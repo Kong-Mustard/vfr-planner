@@ -105,6 +105,17 @@ FREQ = re.compile(r"\b(\d{3}\.\d{1,3})\b")
 HOURS = re.compile(r"\b(H24|HJ|HN|HO|HX|O/R|\d{4}\s*-\s*\d{4})\b")
 
 
+GUARD = {"121.5", "243.0"}  # ความถี่ฉุกเฉิน แสดงแยกในแอปอยู่แล้ว
+CALL_SVC = [("ground", "GND"), ("delivery", "DEL"), ("tower", "TWR"), ("arrival", "ARR"),
+            ("departure", "DEP"), ("approach", "APP"), ("radar", "RADAR"), ("final", "PAR"),
+            ("information", "FIS"), ("control", "ACC"), ("apron", "APN")]
+
+
+def callsign_svc(call):
+    c = (call or "").lower()
+    return next((v for k, v in CALL_SVC if k in c), "")
+
+
 def freqs_of(text):
     out = []
     for f in FREQ.findall(text):
@@ -160,11 +171,14 @@ def parse_ad2(icao, html):
                     else:
                         ap["comm"].append({"svc": svc or last_svc, "callsign": call, "freq": "", "hours": hours, "rmk": ""})
                 continue
-            ap["comm"].append({"svc": svc or last_svc, "callsign": call, "freq": " / ".join(fq), "hours": hours, "rmk": ""})
+            use = svc or callsign_svc(call) or last_svc
+            fq = [f for f in fq if f not in GUARD]
+            if fq:
+                ap["comm"].append({"svc": use, "callsign": call, "freq": " / ".join(fq), "hours": hours, "rmk": ""})
     # รวมรายการ service เดียวกันที่ซ้ำ
     merged = []
     for e in ap["comm"]:
-        if merged and merged[-1]["svc"] == e["svc"] and (not e["freq"] or not merged[-1]["freq"] or not e["callsign"]):
+        if merged and merged[-1]["svc"] == e["svc"] and (not e["freq"] or not merged[-1]["freq"]) and (not e["callsign"] or e["callsign"] == merged[-1]["callsign"]):
             m = merged[-1]
             fs = [x for x in (m["freq"].split(" / ") + e["freq"].split(" / ")) if x]
             m["freq"] = " / ".join(dict.fromkeys(fs)); m["callsign"] = m["callsign"] or e["callsign"]; m["hours"] = m["hours"] or e["hours"]
@@ -194,7 +208,7 @@ def parse_enr41(html):
             lat, lon = parse_coord(line)
             if lat is None or len(r) < 3:
                 continue
-            m = re.search(r"\b(VOR/DME|VORTAC|VOR|DME|NDB|TACAN)\b", line)
+            m = re.search(r"(DVOR/DME|VOR/DME|VORTAC|DVOR|VOR|NDB/DME|NDB|TACAN|DME)", line.replace(" /", "/").replace("/ ", "/"))
             ident = next((c for c in r if re.fullmatch(r"[A-Z]{2,3}", c)), "")
             freq = next((c for c in r if re.search(r"\d+(\.\d+)?\s*(MHZ|KHZ|CH)", c, re.I)), "")
             out.append({"name": r[0], "type": m.group(1) if m else "", "id": ident, "freq": freq,
@@ -217,7 +231,7 @@ def main():
     print("เลือกใช้ฉบับ:", ed)
     root = f"{BASE}{ed}-AIRAC/html/eAIP/"
     menu = get(root + "VT-menu-en-GB.html")
-    msoup = strip_markup(BeautifulSoup(menu, "html.parser"))
+    msoup = BeautifulSoup(menu, "html.parser")  # ห้าม strip เมนู (ส่วนที่พับไว้ซ่อนด้วย display:none)
     names = {}
     for a in msoup.find_all("a", href=True):
         m = re.search(r"VT-AD-2\.([A-Z]{4})-en-GB\.html", a["href"])
