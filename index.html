@@ -213,7 +213,7 @@ body.printing #printView{position:static;padding:0}
 body.mapfull{overflow:hidden}
 body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:100vw!important;height:100%!important;min-height:0;border-radius:0;border:0}
 .ad-blk{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
-.ad-blk h3{margin:0 0 6px;font:700 17px var(--f-display);color:var(--nav)}
+.ad-blk>summary{cursor:pointer}.ad-blk[open]>summary{margin-bottom:6px}.ad-blk h3{margin:0;font:700 17px var(--f-display);color:var(--nav)}
 .ad-blk details{margin-top:6px}.ad-blk summary{cursor:pointer;font-weight:600}
 .ad-proc{font-size:14px;line-height:1.55;white-space:pre-wrap;max-height:340px;overflow:auto;background:var(--input);padding:8px;border-radius:6px}
 .chart-list{display:flex;flex-direction:column;gap:3px;font-size:14px}
@@ -1386,6 +1386,8 @@ $("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");i
 $("#npSearch").addEventListener("input",npRenderList);
 
 /* ---------- AD 2.22 procedures / AD 2.24 charts / จุดรายงาน ---------- */
+const procOpen=new Set(); /* จำว่าผู้ใช้กางอันไหนไว้ ค่าเริ่มต้น = ยุบทั้งหมด */
+document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.pk){d.open?procOpen.add(d.dataset.pk.replace(/^([^:]+)/,"$1")):procOpen.delete(d.dataset.pk)}},true);
 const rpLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(rpLayer,"จุดรายงาน (eAIP)");
 function procAirports(){const W=state.wps;if(!W.length)return[];const ids=[];const add=x=>{const k=String(x||"").toUpperCase();if(AP[k]&&AP[k].eaip&&!AP[k].eaip.custom&&!ids.includes(k))ids.push(k)};
   add(W[0].name);if(W.length>1)add(W[W.length-1].name);W.slice(1,-1).forEach(w=>add(w.name));return ids}
@@ -1396,11 +1398,12 @@ function renderProc(){const box=$("#procList");if(!box)return;rpLayer.clearLayer
   box.innerHTML=ids.map((ic,k)=>{const a=AP[ic],e=a.eaip,ch=e.charts||[],pts=(e.points||[]).filter(realPt);
     const role=k===0&&ic===state.wps[0].name.toUpperCase()?"ต้นทาง":ic===state.wps[state.wps.length-1].name.toUpperCase()?"ปลายทาง":"ตามเส้นทาง";
     const vis=c=>/VISUAL|VFR|HELI|AERODROME CHART|GROUND MOVEMENT/i.test(c.name);
-    return`<div class="ad-blk"><h3>${esc(ic)} ${esc(a.name||"")} <span class="hint">(${role})</span></h3>
+    const op=k=>procOpen.has(ic+k)?" open":"";
+    return`<details class="ad-blk" data-pk="${esc(ic)}:ad"${op(":ad")}><summary><h3 style="display:inline">${esc(ic)} ${esc(a.name||"")} <span class="hint">(${role}${pts.length?` · จุดรายงาน ${pts.length}`:""}${ch.length?` · charts ${ch.length}`:""})</span></h3></summary>
       ${pts.length?`<div><b>จุดรายงาน/จุดในขั้นตอน</b> <span class="hint">แตะเพื่อเพิ่มเป็นจุดเส้นทาง (แทรกก่อนจุดสุดท้าย)</span><div class="rp-list">${pts.map((p,i)=>`<button class="rp" data-ic="${esc(ic)}" data-i="${i}">▲ ${esc(p.name)}</button>`).join("")}</div></div>`:""}
-      ${e.proc?`<details${role!=="ตามเส้นทาง"?" open":""}><summary>AD 2.22 Flight procedures</summary><div class="ad-proc">${esc(e.proc)}</div></details>`:`<p class="hint">ไม่มีข้อความ AD 2.22</p>`}
-      ${ch.length?`<details><summary>AD 2.24 Charts (${ch.length})</summary><div class="chart-list">${ch.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener" class="${vis(c)?"vis":""}">${esc(c.name)} — ${esc(c.page)} ↗</a>`).join("")}</div></details>`:""}
-      ${e.url?`<a class="hint" href="${esc(e.url)}" target="_blank" rel="noopener">เปิดหน้า AD 2 ${esc(ic)} ใน eAIP ↗</a>`:""}</div>`}).join("");
+      ${e.proc?`<details data-pk="${esc(ic)}:p"${op(":p")}><summary>AD 2.22 Flight procedures</summary><div class="ad-proc">${esc(e.proc)}</div></details>`:`<p class="hint">ไม่มีข้อความ AD 2.22</p>`}
+      ${ch.length?`<details data-pk="${esc(ic)}:c"${op(":c")}><summary>AD 2.24 Charts (${ch.length})</summary><div class="chart-list">${ch.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener" class="${vis(c)?"vis":""}">${esc(c.name)} — ${esc(c.page)} ↗</a>`).join("")}</div></details>`:""}
+      ${e.url?`<a class="hint" href="${esc(e.url)}" target="_blank" rel="noopener">เปิดหน้า AD 2 ${esc(ic)} ใน eAIP ↗</a>`:""}</details>`}).join("");
   ids.forEach(ic=>(AP[ic].eaip.points||[]).filter(realPt).forEach(p=>L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:'<div class="rptri"></div>',iconSize:[14,12],iconAnchor:[7,6]})})
     .bindTooltip(`${esc(p.name)} (${esc(ic)} ${esc(p.src)})`).addTo(rpLayer)));}
 $("#procList").addEventListener("click",e=>{const b=e.target.closest(".rp");if(!b)return;const p=AP[b.dataset.ic].eaip.points.filter(x=>!/\b(ARP|DVOR|VOR|NDB|TACAN|DME|LOC|ILS|GP)\b/.test(x.name))[+b.dataset.i];
