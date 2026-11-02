@@ -10,6 +10,7 @@ on:
       - eaip_update.py
       - .github/workflows/eaip.yml
 
+concurrency: { group: data-commit, cancel-in-progress: false }
 permissions:
   contents: write
 

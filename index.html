@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>VFR Planner</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -159,6 +160,18 @@ body.printing #printView{position:static;padding:0}
 .fp-grid input{font:500 14px var(--f-body)}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbox svg{display:block}
+.wx-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:end;margin-bottom:8px}
+.wx-ctl label{min-width:150px}.wx-ctl .wx-time{flex:1;min-width:220px}
+.wx-ctl .chk{flex-direction:row;align-items:center;gap:6px;min-width:0;font-size:14px;color:var(--ink)}
+.wx-ctl .chk input{width:auto}
+#wxMap{height:58vh;min-height:360px;border-radius:10px;border:1px solid var(--line)}
+.wx-legend{background:rgba(255,255,255,.9);color:#14233a;padding:4px 8px;border-radius:6px;font:600 11px var(--f-mono)}
+.metar{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font:13px/1.45 var(--f-mono);overflow-wrap:anywhere}
+.metar b{font-family:var(--f-display);font-size:15px}
+.fc{display:inline-block;font:700 11px var(--f-body);color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px}
+.fc.VFR{background:#1f8a4c}.fc.MVFR{background:#2f6fd6}.fc.IFR{background:#d1242f}.fc.LIFR{background:#a1249e}
+#wxRouteTbl td,#wxRouteTbl th{white-space:nowrap}
+.spread{color:var(--warn);font-weight:700}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
@@ -245,7 +258,7 @@ body.printing #printView{position:static;padding:0}
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-tab="plan" aria-selected="true">1 · วางแผน VFR</button>
     <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · NAVLOG</button>
-    <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ<small>เร็วๆ นี้</small></button>
+    <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ</button>
     <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM</button>
     <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY</button>
     <button class="tab" role="tab" data-tab="quiz" aria-selected="false">6 · ข้อสอบ</button>
@@ -415,7 +428,37 @@ body.printing #printView{position:static;padding:0}
   </div>
  </div>
 </section>
-<section id="tab-wx" class="tabpanel card" hidden><div class="placeholder"><h3>สภาพอากาศ</h3>ยังไม่เปิดใช้ — METAR/TAF ตามเส้นทาง, Windy, เรดาร์ฝน</div></section>
+<section id="tab-wx" class="tabpanel" hidden>
+ <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="card section">
+    <div class="sechead"><h2>แผนที่ลม / ฝน</h2>
+      <div class="btns">
+        <a class="linkbtn" href="https://www.windy.com/?14.0,100.6,6" target="_blank" rel="noopener">Windy ↗</a>
+        <a class="linkbtn" href="https://weather.tmd.go.th/" target="_blank" rel="noopener">กรมอุตุฯ เรดาร์ ↗</a>
+        <a class="linkbtn" href="https://aviationweather.gov/" target="_blank" rel="noopener">AviationWeather ↗</a>
+      </div></div>
+    <div class="wx-ctl">
+      <label>โมเดลพยากรณ์<select id="wxModel"><option value="ecmwf_ifs025">ECMWF IFS (0.25°)</option><option value="gfs_seamless">GFS (NOAA)</option><option value="icon_seamless">ICON (DWD)</option></select></label>
+      <label>ระดับความสูง<select id="wxLevel"><option value="10m">ผิวพื้น (10 m)</option><option value="1000hPa">≈ 400 ft (1000 hPa)</option><option value="925hPa" selected>≈ 2,500 ft (925 hPa)</option><option value="850hPa">≈ 5,000 ft (850 hPa)</option><option value="700hPa">≈ 10,000 ft (700 hPa)</option></select></label>
+      <label class="wx-time">เวลา <b id="wxTimeLbl">–</b><input id="wxTime" type="range" min="0" max="47" value="0"></label>
+      <label class="chk"><input type="checkbox" id="wxWind" checked> ลม (เคลื่อนไหว)</label>
+      <label class="chk"><input type="checkbox" id="wxRadar" checked> เรดาร์ฝน (ล่าสุด)</label>
+    </div>
+    <div id="wxMap"></div>
+    <p class="hint" id="wxStatus"></p>
+  </div>
+  <div class="card section">
+    <div class="sechead"><h2>อากาศตามเส้นทาง</h2>
+      <div class="btns"><button id="wxRoute" class="primary">ดึงพยากรณ์ตามเส้นทาง</button><button id="wxFill">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
+    <p class="hint">เทียบ 3 โมเดล ณ เวลา ETA ของแต่ละจุดและระดับ ALT ของ leg · ปุ่ม "ใส่ลง NAV LOG" ใช้ค่าเฉลี่ยของโมเดลเป็นค่าตั้งต้นคร่าวๆ — แก้ได้ในแท็บ NAVLOG หลังเช็คอากาศจริง</p>
+    <div class="tablewrap"><table id="wxRouteTbl"><tbody><tr><td class="hint" style="padding:14px">กด "ดึงพยากรณ์ตามเส้นทาง"</td></tr></tbody></table></div>
+  </div>
+  <div class="card section">
+    <div class="sechead"><h2>METAR / TAF</h2><span class="hint" id="metarSrc"></span></div>
+    <div id="metarList"></div>
+  </div>
+ </div>
+</section>
 <section id="tab-notam" class="tabpanel" hidden>
  <div class="card section">
   <div class="sechead"><h2>NOTAM</h2>
@@ -449,6 +492,7 @@ body.printing #printView{position:static;padding:0}
 <div id="toast" class="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js"></script>
 <script>
 "use strict";
@@ -654,7 +698,7 @@ function renderNavlogExtras(res){
   const W=state.wps;$("#nlTitle").textContent=W.length>1?`${W[0].name} → ${W[W.length-1].name}`:"ยังไม่มีเส้นทาง";
   $("#nlHead").innerHTML=[["Aircraft",state.acft||"–"],["Date",state.date||"–"],["เริ่มบิน",state.depTime||"–"],["น้ำมันเริ่ม",(state.fuel0||"–")+" lb"],
     ["Burn",(state.burn||"–")+" lb/นาที"],["สำรองขั้นต่ำ",(state.reserve||"–")+" lb"],["ระยะรวม",res.rows.length?res.total.toFixed(1)+" NM":"–"],["เวลารวม",res.rows.length?mmss(res.cumMin):"–"]]
-    .map(([k,v])=>`<span>${k}: <b>${esc(v)}</b></span>`).join("");
+    .map(([k,v])=>`<span>${k}: <b>${esc(v)}</b></span>`).join("")+(state.windSrc?`<span class="hint" style="flex-basis:100%">ลม/อุณหภูมิตั้งต้นจาก ${esc(state.windSrc)} — ค่าคร่าวๆ ตรวจและแก้ก่อนบิน</span>`:"");
   const act=document.activeElement;if(act&&(act.closest("#wxLog")||act.closest("#fpGrid")))return;
   state.wxlog=state.wxlog||{};state.fp=state.fp||{};
   const locName={Departure:W[0]&&W[0].name,Destination:W.length>1&&W[W.length-1].name,Alternate:state.fp.altn};
@@ -847,6 +891,95 @@ function renderAreas(){const box=$("#areaList");
 function W_name(i){const W=state.wps;return W.length>1?`${W[i].name}→${W[i+1].name}`:W[0].name}
 $("#areaShowD").onchange=e=>{e.target.checked?areaLayers.D.addTo(map):map.removeLayer(areaLayers.D)};
 
+/* ---------- สภาพอากาศ: Open-Meteo (ECMWF/GFS/ICON), RainViewer, METAR/TAF ---------- */
+const WX_MODELS={ecmwf_ifs025:"ECMWF",gfs_seamless:"GFS",icon_seamless:"ICON"};
+const WX_LV=[["10m",33],["1000hPa",360],["925hPa",2500],["850hPa",4800],["700hPa",9900]]; // ระดับ → ความสูงโดยประมาณ (ft, ISA)
+let wxMap=null,wxVel=null,wxRadarL=null,wxGrid=null,wxRoute=null;
+function wxInit(){if(wxMap)return;wxMap=L.map("wxMap",{zoomControl:true}).setView([13.5,101],6);
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:12,attribution:"Imagery © Esri"}).addTo(wxMap);
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:12}).addTo(wxMap);
+  wxMap.on("moveend",()=>{});wxLoadGrid();wxLoadRadar();wxDrawRoute()}
+function wxDrawRoute(){if(!wxMap)return;if(wxRoute)wxMap.removeLayer(wxRoute);const pts=state.wps.map(w=>[w.lat,w.lon]);
+  wxRoute=L.layerGroup([L.polyline(pts,{color:"#ff3db8",weight:3}),...pts.map((p,i)=>L.circleMarker(p,{radius:5,color:"#fff",weight:2,fillColor:"#ff3db8",fillOpacity:1}).bindTooltip(state.wps[i].name))]).addTo(wxMap)}
+async function wxLoadRadar(){if(wxRadarL){wxMap.removeLayer(wxRadarL);wxRadarL=null}if(!$("#wxRadar").checked)return;
+  try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json();const f=d.radar.past[d.radar.past.length-1];
+    wxRadarL=L.tileLayer(`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`,{opacity:.7,maxNativeZoom:7,maxZoom:12,attribution:"Radar © RainViewer"}).addTo(wxMap);
+    $("#wxStatus").dataset.radar=`เรดาร์ ${new Date(f.time*1000).toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"})} น.`;wxStatus()}catch(e){$("#wxStatus").dataset.radar="โหลดเรดาร์ไม่ได้";wxStatus()}}
+function wxStatus(){const s=$("#wxStatus");s.textContent=[s.dataset.grid,s.dataset.radar].filter(Boolean).join(" · ")}
+const uv=(dir,spd)=>{const r=dir*D2R;return[-spd*Math.sin(r),-spd*Math.cos(r)]};
+const dirspd=(u,v)=>[norm(Math.atan2(-u,-v)*R2D),Math.hypot(u,v)];
+async function wxLoadGrid(){const model=$("#wxModel").value,lv=$("#wxLevel").value;$("#wxStatus").dataset.grid="กำลังโหลดลม…";wxStatus();
+  const la=[],lo=[],LA1=21,LA2=5,LO1=97,LO2=106,ST=0.75;for(let y=LA1;y>=LA2-1e-6;y-=ST)for(let x=LO1;x<=LO2+1e-6;x+=ST){la.push(y.toFixed(2));lo.push(x.toFixed(2))}
+  const vars=lv==="10m"?"wind_speed_10m,wind_direction_10m":`wind_speed_${lv},wind_direction_${lv}`;
+  try{const url=`https://api.open-meteo.com/v1/forecast?latitude=${la.join(",")}&longitude=${lo.join(",")}&hourly=${vars}&models=${model}&wind_speed_unit=kn&timezone=Asia%2FBangkok&forecast_hours=48`;
+    const d=await(await fetch(url)).json();if(d.error)throw new Error(d.reason);
+    const arr=Array.isArray(d)?d:[d];const nx=Math.round((LO2-LO1)/ST)+1,ny=Math.round((LA1-LA2)/ST)+1;
+    wxGrid={model,lv,nx,ny,la1:LA1,lo1:LO1,st:ST,times:arr[0].hourly.time,pts:arr.map(p=>({s:p.hourly[vars.split(",")[0]],d:p.hourly[vars.split(",")[1]]}))};
+    $("#wxTime").max=wxGrid.times.length-1;{const now=new Date().toLocaleString("sv-SE",{timeZone:"Asia/Bangkok"}).slice(0,13).replace(" ","T")+":00";const ni=wxGrid.times.indexOf(now);if(ni>=0&&!wxGrid._set){$("#wxTime").value=ni;wxGrid._set=1}}$("#wxStatus").dataset.grid=`ลม ${WX_MODELS[model]} ${$("#wxLevel").selectedOptions[0].text} (Open-Meteo)`;wxStatus();wxDrawWind()}
+  catch(e){$("#wxStatus").dataset.grid="โหลดข้อมูลลมไม่ได้ (ต้องต่อเน็ต) "+(e.message||"");wxStatus()}}
+function wxDrawWind(){if(!wxGrid)return;const t=+$("#wxTime").value;$("#wxTimeLbl").textContent=wxGrid.times[t].replace("T"," ")+" น.";
+  if(wxVel){wxMap.removeLayer(wxVel);wxVel=null}if(!$("#wxWind").checked||typeof L.velocityLayer!=="function")return;
+  const U=[],V=[];wxGrid.pts.forEach(p=>{const s=p.s[t],d=p.d[t];if(s==null||d==null){U.push(0);V.push(0);return}const [u,v]=uv(d,s);U.push(u);V.push(v)});
+  const hdr=n=>({parameterCategory:2,parameterNumber:n,lo1:wxGrid.lo1,la1:wxGrid.la1,lo2:wxGrid.lo1+(wxGrid.nx-1)*wxGrid.st,la2:wxGrid.la1-(wxGrid.ny-1)*wxGrid.st,dx:wxGrid.st,dy:wxGrid.st,nx:wxGrid.nx,ny:wxGrid.ny,refTime:wxGrid.times[t]});
+  wxVel=L.velocityLayer({displayValues:true,displayOptions:{velocityType:"ลม",position:"bottomleft",emptyString:"ไม่มีข้อมูล",speedUnit:"kt",directionString:"ทิศ",speedString:"ความเร็ว"},
+    data:[{header:hdr(2),data:U},{header:hdr(3),data:V}],maxVelocity:40,velocityScale:0.012,lineWidth:2,particleMultiplier:1/220}).addTo(wxMap)}
+/* อากาศตามเส้นทาง: จุด = waypoint และกลาง leg, เวลา = ETA, ระดับ = ALT ของ leg */
+function routeSamples(){const res=compute(),W=state.wps,dep=res.dep,out=[];
+  const date=state.date||new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
+  const at=min=>{const d=new Date(`${date}T00:00:00+07:00`);d.setMinutes(d.getMinutes()+min);return d};
+  W.forEach((w,i)=>{const leg=Math.min(i,Math.max(0,res.rows.length-1));
+    out.push({name:w.name,lat:w.lat,lon:w.lon,alt:num(state.legs[leg]&&state.legs[leg].alt,num(state.g.alt,1000)),time:at(dep+(i?res.rows[i-1].eta-dep:0)),leg:i<res.rows.length?i:null,kind:"wp"});
+    if(i<res.rows.length){const n=W[i+1],r=res.rows[i];out.push({name:`กลาง ${w.name}→${n.name}`,lat:(w.lat+n.lat)/2,lon:(w.lon+n.lon)/2,alt:num(state.legs[i].alt,1000),time:at(r.eta-r.ete/2),leg:i,kind:"mid"})}});
+  return out}
+let wxRouteData=null;
+async function wxRouteFetch(){const S=routeSamples();if(S.length<1){toast("ยังไม่มีเส้นทาง");return}
+  const tb=$("#wxRouteTbl tbody");tb.innerHTML=`<tr><td class="hint" style="padding:14px">กำลังดึงพยากรณ์…</td></tr>`;
+  const lv=WX_LV.map(x=>x[0]);const vars=["temperature_2m","cloud_cover_low","precipitation","visibility","cape","wind_speed_10m","wind_direction_10m",
+    ...lv.filter(l=>l!=="10m").flatMap(l=>[`wind_speed_${l}`,`wind_direction_${l}`,`temperature_${l}`])];
+  try{const url=`https://api.open-meteo.com/v1/forecast?latitude=${S.map(s=>s.lat.toFixed(3)).join(",")}&longitude=${S.map(s=>s.lon.toFixed(3)).join(",")}&hourly=${vars.join(",")}&models=${Object.keys(WX_MODELS).join(",")}&wind_speed_unit=kn&timezone=Asia%2FBangkok&forecast_days=7`;
+    const d=await(await fetch(url)).json();if(d.error)throw new Error(d.reason);const arr=Array.isArray(d)?d:[d];
+    wxRouteData=S.map((s,k)=>{const H=arr[k].hourly,tStr=s.time.toLocaleString("sv-SE",{timeZone:"Asia/Bangkok"}).slice(0,13)+":00";
+      const ti=H.time.indexOf(tStr.replace(" ","T"));const per={};
+      Object.keys(WX_MODELS).forEach(m=>{const g=(v)=>{const a=H[`${v}_${m}`];return a&&ti>=0?a[ti]:null};
+        // ลมที่ ALT: interpolate u/v และ temp ระหว่างระดับ
+        const levels=WX_LV.map(([l,ft])=>{const sp=l==="10m"?g("wind_speed_10m"):g(`wind_speed_${l}`),dr=l==="10m"?g("wind_direction_10m"):g(`wind_direction_${l}`),tp=l==="10m"?g("temperature_2m"):g(`temperature_${l}`);
+          return sp==null||dr==null?null:{ft,uv:uv(dr,sp),tp}}).filter(Boolean);
+        let w=null;if(levels.length){let lo=levels[0],hi=levels[levels.length-1];for(let j=0;j<levels.length-1;j++)if(s.alt>=levels[j].ft&&s.alt<=levels[j+1].ft){lo=levels[j];hi=levels[j+1]}
+          const f=hi.ft===lo.ft?0:Math.max(0,Math.min(1,(s.alt-lo.ft)/(hi.ft-lo.ft)));const u=lo.uv[0]+(hi.uv[0]-lo.uv[0])*f,v=lo.uv[1]+(hi.uv[1]-lo.uv[1])*f;
+          const tp=lo.tp!=null&&hi.tp!=null?lo.tp+(hi.tp-lo.tp)*f:null;const [dd,ss]=dirspd(u,v);w={u,v,dir:dd,spd:ss,tp}}
+        per[m]={w,cl:g("cloud_cover_low"),pr:g("precipitation"),vis:g("visibility"),cape:g("cape")}});
+      return{...s,ti,per}});
+    wxRenderRoute()}catch(e){tb.innerHTML=`<tr><td class="hint" style="padding:14px">ดึงพยากรณ์ไม่ได้ (ต้องต่อเน็ต) ${esc(e.message||"")}</td></tr>`}}
+function wxAvg(p){const ws=Object.values(p.per).map(x=>x.w).filter(Boolean);if(!ws.length)return null;
+  const u=ws.reduce((a,w)=>a+w.u,0)/ws.length,v=ws.reduce((a,w)=>a+w.v,0)/ws.length,[d,s]=dirspd(u,v),tps=ws.map(w=>w.tp).filter(x=>x!=null);
+  const spread=Math.max(...ws.map(w=>Math.hypot(w.u-u,w.v-v)));return{dir:d,spd:s,tp:tps.length?tps.reduce((a,b)=>a+b)/tps.length:null,spread}}
+function wxRenderRoute(){if(!wxRouteData)return;const M=Object.keys(WX_MODELS);const f=v=>v==null?"–":v;
+  const wtxt=w=>w?`${hdg(w.dir)}°/${Math.round(w.spd)}`:"–";
+  $("#wxRouteTbl").innerHTML=`<thead><tr><th>จุด</th><th>ETA</th><th>ALT</th>${M.map(m=>`<th>ลม ${WX_MODELS[m]}</th>`).join("")}<th>เฉลี่ย</th><th>Temp</th><th>เมฆต่ำ %</th><th>ฝน mm/h</th><th>ทัศนวิสัย km</th><th>CAPE</th></tr></thead><tbody>`+
+    wxRouteData.map(p=>{const a=wxAvg(p),e=p.per.ecmwf_ifs025||p.per[M[0]],pick=k=>{const vs=M.map(m=>p.per[m][k]).filter(x=>x!=null);return vs.length?Math.max(...vs):null};
+      const vis=(()=>{const vs=M.map(m=>p.per[m].vis).filter(x=>x!=null);return vs.length?(Math.min(...vs)/1000).toFixed(1):"–"})();
+      return`<tr${p.kind==="mid"?' style="color:var(--muted)"':""}><td style="text-align:left">${esc(p.name)}</td><td>${p.time.toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"})}</td><td>${p.alt}</td>
+       ${M.map(m=>`<td>${wtxt(p.per[m].w)}</td>`).join("")}<td class="c"><b>${wtxt(a)}</b>${a&&a.spread>8?` <span class="spread" title="โมเดลต่างกันมาก">±${Math.round(a.spread)}</span>`:""}</td>
+       <td>${a&&a.tp!=null?a.tp.toFixed(0)+"°":"–"}</td><td>${f(pick("cl"))}</td><td>${f(pick("pr"))}</td><td>${vis}</td><td>${f(pick("cape"))}</td></tr>`}).join("")+`</tbody>`;
+  if(wxRouteData.some(p=>p.ti<0))toast("บางจุดอยู่นอกช่วงพยากรณ์ (ไม่เกิน 7 วัน)")}
+$("#wxRoute").onclick=wxRouteFetch;
+$("#wxFill").onclick=async()=>{if(!wxRouteData)await wxRouteFetch();if(!wxRouteData)return;let n=0;
+  state.legs.forEach((l,i)=>{const p=wxRouteData.find(x=>x.kind==="mid"&&x.leg===i);const a=p&&wxAvg(p);if(!a)return;
+    l.wd=Math.round(a.dir/10)*10||360;l.wv=Math.round(a.spd);if(a.tp!=null)l.temp=Math.round(a.tp);n++});
+  if(!n){toast("ไม่มีข้อมูลลมสำหรับ leg");return}state.windSrc=`พยากรณ์เฉลี่ย ECMWF/GFS/ICON (Open-Meteo) ดึงเมื่อ ${new Date().toLocaleString("th-TH")}`;
+  markEdited();render();toast(`ใส่ลมลง NAV LOG ${n} leg แล้ว — ตรวจ/แก้ได้ในแท็บ NAVLOG`)};
+["wxModel","wxLevel"].forEach(id=>$("#"+id).addEventListener("change",wxLoadGrid));
+$("#wxTime").addEventListener("input",wxDrawWind);$("#wxWind").addEventListener("change",wxDrawWind);$("#wxRadar").addEventListener("change",wxLoadRadar);
+/* METAR/TAF จาก metar.json (GitHub ดึงทุก 30 นาที) */
+async function metarLoad(){const box=$("#metarList");
+  try{const d=await(await fetch("metar.json",{cache:"no-cache"})).json();const W=state.wps.map(w=>w.name.toUpperCase());
+    const near=routeAirports(num($("#corridor").value,25)).map(a=>a.id);const ids=[...new Set([...W,...near])].filter(i=>d.metar[i]||d.taf[i]);
+    const age=Math.round((Date.now()-new Date(d.fetched.replace("Z",":00Z")))/60000);
+    $("#metarSrc").textContent=`aviationweather.gov · อัปเดต ${age} นาทีที่แล้ว · สนามตามเส้นทาง`;
+    box.innerHTML=ids.length?ids.map(i=>{const m=d.metar[i],t=d.taf[i];return`<div class="metar"><b>${i}</b>${m&&m.cat?`<span class="fc ${m.cat}">${m.cat}</span>`:""}<br>${m?esc(m.raw):"ไม่มี METAR"}${t?`<br><span style="color:var(--muted)">${esc(t.raw)}</span>`:""}</div>`}).join("")
+      :`<p class="hint">ไม่มี METAR/TAF ของสนามตามเส้นทาง (สนามทหารบางแห่งไม่มีในระบบสากล)</p>`}
+  catch(e){box.innerHTML=`<p class="hint">ยังไม่มีไฟล์ METAR/TAF หรือออฟไลน์อยู่</p>`}}
+
 /* ---------- Kneeboard PDF (A5) — ใช้หน้าพิมพ์ของเบราว์เซอร์ → Save as PDF ---------- */
 $("#kneePdf").onclick=()=>{
   const res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
@@ -1031,7 +1164,8 @@ qzRender();
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
-  document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50)});
+  document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50);
+  if(t.dataset.tab==="wx")setTimeout(()=>{wxInit();wxMap.invalidateSize();wxDrawRoute();metarLoad()},50)});
 
 /* ---------- boot ---------- */
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),{padding:[40,40]});else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}

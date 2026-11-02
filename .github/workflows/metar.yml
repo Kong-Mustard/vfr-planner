@@ -1,0 +1,43 @@
+# ดึง METAR/TAF ของสนามในไทยทุก 30 นาที → metar.json (แอปโหลดเองในแท็บสภาพอากาศ)
+name: Update METAR/TAF
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/metar.yml]
+permissions:
+  contents: write
+concurrency: { group: data-commit, cancel-in-progress: false }
+jobs:
+  wx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch METAR/TAF
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request, datetime
+          ids = sorted(k for k in json.load(open("eaip_data.json"))["airports"] if k.startswith("VT"))
+          def get(kind):
+              url = f"https://aviationweather.gov/api/data/{kind}?ids={','.join(ids)}&format=json" + ("&hours=3" if kind == "metar" else "")
+              with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "vfr-planner"}), timeout=60) as r:
+                  return json.load(r)
+          out = {"fetched": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"), "source": "aviationweather.gov", "metar": {}, "taf": {}}
+          for m in get("metar"):
+              i = m.get("icaoId")
+              if i and i not in out["metar"]:
+                  out["metar"][i] = {"raw": m.get("rawOb"), "time": m.get("reportTime"), "cat": m.get("fltCat"), "wdir": m.get("wdir"), "wspd": m.get("wspd"), "visib": m.get("visib"), "temp": m.get("temp")}
+          for t in get("taf"):
+              i = t.get("icaoId")
+              if i and i not in out["taf"]:
+                  out["taf"][i] = {"raw": t.get("rawTAF"), "issue": t.get("issueTime")}
+          json.dump(out, open("metar.json", "w"), indent=0)
+          print(len(out["metar"]), "METAR,", len(out["taf"]), "TAF")
+          PY
+      - name: Commit
+        run: |
+          git config user.name "eaip-bot"; git config user.email "eaip-bot@users.noreply.github.com"
+          git add metar.json
+          git diff --cached --quiet || git commit -m "อัปเดต METAR/TAF"
+          git pull --rebase; git push
