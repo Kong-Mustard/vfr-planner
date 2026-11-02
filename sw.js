@@ -2,7 +2,7 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v2";
+const V = "vfr-v3";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",

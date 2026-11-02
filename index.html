@@ -401,6 +401,11 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   .top>.side{position:absolute;z-index:600;top:16px;left:16px;bottom:16px;width:390px;max-height:none;overflow:auto;border-radius:22px;box-shadow:var(--shadow);
     background:color-mix(in srgb,var(--panel) 97%,transparent)}
 }
+.side>.sechead{position:sticky;top:-14px;z-index:2;background:inherit;margin:-14px -14px 0;padding:14px 14px 6px}
+#sideToggle{margin-left:auto}
+.side.collapsed>*:not(.sechead){display:none!important}
+.side.collapsed>.sechead{position:static;margin:0;padding:0}
+@media (min-width:1000px){.top>.side.collapsed{bottom:auto;width:auto;overflow:visible;padding:10px 14px}}
 @media (max-width:760px){
   body{padding:0 0 calc(70px + env(safe-area-inset-bottom,0px)) 0}
   main{padding:10px 10px 20px}
@@ -437,7 +442,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   <div class="top">
     <div id="map"></div>
     <div class="card side">
-      <div class="sechead"><h2>แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span></div>
+      <div class="sechead"><h2>แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
       <div class="routebox">
         <label>ต้นทาง<input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
         <div id="depRes" class="res"></div>
@@ -1751,8 +1756,13 @@ function netChip(){const c=$("#netChip");const on=navigator.onLine;c.className="
 window.addEventListener("online",netChip);window.addEventListener("offline",netChip);netChip();
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 
+/* ---------- ยุบ/ขยายแผงแผนการบิน (จำค่าไว้ในเครื่อง) ---------- */
+function sideSet(col){const sd=$(".top>.side"),b=$("#sideToggle");sd.classList.toggle("collapsed",col);b.setAttribute("aria-expanded",String(!col));
+  b.textContent=col?"ขยาย ▾":"ยุบ ▴";try{localStorage.setItem("vfr_side",col?"1":"0")}catch(e){}setTimeout(()=>map.invalidateSize(),50)}
+$("#sideToggle").onclick=()=>sideSet(!$(".top>.side").classList.contains("collapsed"));
+try{if(localStorage.getItem("vfr_side")==="1")sideSet(true)}catch(e){}
 /* ---------- boot ---------- */
-function fitPad(){return innerWidth>=1000&&!document.body.classList.contains("mapfull")&&!document.body.classList.contains("printing")?{paddingTopLeft:[430,40],paddingBottomRight:[60,40]}:{padding:[40,40]}}
+function fitPad(){return innerWidth>=1000&&!$(".top>.side").classList.contains("collapsed")&&!document.body.classList.contains("mapfull")&&!document.body.classList.contains("printing")?{paddingTopLeft:[430,40],paddingBottomRight:[60,40]}:{padding:[40,40]}}
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),fitPad());else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
 state=store.get("vfr_current")||JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
