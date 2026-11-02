@@ -98,7 +98,7 @@ tr.tot td{font-weight:700;background:var(--input)}
 .routebox{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft)}
 .res{font:12px var(--f-mono);color:var(--muted);min-height:1em}
 .res b{color:var(--ink)}.res.err{color:var(--bad)}
-.freqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.freqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;align-items:start}
 .fcard{border:2px solid var(--nav);border-radius:8px;padding:8px 10px;font:13px var(--f-mono);min-width:0}
 .fcard h3{margin:0 0 4px;font:600 16px var(--f-display);color:var(--nav)}
 .fcard h3 small{font:500 11px var(--f-body);color:var(--muted)}
@@ -416,6 +416,17 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   .disclaimer{font-size:14px}
   .pe-row{grid-template-columns:1fr 1fr}
 }
+/* ซ่อนตัวหนังสือเล็ก (กดเพื่อดูรายละเอียด) */
+details.area-row{display:block;padding:0}
+details.area-row>summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 12px;cursor:pointer;list-style:none}
+details.area-row>summary::-webkit-details-marker{display:none}
+details.area-row>summary::after{content:"▾ รายละเอียด";margin-left:auto;font-size:12px;color:var(--muted)}
+details.area-row[open]>summary::after{content:"▴ ซ่อน"}
+.area-sum{font-size:15px}.area-sum b{font-family:var(--f-display)}
+.area-ok{display:inline-block;font:600 12px var(--f-body);color:var(--good);border:1px solid var(--good);border-radius:6px;padding:0 6px}
+.area-det{padding:0 12px 10px 12px;display:flex;flex-direction:column;gap:2px}
+.area-det small{color:var(--muted);display:block}
+.freqgrid:not(.det) .dx,.freqgrid:not(.det) .fcard .r small{display:none}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
   border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
@@ -584,6 +595,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <h2 class="hd hd-green">ความถี่ตามเส้นทาง</h2>
       <span class="emerchip">EMER 121.5 / 243.0</span>
       <div class="btns">
+        <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="freqDet" style="width:auto"> แสดงชื่อเรียก/รายละเอียด</label>
         <label style="flex-direction:row;align-items:center;gap:6px">รัศมีจากเส้นทาง<input id="corridor" type="number" value="25" style="width:70px"> NM</label>
         <button type="button" onclick="document.getElementById('importEaip').click()">Import ข้อมูล eAIP</button>
         <input id="importEaip" type="file" accept=".json,application/json" hidden>
@@ -846,7 +858,7 @@ function renderFreq(){
     const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.custom?e.rwy.join(", "):rwyPairs(e.rwy))}</span></div>`:"";
     const tag=e&&e.custom?`<span class="ctag">กรอกเอง</span>`:"";
     const add=!e||e.custom?`<button class="mini" data-cedit="${esc(a.id)}">${e?"แก้ไข":"กรอกข้อมูล"}</button>`:"";
-    return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
+    return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}<span class="dx">${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</span></small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
   $("#custCount").textContent=Object.keys(custAll()).length;
 }
 function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";return}
@@ -867,6 +879,7 @@ function windTri(tc,tas,wd,wv){const ang=(wd-tc)*D2R,x=wv*Math.sin(ang)/tas;
 
 /* ---------- state ---------- */
 let state=null;
+const procOpen=new Set(); /* จำว่าผู้ใช้กางอันไหนไว้ ค่าเริ่มต้น = ยุบทั้งหมด */
 const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป บทบ.ยว.3",acft:"",date:"",depTime:"08:00",fuel0:500,burn:2.6,reserve:200,
   depIn:"VTBH",dstIn:"47Q QU 27275 13325 บทบ.ยว.3",
   g:{alt:1000,cas:80,wd:230,wv:15,temp:30,var:0},
@@ -1068,6 +1081,7 @@ let clearArm=false;$("#clearAll").onclick=e=>{if(!clearArm){clearArm=true;e.targ
   state.wps=[];state.legs=[];state.example=false;clearArm=false;e.target.textContent="ล้างทั้งหมด";render()};
 
 $("#corridor").addEventListener("input",renderFreq);
+(()=>{const c=$("#freqDet");try{c.checked=localStorage.getItem("vfr_freqdet")==="1"}catch(e){}const f=()=>{$("#freqList").classList.toggle("det",c.checked);try{localStorage.setItem("vfr_freqdet",c.checked?"1":"0")}catch(e){}};c.onchange=f;f()})();
 function custFill(ic){const c=custAll()[ic]||{},a=AP[ic]||{};
   $("#cId").value=ic;$("#cName").value=c.name||a.name||"";$("#cCoord").value=c.lat!=null?`${c.lat.toFixed(5)}, ${c.lon.toFixed(5)}`:"";
   $("#cElevRwy").value=[c.elev??"",c.rwy||""].filter(v=>v!=="").join(" / ");$("#cComm").value=c.comm||"";$("#cNav").value=c.nav||"";
@@ -1151,12 +1165,14 @@ function renderAreas(){const box=$("#areaList");
     const alts=legs.map(i=>num(state.legs[i]&&state.legs[i].alt,NaN)).filter(isFinite);
     const inside=alts.some(x=>(isFinite(lo)?x>=lo:true)&&(isFinite(hi)?x<=hi:true));
     const legTxt=legs.map(i=>W_name(i)).join(", ");
-    return`<div class="area-row hit ${a.type}"><span class="area-tag ${a.type}">${esc(a.id)}</span><div style="min-width:0">
-      <b>${esc(a.name)}</b> — ${AREA_NAME[a.type]} · ${esc(a.upper)} / ${esc(a.lower)}
-      ${inside?`<div class="area-alert">ระดับบินที่วางแผนอยู่ในช่วงความสูงของพื้นที่นี้</div>`:alts.length?`<small>ระดับบินที่วางแผนอยู่นอกช่วงความสูงของพื้นที่</small>`:""}
+    const pk="area:"+a.id;
+    return`<details class="area-row hit ${a.type}" data-pk="${esc(pk)}"${procOpen.has(pk)?" open":""}><summary><span class="area-tag ${a.type}">${esc(a.id)}</span>
+      <span class="area-sum"><b>${esc(a.name)}</b> · ${AREA_NAME[a.type]} · <b>${esc(a.upper)} / ${esc(a.lower)}</b>
+      ${inside?`<span class="area-alert">อยู่ในช่วงความสูง</span>`:alts.length?`<span class="area-ok">นอกช่วงความสูง</span>`:""}</span></summary>
+      <div class="area-det">${inside?`<div class="area-alert">ระดับบินที่วางแผนอยู่ในช่วงความสูงของพื้นที่นี้</div>`:""}
       <small>Leg: ${esc(legTxt)}${a.time?` · เวลา: ${esc(a.time)}`:""}</small>
       ${a.entry?`<small>การเข้า: ${esc(a.entry)}</small>`:""}${a.info?`<small>ติดต่อ: ${esc(a.info)}</small>`:""}
-      ${a.approx?`<small><i>ขอบเขตบางส่วนตามแนวชายแดน/ชายฝั่ง วาดแบบประมาณ — ตรวจกับ eAIP</i></small>`:""}</div></div>`}).join("");}
+      ${a.approx?`<small><i>ขอบเขตบางส่วนตามแนวชายแดน/ชายฝั่ง วาดแบบประมาณ — ตรวจกับ eAIP</i></small>`:""}</div></details>`}).join("");}
 function W_name(i){const W=state.wps;return W.length>1?`${W[i].name}→${W[i+1].name}`:W[0].name}
 $("#areaShowD").onchange=e=>{e.target.checked?areaLayers.D.addTo(map):map.removeLayer(areaLayers.D)};
 
@@ -1398,7 +1414,6 @@ $("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");i
 $("#npSearch").addEventListener("input",npRenderList);
 
 /* ---------- AD 2.22 procedures / AD 2.24 charts / จุดรายงาน ---------- */
-const procOpen=new Set(); /* จำว่าผู้ใช้กางอันไหนไว้ ค่าเริ่มต้น = ยุบทั้งหมด */
 document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.pk){d.open?procOpen.add(d.dataset.pk.replace(/^([^:]+)/,"$1")):procOpen.delete(d.dataset.pk)}},true);
 const rpLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(rpLayer,"จุดรายงาน (eAIP)");
 function procAirports(){const W=state.wps;if(!W.length)return[];const ids=[];const add=x=>{const k=String(x||"").toUpperCase();if(AP[k]&&AP[k].eaip&&!AP[k].eaip.custom&&!ids.includes(k))ids.push(k)};
