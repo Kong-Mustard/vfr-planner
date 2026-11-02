@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-02T03:58",
+ "fetched": "2026-11-02T04:00",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -18,40 +18,40 @@
     {
      "svc": "APP",
      "callsign": "Bangkok Approach",
-     "freq": "119.1 / 274.5 / 120.3 / 122.35 / 124.35 / 125.2 / 133.4 / 125.8 / 121.5 / 243.0",
+     "freq": "119.1 / 274.5 / 120.3 / 122.35 / 124.35 / 125.2 / 133.4 / 125.8",
      "hours": "H24",
      "rmk": ""
     },
     {
      "svc": "APP",
      "callsign": "Don Mueang Approach",
-     "freq": "119.4 / 274.5 / 121.5 / 243.0",
+     "freq": "119.4 / 274.5",
      "hours": "H24",
      "rmk": ""
     },
     {
-     "svc": "APP",
+     "svc": "ARR",
      "callsign": "Don Mueang Arrival",
-     "freq": "133.0 / 274.5 / 121.5 / 243.0",
+     "freq": "133.0 / 274.5",
      "hours": "H24",
      "rmk": ""
     },
     {
      "svc": "TWR",
      "callsign": "Don Mueang Tower",
-     "freq": "118.1 / 236.6 / 121.5 / 243.0",
+     "freq": "118.1 / 236.6",
      "hours": "H24",
      "rmk": ""
     },
     {
-     "svc": "TWR",
+     "svc": "GND",
      "callsign": "Don Mueang Ground",
      "freq": "121.9 / 257.8 / 122.5",
      "hours": "H24",
      "rmk": ""
     },
     {
-     "svc": "TWR",
+     "svc": "DEL",
      "callsign": "Don Mueang Delivery",
      "freq": "127.7",
      "hours": "H24",
@@ -149,12 +149,3120 @@
    ],
    "name": "",
    "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html"
+  },
+  "VTBK": {
+   "icao": "VTBK",
+   "lat": 14.102008,
+   "lon": 99.917258,
+   "elev_ft": 32.0,
+   "rwy": [
+    "03",
+    "21"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Kamphaeng Saen Approach",
+     "freq": "127.75",
+     "hours": "0000-0900",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Arrival",
+     "freq": "347.2",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "DEP",
+     "callsign": "Departure",
+     "freq": "237.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Kamphaeng Saen Tower",
+     "freq": "237.5 / 123.3",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Kamphaeng Saen Ground",
+     "freq": "257.8 / 121.75",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "VOR/DME (0° 17’W)",
+     "id": "KPS",
+     "freq": "114.5 MHZ CH 92X",
+     "lat": 14.165753,
+     "lon": 99.954311,
+     "rmk": "Operation during weekdays MON-FRI (Except public holiday)"
+    },
+    {
+     "type": "NDB (0° 17’W)",
+     "id": "KPS",
+     "freq": "251 KHZ",
+     "lat": 14.170344,
+     "lon": 99.956864,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT I LOC/DME 21 (0° 35’W)",
+     "id": "IKPS",
+     "freq": "109.9 MHZ CH 36X",
+     "lat": 14.088839,
+     "lon": 99.909608,
+     "rmk": ""
+    },
+    {
+     "type": "GP 21",
+     "id": "",
+     "freq": "333.8 MHZ",
+     "lat": 14.109589,
+     "lon": 99.922942,
+     "rmk": ""
+    },
+    {
+     "type": "MM 21",
+     "id": "",
+     "freq": "75 KHZ",
+     "lat": 14.121186,
+     "lon": 99.928403,
+     "rmk": ""
+    },
+    {
+     "type": "OM 21",
+     "id": "",
+     "freq": "75 KHZ",
+     "lat": 14.170397,
+     "lon": 99.956806,
+     "rmk": ""
+    },
+    {
+     "type": "TACAN",
+     "id": "KPS",
+     "freq": "CH98 X",
+     "lat": 14.100228,
+     "lon": 99.912158,
+     "rmk": ""
+    }
+   ],
+   "name": "Nakhon Pathom/ Kamphaeng Saen",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBK-en-GB.html"
+  },
+  "VTBL": {
+   "icao": "VTBL",
+   "lat": 14.874639,
+   "lon": 100.663389,
+   "elev_ft": 133.0,
+   "rwy": [
+    "16",
+    "34",
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Khok Kathiam Tower",
+     "freq": "122.6 / 238.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Khok Kathiam Ground",
+     "freq": "121.75 / 257.8",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "LB",
+     "freq": "280 KHz",
+     "lat": 14.876742,
+     "lon": 100.657347,
+     "rmk": "NIL"
+    },
+    {
+     "type": "TACAN",
+     "id": "LOB",
+     "freq": "115",
+     "lat": 14.876203,
+     "lon": 100.659858,
+     "rmk": "*EXC SAT-SUN and Public holiday or on request"
+    },
+    {
+     "type": "ILS CAT I LOC RWY 05",
+     "id": "ILOB",
+     "freq": "108.3 MHz",
+     "lat": 14.8796,
+     "lon": 100.668828,
+     "rmk": ""
+    },
+    {
+     "type": "GP/DME",
+     "id": "",
+     "freq": "334.1 MHz CH 20X",
+     "lat": 14.870456,
+     "lon": 100.660472,
+     "rmk": ""
+    },
+    {
+     "type": "MM",
+     "id": "",
+     "freq": "230",
+     "lat": 14.861944,
+     "lon": 100.650083,
+     "rmk": "Instrument Landing System - Reference datum Height(RDH) is 15.24 M (50 FT) A. Localizer - LOC 300 M (984 FT) from THR RWY 23 , along RWY centre line. Course width 6º B. Glide Path 3º - GP 300 M (984 FT) from THR RWY 05 , 120 M (394FT) from RWY centre line. C. DME - Co-located with GP."
+    }
+   ],
+   "name": "Lop Buri/ Khok Kathiam",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBL-en-GB.html"
+  },
+  "VTBO": {
+   "icao": "VTBO",
+   "lat": 12.275833,
+   "lon": 102.320556,
+   "elev_ft": 109.0,
+   "rwy": [
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Trat Approach",
+     "freq": "120.25",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Trat Tower",
+     "freq": "122.9",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "TRT",
+     "freq": "384 KHz",
+     "lat": 12.274472,
+     "lon": 102.313917,
+     "rmk": "NDB restriction, due to mountainous terrain surround NDB station, coverage check does not provide adequate signal clockwise 50 nm orbit at altitude in various areas as follows: - Bearing 001º-145º unable to performed due to border limited. - Bearing 146º-320º altitude should not below 5 000 ft - Bearing 321º-360º altitude should not below 8 000 ft"
+    },
+    {
+     "type": "DME",
+     "id": "TRT",
+     "freq": "997 MHz",
+     "lat": 12.276444,
+     "lon": 102.319083,
+     "rmk": "DME restriction, due to mountainous terrain surround DME station, coverage check does not provide adequate signal clockwise orbit at required altitude and distance in various areas as follows: 1. 25 nm orbit - Radial 006º-020º altitude should not below 2 000 ft - Radial 121º-150º altitude should not below 14 000 ft - Radial 151º-190º altitude should not below 10 000 ft - Radial 191º-005º altitude should not below 7 000 ft 2. 20 nm orbit (Due to border limited) - Radial 021º-090º altitude should not below 2 000 ft - Radial 091º-120º altitude should not below 5 000 ft"
+    }
+   ],
+   "name": "Trat/ Khao Sming",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBO-en-GB.html"
+  },
+  "VTBP": {
+   "icao": "VTBP",
+   "lat": 11.788417,
+   "lon": 99.804625,
+   "elev_ft": 17.0,
+   "rwy": [
+    "08",
+    "26",
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Prachuap TWR",
+     "freq": "351.1 / 135.9 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Prachuap GND",
+     "freq": "257.8 / 121.75",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "TACAN",
+     "id": "PCK",
+     "freq": "117",
+     "lat": 11.786774,
+     "lon": 99.791726,
+     "rmk": "NIL"
+    },
+    {
+     "type": "NDB",
+     "id": "PCK",
+     "freq": "320 KHZ",
+     "lat": 11.791635,
+     "lon": 99.800008,
+     "rmk": ""
+    }
+   ],
+   "name": "Prachuap Khiri Khan",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBP-en-GB.html"
+  },
+  "VTBS": {
+   "icao": "VTBS",
+   "lat": 13.685833,
+   "lon": 100.748889,
+   "elev_ft": 8.0,
+   "rwy": [
+    "02R",
+    "20L",
+    "01",
+    "19",
+    "02L",
+    "20R"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Bangkok Approach",
+     "freq": "119.1 / 274.5 / 120.3 / 122.35 / 124.35 / 125.2 / 133.4 / 125.8",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "DEP",
+     "callsign": "Suvarnabhumi Departure",
+     "freq": "119.25 / 274.5",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ARR",
+     "callsign": "Suvarnabhumi Arrival",
+     "freq": "121.1 / 274.5 / 126.3",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Suvarnabhumi Tower",
+     "freq": "118.2 / 262.5 / 119.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Suvarnabhumi Ground",
+     "freq": "121.65 / 275.8 / 121.7 / 121.75 / 121.95",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "DEL",
+     "callsign": "Suvarnabhumi Delivery",
+     "freq": "128.7 / 133.8",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Suvarnabhumi Airport",
+     "freq": "133.6 / 278.6 / 127.65",
+     "hours": "H24",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "SVB",
+     "freq": "111.4 MHz CH 51X",
+     "lat": 13.659,
+     "lon": 100.731444,
+     "rmk": "DVOR/DME restriction due to terrain surround DVOR/DME station, coverage check does not provide adequate signal 40 NM at required altitude in various areas as follows: Radial 131°-150° altitude should not below 4 000 ft. Radial 151°-250° altitude should not below 2 000 ft. Radial 251°-130° altitude should not below 2 500 ft."
+    },
+    {
+     "type": "ILS CAT II LOC 02R",
+     "id": "I-SWS",
+     "freq": "109.1 MHz",
+     "lat": 13.706194,
+     "lon": 100.743833,
+     "rmk": "RWY 02R ILS LOC coverage expanded service volume up to 25 DME altitude not below 2 500 ft. AMSL."
+    },
+    {
+     "type": "DME 02R",
+     "id": "CH 28X",
+     "freq": "134",
+     "lat": 13.705972,
+     "lon": 100.744667,
+     "rmk": ""
+    },
+    {
+     "type": "GP 02R",
+     "id": "331.4 MHz",
+     "freq": "331.4 MHz",
+     "lat": 13.674361,
+     "lon": 100.734333,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT II LOC 20L",
+     "id": "I-SWN",
+     "freq": "109.5 MHz",
+     "lat": 13.66875,
+     "lon": 100.733972,
+     "rmk": "RWY 20L ILS LOC coverage expanded service volume up to 25 DME altitude not below 2 500 ft. AMSL."
+    },
+    {
+     "type": "DME 20L",
+     "id": "CH 32X",
+     "freq": "134",
+     "lat": 13.6685,
+     "lon": 100.734806,
+     "rmk": ""
+    },
+    {
+     "type": "GP 20L",
+     "id": "332.6 MHz",
+     "freq": "332.6 MHz",
+     "lat": 13.701083,
+     "lon": 100.741333,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT II LOC 01",
+     "id": "I-SES",
+     "freq": "110.1 MHz",
+     "lat": 13.69425,
+     "lon": 100.761694,
+     "rmk": "RWY01 ILS LOC coverage expanded service volume up to 25 DME altitude not below 2 500 ft. AMSL."
+    },
+    {
+     "type": "DME 01",
+     "id": "CH 38X",
+     "freq": "134",
+     "lat": 13.694417,
+     "lon": 100.760861,
+     "rmk": ""
+    },
+    {
+     "type": "GP 01",
+     "id": "334.4 MHz",
+     "freq": "334.4 MHz",
+     "lat": 13.65925,
+     "lon": 100.753639,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT II LOC 19",
+     "id": "I-SEN",
+     "freq": "110.5 MHz CH 42X",
+     "lat": 13.654139,
+     "lon": 100.751139,
+     "rmk": "RWY 19 ILS LOC coverage expanded service volume up to 25 DME altitude not below 2 500 ft. AMSL."
+    },
+    {
+     "type": "DME 19",
+     "id": "CH 42X",
+     "freq": "133",
+     "lat": 13.654361,
+     "lon": 100.750333,
+     "rmk": ""
+    },
+    {
+     "type": "GP 19",
+     "id": "329.6 MHz",
+     "freq": "329.6 MHz",
+     "lat": 13.688583,
+     "lon": 100.761361,
+     "rmk": ""
+    }
+   ],
+   "name": "Bangkok/ Suvarnabhumi International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBS-en-GB.html"
+  },
+  "VTBU": {
+   "icao": "VTBU",
+   "lat": 12.679722,
+   "lon": 101.005,
+   "elev_ft": 59.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "U-Tapao Approach",
+     "freq": "119.7 / 134.5 / 238.3 / 273.3",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "U-Tapao Tower",
+     "freq": "118.3 / 227.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "U-Tapao Ground",
+     "freq": "121.9 / 275.8",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "U-Tapao Int Airport",
+     "freq": "127.2",
+     "hours": "H24",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "UP",
+     "freq": "414 kHz",
+     "lat": 12.661944,
+     "lon": 100.995,
+     "rmk": "The coverage 50 NM orbit clockwise data refer from commissioning shall be as follows -Bearing 321-020 degree altitude 3,000 feet. -Bearing 021-050 degree altitude 7,000 feet. -Bearing 051-100 degree altitude 6,000 feet. -Bearing 101-320 degree altitude 2,000 feet."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "BUT",
+     "freq": "110.8 MHz CH 45X",
+     "lat": 12.666667,
+     "lon": 101.000472,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit 40 NM at required altitude and distance in various areas: Radial 101°-170° altitude should not below 2 000 ft Radial 171°-250° altitude should not below 6 000 ft Radial 251°-320° altitude should not below 8 000 ft Radial 321°-050° altitude should not below 6 000 ft Radial 051°-100° altitude should not below 4 000 ft"
+    },
+    {
+     "type": "ILS CAT I LOC RWY 18",
+     "id": "IBUT",
+     "freq": "111.9 MHz",
+     "lat": 12.660361,
+     "lon": 101.003389,
+     "rmk": "DME transponder provide minimum signal strength at 17 NM altitude 2 000 ft between 22-35 degrees (90Hz) of localizer course. Meanwhile DME signal has lock-on presented throughout the ILS/DME coverage."
+    },
+    {
+     "type": "GP /DME",
+     "id": "",
+     "freq": "331.1 MHz CH 56X",
+     "lat": 12.6925,
+     "lon": 101.007167,
+     "rmk": ""
+    }
+   ],
+   "name": "Rayong/ U-Tapao Rayong Pattaya International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBU-en-GB.html"
+  },
+  "VTBW": {
+   "icao": "VTBW",
+   "lat": 13.768756,
+   "lon": 102.315547,
+   "elev_ft": 225.0,
+   "rwy": [
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Watthana Nakon TWR",
+     "freq": "236.6 / 120.75",
+     "hours": "2300-1100",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Watthana Nakon Ground",
+     "freq": "298.0 / 123.3",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "WN",
+     "freq": "270 KHZ",
+     "lat": 13.767394,
+     "lon": 102.318411,
+     "rmk": "NIL"
+    }
+   ],
+   "name": "Sa Kaeo/ Watthana Nakhon",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBW-en-GB.html"
+  },
+  "VTCC": {
+   "icao": "VTCC",
+   "lat": 18.771389,
+   "lon": 98.962778,
+   "elev_ft": 1036.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Chiang Mai Approach",
+     "freq": "129.6 / 305.4",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Chiang Mai Tower",
+     "freq": "118.1 / 236.6",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Chiang Mai Ground",
+     "freq": "121.9 / 275.8",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Chiang Mai Int Airport",
+     "freq": "127.425 / 301.5",
+     "hours": "H24",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "CMA",
+     "freq": "116.9 MHz CH 116X",
+     "lat": 18.766111,
+     "lon": 98.961222,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround station coverage check does not provide adequate signal at required altitudes in various area as follows: 40 NM Orbit Radial 350º-080º altitude should not below 8 000 ft Radial 081º-180º altitude should not below 7 000 ft Radial 181º-240º altitude should not below 9 000 ft 20 NM Orbit (Due to mountainous terrain) Radial 241º-349º altitude should not below 12 000 ft"
+    },
+    {
+     "type": "ILS CAT I LOC 36",
+     "id": "ICMA",
+     "freq": "109.9 MHz",
+     "lat": 18.785389,
+     "lon": 98.962944,
+     "rmk": "Instrument landing system (ILS) Reference Datum Height (RDH) is 16.5 m . A. Localizer Coverage 18 NM within ± 10° and 10 NM between ± 10° and ± 35° from the front course line. The localizer antenna array is located on the extended runway centre line at distance 478.4 m from THR of RWY 18. Height of the array is 2.3 m. B. Glide path 3° Coverage in sectors of 8° in azimuth on each side of the centre line of the ILS glide path to a distance of 10 NM up to 1.75 times the glide angle and down to 0.45 times the glide angle above the horizontal or down to 0.30 times the glide angle as required. Location 327.6 m (1,075 ft) from THR RWY 36, 120.3 m (395 ft) west side from RWY centre line. C. DME Paired with Glide Slope. Power output 100 watts. Bi-directional antenna. Location 1447.4 m (4749 ft) from THR RWY 36, 176.3 m (579 ft) west side from RWY centre line"
+    },
+    {
+     "type": "GP 36 DME 36",
+     "id": "",
+     "freq": "333.8 MHz CH36X",
+     "lat": 18.756,
+     "lon": 98.961694,
+     "rmk": ""
+    }
+   ],
+   "name": "Chiang Mai/ Chiang Mai International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCC-en-GB.html"
+  },
+  "VTCH": {
+   "icao": "VTCH",
+   "lat": 19.301667,
+   "lon": 97.975,
+   "elev_ft": 929.0,
+   "rwy": [
+    "11",
+    "29"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Mae Hong Son Approach",
+     "freq": "126.2",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Mae Hong Son Tower",
+     "freq": "122.3 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Mae Hong Son Airport",
+     "freq": "127.45",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "MH",
+     "freq": "384 KHZ",
+     "lat": 19.298917,
+     "lon": 97.975306,
+     "rmk": "Data refer to commissioning checked as follows: 40 NM orbit flown from bearing 071°-180° clockwise orbit at altitude 8 500 FT. Result found satisfactory. Bearing 181°-070° clockwise unable to performed due to border limited. Facility performance classified as “Restricted” due to item b) above as per commissioning checked."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "MHS",
+     "freq": "115.5 MHZ CH102X",
+     "lat": 19.31975,
+     "lon": 97.912111,
+     "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance Radial 040° distance between 10.5-12.5 DME altitude 5 500 FT Radial 085° distance between 5.5-7.5 DME altitude 7 000 FT Radial 100° distance between 9.0-10.0 DME altitude 7 000 FT Radial 120° distance between 9.5 - 10.5 DME altitude 7 500 FT Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 060°-080° altitude should not below 8 500 FT Radial 081°-140° altitude should not below 13 000 FT Radial 141°-190° altitude should not below 9 000 FT Radial 191°-059° unable to perform due to border limited"
+    }
+   ],
+   "name": "Mae Hong Son",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCH-en-GB.html"
+  },
+  "VTCI": {
+   "icao": "VTCI",
+   "lat": 19.372008,
+   "lon": 98.435833,
+   "elev_ft": 1676.0,
+   "rwy": [
+    "01",
+    "19"
+   ],
+   "comm": [],
+   "navaids": [],
+   "name": "Mae Hong Son / Pai",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCI-en-GB.html"
+  },
+  "VTCL": {
+   "icao": "VTCL",
+   "lat": 18.270833,
+   "lon": 99.504167,
+   "elev_ft": 815.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Lampang Approach",
+     "freq": "119.3",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Lampang Tower",
+     "freq": "122.3 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Lampang Airport",
+     "freq": "128.65",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "LP",
+     "freq": "395 KHZ",
+     "lat": 18.278,
+     "lon": 99.507472,
+     "rmk": "Coverage 25 NM clockwise orbit data refer from commissioning checked as follows: Bearing 001°-360° at altitude 5 500 ft"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "LPN",
+     "freq": "114.7 MHZ CH94X",
+     "lat": 18.276611,
+     "lon": 99.502333,
+     "rmk": "DVOR/DME restriction due to Terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at required altitudes in various areas as follows: Radial 351°-070° beyond 40 NM should not below 6 000 ft Radial 071°-130° beyond 30 NM should not below 6 000 ft Radial 131°-320° beyond 40 NM should not below 6 000 ft Radial 321°-350° beyond 30 NM should not below 6 000 ft"
+    },
+    {
+     "type": "LOC 36",
+     "id": "I-LPN",
+     "freq": "109.7 MHZ",
+     "lat": 18.281,
+     "lon": 99.503306,
+     "rmk": "LOC: Designated operation coverage 18 NM, ALT 7000 ft AMSL"
+    },
+    {
+     "type": "DME 36",
+     "id": "",
+     "freq": "109.7 MHZ",
+     "lat": 18.281056,
+     "lon": 99.504,
+     "rmk": "DME: Paired with LOC Freq. GP: Not installation"
+    }
+   ],
+   "name": "Lampang",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCL-en-GB.html"
+  },
+  "VTCN": {
+   "icao": "VTCN",
+   "lat": 18.807914,
+   "lon": 100.783333,
+   "elev_ft": 685.0,
+   "rwy": [
+    "02",
+    "20"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Nan Approach",
+     "freq": "120.25",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Nan Tower",
+     "freq": "118.55 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Nan Airport",
+     "freq": "128.05",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "NN",
+     "freq": "355 KHz",
+     "lat": 18.807222,
+     "lon": 100.786639,
+     "rmk": "NDB restriction, orbit coverage in mountain terrain and border limited was check and found as follow: -40 NM from bearing 331-045 DEG (CW) altitude should not below 8000 ft. (due to border limited). -20 NM from bearing 046-160 DEG (CW) altitude should not below 6500 ft. (due to border limited). -50 NM from bearing 161-330 DEG (CW) altitude should not below 7500 ft."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "NAN",
+     "freq": "115.7 MHz CH104X",
+     "lat": 18.809111,
+     "lon": 100.782611,
+     "rmk": "DVOR/DME restriction, due to Mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal to 40 NM. At the required altitude in various areas as follow: -RDL 021-110 DEG at 20 NM should not below 8000 ft. -RDL 111-160 DEG at 20 NM should not below 6000 ft. -RDL 161-230 DEG at 40 NM should not below 7000 ft. -RDL 231-250 DEG at 40 NM should not below 9000 ft. -RDL 251-290 DEG at 40 NM should not below 11000 ft. -RDL 291-350 DEG at 40 NM should not below 9000 ft. -RDL 351-020 DEG at 40 NM should not below 8000 ft."
+    }
+   ],
+   "name": "Nan/ Nan Nakhon",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCN-en-GB.html"
+  },
+  "VTCP": {
+   "icao": "VTCP",
+   "lat": 18.132222,
+   "lon": 100.164722,
+   "elev_ft": 540.0,
+   "rwy": [
+    "01",
+    "19"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Phrae Approach",
+     "freq": "120.1",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Phrae Tower",
+     "freq": "118.6 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Phrae Airport",
+     "freq": "126.45",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "PR",
+     "freq": "340 KHz",
+     "lat": 18.129472,
+     "lon": 100.161361,
+     "rmk": "The coverage clockwise orbit data refer to commissioning check due to excessive ADF needle oscillation in various areas within 50 NM radius as follows: Bearing 001°-040° altitude should not below 7 000 ft Bearing 041°-180° altitude should not below 8 000 ft Bearing 181°-200° altitude should not below 5 000 ft Bearing 201°-260° altitude should not below 8 000 ft Bearing 261°-360° altitude should not below 6 000 ft"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "PAE",
+     "freq": "111.8 MHZ CH55X",
+     "lat": 18.134139,
+     "lon": 100.16625,
+     "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance on radial 146° distance between 7.0-8.0 DME altitude 7 000 ft Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 055º-080º altitude should not below 9 000 ft Radial 081º-160º altitude should not below 11 000 ft Radial 161º-180º altitude should not below 8 000 ft Radial 181º-350º altitude should not below 6 000 ft Radial 351º-054º altitude should not below 6 500 ft"
+    }
+   ],
+   "name": "Phrae",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCP-en-GB.html"
+  },
+  "VTCT": {
+   "icao": "VTCT",
+   "lat": 19.952222,
+   "lon": 99.883056,
+   "elev_ft": 1280.0,
+   "rwy": [
+    "03",
+    "21"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Chiang Rai Approach",
+     "freq": "120.05 / 257.8",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Chiang Rai Tower",
+     "freq": "118.4 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Chiang Rai Intl Airport",
+     "freq": "127.85",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "CT",
+     "freq": "277 kHz",
+     "lat": 19.95975,
+     "lon": 99.883083,
+     "rmk": "The coverage clockwise orbit data refer to commissioning due to mountainous terrain and border limit as follows: 25 NM Bearing 001 º- 140 º at altitude 5 500 ft Bearing 281 º- 360 º at altitude 7 500 ft 40 NM Bearing 141 °- 180 ° at altitude 6 000 ft Bearing 181 °- 280 ° at altitude 7 500 ft"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "CTR",
+     "freq": "116.5 MHz CH 112X",
+     "lat": 19.948861,
+     "lon": 99.883139,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal at the required altitude in various areas as follows: 40 NM Radial 141º-180º altitude should not below 5 000 ft Radial 181º-210º altitude should not below 7 500 ft Radial 211º-255º altitude should not below 9 000 ft Radial 256º-265º altitude should not below 10 000 ft Radial 266º-270º altitude should not below 9 000 ft 20 NM (Due to border limited) Radial 271º-340º altitude should not below 6 500 ft Radial 341º-140º altitude should not below 5 000 ft"
+    },
+    {
+     "type": "ILS CAT I LOC 03",
+     "id": "ICTR",
+     "freq": "109.5 MHz",
+     "lat": 19.966528,
+     "lon": 99.89125,
+     "rmk": "Instrument Landing System (ILS) coverage over a sector of 35 either side of the runway centre line, no back course. The antenna array is located on the extended runway centre line at the distance of 300 m from the threshold of RWY 21, height of the array is 2 m Glide Path 3º. DME co - located with localizer, power output 100 watts omnidirectional."
+    },
+    {
+     "type": "GP 03",
+     "id": "",
+     "freq": "332.6 MHz",
+     "lat": 19.942361,
+     "lon": 99.8785,
+     "rmk": ""
+    },
+    {
+     "type": "DME 03",
+     "id": "",
+     "freq": "CH 32X",
+     "lat": 19.966028,
+     "lon": 99.892139,
+     "rmk": ""
+    }
+   ],
+   "name": "Chiang Rai/ Mae Fah Luang-Chiang Rai International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCT-en-GB.html"
+  },
+  "VTPB": {
+   "icao": "VTPB",
+   "lat": 16.676031,
+   "lon": 101.195,
+   "elev_ft": 450.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Phetchabun Approach",
+     "freq": "126.7",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Phetchabun Tower",
+     "freq": "122.3 / 236.6",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "PH",
+     "freq": "283 KHz",
+     "lat": 16.660861,
+     "lon": 101.190361,
+     "rmk": "NDB can not provide adequate signal to 50 NM at required altitude in various areas due to mountainous area around the STN: -RDL 041-180 DEG beyond 50 NM should not below 7000 ft. -RDL 181-270 DEG beyond 50 NM should not below 7100 ft. -RDL 271-340 DEG beyond 50 NM should not below 8500 ft. -RDL 341-015 DEG flown to 45 NM should not below 8500 ft. (due to border limited) -RDL 016-040 DEG beyond 50 NM should not below 7000 ft."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "PCB",
+     "freq": "115.4 MHz CH101X",
+     "lat": 16.676,
+     "lon": 101.196611,
+     "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance on radial 277° distance between 7-9 DME altitude 5 500 ft Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 061°-230° beyond 30 NM altitude should not below 6 500 ft Radial 231°-320° beyond 30 NM altitude should not below 8 000 ft Radial 321°-060° beyond 40 NM altitude should not below 7 500 ft"
+    },
+    {
+     "type": "ILS CAT I 36 LOC",
+     "id": "IPCB",
+     "freq": "109.1 MHz CH28X",
+     "lat": 16.688222,
+     "lon": 101.195111,
+     "rmk": "LOC designated operation coverage 18 NM, ALT 7000 ft AMSL"
+    },
+    {
+     "type": "DME 36",
+     "id": "IPCB",
+     "freq": "109.1 MHzCH28X",
+     "lat": 16.688222,
+     "lon": 101.196056,
+     "rmk": "DME Paired with LOC FREQ"
+    },
+    {
+     "type": "GP 36",
+     "id": "",
+     "freq": "331.4 MHz",
+     "lat": 16.669139,
+     "lon": 101.196222,
+     "rmk": "GP 3 DEG, RDH 50 ft"
+    }
+   ],
+   "name": "Phetchabun",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPB-en-GB.html"
+  },
+  "VTPH": {
+   "icao": "VTPH",
+   "lat": 12.630278,
+   "lon": 99.953333,
+   "elev_ft": 62.0,
+   "rwy": [
+    "16",
+    "34"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Hua Hin Approach",
+     "freq": "126.2",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Hua Hin Tower",
+     "freq": "122.7 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Hua Hin Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Hua Hin Airport",
+     "freq": "126.8",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "HN",
+     "freq": "213 KHz",
+     "lat": 12.645,
+     "lon": 99.94625,
+     "rmk": "The coverage orbit data refer to commissioning check as follows: 50 nm orbit flown from bearing 001°-179° (CW) at altitude 1 500 ft 30 nm orbit flown from bearing 180°-360° (CW) at altitude 4 000 ft (due to border limited) Due to the fluctuation of needle is out of tolerance from bearing 180°-330°"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "HHN",
+     "freq": "113.3 MHz CH80X",
+     "lat": 12.634417,
+     "lon": 99.951167,
+     "rmk": "DVOR/DME restriction , due to terrain surround DVOR/DME station coverage check does not provide adequate signal 40 nm at required altitude in various areas as follows: 40 nm clockwise orbit Radial 001°-170° altitude should not below 3 000 ft Radial 171°-210° altitude should not below 7 000 ft Radial 301°-340° altitude should not below 10 000 ft Radial 340°-360° altitude should not below 3 000 ft 30 nm clockwise orbit (Due to border limited) Radial 211°- 300° altitude should not below 10 000 ft Radial 341° distance 10.3 DME at altitude 4 000 ft found roughness out of tolerance"
+    }
+   ],
+   "name": "Prachuap Khiri Khan/ Hua Hin",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPH-en-GB.html"
+  },
+  "VTPI": {
+   "icao": "VTPI",
+   "lat": 15.277319,
+   "lon": 100.295861,
+   "elev_ft": 103.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Takhli Approach",
+     "freq": "325.0 / 124.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Takhli Arrival",
+     "freq": "325.0 / 124.0",
+     "hours": "0100-0900",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Takhli Departure",
+     "freq": "282.5 / 134.1",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "SRA",
+     "callsign": "Final Controller",
+     "freq": "382.4",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Takhli Tower",
+     "freq": "241.5 / 133.25",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Takhli Ground",
+     "freq": "236.6 / 257.8 / 121.75",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "0100-0900, MON-FRI (Exception, SAT-SUN)",
+     "freq": "253.0",
+     "hours": "0100-0900",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "TL",
+     "freq": "350 KHZ",
+     "lat": 15.275958,
+     "lon": 100.297531,
+     "rmk": "Military used and/or civil aircrafts used in military services only"
+    },
+    {
+     "type": "TACAN",
+     "id": "TKL",
+     "freq": "CH 95 X",
+     "lat": 15.274758,
+     "lon": 100.299061,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT I LOC",
+     "id": "ITKL",
+     "freq": "108.7 MHZ",
+     "lat": 15.260911,
+     "lon": 100.295486,
+     "rmk": ""
+    },
+    {
+     "type": "GP/DME",
+     "id": "",
+     "freq": "330.5 MHZ CH 24X",
+     "lat": 15.287667,
+     "lon": 100.297525,
+     "rmk": ""
+    },
+    {
+     "type": "MM",
+     "id": "",
+     "freq": "75 MHZ",
+     "lat": 15.299922,
+     "lon": 100.296381,
+     "rmk": ""
+    }
+   ],
+   "name": "Nakhon Sawan/ Takhli",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPI-en-GB.html"
+  },
+  "VTPM": {
+   "icao": "VTPM",
+   "lat": 16.699925,
+   "lon": 98.550122,
+   "elev_ft": 693.0,
+   "rwy": [
+    "09",
+    "27"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Mae Sot Approach",
+     "freq": "120.65",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Mae Sot Tower",
+     "freq": "118.35 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Mae Sot Airport",
+     "freq": "126.65",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "MS",
+     "freq": "316 KHz",
+     "lat": 16.701917,
+     "lon": 98.539778,
+     "rmk": "Data refer from commissioning as follows: 50 NM orbit flown from bearing 340°-170° clockwise orbit at altitude 7 500 ft result found satisfactory Bearing 171°-339° clockwise orbit unable to perform due to border limited"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "MST",
+     "freq": "116.7 MHz CH114X",
+     "lat": 16.697806,
+     "lon": 98.541556,
+     "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance Radial 104° distance between 6.0-13.0 DME altitude 5 500 ft Radial 012° distance between 22.0-24.0 DME altitude 5 000 ft Radial 124° distance between 32.0-34.0 DME altitude 6 600 ft Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit 40 NM at the required altitude in various areas as follows: Radial 000°-030° altitude should not below 7 000 ft Radial 031°-060° altitude should not below 9 000 ft Radial 061°-070° altitude should not below 10 000 ft Radial 071°-120° altitude should not below 9 000 ft Radial 121°-360° unable to perform due to border limited"
+    }
+   ],
+   "name": "Tak/ Mae Sot",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPM-en-GB.html"
+  },
+  "VTPN": {
+   "icao": "VTPN",
+   "lat": 15.672472,
+   "lon": 100.136042,
+   "elev_ft": 113.0,
+   "rwy": [
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Nakhon Sawan Tower",
+     "freq": "122.8 / 236.6 / 122.3",
+     "hours": "0130-0930",
+     "rmk": ""
+    }
+   ],
+   "navaids": [],
+   "name": "Nakhon Sawan",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPN-en-GB.html"
+  },
+  "VTPO": {
+   "icao": "VTPO",
+   "lat": 17.2375,
+   "lon": 99.818333,
+   "elev_ft": 184.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Sukhothai Approach",
+     "freq": "120.7",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Sukhothai Tower",
+     "freq": "122.9",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "THS",
+     "freq": "292 KHz",
+     "lat": 17.235194,
+     "lon": 99.822028,
+     "rmk": "Route coverage checked on bearing 021° from THS to PR altitude 9 000 ft flown to 57 NM found satisfactory Coverage 50 NM clockwise orbit data refer from commissioning checked as follows: Bearing 041°-100° at altitude 4 000 ft Bearing 101°-190° at altitude 2 000 ft Bearing 191°-040° at altitude 5 000 ft"
+    },
+    {
+     "type": "LOC 36 ILS CAT I",
+     "id": "ISKT",
+     "freq": "109.5 MHz",
+     "lat": 17.249444,
+     "lon": 99.818556,
+     "rmk": "LOC: Designated Operation coverage 18 NM, ALT 6500 ft/AMSL."
+    },
+    {
+     "type": "GP 36",
+     "id": "",
+     "freq": "332.6 MHz",
+     "lat": 17.230833,
+     "lon": 99.81725,
+     "rmk": ""
+    },
+    {
+     "type": "DME 36",
+     "id": "ISKT",
+     "freq": "109.5 MHz",
+     "lat": 17.249389,
+     "lon": 99.819222,
+     "rmk": "DME: Paired with LOC Freq"
+    }
+   ],
+   "name": "Sukhothai",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPO-en-GB.html"
+  },
+  "VTPP": {
+   "icao": "VTPP",
+   "lat": 16.782942,
+   "lon": 100.279167,
+   "elev_ft": 148.0,
+   "rwy": [
+    "14",
+    "32"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Phitsanulok Approach",
+     "freq": "120.7 / 284.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Phitsanulok Tower",
+     "freq": "118.9 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Phitsanulok Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Phitsanulok Airport",
+     "freq": "127.4",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "PSL",
+     "freq": "114.1 MHz CH88X",
+     "lat": 16.770333,
+     "lon": 100.291361,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 351°-120° altitude should not below 5 500 ft Radial 121°-270° altitude should not below 3 000 ft Radial 271°-300° altitude should not below 5 000 ft Radial 301°-350° altitude should not below 3 500 ft"
+    },
+    {
+     "type": "ILS CAT I LOC 32",
+     "id": "IPSL",
+     "freq": "110.1 MHz",
+     "lat": 16.796167,
+     "lon": 100.269111,
+     "rmk": "Designated operational coverage 18 NM ±10º and 10 NM ±35º of localizer course, no back course and voice feature, the antenna array is located on extended runway centre line at distance 310 m. from THR of runway 14."
+    },
+    {
+     "type": "GP 32",
+     "id": "",
+     "freq": "334.4 MHz CH38X",
+     "lat": 16.774944,
+     "lon": 100.286556,
+     "rmk": "Glide Path 3° DME co-located with Glide Slope power output 100 watts Uni-directional"
+    },
+    {
+     "type": "DME 32",
+     "id": "",
+     "freq": "334.4 MHz CH38X",
+     "lat": 16.774944,
+     "lon": 100.286556,
+     "rmk": ""
+    }
+   ],
+   "name": "Phitsanulok",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPP-en-GB.html"
+  },
+  "VTPT": {
+   "icao": "VTPT",
+   "lat": 16.895986,
+   "lon": 99.253728,
+   "elev_ft": 478.0,
+   "rwy": [
+    "09",
+    "27"
+   ],
+   "comm": [],
+   "navaids": [],
+   "name": "Tak",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPT-en-GB.html"
+  },
+  "VTSB": {
+   "icao": "VTSB",
+   "lat": 9.136111,
+   "lon": 99.139167,
+   "elev_ft": 20.0,
+   "rwy": [
+    "04",
+    "22"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Surat Thani Approach",
+     "freq": "123.35 / 240.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Surat Thani Tower",
+     "freq": "122.7 / 274.5",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Surat Thani Ground",
+     "freq": "121.9 / 275.8",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Surat Thani Airport",
+     "freq": "125.95",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "STN",
+     "freq": "110.6 MHz CH43X",
+     "lat": 9.129472,
+     "lon": 99.134722,
+     "rmk": "DVOR/DME restriction, due to mountainous terrain surround DVOR/DME station coverage orbit 40 NM as follow: RDL 001-070 DEG ALT should not below 1500 ft RDL 071-090 DEG ALT should not below 3500 ft RDL 091-150 DEG ALT should not below 5000 ft RDL 151-190 DEG ALT should not below 1500 ft RDL 191-360 DEG ALT should not below 4000 ft RDL 227 DEG distance approximate 10-13 DME out of tolerance roughness and scalloping."
+    },
+    {
+     "type": "ILS CAT I LOC 22",
+     "id": "ISTN",
+     "freq": "109.5 MHz",
+     "lat": 9.120833,
+     "lon": 99.124083,
+     "rmk": "Designated operational coverage 18 NM ±10º and 10 nm ±35º of localizer course, no back course and voice feature, the antenna array is located on extended runway centre line at distance 305 m from THR of runway 04."
+    },
+    {
+     "type": "GP 22",
+     "id": "",
+     "freq": "332.6 MHz CH32X",
+     "lat": 9.139361,
+     "lon": 99.143722,
+     "rmk": "- Glide Path 3°"
+    },
+    {
+     "type": "DME 22",
+     "id": "",
+     "freq": "CH32X",
+     "lat": 9.139361,
+     "lon": 99.143722,
+     "rmk": "- DME co-located with GlideSlope power output 100 wattsUni-directional"
+    }
+   ],
+   "name": "Surat Thani",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSB-en-GB.html"
+  },
+  "VTSC": {
+   "icao": "VTSC",
+   "lat": 6.517778,
+   "lon": 101.7425,
+   "elev_ft": 23.0,
+   "rwy": [
+    "02",
+    "20"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Narathiwat Approach",
+     "freq": "125.55",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Narathiwat Tower",
+     "freq": "122.7 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Narathiwat Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "NT",
+     "freq": "383 KHz",
+     "lat": 6.528139,
+     "lon": 101.74975,
+     "rmk": "NDB, 50 nm coverage restriction as follows: Bearing 260º-300º altitude should not below 5 500 ft Bearing 301º-055º altitude should not below 1 500 ft Bearing 056º-259º unable to perform flight inspection due to border limited"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "NTW",
+     "freq": "116.3 MHz CH110X",
+     "lat": 6.527278,
+     "lon": 101.745139,
+     "rmk": "DVOR/DME restrictions, Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 nm at the required altitude in various areas as follows: 40 nm clockwise orbit flown from Radial 271º-290º altitude should not below 9 000 ft Radial 291º-300º altitude should not below 4 000 ft Radial 301º-020º altitude should not below 2 000 ft 20 nm clockwise orbit flown from Radial 021º-130º altitude should not below 2 000 ft Radial 131º-270º altitude should not below 5 000 ft Due to the out-of-tolerance 30 Hz FM deviation ratio on radial 294º unusable within 10-40 nm."
+    },
+    {
+     "type": "ILS CAT I LOC RWY 02",
+     "id": "INTW",
+     "freq": "110.1 MHz",
+     "lat": 6.530806,
+     "lon": 101.748139,
+     "rmk": "ILS coverage over a sector 035° either side of runway centreline, no back course and voice feature. Distance 1 050 m to THR RWY 02."
+    },
+    {
+     "type": "GP/DME",
+     "id": "",
+     "freq": "334.4 MHz CH 38X",
+     "lat": 6.509944,
+     "lon": 101.740278,
+     "rmk": "Narathiwat GP RWY 02 unusable beyond 6 degrees left of LOC course."
+    }
+   ],
+   "name": "Narathiwat",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSC-en-GB.html"
+  },
+  "VTSE": {
+   "icao": "VTSE",
+   "lat": 10.711111,
+   "lon": 99.361667,
+   "elev_ft": 22.0,
+   "rwy": [
+    "06",
+    "24"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Chumphon Approach",
+     "freq": "122.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Chumphon Tower",
+     "freq": "122.15 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Chumphon Airport",
+     "freq": "128.45",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "CP",
+     "freq": "279 KHz",
+     "lat": 10.717722,
+     "lon": 99.366111,
+     "rmk": "50 NM coverage was check and found as follow: Bearing 016-200 degrees ALT should not below 1,500 ft. Bearing 201-225 degrees ALT should not below 5,000 ft. Bearing 226-015 degrees unable to perform flight inspection due to border limited"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "CPN",
+     "freq": "110 MHz CH37X",
+     "lat": 10.711167,
+     "lon": 99.365556,
+     "rmk": "DVOR/DME restriction, due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit at the required altitude and distance in various areas as follows: 40 NM Radial 011°-020° altitude should not below 5 000 ft. Radial 021°-050° altitude should not below 4 000 ft. Radial 051°-100° altitude should not below 2 000 ft. Radial 101°-110° altitude should not below 4 000 ft. Radial 111°-190° altitude should not below 2 000 ft. Radial 191°-225° altitude should not below 4 000 ft. Radial 226°-230° altitude should not below 6 000 ft. 30 nm (Due to border limited) Radial 231°-270° altitude should not below 5 000 ft. 20 nm (Due to border limited) Radial 271°-010° altitude should not below 5 000 ft."
+    },
+    {
+     "type": "LOC 24 ILS CAT I",
+     "id": "ICPN",
+     "freq": "109.9 MHz",
+     "lat": 10.705083,
+     "lon": 99.351,
+     "rmk": "LOC: Designated operation coverage 18 NM, ALT 6300 ft AMSL"
+    },
+    {
+     "type": "GP 24",
+     "id": "",
+     "freq": "333.8 MHz",
+     "lat": 10.713667,
+     "lon": 99.368194,
+     "rmk": "GP: 3 DEG, RDH 50 ft"
+    },
+    {
+     "type": "DME 24",
+     "id": "ICPN",
+     "freq": "109.9 MHz",
+     "lat": 10.705639,
+     "lon": 99.350667,
+     "rmk": "DME: Paired with LOC FREQ."
+    }
+   ],
+   "name": "Chumphon/ Chumphon",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSE-en-GB.html"
+  },
+  "VTSF": {
+   "icao": "VTSF",
+   "lat": 8.539617,
+   "lon": 99.944722,
+   "elev_ft": 13.0,
+   "rwy": [
+    "01",
+    "19"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Nakhon Si Thammarat Approach",
+     "freq": "119.75",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Nakhon Si Thammarat Tower",
+     "freq": "122.55 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Nakhon Si Thammarat Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Nakhon Si Thammarat Airport",
+     "freq": "123.4",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "NKS",
+     "freq": "117.4 MHz CH121X",
+     "lat": 8.541639,
+     "lon": 99.946833,
+     "rmk": "Due to mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal to 40 nm, at required altitudes is various areas: RDL 001-190 beyond 40 NM should not below 2500 ft. RDL 191-240 beyond 40 nm should not below 7000 ft. RDL 241-280 beyond 25 nm should not below 8000 ft. RDL 281-320 beyond 40 nm should not below 7000 ft. RDL 321-360 beyond 40 nm should not below 5000 ft."
+    },
+    {
+     "type": "LOC 19 ILS CAT I",
+     "id": "INKS",
+     "freq": "109.7 MHz",
+     "lat": 8.527306,
+     "lon": 99.943417,
+     "rmk": "Localizer - Designated operational coverage 18 nm ±10º and 10 nm ±35º of localizer course, no back course and voice feature. Glide path 3° - RWY19 ILS Glide Path not coincident with PAPI starting at 1 DME or 400 ft (MSL)"
+    },
+    {
+     "type": "GP 19",
+     "id": "",
+     "freq": "333.2 MHz",
+     "lat": 8.545889,
+     "lon": 99.946472,
+     "rmk": ""
+    },
+    {
+     "type": "DME 19",
+     "id": "",
+     "freq": "333.2 MHz",
+     "lat": 8.545833,
+     "lon": 99.946444,
+     "rmk": "DME - Paired with Glide Path. - Power output 100 watts. - Omni-directional antenna."
+    }
+   ],
+   "name": "Nakhon Si Thammarat",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSF-en-GB.html"
+  },
+  "VTSG": {
+   "icao": "VTSG",
+   "lat": 8.095833,
+   "lon": 98.988889,
+   "elev_ft": 95.0,
+   "rwy": [
+    "14",
+    "32"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Krabi Approach",
+     "freq": "120.05",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Krabi Tower",
+     "freq": "122.5 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Krabi Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Krabi Airport",
+     "freq": "132.4",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "KBI",
+     "freq": "111 MHz CH47X",
+     "lat": 8.1075,
+     "lon": 98.9775,
+     "rmk": "DVOR/DME restriction, due to mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal to 40 nm at required altitude in various areas as follows: Radial 001°-180° altitude should not below 5 500 ft. Radial 181°-200° altitude should not below 7 000 ft. Radial 201°-340° altitude should not below 10 000 ft. Radial 341°-360° altitude should not below 15 500 ft."
+    },
+    {
+     "type": "ILS CAT I LOC 32",
+     "id": "IKBI",
+     "freq": "110.1 MHz CH38X",
+     "lat": 8.108472,
+     "lon": 98.978417,
+     "rmk": "Designated operation coverage 18 NM, ALT 6300 ft/AMSL."
+    },
+    {
+     "type": "DME 32",
+     "id": "IKBI",
+     "freq": "CH38X",
+     "lat": 8.108167,
+     "lon": 98.977861,
+     "rmk": "3.2 DEG, RDH 56.5 ft ."
+    },
+    {
+     "type": "GP 32",
+     "id": "",
+     "freq": "334.4 MHz",
+     "lat": 8.088556,
+     "lon": 98.99625,
+     "rmk": ""
+    }
+   ],
+   "name": "Krabi",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSG-en-GB.html"
+  },
+  "VTSH": {
+   "icao": "VTSH",
+   "lat": 7.185719,
+   "lon": 100.608794,
+   "elev_ft": 12.0,
+   "rwy": [
+    "13",
+    "31"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Songkhla Tower",
+     "freq": "126.2 / 227.0",
+     "hours": "HJ",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "VOR/DME",
+     "id": "SKL",
+     "freq": "113.5 MHZ CH82X",
+     "lat": 7.188792,
+     "lon": 100.604197,
+     "rmk": "Military Facility"
+    },
+    {
+     "type": "NDB",
+     "id": "SK",
+     "freq": "410 KHZ",
+     "lat": 7.1875,
+     "lon": 100.603889,
+     "rmk": ""
+    }
+   ],
+   "name": "Songkhla",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSH-en-GB.html"
+  },
+  "VTSK": {
+   "icao": "VTSK",
+   "lat": 6.785708,
+   "lon": 101.153636,
+   "elev_ft": 8.0,
+   "rwy": [
+    "08",
+    "26"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Pattani Approach",
+     "freq": "126.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Pattani Tower",
+     "freq": "119.3 / 236.6",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "Mobile TACAN",
+     "id": "BTG",
+     "freq": "118.0 MHz",
+     "lat": 6.787331,
+     "lon": 101.150844,
+     "rmk": "NIL"
+    }
+   ],
+   "name": "Pattani",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSK-en-GB.html"
+  },
+  "VTSM": {
+   "icao": "VTSM",
+   "lat": 9.548889,
+   "lon": 100.0625,
+   "elev_ft": 64.0,
+   "rwy": [
+    "17",
+    "35"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Samui Approach",
+     "freq": "129.6 / 305.4",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Samui Tower",
+     "freq": "118.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Samui Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Samui Airport",
+     "freq": "128.6",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "SMU",
+     "freq": "117.6 MHz CH123X",
+     "lat": 9.547056,
+     "lon": 100.06175,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal at required altitude in various areas as follows: Radial 000º-015º beyond 25 NM altitude should not below 4 000 ft. Radial 016º-040º beyond 25 NM altitude should not below 6 000 ft. Radial 041º-060º beyond 20 NM altitude should not below 11 000 ft. Radial 061º-070º beyond 25 NM altitude should not below 9 000 ft. Radial 071º-120º beyond 40 NM altitude should not below 11 000 ft. Radial 121º-180º beyond 40 NM altitude should not below 5 000 ft. Radial 181º-210º beyond 25 NM altitude should not below 8 000 ft. Radial 211º-260º beyond 20 NM altitude should not below 9 000 ft. Radial 261º-280º beyond 25 NM altitude should not below 7 000 ft. Radial 281º-360º beyond 40 NM altitude should not below 8 000 ft."
+    }
+   ],
+   "name": "Surat Thani/ Samui",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSM-en-GB.html"
+  },
+  "VTSN": {
+   "icao": "VTSN",
+   "lat": 8.463889,
+   "lon": 99.958333,
+   "elev_ft": 44.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "TWR",
+     "callsign": "Nakhon Si Thammarat Tower",
+     "freq": "122.7 / 236.6",
+     "hours": "HJ",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Nakhon Si Thammarat Radio",
+     "freq": "121.9",
+     "hours": "HJ",
+     "rmk": ""
+    }
+   ],
+   "navaids": [],
+   "name": "Nakhon Si Thammarat / Cha - Ian",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSN-en-GB.html"
+  },
+  "VTSP": {
+   "icao": "VTSP",
+   "lat": 8.1125,
+   "lon": 98.309167,
+   "elev_ft": 84.0,
+   "rwy": [
+    "09",
+    "27"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Phuket Approach",
+     "freq": "124.7 / 284.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ARR",
+     "callsign": "Phuket Arrival",
+     "freq": "120.7",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Phuket Tower",
+     "freq": "118.1 / 236.6",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Phuket Ground",
+     "freq": "121.9",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "CDC",
+     "callsign": "Phuket Delivery",
+     "freq": "118.55",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Phuket Intl Airport",
+     "freq": "128.0",
+     "hours": "H24",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "PUT",
+     "freq": "116.9 MHz CH 116X",
+     "lat": 8.113944,
+     "lon": 98.306972,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround station coverage check does not provide adequate signal 40 NM at required altitudes in various area as follows: Radial 360º-030º altitude should not below 5 500 ft. Radial 031º-170º altitude should not below 9 000 ft. Radial 171º-220º altitude should not below 7 000 ft. Radial 221º-359º altitude should not below 3 000 ft."
+    },
+    {
+     "type": "ILS CAT I LOC 27",
+     "id": "IPKT",
+     "freq": "109.9 MHz",
+     "lat": 8.11325,
+     "lon": 98.305444,
+     "rmk": "ILS with non-standard localizer alignment, offset 1.4° from runway centre line, coverage over a sector of 35° either side of course, no back course and voice feature, the antenna array is located 245 m from end of RWY 27 120 m from runway centre line. Front course 266 Mag. Width 4.4°. Glide Path angle 3.2° . Middle Marker (MM without compass locator) distance 804 m. from approach end of RWY 27 . DME co-located with localizer Glide slope unusable starting at the middle marker (2.0 DME) to RWY THR. Glide slope shall not be used when DME out of service."
+    },
+    {
+     "type": "GP 27",
+     "id": "",
+     "freq": "333.8 MHz",
+     "lat": 8.113111,
+     "lon": 98.327833,
+     "rmk": ""
+    },
+    {
+     "type": "DME 27",
+     "id": "",
+     "freq": "CH 36X",
+     "lat": 8.11325,
+     "lon": 98.305361,
+     "rmk": ""
+    },
+    {
+     "type": "MM",
+     "id": "",
+     "freq": "75 MHz",
+     "lat": 8.11525,
+     "lon": 98.337444,
+     "rmk": ""
+    }
+   ],
+   "name": "Phuket/ Phuket International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSP-en-GB.html"
+  },
+  "VTSR": {
+   "icao": "VTSR",
+   "lat": 9.7775,
+   "lon": 98.585556,
+   "elev_ft": 61.0,
+   "rwy": [
+    "02",
+    "20"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Ranong Approach",
+     "freq": "125.1",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Ranong Tower",
+     "freq": "122.25 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Ranong Airport",
+     "freq": "126.475",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "RN",
+     "freq": "375 KHz",
+     "lat": 9.783306,
+     "lon": 98.591,
+     "rmk": "50 nm orbit flown from: Bearing 020°-040° altitude should not below 5 000 ft. Bearing 041°-140° altitude should not below 3 500 ft. Bearing 141°-200° altitude should not below 5 500 ft. Bearing 201°-019° unable to perform flight inspection due to border limited."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "RAN",
+     "freq": "113.4 MHz CH 81X",
+     "lat": 9.777972,
+     "lon": 98.583722,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/ DME station coverage, check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: 20 NM orbit Radial 020°-040° altitude should not below 6 000 ft. Radial 041°-060° altitude should not below 12 000 ft. Radial 061°-120° altitude should not below 16 000 ft. Radial 151°-170° altitude should not below 9 000 ft. 40 NM orbit Radial 121°-150° altitude should not below 16 000 ft. Radial 171°-187° altitude should not below 12 000 ft. Radial 188°-230° altitude should not below 7 000 ft. Radial 231°-019° unable to fly due to border limited."
+    },
+    {
+     "type": "ILS CAT I LOC 02",
+     "id": "IRAN",
+     "freq": "110.5 MHz",
+     "lat": 9.788417,
+     "lon": 98.590278,
+     "rmk": "ILS/DME RWY 02 unusable beyond 5° right of LOC course."
+    },
+    {
+     "type": "GP 02",
+     "id": "",
+     "freq": "329.6 MHz",
+     "lat": 9.772333,
+     "lon": 98.581972,
+     "rmk": ""
+    },
+    {
+     "type": "DME 02",
+     "id": "",
+     "freq": "CH 42X",
+     "lat": 9.755667,
+     "lon": 98.581972,
+     "rmk": ""
+    }
+   ],
+   "name": "Ranong",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSR-en-GB.html"
+  },
+  "VTSS": {
+   "icao": "VTSS",
+   "lat": 6.932778,
+   "lon": 100.395,
+   "elev_ft": 90.0,
+   "rwy": [
+    "08",
+    "26"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Hat Yai Approach",
+     "freq": "126.7 / 301.5 / 133.2",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Hat Yai Tower",
+     "freq": "118.1 / 275.8 / 133.2",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Hat Yai Ground",
+     "freq": "121.9 / 257.8",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Hat Yai Intl. Airport",
+     "freq": "128.8",
+     "hours": "H24",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "HTY",
+     "freq": "115.3 MHz CH100X",
+     "lat": 6.934111,
+     "lon": 100.387944,
+     "rmk": "DVOR/DME restriction, due to mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal to 40 nm at the required altitude in various areas as following: RDL 171-240 DEG at 10 NM ALT should not below 5,000 ft. RDL 131-170 DEG at 20 NM ALT should not below 4,000 ft. RDL 031-130 DEG at 40 NM ALT should not below 5,000 ft. RDL 241-270 DEG at 40 NM ALT should not below 7,000 ft. RDL 271-300 DEG at 40 NM ALT should not below 10,000 ft. RDL 301-330 DEG at 40 NM ALT should not below 6,000 ft. RDL 331-030 DEG at 40 NM ALT should not below 3,000 ft."
+    },
+    {
+     "type": "ILS CAT I LOC 26",
+     "id": "IHTY",
+     "freq": "109.9 MHz",
+     "lat": 6.930278,
+     "lon": 100.375,
+     "rmk": "RWY 26 ILS Glide slope not coincident with PAPI starting at 0.7 DME"
+    },
+    {
+     "type": "GP 26",
+     "id": "333.8 MHz 36X",
+     "freq": "333.8 MHz",
+     "lat": 6.932972,
+     "lon": 100.405361,
+     "rmk": ""
+    },
+    {
+     "type": "DME 26",
+     "id": "",
+     "freq": "36X",
+     "lat": 6.932972,
+     "lon": 100.405361,
+     "rmk": ""
+    },
+    {
+     "type": "TACAN",
+     "id": "HTY",
+     "freq": "115.70 MHz CH104X",
+     "lat": 6.928056,
+     "lon": 100.395556,
+     "rmk": "HR service 30 Min PN to ATC"
+    }
+   ],
+   "name": "Songkhla / Hat Yai International Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSS-en-GB.html"
+  },
+  "VTST": {
+   "icao": "VTST",
+   "lat": 7.508611,
+   "lon": 99.615833,
+   "elev_ft": 67.0,
+   "rwy": [
+    "08",
+    "26"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Trang Approach",
+     "freq": "125.3",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Trang Tower",
+     "freq": "118.4 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Trang Airport",
+     "freq": "134.5",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "TRN",
+     "freq": "116.6 MHz CH 113X",
+     "lat": 7.508917,
+     "lon": 99.626,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal at the required altitude in various areas as follows: 20 NM orbit Radial 081°-130° altitude should not below 6 000 ft. 40 NM orbit Radial 131°-350° altitude should not below 4 000 ft. Radial 351°-030° altitude should not below 6 000 ft. Radial 031°-080° altitude should not below 7 000 ft."
+    },
+    {
+     "type": "ILS CAT I LOC 08",
+     "id": "ITRN",
+     "freq": "110.3 MHz CH 40X",
+     "lat": 7.510639,
+     "lon": 99.628667,
+     "rmk": "LOC: Designated Operation Coverage 18 NM, ALT 6 300 ft/AMSL"
+    },
+    {
+     "type": "GP 08",
+     "id": "",
+     "freq": "335 MHz",
+     "lat": 7.508528,
+     "lon": 99.609639,
+     "rmk": "GP: 3.50 DEG, RDH 58 ft"
+    },
+    {
+     "type": "DME 08",
+     "id": "I-TRN",
+     "freq": "110.3 MHz",
+     "lat": 7.511306,
+     "lon": 99.628556,
+     "rmk": ""
+    }
+   ],
+   "name": "Trang",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTST-en-GB.html"
+  },
+  "VTSY": {
+   "icao": "VTSY",
+   "lat": 5.788889,
+   "lon": 101.147222,
+   "elev_ft": 738.0,
+   "rwy": [],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Narathiwat Approach",
+     "freq": "125.55",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Betong Tower",
+     "freq": "124.15 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Betong Ground",
+     "freq": "122.15",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Betong Airport",
+     "freq": "128.5",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR",
+     "id": "BET",
+     "freq": "113.1 MHz",
+     "lat": 5.785444,
+     "lon": 101.144056,
+     "rmk": "DVOR/DME restrictions, Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 nm at required altitude and distance in various areas as follows: Radial 350°-020° altitude should not below 8 000 ft. Radial 021°-040° altitude should not below 6 500 ft. Radial 041°-060° altitude should not below 9 000 ft. Radial 061°-075° altitude should not below 15 000 ft. Radial 076°-349° unable to check due to border limit"
+    },
+    {
+     "type": "DME",
+     "id": "",
+     "freq": "78X",
+     "lat": 5.7855,
+     "lon": 101.143944,
+     "rmk": "DME co-located with DVOR"
+    }
+   ],
+   "name": "Yala/ Betong",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSY-en-GB.html"
+  },
+  "VTUD": {
+   "icao": "VTUD",
+   "lat": 17.386389,
+   "lon": 102.788333,
+   "elev_ft": 579.0,
+   "rwy": [
+    "12",
+    "30"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Udon Approach",
+     "freq": "126.2 / 265.9 / 119.45",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Udon Tower",
+     "freq": "122.5 / 355.4 / 119.45",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Udon Ground",
+     "freq": "121.9 / 275.8",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Udon Airport",
+     "freq": "127.6",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "UDN",
+     "freq": "114.3 MHz CH90X",
+     "lat": 17.38475,
+     "lon": 102.774917,
+     "rmk": "DVOR/DME restriction, due to mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal at required altitudes in various areas as follows: 1. 15 nm orbit - RDL 277º-280º ALT should not below 5000 ft 2. 20 nm orbit (due to border limited) - RDL 331º- 030º ALT should not below 2500 ft 3. 40 nm orbit - RDL 031º- 090º ALT should not below 3000 ft - RDL 091º-190º ALT should not below 4000 ft - RDL 191º- 268º ALT should not below 5000 ft - RDL 269º- 276º ALT should not below 8000ft - RDL 281º- 330º ALT should not below 5000 ft 4.The En-route radial 275 (W15) beyond 20 nm ALT 6500 ft the DVOR/DME signal out of tolerance."
+    },
+    {
+     "type": "ILS CAT I LOC 30",
+     "id": "IUDN",
+     "freq": "110.1 MHz",
+     "lat": 17.394778,
+     "lon": 102.771194,
+     "rmk": ""
+    },
+    {
+     "type": "GP 30",
+     "id": "",
+     "freq": "334.4 MHz",
+     "lat": 17.382417,
+     "lon": 102.798889,
+     "rmk": ""
+    },
+    {
+     "type": "DME 30",
+     "id": "IUDN",
+     "freq": "CH38X",
+     "lat": 17.382417,
+     "lon": 102.798889,
+     "rmk": ""
+    },
+    {
+     "type": "TACAN",
+     "id": "UDN",
+     "freq": "000",
+     "lat": 17.382806,
+     "lon": 102.798556,
+     "rmk": "Military Facilities PN 30 min to ATC"
+    }
+   ],
+   "name": "Udon Thani",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUD-en-GB.html"
+  },
+  "VTUI": {
+   "icao": "VTUI",
+   "lat": 17.195278,
+   "lon": 104.118611,
+   "elev_ft": 529.0,
+   "rwy": [
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Sakon Nakhon Approach",
+     "freq": "123.35 / 284.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Sakon Nakhon Tower",
+     "freq": "119.65 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Sakon Nakhon Airport",
+     "freq": "128.25",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "SN",
+     "freq": "365 KHz",
+     "lat": 17.196972,
+     "lon": 104.114833,
+     "rmk": "Data refer from commissioning checked as follows: Bearing 181°-360° 50 NM. orbit altitude should not below 3 000 ft. Bearing 001°-140° 50 NM. orbit unable to check due to border limited Bearing 141°-180° unusable beyond 15 NM."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "SKN",
+     "freq": "114.2 MHz",
+     "lat": 17.214111,
+     "lon": 104.13675,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal at required altitude in various areas as follows: 30 NM. orbit (Due to border limited) Radial 000º-130º altitude should not below 2 100 ft. 40 NM. orbit Radial 131º-280º altitude should not below 5 500 ft. Radial 281º-359º altitude should not below 2 100 ft."
+    },
+    {
+     "type": "IILS CAT I LOC 23",
+     "id": "ISKN",
+     "freq": "110.3 MHz CH40X",
+     "lat": 17.185472,
+     "lon": 104.108583,
+     "rmk": "Designated operation coverage 18 NM. ALT 6800 ft/AMSL."
+    },
+    {
+     "type": "DME 23",
+     "id": "",
+     "freq": "",
+     "lat": 17.185,
+     "lon": 104.109056,
+     "rmk": "Paired with LOC FREQ"
+    },
+    {
+     "type": "GP 23",
+     "id": "",
+     "freq": "335.0 MHz",
+     "lat": 17.20225,
+     "lon": 104.124694,
+     "rmk": "3 DEG REF Datum height 50 ft."
+    }
+   ],
+   "name": "Sakon Nakhon/ Sakon Nakhon",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUI-en-GB.html"
+  },
+  "VTUK": {
+   "icao": "VTUK",
+   "lat": 16.466667,
+   "lon": 102.783611,
+   "elev_ft": 681.0,
+   "rwy": [
+    "03",
+    "21"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Khon Kaen Approach",
+     "freq": "123.4 / 240.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Khon Kaen Tower",
+     "freq": "122.25 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Khon Kaen Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Khon Kaen Airport",
+     "freq": "126.85",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "KN",
+     "freq": "393 KHz",
+     "lat": 16.462028,
+     "lon": 102.7845,
+     "rmk": "Coverage clockwise orbit 50 NM checked as follows: Bearing 350° -225° at altitude 2 500 ft. Bearing 226° - 349° at altitude 5 000 ft. NIL"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "KKN",
+     "freq": "114.9 MHz CH96X",
+     "lat": 16.470889,
+     "lon": 102.787972,
+     "rmk": "DVOR/DME restriction due to terrain surround DVOR/DME station, coverage check does not provide adequate signal 40 NM nm . at required altitude in various areas as follows: Radial 001°-080° altitude should not below 2 500 ft. Radial 081°-220° altitude should not below 2 000 ft. Radial 221°-360° altitude should not below 3 500 ft."
+    }
+   ],
+   "name": "Khon Kaen",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUK-en-GB.html"
+  },
+  "VTUL": {
+   "icao": "VTUL",
+   "lat": 17.439167,
+   "lon": 101.721944,
+   "elev_ft": 864.0,
+   "rwy": [
+    "01",
+    "19"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Loei Approach",
+     "freq": "122.55",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Loei Tower",
+     "freq": "118.35 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Loei Airport",
+     "freq": "126.25",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "LY",
+     "freq": "325 KHz",
+     "lat": 17.448611,
+     "lon": 101.7265,
+     "rmk": "50 NM Coverage clockwise orbit data refer from commissioning checked as follows: Bearing 061° - 160° at 4 000 ft Bearing 161° - 265°at 8 000 ft Bearing 266° - 060° unable to perform flight inspection due to border limited Facility unusable from bearing 205° - 255° clockwise below 8 000 ft due to needle swing Facility performance classified as “Restricted” due to item b) and c) above as per commissioning checked"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "LOY",
+     "freq": "115.9 MHz CH106X",
+     "lat": 17.447028,
+     "lon": 101.723083,
+     "rmk": "DVOR/DME restriction, Unusable due to roughness out of tolerance Radial 020° between 10-11 DME altitude 3 000 ft. Radial 243° between 7-8 DME altitude 6 000 ft and between 32-33 DME altitude 7 500 ft. Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: 40 NM orbit Radial 030°-050° altitude should not below 10 000 ft. Radial 051°-100° altitude should not below 7 000 ft. Radial 101°-130° altitude should not below 10 000 ft. Radial 131°-200° altitude should not below 5 000 ft. Radial 201°-250° altitude should not below 12 000 ft. Radial 251°-270° altitude should not below 13 000 ft. 20 NM orbit (Due to border limited) Radial 271°-029° altitude should not below 4 500 ft."
+    }
+   ],
+   "name": "Loei",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUL-en-GB.html"
+  },
+  "VTUN": {
+   "icao": "VTUN",
+   "lat": 14.934444,
+   "lon": 102.078611,
+   "elev_ft": null,
+   "rwy": [
+    "06",
+    "24"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Khorat Approach",
+     "freq": "349.0 / 129.75",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Khorat Arrival",
+     "freq": "349.0 / 129.75",
+     "hours": "0100-0900",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Khorat Departure",
+     "freq": "285.0 / 134.1",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "SRA",
+     "callsign": "Final Controller",
+     "freq": "382.4",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Khorat Tower",
+     "freq": "240.5 / 122.2",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Khorat Ground",
+     "freq": "257.8 / 121.75",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Khorat AD",
+     "freq": "134.8 / 390.6",
+     "hours": "0100-0900",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "TACAN",
+     "id": "KRT",
+     "freq": "125",
+     "lat": 14.935,
+     "lon": 102.072722,
+     "rmk": "315 m (Centre line of RWY)"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "KRT",
+     "freq": "113.7 MHz CH84X",
+     "lat": 14.917306,
+     "lon": 102.139806,
+     "rmk": ""
+    },
+    {
+     "type": "ILS (CAT I) LOC GP/DME",
+     "id": "IKRT",
+     "freq": "109.9 MHz CH36X",
+     "lat": 14.926472,
+     "lon": 102.062778,
+     "rmk": ""
+    },
+    {
+     "type": "GP",
+     "id": "",
+     "freq": "333.8 MHz",
+     "lat": 14.938889,
+     "lon": 102.089444,
+     "rmk": ""
+    },
+    {
+     "type": "LLZ",
+     "id": "",
+     "freq": "109.9 MHz CH36X",
+     "lat": 14.926056,
+     "lon": 102.063,
+     "rmk": ""
+    }
+   ],
+   "name": "Nakhon Ratchasima / Khorat",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUN-en-GB.html"
+  },
+  "VTUO": {
+   "icao": "VTUO",
+   "lat": 15.226758,
+   "lon": 103.251111,
+   "elev_ft": 594.0,
+   "rwy": [
+    "04",
+    "22"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Buri Ram Approach",
+     "freq": "125.55",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Buri Ram Tower",
+     "freq": "118.05 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Buri Ram Airport",
+     "freq": "127.05",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "BR",
+     "freq": "303 KHz",
+     "lat": 15.238639,
+     "lon": 103.252556,
+     "rmk": "Coverage 50 NM clockwise orbit data refer from commissioning checked as follows: Bearing 001°-360° at altitude 1 700 ft"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "BRM",
+     "freq": "117.2 MHz CH119X",
+     "lat": 15.239556,
+     "lon": 103.258778,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit 40 NM at required altitude in various areas as follows: Radial 091°-140° altitude should not below 3 500 ft Radial 141°-240° altitude should not below 5 000 ft Radial 241°-280° altitude should not below 4 000 ft Radial 281°-090° altitude should not below 2 500 ft"
+    }
+   ],
+   "name": "Buri Ram Airport",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUO-en-GB.html"
+  },
+  "VTUQ": {
+   "icao": "VTUQ",
+   "lat": 14.949444,
+   "lon": 102.312778,
+   "elev_ft": 765.0,
+   "rwy": [
+    "06",
+    "24"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Ratchasima Approach",
+     "freq": "123.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Ratchasima Tower",
+     "freq": "119.8 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Ratchasima Airport",
+     "freq": "126.6",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "KR",
+     "freq": "399 KHz",
+     "lat": 14.956444,
+     "lon": 102.314694,
+     "rmk": "Coverage 50 nm clockwise data refer from commissioning as follows: Bearing 271°-160° at altitude 2 000 ft. Bearing 161°-270° at altitude 3 500 ft."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "NKR",
+     "freq": "110.2 MHz CH39X",
+     "lat": 14.946556,
+     "lon": 102.311222,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 nm at required altitude in various areas as follows: Radial 271°-110° altitude should not below 3 000 ft. Radial 111°-160° altitude should not below 3 500 ft. Radial 161°-270° altitude should not below 4 500 ft."
+    },
+    {
+     "type": "LOC 06 ILS CAT I",
+     "id": "INKR",
+     "freq": "109.7 MHz",
+     "lat": 14.955333,
+     "lon": 102.32375,
+     "rmk": "LOC: Designated operation coverage 18 nm, ALT 7000 ft. AMSL"
+    },
+    {
+     "type": "GP 06",
+     "id": "",
+     "freq": "333.2 MHz",
+     "lat": 14.945333,
+     "lon": 102.30725,
+     "rmk": "GP: 3 DEG, RDH 54 ft."
+    },
+    {
+     "type": "DME 06",
+     "id": "INKR",
+     "freq": "109.7 MHz",
+     "lat": 14.95475,
+     "lon": 102.324056,
+     "rmk": "DME: Paired with LOC Freq."
+    }
+   ],
+   "name": "Nakhon Ratchasima",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUQ-en-GB.html"
+  },
+  "VTUU": {
+   "icao": "VTUU",
+   "lat": 15.251272,
+   "lon": 104.870278,
+   "elev_ft": 411.0,
+   "rwy": [
+    "05",
+    "23"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Ubon Approach",
+     "freq": "123.5 / 257.8",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Ubon Tower",
+     "freq": "119.9 / 274.5",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Ubon Ground",
+     "freq": "121.9 / 275.8",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Ubon Airport",
+     "freq": "128.2",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ASR",
+     "callsign": "Departure Control Arrival Control",
+     "freq": "335.5 / 134.1 / 282.2 / 125.75",
+     "hours": "0100-0900",
+     "rmk": ""
+    },
+    {
+     "svc": "SRA",
+     "callsign": "Final Control",
+     "freq": "382.4",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "DVOR/DME",
+     "id": "UBL",
+     "freq": "112.7 MHz CH74X",
+     "lat": 15.245167,
+     "lon": 104.865889,
+     "rmk": "DVOR/DME restriction Due to obstacles surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit at required altitude in various areas as follows: 40 nm Radial 111°-155° altitude should not below 3 000 ft. Radial 156°-165° altitude should not below 7 000 ft. Radial 166°-200° altitude should not below 5 000 ft. Radial 201°-070° altitude should not below 3 000 ft. 30 nm (Due to border limit) Radial 071°-110° altitude should not below 2 000 ft. During 6 NM orbit found 30 Hz. AM modulation is fluctuated within 29%-50% between radial 170°-190°. UBON DVOR/DME unusable between radial 170°-190° (CW) beyond 10 nm altitude 2 000 ft."
+    },
+    {
+     "type": "ILS CAT I LOC 23",
+     "id": "IUBL",
+     "freq": "110.1 MHz CH38X",
+     "lat": 15.24,
+     "lon": 104.855694,
+     "rmk": "ILS coverage over sector of 35 either side of runway centre line, no back course and voice feature, the antenna array is located on extended runway centre line at distance 500 m from THR of RWY 05, height of antenna array is 4.1 m from ground No marker"
+    },
+    {
+     "type": "GP 23",
+     "id": "",
+     "freq": "334.4 MHz",
+     "lat": 15.257222,
+     "lon": 104.879778,
+     "rmk": "Glide Path angle 3.0° DME co-located with glide path power output 100 watts omnidirectional"
+    },
+    {
+     "type": "DME 23",
+     "id": "IUBL",
+     "freq": "334.4 MHz",
+     "lat": 15.257222,
+     "lon": 104.879778,
+     "rmk": ""
+    },
+    {
+     "type": "TACAN",
+     "id": "UBL",
+     "freq": "114.6 MHz",
+     "lat": 15.262442,
+     "lon": 104.883333,
+     "rmk": "Other this period 2 HR PN TO ATC"
+    }
+   ],
+   "name": "Ubon Ratchathani",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUU-en-GB.html"
+  },
+  "VTUV": {
+   "icao": "VTUV",
+   "lat": 16.116667,
+   "lon": 103.773889,
+   "elev_ft": 451.0,
+   "rwy": [
+    "18",
+    "36"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Roi Et Approach",
+     "freq": "125.4",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Roi Et Tower",
+     "freq": "119.75 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Roi Et Airport",
+     "freq": "128.275",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "RE",
+     "freq": "319 KHz",
+     "lat": 16.110667,
+     "lon": 103.778222,
+     "rmk": "Coverage orbit data refer from commissioning checked as follows: 50 nm clockwise orbit result found satisfactory. Bearing 341°-030° at altitude 3 000 ft Bearing 031°-060° at altitude 3 000 ft Bearing 061°-340° at altitude 2 000 ft"
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "ROT",
+     "freq": "111.2 MHz CH 49X",
+     "lat": 16.116806,
+     "lon": 103.772083,
+     "rmk": "Coverage orbit data refer from commissioning checked as follows: 40 nm clockwise orbit flown from radial 001°-360° altitude should not below 2 000 ft Airway W5 flown to 40 nm at 2 000 ft was checked and found satisfactory"
+    },
+    {
+     "type": "LOC 36 ILS CAT I",
+     "id": "IROT",
+     "freq": "109.5 MHz",
+     "lat": 16.128944,
+     "lon": 103.774333,
+     "rmk": "LOC: Designated operation coverage 18 nm, ALT 6700 ft AMSL"
+    },
+    {
+     "type": "GP 36",
+     "id": "",
+     "freq": "332.6 MHz",
+     "lat": 16.109917,
+     "lon": 103.772361,
+     "rmk": "GP: 3 GEG, RDH 50 ft"
+    },
+    {
+     "type": "DME 36",
+     "id": "IROT",
+     "freq": "109.5 MHz",
+     "lat": 16.128972,
+     "lon": 103.773667,
+     "rmk": "DME: Paired with LOC FREQ."
+    }
+   ],
+   "name": "Roi Et",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUV-en-GB.html"
+  },
+  "VTUW": {
+   "icao": "VTUW",
+   "lat": 17.385278,
+   "lon": 104.641944,
+   "elev_ft": 587.0,
+   "rwy": [
+    "15",
+    "33"
+   ],
+   "comm": [
+    {
+     "svc": "APP",
+     "callsign": "Sakon Nakhon Approach",
+     "freq": "123.35 / 284.0",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Nakhon Phanom Tower",
+     "freq": "122.15 / 236.6",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "GND",
+     "callsign": "Nakhon Phanom Ground",
+     "freq": "121.9",
+     "hours": "",
+     "rmk": ""
+    },
+    {
+     "svc": "ATIS",
+     "callsign": "Nakhon Phanom Airport",
+     "freq": "128.85",
+     "hours": "",
+     "rmk": ""
+    }
+   ],
+   "navaids": [
+    {
+     "type": "NDB",
+     "id": "NP",
+     "freq": "383 KHz",
+     "lat": 17.392389,
+     "lon": 104.642639,
+     "rmk": "50 nm Coverage clockwise orbit data refer from commissioning checked as follow: -Bearing 170-350 degree at 2100 ft -Bearing 351-169 degree unable to check due to border limited."
+    },
+    {
+     "type": "DVOR/DME",
+     "id": "NKP",
+     "freq": "111.6 MHz CH53X",
+     "lat": 17.388278,
+     "lon": 104.638333,
+     "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 nm at required altitudes in various areas as follows: Radial 181°-190° altitude should not below 2 500 ft Radial 191°-260° altitude should not below 4 000 ft Radial 261°-320° altitude should not below 2 500 ft Radial 321°-180° unable to check (Due to border limited)"
+    },
+    {
+     "type": "LOC 15 ILS CAT I",
+     "id": "INKP",
+     "freq": "109.7 MHz",
+     "lat": 17.372389,
+     "lon": 104.651389,
+     "rmk": "ILS/DME RWY15: Localizer is unusable, due to national border. 18 – 10 NM: Beyond 2° left of localizer inbound course. Within 10 NM: Beyond 20° left of localizer inbound course."
+    },
+    {
+     "type": "GP 15",
+     "id": "",
+     "freq": "333.2 MHz",
+     "lat": 17.390111,
+     "lon": 104.637222,
+     "rmk": "GP: 3 DEG, RDH 50 ft"
+    },
+    {
+     "type": "DME 15",
+     "id": "INKP",
+     "freq": "109.7 MHz",
+     "lat": 17.372028,
+     "lon": 104.650833,
+     "rmk": "Paired with LOC FREQ."
+    }
+   ],
+   "name": "Nakhon Phanom",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUW-en-GB.html"
+  },
+  "VTUZ": {
+   "icao": "VTUZ",
+   "lat": 16.652778,
+   "lon": 102.967778,
+   "elev_ft": 750.0,
+   "rwy": [
+    "01",
+    "19"
+   ],
+   "comm": [],
+   "navaids": [],
+   "name": "KHON-KAEN / NAM PHONG",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUZ-en-GB.html"
   }
  },
  "navaids": [
   {
    "name": "BANGKOK DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "BKK",
    "freq": "117.7 MHz (CH 124X )",
    "lat": 13.893611,
@@ -162,7 +3270,7 @@
   },
   {
    "name": "BETONG DVOR/DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "BET",
    "freq": "113.1 MHz (CH 78X )",
    "lat": 5.785556,
@@ -170,7 +3278,7 @@
   },
   {
    "name": "BURI RAM DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "BRM",
    "freq": "117.2 MHz (CH 119X )",
    "lat": 15.239444,
@@ -178,7 +3286,7 @@
   },
   {
    "name": "CHIANG MAI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "CMA",
    "freq": "116.9 MHz (CH 116X )",
    "lat": 18.766111,
@@ -186,7 +3294,7 @@
   },
   {
    "name": "CHIANG RAI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "CTR",
    "freq": "116.5 MHz (CH 112X )",
    "lat": 19.948889,
@@ -194,7 +3302,7 @@
   },
   {
    "name": "CHUM PHAE DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "CMP",
    "freq": "112.9 MHz (CH 76X )",
    "lat": 16.635278,
@@ -202,7 +3310,7 @@
   },
   {
    "name": "CHUM PHON DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "CPN",
    "freq": "110 MHz (CH 37X )",
    "lat": 10.711111,
@@ -210,7 +3318,7 @@
   },
   {
    "name": "HAT YAI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "HTY",
    "freq": "115.3 MHz (CH 100X )",
    "lat": 6.934167,
@@ -218,7 +3326,7 @@
   },
   {
    "name": "HUA HIN DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "HHN",
    "freq": "113.3 MHz (CH 80X )",
    "lat": 12.634444,
@@ -226,7 +3334,7 @@
   },
   {
    "name": "KAMPHAENG SAEN DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "KPS",
    "freq": "114.5 MHz (CH 92X )",
    "lat": 14.165556,
@@ -234,7 +3342,7 @@
   },
   {
    "name": "KHON KAEN DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "KKN",
    "freq": "114.9 MHz (CH 96X )",
    "lat": 16.470833,
@@ -242,7 +3350,7 @@
   },
   {
    "name": "KHORAT DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "KRT",
    "freq": "113.7 MHz (CH 84X )",
    "lat": 14.917222,
@@ -250,7 +3358,7 @@
   },
   {
    "name": "KRABI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "KBI",
    "freq": "111 MHz (CH 47X )",
    "lat": 8.1075,
@@ -258,7 +3366,7 @@
   },
   {
    "name": "LAMPANG DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "LPN",
    "freq": "114.7 MHz (CH 94X )",
    "lat": 18.276667,
@@ -266,7 +3374,7 @@
   },
   {
    "name": "LOEI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "LOY",
    "freq": "115.9 MHz (CH 106X )",
    "lat": 17.446944,
@@ -274,7 +3382,7 @@
   },
   {
    "name": "MAE HONG SON DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "MHS",
    "freq": "115.5 MHz (CH 102X )",
    "lat": 19.319722,
@@ -282,7 +3390,7 @@
   },
   {
    "name": "MAE SOT DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "MST",
    "freq": "116.7 MHz (CH 114X )",
    "lat": 16.697778,
@@ -290,7 +3398,7 @@
   },
   {
    "name": "NAKHON PHANOM DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "NKP",
    "freq": "111.6 MHz (CH 53X)",
    "lat": 17.388333,
@@ -298,7 +3406,7 @@
   },
   {
    "name": "NAKHON SI THAMMARAT DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "NKS",
    "freq": "117.4 MHz (CH 121X )",
    "lat": 8.541667,
@@ -306,7 +3414,7 @@
   },
   {
    "name": "NAN DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "NAN",
    "freq": "115.7 MHz (CH 104X )",
    "lat": 18.809167,
@@ -314,7 +3422,7 @@
   },
   {
    "name": "NARATHIWAT DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "NTW",
    "freq": "116.3 MHz (CH 110X )",
    "lat": 6.527222,
@@ -322,7 +3430,7 @@
   },
   {
    "name": "PHETCHABUN DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "PCB",
    "freq": "115.4 MHz (CH 101X )",
    "lat": 16.676111,
@@ -330,7 +3438,7 @@
   },
   {
    "name": "PHITSANULOK DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "PSL",
    "freq": "114.1 MHz (CH 88X )",
    "lat": 16.770278,
@@ -338,7 +3446,7 @@
   },
   {
    "name": "PHRAE DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "PAE",
    "freq": "111.8 MHz (CH 55X )",
    "lat": 18.134167,
@@ -346,7 +3454,7 @@
   },
   {
    "name": "PHUKET DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "PUT",
    "freq": "116.9 MHz (CH 116X )",
    "lat": 8.113889,
@@ -354,7 +3462,7 @@
   },
   {
    "name": "RANONG DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "RAN",
    "freq": "113.4 MHz (CH 81X )",
    "lat": 9.778056,
@@ -362,7 +3470,7 @@
   },
   {
    "name": "RAYONG DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "RYN",
    "freq": "112.5 MHz (CH 72X )",
    "lat": 12.778611,
@@ -370,7 +3478,7 @@
   },
   {
    "name": "ROI-ET DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "ROT",
    "freq": "111.2 MHz (CH 49X )",
    "lat": 16.116944,
@@ -378,7 +3486,7 @@
   },
   {
    "name": "SAKON NAKHON DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "SKN",
    "freq": "114.2 MHz (CH 89X )",
    "lat": 17.214167,
@@ -386,7 +3494,7 @@
   },
   {
    "name": "SONGKHLA DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "SKL",
    "freq": "113.5 MHz (CH 82X)",
    "lat": 7.188792,
@@ -394,7 +3502,7 @@
   },
   {
    "name": "SAMUI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "SMU",
    "freq": "117.6 MHz (CH 123X )",
    "lat": 9.546944,
@@ -402,7 +3510,7 @@
   },
   {
    "name": "SURAT THANI DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "STN",
    "freq": "110.6 MHz (CH 43X )",
    "lat": 9.129444,
@@ -426,7 +3534,7 @@
   },
   {
    "name": "TRANG DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "TRN",
    "freq": "116.6 MHz (CH 113X )",
    "lat": 7.508889,
@@ -442,7 +3550,7 @@
   },
   {
    "name": "UBON DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "UBL",
    "freq": "112.7 MHz (CH 74X )",
    "lat": 15.245278,
@@ -450,7 +3558,7 @@
   },
   {
    "name": "UDON DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "UDN",
    "freq": "114.3 MHz (CH 90X )",
    "lat": 17.384722,
@@ -458,7 +3566,7 @@
   },
   {
    "name": "U-TAPAO DVOR /DME",
-   "type": "DME",
+   "type": "DVOR/DME",
    "id": "BUT",
    "freq": "110.8 MHz (CH 45X )",
    "lat": 12.666667,
