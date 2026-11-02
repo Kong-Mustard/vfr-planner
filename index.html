@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#123c69">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>VFR Planner</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css">
@@ -30,6 +34,7 @@
   --accent:#ff5cb8; --accent-soft:#3a1a30; --nav:#7fb2e8; --input:#0f1b2b; --calc:#123024; --calc-ink:#8fe0b2;
   --warn:#f5a524; --bad:#ff6b6b; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);
   padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));
@@ -172,6 +177,28 @@ body.printing #printView{position:static;padding:0}
 .fc.VFR{background:#1f8a4c}.fc.MVFR{background:#2f6fd6}.fc.IFR{background:#d1242f}.fc.LIFR{background:#a1249e}
 #wxRouteTbl td,#wxRouteTbl th{white-space:nowrap}
 .spread{color:var(--warn);font-weight:700}
+.v3d[hidden]{display:none!important}
+.v3d{position:fixed;inset:0;z-index:3000;background:#0b1320;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.v3d-bar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:8px max(12px,env(safe-area-inset-left,0px));background:#132033;color:#e3ebf5}
+.v3d-bar b{font:700 16px var(--f-display);letter-spacing:.06em}
+.v3d-bar label{flex-direction:row;align-items:center;gap:6px;color:#c7d3e3;font-size:13px}
+.v3d-bar input[type=range]{width:120px}
+.v3d-bar select{width:auto}
+#v3dMap{flex:1;min-height:0}
+.v3d-hud{position:absolute;left:max(12px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 64px);background:rgba(10,20,35,.82);color:#fff;border-radius:10px;padding:10px 14px;font:600 15px/1.5 var(--f-mono);min-width:230px}
+.v3d-hud .big{font-size:26px;font-weight:800}
+.v3d-hud .warn{color:#ff6b6b}
+.v3d-note{margin:0;padding:4px 12px calc(4px + env(safe-area-inset-bottom,0px));font-size:11px;color:#9fb0c6;background:#132033}
+.pick3d{cursor:crosshair!important}
+.leaflet-bar a.btn3d{width:auto;padding:0 8px;font:700 12px var(--f-body);line-height:30px}
+.nt-text{width:100%;font:13px/1.45 var(--f-mono);color:var(--ink);background:var(--input);border:1px solid var(--line);border-radius:8px;padding:8px}
+.nt{border:1px solid var(--line);border-left:5px solid var(--muted);border-radius:8px;padding:8px 10px;margin-bottom:8px;font:13px/1.45 var(--f-mono);overflow-wrap:anywhere}
+.nt.hit{border-left-color:var(--bad)}.nt.ap{border-left-color:var(--warn)}.nt.off{opacity:.55}
+.nt b{font-family:var(--f-display);font-size:14px}
+.nt .tag{display:inline-block;font:700 11px var(--f-body);border-radius:4px;padding:1px 6px;margin-left:6px;color:#fff;background:var(--muted)}
+.nt .tag.hit{background:var(--bad)}.nt .tag.ap{background:var(--warn)}.nt .tag.act{background:#1f8a4c}
+.netchip{font:700 11px var(--f-body);border-radius:999px;padding:3px 9px;border:1px solid var(--line)}
+.netchip.on{color:#1f8a4c;border-color:#1f8a4c}.netchip.off{color:#fff;background:var(--bad);border-color:var(--bad)}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
@@ -255,6 +282,7 @@ body.printing #printView{position:static;padding:0}
 <body>
 <header>
   <div class="brand">VFR<span>·</span>PLANNER</div>
+  <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-tab="plan" aria-selected="true">1 · วางแผน VFR</button>
     <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · NAVLOG</button>
@@ -463,7 +491,18 @@ body.printing #printView{position:static;padding:0}
  <div class="card section">
   <div class="sechead"><h2>NOTAM</h2>
    <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">เปิด NOTAM Leaflet — AEROTHAI ↗</a></div>
-  <p class="hint">แหล่งหลักคือ AEROTHAI (ต้องล็อกอิน) — ส่วนดึง NOTAM อัตโนมัติจากแหล่งฟรีจะเพิ่มในขั้นถัดไป</p>
+  <p class="hint">วิธีใช้: เปิด NOTAM Leaflet ของ AEROTHAI → คัดลอกข้อความ NOTAM ทั้งหมด → วางในช่องด้านล่าง → แอปแยก NOTAM, วาดพื้นที่ (จาก Q-line/พิกัดในข้อความ) บนแผนที่แท็บ 1 และตรวจว่าเส้นทางตัดผ่านในช่วงเวลาที่บินหรือไม่</p>
+  <div class="btns" id="notamLinks"></div>
+ </div>
+ <div class="card section">
+  <div class="sechead"><h2>วาง NOTAM</h2><div class="btns"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้าง</button></div></div>
+  <textarea id="ntText" rows="8" class="nt-text" placeholder="วางข้อความ NOTAM ที่นี่ เช่น&#10;B1234/26 NOTAMN&#10;Q) VTBB/QRDCA/IV/BO/W/000/050/1449N10039E010&#10;A) VTBB B) 2611020100 C) 2611051000&#10;E) DANGER AREA ACTIVATED ..."></textarea>
+  <p class="hint" id="ntInfo"></p>
+ </div>
+ <div class="card section">
+  <div class="sechead"><h2>NOTAM ที่เกี่ยวกับเส้นทาง</h2>
+   <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="ntOnlyRoute" checked style="width:auto"> เฉพาะที่เกี่ยวกับเส้นทาง/เวลาบิน</label></div>
+  <div id="ntList"></div>
  </div>
 </section>
 <section id="tab-quiz" class="tabpanel" hidden>
@@ -490,6 +529,19 @@ body.printing #printView{position:static;padding:0}
 </section>
 </main>
 <div id="toast" class="toast"></div>
+<div id="v3d" class="v3d" hidden>
+  <div class="v3d-bar">
+    <b>ภาพ 3 มิติ</b>
+    <label>ความสูงภูมิประเทศ ×<span id="exVal">1.0</span><input id="v3dEx" type="range" min="1" max="3" step="0.1" value="1"></label>
+    <button id="v3dFly" class="primary">▶ บินตามเส้นทาง</button>
+    <label>ความเร็ว<select id="v3dSpd"><option value="5">×5</option><option value="10" selected>×10</option><option value="30">×30</option><option value="60">×60</option></select></label>
+    <button id="v3dTop">มุมมองภาพรวม</button>
+    <button id="v3dClose">ปิด ✕</button>
+  </div>
+  <div id="v3dMap"></div>
+  <div id="v3dHud" class="v3d-hud" hidden></div>
+  <p class="v3d-note">ภาพดาวเทียม Esri · ความสูงภูมิประเทศ AWS Terrain Tiles (≈30 m) · ภาพอาจไม่ตรงกับสภาพจริงขณะบิน — ใช้ศึกษาภูมิประเทศคร่าวๆ เท่านั้น</p>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js"></script>
@@ -656,7 +708,7 @@ function drawMap(rows){
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
-map.on("click",e=>{if(!addMode)return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
+map.on("click",e=>{if(!addMode||(typeof pick!=="undefined"&&pick))return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
 
 /* ---------- compute ---------- */
 function compute(){
@@ -763,7 +815,7 @@ function render(){
   $("#sEta").textContent=res.rows.length?hhmm(res.dep+res.cumMin):"–";
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
   $("#exampleTag").hidden=!state.example;
-  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();
   store.set("vfr_current",state);
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
@@ -980,6 +1032,118 @@ async function metarLoad(){const box=$("#metarList");
       :`<p class="hint">ไม่มี METAR/TAF ของสนามตามเส้นทาง (สนามทหารบางแห่งไม่มีในระบบสากล)</p>`}
   catch(e){box.innerHTML=`<p class="hint">ยังไม่มีไฟล์ METAR/TAF หรือออฟไลน์อยู่</p>`}}
 
+/* ---------- ภาพ 3 มิติ (MapLibre + terrain) ---------- */
+const ML_JS="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",ML_CSS="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css";
+let ml=null,pick=null,pickLayer=null,fly=null;
+function loadML(){return new Promise((ok,no)=>{if(window.maplibregl)return ok();const l=document.createElement("link");l.rel="stylesheet";l.href=ML_CSS;document.head.appendChild(l);
+  const s=document.createElement("script");s.src=ML_JS;s.onload=ok;s.onerror=()=>no(new Error("โหลด 3D ไม่ได้ (ต้องต่อเน็ต)"));document.head.appendChild(s)})}
+const Ctl3D=L.Control.extend({options:{position:"topleft"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar");
+  d.innerHTML=`<a href="#" class="btn3d" title="แตะ 2 มุมบนแผนที่เพื่อตีกรอบพื้นที่ แล้วเปิดภาพ 3 มิติ">ตีกรอบ 3D</a><a href="#" class="btn3d" title="เปิดภาพ 3 มิติตามเส้นทางทั้งหมด">3D เส้นทาง</a>`;
+  L.DomEvent.disableClickPropagation(d);const [a,b]=d.querySelectorAll("a");
+  a.onclick=e=>{e.preventDefault();startPick()};b.onclick=e=>{e.preventDefault();if(state.wps.length<2){toast("ยังไม่มีเส้นทาง");return}
+    const bb=L.latLngBounds(state.wps.map(w=>[w.lat,w.lon])).pad(0.15);open3D(bb)};return d}});
+new Ctl3D().addTo(map);
+function startPick(){pick={a:null};addMode=false;$("#addMode").classList.remove("on");$("#addMode").textContent="✚ คลิกแผนที่เพื่อเพิ่มจุด: ปิด";
+  map.getContainer().classList.add("pick3d");toast("แตะมุมแรกของกรอบ")}
+map.on("click",e=>{if(!pick)return;if(!pick.a){pick.a=e.latlng;toast("แตะมุมตรงข้าม");return}
+  const bb=L.latLngBounds(pick.a,e.latlng);pick=null;map.getContainer().classList.remove("pick3d");
+  if(pickLayer)map.removeLayer(pickLayer);pickLayer=L.rectangle(bb,{color:"#ffd400",weight:2,fill:false,dashArray:"6 4"}).addTo(map);open3D(bb)});
+map.on("mousemove",e=>{if(!pick||!pick.a)return;if(pickLayer)map.removeLayer(pickLayer);pickLayer=L.rectangle(L.latLngBounds(pick.a,e.latlng),{color:"#ffd400",weight:2,fill:false,dashArray:"6 4"}).addTo(map)});
+async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
+  $("#v3d").hidden=false;document.body.style.overflow="hidden";
+  const route={type:"FeatureCollection",features:[{type:"Feature",geometry:{type:"LineString",coordinates:state.wps.map(w=>[w.lon,w.lat])}},
+    ...state.wps.map((w,i)=>({type:"Feature",properties:{n:`${i+1} ${w.name}`},geometry:{type:"Point",coordinates:[w.lon,w.lat]}}))]};
+  const b=[[bb.getWest(),bb.getSouth()],[bb.getEast(),bb.getNorth()]];
+  if(ml){ml.remove();ml=null}
+  ml=new maplibregl.Map({container:"v3dMap",attributionControl:{compact:true},maxPitch:85,
+    style:{version:8,glyphs:"https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+      sources:{sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18,attribution:"Imagery © Esri"},
+        dem:{type:"raster-dem",tiles:["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],encoding:"terrarium",tileSize:256,maxzoom:14,attribution:"Terrain: AWS Open Data"},
+        route:{type:"geojson",data:route}},
+      layers:[{id:"sat",type:"raster",source:"sat"},
+        {id:"rl",type:"line",source:"route",filter:["==","$type","LineString"],paint:{"line-color":"#ff3db8","line-width":4}},
+        {id:"wp",type:"circle",source:"route",filter:["==","$type","Point"],paint:{"circle-radius":7,"circle-color":"#ff3db8","circle-stroke-color":"#fff","circle-stroke-width":2}},
+        {id:"wpl",type:"symbol",source:"route",filter:["==","$type","Point"],layout:{"text-field":["get","n"],"text-font":["Open Sans Semibold"],"text-size":14,"text-offset":[0,1.4]},paint:{"text-color":"#fff","text-halo-color":"#000","text-halo-width":1.5}}],
+      sky:{"sky-color":"#7fb2e8","horizon-color":"#dbe8f5","fog-color":"#c9d6e3","sky-horizon-blend":0.6,"horizon-fog-blend":0.5,"fog-ground-blend":0.4}},
+    bounds:b,fitBoundsOptions:{padding:30}});
+  ml.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
+  ml.on("load",()=>{ml.setTerrain({source:"dem",exaggeration:+$("#v3dEx").value});ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
+  ml._box=b}
+function close3D(){stopFly();$("#v3d").hidden=true;document.body.style.overflow="";if(ml){ml.remove();ml=null}if(pickLayer){map.removeLayer(pickLayer);pickLayer=null}}
+$("#v3dClose").onclick=close3D;
+$("#v3dEx").oninput=e=>{$("#exVal").textContent=(+e.target.value).toFixed(1);if(ml&&ml.getTerrain())ml.setTerrain({source:"dem",exaggeration:+e.target.value})};
+$("#v3dTop").onclick=()=>{stopFly();if(ml)ml.fitBounds(ml._box,{padding:30,pitch:60,duration:1000})};
+/* บินตามเส้นทาง: กล้องอยู่ที่ ALT ของ leg มองไปข้างหน้า ~1.5 NM */
+function routePath(){const res=compute(),W=state.wps,segs=[];let acc=0;
+  res.rows.forEach((r,i)=>{segs.push({i,a:[W[i].lon,W[i].lat],b:[W[i+1].lon,W[i+1].lat],d0:acc,d:r.dist,gs:isFinite(r.gs)&&r.gs>20?r.gs:num(state.legs[i].cas,80),alt:num(state.legs[i].alt,1000),mh:r.mh,to:W[i+1].name});acc+=r.dist});
+  return{segs,total:acc}}
+function posAt(P,d){d=Math.max(0,Math.min(P.total-1e-6,d));const s=P.segs.find(x=>d>=x.d0&&d<=x.d0+x.d)||P.segs[P.segs.length-1];const f=s.d?(d-s.d0)/s.d:0;
+  return{s,ll:[s.a[0]+(s.b[0]-s.a[0])*f,s.a[1]+(s.b[1]-s.a[1])*f]}}
+function stopFly(){if(fly){cancelAnimationFrame(fly.raf);fly=null}$("#v3dFly").textContent="▶ บินตามเส้นทาง";$("#v3dHud").hidden=true}
+$("#v3dFly").onclick=()=>{if(!ml)return;if(fly){stopFly();return}const P=routePath();if(!P.segs.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
+  ml.setMaxBounds(null);fly={P,d:0,t:performance.now()};$("#v3dFly").textContent="⏸ หยุด";$("#v3dHud").hidden=false;
+  const step=now=>{if(!fly||!ml)return;const dt=(now-fly.t)/1000;fly.t=now;const {s,ll}=posAt(P,fly.d);
+    fly.d+=s.gs*(+$("#v3dSpd").value)*dt/3600;if(fly.d>=P.total){stopFly();toast("ถึงปลายทาง");return}
+    const ahead=posAt(P,fly.d+1.5).ll;const ex=+$("#v3dEx").value;
+    const elev=q=>{try{return ml.terrain?ml.terrain.getElevationForLngLatZoom(maplibregl.LngLat.convert(q),ml.transform.tileZoom):0}catch(e){return 0}};
+    const terr=elev(ll); // ค่านี้คูณ exaggeration แล้ว
+    const altM=s.alt*0.3048,camAlt=Math.max(terr+(altM-terr/ex),terr+30);
+    try{ml.jumpTo(ml.calculateCameraOptionsFromTo(maplibregl.LngLat.convert(ll),camAlt,maplibregl.LngLat.convert(ahead),Math.max(0,camAlt-150)))}catch(e){}
+    const agl=Math.round((altM-terr/ex)/0.3048),remNm=P.total-fly.d,remMin=remNm/s.gs*60;
+    $("#v3dHud").innerHTML=`<div>→ ${esc(s.to)}</div><div class="big">${isFinite(s.mh)?hdg(s.mh):"---"}°</div>
+      <div>ALT ${s.alt} ft · GS ${Math.round(s.gs)} kt</div><div class="${agl<500?"warn":""}">ภูมิประเทศ ${Math.round(terr/ex/0.3048)} ft · สูงจากพื้น ${agl} ft${agl<500?" ⚠":""}</div>
+      <div>เหลือ ${remNm.toFixed(1)} NM · ${mmss(remMin)}</div>`;
+    fly.raf=requestAnimationFrame(step)};fly.raf=requestAnimationFrame(step)};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#v3d").hidden)close3D()});
+
+/* ---------- NOTAM: วางข้อความจาก AEROTHAI → แยก/วาด/ตรวจเส้นทาง ---------- */
+const ntLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(ntLayer,"NOTAM area");
+let NT=[];
+function ntCoord(s){const m=String(s).match(/(\d{4}(?:\d{2})?(?:\.\d+)?)([NS])\s*(\d{5}(?:\d{2})?(?:\.\d+)?)([EW])/);if(!m)return null;
+  const dm=(v,dd)=>{const ip=v.split(".")[0],d=+v.slice(0,dd),r=v.slice(dd);return ip.length-dd===4?d+ +r.slice(0,2)/60+ +r.slice(2)/3600:d+ +r/60};
+  return[dm(m[1],2)*(m[2]==="S"?-1:1),dm(m[3],3)*(m[4]==="W"?-1:1)]}
+function ntTime(s){const m=String(s||"").match(/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/);return m?new Date(Date.UTC(2000+ +m[1],+m[2]-1,+m[3],+m[4],+m[5])):null}
+function circlePoly(c,nm){const out=[];for(let b=0;b<=360;b+=10){const R=3440.065,d=nm/R,br=b*D2R,la=c[0]*D2R,lo=c[1]*D2R;
+  const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(br)),lo2=lo+Math.atan2(Math.sin(br)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2));out.push([la2*R2D,lo2*R2D])}return out}
+function ntParse(txt){const parts=String(txt).replace(/\r/g,"").split(/(?=\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC]\b)/).map(s=>s.trim()).filter(s=>/NOTAM[NRC]/.test(s));
+  return parts.map(raw=>{const one=raw.replace(/\n/g," ");const g=k=>{const m=one.match(new RegExp(`\\b${k}\\)\\s*(.*?)(?=\\s+[A-G]\\)\\s|$)`));return m?m[1].trim():""};
+    const id=(raw.match(/^([A-Z]\d{4}\/\d{2})/)||[])[1]||"";const q=g("Q");const qp=q.split("/");const n={id,raw,q,code:qp[1]||"",lower:+qp[5]||0,upper:+qp[6]||999,
+      loc:g("A"),from:ntTime(g("B")),to:/PERM/.test(g("C"))?null:ntTime(g("C")),est:/EST/.test(g("C")),sched:g("D"),text:g("E"),polys:[]};
+    const qc=qp[7]&&qp[7].match(/(\d{4}[NS]\d{5}[EW])(\d{3})/);
+    // พื้นที่จากข้อความ E: polygon (≥3 พิกัด) หรือวงกลม "RADIUS x NM"
+    const cs=[...n.text.matchAll(/\d{4,6}(?:\.\d+)?[NS]\s*\d{5,7}(?:\.\d+)?[EW]/g)].map(m=>ntCoord(m[0])).filter(Boolean);
+    const rad=n.text.match(/RADIUS\s*(?:OF\s*)?(\d+(?:\.\d+)?)\s*(NM|KM)/i);
+    if(rad&&cs.length){const r=+rad[1]*(rad[2].toUpperCase()==="KM"?0.54:1);n.polys.push({p:circlePoly(cs[0],r),src:"E"})}
+    else if(cs.length>=3)n.polys.push({p:cs,src:"E"});
+    else if(qc){const c=ntCoord(qc[1]),r=+qc[2];if(c&&r&&r<999)n.polys.push({p:circlePoly(c,r),src:"Q"})}
+    return n})}
+function ntFlightWindow(){const res=compute(),date=state.date||new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
+  const t0=new Date(`${date}T00:00:00+07:00`);t0.setMinutes(t0.getMinutes()+res.dep);const t1=new Date(t0.getTime()+(res.cumMin||60)*60000);return[t0,t1]}
+function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,names=new Set(W.map(w=>w.name.toUpperCase())),near=new Set(routeAirports(num($("#corridor").value,25)).map(a=>a.id));
+  const alts=state.legs.map(l=>num(l.alt,0));const maxFL=Math.max(0,...alts)/100;
+  return NT.map(n=>{const active=(!n.from||n.from<=t1)&&(!n.to||n.to>=t0);
+    let hit=false;if(n.polys.length&&W.length>1)for(const P of n.polys){for(let i=0;i<W.length-1&&!hit;i++){const p=[W[i].lat,W[i].lon],q=[W[i+1].lat,W[i+1].lon],k=Math.max(2,Math.ceil(gcDistNm(p,q)/0.5));
+      for(let j=0;j<=k;j++){const t=j/k;if(inPoly([p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t],P.p)){hit=true;break}}}}
+    const levelOK=!(n.lower>maxFL+5)||!alts.length;const ap=names.has(n.loc)||near.has(n.loc);
+    return{...n,active,hit:hit&&levelOK,ap}})}
+function ntRender(){const E=ntEval(),only=$("#ntOnlyRoute").checked;ntLayer.clearLayers();
+  E.forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:"#8b3fd6",weight:n.hit&&n.active?3:1.5,fillOpacity:.12,dashArray:P.src==="Q"?"5 4":null})
+    .bindPopup(`<b>${esc(n.id)} ${esc(n.loc)}</b><br>${esc(n.code)} · FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc(n.text.slice(0,300))}${P.src==="Q"?"<br><i>วงกลมจาก Q-line (ประมาณ)</i>":""}`).addTo(ntLayer)));
+  const fmt=d=>d?d.toISOString().slice(0,16).replace("T"," ")+"Z":"PERM";
+  const L2=E.filter(n=>!only||(n.active&&(n.hit||n.ap))).sort((a,b)=>(b.hit-a.hit)||(b.ap-a.ap));
+  $("#ntList").innerHTML=L2.length?L2.map(n=>`<div class="nt ${n.hit?"hit":n.ap?"ap":""} ${n.active?"":"off"}"><b>${esc(n.id)}</b> ${esc(n.loc)}
+    ${n.hit?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${n.ap?'<span class="tag ap">สนามตามเส้นทาง</span>':""}${n.active?'<span class="tag act">มีผลช่วงเวลาบิน</span>':'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>'}
+    <br>${fmt(n.from)} → ${fmt(n.to)}${n.est?" EST":""}${n.sched?` · ${esc(n.sched)}`:""} · FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc(n.text)}</div>`).join("")
+    :`<p class="hint">${NT.length?"ไม่มี NOTAM ที่เกี่ยวกับเส้นทาง/เวลาบิน (เอาเครื่องหมายถูกออกเพื่อดูทั้งหมด)":"ยังไม่ได้วาง NOTAM"}</p>`;
+  const [t0,t1]=ntFlightWindow();$("#ntInfo").textContent=NT.length?`อ่านได้ ${NT.length} NOTAM · มีพื้นที่ ${NT.filter(n=>n.polys.length).length} · ช่วงเวลาบิน ${fmt(t0)}–${fmt(t1)} · วางเมื่อ ${store.get("vfr_notam_t")||"–"}`:"";
+  const links=[...new Set(state.wps.map(w=>w.name.toUpperCase()).filter(x=>/^VT[A-Z]{2}$/.test(x)))];
+  $("#notamLinks").innerHTML=`<a class="linkbtn" href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank" rel="noopener">FAA NOTAM Search ↗</a>`+(links.length?`<span class="hint">ICAO ตามเส้นทาง: <b>${links.concat("VTBB").join(" ")}</b></span>`:"")}
+$("#ntParse").onclick=()=>{NT=ntParse($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}store.set("vfr_notam_t",new Date().toLocaleString("th-TH"));
+  ntRender();toast(NT.length?`อ่านได้ ${NT.length} NOTAM`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
+$("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
+$("#ntOnlyRoute").onchange=ntRender;
+try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntParse(t)}}catch(e){}
+
 /* ---------- Kneeboard PDF (A5) — ใช้หน้าพิมพ์ของเบราว์เซอร์ → Save as PDF ---------- */
 $("#kneePdf").onclick=()=>{
   const res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
@@ -1166,6 +1330,11 @@ qzRender();
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
   document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50);
   if(t.dataset.tab==="wx")setTimeout(()=>{wxInit();wxMap.invalidateSize();wxDrawRoute();metarLoad()},50)});
+
+/* ---------- offline (PWA) ---------- */
+function netChip(){const c=$("#netChip");const on=navigator.onLine;c.className="netchip "+(on?"on":"off");c.textContent=on?"ออนไลน์":"ออฟไลน์ — ใช้ข้อมูลที่เก็บไว้"}
+window.addEventListener("online",netChip);window.addEventListener("offline",netChip);netChip();
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 /* ---------- boot ---------- */
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),{padding:[40,40]});else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
