@@ -2,7 +2,7 @@
 
 แอปวางแผนการบิน VFR ใช้ส่วนตัว — เปิดใน Chrome/Safari (iPad: Add to Home Screen)
 
-- `index.html` — ตัวแอป (แท็บ: วางแผน VFR / Flight log / สภาพอากาศ / NOTAM / EMERGENCY)
+- `index.html` — ตัวแอป (แท็บ: 1 วางแผน / 2 NAVLOG / 3 อากาศ / 4 NOTAM / 5 NORMAL / 6 EMER / 7 แปลงหน่วย / 8 ข้อสอบ — ข้อสอบเป็นแท็บสุดท้ายเสมอ)
 - `eaip_update.py` — ดึงข้อมูลสนามบิน/ความถี่จาก eAIP Thailand → `eaip_data.json` (รันเดือนละครั้ง)
 - `บันทึกโปรเจกต์.md` — สรุปงานที่ทำแล้วและงานค้าง
 
