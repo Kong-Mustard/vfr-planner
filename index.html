@@ -136,6 +136,47 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
 }
+/* ---- EMERGENCY ---- */
+.ep-wrap{display:grid;grid-template-columns:330px minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:860px){.ep-wrap{grid-template-columns:1fr}}
+.ep-side{padding:10px;display:flex;flex-direction:column;gap:8px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);max-height:calc(100vh - 90px)}
+@media (max-width:860px){.ep-side{position:static;max-height:none}}
+.ep-tools{display:flex;flex-direction:column;gap:6px}
+#epSearch{font:500 16px var(--f-body);padding:9px 10px}
+.ep-filter{display:flex;gap:4px}.ep-filter button{flex:1}
+.ep-filter button.on{background:var(--bad);border-color:var(--bad);color:#fff}
+.ep-list{overflow:auto;display:flex;flex-direction:column;gap:2px;min-height:120px}
+@media (max-width:860px){.ep-list{max-height:40vh}}
+.ep-grp{font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 6px 2px}
+.ep-item{all:unset;display:grid;grid-template-columns:52px 1fr auto;gap:6px;align-items:baseline;padding:7px 6px;border-radius:6px;cursor:pointer;font:500 14px/1.3 var(--f-body);color:var(--ink)}
+.ep-item:hover{background:var(--input)}.ep-item:focus-visible{outline:2px solid var(--bad)}
+.ep-item.sel{background:var(--accent-soft)}
+.ep-item .id{font:600 12px var(--f-mono);color:var(--muted)}
+.memdot{font:700 10px var(--f-body);color:#fff;background:var(--bad);border-radius:4px;padding:1px 5px}
+.ep-foot{border-top:1px solid var(--line);padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.ep-main{padding:16px 18px;min-height:300px;font-size:17px;line-height:1.5}
+.ep-main h2{font:700 22px/1.25 var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 4px;text-wrap:balance}
+.ep-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin-bottom:12px}
+.ep-legend{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:6px 8px;margin-bottom:12px}
+.ep-legend u{text-decoration-color:var(--bad);text-decoration-thickness:2px}
+.b-warning,.b-caution,.b-note{border-radius:8px;padding:8px 12px;margin:10px 0;font-size:15px}
+.b-warning{border:2px solid var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent);font-weight:600}
+.b-caution{border:2px solid var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent);font-weight:600}
+.b-note{border:1px solid var(--line);background:var(--input)}
+.b-warning::before,.b-caution::before,.b-note::before{display:block;font:700 12px var(--f-display);letter-spacing:.12em;margin-bottom:2px}
+.b-warning::before{content:"WARNING";color:var(--bad)}.b-caution::before{content:"CAUTION";color:var(--warn)}.b-note::before{content:"NOTE";color:var(--muted)}
+.b-text{margin:8px 0;color:var(--ink)}
+.b-sub{margin:8px 0 8px 4px}
+.b-cond{margin:14px 0 4px;font-style:italic;font-weight:600;color:var(--nav)}
+.b-step{display:grid;grid-template-columns:34px 1fr;gap:8px;margin:8px 0;align-items:start}
+.b-step .n{display:inline-grid;place-items:center;width:28px;height:28px;font:700 15px var(--f-mono);color:var(--ink)}
+.b-step .n.circ{border:2px solid var(--ink);border-radius:50%}
+.b-step .tx{font-size:19px;font-weight:500}
+.b-step.mem .tx{text-decoration:underline;text-decoration-color:var(--bad);text-decoration-thickness:2px;text-underline-offset:4px;font-weight:700}
+.quiz .b-step.mem .tx{filter:blur(7px);cursor:pointer;user-select:none}
+.quiz .b-step.mem.show .tx{filter:none}
+.ep-empty{color:var(--muted);text-align:center;padding:40px 10px}
+.ep-empty h3{font:600 22px var(--f-display);color:var(--bad);margin:0 0 6px}
 .placeholder{padding:40px 16px;text-align:center;color:var(--muted)}
 .placeholder h3{font:600 22px var(--f-display);color:var(--nav);margin:0 0 6px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--nav);color:var(--panel);
@@ -153,7 +194,7 @@ body.printing #printView{position:static;padding:0}
     <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · Flight log<small>เร็วๆ นี้</small></button>
     <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ<small>เร็วๆ นี้</small></button>
     <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM<small>เร็วๆ นี้</small></button>
-    <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY<small>เร็วๆ นี้</small></button>
+    <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY</button>
   </nav>
 </header>
 
@@ -288,7 +329,25 @@ body.printing #printView{position:static;padding:0}
 <section id="tab-log" class="tabpanel card" hidden><div class="placeholder"><h3>Flight log</h3>ยังไม่เปิดใช้ — จะทำต่อจากแท็บวางแผน</div></section>
 <section id="tab-wx" class="tabpanel card" hidden><div class="placeholder"><h3>สภาพอากาศ</h3>ยังไม่เปิดใช้ — METAR/TAF ตามเส้นทาง, Windy, เรดาร์ฝน</div></section>
 <section id="tab-notam" class="tabpanel card" hidden><div class="placeholder"><h3>NOTAM</h3>ยังไม่เปิดใช้</div></section>
-<section id="tab-emer" class="tabpanel card" hidden><div class="placeholder"><h3 style="color:var(--bad)">EMERGENCY</h3>ยังไม่เปิดใช้</div></section>
+<section id="tab-emer" class="tabpanel" hidden>
+ <div class="ep-wrap">
+  <aside class="card ep-side">
+    <div class="ep-tools">
+      <input id="epSearch" type="search" placeholder="ค้นหา เช่น fire, HYD, GEN" aria-label="ค้นหา emergency procedure">
+      <div class="ep-filter" role="group" aria-label="ตัวกรอง">
+        <button id="epAll" class="on">ทั้งหมด</button><button id="epMem">เฉพาะท่องจำ</button>
+      </div>
+    </div>
+    <div id="epList" class="ep-list"></div>
+    <div class="ep-foot">
+      <p id="epSrc" class="hint"></p>
+      <div class="btns"><button type="button" onclick="document.getElementById('epImport').click()">Import ข้อมูล EP</button><button id="epClear">ลบข้อมูล EP</button></div>
+      <input id="epImport" type="file" accept=".json,application/json" hidden>
+    </div>
+  </aside>
+  <article class="card ep-main" id="epMain"></article>
+ </div>
+</section>
 </main>
 <div id="toast" class="toast"></div>
 
@@ -654,6 +713,42 @@ $("#exportXlsx").onclick=async()=>{
   if(EAIP){const r=w3.getRow(rr+1);r.getCell(1).value=`ที่มา: eAIP Thailand ฉบับ ${EAIP.edition}`;r.getCell(1).font={...F,italic:true}}
   const buf=await wb.xlsx.writeBuffer();
   download(fname()+".xlsx",buf,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");toast("สร้างไฟล์ Excel แล้ว")};
+
+/* ---------- EMERGENCY (ข้อมูลจากไฟล์ที่ import — เก็บในเครื่องเท่านั้น ไม่อยู่ใน repo) ---------- */
+let EP=store.get("vfr_ep"),epSel=null,epMemOnly=false,epQuiz=false;
+function epRenderList(){const L=$("#epList");
+  if(!EP){L.innerHTML="";$("#epSrc").textContent="";epRenderMain();return}
+  $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) บทที่ ${EP.chapter} · ${EP.procedures.length} หัวข้อ`;
+  const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="";
+  EP.procedures.forEach((p,i)=>{if(epMemOnly&&!p.memory)return;
+    if(q&&!(p.id+" "+p.title+" "+p.blocks.map(b=>b.t).join(" ")).toLowerCase().includes(q))return;
+    if(p.section!==grp){grp=p.section;html+=`<div class="ep-grp">${esc(grp)}</div>`}
+    html+=`<button class="ep-item${i===epSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${p.memory?'<span class="memdot">MEM</span>':""}</button>`});
+  L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
+function epRenderMain(){const M=$("#epMain");
+  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>กด <b>Import ข้อมูล EP</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
+  if(epSel==null){M.innerHTML=`<div class="ep-empty"><h3>เลือกหัวข้อ</h3>เลือก procedure จากรายการ หรือพิมพ์ค้นหา<br><span class="hint">ตัวกรอง "เฉพาะท่องจำ" แสดงเฉพาะหัวข้อที่มีขั้นตอนต้องจำ</span></div>`;return}
+  const p=EP.procedures[epSel];
+  const body=p.blocks.map(b=>{const t=esc(b.t);
+    if(b.k==="step")return`<div class="b-step${b.u?" mem":""}"><span class="n${b.c?" circ":""}">${b.n??"•"}</span><span class="tx">${t}</span></div>`;
+    return`<div class="b-${b.k}">${t}</div>`}).join("");
+  M.innerHTML=`<h2>${esc(p.id)} ${esc(p.title)}</h2>
+   <div class="ep-meta"><span>${esc(EP.source)} หน้า ${esc(p.page)}</span>${p.memory?'<span class="memdot">MEMORY ITEMS</span>':""}
+    ${p.memory?`<button id="epQuizBtn" class="mini${epQuiz?" on":""}">${epQuiz?"เลิกโหมดท่องจำ":"โหมดท่องจำ (ซ่อนขั้นตอนที่ต้องจำ)"}</button>`:""}</div>
+   <div class="ep-legend"><u>ขีดเส้นใต้</u> = ต้องทำได้จากความจำ · ตัวเลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับเป็นผู้ทำ · ใช้อ้างอิง/ฝึกเท่านั้น ใช้ checklist (CL) จริงเสมอ</div>
+   <div class="${epQuiz?"quiz":""}" id="epBody">${body}</div>`;
+  const qb=$("#epQuizBtn");if(qb)qb.onclick=()=>{epQuiz=!epQuiz;epRenderMain()};
+  $("#epBody").onclick=e=>{const s=e.target.closest(".b-step.mem");if(s&&epQuiz)s.classList.toggle("show")}}
+$("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;epSel=+b.dataset.i;epRenderList();epRenderMain();
+  if(window.innerWidth<=860)$("#epMain").scrollIntoView({behavior:"smooth"})});
+$("#epSearch").addEventListener("input",epRenderList);
+$("#epAll").onclick=()=>{epMemOnly=false;$("#epAll").classList.add("on");$("#epMem").classList.remove("on");epRenderList()};
+$("#epMem").onclick=()=>{epMemOnly=true;$("#epMem").classList.add("on");$("#epAll").classList.remove("on");epRenderList()};
+$("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.procedures))throw 0;
+  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain()}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
+let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EP"},3000);return}
+  try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EP";epRenderList()};
+epRenderList();epRenderMain();
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
