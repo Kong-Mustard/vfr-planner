@@ -1,0 +1,28 @@
+# ดึงข้อมูล eAIP Thailand อัตโนมัติ → eaip_data.json (แอปโหลดเองตอนเปิด)
+name: Update eAIP
+
+on:
+  schedule:
+    - cron: "17 2 * * 4"   # ทุกวันพฤหัส 09:17 น. เวลาไทย (AIRAC มีผลวันพฤหัส)
+  workflow_dispatch:        # กดรันเองได้ที่แท็บ Actions
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests beautifulsoup4
+      - run: python eaip_update.py
+      - name: Commit ถ้าข้อมูลเปลี่ยน
+        run: |
+          git config user.name "eaip-bot"
+          git config user.email "eaip-bot@users.noreply.github.com"
+          git add eaip_data.json
+          git diff --cached --quiet || git commit -m "อัปเดตข้อมูล eAIP อัตโนมัติ"
+          git push

@@ -603,6 +603,11 @@ state=store.get("vfr_current")||JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
 if(state.remStep==null)state.remStep="10";
 fillDatalist();fillForm();refreshSel();render();fit();
+/* โหลด eaip_data.json ที่ GitHub อัปเดตให้อัตโนมัติ (อยู่ข้างไฟล์แอป) */
+fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
+  if(!d||!d.airports||!d.edition)return;
+  if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();fillDatalist();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 </script>
 </body>
 </html>
