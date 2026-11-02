@@ -216,6 +216,19 @@ def parse_enr41(html):
     return out
 
 
+def parse_enr51(html):
+    """ยังเป็นตัวอ่านเบื้องต้น — จะปรับหลังเห็นรูปแบบหน้าจริง"""
+    soup = strip_markup(BeautifulSoup(html, "html.parser"))
+    out = []
+    for tb in soup.find_all("table"):
+        for r in rows(tb):
+            line = " ".join(r)
+            m = re.match(r"^(VT\s*[PRD]\s*-?\s*\d+[A-Z]?)\b", line)
+            if m:
+                out.append({"raw": r})
+    return out
+
+
 def debug_dump(name, html):
     import os
     os.makedirs("debug", exist_ok=True)
@@ -267,6 +280,15 @@ def main():
         print(f"ENR 4.1 navaid {len(data['navaids'])} รายการ")
     except Exception as e:
         data["errors"].append(f"ENR 4.1: {e}")
+    # ENR 5.1 Prohibited / Restricted / Danger areas
+    try:
+        raw = get(root + "VT-ENR-5.1-en-GB.html")
+        if "--debug-enr5" in sys.argv:
+            debug_dump("ENR_5.1.html", raw)
+        data["areas"] = parse_enr51(raw)
+        print(f"ENR 5.1 พื้นที่ {len(data['areas'])} แห่ง")
+    except Exception as e:
+        data["errors"].append(f"ENR 5.1: {e}")
     with open("eaip_data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
     print("\nบันทึกแล้ว: eaip_data.json")
