@@ -144,6 +144,21 @@ body.printing #printView{position:static;padding:0}
 .area-row b{font-family:var(--f-display)}
 .area-row small{color:var(--muted);display:block}
 .area-alert{font-weight:700;color:var(--bad)}
+.disclaimer{flex-basis:100%;margin:0;font-size:12px;line-height:1.4;color:#6b4a00;background:#fff4c2;border:1px solid #e9c46a;border-radius:6px;padding:4px 10px}
+:root[data-theme="dark"] .disclaimer{color:#ffe08a;background:#3a2e08;border-color:#7a5d12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .disclaimer{color:#ffe08a;background:#3a2e08;border-color:#7a5d12}}
+.emerchip{font:700 13px var(--f-mono);color:var(--bad);border:2px solid var(--bad);border-radius:6px;padding:3px 8px;white-space:nowrap}
+.mini-tbl td{font-size:15px;padding:6px}.mini-tbl td.mh{font-size:18px;font-weight:700}
+.linkbtn{display:inline-block;font:600 14px var(--f-body);background:var(--nav);color:var(--panel);padding:8px 12px;border-radius:7px;text-decoration:none}
+.nl-head{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;margin-bottom:8px}
+.nl-head span b{font-family:var(--f-mono)}
+.form-tbl td{padding:3px}.form-tbl td:first-child{font-weight:600;text-align:left;white-space:nowrap}
+.form-tbl input{font:500 14px var(--f-body);min-width:140px;text-align:left}
+.fp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}
+@media (max-width:760px){.fp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fp-grid input{font:500 14px var(--f-body)}
+.hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+.hbox svg{display:block}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
@@ -229,12 +244,13 @@ body.printing #printView{position:static;padding:0}
   <div class="brand">VFR<span>·</span>PLANNER</div>
   <nav class="tabs" role="tablist">
     <button class="tab" role="tab" data-tab="plan" aria-selected="true">1 · วางแผน VFR</button>
-    <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · Flight log<small>เร็วๆ นี้</small></button>
+    <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · NAVLOG</button>
     <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ<small>เร็วๆ นี้</small></button>
-    <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM<small>เร็วๆ นี้</small></button>
+    <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM</button>
     <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY</button>
     <button class="tab" role="tab" data-tab="quiz" aria-selected="false">6 · ข้อสอบ</button>
   </nav>
+  <p class="disclaimer" role="note">⚠ แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง</p>
 </header>
 
 <main>
@@ -264,6 +280,7 @@ body.printing #printView{position:static;padding:0}
         <label>น้ำมันสำรองขั้นต่ำ (lb)<input id="reserve" type="number" inputmode="decimal"></label>
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900"></label>
         <label>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0"></label>
+        <label>ขนาดกล่อง heading<input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1"></label>
         <label>ป้ายระยะคงเหลือ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
       </div>
       <div>
@@ -306,8 +323,9 @@ body.printing #printView{position:static;padding:0}
 
   <div class="card section">
     <div class="sechead">
-      <h2>Nav Log</h2>
+      <h2>NAV LOG</h2>
       <div class="btns">
+        <button id="goNavlog">แก้ไขใน NAVLOG เต็ม →</button>
         <button id="savePlan" class="primary">บันทึกแผน</button>
         <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
         <button id="delPlan">ลบแผนนี้</button>
@@ -318,13 +336,9 @@ body.printing #printView{position:static;padding:0}
         <label class="btnlike" style="display:inline-flex"><input id="importJson" type="file" accept=".json,application/json" hidden><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button></label>
       </div>
     </div>
-    <p class="hint">ช่องขาว = กรอกได้ (แก้เฉพาะ leg ได้) · ช่องเขียว = คำนวณอัตโนมัติ · MH กลับ = heading ขาบินกลับเส้นทางเดิมพร้อมแก้ลมแล้ว</p>
-    <div class="tablewrap"><table id="navTable">
-      <thead><tr>
-        <th>Leg</th><th>From → To</th><th>ALT</th><th>W/D</th><th>W/V</th><th>Temp</th><th>CAS</th><th>TAS</th>
-        <th>TC</th><th>WCA</th><th>TH</th><th>MH</th><th>Dev</th><th>CH</th><th>MH กลับ</th>
-        <th>Dist</th><th>Rem</th><th>GS</th><th>ETE</th><th>ETA</th><th>ATE</th><th>Fuel leg</th><th>Fuel rem</th>
-      </tr></thead>
+    <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG ข้อมูลเชื่อมกันทั้งสองแท็บ</p>
+    <div class="tablewrap"><table id="navMini" class="mini-tbl">
+      <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -340,6 +354,7 @@ body.printing #printView{position:static;padding:0}
   <div class="card section">
     <div class="sechead">
       <h2>ความถี่ตามเส้นทาง</h2>
+      <span class="emerchip">EMER 121.5 / 243.0</span>
       <div class="btns">
         <label style="flex-direction:row;align-items:center;gap:6px">รัศมีจากเส้นทาง<input id="corridor" type="number" value="25" style="width:70px"> NM</label>
         <button type="button" onclick="document.getElementById('importEaip').click()">Import ข้อมูล eAIP</button>
@@ -373,9 +388,41 @@ body.printing #printView{position:static;padding:0}
  <aside id="printView" aria-hidden="true"></aside>
 </section>
 
-<section id="tab-log" class="tabpanel card" hidden><div class="placeholder"><h3>Flight log</h3>ยังไม่เปิดใช้ — จะทำต่อจากแท็บวางแผน</div></section>
+<section id="tab-log" class="tabpanel" hidden>
+ <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="card section">
+    <div class="sechead"><h2>NAVLOG — <span id="nlTitle"></span></h2><span class="hint">ช่องขาว = กรอกได้ · ช่องเขียว = คำนวณอัตโนมัติ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
+    <div class="nl-head" id="nlHead"></div>
+    <div class="tablewrap"><table id="navTable">
+      <thead><tr>
+        <th>Leg</th><th>From → To</th><th>ALT</th><th>W/D</th><th>W/V</th><th>Temp</th><th>CAS</th><th>TAS</th>
+        <th>TC</th><th>WCA</th><th>TH</th><th>Var</th><th>MH</th><th>Dev</th><th>CH</th><th>MH กลับ</th>
+        <th>Dist</th><th>Rem</th><th>GS</th><th>ETE</th><th>ETA</th><th>ATE</th><th>Fuel leg</th><th>Fuel rem</th><th>Fuel act</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+  <div class="card section">
+    <div class="sechead"><h2>WEATHER LOG &amp; NOTES</h2></div>
+    <div class="tablewrap"><table id="wxLog" class="form-tbl">
+      <thead><tr><th>Location</th><th>Ceiling / Visibility</th><th>Winds Aloft</th><th>Notes / NOTAMs</th><th>Frequency (TWR / APP / ATIS)</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+  <div class="card section">
+    <div class="sechead"><h2>FLIGHT PLAN</h2><span class="hint">ช่องที่เป็นตัวเทาเติมให้อัตโนมัติจากแผน — พิมพ์ทับได้</span></div>
+    <div class="fp-grid" id="fpGrid"></div>
+  </div>
+ </div>
+</section>
 <section id="tab-wx" class="tabpanel card" hidden><div class="placeholder"><h3>สภาพอากาศ</h3>ยังไม่เปิดใช้ — METAR/TAF ตามเส้นทาง, Windy, เรดาร์ฝน</div></section>
-<section id="tab-notam" class="tabpanel card" hidden><div class="placeholder"><h3>NOTAM</h3>ยังไม่เปิดใช้</div></section>
+<section id="tab-notam" class="tabpanel" hidden>
+ <div class="card section">
+  <div class="sechead"><h2>NOTAM</h2>
+   <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">เปิด NOTAM Leaflet — AEROTHAI ↗</a></div>
+  <p class="hint">แหล่งหลักคือ AEROTHAI (ต้องล็อกอิน) — ส่วนดึง NOTAM อัตโนมัติจากแหล่งฟรีจะเพิ่มในขั้นถัดไป</p>
+ </div>
+</section>
 <section id="tab-quiz" class="tabpanel" hidden>
  <div class="card qz" id="qz"></div>
 </section>
@@ -483,11 +530,10 @@ function renderFreq(){
   if(EAIP){const age=Math.round((Date.now()-new Date(EAIP.edition))/864e5);
     st.innerHTML=`ข้อมูล eAIP ฉบับ <b>${esc(EAIP.edition)}</b> (import ${esc(EAIP.fetched||"")}, ${Object.keys(EAIP.airports||{}).length} สนาม)`+(age>28?` · <span class="bad">ฉบับนี้อาจหมดอายุแล้ว (${age} วัน) ให้รันสคริปต์ใหม่</span>`:"");}
   else st.innerHTML=`<span class="warnc">ยังไม่มีข้อมูลความถี่ — รัน eaip_update.py แล้วกด Import ข้อมูล eAIP</span> · ตอนนี้แสดงเฉพาะรายชื่อสนามใกล้เส้นทาง`;
-  const emer=`<div class="fcard emer"><h3>EMER</h3><div class="r"><b>Guard</b><span>121.5 / 243.0</span></div></div>`;
-  $("#freqList").innerHTML=emer+list.map(a=>{const e=a.eaip;
+  $("#freqList").innerHTML=list.map(a=>{const e=a.eaip;
     const comm=e?e.comm.map(c=>`<div class="r"><b>${esc(c.svc)}</b><span>${esc(c.freq)}${c.callsign?`<br><small>${esc(c.callsign)}</small>`:""}</span></div>`).join(""):"";
     const nav=e?e.navaids.map(n=>`<div class="r"><b>${esc(n.type)}</b><span>${esc(n.id)} ${esc(n.freq)}</span></div>`).join(""):"";
-    const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.rwy.join(" / "))}</span></div>`:"";
+    const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.custom?e.rwy.join(", "):rwyPairs(e.rwy))}</span></div>`:"";
     const tag=e&&e.custom?`<span class="ctag">กรอกเอง</span>`:"";
     const add=!e||e.custom?`<button class="mini" data-cedit="${esc(a.id)}">${e?"แก้ไข":"กรอกข้อมูล"}</button>`:"";
     return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
@@ -554,9 +600,18 @@ function drawMap(rows){
     m.on("dragend",e=>{const p=e.target.getLatLng();w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render()});
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
-    L.marker([(a[0]+b[0])/2,(a[1]+b[1])/2],{interactive:false,icon:L.divIcon({className:"",html:`<div class="legbox"><b>${isFinite(r.mh)?hdg(r.mh):"---"}°</b><span>${r.dist.toFixed(1)} NM</span><span>${mmss(r.ete)} m.</span><i>${isFinite(r.mhBack)?hdg(r.mhBack):"---"}°</i></div>`,iconSize:null,iconAnchor:[-34,30]})}).addTo(routeLayer)});
+    const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
+    const key=legKey(i);let pos=state.boxPos[key];
+    if(!pos){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,off=85*s;
+      const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
+    const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
+    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:hboxSvg(r,s),iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
+    mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
+    mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state)});
+    mk.on("dblclick",()=>{delete state.boxPos[key];render()})});
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
 }
+map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
 map.on("click",e=>{if(!addMode)return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
 
 /* ---------- compute ---------- */
@@ -584,6 +639,51 @@ function compute(){
 /* ---------- render ---------- */
 function cell(v,cls=""){return`<td class="c ${cls}">${v}</td>`}
 function inp(i,key,w="w-s"){const v=state.legs[i][key];return`<td class="${w}"><input data-leg="${i}" data-k="${key}" value="${v??""}" inputmode="decimal"></td>`}
+/* ---------- NAVLOG เต็ม (แท็บ 2): หัวแผน, Weather log, Flight plan ---------- */
+const WX_ROWS=["Departure","Enroute 1","Enroute 2","Destination","Alternate"];
+const FP_FIELDS=[["type","1. Type"],["ident","2. Aircraft Ident"],["acftType","3. Acft Type/Equip"],["tas","4. True Airspeed"],
+ ["dep","5. Departure Pt"],["depTime","6. Depart Time"],["alt","7. Cruising Alt"],["route","8. Route of Flight"],
+ ["dest","9. Destination"],["ete","10. Est Time Enroute"],["remarks","11. Remarks"],["fob","12. Fuel on Board"],
+ ["altn","13. Alternate"],["pilot","14. Pilot Name/Info"],["aboard","15. # Aboard"],["color","16. Color of Aircraft"]];
+function fpAuto(res){const W=state.wps,r0=res.rows[0];return{type:"VFR",ident:state.acft||"",acftType:"UH-60M",tas:r0?r0.tas.toFixed(0)+" kt":"",
+  dep:W[0]?W[0].name:"",depTime:state.depTime||"",alt:state.g.alt?state.g.alt+" ft":"",route:W.map(w=>w.name).join(" – "),
+  dest:W.length?W[W.length-1].name:"",ete:res.rows.length?mmss(res.cumMin):"",fob:state.fuel0?state.fuel0+" lb":""}}
+function apFreqText(name){const a=AP[String(name||"").toUpperCase()];if(!a||!a.eaip)return"";
+  return a.eaip.comm.filter(c=>/TWR|APP|ATIS/.test(c.svc)).map(c=>`${c.svc} ${c.freq.split(" / ")[0]}`).join(" · ")}
+function renderNavlogExtras(res){
+  const W=state.wps;$("#nlTitle").textContent=W.length>1?`${W[0].name} → ${W[W.length-1].name}`:"ยังไม่มีเส้นทาง";
+  $("#nlHead").innerHTML=[["Aircraft",state.acft||"–"],["Date",state.date||"–"],["เริ่มบิน",state.depTime||"–"],["น้ำมันเริ่ม",(state.fuel0||"–")+" lb"],
+    ["Burn",(state.burn||"–")+" lb/นาที"],["สำรองขั้นต่ำ",(state.reserve||"–")+" lb"],["ระยะรวม",res.rows.length?res.total.toFixed(1)+" NM":"–"],["เวลารวม",res.rows.length?mmss(res.cumMin):"–"]]
+    .map(([k,v])=>`<span>${k}: <b>${esc(v)}</b></span>`).join("");
+  const act=document.activeElement;if(act&&(act.closest("#wxLog")||act.closest("#fpGrid")))return;
+  state.wxlog=state.wxlog||{};state.fp=state.fp||{};
+  const locName={Departure:W[0]&&W[0].name,Destination:W.length>1&&W[W.length-1].name,Alternate:state.fp.altn};
+  $("#wxLog tbody").innerHTML=WX_ROWS.map(rw=>{const d=state.wxlog[rw]||{};
+    return`<tr><td>${rw}${locName[rw]?` <span class="hint">(${esc(locName[rw])})</span>`:""}</td>${["cv","wind","notes","freq"].map(k=>
+      `<td><input data-wx="${rw}" data-k="${k}" value="${esc(d[k]||"")}" placeholder="${k==="freq"?esc(apFreqText(locName[rw])):""}"></td>`).join("")}</tr>`}).join("");
+  const auto=fpAuto(res);
+  $("#fpGrid").innerHTML=FP_FIELDS.map(([k,l])=>`<label>${l}<input data-fp="${k}" value="${esc(state.fp[k]||"")}" placeholder="${esc(auto[k]||"")}"></label>`).join("");
+}
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.dataset.wx){state.wxlog=state.wxlog||{};(state.wxlog[t.dataset.wx]=state.wxlog[t.dataset.wx]||{})[t.dataset.k]=t.value;store.set("vfr_current",state)}
+  if(t.dataset.fp){state.fp=state.fp||{};state.fp[t.dataset.fp]=t.value;store.set("vfr_current",state)}});
+/* RWY: จับคู่ทิศตรงข้าม เช่น 16/34/05/23 → 16-34, 05-23 */
+function rwyPairs(list){const L=(list||[]).map(String),used=new Set(),out=[];
+  const opp=d=>{const m=d.match(/^(\d{2})([LRC]?)$/);if(!m)return null;const n=((+m[1]+18-1)%36)+1;return String(n).padStart(2,"0")+({L:"R",R:"L",C:"C"}[m[2]]||"")};
+  L.forEach(d=>{if(used.has(d))return;const o=opp(d);if(o&&L.includes(o)&&!used.has(o)){used.add(d);used.add(o);out.push(+d.slice(0,2)<=+o.slice(0,2)?`${d}-${o}`:`${o}-${d}`)}else{used.add(d);out.push(d)}});
+  return out.join(", ")}
+/* กล่อง heading แบบแผน kneeboard: บน = heading ไป, กลาง = ระยะ/เวลา, ล่าง = heading กลับ */
+function hboxSvg(r,s){const w=Math.round(92*s),hgt=Math.round(150*s);
+  return`<svg width="${w}" height="${hgt}" viewBox="0 0 92 150" aria-hidden="true">
+   <path d="M46 2 L89 30 L89 120 L46 148 L3 120 L3 30 Z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+   <line x1="3" y1="42" x2="89" y2="42" stroke="#111" stroke-width="2"/><line x1="3" y1="108" x2="89" y2="108" stroke="#111" stroke-width="2"/>
+   <line x1="14" y1="75" x2="78" y2="75" stroke="#111" stroke-width="1.5"/>
+   <text x="46" y="36" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="800" font-size="21" fill="#111">${isFinite(r.mh)?hdg(r.mh):"---"}°</text>
+   <text x="46" y="66" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#111">${r.dist.toFixed(1)} NM</text>
+   <text x="46" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="16" fill="#111">${mmss(r.ete)} m.</text>
+   <text x="46" y="131" text-anchor="middle" font-family="JetBrains Mono,monospace" font-weight="700" font-size="18" fill="#444">${isFinite(r.mhBack)?hdg(r.mhBack):"---"}°</text></svg>`}
+function legKey(i){const a=state.wps[i],b=state.wps[i+1];return[a.lat,a.lon,b.lat,b.lon].map(v=>v.toFixed(4)).join(",")}
+
 function render(){
   const res=compute();const rv=state.reserve!==""&&state.reserve!=null?num(state.reserve):null;
   // waypoints
@@ -599,13 +699,20 @@ function render(){
     return`<tr><td>${i+1}</td><td style="text-align:left">${esc(state.wps[i].name)} → ${esc(state.wps[i+1].name)}</td>
     ${inp(i,"alt","w-m")}${inp(i,"wd")}${inp(i,"wv")}${inp(i,"temp")}${inp(i,"cas")}
     ${cell(r.tas.toFixed(1))}${cell(hdg(r.tc))}${cell(isFinite(r.wca)?(r.wca>=0?"+":"")+r.wca.toFixed(1):"ลมแรงเกิน","",)}
-    ${cell(isFinite(r.th)?hdg(r.th):"–")}${cell(isFinite(r.mh)?hdg(r.mh):"–","mh")}${inp(i,"dev")}${cell(isFinite(r.ch)?hdg(r.ch):"–")}
+    ${cell(isFinite(r.th)?hdg(r.th):"–")}${cell(num(state.g.var,0))}${cell(isFinite(r.mh)?hdg(r.mh):"–","mh")}${inp(i,"dev")}${cell(isFinite(r.ch)?hdg(r.ch):"–")}
     ${cell(isFinite(r.mhBack)?hdg(r.mhBack):"–")}
     ${cell(r.dist.toFixed(1))}${cell(r.rem.toFixed(1))}${cell(isFinite(r.gs)?r.gs.toFixed(0):"–")}
     ${cell(mmss(r.ete))}${cell(hhmm(r.eta))}<td class="w-s"><input data-leg="${i}" data-k="ate" value="${esc(state.legs[i].ate||"")}" placeholder="mm:ss"></td>
-    ${cell(isFinite(r.fLeg)?r.fLeg.toFixed(1):"–")}${cell(isFinite(r.fuel)?r.fuel.toFixed(1):"–",fCls)}</tr>`}).join("");
-  const tot=res.rows.length?`<tr class="tot"><td colspan="15" style="text-align:right">รวม</td><td>${res.total.toFixed(1)}</td><td></td><td></td><td>${mmss(res.cumMin)}</td><td>${hhmm(res.dep+res.cumMin)}</td><td></td><td>${(res.cumMin*num(state.burn,0)).toFixed(1)}</td><td class="${rv!=null&&res.fuel<rv?"bad":""}">${res.fuel.toFixed(1)}</td></tr>`:"";
-  $("#navTable tbody").innerHTML=body+tot||`<tr><td colspan="23" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุดถึงจะคำนวณ leg ได้</td></tr>`;
+    ${cell(isFinite(r.fLeg)?r.fLeg.toFixed(1):"–")}${cell(isFinite(r.fuel)?r.fuel.toFixed(1):"–",fCls)}<td class="w-s"><input data-leg="${i}" data-k="fact" value="${esc(state.legs[i].fact||"")}" placeholder="lb"></td></tr>`}).join("");
+  const tot=res.rows.length?`<tr class="tot"><td colspan="16" style="text-align:right">รวม</td><td>${res.total.toFixed(1)}</td><td></td><td></td><td>${mmss(res.cumMin)}</td><td>${hhmm(res.dep+res.cumMin)}</td><td></td><td>${(res.cumMin*num(state.burn,0)).toFixed(1)}</td><td class="${rv!=null&&res.fuel<rv?"bad":""}">${res.fuel.toFixed(1)}</td><td></td></tr>`:"";
+  $("#navTable tbody").innerHTML=body+tot||`<tr><td colspan="25" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุดถึงจะคำนวณ leg ได้</td></tr>`;
+  // NAV LOG ย่อ (แท็บ 1)
+  $("#navMini tbody").innerHTML=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":"";
+    return`<tr><td style="text-align:left"><b>${esc(state.wps[i+1].name)}</b></td><td>${esc(state.legs[i].alt??"")}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td>
+      <td class="c mh">${isFinite(r.mh)?hdg(r.mh):"–"}°</td><td class="c">${isFinite(r.mhBack)?hdg(r.mhBack):"–"}°</td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td>
+      <td class="c">${mmss(r.ete)}</td><td class="c">${hhmm(r.eta)}</td><td class="c ${fCls}">${isFinite(r.fuel)?r.fuel.toFixed(0):"–"}</td></tr>`}).join("")
+    ||`<tr><td colspan="11" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุด</td></tr>`;
+  renderNavlogExtras(res);
   // summary
   $("#sDist").textContent=res.rows.length?res.total.toFixed(1)+" NM":"–";
   $("#sEte").textContent=res.rows.length?mmss(res.cumMin):"–";
@@ -621,10 +728,12 @@ function markEdited(){if(state.example){state.example=false}}
 /* ---------- form binding ---------- */
 const fields={planName:"planName",acft:"acft",date:"date",depTime:"depTime",fuel0:"fuel0",burn:"burn",reserve:"reserve",sa:"sa",unitFreq:"unitFreq",remStep:"remStep"};
 const gfields={gAlt:"alt",gCas:"cas",gWd:"wd",gWv:"wv",gTemp:"temp",gVar:"var"};
-function fillForm(){["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
+function fillForm(){if($("#boxScale"))$("#boxScale").value=state.boxScale||1;["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
   for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??""}
 for(const[id,k]of Object.entries(fields))$("#"+id).addEventListener("input",e=>{state[k]=e.target.value;markEdited();render()});
 for(const[id,k]of Object.entries(gfields))$("#"+id).addEventListener("input",e=>{state.g[k]=e.target.value;markEdited();if(k==="var")render()});
+$("#boxScale").addEventListener("input",e=>{state.boxScale=+e.target.value;render()});
+$("#goNavlog").onclick=()=>document.querySelector('.tab[data-tab="log"]').click();
 $("#applyAll").onclick=()=>{state.legs.forEach(l=>Object.assign(l,{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp}));render();toast("ใช้ค่ากับทุก leg แล้ว")};
 
 $("#navTable").addEventListener("change",e=>{const t=e.target;if(t.dataset.leg==null)return;state.legs[+t.dataset.leg][t.dataset.k]=t.value;markEdited();render()});
@@ -747,7 +856,7 @@ $("#kneePdf").onclick=()=>{
     res.rows.map((r,i)=>`<tr><td>${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
   pv.innerHTML=`<div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.</div></div>
-    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}${cards}</div></div>${tbl}`;
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div>${cards}</div></div>${tbl}`;
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
   $("#pvMap").appendChild(mapEl);
   const back=()=>{home.insertBefore(mapEl,next);map.invalidateSize();window.removeEventListener("afterprint",back)};
