@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: "17 2 * * 4"   # ทุกวันพฤหัส 09:17 น. เวลาไทย (AIRAC มีผลวันพฤหัส)
   workflow_dispatch:        # กดรันเองได้ที่แท็บ Actions
+  push:                     # รันทันทีเมื่อแก้สคริปต์
+    paths:
+      - eaip_update.py
+      - .github/workflows/eaip.yml
 
 permissions:
   contents: write
@@ -18,11 +22,12 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests beautifulsoup4
-      - run: python eaip_update.py
+      - run: python eaip_update.py --debug
       - name: Commit ถ้าข้อมูลเปลี่ยน
         run: |
           git config user.name "eaip-bot"
           git config user.email "eaip-bot@users.noreply.github.com"
-          git add eaip_data.json
+          git add eaip_data.json debug/
           git diff --cached --quiet || git commit -m "อัปเดตข้อมูล eAIP อัตโนมัติ"
+          git pull --rebase
           git push

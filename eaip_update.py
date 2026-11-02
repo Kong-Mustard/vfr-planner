@@ -30,8 +30,19 @@ def get(url):
             print("  ลองใหม่:", e); time.sleep(2)
 
 
+DBTOK = re.compile(r"\b[A-Z][A-Z0-9_]*;[A-Z0-9_]+;\d+\b")
+
+
 def clean(t):
-    return re.sub(r"\s+", " ", t or "").strip()
+    t = DBTOK.sub(" ", t or "")
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def strip_markup(soup):
+    """ลบ element ที่ซ่อนรหัสฐานข้อมูล (เช่น class sdParams / display:none)"""
+    for el in soup.select(".sdParams, [style*='display:none'], [style*='display: none']"):
+        el.decompose()
+    return soup
 
 
 COORD = re.compile(r"(\d{6}(?:\.\d+)?)\s*([NS])[\s,/]*(\d{7}(?:\.\d+)?)\s*([EW])")
@@ -89,8 +100,22 @@ def rows(tb):
     return res
 
 
+SVC = re.compile(r"^(APP|TWR|GND|ATIS|CDC|DEL|DART|ACC|FIS|AFIS|ASR|SRA|PAR|RADAR|DEP|ARR|APN|AMC|VOLMET|D-ATIS|CTL|INFO|MIL|GCA|OPS)\b", re.I)
+FREQ = re.compile(r"\b(\d{3}\.\d{1,3})\b")
+HOURS = re.compile(r"\b(H24|HJ|HN|HO|HX|O/R|\d{4}\s*-\s*\d{4})\b")
+
+
+def freqs_of(text):
+    out = []
+    for f in FREQ.findall(text):
+        v = float(f)
+        if 108 <= v <= 400 and f not in out:
+            out.append(f)
+    return out
+
+
 def parse_ad2(icao, html):
-    soup = BeautifulSoup(html, "html.parser")
+    soup = strip_markup(BeautifulSoup(html, "html.parser"))
     sec = tables_by_section(soup, r"AD\s*2")
     sec = {"2." + k: v for k, v in sec.items()}
     ap = {"icao": icao, "lat": None, "lon": None, "elev_ft": None, "rwy": [], "comm": [], "navaids": []}
@@ -109,15 +134,43 @@ def parse_ad2(icao, html):
         for r in rows(tb):
             if r and re.fullmatch(r"\d{2}[LRC]?", r[0]):
                 ap["rwy"].append(r[0])
-    # AD 2.18 ATS communication
+    # AD 2.18 ATS communication — ทนต่อ rowspan: แยก service / callsign / ความถี่ ตามรูปแบบข้อความ
     last_svc = ""
     for tb in sec.get("2.18", []):
         for r in rows(tb):
-            if len(r) < 3 or "DESIGNATION" in r[0].upper() or r[0].strip() in ("1", "1 2"):
+            line = " ".join(r)
+            if "DESIGNATION" in line.upper() or re.fullmatch(r"[\d\s]+", line):
                 continue
-            svc = r[0] or last_svc; last_svc = svc
-            ap["comm"].append({"svc": svc, "callsign": r[1], "freq": r[2],
-                               "hours": r[3] if len(r) > 3 else "", "rmk": r[4] if len(r) > 4 else ""})
+            svc = ""
+            for c in r[:2]:
+                m = SVC.match(c)
+                if m:
+                    svc = m.group(1).upper(); break
+            fq = freqs_of(line)
+            call = next((c for c in r if re.search(r"[a-z]", c) and not SVC.fullmatch(c) and not FREQ.search(c) and len(c) < 60), "")
+            hours = next((m.group(1) for c in r for m in [HOURS.search(c)] if m), "")
+            if svc:
+                last_svc = svc
+            if not fq:
+                # แถวที่มีแต่ callsign (เพราะ rowspan) → เติมให้รายการล่าสุดของ service เดียวกันที่ยังไม่มี callsign
+                if call:
+                    for e in reversed(ap["comm"]):
+                        if e["svc"] == (svc or last_svc) and not e["callsign"]:
+                            e["callsign"] = call; break
+                    else:
+                        ap["comm"].append({"svc": svc or last_svc, "callsign": call, "freq": "", "hours": hours, "rmk": ""})
+                continue
+            ap["comm"].append({"svc": svc or last_svc, "callsign": call, "freq": " / ".join(fq), "hours": hours, "rmk": ""})
+    # รวมรายการ service เดียวกันที่ซ้ำ
+    merged = []
+    for e in ap["comm"]:
+        if merged and merged[-1]["svc"] == e["svc"] and (not e["freq"] or not merged[-1]["freq"] or not e["callsign"]):
+            m = merged[-1]
+            fs = [x for x in (m["freq"].split(" / ") + e["freq"].split(" / ")) if x]
+            m["freq"] = " / ".join(dict.fromkeys(fs)); m["callsign"] = m["callsign"] or e["callsign"]; m["hours"] = m["hours"] or e["hours"]
+        else:
+            merged.append(e)
+    ap["comm"] = [e for e in merged if e["freq"]]
     # AD 2.19 navaids
     for tb in sec.get("2.19", []):
         for r in rows(tb):
@@ -125,13 +178,15 @@ def parse_ad2(icao, html):
             lat, lon = parse_coord(line)
             if lat is None or len(r) < 3:
                 continue
-            ap["navaids"].append({"type": r[0], "id": r[1], "freq": r[2], "lat": lat, "lon": lon,
+            ident = next((c for c in r[1:3] if re.fullmatch(r"[A-Z]{1,4}", c)), r[1])
+            fq = re.search(r"\d{3}(?:\.\d{1,3})?\s*(?:MHz|KHz|kHz)?(?:\s*\(?CH\s*\d+[XY]\)?)?", " ".join(r[1:4]), re.I)
+            ap["navaids"].append({"type": r[0], "id": ident, "freq": fq.group(0).strip() if fq else r[2], "lat": lat, "lon": lon,
                                   "rmk": r[-1] if len(r) > 6 else ""})
     return ap
 
 
 def parse_enr41(html):
-    soup = BeautifulSoup(html, "html.parser")
+    soup = strip_markup(BeautifulSoup(html, "html.parser"))
     out = []
     for tb in soup.find_all("table"):
         for r in rows(tb):
@@ -147,14 +202,22 @@ def parse_enr41(html):
     return out
 
 
+def debug_dump(name, html):
+    import os
+    os.makedirs("debug", exist_ok=True)
+    with open(os.path.join("debug", name), "w", encoding="utf-8") as f:
+        f.write(html)
+
+
 def main():
-    forced = sys.argv[1] if len(sys.argv) > 1 else None
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    forced = args[0] if args else None
     ed, order = pick_edition(forced)
     print("ฉบับบนหน้าเว็บ (บนสุดก่อน):", ", ".join(order[:5]))
     print("เลือกใช้ฉบับ:", ed)
     root = f"{BASE}{ed}-AIRAC/html/eAIP/"
     menu = get(root + "VT-menu-en-GB.html")
-    msoup = BeautifulSoup(menu, "html.parser")
+    msoup = strip_markup(BeautifulSoup(menu, "html.parser"))
     names = {}
     for a in msoup.find_all("a", href=True):
         m = re.search(r"VT-AD-2\.([A-Z]{4})-en-GB\.html", a["href"])
@@ -167,8 +230,12 @@ def main():
     for i, ic in enumerate(icaos, 1):
         url = root + f"VT-AD-2.{ic}-en-GB.html"
         try:
-            ap = parse_ad2(ic, get(url))
-            ap["name"] = re.sub(r"^\s*" + ic + r"\s*[-—–]?\s*", "", names[ic]) or ic
+            raw = get(url)
+            if ic in ("VTPP", "VTBD") and "--debug" in sys.argv:
+                debug_dump(f"AD2_{ic}.html", raw)
+            ap = parse_ad2(ic, raw)
+            nm = re.sub(r"^\s*" + ic + r"\s*[-—–]?\s*", "", names[ic])
+            ap["name"] = "" if (not nm or "AERODROMES" in nm.upper()) else nm
             ap["url"] = url
             data["airports"][ic] = ap
             print(f"[{i}/{len(icaos)}] {ic} ความถี่ {len(ap['comm'])} รายการ, navaid {len(ap['navaids'])}, พิกัด {'OK' if ap['lat'] else 'ไม่พบ'}")
@@ -179,7 +246,10 @@ def main():
             data["errors"].append(f"{ic}: {e}")
         time.sleep(0.4)
     try:
-        data["navaids"] = parse_enr41(get(root + "VT-ENR-4.1-en-GB.html"))
+        raw = get(root + "VT-ENR-4.1-en-GB.html")
+        if "--debug" in sys.argv:
+            debug_dump("ENR_4.1.html", raw)
+        data["navaids"] = parse_enr41(raw)
         print(f"ENR 4.1 navaid {len(data['navaids'])} รายการ")
     except Exception as e:
         data["errors"].append(f"ENR 4.1: {e}")
