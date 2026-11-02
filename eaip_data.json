@@ -1,1849 +1,469 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-02T03:55",
+ "fetched": "2026-11-02T03:58",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
-   "lat": null,
-   "lon": null,
+   "lat": 13.914372,
+   "lon": 100.605556,
    "elev_ft": 9.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;167",
-     "callsign": "Bangkok Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;98",
-     "freq": "119.1 TFREQUENCY;VAL_FREQ_TRANS;1385 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;223 MHz TFREQUENCY;UOM_FREQ;222 120.3 TFREQUENCY;VAL_FREQ_TRANS;1386 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;223 MHz TFREQUENCY;UOM_FREQ;222 122.35 TFREQUENCY;VAL_FREQ_TRANS;186 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;222 124.35 TFREQUENCY;VAL_FREQ_TRANS;187 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;222 125.2 TFREQUENCY;VAL_FREQ_TRANS;188 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;222 133.4 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;222 125.8 TFREQUENCY;VAL_FREQ_TRANS;1387 MHz TFREQUENCY;UOM_FREQ;222 2) 121.5 TFREQUENCY;VAL_FREQ_TRANS;1388 MHz TFREQUENCY;UOM_FREQ;222 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;1389 MHz TFREQUENCY;UOM_FREQ;222 1)",
-     "hours": "H24",
-     "rmk": "1) Emergency frequency 2) Clearance delivery for helicopters operating within BKK CTR 3) Arrival ATIS 4) Departure ATIS"
-    },
-    {
-     "svc": "Don Mueang Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;110",
-     "callsign": "119.4 TFREQUENCY;VAL_FREQ_TRANS;222 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;222 121.5 TFREQUENCY;VAL_FREQ_TRANS;1388 MHz TFREQUENCY;UOM_FREQ;222 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;1389 MHz TFREQUENCY;UOM_FREQ;222 1)",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "Don Mueang Arrival TCALLSIGN_DETAIL;TXT_CALL_SIGN;112",
-     "callsign": "133.0 TFREQUENCY;VAL_FREQ_TRANS;227 MHz TFREQUENCY;UOM_FREQ;222 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;228 MHz TFREQUENCY;UOM_FREQ;222 121.5 TFREQUENCY;VAL_FREQ_TRANS;1388 MHz TFREQUENCY;UOM_FREQ;222 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;1389 MHz TFREQUENCY;UOM_FREQ;222 1)",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;166",
-     "callsign": "Don Mueang Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;109",
-     "freq": "118.1 TFREQUENCY;VAL_FREQ_TRANS;220 MHz TFREQUENCY;UOM_FREQ;222 / 236.6 TFREQUENCY;VAL_FREQ_TRANS;221 MHz TFREQUENCY;UOM_FREQ;222 121.5 TFREQUENCY;VAL_FREQ_TRANS;1563 MHz TFREQUENCY;UOM_FREQ;222 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;1564 MHz TFREQUENCY;UOM_FREQ;222 1)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "Don Mueang Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;113",
-     "callsign": "121.9 TFREQUENCY;VAL_FREQ_TRANS;229 MHz TFREQUENCY;UOM_FREQ;222 / 257.8 TFREQUENCY;VAL_FREQ_TRANS;231 MHz TFREQUENCY;UOM_FREQ;222 122.5 TFREQUENCY;VAL_FREQ_TRANS;230 MHz TFREQUENCY;UOM_FREQ;222 / 257.8 TFREQUENCY;VAL_FREQ_TRANS;231 MHz TFREQUENCY;UOM_FREQ;222",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "Don Mueang Delivery TCALLSIGN_DETAIL;TXT_CALL_SIGN;111",
-     "callsign": "127.7 TFREQUENCY;VAL_FREQ_TRANS;224 MHz TFREQUENCY;UOM_FREQ;222",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS",
-     "callsign": "Don Mueang Intl Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;114",
-     "freq": "126.4 TFREQUENCY;VAL_FREQ_TRANS;232 MHz TFREQUENCY;UOM_FREQ;222 3) / 344.6 TFREQUENCY;VAL_FREQ_TRANS;233 MHz TFREQUENCY;UOM_FREQ;222 3) / 118.55 TFREQUENCY;VAL_FREQ_TRANS;1102 MHz TFREQUENCY;UOM_FREQ;222 4)",
-     "hours": "H24",
-     "rmk": ""
-    }
+   "rwy": [
+    "03L",
+    "21R",
+    "03R",
+    "21L"
    ],
-   "navaids": [],
-   "name": "AD 2 AERODROMES",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html"
-  },
-  "VTBK": {
-   "icao": "VTBK",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 389.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;368",
-     "callsign": "Kamphaeng Saen Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;306",
-     "freq": "127.75 TFREQUENCY;VAL_FREQ_TRANS;466 MHZ TFREQUENCY;UOM_FREQ;466",
-     "hours": "0000-0900 MON-FRI (Except public holiday)",
-     "rmk": "Primary Operation for Radar Approach"
-    },
-    {
-     "svc": "ASR TSERVICE;TXT_NAME;369",
-     "callsign": "Arrival TCALLSIGN_DETAIL;TXT_CALL_SIGN;307",
-     "freq": "347.2 TFREQUENCY;VAL_FREQ_TRANS;467 MHZ TFREQUENCY;UOM_FREQ;467",
-     "hours": "Secondary Operation.",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;372",
-     "callsign": "Kamphaeng Saen Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;310",
-     "freq": "237.5 TFREQUENCY;VAL_FREQ_TRANS;473 MHZ TFREQUENCY;UOM_FREQ;473 123.3 TFREQUENCY;VAL_FREQ_TRANS;474 MHZ TFREQUENCY;UOM_FREQ;474 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;475 MHZ TFREQUENCY;UOM_FREQ;475 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;476 MHZ TFREQUENCY;UOM_FREQ;476",
-     "hours": "Primary Operation Secondary Operation *Emergency Freq.",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;373",
-     "callsign": "Kamphaeng Saen Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;311",
-     "freq": "257.8 TFREQUENCY;VAL_FREQ_TRANS;477 MHZ TFREQUENCY;UOM_FREQ;477 121.75 TFREQUENCY;VAL_FREQ_TRANS;478 MHZ TFREQUENCY;UOM_FREQ;478",
-     "hours": "",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;389 Nakhon Pathom/ Kamphaeng Saen TAD_HP;TXT_NAME;389",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBK-en-GB.html"
-  },
-  "VTBL": {
-   "icao": "VTBL",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 383.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;363",
-     "callsign": "Khok Kathiam Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;302",
-     "freq": "122.6 TFREQUENCY;VAL_FREQ_TRANS;455 MHz TFREQUENCY;UOM_FREQ;460 238.6 TFREQUENCY;VAL_FREQ_TRANS;456 MHz TFREQUENCY;UOM_FREQ;460 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;457 MHz TFREQUENCY;UOM_FREQ;460 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;458 MHz TFREQUENCY;UOM_FREQ;460",
-     "hours": "23:00 TTMSHT;TIME_WEF;803 - 11:00 TTMSHT;TIME_TIL;803",
-     "rmk": "*Emergency Freq."
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;364",
-     "callsign": "Khok Kathiam Ground TSERVICE;TXT_NAME;364",
-     "freq": "121.75 TFREQUENCY;VAL_FREQ_TRANS;459 MHz TFREQUENCY;UOM_FREQ;459 257.8 TFREQUENCY;VAL_FREQ_TRANS;460 MHz TFREQUENCY;UOM_FREQ;460",
-     "hours": "23:00 TTMSHT;TIME_WEF;805 - 11:00 TTMSHT;TIME_TIL;805",
-     "rmk": ""
-    }
-   ],
-   "navaids": [
-    {
-     "type": "NDB TNAVAID;CODE_TYPE;360",
-     "id": "LB TNAVAID;CODE_ID;360",
-     "freq": "280 TNDB;VAL_FREQ;237 KHz TNDB;UOM_FREQ;237",
-     "lat": 14.876742,
-     "lon": 100.657347,
-     "rmk": "NIL"
-    }
-   ],
-   "name": "TAD_HP;CODE_ID;383 Lop Buri/ Khok Kathiam TAD_HP;TXT_NAME;383",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBL-en-GB.html"
-  },
-  "VTBO": {
-   "icao": "VTBO",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 475.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;460",
-     "callsign": "Trat Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;384",
-     "freq": "120.25 TFREQUENCY;VAL_FREQ_TRANS;636 MHz TFREQUENCY;UOM_FREQ;636 121.5 TFREQUENCY;VAL_FREQ_TRANS;1518 MHz TFREQUENCY;UOM_FREQ;1518 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;461",
-     "callsign": "Trat Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;385",
-     "freq": "122.9 TFREQUENCY;VAL_FREQ_TRANS;637 MHz TFREQUENCY;UOM_FREQ;637 121.5 TFREQUENCY;VAL_FREQ_TRANS;1241 MHz TFREQUENCY;UOM_FREQ;1241 1)",
-     "hours": "23:00-11:00",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;475 Trat/ Khao Sming TAD_HP;TXT_NAME;475",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBO-en-GB.html"
-  },
-  "VTBP": {
-   "icao": "VTBP",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 447.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;422",
-     "callsign": "Prachuap TWR TCALLSIGN_DETAIL;TXT_CALL_SIGN;353",
-     "freq": "351.1 TFREQUENCY;VAL_FREQ_TRANS;568 MHZ TFREQUENCY;UOM_FREQ;568 135.9 TFREQUENCY;VAL_FREQ_TRANS;569 MHZ TFREQUENCY;UOM_FREQ;569 236.6 TFREQUENCY;VAL_FREQ_TRANS;570 MHZ TFREQUENCY;UOM_FREQ;570 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;571 MHZ TFREQUENCY;UOM_FREQ;571 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;572 MHZ TFREQUENCY;UOM_FREQ;572",
-     "hours": "23:00 TTMSHT;TIME_WEF;887 - 11:00 TTMSHT;TIME_TIL;887",
-     "rmk": "Primary operation *Emergency Freq."
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;423",
-     "callsign": "Prachuap GND TCALLSIGN_DETAIL;TXT_CALL_SIGN;354",
-     "freq": "257.8 TFREQUENCY;VAL_FREQ_TRANS;573 MHZ TFREQUENCY;UOM_FREQ;573 121.75 TFREQUENCY;VAL_FREQ_TRANS;574 MHZ TFREQUENCY;UOM_FREQ;574",
-     "hours": "23:00 TTMSHT;TIME_WEF;889 - 11:00 TTMSHT;TIME_TIL;889",
-     "rmk": "Secondary operation"
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;447 Prachuap Khiri Khan TAD_HP;TXT_NAME;447",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBP-en-GB.html"
-  },
-  "VTBS": {
-   "icao": "VTBS",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 8.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;141",
-     "callsign": "Bangkok Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;98",
-     "freq": "119.1 TFREQUENCY;VAL_FREQ_TRANS;1385 MHz TFREQUENCY;UOM_FREQ;1385 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;223 MHz TFREQUENCY;UOM_FREQ;223 120.3 TFREQUENCY;VAL_FREQ_TRANS;1386 MHz TFREQUENCY;UOM_FREQ;1386 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;223 MHz TFREQUENCY;UOM_FREQ;223 122.35 TFREQUENCY;VAL_FREQ_TRANS;186 MHz TFREQUENCY;UOM_FREQ;186 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;193 124.35 TFREQUENCY;VAL_FREQ_TRANS;187 MHz TFREQUENCY;UOM_FREQ;187 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;193 125.2 TFREQUENCY;VAL_FREQ_TRANS;188 MHz TFREQUENCY;UOM_FREQ;188 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;193 133.4 MHz TFREQUENCY;UOM_FREQ;1381 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;193 MHz TFREQUENCY;UOM_FREQ;193 125.8 TFREQUENCY;VAL_FREQ_TRANS;190 MHz TFREQUENCY;UOM_FREQ;190 2) 121.5 TFREQUENCY;VAL_FREQ_TRANS;191 MHz TFREQUENCY;UOM_FREQ;191 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;192 MHz TFREQUENCY;UOM_FREQ;192 1)",
-     "hours": "H24",
-     "rmk": "1) Emergency frequency 2) Clearance delivery for aircraft departing to adjacent aerodromes and helicopters operating within BKK CTR 3) For RWY 01/19 TRWY;TXT_DESIG;154 4) For RWY 02R/20L TRWY;TXT_DESIG;153 and RWY 02L/20R TRWY;TXT_DESIG;153 5) Arrival ATIS 6) Departure ATIS"
-    },
-    {
-     "svc": "Suvarnabhumi Departure TCALLSIGN_DETAIL;TXT_CALL_SIGN;99",
-     "callsign": "119.25 TFREQUENCY;VAL_FREQ_TRANS;194 MHz TFREQUENCY;UOM_FREQ;194 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;1394 MHz TFREQUENCY;UOM_FREQ;1394 121.5 TFREQUENCY;VAL_FREQ_TRANS;1393 MHz TFREQUENCY;UOM_FREQ;1393 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;1395 MHz TFREQUENCY;UOM_FREQ;1395 1)",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "Suvarnabhumi Arrival TCALLSIGN_DETAIL;TXT_CALL_SIGN;101",
-     "callsign": "121.1 TFREQUENCY;VAL_FREQ_TRANS;202 MHz TFREQUENCY;UOM_FREQ;202 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;1392 MHz TFREQUENCY;UOM_FREQ;1392 126.3 TFREQUENCY;VAL_FREQ_TRANS;201 MHz TFREQUENCY;UOM_FREQ;201 / 274.5 TFREQUENCY;VAL_FREQ_TRANS;1392 MHz TFREQUENCY;UOM_FREQ;1392 121.5 TFREQUENCY;VAL_FREQ_TRANS;203 MHz TFREQUENCY;UOM_FREQ;203 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;200 MHz TFREQUENCY;UOM_FREQ;200 1)",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Suvarnabhumi Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;100",
-     "freq": "118.2 TFREQUENCY;VAL_FREQ_TRANS;195 MHz TFREQUENCY;UOM_FREQ;195 3) / 262.5 TFREQUENCY;VAL_FREQ_TRANS;196 MHz TFREQUENCY;UOM_FREQ;196 119.0 TFREQUENCY;VAL_FREQ_TRANS;197 MHz TFREQUENCY;UOM_FREQ;197 4) 121.5 TFREQUENCY;VAL_FREQ_TRANS;198 MHz TFREQUENCY;UOM_FREQ;198 1) / 243.0 TFREQUENCY;VAL_FREQ_TRANS;199 MHz TFREQUENCY;UOM_FREQ;199 1)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "Suvarnabhumi Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;102",
-     "callsign": "121.65 TFREQUENCY;VAL_FREQ_TRANS;204 MHz TFREQUENCY;UOM_FREQ;204 / 275.8 TFREQUENCY;VAL_FREQ_TRANS;205 MHz TFREQUENCY;UOM_FREQ;205 121.7 TFREQUENCY;VAL_FREQ_TRANS;206 MHz TFREQUENCY;UOM_FREQ;206 121.75 TFREQUENCY;VAL_FREQ_TRANS;206 MHz TFREQUENCY;UOM_FREQ;206 121.95 TFREQUENCY;VAL_FREQ_TRANS;207 MHz TFREQUENCY;UOM_FREQ;207",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "Suvarnabhumi Delivery TCALLSIGN_DETAIL;TXT_CALL_SIGN;1070",
-     "callsign": "128.7 TFREQUENCY;VAL_FREQ_TRANS;1396 MHz TFREQUENCY;UOM_FREQ;1396 133.8 TFREQUENCY;VAL_FREQ_TRANS;1397 MHz TFREQUENCY;UOM_FREQ;1397",
-     "freq": "H24",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;146",
-     "callsign": "Suvarnabhumi Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;103",
-     "freq": "133.6 TFREQUENCY;VAL_FREQ_TRANS;208 MHz TFREQUENCY;UOM_FREQ;208 5) / 278.6 TFREQUENCY;VAL_FREQ_TRANS;209 MHz TFREQUENCY;UOM_FREQ;209 5) / 127.65 TFREQUENCY;VAL_FREQ_TRANS;1101 MHz TFREQUENCY;UOM_FREQ;1101 6)",
-     "hours": "H24",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;209 Bangkok/ Suvarnabhumi International Airport TAD_HP;TXT_NAME;209",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBS-en-GB.html"
-  },
-  "VTBU": {
-   "icao": "VTBU",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 59.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;337",
-     "callsign": "U-Tapao Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;280",
-     "freq": "119.7 TFREQUENCY;VAL_FREQ_TRANS;404 MHz TFREQUENCY;UOM_FREQ;404 / PRI TFREQUENCY;CODE_TYPE;404 121.5 TFREQUENCY;VAL_FREQ_TRANS;405 MHz TFREQUENCY;UOM_FREQ;405 / EMERG TFREQUENCY;CODE_TYPE;191 134.5 TFREQUENCY;VAL_FREQ_TRANS;406 MHz TFREQUENCY;UOM_FREQ;406 / SEC TFREQUENCY;CODE_TYPE;406 238.3 TFREQUENCY;VAL_FREQ_TRANS;407 MHz TFREQUENCY;UOM_FREQ;407 / SEC TFREQUENCY;CODE_TYPE;407 273.3 TFREQUENCY;VAL_FREQ_TRANS;408 MHz TFREQUENCY;UOM_FREQ;408 / PRI TFREQUENCY;CODE_TYPE;408 243.0 TFREQUENCY;VAL_FREQ_TRANS;409 MHz TFREQUENCY;UOM_FREQ;409 / EMERG TFREQUENCY;CODE_TYPE;414",
-     "hours": "H24",
-     "rmk": "UHF reserved for military use"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;338",
-     "callsign": "U-Tapao Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;281",
-     "freq": "118.3 TFREQUENCY;VAL_FREQ_TRANS;412 MHz TFREQUENCY;UOM_FREQ;412 121.5 TFREQUENCY;VAL_FREQ_TRANS;411 MHz TFREQUENCY;UOM_FREQ;411 / EMERG TFREQUENCY;CODE_TYPE;405 227.0 TFREQUENCY;VAL_FREQ_TRANS;413 MHz TFREQUENCY;UOM_FREQ;413 243.0 TFREQUENCY;VAL_FREQ_TRANS;414 MHz TFREQUENCY;UOM_FREQ;414 / EMERG TFREQUENCY;CODE_TYPE;414",
-     "hours": "H24",
-     "rmk": "UHF reserved for military use"
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;339",
-     "callsign": "U-Tapao Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;282",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;415 MHz TFREQUENCY;UOM_FREQ;415 275.8 TFREQUENCY;VAL_FREQ_TRANS;416 MHz TFREQUENCY;UOM_FREQ;416",
-     "hours": "H24",
-     "rmk": "UHF reserved for military use"
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;340",
-     "callsign": "U-Tapao Int Airport TUNIT;TXT_NAME;301",
-     "freq": "127.2 TFREQUENCY;VAL_FREQ_TRANS;1519 MHz TFREQUENCY;UOM_FREQ;1519",
-     "hours": "H24",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;369 Rayong/ U-Tapao Rayong Pattaya International Airport TAD_HP;TXT_NAME;369",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBU-en-GB.html"
-  },
-  "VTBW": {
-   "icao": "VTBW",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 457.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;437",
-     "callsign": "Watthana Nakon TWR TCALLSIGN_DETAIL;TXT_CALL_SIGN;364",
-     "freq": "UHF 236.6 TFREQUENCY;VAL_FREQ_TRANS;594 MHZ TFREQUENCY;UOM_FREQ;594 VHF 120.75 TFREQUENCY;VAL_FREQ_TRANS;593 MHZ TFREQUENCY;UOM_FREQ;593 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;595 MHZ TFREQUENCY;UOM_FREQ;595 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;596 MHZ TFREQUENCY;UOM_FREQ;596",
-     "hours": "2300-1100 Every day",
-     "rmk": "Primary operation *Emergency Freq."
-    },
-    {
-     "svc": "GND",
-     "callsign": "Watthana Nakon Ground",
-     "freq": "UHF 298.0 MHZ VHF 123.3 MHZ",
-     "hours": "",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;457 Sa Kaeo/ Watthana Nakhon TAD_HP;TXT_NAME;457",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBW-en-GB.html"
-  },
-  "VTCC": {
-   "icao": "VTCC",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 1036.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;326",
-     "callsign": "Chiang Mai Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;269",
-     "freq": "129.6 TFREQUENCY;VAL_FREQ_TRANS;380 MHz TFREQUENCY;UOM_FREQ;380 305.4 TFREQUENCY;VAL_FREQ_TRANS;381 MHz TFREQUENCY;UOM_FREQ;381 121.5 TFREQUENCY;VAL_FREQ_TRANS;1426 MHz TFREQUENCY;UOM_FREQ;1426 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1427 MHz TFREQUENCY;UOM_FREQ;1427 1)",
-     "hours": "H24",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;327",
-     "callsign": "Chiang Mai Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;270",
-     "freq": "118.1 TFREQUENCY;VAL_FREQ_TRANS;382 MHz TFREQUENCY;UOM_FREQ;382 236.6 TFREQUENCY;VAL_FREQ_TRANS;384 MHz TFREQUENCY;UOM_FREQ;384 121.5 TFREQUENCY;VAL_FREQ_TRANS;383 MHz TFREQUENCY;UOM_FREQ;383 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;385 MHz TFREQUENCY;UOM_FREQ;385 1)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;328",
-     "callsign": "Chiang Mai Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;271",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;386 MHz TFREQUENCY;UOM_FREQ;386 275.8 TFREQUENCY;VAL_FREQ_TRANS;387 MHz TFREQUENCY;UOM_FREQ;387",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;329",
-     "callsign": "Chiang Mai Int Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;272",
-     "freq": "127.425 TFREQUENCY;VAL_FREQ_TRANS;388 MHz TFREQUENCY;UOM_FREQ;388 301.5 TFREQUENCY;VAL_FREQ_TRANS;389 MHz TFREQUENCY;UOM_FREQ;389",
-     "hours": "H24",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;310 Chiang Mai/ Chiang Mai International Airport TAD_HP;TXT_NAME;310",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCC-en-GB.html"
-  },
-  "VTCH": {
-   "icao": "VTCH",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 385.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;365",
-     "callsign": "Mae Hong Son Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;304",
-     "freq": "126.2 TFREQUENCY;VAL_FREQ_TRANS;461 MHz TFREQUENCY;UOM_FREQ;461 121.5 TFREQUENCY;VAL_FREQ_TRANS;1425 MHz TFREQUENCY;UOM_FREQ;1425 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;366",
-     "callsign": "Mae Hong Son Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;305",
-     "freq": "122.3 TFREQUENCY;VAL_FREQ_TRANS;462 MHz TFREQUENCY;UOM_FREQ;462 236.6 TFREQUENCY;VAL_FREQ_TRANS;463 MHz TFREQUENCY;UOM_FREQ;463 121.5 TFREQUENCY;VAL_FREQ_TRANS;1424 MHz TFREQUENCY;UOM_FREQ;1424 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;367",
-     "callsign": "Mae Hong Son Airport TSERVICE;TXT_NAME;367",
-     "freq": "127.45 TFREQUENCY;VAL_FREQ_TRANS;464 MHz TFREQUENCY;UOM_FREQ;464",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;385 Mae Hong Son TAD_HP;TXT_NAME;385",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCH-en-GB.html"
-  },
-  "VTCI": {
-   "icao": "VTCI",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 387.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "NIL",
-     "callsign": "NIL",
-     "freq": "NIL",
-     "hours": "NIL",
-     "rmk": "NIL"
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;387 Mae Hong Son / Pai TAD_HP;TXT_NAME;387",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCI-en-GB.html"
-  },
-  "VTCL": {
-   "icao": "VTCL",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 379.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;358",
-     "callsign": "Lampang Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;298",
-     "freq": "119.3 TFREQUENCY;VAL_FREQ_TRANS;447 MHz TFREQUENCY;UOM_FREQ;447 121.5 TFREQUENCY;VAL_FREQ_TRANS;1428 MHz TFREQUENCY;UOM_FREQ;1428 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;359",
-     "callsign": "Lampang Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;299",
-     "freq": "122.3 TFREQUENCY;VAL_FREQ_TRANS;449 MHz TFREQUENCY;UOM_FREQ;449 236.6 TFREQUENCY;VAL_FREQ_TRANS;450 MHz TFREQUENCY;UOM_FREQ;450 121.5 TFREQUENCY;VAL_FREQ_TRANS;448 MHz TFREQUENCY;UOM_FREQ;448 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;360",
-     "callsign": "Lampang Airport TAD_HP;TXT_NAME;379",
-     "freq": "128.65 TFREQUENCY;VAL_FREQ_TRANS;451 MHz TFREQUENCY;UOM_FREQ;451",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;379 Lampang TAD_HP;TXT_NAME;379",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCL-en-GB.html"
-  },
-  "VTCN": {
-   "icao": "VTCN",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 435.0,
-   "rwy": [],
    "comm": [
     {
      "svc": "APP",
-     "callsign": "Nan Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;337",
-     "freq": "120.25 TFREQUENCY;VAL_FREQ_TRANS;535 MHz TFREQUENCY;UOM_FREQ;535 121.5 TFREQUENCY;VAL_FREQ_TRANS;1447 MHz TFREQUENCY;UOM_FREQ;1447 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
+     "callsign": "Bangkok Approach",
+     "freq": "119.1 / 274.5 / 120.3 / 122.35 / 124.35 / 125.2 / 133.4 / 125.8 / 121.5 / 243.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "APP",
+     "callsign": "Don Mueang Approach",
+     "freq": "119.4 / 274.5 / 121.5 / 243.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "APP",
+     "callsign": "Don Mueang Arrival",
+     "freq": "133.0 / 274.5 / 121.5 / 243.0",
+     "hours": "H24",
+     "rmk": ""
     },
     {
      "svc": "TWR",
-     "callsign": "Nan Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;338",
-     "freq": "118.55 TFREQUENCY;VAL_FREQ_TRANS;536 MHz TFREQUENCY;UOM_FREQ;536 121.5 TFREQUENCY;VAL_FREQ_TRANS;537 MHz TFREQUENCY;UOM_FREQ;537 1) 236.6 TFREQUENCY;VAL_FREQ_TRANS;538 MHz TFREQUENCY;UOM_FREQ;538",
-     "hours": "As AD OPR HR",
+     "callsign": "Don Mueang Tower",
+     "freq": "118.1 / 236.6 / 121.5 / 243.0",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Don Mueang Ground",
+     "freq": "121.9 / 257.8 / 122.5",
+     "hours": "H24",
+     "rmk": ""
+    },
+    {
+     "svc": "TWR",
+     "callsign": "Don Mueang Delivery",
+     "freq": "127.7",
+     "hours": "H24",
      "rmk": ""
     },
     {
      "svc": "ATIS",
-     "callsign": "Nan Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1151",
-     "freq": "128.05 TFREQUENCY;VAL_FREQ_TRANS;540 MHZ TFREQUENCY;UOM_FREQ;540",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;435 Nan/ Nan Nakhon TAD_HP;TXT_NAME;435",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCN-en-GB.html"
-  },
-  "VTCP": {
-   "icao": "VTCP",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 445.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;418",
-     "callsign": "Phrae Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;350",
-     "freq": "120.1 TFREQUENCY;VAL_FREQ_TRANS;561 MHz TFREQUENCY;UOM_FREQ;561 121.5 TFREQUENCY;VAL_FREQ_TRANS;1448 MHz TFREQUENCY;UOM_FREQ;1448 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;419",
-     "callsign": "Phrae Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;351",
-     "freq": "121.5 TFREQUENCY;VAL_FREQ_TRANS;562 MHz TFREQUENCY;UOM_FREQ;562 1) 118.6 TFREQUENCY;VAL_FREQ_TRANS;563 MHz TFREQUENCY;UOM_FREQ;563 236.6 TFREQUENCY;VAL_FREQ_TRANS;564 MHz TFREQUENCY;UOM_FREQ;564",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;421",
-     "callsign": "Phrae Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1152",
-     "freq": "126.45 TFREQUENCY;VAL_FREQ_TRANS;567 MHZ TFREQUENCY;UOM_FREQ;567",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;445 Phrae TAD_HP;TXT_NAME;445",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCP-en-GB.html"
-  },
-  "VTCT": {
-   "icao": "VTCT",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 1280.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;330",
-     "callsign": "Chiang Rai Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;273",
-     "freq": "120.05 TFREQUENCY;VAL_FREQ_TRANS;390 MHz TFREQUENCY;UOM_FREQ;390 257.8 TFREQUENCY;VAL_FREQ_TRANS;391 MHz TFREQUENCY;UOM_FREQ;391 121.5 TFREQUENCY;VAL_FREQ_TRANS;392 MHz TFREQUENCY;UOM_FREQ;392 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;331",
-     "callsign": "Chiang Rai Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;274",
-     "freq": "118.4 TFREQUENCY;VAL_FREQ_TRANS;393 MHz TFREQUENCY;UOM_FREQ;393 236.6 TFREQUENCY;VAL_FREQ_TRANS;394 MHz TFREQUENCY;UOM_FREQ;394 121.5 TFREQUENCY;VAL_FREQ_TRANS;392 MHz TFREQUENCY;UOM_FREQ;392 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;332",
-     "callsign": "Chiang Rai Intl Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;275",
-     "freq": "127.85 TFREQUENCY;VAL_FREQ_TRANS;395 MHz TFREQUENCY;UOM_FREQ;395",
-     "hours": "As AD OPR HR",
+     "callsign": "Don Mueang Intl Airport",
+     "freq": "126.4 / 344.6 / 118.55",
+     "hours": "H24",
      "rmk": ""
     }
    ],
    "navaids": [
     {
-     "type": "DME 03",
+     "type": "DVOR/DME",
+     "id": "BKK",
+     "freq": "117.7 MHz CH 124X",
+     "lat": 13.893528,
+     "lon": 100.596194,
+     "rmk": "DVOR/DME restriction due to obstacles surround DVOR/DME station, coverage check does not provide adequate signal 40 NM at required altitude in various areas as follows: Radial 321°-030° altitude should not below 2 500 ft. Radial 031°-060° altitude should not below 4 000 ft. Radial 061°-120° altitude should not below 3 000 ft. Radial 121°-320° altitude should not below 4 000 ft."
+    },
+    {
+     "type": "ILS CAT ll LOC-21R",
+     "id": "IBKK",
+     "freq": "109.3 MHz",
+     "lat": 13.894611,
+     "lon": 100.594611,
+     "rmk": "Instrument Landing System - Reference Datum Height (RDH) is 16.46 m ( 54 ft ). A. Localizer - LOC 300 m. (984 ft.) from THR RWY 03L, along RWY centre line. Course width 3° B. Glide Path 3° - GP 333 m. (1,093 ft.) from THR RWY 21R, 120 m. (394 ft.) from RWY centre line. C.DME - Co-located with GP."
+    },
+    {
+     "type": "GP 21R",
      "id": "",
-     "freq": "CH 32X",
-     "lat": 19.966028,
-     "lon": 99.892139,
+     "freq": "332.0 MHz",
+     "lat": 13.923167,
+     "lon": 100.611889,
+     "rmk": ""
+    },
+    {
+     "type": "DME",
+     "id": "",
+     "freq": "CH 30X",
+     "lat": 13.923167,
+     "lon": 100.611889,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT I LOC 21L",
+     "id": "IDMG",
+     "freq": "110.3 MHz",
+     "lat": 13.897722,
+     "lon": 100.6005,
+     "rmk": "Instrument Landing System Reference Datum Height (RDH) is 53 ft. A. Localizer LOC 225 m. from THR RWY 03R, along RWY centre line. Course width 3.6° B. Glide Path 3° GP 320 m. from THR RWY 21L, 120 m. from RWY centre line. C. DME Co-located with GP"
+    },
+    {
+     "type": "GP 21L",
+     "id": "",
+     "freq": "335.0 MHz",
+     "lat": 13.922556,
+     "lon": 100.613167,
+     "rmk": ""
+    },
+    {
+     "type": "DME 21L",
+     "id": "",
+     "freq": "CH 40X",
+     "lat": 13.922556,
+     "lon": 100.613167,
+     "rmk": ""
+    },
+    {
+     "type": "ILS CAT I LOC 03L",
+     "id": "IBKD",
+     "freq": "109.7 MHz CH 34X",
+     "lat": 13.928833,
+     "lon": 100.613806,
+     "rmk": "Instrument Landing System Designated operation coverage 9 DME (IBKD), ALT 6000 ft/AMSL Reference Datum Height (RDH) is 55 ft. A. Localizer Course width 3.0° B. Glide Path 3° GP unusable beyond 6° right side of localizer course C. DME Co-located with LOC"
+    },
+    {
+     "type": "DME 03L",
+     "id": "",
+     "freq": "",
+     "lat": 13.929111,
+     "lon": 100.613194,
+     "rmk": ""
+    },
+    {
+     "type": "GP 03L",
+     "id": "",
+     "freq": "333.2 MHz",
+     "lat": 13.899,
+     "lon": 100.598333,
      "rmk": ""
     }
    ],
-   "name": "TAD_HP;CODE_ID;328 Chiang Rai/ Mae Fah Luang-Chiang Rai International Airport TAD_HP;TXT_NAME;328",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTCT-en-GB.html"
-  },
-  "VTPB": {
-   "icao": "VTPB",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 441.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;412",
-     "callsign": "Phetchabun Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;344",
-     "freq": "126.7 TFREQUENCY;VAL_FREQ_TRANS;551 MHz TFREQUENCY;UOM_FREQ;551",
-     "hours": "As AD OPR HR",
-     "rmk": "NIL"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;413",
-     "callsign": "Phetchabun Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;345",
-     "freq": "122.3 TFREQUENCY;VAL_FREQ_TRANS;552 MHz TFREQUENCY;UOM_FREQ;552 236.6 TFREQUENCY;VAL_FREQ_TRANS;553 MHz TFREQUENCY;UOM_FREQ;553",
-     "hours": "As AD OPR HR",
-     "rmk": "NIL"
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;441 Phetchabun TAD_HP;TXT_NAME;441",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPB-en-GB.html"
-  },
-  "VTPH": {
-   "icao": "VTPH",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 449.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;424",
-     "callsign": "Hua Hin Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;355",
-     "freq": "126.2 TFREQUENCY;VAL_FREQ_TRANS;575 MHz TFREQUENCY;UOM_FREQ;575 121.5 TFREQUENCY;VAL_FREQ_TRANS;1560 MHz TFREQUENCY;UOM_FREQ;1560 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;425",
-     "callsign": "Hua Hin Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;356",
-     "freq": "122.7 TFREQUENCY;VAL_FREQ_TRANS;576 MHz TFREQUENCY;UOM_FREQ;576 236.6 TFREQUENCY;VAL_FREQ_TRANS;577 MHz TFREQUENCY;UOM_FREQ;577 121.5 TFREQUENCY;VAL_FREQ_TRANS;1242 MHz TFREQUENCY;UOM_FREQ;1242 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1243 MHz TFREQUENCY;UOM_FREQ;1243 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;426",
-     "callsign": "Hua Hin Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;357",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;578 MHz TFREQUENCY;UOM_FREQ;578",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;427",
-     "callsign": "Hua Hin Airport TSERVICE;TXT_NAME;427",
-     "freq": "126.8 TFREQUENCY;VAL_FREQ_TRANS;579 MHz TFREQUENCY;UOM_FREQ;579",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;449 Prachuap Khiri Khan/ Hua Hin TAD_HP;TXT_NAME;449",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPH-en-GB.html"
-  },
-  "VTPI": {
-   "icao": "VTPI",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 429.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Takhli Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;326",
-     "freq": "325.0 TFREQUENCY;VAL_FREQ_TRANS;507 MHZ TFREQUENCY;UOM_FREQ;507 124.0 TFREQUENCY;VAL_FREQ_TRANS;508 MHZ TFREQUENCY;UOM_FREQ;508",
-     "hours": "H24",
-     "rmk": "Secondary Operation"
-    },
-    {
-     "svc": "ASR",
-     "callsign": "Takhli Arrival TCALLSIGN_DETAIL;TXT_CALL_SIGN;327",
-     "freq": "325.0 TFREQUENCY;VAL_FREQ_TRANS;509 MHZ TFREQUENCY;UOM_FREQ;509 124.0 TFREQUENCY;VAL_FREQ_TRANS;510 MHZ TFREQUENCY;UOM_FREQ;510",
-     "hours": "0100-0900 weekdays MON-FRI (Except public holiday or on request 1 HR prior notice required to ATC)",
-     "rmk": "Radar Approach Primary Operation during weekdays"
-    },
-    {
-     "svc": "ASR",
-     "callsign": "Takhli Departure TCALLSIGN_DETAIL;TXT_CALL_SIGN;328",
-     "freq": "282.5 TFREQUENCY;VAL_FREQ_TRANS;511 MHZ TFREQUENCY;UOM_FREQ;511 134.1 TFREQUENCY;VAL_FREQ_TRANS;512 MHZ TFREQUENCY;UOM_FREQ;512",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "SRA",
-     "callsign": "Final Controller TCALLSIGN_DETAIL;TXT_CALL_SIGN;329",
-     "freq": "382.4 TFREQUENCY;VAL_FREQ_TRANS;513 MHZ TFREQUENCY;UOM_FREQ;513",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Takhli Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;330",
-     "freq": "241.5 TFREQUENCY;VAL_FREQ_TRANS;514 MHZ TFREQUENCY;UOM_FREQ;514 133.25 TFREQUENCY;VAL_FREQ_TRANS;515 MHZ TFREQUENCY;UOM_FREQ;515 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;516 MHZ TFREQUENCY;UOM_FREQ;516 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;517 MHZ TFREQUENCY;UOM_FREQ;517",
-     "hours": "H24",
-     "rmk": "*Emergency Freq"
-    },
-    {
-     "svc": "GND",
-     "callsign": "Takhli Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;331",
-     "freq": "236.6 TFREQUENCY;VAL_FREQ_TRANS;518 MHZ TFREQUENCY;UOM_FREQ;518 257.8 TFREQUENCY;VAL_FREQ_TRANS;519 MHZ TFREQUENCY;UOM_FREQ;519 121.75 TFREQUENCY;VAL_FREQ_TRANS;520 MHZ TFREQUENCY;UOM_FREQ;520",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS",
-     "callsign": "",
-     "freq": "253.0 MHZ",
-     "hours": "0100-0900, MON-FRI (Exception, SAT-SUN)",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;429 Nakhon Sawan/ Takhli TAD_HP;TXT_NAME;429",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPI-en-GB.html"
-  },
-  "VTPM": {
-   "icao": "VTPM",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 471.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;454",
-     "callsign": "Mae Sot Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;380",
-     "freq": "120.65 TFREQUENCY;VAL_FREQ_TRANS;627 MHz TFREQUENCY;UOM_FREQ;627 121.5 TFREQUENCY;VAL_FREQ_TRANS;628 MHz TFREQUENCY;UOM_FREQ;628 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;455",
-     "callsign": "Mae Sot Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;381",
-     "freq": "121.5 TFREQUENCY;VAL_FREQ_TRANS;628 MHz TFREQUENCY;UOM_FREQ;628 1) 118.35 TFREQUENCY;VAL_FREQ_TRANS;629 MHz TFREQUENCY;UOM_FREQ;629 236.6 TFREQUENCY;VAL_FREQ_TRANS;630 MHz TFREQUENCY;UOM_FREQ;630",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;456",
-     "callsign": "Mae Sot Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1129",
-     "freq": "126.65 TFREQUENCY;VAL_FREQ_TRANS;631 MHZ TFREQUENCY;UOM_FREQ;631",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;471 Tak/ Mae Sot TAD_HP;TXT_NAME;471",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPM-en-GB.html"
-  },
-  "VTPN": {
-   "icao": "VTPN",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 113.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "TWR",
-     "callsign": "Nakhon Sawan Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;325",
-     "freq": "122.8 TFREQUENCY;VAL_FREQ_TRANS;504 MHZ TFREQUENCY;UOM_FREQ;504 236.6 TFREQUENCY;VAL_FREQ_TRANS;505 MHZ TFREQUENCY;UOM_FREQ;505 122.3 TFREQUENCY;VAL_FREQ_TRANS;506 MHZ TFREQUENCY;UOM_FREQ;506 121.5 TFREQUENCY;VAL_FREQ_TRANS;980 MHZ TFREQUENCY;UOM_FREQ;980",
-     "hours": "0130-0930 MON-FRI",
-     "rmk": "Primary Freq Secondary Freq Emergency Freq."
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;549 Nakhon Sawan TAD_HP;TXT_NAME;549",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPN-en-GB.html"
-  },
-  "VTPO": {
-   "icao": "VTPO",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 461.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;414",
-     "callsign": "Sukhothai Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;1150",
-     "freq": "120.7 TFREQUENCY;VAL_FREQ_TRANS;554 MHz TFREQUENCY;UOM_FREQ;554 121.5 TFREQUENCY;VAL_FREQ_TRANS;1444 MHz TFREQUENCY;UOM_FREQ;1444 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;440",
-     "callsign": "Sukhothai Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;367",
-     "freq": "122.9 TFREQUENCY;VAL_FREQ_TRANS;602 MHz TFREQUENCY;UOM_FREQ;602 121.5 TFREQUENCY;VAL_FREQ_TRANS;603 MHz TFREQUENCY;UOM_FREQ;603 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;461 Sukhothai TAD_HP;TXT_NAME;461",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPO-en-GB.html"
-  },
-  "VTPP": {
-   "icao": "VTPP",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 443.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;414",
-     "callsign": "Phitsanulok Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;346",
-     "freq": "120.7 TFREQUENCY;VAL_FREQ_TRANS;554 MHz TFREQUENCY;UOM_FREQ;554 284.0 TFREQUENCY;VAL_FREQ_TRANS;555 MHz TFREQUENCY;UOM_FREQ;555 121.5 TFREQUENCY;VAL_FREQ_TRANS;1445 MHz TFREQUENCY;UOM_FREQ;1445 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1446 MHz TFREQUENCY;UOM_FREQ;1446 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;415",
-     "callsign": "Phitsanulok Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;347",
-     "freq": "118.9 TFREQUENCY;VAL_FREQ_TRANS;557 MHz TFREQUENCY;UOM_FREQ;557 236.6 TFREQUENCY;VAL_FREQ_TRANS;558 MHz TFREQUENCY;UOM_FREQ;558 121.5 TFREQUENCY;VAL_FREQ_TRANS;556 MHz TFREQUENCY;UOM_FREQ;556 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1256 MHz TFREQUENCY;UOM_FREQ;1256 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;416",
-     "callsign": "Phitsanulok Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;348",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;559 MHz TFREQUENCY;UOM_FREQ;559",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;417",
-     "callsign": "Phitsanulok Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;349",
-     "freq": "127.4 TFREQUENCY;VAL_FREQ_TRANS;560 MHz TFREQUENCY;UOM_FREQ;560",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;443 Phitsanulok TAD_HP;TXT_NAME;443",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPP-en-GB.html"
-  },
-  "VTPT": {
-   "icao": "VTPT",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 469.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "NIL",
-     "callsign": "NIL",
-     "freq": "NIL",
-     "hours": "NIL",
-     "rmk": "NIL"
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;469 Tak TAD_HP;TXT_NAME;469",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPT-en-GB.html"
-  },
-  "VTSB": {
-   "icao": "VTSB",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 463.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;441",
-     "callsign": "Surat Thani Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;368",
-     "freq": "123.35 TFREQUENCY;VAL_FREQ_TRANS;606 / 240.0 TFREQUENCY;VAL_FREQ_TRANS;607 MHz TFREQUENCY;UOM_FREQ;607 121.5 TFREQUENCY;VAL_FREQ_TRANS;1465 MHz TFREQUENCY;UOM_FREQ;1465 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;442",
-     "callsign": "Surat Thani Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;369",
-     "freq": "122.7 TFREQUENCY;VAL_FREQ_TRANS;609 MHz TFREQUENCY;UOM_FREQ;609 274.5 TFREQUENCY;VAL_FREQ_TRANS;610 MHz TFREQUENCY;UOM_FREQ;610 121.5 TFREQUENCY;VAL_FREQ_TRANS;608 MHz TFREQUENCY;UOM_FREQ;608 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;611 MHz TFREQUENCY;UOM_FREQ;611 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;443",
-     "callsign": "Surat Thani Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;370",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;612 MHz TFREQUENCY;UOM_FREQ;612 275.8 TFREQUENCY;VAL_FREQ_TRANS;613 MHz TFREQUENCY;UOM_FREQ;613",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;445",
-     "callsign": "Surat Thani Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1156",
-     "freq": "125.95 TFREQUENCY;VAL_FREQ_TRANS;616 MHz TFREQUENCY;UOM_FREQ;616",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;463 Surat Thani TAD_HP;TXT_NAME;463",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSB-en-GB.html"
-  },
-  "VTSC": {
-   "icao": "VTSC",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 437.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Narathiwat Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;339",
-     "freq": "125.55 TFREQUENCY;VAL_FREQ_TRANS;541 MHz TFREQUENCY;UOM_FREQ;541 121.5 TFREQUENCY;VAL_FREQ_TRANS;1341 MHz TFREQUENCY;UOM_FREQ;1341 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Narathiwat Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;340",
-     "freq": "122.7 TFREQUENCY;VAL_FREQ_TRANS;543 MHz TFREQUENCY;UOM_FREQ;543 236.6 TFREQUENCY;VAL_FREQ_TRANS;544 MHz TFREQUENCY;UOM_FREQ;544 121.5 TFREQUENCY;VAL_FREQ_TRANS;542 MHz TFREQUENCY;UOM_FREQ;542 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND",
-     "callsign": "Narathiwat Ground",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;1450 MHz TFREQUENCY;UOM_FREQ;1450 121.5 TFREQUENCY;VAL_FREQ_TRANS;1451 MHz TFREQUENCY;UOM_FREQ;1451 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS",
-     "callsign": "Narathiwat Airport TSERVICE;TXT_NAME;409",
-     "freq": "383 TFREQUENCY;VAL_FREQ_TRANS;547 KHz TFREQUENCY;UOM_FREQ;547",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [
-    {
-     "type": "NDB",
-     "id": "NT TNDB;CODE_ID;184",
-     "freq": "383 TNDB;VAL_FREQ;184 KHz TNDB;UOM_FREQ;184",
-     "lat": 6.528139,
-     "lon": 101.74975,
-     "rmk": "NDB, 50 nm coverage restriction as follows: Bearing 260º-300º altitude should not below 5 500 ft Bearing 301º-055º altitude should not below 1 500 ft Bearing 056º-259º unable to perform flight inspection due to border limited"
-    }
-   ],
-   "name": "TAD_HP;CODE_ICAO;437 Narathiwat TAD_HP;TXT_NAME;437",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSC-en-GB.html"
-  },
-  "VTSE": {
-   "icao": "VTSE",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 373.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;348",
-     "callsign": "Chumphon Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;289",
-     "freq": "122.6 TFREQUENCY;VAL_FREQ_TRANS;430 MHz TFREQUENCY;UOM_FREQ;430 121.5 TFREQUENCY;VAL_FREQ_TRANS;1503 MHz TFREQUENCY;UOM_FREQ;1503 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;349",
-     "callsign": "Chumphon Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;290",
-     "freq": "122.15 TFREQUENCY;VAL_FREQ_TRANS;433 MHz TFREQUENCY;UOM_FREQ;433 236.6 TFREQUENCY;VAL_FREQ_TRANS;434 MHz TFREQUENCY;UOM_FREQ;434 121.5 TFREQUENCY;VAL_FREQ_TRANS;1244 MHz TFREQUENCY;UOM_FREQ;1244 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;1307",
-     "callsign": "Chumphon Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1190",
-     "freq": "128.45 TFREQUENCY;VAL_FREQ_TRANS;1504 MHz TFREQUENCY;UOM_FREQ;1504",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;373 Chumphon/ Chumphon TAD_HP;TXT_NAME;373",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSE-en-GB.html"
-  },
-  "VTSF": {
-   "icao": "VTSF",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 13.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Nakhon Si Thammarat Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;332",
-     "freq": "119.75 TFREQUENCY;VAL_FREQ_TRANS;522 MHz TFREQUENCY;UOM_FREQ;522 121.5 TFREQUENCY;VAL_FREQ_TRANS;1517 MHz TFREQUENCY;UOM_FREQ;1517 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Nakhon Si Thammarat Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;333",
-     "freq": "122.55 TFREQUENCY;VAL_FREQ_TRANS;525 MHz TFREQUENCY;UOM_FREQ;525 236.6 TFREQUENCY;VAL_FREQ_TRANS;526 MHz TFREQUENCY;UOM_FREQ;526 121.5 TFREQUENCY;VAL_FREQ_TRANS;1245 MHz TFREQUENCY;UOM_FREQ;1245 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1246 MHz TFREQUENCY;UOM_FREQ;1246 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND",
-     "callsign": "Nakhon Si Thammarat Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;334",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;527 MHz TFREQUENCY;UOM_FREQ;527",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;399",
-     "callsign": "Nakhon Si Thammarat Airport TSERVICE;TXT_NAME;399",
-     "freq": "123.4 TFREQUENCY;VAL_FREQ_TRANS;528 MHz TFREQUENCY;UOM_FREQ;528",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;431 Nakhon Si Thammarat TAD_HP;TXT_NAME;431",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSF-en-GB.html"
-  },
-  "VTSG": {
-   "icao": "VTSG",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 377.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;354",
-     "callsign": "Krabi Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;295",
-     "freq": "120.05 TFREQUENCY;VAL_FREQ_TRANS;441 MHz TFREQUENCY;UOM_FREQ;441 121.5 TFREQUENCY;VAL_FREQ_TRANS;1485 MHz TFREQUENCY;UOM_FREQ;1485 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;355",
-     "callsign": "Krabi Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;296",
-     "freq": "122.5 TFREQUENCY;VAL_FREQ_TRANS;442 MHz TFREQUENCY;UOM_FREQ;442 236.6 TFREQUENCY;VAL_FREQ_TRANS;443 MHz TFREQUENCY;UOM_FREQ;443 121.5 TFREQUENCY;VAL_FREQ_TRANS;444 MHz TFREQUENCY;UOM_FREQ;444 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;356",
-     "callsign": "Krabi Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;297",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;445 MHz TFREQUENCY;UOM_FREQ;445",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;357",
-     "callsign": "Krabi Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1170",
-     "freq": "132.4 TFREQUENCY;VAL_FREQ_TRANS;446 MHz TFREQUENCY;UOM_FREQ;446",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [
-    {
-     "type": "DME 32",
-     "id": "IKBI",
-     "freq": "CH38X",
-     "lat": 8.108167,
-     "lon": 98.977861,
-     "rmk": "3.2 TILS_GP;VAL_SLOPE;170 DEG, RDH 56.5 TILS_GP;VAL_RDH;170 ft TILS_GP;UOM_RDH;170 ."
-    }
-   ],
-   "name": "TAD_HP;CODE_ID;377 Krabi TAD_HP;TXT_NAME;377",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSG-en-GB.html"
-  },
-  "VTSH": {
-   "icao": "VTSH",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 12.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;438",
-     "callsign": "Songkhla Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;365",
-     "freq": "121.5 TFREQUENCY;VAL_FREQ_TRANS;597 * MHZ TFREQUENCY;UOM_FREQ;597 126.2 TFREQUENCY;VAL_FREQ_TRANS;598 MHZ TFREQUENCY;UOM_FREQ;598 227.0 TFREQUENCY;VAL_FREQ_TRANS;599 MHZ TFREQUENCY;UOM_FREQ;599",
-     "hours": "HJ",
-     "rmk": "*Emergency Freq."
-    },
-    {
-     "svc": "AFS TSERVICE;CODE_TYPE;439",
-     "callsign": "Songkhla TCALLSIGN_DETAIL;TXT_CALL_SIGN;366",
-     "freq": "USB 7745 TFREQUENCY;VAL_FREQ_TRANS;600 KHZ TFREQUENCY;UOM_FREQ;600 USB 5443 TFREQUENCY;VAL_FREQ_TRANS;601 KHZ TFREQUENCY;UOM_FREQ;601",
-     "hours": "Domestic circuit 7745-PRI. 5443-SEC",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;459 Songkhla TAD_HP;TXT_NAME;459",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSH-en-GB.html"
-  },
-  "VTSK": {
-   "icao": "VTSK",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 439.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Pattani Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;342",
-     "freq": "126.0 TFREQUENCY;VAL_FREQ_TRANS;548 MHz TFREQUENCY;UOM_FREQ;548",
-     "hours": "23:00 TTMSHT;TIME_WEF;867 - 11:00 TTMSHT;TIME_TIL;867 2)",
-     "rmk": "1) Emergency frequency 2) Outside this period and Holiday 1 HR PN to ATC"
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Pattani Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;343",
-     "freq": "119.3 TFREQUENCY;VAL_FREQ_TRANS;1452 MHz TFREQUENCY;UOM_FREQ;1452 236.6 TFREQUENCY;VAL_FREQ_TRANS;550 MHz TFREQUENCY;UOM_FREQ;550 121.5 TFREQUENCY;VAL_FREQ_TRANS;549 MHz TFREQUENCY;UOM_FREQ;549 1)",
-     "hours": "23:00-11:00 2)",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;439 Pattani TAD_HP;TXT_NAME;439",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSK-en-GB.html"
-  },
-  "VTSM": {
-   "icao": "VTSM",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 64.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;446",
-     "callsign": "Samui Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;372",
-     "freq": "129.6 TFREQUENCY;VAL_FREQ_TRANS;617 MHz TFREQUENCY;UOM_FREQ;617 / 305.4 TFREQUENCY;VAL_FREQ_TRANS;1464 MHz TFREQUENCY;UOM_FREQ;1464 121.5 TFREQUENCY;VAL_FREQ_TRANS;1462 MHz TFREQUENCY;UOM_FREQ;1462 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;447",
-     "callsign": "Samui Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;373",
-     "freq": "118.9 TFREQUENCY;VAL_FREQ_TRANS;618 MHz TFREQUENCY;UOM_FREQ;618 121.5 TFREQUENCY;VAL_FREQ_TRANS;1000 MHz TFREQUENCY;UOM_FREQ;1000 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;448",
-     "callsign": "Samui Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;374",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;619 MHz TFREQUENCY;UOM_FREQ;619",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;449",
-     "callsign": "Samui Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;375",
-     "freq": "128.6 TFREQUENCY;VAL_FREQ_TRANS;620 MHz TFREQUENCY;UOM_FREQ;620",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;465 Surat Thani/ Samui TAD_HP;TXT_NAME;465",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSM-en-GB.html"
-  },
-  "VTSN": {
-   "icao": "VTSN",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 44.0,
-   "rwy": [
-    "18",
-    "36"
-   ],
-   "comm": [
-    {
-     "svc": "TWR",
-     "callsign": "Nakhon Si Thammarat Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;335",
-     "freq": "122.7 TFREQUENCY;VAL_FREQ_TRANS;529 MHZ TFREQUENCY;UOM_FREQ;529 236.6 TFREQUENCY;VAL_FREQ_TRANS;530 MHZ TFREQUENCY;UOM_FREQ;530 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;531 MHZ TFREQUENCY;UOM_FREQ;531",
-     "hours": "HJ",
-     "rmk": "*Emergency Freq"
-    },
-    {
-     "svc": "G/A/G",
-     "callsign": "Nakhon Si Thammarat Radio TCALLSIGN_DETAIL;TXT_CALL_SIGN;336",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;532 MHZ TFREQUENCY;UOM_FREQ;532 6577 TFREQUENCY;VAL_FREQ_TRANS;533 KHZ TFREQUENCY;UOM_FREQ;533 5490 TFREQUENCY;VAL_FREQ_TRANS;534 KHZ TFREQUENCY;UOM_FREQ;534",
-     "hours": "HJ",
-     "rmk": "Primary Freq. (Upper side band) Secondary Freq. (Upper side band)"
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;433 Nakhon Si Thammarat / Cha - Ian TAD_HP;TXT_NAME;433",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSN-en-GB.html"
-  },
-  "VTSP": {
-   "icao": "VTSP",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 84.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;333",
-     "callsign": "Phuket Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;276",
-     "freq": "124.7 TFREQUENCY;VAL_FREQ_TRANS;396 MHz TFREQUENCY;UOM_FREQ;396 284.0 TFREQUENCY;VAL_FREQ_TRANS;397 MHz TFREQUENCY;UOM_FREQ;397 121.5 TFREQUENCY;VAL_FREQ_TRANS;1486 MHz TFREQUENCY;UOM_FREQ;1486 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1487 MHz TFREQUENCY;UOM_FREQ;1487 1) 2)",
-     "hours": "H24",
-     "rmk": "1) Emergency frequency 2) On radial 130, radial 170 and radial 210 at distance 15 NM altitude 2 500 ft are blind spot."
-    },
-    {
-     "svc": "ARR TSERVICE;CODE_TYPE;1006",
-     "callsign": "Phuket Arrival TSERVICE;TXT_NAME;1006",
-     "freq": "120.7 TFREQUENCY;VAL_FREQ_TRANS;1180 MHz TFREQUENCY;UOM_FREQ;1180",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;334",
-     "callsign": "Phuket Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;277",
-     "freq": "118.1 TFREQUENCY;VAL_FREQ_TRANS;398 MHz TFREQUENCY;UOM_FREQ;398 236.6 TFREQUENCY;VAL_FREQ_TRANS;400 MHz TFREQUENCY;UOM_FREQ;400 2) 121.5 TFREQUENCY;VAL_FREQ_TRANS;399 MHz TFREQUENCY;UOM_FREQ;399 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;401 MHz TFREQUENCY;UOM_FREQ;401 1) 2)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;335",
-     "callsign": "Phuket Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;278",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;402 MHz TFREQUENCY;UOM_FREQ;402",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "CDC TSERVICE;CODE_TYPE;1007",
-     "callsign": "Phuket Delivery TSERVICE;TXT_NAME;1007",
-     "freq": "118.55 TFREQUENCY;VAL_FREQ_TRANS;1181 MHz TFREQUENCY;UOM_FREQ;1181",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;336",
-     "callsign": "Phuket Intl Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;279",
-     "freq": "128.0 TFREQUENCY;VAL_FREQ_TRANS;403 MHz TFREQUENCY;UOM_FREQ;403",
-     "hours": "H24",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;349 Phuket/ Phuket International Airport TAD_HP;TXT_NAME;349",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSP-en-GB.html"
-  },
-  "VTSR": {
-   "icao": "VTSR",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 451.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;428",
-     "callsign": "Ranong Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;358",
-     "freq": "125.1 TFREQUENCY;VAL_FREQ_TRANS;580 MHz TFREQUENCY;UOM_FREQ;580 121.5 TFREQUENCY;VAL_FREQ_TRANS;1481 MHz TFREQUENCY;UOM_FREQ;1481 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;429",
-     "callsign": "Ranong Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;359",
-     "freq": "122.25 TFREQUENCY;VAL_FREQ_TRANS;582 MHz TFREQUENCY;UOM_FREQ;582 236.6 TFREQUENCY;VAL_FREQ_TRANS;1482 MHz TFREQUENCY;UOM_FREQ;1482 121.5 TFREQUENCY;VAL_FREQ_TRANS;581 MHz TFREQUENCY;UOM_FREQ;581 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;430",
-     "callsign": "Ranong Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1171",
-     "freq": "126.475 TFREQUENCY;VAL_FREQ_TRANS;583 MHz TFREQUENCY;UOM_FREQ;583",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;451 Ranong TAD_HP;TXT_NAME;451",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSR-en-GB.html"
-  },
-  "VTSS": {
-   "icao": "VTSS",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 90.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;341",
-     "callsign": "Hat Yai Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;283",
-     "freq": "126.7 TFREQUENCY;VAL_FREQ_TRANS;418 MHz TFREQUENCY;UOM_FREQ;418 301.5 TFREQUENCY;VAL_FREQ_TRANS;419 MHz TFREQUENCY;UOM_FREQ;419 121.5 TFREQUENCY;VAL_FREQ_TRANS;1453 MHz TFREQUENCY;UOM_FREQ;1453 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1454 MHz TFREQUENCY;UOM_FREQ;1454 1) 133.2 TFREQUENCY;VAL_FREQ_TRANS;1248 MHz TFREQUENCY;UOM_FREQ;1248 2)",
-     "hours": "H24",
-     "rmk": "1) Emergency frequency 2) Backup frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;342",
-     "callsign": "Hat Yai Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;284",
-     "freq": "118.1 TFREQUENCY;VAL_FREQ_TRANS;420 MHz TFREQUENCY;UOM_FREQ;420 275.8 TFREQUENCY;VAL_FREQ_TRANS;422 MHz TFREQUENCY;UOM_FREQ;422 121.5 TFREQUENCY;VAL_FREQ_TRANS;421 MHz TFREQUENCY;UOM_FREQ;421 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;423 MHz TFREQUENCY;UOM_FREQ;423 1) 133.2 TFREQUENCY;VAL_FREQ_TRANS;1247 MHz TFREQUENCY;UOM_FREQ;1247 2)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;343",
-     "callsign": "Hat Yai Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;285",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;424 MHz TFREQUENCY;UOM_FREQ;424 257.8 TFREQUENCY;VAL_FREQ_TRANS;425 MHz TFREQUENCY;UOM_FREQ;425 121.5 TFREQUENCY;VAL_FREQ_TRANS;1455 MHz TFREQUENCY;UOM_FREQ;1455 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1456 MHz TFREQUENCY;UOM_FREQ;1456 1)",
-     "hours": "H24",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;344",
-     "callsign": "Hat Yai Intl. Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;286",
-     "freq": "128.8 TFREQUENCY;VAL_FREQ_TRANS;426 MHz TFREQUENCY;UOM_FREQ;426",
-     "hours": "H24",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;351 Songkhla / Hat Yai International Airport TAD_HP;TXT_NAME;351",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSS-en-GB.html"
-  },
-  "VTST": {
-   "icao": "VTST",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 473.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;457",
-     "callsign": "Trang Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;382",
-     "freq": "125.3 TFREQUENCY;VAL_FREQ_TRANS;632 MHz TFREQUENCY;UOM_FREQ;632 121.5 TFREQUENCY;VAL_FREQ_TRANS;1457 MHz TFREQUENCY;UOM_FREQ;1457 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;458",
-     "callsign": "Trang Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;383",
-     "freq": "118.4 TFREQUENCY;VAL_FREQ_TRANS;633 MHz TFREQUENCY;UOM_FREQ;633 236.6 TFREQUENCY;VAL_FREQ_TRANS;634 MHz TFREQUENCY;UOM_FREQ;634 121.5 TFREQUENCY;VAL_FREQ_TRANS;1458 MHz TFREQUENCY;UOM_FREQ;1458 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;459",
-     "callsign": "Trang Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1154",
-     "freq": "134.5 TFREQUENCY;VAL_FREQ_TRANS;635 MHz TFREQUENCY;UOM_FREQ;635",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [
-    {
-     "type": "DME 08",
-     "id": "I-TRN",
-     "freq": "110.3 TILS_LLZ;VAL_FREQ;154 MHz TILS_LLZ;UOM_FREQ;154",
-     "lat": 7.511306,
-     "lon": 99.628556,
-     "rmk": ""
-    }
-   ],
-   "name": "TAD_HP;CODE_ID;473 Trang TAD_HP;TXT_NAME;473",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTST-en-GB.html"
-  },
-  "VTSY": {
-   "icao": "VTSY",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 738.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;406",
-     "callsign": "Narathiwat Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;339",
-     "freq": "125.55 TFREQUENCY;VAL_FREQ_TRANS;541 MHz TFREQUENCY;UOM_FREQ;541 121.5 TFREQUENCY;VAL_FREQ_TRANS;1341 MHz TFREQUENCY;UOM_FREQ;1341 1)",
-     "hours": "23:00 TTMSHT;TIME_WEF;859 - 11:00 TTMSHT;TIME_TIL;859",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;987",
-     "callsign": "Betong Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;849",
-     "freq": "124.15 TFREQUENCY;VAL_FREQ_TRANS;1346 MHz TFREQUENCY;UOM_FREQ;1346 236.6 TFREQUENCY;VAL_FREQ_TRANS;1347 MHz TFREQUENCY;UOM_FREQ;1347 121.5 TFREQUENCY;VAL_FREQ_TRANS;1348 MHz TFREQUENCY;UOM_FREQ;1341 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1349 MHz TFREQUENCY;UOM_FREQ;1349 1)",
-     "hours": "01:30 TTMSHT;TIME_WEF;1690 - 09:30 TTMSHT;TIME_TIL;1690",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;1169",
-     "callsign": "Betong Ground TSERVICE;TXT_NAME;1169",
-     "freq": "122.15 TFREQUENCY;VAL_FREQ_TRANS;1343 MHz TFREQUENCY;UOM_FREQ;1343 121.5 TFREQUENCY;VAL_FREQ_TRANS;1344 MHz TFREQUENCY;UOM_FREQ;1344 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;1345 MHz TFREQUENCY;UOM_FREQ;1345 1)",
-     "hours": "01:30 TTMSHT;TIME_WEF;1691 - 09:30 TTMSHT;TIME_TIL;1691",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;1168",
-     "callsign": "Betong Airport TSERVICE;TXT_NAME;1168",
-     "freq": "128.5 TFREQUENCY;VAL_FREQ_TRANS;1342 MHz TFREQUENCY;UOM_FREQ;1342",
-     "hours": "01:30 TTMSHT;TIME_WEF;1869 - 09:30 TTMSHT;TIME_TIL;1869",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;969 Yala/ Betong TAD_HP;TXT_NAME;969",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSY-en-GB.html"
-  },
-  "VTUD": {
-   "icao": "VTUD",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 479.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;469",
-     "callsign": "Udon Approach TSERVICE;TXT_NAME;469",
-     "freq": "126.2 TFREQUENCY;VAL_FREQ_TRANS;652 MHz TFREQUENCY;UOM_FREQ;652 265.9 TFREQUENCY;VAL_FREQ_TRANS;653 MHz TFREQUENCY;UOM_FREQ;653 119.45 TFREQUENCY;VAL_FREQ_TRANS;1160 MHz TFREQUENCY;UOM_FREQ;1160 2) 121.5 TFREQUENCY;VAL_FREQ_TRANS;1518 MHz TFREQUENCY;UOM_FREQ;1518 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency 2) Backup frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;470",
-     "callsign": "Udon Tower TSERVICE;TXT_NAME;470",
-     "freq": "121.5 TFREQUENCY;VAL_FREQ_TRANS;654 MHz TFREQUENCY;UOM_FREQ;654 1) 122.5 TFREQUENCY;VAL_FREQ_TRANS;655 MHz TFREQUENCY;UOM_FREQ;655 243.0 TFREQUENCY;VAL_FREQ_TRANS;656 MHz TFREQUENCY;UOM_FREQ;656 1) 355.4 TFREQUENCY;VAL_FREQ_TRANS;657 MHz TFREQUENCY;UOM_FREQ;657 119.45 TFREQUENCY;VAL_FREQ_TRANS;1161 MHz TFREQUENCY;UOM_FREQ;1161 2)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;471",
-     "callsign": "Udon Ground TSERVICE;TXT_NAME;471",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;658 MHz TFREQUENCY;UOM_FREQ;658 275.8 TFREQUENCY;VAL_FREQ_TRANS;659 MHz TFREQUENCY;UOM_FREQ;659",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;472",
-     "callsign": "Udon Airport TSERVICE;TXT_NAME;472",
-     "freq": "127.6 TFREQUENCY;VAL_FREQ_TRANS;660 MHz TFREQUENCY;UOM_FREQ;660",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;479 Udon Thani TAD_HP;TXT_NAME;479",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUD-en-GB.html"
-  },
-  "VTUI": {
-   "icao": "VTUI",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 455.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;434",
-     "callsign": "Sakon Nakhon Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;362",
-     "freq": "123.35 TFREQUENCY;VAL_FREQ_TRANS;588 MHz TFREQUENCY;UOM_FREQ;588 284.0 TFREQUENCY;VAL_FREQ_TRANS;1460 MHz TFREQUENCY;UOM_FREQ;1460 121.5 TFREQUENCY;VAL_FREQ_TRANS;1461 MHz TFREQUENCY;UOM_FREQ;1461 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;435",
-     "callsign": "Sakon Nakhon Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;363",
-     "freq": "119.65 TFREQUENCY;VAL_FREQ_TRANS;590 MHz TFREQUENCY;UOM_FREQ;590 236.6 TFREQUENCY;VAL_FREQ_TRANS;591 MHz TFREQUENCY;UOM_FREQ;591 121.5 TFREQUENCY;VAL_FREQ_TRANS;589 MHz TFREQUENCY;UOM_FREQ;589 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;436",
-     "callsign": "Sakon Nakhon Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;1155",
-     "freq": "128.25 TFREQUENCY;VAL_FREQ_TRANS;592 MHz TFREQUENCY;UOM_FREQ;592",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;455 Sakon Nakhon/ Sakon Nakhon TAD_HP;TXT_NAME;455",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUI-en-GB.html"
-  },
-  "VTUK": {
-   "icao": "VTUK",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 375.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;350",
-     "callsign": "Khon Kaen Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;291",
-     "freq": "123.4 TFREQUENCY;VAL_FREQ_TRANS;435 MHz TFREQUENCY;UOM_FREQ;435 240.0 TFREQUENCY;VAL_FREQ_TRANS;1249 MHz TFREQUENCY;UOM_FREQ;1249 121.5 TFREQUENCY;VAL_FREQ_TRANS;1459 MHz TFREQUENCY;UOM_FREQ;1459 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;351",
-     "callsign": "Khon Kaen Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;292",
-     "freq": "122.25 TFREQUENCY;VAL_FREQ_TRANS;437 MHz TFREQUENCY;UOM_FREQ;437 236.6 TFREQUENCY;VAL_FREQ_TRANS;438 MHz TFREQUENCY;UOM_FREQ;438 121.5 TFREQUENCY;VAL_FREQ_TRANS;436 MHz TFREQUENCY;UOM_FREQ;436 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;352",
-     "callsign": "Khon Kaen Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;293",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;439 MHz TFREQUENCY;UOM_FREQ;439",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;353",
-     "callsign": "Khon Kaen Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;294",
-     "freq": "126.85 TFREQUENCY;VAL_FREQ_TRANS;440 MHz TFREQUENCY;UOM_FREQ;440",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;375 Khon Kaen TAD_HP;TXT_NAME;375",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUK-en-GB.html"
-  },
-  "VTUL": {
-   "icao": "VTUL",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 381.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;361",
-     "callsign": "Loei Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;300",
-     "freq": "122.55 TFREQUENCY;VAL_FREQ_TRANS;452 MHz TFREQUENCY;UOM_FREQ;452 121.5 TFREQUENCY;VAL_FREQ_TRANS;1516 MHz TFREQUENCY;UOM_FREQ;1516 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;362",
-     "callsign": "Loei Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;301",
-     "freq": "118.35 TFREQUENCY;VAL_FREQ_TRANS;454 MHz TFREQUENCY;UOM_FREQ;454 236.6 TFREQUENCY;VAL_FREQ_TRANS;1250 MHz TFREQUENCY;UOM_FREQ;1250 121.5 TFREQUENCY;VAL_FREQ_TRANS;453 MHz TFREQUENCY;UOM_FREQ;453 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;1068",
-     "callsign": "Loei Airport TSERVICE;TXT_NAME;1068",
-     "freq": "126.25 TFREQUENCY;VAL_FREQ_TRANS;1251 MHz TFREQUENCY;UOM_FREQ;1251 ;;",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;381 Loei TAD_HP;TXT_NAME;381",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUL-en-GB.html"
-  },
-  "VTUN": {
-   "icao": "VTUN",
-   "lat": null,
-   "lon": null,
-   "elev_ft": null,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Khorat Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;318",
-     "freq": "349.0 TFREQUENCY;VAL_FREQ_TRANS;490 MHZ TFREQUENCY;UOM_FREQ;490 129.75 TFREQUENCY;VAL_FREQ_TRANS;491 MHZ TFREQUENCY;UOM_FREQ;491",
-     "hours": "H24",
-     "rmk": "Secondary Operation"
-    },
-    {
-     "svc": "ASR",
-     "callsign": "Khorat Arrival TCALLSIGN_DETAIL;TXT_CALL_SIGN;319",
-     "freq": "349.0 TFREQUENCY;VAL_FREQ_TRANS;492 MHZ TFREQUENCY;UOM_FREQ;492 129.75 TFREQUENCY;VAL_FREQ_TRANS;493 MHZ TFREQUENCY;UOM_FREQ;493",
-     "hours": "0100-0900 MON-FRI",
-     "rmk": "Weekend and Public holiday on request at least 1 hour priorrequired to Radar Approach."
-    },
-    {
-     "svc": "ASR",
-     "callsign": "Khorat Departure TCALLSIGN_DETAIL;TXT_CALL_SIGN;320",
-     "freq": "285.0 TFREQUENCY;VAL_FREQ_TRANS;494 MHZ TFREQUENCY;UOM_FREQ;494 134.1 TFREQUENCY;VAL_FREQ_TRANS;495 MHZ TFREQUENCY;UOM_FREQ;495",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "SRA",
-     "callsign": "Final Controller TCALLSIGN_DETAIL;TXT_CALL_SIGN;321",
-     "freq": "382.4 TFREQUENCY;VAL_FREQ_TRANS;496 MHZ TFREQUENCY;UOM_FREQ;496",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Khorat Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;322",
-     "freq": "240.5 TFREQUENCY;VAL_FREQ_TRANS;497 MHZ TFREQUENCY;UOM_FREQ;497 122.2 TFREQUENCY;VAL_FREQ_TRANS;498 MHZ TFREQUENCY;UOM_FREQ;498 * 121.5 TFREQUENCY;VAL_FREQ_TRANS;499 MHZ TFREQUENCY;UOM_FREQ;499 * 243.0 TFREQUENCY;VAL_FREQ_TRANS;500 MHZ TFREQUENCY;UOM_FREQ;500",
-     "hours": "H24",
-     "rmk": "*Emergency Freq."
-    },
-    {
-     "svc": "GND",
-     "callsign": "Khorat Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;323",
-     "freq": "257.8 TFREQUENCY;VAL_FREQ_TRANS;501 MHZ TFREQUENCY;UOM_FREQ;501 121.75 TFREQUENCY;VAL_FREQ_TRANS;502 MHZ TFREQUENCY;UOM_FREQ;502",
-     "hours": "",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS",
-     "callsign": "Khorat AD TCALLSIGN_DETAIL;TXT_CALL_SIGN;324",
-     "freq": "134.8 TFREQUENCY;VAL_FREQ_TRANS;503 MHZ TFREQUENCY;UOM_FREQ;503 390.6 MHZ",
-     "hours": "0100-0900 MON-FRI",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;395 Nakhon Ratchasima / Khorat TAD_HP;TXT_NAME;395",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUN-en-GB.html"
-  },
-  "VTUO": {
-   "icao": "VTUO",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 371.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP",
-     "callsign": "Buri Ram Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;287",
-     "freq": "125.55 TFREQUENCY;VAL_FREQ_TRANS;427 MHz TFREQUENCY;UOM_FREQ;427 121.5 TFREQUENCY;VAL_FREQ_TRANS;1440 MHz TFREQUENCY;UOM_FREQ;1440 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR",
-     "callsign": "Buri Ram Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;288",
-     "freq": "118.05 TFREQUENCY;VAL_FREQ_TRANS;428 MHz TFREQUENCY;UOM_FREQ;428 236.6 TFREQUENCY;VAL_FREQ_TRANS;1253 MHz TFREQUENCY;UOM_FREQ;1253 121.5 TFREQUENCY;VAL_FREQ_TRANS;1252 TFREQUENCY;CODE_MODE;1252 MHz TFREQUENCY;UOM_FREQ;1252 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS",
-     "callsign": "Buri Ram Airport TSERVICE;TXT_NAME;347",
-     "freq": "127.05 TFREQUENCY;VAL_FREQ_TRANS;429 MHz TFREQUENCY;UOM_FREQ;429",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;371 Buri Ram Airport TAD_HP;TXT_NAME;371",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUO-en-GB.html"
-  },
-  "VTUQ": {
-   "icao": "VTUQ",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 393.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;378",
-     "callsign": "Ratchasima Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;316",
-     "freq": "123.6 TFREQUENCY;VAL_FREQ_TRANS;486 MHz TFREQUENCY;UOM_FREQ;486 121.5 TFREQUENCY;VAL_FREQ_TRANS;1502 MHz TFREQUENCY;UOM_FREQ;1502 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;379",
-     "callsign": "Ratchasima Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;317",
-     "freq": "119.8 TFREQUENCY;VAL_FREQ_TRANS;487 MHz TFREQUENCY;UOM_FREQ;487 236.6 TFREQUENCY;VAL_FREQ_TRANS;488 MHz TFREQUENCY;UOM_FREQ;488 121.5 TFREQUENCY;VAL_FREQ_TRANS;1254 MHz TFREQUENCY;UOM_FREQ;1254 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;380",
-     "callsign": "Ratchasima Airport TSERVICE;TXT_NAME;380",
-     "freq": "126.6 TFREQUENCY;VAL_FREQ_TRANS;489 MHz TFREQUENCY;UOM_FREQ;489",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;393 Nakhon Ratchasima TAD_HP;TXT_NAME;393",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUQ-en-GB.html"
-  },
-  "VTUU": {
-   "icao": "VTUU",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 477.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;462",
-     "callsign": "Ubon Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;386",
-     "freq": "123.5 TFREQUENCY;VAL_FREQ_TRANS;638 MHz TFREQUENCY;UOM_FREQ;638 257.8 TFREQUENCY;VAL_FREQ_TRANS;639 MHz TFREQUENCY;UOM_FREQ;639 121.5 TFREQUENCY;VAL_FREQ_TRANS;1524 MHz TFREQUENCY;UOM_FREQ;1524 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;463",
-     "callsign": "Ubon Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;387",
-     "freq": "119.9 TFREQUENCY;VAL_FREQ_TRANS;641 MHz TFREQUENCY;UOM_FREQ;641 274.5 TFREQUENCY;VAL_FREQ_TRANS;643 MHz TFREQUENCY;UOM_FREQ;643 121.5 TFREQUENCY;VAL_FREQ_TRANS;640 MHz TFREQUENCY;UOM_FREQ;640 1) 243.0 TFREQUENCY;VAL_FREQ_TRANS;642 MHz TFREQUENCY;UOM_FREQ;642 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;464",
-     "callsign": "Ubon Ground TSERVICE;TXT_NAME;464",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;644 MHz TFREQUENCY;UOM_FREQ;644 275.8 TFREQUENCY;VAL_FREQ_TRANS;645 MHz TFREQUENCY;UOM_FREQ;645",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;465",
-     "callsign": "Ubon Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;689",
-     "freq": "128.2 TFREQUENCY;VAL_FREQ_TRANS;646 MHz TFREQUENCY;UOM_FREQ;646",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ASR TSERVICE;CODE_TYPE;466",
-     "callsign": "Departure Control TSERVICE;TXT_NAME;466 Arrival Control TSERVICE;TXT_NAME;467",
-     "freq": "335.5 TFREQUENCY;VAL_FREQ_TRANS;647 MHz TFREQUENCY;UOM_FREQ;647 134.1 TFREQUENCY;VAL_FREQ_TRANS;648 MHz TFREQUENCY;UOM_FREQ;648 282.2 TFREQUENCY;VAL_FREQ_TRANS;649 MHz TFREQUENCY;UOM_FREQ;649 125.75 TFREQUENCY;VAL_FREQ_TRANS;650 MHz TFREQUENCY;UOM_FREQ;650",
-     "hours": "0100-0900 2) MON-FRI (Except Public Holiday)",
-     "rmk": "2) Other this period 2 HR PN TO ATC Royal Thai Air Force ASR OPS AVBL for MIL - Coverage/HGT: PSR 70 nm/30 000ft SSR 200 nm/100 000 ft - EM: PSR 500 KW SSR 1.5 KW"
-    },
-    {
-     "svc": "SRA TSERVICE;CODE_TYPE;468",
-     "callsign": "Final Control",
-     "freq": "382.4 TFREQUENCY;VAL_FREQ_TRANS;651 MHz TFREQUENCY;UOM_FREQ;651",
-     "hours": "",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;477 Ubon Ratchathani TAD_HP;TXT_NAME;477",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUU-en-GB.html"
-  },
-  "VTUV": {
-   "icao": "VTUV",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 453.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;431",
-     "callsign": "Roi Et Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;360",
-     "freq": "125.4 TFREQUENCY;VAL_FREQ_TRANS;584 MHz TFREQUENCY;UOM_FREQ;584 121.5 TFREQUENCY;VAL_FREQ_TRANS;1501 MHz TFREQUENCY;UOM_FREQ;1501 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;432",
-     "callsign": "Roi Et Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;361",
-     "freq": "119.75 TFREQUENCY;VAL_FREQ_TRANS;585 MHz TFREQUENCY;UOM_FREQ;585 236.6 TFREQUENCY;VAL_FREQ_TRANS;586 MHz TFREQUENCY;UOM_FREQ;586 121.5 TFREQUENCY;VAL_FREQ_TRANS;1255 MHz TFREQUENCY;UOM_FREQ;1255 1)",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;433",
-     "callsign": "Roi Et Airport TSERVICE;TXT_NAME;433",
-     "freq": "128.275 TFREQUENCY;VAL_FREQ_TRANS;587 MHz TFREQUENCY;UOM_FREQ;587",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ID;453 Roi Et TAD_HP;TXT_NAME;453",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUV-en-GB.html"
-  },
-  "VTUW": {
-   "icao": "VTUW",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 391.0,
-   "rwy": [],
-   "comm": [
-    {
-     "svc": "APP TSERVICE;CODE_TYPE;374",
-     "callsign": "Sakon Nakhon Approach TCALLSIGN_DETAIL;TXT_CALL_SIGN;312",
-     "freq": "123.35 TFREQUENCY;VAL_FREQ_TRANS;479 MHz TFREQUENCY;UOM_FREQ;479 284.0 TFREQUENCY;VAL_FREQ_TRANS;480 MHz TFREQUENCY;UOM_FREQ;480 121.5 TFREQUENCY;VAL_FREQ_TRANS;482 MHz TFREQUENCY;UOM_FREQ;482 1)",
-     "hours": "As AD OPR HR",
-     "rmk": "1) Emergency frequency"
-    },
-    {
-     "svc": "TWR TSERVICE;CODE_TYPE;375",
-     "callsign": "Nakhon Phanom Tower TCALLSIGN_DETAIL;TXT_CALL_SIGN;313",
-     "freq": "122.15 TFREQUENCY;VAL_FREQ_TRANS;481 MHz TFREQUENCY;UOM_FREQ;481 121.5 TFREQUENCY;VAL_FREQ_TRANS;482 MHz TFREQUENCY;UOM_FREQ;482 1) 236.6 TFREQUENCY;VAL_FREQ_TRANS;483 MHz TFREQUENCY;UOM_FREQ;483",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "GND TSERVICE;CODE_TYPE;376",
-     "callsign": "Nakhon Phanom Ground TCALLSIGN_DETAIL;TXT_CALL_SIGN;314",
-     "freq": "121.9 TFREQUENCY;VAL_FREQ_TRANS;484 MHz TFREQUENCY;UOM_FREQ;484",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    },
-    {
-     "svc": "ATIS TSERVICE;CODE_TYPE;377",
-     "callsign": "Nakhon Phanom Airport TCALLSIGN_DETAIL;TXT_CALL_SIGN;315",
-     "freq": "128.85 TFREQUENCY;VAL_FREQ_TRANS;485 MHz TFREQUENCY;UOM_FREQ;485",
-     "hours": "As AD OPR HR",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;391 Nakhon Phanom TAD_HP;TXT_NAME;391",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUW-en-GB.html"
-  },
-  "VTUZ": {
-   "icao": "VTUZ",
-   "lat": null,
-   "lon": null,
-   "elev_ft": 2090.0,
-   "rwy": [
-    "01",
-    "19"
-   ],
-   "comm": [
-    {
-     "svc": "TWR",
-     "callsign": "Nam Phong Tower",
-     "freq": "NIL",
-     "hours": "Active by NOTAM",
-     "rmk": "Primary Operation Secondary Operation *Emergency Freq."
-    },
-    {
-     "svc": "GND",
-     "callsign": "Nam Phong Ground",
-     "freq": "NIL",
-     "hours": "",
-     "rmk": ""
-    }
-   ],
-   "navaids": [],
-   "name": "TAD_HP;CODE_ICAO;2090 KHON-KAEN / NAM PHONG TAD_HP;TXT_NAME;2090",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUZ-en-GB.html"
+   "name": "",
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html"
   }
  },
  "navaids": [
   {
-   "name": "BURI RAM TVOR;TXT_NAME;87 DVOR TVOR;CODE_TYPE;87 /DME",
+   "name": "BANGKOK DVOR /DME",
    "type": "DME",
-   "id": "",
-   "freq": "117.2 TVOR;VAL_FREQ;87 MHz TVOR;UOM_FREQ;87 (CH 119X TDME;CODE_CHANNEL;50 )",
+   "id": "BKK",
+   "freq": "117.7 MHz (CH 124X )",
+   "lat": 13.893611,
+   "lon": 100.596111
+  },
+  {
+   "name": "BETONG DVOR/DME",
+   "type": "DME",
+   "id": "BET",
+   "freq": "113.1 MHz (CH 78X )",
+   "lat": 5.785556,
+   "lon": 101.144167
+  },
+  {
+   "name": "BURI RAM DVOR /DME",
+   "type": "DME",
+   "id": "BRM",
+   "freq": "117.2 MHz (CH 119X )",
    "lat": 15.239444,
    "lon": 103.258889
+  },
+  {
+   "name": "CHIANG MAI DVOR /DME",
+   "type": "DME",
+   "id": "CMA",
+   "freq": "116.9 MHz (CH 116X )",
+   "lat": 18.766111,
+   "lon": 98.961111
+  },
+  {
+   "name": "CHIANG RAI DVOR /DME",
+   "type": "DME",
+   "id": "CTR",
+   "freq": "116.5 MHz (CH 112X )",
+   "lat": 19.948889,
+   "lon": 99.883056
+  },
+  {
+   "name": "CHUM PHAE DVOR /DME",
+   "type": "DME",
+   "id": "CMP",
+   "freq": "112.9 MHz (CH 76X )",
+   "lat": 16.635278,
+   "lon": 101.988889
+  },
+  {
+   "name": "CHUM PHON DVOR /DME",
+   "type": "DME",
+   "id": "CPN",
+   "freq": "110 MHz (CH 37X )",
+   "lat": 10.711111,
+   "lon": 99.365556
+  },
+  {
+   "name": "HAT YAI DVOR /DME",
+   "type": "DME",
+   "id": "HTY",
+   "freq": "115.3 MHz (CH 100X )",
+   "lat": 6.934167,
+   "lon": 100.388056
+  },
+  {
+   "name": "HUA HIN DVOR /DME",
+   "type": "DME",
+   "id": "HHN",
+   "freq": "113.3 MHz (CH 80X )",
+   "lat": 12.634444,
+   "lon": 99.951111
+  },
+  {
+   "name": "KAMPHAENG SAEN DVOR /DME",
+   "type": "DME",
+   "id": "KPS",
+   "freq": "114.5 MHz (CH 92X )",
+   "lat": 14.165556,
+   "lon": 99.954167
+  },
+  {
+   "name": "KHON KAEN DVOR /DME",
+   "type": "DME",
+   "id": "KKN",
+   "freq": "114.9 MHz (CH 96X )",
+   "lat": 16.470833,
+   "lon": 102.788056
+  },
+  {
+   "name": "KHORAT DVOR /DME",
+   "type": "DME",
+   "id": "KRT",
+   "freq": "113.7 MHz (CH 84X )",
+   "lat": 14.917222,
+   "lon": 102.139722
+  },
+  {
+   "name": "KRABI DVOR /DME",
+   "type": "DME",
+   "id": "KBI",
+   "freq": "111 MHz (CH 47X )",
+   "lat": 8.1075,
+   "lon": 98.9775
+  },
+  {
+   "name": "LAMPANG DVOR /DME",
+   "type": "DME",
+   "id": "LPN",
+   "freq": "114.7 MHz (CH 94X )",
+   "lat": 18.276667,
+   "lon": 99.502222
+  },
+  {
+   "name": "LOEI DVOR /DME",
+   "type": "DME",
+   "id": "LOY",
+   "freq": "115.9 MHz (CH 106X )",
+   "lat": 17.446944,
+   "lon": 101.723056
+  },
+  {
+   "name": "MAE HONG SON DVOR /DME",
+   "type": "DME",
+   "id": "MHS",
+   "freq": "115.5 MHz (CH 102X )",
+   "lat": 19.319722,
+   "lon": 97.912222
+  },
+  {
+   "name": "MAE SOT DVOR /DME",
+   "type": "DME",
+   "id": "MST",
+   "freq": "116.7 MHz (CH 114X )",
+   "lat": 16.697778,
+   "lon": 98.541667
+  },
+  {
+   "name": "NAKHON PHANOM DVOR /DME",
+   "type": "DME",
+   "id": "NKP",
+   "freq": "111.6 MHz (CH 53X)",
+   "lat": 17.388333,
+   "lon": 104.638333
+  },
+  {
+   "name": "NAKHON SI THAMMARAT DVOR /DME",
+   "type": "DME",
+   "id": "NKS",
+   "freq": "117.4 MHz (CH 121X )",
+   "lat": 8.541667,
+   "lon": 99.946944
+  },
+  {
+   "name": "NAN DVOR /DME",
+   "type": "DME",
+   "id": "NAN",
+   "freq": "115.7 MHz (CH 104X )",
+   "lat": 18.809167,
+   "lon": 100.7825
+  },
+  {
+   "name": "NARATHIWAT DVOR /DME",
+   "type": "DME",
+   "id": "NTW",
+   "freq": "116.3 MHz (CH 110X )",
+   "lat": 6.527222,
+   "lon": 101.745278
+  },
+  {
+   "name": "PHETCHABUN DVOR /DME",
+   "type": "DME",
+   "id": "PCB",
+   "freq": "115.4 MHz (CH 101X )",
+   "lat": 16.676111,
+   "lon": 101.196667
+  },
+  {
+   "name": "PHITSANULOK DVOR /DME",
+   "type": "DME",
+   "id": "PSL",
+   "freq": "114.1 MHz (CH 88X )",
+   "lat": 16.770278,
+   "lon": 100.291389
+  },
+  {
+   "name": "PHRAE DVOR /DME",
+   "type": "DME",
+   "id": "PAE",
+   "freq": "111.8 MHz (CH 55X )",
+   "lat": 18.134167,
+   "lon": 100.166389
+  },
+  {
+   "name": "PHUKET DVOR /DME",
+   "type": "DME",
+   "id": "PUT",
+   "freq": "116.9 MHz (CH 116X )",
+   "lat": 8.113889,
+   "lon": 98.306944
+  },
+  {
+   "name": "RANONG DVOR /DME",
+   "type": "DME",
+   "id": "RAN",
+   "freq": "113.4 MHz (CH 81X )",
+   "lat": 9.778056,
+   "lon": 98.583611
+  },
+  {
+   "name": "RAYONG DVOR /DME",
+   "type": "DME",
+   "id": "RYN",
+   "freq": "112.5 MHz (CH 72X )",
+   "lat": 12.778611,
+   "lon": 101.676389
+  },
+  {
+   "name": "ROI-ET DVOR /DME",
+   "type": "DME",
+   "id": "ROT",
+   "freq": "111.2 MHz (CH 49X )",
+   "lat": 16.116944,
+   "lon": 103.772222
+  },
+  {
+   "name": "SAKON NAKHON DVOR /DME",
+   "type": "DME",
+   "id": "SKN",
+   "freq": "114.2 MHz (CH 89X )",
+   "lat": 17.214167,
+   "lon": 104.136667
+  },
+  {
+   "name": "SONGKHLA DVOR /DME",
+   "type": "DME",
+   "id": "SKL",
+   "freq": "113.5 MHz (CH 82X)",
+   "lat": 7.188792,
+   "lon": 100.604197
+  },
+  {
+   "name": "SAMUI DVOR /DME",
+   "type": "DME",
+   "id": "SMU",
+   "freq": "117.6 MHz (CH 123X )",
+   "lat": 9.546944,
+   "lon": 100.061667
+  },
+  {
+   "name": "SURAT THANI DVOR /DME",
+   "type": "DME",
+   "id": "STN",
+   "freq": "110.6 MHz (CH 43X )",
+   "lat": 9.129444,
+   "lon": 99.134722
+  },
+  {
+   "name": "SUKHOTHAI NDB",
+   "type": "NDB",
+   "id": "THS",
+   "freq": "292 kHz",
+   "lat": 17.235278,
+   "lon": 99.821944
+  },
+  {
+   "name": "TAKHLI NDB",
+   "type": "NDB",
+   "id": "TL",
+   "freq": "350 kHz",
+   "lat": 15.275958,
+   "lon": 100.297531
+  },
+  {
+   "name": "TRANG DVOR /DME",
+   "type": "DME",
+   "id": "TRN",
+   "freq": "116.6 MHz (CH 113X )",
+   "lat": 7.508889,
+   "lon": 99.626111
+  },
+  {
+   "name": "TRAT NDB",
+   "type": "NDB",
+   "id": "TRT",
+   "freq": "384 kHz (CH 36X )",
+   "lat": 12.274444,
+   "lon": 102.313889
+  },
+  {
+   "name": "UBON DVOR /DME",
+   "type": "DME",
+   "id": "UBL",
+   "freq": "112.7 MHz (CH 74X )",
+   "lat": 15.245278,
+   "lon": 104.865833
+  },
+  {
+   "name": "UDON DVOR /DME",
+   "type": "DME",
+   "id": "UDN",
+   "freq": "114.3 MHz (CH 90X )",
+   "lat": 17.384722,
+   "lon": 102.775
+  },
+  {
+   "name": "U-TAPAO DVOR /DME",
+   "type": "DME",
+   "id": "BUT",
+   "freq": "110.8 MHz (CH 45X )",
+   "lat": 12.666667,
+   "lon": 101.000556
   }
  ],
- "errors": [
-  "VTBD: อ่านพิกัด ARP ไม่ได้",
-  "VTBK: อ่านพิกัด ARP ไม่ได้",
-  "VTBL: อ่านพิกัด ARP ไม่ได้",
-  "VTBO: อ่านพิกัด ARP ไม่ได้",
-  "VTBP: อ่านพิกัด ARP ไม่ได้",
-  "VTBS: อ่านพิกัด ARP ไม่ได้",
-  "VTBU: อ่านพิกัด ARP ไม่ได้",
-  "VTBW: อ่านพิกัด ARP ไม่ได้",
-  "VTCC: อ่านพิกัด ARP ไม่ได้",
-  "VTCH: อ่านพิกัด ARP ไม่ได้",
-  "VTCI: อ่านพิกัด ARP ไม่ได้",
-  "VTCL: อ่านพิกัด ARP ไม่ได้",
-  "VTCN: อ่านพิกัด ARP ไม่ได้",
-  "VTCP: อ่านพิกัด ARP ไม่ได้",
-  "VTCT: อ่านพิกัด ARP ไม่ได้",
-  "VTPB: อ่านพิกัด ARP ไม่ได้",
-  "VTPH: อ่านพิกัด ARP ไม่ได้",
-  "VTPI: อ่านพิกัด ARP ไม่ได้",
-  "VTPM: อ่านพิกัด ARP ไม่ได้",
-  "VTPN: อ่านพิกัด ARP ไม่ได้",
-  "VTPO: อ่านพิกัด ARP ไม่ได้",
-  "VTPP: อ่านพิกัด ARP ไม่ได้",
-  "VTPT: อ่านพิกัด ARP ไม่ได้",
-  "VTSB: อ่านพิกัด ARP ไม่ได้",
-  "VTSC: อ่านพิกัด ARP ไม่ได้",
-  "VTSE: อ่านพิกัด ARP ไม่ได้",
-  "VTSF: อ่านพิกัด ARP ไม่ได้",
-  "VTSG: อ่านพิกัด ARP ไม่ได้",
-  "VTSH: อ่านพิกัด ARP ไม่ได้",
-  "VTSK: อ่านพิกัด ARP ไม่ได้",
-  "VTSM: อ่านพิกัด ARP ไม่ได้",
-  "VTSN: อ่านพิกัด ARP ไม่ได้",
-  "VTSP: อ่านพิกัด ARP ไม่ได้",
-  "VTSR: อ่านพิกัด ARP ไม่ได้",
-  "VTSS: อ่านพิกัด ARP ไม่ได้",
-  "VTST: อ่านพิกัด ARP ไม่ได้",
-  "VTSY: อ่านพิกัด ARP ไม่ได้",
-  "VTUD: อ่านพิกัด ARP ไม่ได้",
-  "VTUI: อ่านพิกัด ARP ไม่ได้",
-  "VTUK: อ่านพิกัด ARP ไม่ได้",
-  "VTUL: อ่านพิกัด ARP ไม่ได้",
-  "VTUN: อ่านพิกัด ARP ไม่ได้",
-  "VTUO: อ่านพิกัด ARP ไม่ได้",
-  "VTUQ: อ่านพิกัด ARP ไม่ได้",
-  "VTUU: อ่านพิกัด ARP ไม่ได้",
-  "VTUV: อ่านพิกัด ARP ไม่ได้",
-  "VTUW: อ่านพิกัด ARP ไม่ได้",
-  "VTUZ: อ่านพิกัด ARP ไม่ได้"
- ]
+ "errors": []
 }
