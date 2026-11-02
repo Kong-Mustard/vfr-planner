@@ -199,6 +199,28 @@ body.printing #printView{position:static;padding:0}
 .nt .tag.hit{background:var(--bad)}.nt .tag.ap{background:var(--warn)}.nt .tag.act{background:#1f8a4c}
 .netchip{font:700 11px var(--f-body);border-radius:999px;padding:3px 9px;border:1px solid var(--line)}
 .netchip.on{color:#1f8a4c;border-color:#1f8a4c}.netchip.off{color:#fff;background:var(--bad);border-color:var(--bad)}
+.np-step{display:grid;grid-template-columns:30px 40px 1fr;gap:6px;align-items:start;padding:8px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.np-step.sub{grid-template-columns:30px 40px 1fr;padding-left:34px;font-size:16px}
+.np-step input{width:22px;height:22px;margin-top:3px;accent-color:#1f8a4c}
+.np-step .n{font:700 15px var(--f-mono);display:inline-grid;place-items:center;min-width:28px;height:28px}
+.np-step .n.circ{border:2px solid var(--ink);border-radius:50%}
+.np-step .tx{font-size:18px;line-height:1.4}
+.np-step.done .tx{color:var(--muted);text-decoration:line-through}
+.np-f{font:800 15px var(--f-mono);color:var(--accent);margin-right:6px}
+.np-prog{font:600 13px var(--f-mono);color:var(--muted)}
+@media (min-width:1000px){#map{height:calc(100vh - 150px);min-height:620px}.top{grid-template-columns:minmax(0,1fr) 330px}.side{max-height:calc(100vh - 150px);overflow:auto}}
+body.mapfull{overflow:hidden}
+body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:100vw!important;height:100%!important;min-height:0;border-radius:0;border:0}
+.ad-blk{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
+.ad-blk h3{margin:0 0 6px;font:700 17px var(--f-display);color:var(--nav)}
+.ad-blk details{margin-top:6px}.ad-blk summary{cursor:pointer;font-weight:600}
+.ad-proc{font-size:14px;line-height:1.55;white-space:pre-wrap;max-height:340px;overflow:auto;background:var(--input);padding:8px;border-radius:6px}
+.chart-list{display:flex;flex-direction:column;gap:3px;font-size:14px}
+.chart-list a{color:var(--nav)}.chart-list a.vis{font-weight:700;color:var(--accent)}
+.rp-list{display:flex;flex-wrap:wrap;gap:6px}
+.rp{font:600 13px var(--f-mono);border:1px solid var(--line);border-radius:6px;padding:3px 8px;background:var(--panel);cursor:pointer}
+.rp:hover{border-color:var(--accent)}
+.rptri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid #ffd400;filter:drop-shadow(0 0 1px #000)}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
@@ -290,6 +312,7 @@ body.printing #printView{position:static;padding:0}
     <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM</button>
     <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY</button>
     <button class="tab" role="tab" data-tab="quiz" aria-selected="false">6 · ข้อสอบ</button>
+    <button class="tab" role="tab" data-tab="normal" aria-selected="false">7 · NORMAL PROC</button>
   </nav>
   <p class="disclaimer" role="note">⚠ แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง</p>
 </header>
@@ -382,6 +405,11 @@ body.printing #printView{position:static;padding:0}
       <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
       <tbody></tbody>
     </table></div>
+  </div>
+
+  <div class="card section" id="procCard">
+    <div class="sechead"><h2>ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
+    <div id="procList"></div>
   </div>
 
   <div class="card section" id="areaCard">
@@ -505,6 +533,16 @@ body.printing #printView{position:static;padding:0}
   <div id="ntList"></div>
  </div>
 </section>
+<section id="tab-normal" class="tabpanel" hidden>
+ <div class="ep-wrap">
+  <aside class="card ep-side">
+    <div class="ep-tools"><input id="npSearch" type="search" placeholder="ค้นหา เช่น starting, before taxi" aria-label="ค้นหา normal procedure"></div>
+    <div id="npList" class="ep-list"></div>
+    <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 5)</p></div>
+  </aside>
+  <article class="card ep-main" id="npMain"></article>
+ </div>
+</section>
 <section id="tab-quiz" class="tabpanel" hidden>
  <div class="card qz" id="qz"></div>
 </section>
@@ -588,6 +626,7 @@ function resolvePoint(text,remember=true){
   const t=String(text||"").trim();if(!t)return null;const U=t.toUpperCase();
   if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
   const c=customPts()[U];if(c)return{name:c.name,lat:c.lat,lon:c.lon,info:"จุดที่บันทึกไว้"};
+  const sp=typeof sigPoint==="function"&&sigPoint(U);if(sp)return{name:sp.name,lat:sp.lat,lon:sp.lon,info:"Significant point (eAIP ENR 4.4)"};
   const s=splitCoordName(t);if(s){const p=parseCoord(s.coord);if(p){
     if(s.name&&remember)saveCustom(s.name,p[0],p[1]);
     return{name:s.name||"",lat:p[0],lon:p[1],info:s.name?"พิกัดที่ใส่ (บันทึกชื่อแล้ว)":"พิกัดที่ใส่"}}}
@@ -815,7 +854,7 @@ function render(){
   $("#sEta").textContent=res.rows.length?hhmm(res.dep+res.cumMin):"–";
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
   $("#exampleTag").hidden=!state.example;
-  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();
   store.set("vfr_current",state);
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
@@ -1043,6 +1082,10 @@ const Ctl3D=L.Control.extend({options:{position:"topleft"},onAdd(){const d=L.Dom
   a.onclick=e=>{e.preventDefault();startPick()};b.onclick=e=>{e.preventDefault();if(state.wps.length<2){toast("ยังไม่มีเส้นทาง");return}
     const bb=L.latLngBounds(state.wps.map(w=>[w.lat,w.lon])).pad(0.15);open3D(bb)};return d}});
 new Ctl3D().addTo(map);
+const CtlFull=L.Control.extend({options:{position:"topleft"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar");d.innerHTML=`<a href="#" class="btn3d" title="ขยายแผนที่เต็มจอ (Esc เพื่อออก)">⛶ เต็มจอ</a>`;
+  L.DomEvent.disableClickPropagation(d);const a=d.querySelector("a");a.onclick=e=>{e.preventDefault();const on=document.body.classList.toggle("mapfull");a.textContent=on?"✕ ออกจากเต็มจอ":"⛶ เต็มจอ";setTimeout(()=>map.invalidateSize(),60)};return d}});
+new CtlFull().addTo(map);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("mapfull")){document.body.classList.remove("mapfull");document.querySelectorAll(".btn3d").forEach(a=>{if(a.textContent.includes("ออกจาก"))a.textContent="⛶ เต็มจอ"});setTimeout(()=>map.invalidateSize(),60)}});
 function startPick(){pick={a:null};addMode=false;$("#addMode").classList.remove("on");$("#addMode").textContent="✚ คลิกแผนที่เพื่อเพิ่มจุด: ปิด";
   map.getContainer().classList.add("pick3d");toast("แตะมุมแรกของกรอบ")}
 map.on("click",e=>{if(!pick)return;if(!pick.a){pick.a=e.latlng;toast("แตะมุมตรงข้าม");return}
@@ -1143,6 +1186,66 @@ $("#ntParse").onclick=()=>{NT=ntParse($("#ntText").value);try{localStorage.setIt
 $("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
 $("#ntOnlyRoute").onchange=ntRender;
 try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntParse(t)}}catch(e){}
+
+/* ---------- NORMAL PROCEDURES (บทที่ 8) — checklist ติ๊กได้ ---------- */
+let npSel=null,npFull=false,npDone={};
+const NP_FLAG={"*":"ทำทุก thru-flight",".":"ต้องทำ operational check",O:"ถ้าติดตั้ง",N:"เฉพาะกลางคืน",I:"เฉพาะบินด้วยเครื่องวัด"};
+function npData(){return EP&&EP.normal?EP.normal:null}
+function npRenderList(){const D=npData(),L=$("#npList");if(!D){L.innerHTML="";npRenderMain();return}
+  const q=$("#npSearch").value.trim().toLowerCase();let html="",grp="";
+  D.procedures.forEach((p,i)=>{if(!p.blocks.some(b=>b.k==="step"||b.k==="sub"))return;
+    if(q&&!(p.id+" "+p.title).toLowerCase().includes(q))return;
+    if(p.section!==grp){grp=p.section;html+=`<div class="ep-grp">${esc(grp)}</div>`}
+    const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(npDone[i]||{}).length;
+    html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`});
+  $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
+function npRenderMain(){const M=$("#npMain"),D=npData();
+  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ 5 EMERGENCY</div>`;return}
+  if(npSel==null){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">เลือกขั้นตอน</h3>เช่น BEFORE STARTING ENGINES, STARTING ENGINES, BEFORE TAXI…<br><span class="hint">แตะแต่ละขั้นตอนเพื่อติ๊กว่าทำแล้ว</span></div>`;return}
+  const p=D.procedures[npSel],done=npDone[npSel]=npDone[npSel]||{};
+  const warnN=p.blocks.filter(b=>b.k==="warning"||b.k==="caution").length;
+  const body=p.blocks.map((b,k)=>{if(b.k==="step"||b.k==="sub"){const fl=(b.f||"").split("").filter(c=>NP_FLAG[c]).map(c=>`<span class="np-f" title="${NP_FLAG[c]}">${c==="."?"★":c}</span>`).join("");
+      return`<label class="np-step ${b.k==="sub"?"sub":""} ${done[k]?"done":""}" data-k="${k}"><input type="checkbox" ${done[k]?"checked":""}><span class="n${b.c?" circ":""}">${esc(b.n??"•")}${b.k==="step"?".":")"}</span><span class="tx">${fl}${esc(b.t)}</span></label>`}
+    if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:"";
+    return`<div class="b-${b.k}">${esc(b.t)}</div>`}).join("");
+  const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(done).length;
+  M.innerHTML=`<h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
+    ${!npFull&&warnN?`<span class="warnchip">WARNING/CAUTION ${warnN}</span>`:""}<button id="npFullBtn" class="mini">${npFull?"ซ่อน WARNING/NOTE":"แสดง WARNING/NOTE"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
+    <div id="npBody">${body}</div>
+    <div class="ep-legend">* = ทำทุก thru-flight · ★ = ต้องทำ operational check · O = ถ้าติดตั้ง · N = กลางคืน · I = บินด้วยเครื่องวัด · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
+  $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
+  $("#npBody").onchange=e=>{const s=e.target.closest(".np-step");if(!s)return;const k=s.dataset.k;if(e.target.checked)done[k]=1;else delete done[k];s.classList.toggle("done",e.target.checked);
+    M.querySelector(".ep-meta .np-prog").textContent=`ทำแล้ว ${Object.keys(done).length}/${n}`;npRenderList()}}
+$("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;npSel=+b.dataset.i;npRenderList();npRenderMain();if(window.innerWidth<=860)$("#npMain").scrollIntoView({behavior:"smooth"})});
+$("#npSearch").addEventListener("input",npRenderList);
+
+/* ---------- AD 2.22 procedures / AD 2.24 charts / จุดรายงาน ---------- */
+const rpLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(rpLayer,"จุดรายงาน (eAIP)");
+function procAirports(){const W=state.wps;if(!W.length)return[];const ids=[];const add=x=>{const k=String(x||"").toUpperCase();if(AP[k]&&AP[k].eaip&&!AP[k].eaip.custom&&!ids.includes(k))ids.push(k)};
+  add(W[0].name);if(W.length>1)add(W[W.length-1].name);W.slice(1,-1).forEach(w=>add(w.name));return ids}
+function renderProc(){const box=$("#procList");if(!box)return;rpLayer.clearLayers();
+  const ids=procAirports();
+  if(!ids.length){box.innerHTML=`<p class="hint">ใส่ต้นทาง/ปลายทางเป็นรหัส ICAO ที่มีใน eAIP (เช่น VTPP) เพื่อดูขั้นตอนและ charts — สนามทหารที่ไม่มีใน eAIP ต้องใช้เอกสารของหน่วย</p>`;return}
+  const realPt=p=>!/\b(ARP|DVOR|VOR|NDB|TACAN|DME|LOC|ILS|GP)\b/.test(p.name);
+  box.innerHTML=ids.map((ic,k)=>{const a=AP[ic],e=a.eaip,ch=e.charts||[],pts=(e.points||[]).filter(realPt);
+    const role=k===0&&ic===state.wps[0].name.toUpperCase()?"ต้นทาง":ic===state.wps[state.wps.length-1].name.toUpperCase()?"ปลายทาง":"ตามเส้นทาง";
+    const vis=c=>/VISUAL|VFR|HELI|AERODROME CHART|GROUND MOVEMENT/i.test(c.name);
+    return`<div class="ad-blk"><h3>${esc(ic)} ${esc(a.name||"")} <span class="hint">(${role})</span></h3>
+      ${pts.length?`<div><b>จุดรายงาน/จุดในขั้นตอน</b> <span class="hint">แตะเพื่อเพิ่มเป็นจุดเส้นทาง (แทรกก่อนจุดสุดท้าย)</span><div class="rp-list">${pts.map((p,i)=>`<button class="rp" data-ic="${esc(ic)}" data-i="${i}">▲ ${esc(p.name)}</button>`).join("")}</div></div>`:""}
+      ${e.proc?`<details${role!=="ตามเส้นทาง"?" open":""}><summary>AD 2.22 Flight procedures</summary><div class="ad-proc">${esc(e.proc)}</div></details>`:`<p class="hint">ไม่มีข้อความ AD 2.22</p>`}
+      ${ch.length?`<details><summary>AD 2.24 Charts (${ch.length})</summary><div class="chart-list">${ch.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener" class="${vis(c)?"vis":""}">${esc(c.name)} — ${esc(c.page)} ↗</a>`).join("")}</div></details>`:""}
+      ${e.url?`<a class="hint" href="${esc(e.url)}" target="_blank" rel="noopener">เปิดหน้า AD 2 ${esc(ic)} ใน eAIP ↗</a>`:""}</div>`}).join("");
+  ids.forEach(ic=>(AP[ic].eaip.points||[]).filter(realPt).forEach(p=>L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:'<div class="rptri"></div>',iconSize:[14,12],iconAnchor:[7,6]})})
+    .bindTooltip(`${esc(p.name)} (${esc(ic)} ${esc(p.src)})`).addTo(rpLayer)));}
+$("#procList").addEventListener("click",e=>{const b=e.target.closest(".rp");if(!b)return;const p=AP[b.dataset.ic].eaip.points.filter(x=>!/\b(ARP|DVOR|VOR|NDB|TACAN|DME|LOC|ILS|GP)\b/.test(x.name))[+b.dataset.i];
+  const w={name:p.name.slice(0,20),lat:p.lat,lon:p.lon,vor:""};const at=Math.max(1,state.wps.length-1);state.wps.splice(at,0,w);state.legs.splice(at-1,0,blankLeg());markEdited();render();toast("เพิ่ม "+w.name)});
+const spLayer=L.layerGroup();layerCtl.addOverlay(spLayer,"Significant points (ENR 4.4)");
+function drawSig(){spLayer.clearLayers();if(!map.hasLayer(spLayer)||map.getZoom()<8)return;const b=map.getBounds().pad(0.2);
+  ((EAIP&&EAIP.sigpoints)||[]).forEach(s=>{if(b.contains([s.lat,s.lon]))L.marker([s.lat,s.lon],{icon:L.divIcon({className:"",html:'<div class="rptri" style="border-bottom-color:#7fb2e8"></div>',iconSize:[14,12],iconAnchor:[7,6]})})
+    .bindTooltip(s.name,{permanent:map.getZoom()>=10,direction:"right",className:"leglabel"}).on("click",()=>{state.wps.push({name:s.name,lat:s.lat,lon:s.lon,vor:""});markEdited();render();toast("เพิ่ม "+s.name)}).addTo(spLayer)})}
+map.on("moveend overlayadd",drawSig);
+/* ENR 4.4 significant points → พิมพ์ชื่อจุดในช่องต้นทาง/ปลายทาง/พิกัดได้ */
+function sigPoint(name){const S=(EAIP&&EAIP.sigpoints)||[];const n=String(name||"").toUpperCase().trim();return S.find(s=>s.name===n)}
 
 /* ---------- Kneeboard PDF (A5) — ใช้หน้าพิมพ์ของเบราว์เซอร์ → Save as PDF ---------- */
 $("#kneePdf").onclick=()=>{
@@ -1266,7 +1369,7 @@ $("#epSearch").addEventListener("input",epRenderList);
 $("#epAll").onclick=()=>{epMemOnly=false;$("#epAll").classList.add("on");$("#epMem").classList.remove("on");epRenderList()};
 $("#epMem").onclick=()=>{epMemOnly=true;$("#epMem").classList.add("on");$("#epAll").classList.remove("on");epRenderList()};
 $("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.procedures))throw 0;
-  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
+  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}if(typeof npRenderList==="function"){npSel=null;npRenderList();npRenderMain()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
 let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EP"},3000);return}
   try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EP";epRenderList()};
 epRenderList();epRenderMain();
@@ -1341,6 +1444,7 @@ function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon
 state=store.get("vfr_current")||JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
 if(state.remStep==null)state.remStep="10";
+try{npRenderList();npRenderMain()}catch(e){}
 fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 /* โหลด eaip_data.json ที่ GitHub อัปเดตให้อัตโนมัติ (อยู่ข้างไฟล์แอป) */
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
