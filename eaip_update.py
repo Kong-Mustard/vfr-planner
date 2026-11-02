@@ -216,16 +216,121 @@ def parse_enr41(html):
     return out
 
 
+import math
+
+C_RE = re.compile(r"(?<![\d.])(\d{4}(?:\d{2})?(?:\.\d+)?)\s*([NS])\s*(\d{5}(?:\d{2})?(?:\.\d+)?)\s*([EW])")
+
+
+def _dm(v, dd):
+    """รองรับ DDMMSS(.s) และ DDMM(.m)"""
+    ip = v.split(".")[0]
+    d = int(v[:dd]); rest = v[dd:]
+    if len(ip) - dd == 4:  # MMSS
+        return d + int(rest[:2]) / 60 + float(rest[2:]) / 3600
+    return d + float(rest) / 60  # MM(.m)
+
+
+def _c(m):
+    lat = _dm(m.group(1), 2) * (1 if m.group(2) == "N" else -1)
+    lon = _dm(m.group(3), 3) * (1 if m.group(4) == "E" else -1)
+    return [round(lat, 5), round(lon, 5)]
+
+
+def _dest(c, brg, nm):
+    """จุดปลายทางจาก center ด้วย bearing (°T) และระยะ (NM) — spherical"""
+    R = 3440.065; d = nm / R; b = math.radians(brg); la = math.radians(c[0]); lo = math.radians(c[1])
+    la2 = math.asin(math.sin(la) * math.cos(d) + math.cos(la) * math.sin(d) * math.cos(b))
+    lo2 = lo + math.atan2(math.sin(b) * math.sin(d) * math.cos(la), math.cos(d) - math.sin(la) * math.sin(la2))
+    return [round(math.degrees(la2), 5), round(math.degrees(lo2), 5)]
+
+
+def _brg(c, p):
+    la1, la2 = math.radians(c[0]), math.radians(p[0]); dl = math.radians(p[1] - c[1])
+    return (math.degrees(math.atan2(math.sin(dl) * math.cos(la2), math.cos(la1) * math.sin(la2) - math.sin(la1) * math.cos(la2) * math.cos(dl))) + 360) % 360
+
+
+def _arc(c, r, b1, b2, cw, step=5):
+    if cw:
+        span = (b2 - b1) % 360 or 360
+    else:
+        span = -((b1 - b2) % 360 or 360)
+    n = max(2, int(abs(span) / step))
+    return [_dest(c, b1 + span * i / n, r) for i in range(n + 1)]
+
+
+def parse_geom(g):
+    """คืน (polygon [[lat,lon],...], approx) จากข้อความ lateral limits"""
+    approx = bool(re.search(r"boundary|border|coast", g, re.I))
+    m = re.search(r"semi-circle\s+(\d+(?:\.\d+)?)\s*NM radius of\s*", g, re.I)
+    if m:
+        c = _c(C_RE.search(g, m.end())); r = float(m.group(1))
+        fr = re.search(r"from\s*(\d+)\s*°?\s*to\s*(\d+)", g[m.end():])
+        b1, b2 = (float(fr.group(1)), float(fr.group(2))) if fr else (0, 180)
+        return [c] + _arc(c, r, b1, b2, True) + [c], approx
+    m = re.search(r"circle\s+(?:of\s+)?(\d+(?:\.\d+)?)\s*NM radius", g, re.I)
+    if m and "arc" not in g.lower():
+        c = _c(C_RE.search(g, m.end())); r = float(m.group(1))
+        return _arc(c, r, 0, 360, True, 10), approx
+    ms = list(C_RE.finditer(g))
+    pts, centers = [], []
+    for k in ms:
+        before = g[:k.start()].rstrip()
+        (centers if before.endswith("(") else pts).append(k)
+    poly = []; prev_end = 0; first_center = None
+    lead = re.search(r"bounded by\s*(\d+(?:\.\d+)?)\s*NM arc", g, re.I)
+    for i, k in enumerate(pts):
+        p = _c(k)
+        conn = g[prev_end:k.start()]
+        am = re.search(r"arc", conn, re.I)
+        if am and poly:
+            rm = re.search(r"(\d+(?:\.\d+)?)\s*NM", conn)
+            cm = C_RE.search(conn)
+            c = _c(cm) if cm else (first_center and _c(first_center))
+            if c and rm:
+                cw = not re.search(r"counter|anti", conn, re.I)
+                poly += _arc(c, float(rm.group(1)), _brg(c, poly[-1]), _brg(c, p), cw)[1:-1]
+        poly.append(p); prev_end = k.end()
+        if lead and first_center is None and centers:
+            first_center = centers[0]
+    tail = g[prev_end:]
+    if re.search(r"arc to the starting point", tail, re.I) and lead and centers and poly:
+        c = _c(centers[0]); r = float(lead.group(1))
+        cw = not re.search(r"counter|anti", tail, re.I)
+        poly += _arc(c, r, _brg(c, poly[-1]), _brg(c, poly[0]), cw)[1:-1]
+    if poly and poly[0] != poly[-1]:
+        poly.append(poly[0])
+    return poly, approx
+
+
 def parse_enr51(html):
-    """ยังเป็นตัวอ่านเบื้องต้น — จะปรับหลังเห็นรูปแบบหน้าจริง"""
     soup = strip_markup(BeautifulSoup(html, "html.parser"))
     out = []
     for tb in soup.find_all("table"):
         for r in rows(tb):
             line = " ".join(r)
-            m = re.match(r"^(VT\s*[PRD]\s*-?\s*\d+[A-Z]?)\b", line)
-            if m:
-                out.append({"raw": r})
+            m = re.match(r"^(VT\s*([PRD])\s*-?\s*\d+[A-Z]?)\s+(.*)$", r[0] if r else "")
+            if not m:
+                continue
+            ident = re.sub(r"\s+", "", m.group(1))
+            name_geo = m.group(3)
+            nm = re.match(r"^(.*?)\s+(Area bounded|Circle of|A circle|A semi-circle|Area \d)", name_geo)
+            name = nm.group(1).strip() if nm else name_geo[:40]
+            try:
+                poly, approx = parse_geom(name_geo)
+            except Exception as e:
+                poly, approx = [], True
+            vert = r[1] if len(r) > 1 else ""
+            upper, _, lower = vert.partition("/")
+            info = r[2] if len(r) > 2 else ""
+            LBL = r"(?:Type of restriction|Nature of hazard/activity|Time of a\w*|Permission to entry|Inflight information|Contact agency)"
+            def field(lbl):
+                mm = re.search(lbl + r"\s*:\s*(.*?)(?=\s*" + LBL + r"\s*:|$)", info)
+                return mm.group(1).strip() if mm else ""
+            out.append({"id": ident, "type": m.group(2), "name": name, "upper": upper.strip(), "lower": lower.strip(),
+                        "poly": poly, "approx": approx, "geom_text": name_geo,
+                        "restriction": field("Type of restriction"), "activity": field("Nature of hazard/activity"),
+                        "time": field(r"Time of a\w*"), "entry": field("Permission to entry"),
+                        "info": field("Inflight information"), "contact": field("Contact agency")})
     return out
 
 

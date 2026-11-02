@@ -136,6 +136,14 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
 }
+.area-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);margin-bottom:6px}
+.area-row.hit{border-width:2px}
+.area-row.P{border-color:var(--bad)}.area-row.R{border-color:var(--warn)}.area-row.D{border-color:#2f6fd6}
+.area-tag{font:700 12px var(--f-mono);padding:2px 6px;border-radius:4px;color:#fff;align-self:start}
+.area-tag.P{background:var(--bad)}.area-tag.R{background:var(--warn)}.area-tag.D{background:#2f6fd6}
+.area-row b{font-family:var(--f-display)}
+.area-row small{color:var(--muted);display:block}
+.area-alert{font-weight:700;color:var(--bad)}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
@@ -319,6 +327,14 @@ body.printing #printView{position:static;padding:0}
       </tr></thead>
       <tbody></tbody>
     </table></div>
+  </div>
+
+  <div class="card section" id="areaCard">
+    <div class="sechead">
+      <h2>พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
+      <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="areaShowD" checked style="width:auto"> แสดง Danger area บนแผนที่</label>
+    </div>
+    <div id="areaList"></div>
   </div>
 
   <div class="card section">
@@ -596,7 +612,7 @@ function render(){
   $("#sEta").textContent=res.rows.length?hhmm(res.dep+res.cumMin):"–";
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
   $("#exampleTag").hidden=!state.example;
-  drawMap(res.rows);renderFreq();
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();
   store.set("vfr_current",state);
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
@@ -652,7 +668,7 @@ $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(
   store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();render();
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -682,6 +698,45 @@ $("#importJson").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().th
 $("#exportCsv").onclick=()=>{const r=compute().rows;const H=["Leg","From","To","ALT","WD","WV","Temp","CAS","TAS","TC","WCA","TH","Var","MH","Dev","CH","MH_back","Dist","Rem","GS","ETE","ETA","FuelLeg","FuelRem","VOR"];
   const lines=[H.join(",")].concat(r.map((x,i)=>{const l=state.legs[i];return[i+1,state.wps[i].name,state.wps[i+1].name,l.alt,l.wd,l.wv,l.temp,l.cas,x.tas.toFixed(1),hdg(x.tc),x.wca.toFixed(1),hdg(x.th),state.g.var,hdg(x.mh),l.dev,hdg(x.ch),hdg(x.mhBack),x.dist.toFixed(2),x.rem.toFixed(2),x.gs.toFixed(1),mmss(x.ete),hhmm(x.eta),x.fLeg.toFixed(1),x.fuel.toFixed(1),state.wps[i+1].vor||""].map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")}));
   download(fname()+".csv","﻿"+lines.join("\n"),"text/csv")};
+
+/* ---------- พื้นที่ P/R/D จาก eAIP ENR 5.1 ---------- */
+const AREA_COL={P:"#d1242f",R:"#e07a00",D:"#2f6fd6"},AREA_NAME={P:"Prohibited",R:"Restricted",D:"Danger"};
+const areaLayers={P:L.layerGroup().addTo(map),R:L.layerGroup().addTo(map),D:L.layerGroup().addTo(map)};
+layerCtl.addOverlay(areaLayers.P,"Prohibited area");layerCtl.addOverlay(areaLayers.R,"Restricted area");layerCtl.addOverlay(areaLayers.D,"Danger area");
+function altFt(s){s=String(s||"").toUpperCase().replace(/\s+/g," ").trim();
+  if(!s||/GND|SFC|MSL/.test(s)&&!/\d/.test(s))return 0;if(/UNL/.test(s))return 1e6;
+  let m=s.match(/FL\s*(\d+)/);if(m)return +m[1]*100;m=s.match(/([\d ]+)\s*FT/);if(m)return +m[1].replace(/ /g,"");return NaN}
+function areaPopup(a){return`<b>${esc(a.id)} ${esc(a.name)}</b> (${AREA_NAME[a.type]})<br>${esc(a.upper)} / ${esc(a.lower)}<br>${a.time?`เวลา: ${esc(a.time)}<br>`:""}${a.info?`ติดต่อ: ${esc(a.info)}<br>`:""}${a.approx?"<i>ขอบเขตบางส่วนตามแนวชายแดน/ชายฝั่ง วาดแบบประมาณ</i>":""}`}
+function drawAreas(){Object.values(areaLayers).forEach(l=>l.clearLayers());const A=(EAIP&&EAIP.areas)||[];
+  A.forEach(a=>{if(!a.poly||a.poly.length<3)return;
+    L.polygon(a.poly,{color:AREA_COL[a.type],weight:1.5,fillOpacity:a.type==="D"?.08:.15,dashArray:a.approx?"6 4":null}).bindPopup(areaPopup(a)).bindTooltip(`${a.id} ${a.name}`,{sticky:true}).addTo(areaLayers[a.type])});
+  if(!$("#areaShowD").checked)map.removeLayer(areaLayers.D)}
+function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];
+  if((a[0]>pt[0])!==(b[0]>pt[0])&&pt[1]<(b[1]-a[1])*(pt[0]-a[0])/(b[0]-a[0])+a[1])c=!c}return c}
+function routeAreas(){const A=(EAIP&&EAIP.areas)||[],W=state.wps,hits=[];if(W.length<1)return hits;
+  A.forEach(a=>{if(!a.poly||a.poly.length<3)return;const legs=new Set();
+    if(W.length===1){if(inPoly([W[0].lat,W[0].lon],a.poly))legs.add(0)}
+    for(let i=0;i<W.length-1;i++){const p=[W[i].lat,W[i].lon],q=[W[i+1].lat,W[i+1].lon],n=Math.max(2,Math.ceil(gcDistNm(p,q)/0.5));
+      for(let k=0;k<=n;k++){const t=k/n;if(inPoly([p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t],a.poly)){legs.add(i);break}}}
+    if(legs.size)hits.push({a,legs:[...legs]})});
+  return hits.sort((x,y)=>"PRD".indexOf(x.a.type)-"PRD".indexOf(y.a.type)||Math.min(...x.legs)-Math.min(...y.legs))}
+function renderAreas(){const box=$("#areaList");
+  if(!EAIP||!EAIP.areas){box.innerHTML=`<p class="hint">ยังไม่มีข้อมูลพื้นที่ — จะโหลดอัตโนมัติจาก eaip_data.json (ENR 5.1)</p>`;return}
+  const hits=routeAreas();
+  if(!hits.length){box.innerHTML=`<p class="hint">เส้นทางนี้ไม่ตัดผ่าน Prohibited/Restricted/Danger area (ข้อมูล eAIP ${esc(EAIP.edition)}, ${EAIP.areas.length} พื้นที่) — ตรวจ NOTAM/AUP สำหรับพื้นที่ชั่วคราวเสมอ</p>`;return}
+  box.innerHTML=hits.map(({a,legs})=>{
+    const lo=altFt(a.lower),hi=altFt(a.upper);
+    const alts=legs.map(i=>num(state.legs[i]&&state.legs[i].alt,NaN)).filter(isFinite);
+    const inside=alts.some(x=>(isFinite(lo)?x>=lo:true)&&(isFinite(hi)?x<=hi:true));
+    const legTxt=legs.map(i=>W_name(i)).join(", ");
+    return`<div class="area-row hit ${a.type}"><span class="area-tag ${a.type}">${esc(a.id)}</span><div style="min-width:0">
+      <b>${esc(a.name)}</b> — ${AREA_NAME[a.type]} · ${esc(a.upper)} / ${esc(a.lower)}
+      ${inside?`<div class="area-alert">ระดับบินที่วางแผนอยู่ในช่วงความสูงของพื้นที่นี้</div>`:alts.length?`<small>ระดับบินที่วางแผนอยู่นอกช่วงความสูงของพื้นที่</small>`:""}
+      <small>Leg: ${esc(legTxt)}${a.time?` · เวลา: ${esc(a.time)}`:""}</small>
+      ${a.entry?`<small>การเข้า: ${esc(a.entry)}</small>`:""}${a.info?`<small>ติดต่อ: ${esc(a.info)}</small>`:""}
+      ${a.approx?`<small><i>ขอบเขตบางส่วนตามแนวชายแดน/ชายฝั่ง วาดแบบประมาณ — ตรวจกับ eAIP</i></small>`:""}</div></div>`}).join("");}
+function W_name(i){const W=state.wps;return W.length>1?`${W[i].name}→${W[i+1].name}`:W[0].name}
+$("#areaShowD").onchange=e=>{e.target.checked?areaLayers.D.addTo(map):map.removeLayer(areaLayers.D)};
 
 /* ---------- Kneeboard PDF (A5) — ใช้หน้าพิมพ์ของเบราว์เซอร์ → Save as PDF ---------- */
 $("#kneePdf").onclick=()=>{
@@ -874,12 +929,12 @@ function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon
 state=store.get("vfr_current")||JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
 if(state.remStep==null)state.remStep="10";
-fillDatalist();fillForm();refreshSel();render();fit();
+fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 /* โหลด eaip_data.json ที่ GitHub อัปเดตให้อัตโนมัติ (อยู่ข้างไฟล์แอป) */
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
-  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 </script>
 </body>
 </html>
