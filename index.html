@@ -98,6 +98,12 @@ tr.tot td{font-weight:700;background:var(--input)}
 .fcard .r{display:flex;justify-content:space-between;gap:8px;border-top:1px dashed var(--line);padding:2px 0}
 .fcard .r b{color:var(--accent);white-space:nowrap}
 .fcard .r span{text-align:right;overflow-wrap:anywhere}
+.fcard.custom{border-style:dashed;border-color:var(--warn)}
+.ctag{font:600 10px var(--f-body);color:var(--warn);border:1px solid var(--warn);border-radius:4px;padding:0 4px;vertical-align:middle}
+.custbox{border:1px dashed var(--warn);border-radius:8px;padding:8px 12px}
+.custbox summary{cursor:pointer;font:600 14px var(--f-display);color:var(--warn)}
+.custbox textarea{font:500 14px var(--f-mono);color:var(--ink);background:var(--input);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+.custgrid{margin-block:8px}
 .fcard.emer{border-color:var(--bad)}.fcard.emer h3{color:var(--bad)}
 .legbox{display:grid;background:#fff;color:#14233a;border:2px solid #14233a;border-radius:6px;font:600 11px/1.15 var(--f-mono);text-align:center;width:max-content;min-width:56px;box-shadow:0 1px 3px rgba(0,0,0,.35)}
 .legbox b{font-size:14px;padding:2px 4px;border-bottom:1px solid #14233a}
@@ -254,6 +260,26 @@ body.printing #printView{position:static;padding:0}
     </div>
     <p id="eaipStatus" class="hint"></p>
     <div id="freqList" class="freqgrid"></div>
+    <details id="custBox" class="custbox">
+      <summary>สนามที่กรอกเอง (สนามทหาร / ไม่มีใน eAIP) — <span id="custCount">0</span> แห่ง</summary>
+      <p class="hint">เก็บไว้ในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export เพื่อสำรองหรือย้ายไปเครื่องอื่น · ถ้า eAIP มีข้อมูลสนามเดียวกัน แอปจะใช้ข้อมูลที่กรอกเองแทน</p>
+      <div class="grid2 custgrid">
+        <label>รหัส / ชื่อย่อ<input id="cId" type="text" list="apList" placeholder="VTBH"></label>
+        <label>ชื่อสนาม<input id="cName" type="text" placeholder="สระพรานนาค"></label>
+        <label>พิกัด (เว้นว่างได้ถ้ามีบนแผนที่แล้ว)<input id="cCoord" type="text" placeholder="47P PS 76283 53429"></label>
+        <label>Elev (ft) / RWY<input id="cElevRwy" type="text" placeholder="95 / 04-22"></label>
+        <label style="grid-column:1/-1">ความถี่ — บรรทัดละ 1 รายการ: SERVICE ความถี่ ชื่อเรียก<textarea id="cComm" rows="4" placeholder="TWR 122.1 / 236.6 Sa Pran Nak Tower&#10;GND 121.9"></textarea></label>
+        <label style="grid-column:1/-1">Navaid — บรรทัดละ 1 รายการ: TYPE IDENT ความถี่<textarea id="cNav" rows="2" placeholder="NDB SN 350&#10;VOR BR 112.4"></textarea></label>
+      </div>
+      <div class="btns">
+        <button id="cSave" class="primary">บันทึกสนามนี้</button>
+        <button id="cDel">ลบสนามนี้</button>
+        <select id="cList" aria-label="เลือกสนามที่กรอกไว้" style="width:auto"><option value="">แก้สนามที่กรอกไว้…</option></select>
+        <button id="cExport">Export</button>
+        <button type="button" onclick="document.getElementById('cImport').click()">Import</button>
+        <input id="cImport" type="file" accept=".json,application/json" hidden>
+      </div>
+    </details>
   </div>
  </div>
  <aside id="printView" aria-hidden="true"></aside>
@@ -320,6 +346,18 @@ function applyEaip(){if(!EAIP||!EAIP.airports)return;
   for(const[ic,a]of Object.entries(EAIP.airports)){if(a.lat==null)continue;
     AP[ic]={...(AP[ic]||{}),id:ic,name:a.name||(AP[ic]&&AP[ic].name)||ic,lat:a.lat,lon:a.lon,elev:a.elev_ft??(AP[ic]&&AP[ic].elev),eaip:a}}}
 applyEaip();
+/* ---------- สนามที่กรอกเอง (สนามทหาร) — localStorage เท่านั้น ---------- */
+function custAll(){return store.get("vfr_custom_ap")||{}}
+function parseCustLines(txt,kind){return String(txt||"").split(/\n/).map(l=>l.trim()).filter(Boolean).map(l=>{
+  const m=l.match(/^(\S+)\s+(.*)$/)||[l,l,""];const rest=m[2];
+  if(kind==="comm"){const fq=(rest.match(/\d{3}\.\d{1,3}/g)||[]);const call=rest.replace(/[\d.\/]+/g," ").replace(/\s+/g," ").trim();
+    return{svc:m[1].toUpperCase(),freq:fq.join(" / ")||rest,callsign:call}}
+  const p=rest.split(/\s+/);return{type:m[1].toUpperCase(),id:p[0]||"",freq:p.slice(1).join(" ")}})}
+function applyCustom(){for(const[ic,c]of Object.entries(custAll())){const base=AP[ic]||{};
+  const lat=c.lat??base.lat,lon=c.lon??base.lon;if(lat==null)continue;
+  AP[ic]={...base,id:ic,name:c.name||base.name||ic,lat,lon,elev:c.elev!==""&&c.elev!=null?c.elev:base.elev,
+    eaip:{custom:true,rwy:c.rwy?[c.rwy]:[],comm:parseCustLines(c.comm,"comm"),navaids:parseCustLines(c.nav,"nav")}}}}
+applyCustom();
 /* ระยะ (NM) จากจุดถึงเส้น leg แบบ local projection — แม่นพอสำหรับคัดสนามใกล้เส้นทาง */
 function distToSeg(p,a,b){const k=Math.cos(p[0]*D2R)*60,P=[p[1]*k,p[0]*60],A=[a[1]*k,a[0]*60],B=[b[1]*k,b[0]*60];
   const dx=B[0]-A[0],dy=B[1]-A[1],L2=dx*dx+dy*dy;let t=L2?((P[0]-A[0])*dx+(P[1]-A[1])*dy)/L2:0;t=Math.max(0,Math.min(1,t));
@@ -341,7 +379,10 @@ function renderFreq(){
     const comm=e?e.comm.map(c=>`<div class="r"><b>${esc(c.svc)}</b><span>${esc(c.freq)}${c.callsign?`<br><small>${esc(c.callsign)}</small>`:""}</span></div>`).join(""):"";
     const nav=e?e.navaids.map(n=>`<div class="r"><b>${esc(n.type)}</b><span>${esc(n.id)} ${esc(n.freq)}</span></div>`).join(""):"";
     const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.rwy.join(" / "))}</span></div>`:"";
-    return`<div class="fcard"><h3>${esc(a.id)} <small>${esc(a.name)}${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ยังไม่มีข้อมูล eAIP</span></div>`:""}</div>`}).join("");
+    const tag=e&&e.custom?`<span class="ctag">กรอกเอง</span>`:"";
+    const add=!e||e.custom?`<button class="mini" data-cedit="${esc(a.id)}">${e?"แก้ไข":"กรอกข้อมูล"}</button>`:"";
+    return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
+  $("#custCount").textContent=Object.keys(custAll()).length;
 }
 function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";return}
   if(!p){el.textContent="ไม่พบรหัส/ชื่อนี้ และอ่านเป็นพิกัดไม่ได้";el.className="res err";return}
@@ -496,8 +537,29 @@ let clearArm=false;$("#clearAll").onclick=e=>{if(!clearArm){clearArm=true;e.targ
   state.wps=[];state.legs=[];state.example=false;clearArm=false;e.target.textContent="ล้างทั้งหมด";render()};
 
 $("#corridor").addEventListener("input",renderFreq);
+function custFill(ic){const c=custAll()[ic]||{},a=AP[ic]||{};
+  $("#cId").value=ic;$("#cName").value=c.name||a.name||"";$("#cCoord").value=c.lat!=null?`${c.lat.toFixed(5)}, ${c.lon.toFixed(5)}`:"";
+  $("#cElevRwy").value=[c.elev??"",c.rwy||""].filter(v=>v!=="").join(" / ");$("#cComm").value=c.comm||"";$("#cNav").value=c.nav||"";
+  $("#custBox").open=true;$("#custBox").scrollIntoView({behavior:"smooth",block:"start"})}
+function custRefresh(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("");
+  location.reload()}
+$("#freqList").addEventListener("click",e=>{const b=e.target.closest("[data-cedit]");if(b)custFill(b.dataset.cedit)});
+$("#cList").onchange=e=>{if(e.target.value)custFill(e.target.value)};
+$("#cSave").onclick=()=>{const ic=$("#cId").value.trim().toUpperCase();if(!ic){toast("ใส่รหัสสนามก่อน");return}
+  let lat=null,lon=null;const ct=$("#cCoord").value.trim();
+  if(ct){const p=parseCoord(ct);if(!p){toast("อ่านพิกัดไม่ได้");return}[lat,lon]=p}
+  else if(!AP[ic]){toast("สนามนี้ไม่มีบนแผนที่ ต้องใส่พิกัด");return}
+  const er=$("#cElevRwy").value.split("/").map(s=>s.trim());const elev=er[0]!==""&&isFinite(+er[0])?+er[0]:null;
+  const c=custAll();c[ic]={name:$("#cName").value.trim(),lat,lon,elev,rwy:er.slice(elev!=null?1:0).join("/").trim(),comm:$("#cComm").value,nav:$("#cNav").value};
+  if(!store.set("vfr_custom_ap",c)){toast("บันทึกในเครื่องไม่ได้");return}toast("บันทึก "+ic+" แล้ว");setTimeout(custRefresh,600)};
+$("#cDel").onclick=()=>{const ic=$("#cId").value.trim().toUpperCase();const c=custAll();if(!c[ic]){toast("ยังไม่มีสนามนี้ในรายการ");return}
+  delete c[ic];store.set("vfr_custom_ap",c);toast("ลบ "+ic+" แล้ว");setTimeout(custRefresh,600)};
+$("#cExport").onclick=()=>download("สนามที่กรอกเอง.json",JSON.stringify(custAll(),null,1),"application/json");
+$("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(typeof d!=="object"||Array.isArray(d))throw 0;
+  store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
+(function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();fillDatalist();render();
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -607,7 +669,7 @@ fillDatalist();fillForm();refreshSel();render();fit();
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
-  EAIP=d;store.set("vfr_eaip",d);applyEaip();fillDatalist();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 </script>
 </body>
 </html>
