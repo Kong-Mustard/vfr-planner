@@ -7,6 +7,7 @@ plans/
 # ไฟล์แผนที่ export จากแอป (.json) ยกเว้นข้อมูล eAIP
 *.json
 !eaip_data.json
+!metar.json
 __pycache__/
 
 # ข้อมูล Emergency จากคู่มือ (export controlled) — ห้ามขึ้น GitHub
