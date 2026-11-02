@@ -165,6 +165,12 @@ body.printing #printView{position:static;padding:0}
 @media (max-width:760px){.fp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .fp-grid input{font:500 14px var(--f-body)}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+.hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
+.hrot{position:absolute;left:50%;top:-22px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:#0a6cff;color:#fff;
+  display:grid;place-items:center;font:700 14px/1 Arial,sans-serif;cursor:grab;touch-action:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.hrot:active{cursor:grabbing}
+body.printing .hrot{display:none}
+@media print{.hrot{display:none!important}}
 .hbox svg{display:block}
 .wx-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:end;margin-bottom:8px}
 .wx-ctl label{min-width:150px}.wx-ctl .wx-time{flex:1;min-width:220px}
@@ -496,6 +502,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900" style="background:var(--hl);font-weight:800"></label>
         <label>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0"></label>
         <label>ขนาดกล่อง heading<input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1"></label>
+        <label>การหมุนกล่อง heading<select id="boxRotMode"><option value="mh">หันตาม heading (MH)</option><option value="track">หันตามแนวเส้นทาง (TC)</option><option value="0">ตั้งตรง</option></select></label>
+        <div class="btns" style="align-items:end"><button id="boxRotReset" type="button" class="mini">รีเซ็ตการหมุนทุกกล่อง</button></div>
         <label>ป้ายระยะคงเหลือ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
       </div>
       <div>
@@ -930,10 +938,11 @@ function drawMap(rows){
     if(!pos){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,off=85*s;
       const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
     const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
-    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:hboxSvg(r,s),iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
+    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${hboxSvg(r,s)}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state)});
-    mk.on("dblclick",()=>{delete state.boxPos[key];render()})});
+    mk.on("dblclick",()=>{delete state.boxPos[key];render()});
+    mk.on("add",()=>hboxRotInit(mk,key));if(mk._icon)hboxRotInit(mk,key)});
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
@@ -998,6 +1007,17 @@ function rwyPairs(list){const L=(list||[]).map(String),used=new Set(),out=[];
   L.forEach(d=>{if(used.has(d))return;const o=opp(d);if(o&&L.includes(o)&&!used.has(o)){used.add(d);used.add(o);out.push(+d.slice(0,2)<=+o.slice(0,2)?`${d}-${o}`:`${o}-${d}`)}else{used.add(d);out.push(d)}});
   return out.join(", ")}
 /* กล่อง heading แบบแผน kneeboard: บน = heading ไป, กลาง = ระยะ/เวลา, ล่าง = heading กลับ */
+/* การหมุน doghouse: ค่าที่หมุนเองต่อ leg > โหมดตามทิศเส้นทาง > 0 */
+function boxRot(i,r){const k=legKey(i),m=(state.boxRot||{})[k];if(m!=null)return m;const md=state.boxRotMode||"mh";if(md==="mh"&&isFinite(r.mh))return Math.round(norm(r.mh));if(md==="track"&&isFinite(r.tc))return Math.round(r.tc);return 0}
+function hboxRotInit(mk,key){const el=mk._icon;if(!el||el._rotInit)return;el._rotInit=true;const h=el.querySelector(".hrot"),wrap=el.querySelector(".hbwrap");if(!h)return;
+  L.DomEvent.on(h,"mousedown touchstart pointerdown click",L.DomEvent.stopPropagation);
+  L.DomEvent.on(h,"dblclick",e=>{L.DomEvent.stop(e);if(state.boxRot)delete state.boxRot[key];render()});
+  h.addEventListener("pointerdown",e=>{e.preventDefault();mk.dragging.disable();map.dragging.disable();h.setPointerCapture(e.pointerId);
+    const b=el.getBoundingClientRect(),cx=b.left+b.width/2,cy=b.top+b.height/2;let deg=0;
+    const mv=ev=>{deg=Math.round(norm(Math.atan2(ev.clientX-cx,-(ev.clientY-cy))*R2D)/5)*5;wrap.style.transform=`rotate(${deg}deg)`};
+    const up=()=>{h.removeEventListener("pointermove",mv);h.removeEventListener("pointerup",up);h.removeEventListener("pointercancel",up);
+      mk.dragging.enable();map.dragging.enable();state.boxRot=state.boxRot||{};state.boxRot[key]=deg%360;store.set("vfr_current",state)};
+    h.addEventListener("pointermove",mv);h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
 function hboxSvg(r,s){const w=Math.round(92*s),hgt=Math.round(150*s);
   return`<svg width="${w}" height="${hgt}" viewBox="0 0 92 150" aria-hidden="true">
    <path d="M46 2 L89 30 L89 120 L46 148 L3 120 L3 30 Z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
@@ -1054,11 +1074,13 @@ function markEdited(){if(state.example){state.example=false}}
 /* ---------- form binding ---------- */
 const fields={planName:"planName",acft:"acft",date:"date",depTime:"depTime",fuel0:"fuel0",burn:"burn",reserve:"reserve",sa:"sa",unitFreq:"unitFreq",remStep:"remStep"};
 const gfields={gAlt:"alt",gCas:"cas",gWd:"wd",gWv:"wv",gTemp:"temp",gVar:"var"};
-function fillForm(){if($("#boxScale"))$("#boxScale").value=state.boxScale||1;["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
+function fillForm(){if($("#boxScale"))$("#boxScale").value=state.boxScale||1;$("#boxRotMode").value=state.boxRotMode||"mh";["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
   for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??""}
 for(const[id,k]of Object.entries(fields))$("#"+id).addEventListener("input",e=>{state[k]=e.target.value;markEdited();render()});
 for(const[id,k]of Object.entries(gfields))$("#"+id).addEventListener("input",e=>{state.g[k]=e.target.value;markEdited();if(k==="var")render()});
 $("#boxScale").addEventListener("input",e=>{state.boxScale=+e.target.value;render()});
+$("#boxRotMode").addEventListener("change",e=>{state.boxRotMode=e.target.value;state.boxRot={};render()});
+$("#boxRotReset").onclick=()=>{state.boxRot={};render();toast("รีเซ็ตการหมุนแล้ว")};
 $("#goNavlog").onclick=()=>document.querySelector('.tab[data-tab="log"]').click();
 $("#applyAll").onclick=()=>{state.legs.forEach(l=>Object.assign(l,{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp}));render();toast("ใช้ค่ากับทุก leg แล้ว")};
 
