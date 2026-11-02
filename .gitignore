@@ -1,0 +1,10 @@
+# แผนการบินจริง — ห้ามขึ้น GitHub (มีพิกัด/เส้นทางภารกิจ)
+plans/
+*.pdf
+*.xlsx
+*.csv
+*_plan*.json
+# ไฟล์แผนที่ export จากแอป (.json) ยกเว้นข้อมูล eAIP
+*.json
+!eaip_data.json
+__pycache__/

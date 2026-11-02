@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>VFR Planner</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: แถบแท็บด้านบน → แผนที่ + แผงตั้งค่าเคียงกัน → nav log เต็มความกว้าง */
+:root{
+  --bg:#eef2f6; --panel:#ffffff; --ink:#14233a; --muted:#5b6b82; --line:#d3dce7;
+  --accent:#b0177a;          /* magenta เส้นทาง แบบชาร์ต VFR */
+  --accent-soft:#f7e3ef; --nav:#123c69; --input:#f6f9fc; --calc:#e9f5ee; --calc-ink:#155a36;
+  --warn:#b45309; --bad:#c0262d;
+  --f-display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans Thai",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1522; --panel:#132033; --ink:#e3ebf5; --muted:#8fa2bb; --line:#24364f;
+  --accent:#ff5cb8; --accent-soft:#3a1a30; --nav:#7fb2e8; --input:#0f1b2b; --calc:#123024; --calc-ink:#8fe0b2;
+  --warn:#f5a524; --bad:#ff6b6b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1522; --panel:#132033; --ink:#e3ebf5; --muted:#8fa2bb; --line:#24364f;
+  --accent:#ff5cb8; --accent-soft:#3a1a30; --nav:#7fb2e8; --input:#0f1b2b; --calc:#123024; --calc-ink:#8fe0b2;
+  --warn:#f5a524; --bad:#ff6b6b; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);
+  padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+header{position:sticky;top:0;z-index:1000;background:var(--bg);padding-top:max(8px,env(safe-area-inset-top,0px));padding-bottom:8px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.brand{font:700 20px/1 var(--f-display);letter-spacing:.04em;color:var(--nav)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{font:600 15px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--muted);
+  padding:8px 14px;border-radius:8px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--nav);color:var(--panel);border-color:var(--nav)}
+.tab.emer{background:var(--bad);border-color:var(--bad);color:#fff}
+.tab.emer[aria-selected="true"]{background:var(--bad);color:#fff;box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--bad)}
+.tab small{font:500 11px var(--f-body);opacity:.75;margin-left:4px}
+main{padding-block:12px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+h2{font:600 16px var(--f-display);letter-spacing:.06em;text-transform:uppercase;margin:0;color:var(--nav)}
+.top{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px}
+@media (max-width:900px){.top{grid-template-columns:1fr}}
+#map{height:62vh;min-height:380px;border-radius:10px;border:1px solid var(--line)}
+.side{padding:14px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted);font-weight:500}
+input,select{font:500 15px var(--f-mono);color:var(--ink);background:var(--input);border:1px solid var(--line);
+  border-radius:6px;padding:6px 8px;width:100%;min-width:0}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+button{font:600 14px var(--f-body);border:1px solid var(--line);background:var(--panel);color:var(--ink);
+  padding:7px 12px;border-radius:7px;cursor:pointer}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:hover{filter:brightness(.97)}
+.hint{font-size:12px;color:var(--muted);margin:0}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.summary div{background:var(--input);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.summary b{display:block;font:600 18px var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.summary span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.section{padding:14px;display:flex;flex-direction:column;gap:10px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font:13px var(--f-mono);font-variant-numeric:tabular-nums}
+th{font:600 11px var(--f-body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--input);
+  padding:6px 6px;border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0}
+td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+td input{padding:3px 4px;font-size:13px;text-align:center}
+td.c{background:var(--calc);color:var(--calc-ink);font-weight:600}
+td.mh{font-size:15px}
+td.name input{text-align:left;min-width:120px}
+td.coord input{min-width:190px;text-align:left}
+.w-s input{width:58px}.w-m input{width:72px}
+tr.tot td{font-weight:700;background:var(--input)}
+.bad{color:var(--bad)!important}.warnc{color:var(--warn)!important}
+.mini{padding:2px 7px;font-size:12px}
+.wpnum{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font:600 12px var(--f-mono)}
+.mgrs{display:block;font-size:11px;color:var(--muted)}
+.wpicon{background:var(--accent);color:#fff;border:2px solid #fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;
+  font:600 12px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.leglabel{background:rgba(255,255,255,.92);color:#14233a;border:1px solid #b0177a;border-radius:4px;padding:1px 5px;font:600 12px var(--f-mono);white-space:nowrap}
+.routebox{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft)}
+.res{font:12px var(--f-mono);color:var(--muted);min-height:1em}
+.res b{color:var(--ink)}.res.err{color:var(--bad)}
+.freqgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.fcard{border:2px solid var(--nav);border-radius:8px;padding:8px 10px;font:13px var(--f-mono);min-width:0}
+.fcard h3{margin:0 0 4px;font:600 16px var(--f-display);color:var(--nav)}
+.fcard h3 small{font:500 11px var(--f-body);color:var(--muted)}
+.fcard .r{display:flex;justify-content:space-between;gap:8px;border-top:1px dashed var(--line);padding:2px 0}
+.fcard .r b{color:var(--accent);white-space:nowrap}
+.fcard .r span{text-align:right;overflow-wrap:anywhere}
+.fcard.emer{border-color:var(--bad)}.fcard.emer h3{color:var(--bad)}
+.legbox{display:grid;background:#fff;color:#14233a;border:2px solid #14233a;border-radius:6px;font:600 11px/1.15 var(--f-mono);text-align:center;width:max-content;min-width:56px;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.legbox b{font-size:14px;padding:2px 4px;border-bottom:1px solid #14233a}
+.legbox span{padding:1px 4px}.legbox i{font-style:normal;border-top:1px solid #14233a;padding:1px 4px;color:#555}
+.remtag{background:#1d3fd1;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}
+#printView{display:none}
+.pv-head{display:flex;justify-content:space-between;align-items:center;border:2px solid #000;padding:1mm 2mm;gap:2mm}
+.pv-head h1{margin:0;font:700 15pt var(--f-display)}.pv-head .sa{color:#c0262d;font:700 12pt var(--f-display)}
+.pv-head .tot{text-align:right;font:700 10pt var(--f-mono)}
+.pv-body{display:grid;grid-template-columns:86mm 1fr;gap:2mm;margin-top:1.5mm}
+#pvMap #map{width:86mm!important;height:124mm!important;min-height:0!important;border:1px solid #000;border-radius:0}
+.pv-side{display:flex;flex-direction:column;gap:1.5mm}
+.pv-side .fcard{border-width:1.5px;padding:1mm 1.5mm;font-size:7.5pt;break-inside:avoid}
+.pv-side .fcard h3{font-size:9pt;margin:0}.pv-side .fcard h3 small{display:none}
+.pv-side .fcard .r{padding:0}
+.pv-unit{border:2px solid #e07a00;font:700 11pt var(--f-display);padding:1mm 2mm;color:#e07a00}
+.pv-tbl{width:100%;border-collapse:collapse;margin-top:1.5mm;font:8pt var(--f-mono)}
+.pv-tbl th,.pv-tbl td{border:1px solid #000;padding:.6mm 1mm;text-align:center}
+.pv-tbl th{background:#e6e6e6!important;font:700 8pt var(--f-body);color:#000;position:static}
+.pv-tbl td:first-child{text-align:left}
+#printView{width:138mm;font:9pt var(--f-body);color:#000;background:#fff}
+body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overflow:auto;padding:10px}
+@media print{
+  @page{size:A5 portrait;margin:5mm}
+  body{background:#fff!important;color:#000;padding:0!important}
+  header,main>*:not(#tab-plan),#tab-plan>div>*{display:none!important}
+  #tab-plan,#tab-plan>div{display:block!important}
+  #printView{display:block!important;width:138mm;font:9pt var(--f-body);color:#000}
+  .leaflet-control-container{display:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.printing #printView{position:static;padding:0}
+}
+.placeholder{padding:40px 16px;text-align:center;color:var(--muted)}
+.placeholder h3{font:600 22px var(--f-display);color:var(--nav);margin:0 0 6px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--nav);color:var(--panel);
+  padding:8px 16px;border-radius:8px;font-weight:600;z-index:2000;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.example{font-size:11px;font-weight:600;color:var(--warn);border:1px solid var(--warn);border-radius:4px;padding:0 5px;margin-left:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">VFR<span>·</span>PLANNER</div>
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="plan" aria-selected="true">1 · วางแผน VFR</button>
+    <button class="tab" role="tab" data-tab="log" aria-selected="false">2 · Flight log<small>เร็วๆ นี้</small></button>
+    <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ<small>เร็วๆ นี้</small></button>
+    <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM<small>เร็วๆ นี้</small></button>
+    <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY<small>เร็วๆ นี้</small></button>
+  </nav>
+</header>
+
+<main>
+<!-- ============ TAB 1 ============ -->
+<section id="tab-plan" class="tabpanel">
+ <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="top">
+    <div id="map"></div>
+    <div class="card side">
+      <div class="sechead"><h2>แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span></div>
+      <div class="routebox">
+        <label>ต้นทาง<input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
+        <div id="depRes" class="res"></div>
+        <label>ปลายทาง<input id="dstIn" type="text" list="apList" placeholder="VTBD หรือ 47Q QU 27275 13325 บทบ.ยว.3" autocomplete="off"></label>
+        <div id="dstRes" class="res"></div>
+        <div class="btns"><button id="buildRoute" class="primary">สร้างเส้นทาง</button><button id="swapRoute">สลับต้นทาง/ปลายทาง</button></div>
+        <p class="hint">ใส่รหัส ICAO, ชื่อจุดที่เคยบันทึก หรือพิกัด MGRS / ทศนิยม ตามด้วยชื่อจุดได้ (ระบบจะจำชื่อไว้ใช้ครั้งต่อไป)</p>
+        <datalist id="apList"></datalist>
+      </div>
+      <div class="grid2">
+        <label style="grid-column:1/-1">ชื่อแผน / ภารกิจ<input id="planName" type="text"></label>
+        <label>Aircraft No.<input id="acft" type="text"></label>
+        <label>วันที่<input id="date" type="date"></label>
+        <label>เวลาเริ่มบิน<input id="depTime" type="time" value="08:00"></label>
+        <label>น้ำมันเริ่มต้น (lb)<input id="fuel0" type="number" inputmode="decimal"></label>
+        <label>Burn rate (lb/นาที)<input id="burn" type="number" step="0.1" inputmode="decimal"></label>
+        <label>น้ำมันสำรองขั้นต่ำ (lb)<input id="reserve" type="number" inputmode="decimal"></label>
+        <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900"></label>
+        <label>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0"></label>
+        <label>ป้ายระยะคงเหลือ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
+      </div>
+      <div>
+        <h2 style="font-size:13px;margin-bottom:6px">ค่าเริ่มต้นทุก leg</h2>
+        <div class="grid2">
+          <label>ALT (ft)<input id="gAlt" type="number" inputmode="numeric"></label>
+          <label>CAS (kt)<input id="gCas" type="number" inputmode="decimal"></label>
+          <label>Wind Dir (°T)<input id="gWd" type="number" inputmode="numeric"></label>
+          <label>Wind Vel (kt)<input id="gWv" type="number" inputmode="numeric"></label>
+          <label>Temp (°C)<input id="gTemp" type="number" inputmode="decimal"></label>
+          <label>Var (W+, E−)<input id="gVar" type="number" step="0.1" inputmode="decimal"></label>
+        </div>
+        <div class="btns" style="margin-top:8px"><button id="applyAll">ใช้ค่านี้กับทุก leg</button></div>
+      </div>
+      <div class="summary">
+        <div><span>ระยะรวม</span><b id="sDist">–</b></div>
+        <div><span>เวลารวม</span><b id="sEte">–</b></div>
+        <div><span>ถึง (ETA)</span><b id="sEta">–</b></div>
+        <div><span>น้ำมันเหลือ</span><b id="sFuel">–</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card section">
+    <div class="sechead">
+      <h2>จุดเส้นทาง (Check points)</h2>
+      <div class="btns">
+        <button id="addMode" class="on">✚ คลิกแผนที่เพื่อเพิ่มจุด: เปิด</button>
+        <button id="addManual">เพิ่มจุดจากพิกัด</button>
+        <button id="reverse">กลับเส้นทาง</button>
+        <button id="clearAll">ล้างทั้งหมด</button>
+      </div>
+    </div>
+    <p class="hint">พิกัดพิมพ์ได้ทั้งแบบทศนิยม <code>14.8812, 100.6431</code> หรือ MGRS <code>47PQS 1234 5678</code> · ลากหมุดบนแผนที่เพื่อย้ายจุดได้</p>
+    <div class="tablewrap"><table id="wpTable">
+      <thead><tr><th>#</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+
+  <div class="card section">
+    <div class="sechead">
+      <h2>Nav Log</h2>
+      <div class="btns">
+        <button id="savePlan" class="primary">บันทึกแผน</button>
+        <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
+        <button id="delPlan">ลบแผนนี้</button>
+        <button id="kneePdf" class="primary">Kneeboard PDF (A5)</button>
+        <button id="exportXlsx">Export Excel (.xlsx)</button>
+        <button id="exportCsv">Export CSV</button>
+        <button id="exportJson">Export ไฟล์แผน</button>
+        <label class="btnlike" style="display:inline-flex"><input id="importJson" type="file" accept=".json,application/json" hidden><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button></label>
+      </div>
+    </div>
+    <p class="hint">ช่องขาว = กรอกได้ (แก้เฉพาะ leg ได้) · ช่องเขียว = คำนวณอัตโนมัติ · MH กลับ = heading ขาบินกลับเส้นทางเดิมพร้อมแก้ลมแล้ว</p>
+    <div class="tablewrap"><table id="navTable">
+      <thead><tr>
+        <th>Leg</th><th>From → To</th><th>ALT</th><th>W/D</th><th>W/V</th><th>Temp</th><th>CAS</th><th>TAS</th>
+        <th>TC</th><th>WCA</th><th>TH</th><th>MH</th><th>Dev</th><th>CH</th><th>MH กลับ</th>
+        <th>Dist</th><th>Rem</th><th>GS</th><th>ETE</th><th>ETA</th><th>ATE</th><th>Fuel leg</th><th>Fuel rem</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+
+  <div class="card section">
+    <div class="sechead">
+      <h2>ความถี่ตามเส้นทาง</h2>
+      <div class="btns">
+        <label style="flex-direction:row;align-items:center;gap:6px">รัศมีจากเส้นทาง<input id="corridor" type="number" value="25" style="width:70px"> NM</label>
+        <button type="button" onclick="document.getElementById('importEaip').click()">Import ข้อมูล eAIP</button>
+        <input id="importEaip" type="file" accept=".json,application/json" hidden>
+      </div>
+    </div>
+    <p id="eaipStatus" class="hint"></p>
+    <div id="freqList" class="freqgrid"></div>
+  </div>
+ </div>
+ <aside id="printView" aria-hidden="true"></aside>
+</section>
+
+<section id="tab-log" class="tabpanel card" hidden><div class="placeholder"><h3>Flight log</h3>ยังไม่เปิดใช้ — จะทำต่อจากแท็บวางแผน</div></section>
+<section id="tab-wx" class="tabpanel card" hidden><div class="placeholder"><h3>สภาพอากาศ</h3>ยังไม่เปิดใช้ — METAR/TAF ตามเส้นทาง, Windy, เรดาร์ฝน</div></section>
+<section id="tab-notam" class="tabpanel card" hidden><div class="placeholder"><h3>NOTAM</h3>ยังไม่เปิดใช้</div></section>
+<section id="tab-emer" class="tabpanel card" hidden><div class="placeholder"><h3 style="color:var(--bad)">EMERGENCY</h3>ยังไม่เปิดใช้</div></section>
+</main>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js"></script>
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const D2R=Math.PI/180, R2D=180/Math.PI;
+const norm=a=>((a%360)+360)%360;
+const hdg=a=>{const v=Math.round(norm(a));return String(v===0?360:v).padStart(3,"0")};
+const num=(v,d=null)=>{const n=parseFloat(v);return isFinite(n)?n:d};
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+             set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove("show"),1800)}
+function mmss(min){if(!isFinite(min))return"–";const s=Math.round(min*60);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function hhmm(totalMin){if(!isFinite(totalMin))return"–";const m=Math.round(totalMin);return String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(((m%60)+60)%60).padStart(2,"0")}
+function toMgrs(lat,lon){try{return mgrs.forward([lon,lat],5)}catch(e){return""}}
+function fmtMgrs(s){const m=s.match(/^(\d{1,2}[A-Z])([A-Z]{2})(\d+)$/);if(!m)return s;const h=m[3].length/2;return m[1]+m[2]+" "+m[3].slice(0,h)+" "+m[3].slice(h)}
+/* แปลงข้อความพิกัด → [lat,lon] รับทศนิยม หรือ MGRS */
+function parseCoord(txt){
+  const t=String(txt).trim().toUpperCase();
+  const dec=t.match(/^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/);
+  if(dec){const la=+dec[1],lo=+dec[2];if(Math.abs(la)<=90&&Math.abs(lo)<=180)return[la,lo]}
+  const g=t.replace(/\s+/g,"");
+  if(/^\d{1,2}[C-X][A-Z]{2}\d{2,10}$/.test(g)){try{const p=mgrs.toPoint(g);return[p[1],p[0]]}catch(e){}}
+  return null;
+}
+/* ---------- ฐานข้อมูลสนามบิน (OurAirports, ไทย) — ต้องตรวจกับ eAIP ก่อนใช้จริง ---------- */
+const AIRPORTS=[["BTZ","Betong International Airport",5.79,101.15,"medium","785"],["TH-0001","Eastern Flying Club Airport",12.90244,100.93323,"small","160"],["TH-0002","Khlong Si Airfield",14.17062,100.69176,"small",""],["TH-0003","Klong 15 Airfield",14.11471,100.94948,"small","15"],["TH-0004","Prachom Klao Airfield",14.1636,101.33712,"small",""],["TH-0005","Lektop-Thames Airport",14.03662,100.69448,"small",""],["TH-0006","Thung Si Kan Airport",13.94571,100.57441,"small","10"],["TH-0007","Chanthaburi Airstrip",12.63247,102.02603,"small","72"],["TH-0008","Koh Mai Si Airport",11.71745,102.52033,"small","20"],["TH-0009","Khao Khitchakut Heliport",12.83602,102.16877,"heliport",""],["TH-0010","Klaeng Airfield",12.7099,101.63054,"small",""],["TH-0011","Nong Khor Airfield",13.14027,101.04642,"small","214"],["TH-0012","Bang Phra Ultralightport",13.23603,100.9949,"small",""],["TH-0013","Ko Chan Airport",13.3938,101.32055,"small",""],["TH-0014","Supawan Mini Airfield",13.85782,100.32493,"small",""],["TH-0015","Best Ocean Airpark",13.54018,100.32936,"small",""],["TH-0016","Camp Burachat (Sanam Luang) Airfield",13.57376,99.75296,"small",""],["TH-0017","Kaeng Krachan Airfield",12.87173,99.79265,"small",""],["TH-0019","Ratthaphum Airfield",7.1349,100.33063,"small",""],["TH-0020","Khuan Timun Helipad",6.83411,101.02211,"heliport",""],["TH-0021","Phanom Sarakham Airport",13.7553,101.395,"small","166"],["TH-0022","Old Betong Airport",5.78161,101.15926,"small",""],["TH-0023","Banana",13.14421,101.10606,"small",""],["TH-0024","Vanchanphen Airpark",13.94495,102.00432,"small",""],["TH-0025","Dropzone Thailand Airport",12.6714,101.5476,"small",""],["TH-0027","Ban Thi Airport",18.67614,99.10522,"small","990"],["TH-0028","Sri Racha Airport",13.09096,100.96752,"small","84"],["TH-0029","Seri Thai Airport",16.77324,104.03372,"small",""],["TH-0032","Pattaya Huai Yai Airport",12.8351,100.98118,"small",""],["TH-0034","TFT Airfield",14.08045,100.85259,"small","20"],["TH-0035","Lektop-Thames Airport Number 2",14.11717,100.76169,"small",""],["TH-0036","Kabin Buri Airport",14.02144,101.70299,"small","41"],["TH-0037","Lat Ya Army Airfield",14.12524,99.44696,"small",""],["TH-0039","Hinzon Airport",13.77697,101.61345,"small",""],["TH-0040","Khanong Phra Airport",14.63123,101.4659,"small",""],["TH-0041","Skydance Helipad",8.0779,98.3017,"heliport",""],["TH-0042","Chiang Mai Airsports",18.70403,99.11917,"small","1020"],["TH-0043","Bird's Paradise Airpark",17.52204,103.55119,"small","554"],["TH-0044","Tantawan",14.7712,100.776,"small","164"],["TH-0045","Dok Rai",12.92068,101.18363,"small","186"],["TH-0046","Khlong Luang KASET Heliport",14.11945,100.62096,"heliport","16"],["TH-0047","Ram Inthra Police Heliport",13.86045,100.63391,"heliport","23"],["TH-0049","Saensuk Flying Club",13.28923,100.96315,"small",""],["TH-0050","Atlantic",12.85511,100.99091,"small","230"],["TH-0061","Navy 3M Aviation Airfield",12.8354,100.92532,"small",""],["TH-0062","Ayudthaya Airfield",14.27692,100.64779,"small",""],["TH-0063","Nong Phai Lom Police Heliport",14.696,101.49114,"heliport","1047"],["TH-0064","Camp Suranaree Airport",14.95425,102.07387,"small","643"],["TH-0065","Kanchanaburi Police Heliport",14.11386,99.66296,"heliport","108"],["TH-0066","CAVPAD Helicopter Field",13.77207,100.54379,"heliport","22"],["TH-0067","Ban Klang Airfield",8.33028,98.76611,"small","82"],["TH-0068","R'sommai Airfield",13.158,101.03,"small","18"],["VN-0020","Ongkarak Airport (Klong 16)",14.10993,101.00166,"small","6"],["VTBD","Don Mueang International Airport",13.9126,100.607,"large","9"],["VTBE","Pak Phreaw Heliport",14.50821,100.919,"heliport","46"],["VTBH","Sa Pran Nak Airport",14.9494,100.643,"small","95"],["VTBI","Khao E To Airport",14.0778,101.38,"small","80"],["VTBK","Kamphaeng Saen Airport",14.102,99.9172,"medium","30"],["VTBL","Khok Kathiam Airport",14.87462,100.6634,"medium","123"],["VTBN","Prachuap Khiri Khan Airport",12.4172,99.8694,"small",""],["VTBO","Trat Airport",12.2746,102.319,"medium","105"],["VTBP","Prachuap Airport",11.7884,99.8047,"small","10"],["VTBS","Suvarnabhumi Airport",13.6811,100.747,"large","5"],["VTBT","Bang Phra Airport",13.23243,100.9568,"small","90"],["VTBU","U-Tapao–Rayong–Pattaya International Airport",12.6799,101.005,"large","42"],["VTBV","Koh Takian Airport",12.25404,102.51852,"small","-1"],["VTBW","Watthana Nakhon Airport",13.7692,102.31602,"small","200"],["VTCC","Chiang Mai International Airport",18.7668,98.9626,"large","1036"],["VTCH","Mae Hong Son Airport",19.3013,97.9758,"medium","929"],["VTCI","Pai Airport",19.37205,98.4359,"small","1676"],["VTCL","Lampang Airport",18.2709,99.5042,"medium","811"],["VTCN","Nan Airport",18.8079,100.783,"medium","685"],["VTCO","Lamphun Airport",18.54899,99.01243,"small","925"],["VTCP","Phrae Airport",18.1322,100.165,"medium","538"],["VTCS","Mae Sariang Airport",18.18096,97.93063,"small","750"],["VTCT","Mae Fah Luang - Chiang Rai International Airport",19.9523,99.8829,"large","1280"],["VTCY","Nok Airfield",18.6762,99.11157,"small","983"],["VTED","Udorn Air Base",17.383,102.8,"small","591"],["VTPB","Phetchabun Airport",16.676,101.195,"medium","450"],["VTPH","Hua Hin Airport",12.6362,99.9515,"medium","62"],["VTPI","Takhli Royal Thai Air Force Base",15.2773,100.296,"medium","107"],["VTPL","Sak Long Airport",16.82406,101.25124,"small","500"],["VTPM","Mae Sot Airport",16.6999,98.5451,"medium","690"],["VTPN","Nakhon Sawan Airport",15.673,100.137,"small","113"],["VTPO","Sukhothai Airport",17.238,99.8182,"medium","179"],["VTPP","Phitsanulok Airport",16.7829,100.279,"medium","154"],["VTPR","Photharam Airport",13.6686,99.7314,"small","88"],["VTPT","Tak Airport",16.896,99.2533,"medium","478"],["VTPY","Khunan Phumipol Airport",17.2342,99.0579,"small","492"],["VTSA","Khoun Khan Airport",6.6614,100.08,"small","18"],["VTSB","Surat Thani Airport",9.1326,99.1356,"medium","20"],["VTSC","Narathiwat Airport",6.51992,101.743,"medium","16"],["VTSE","Chumphon Airport",10.7112,99.3617,"medium","18"],["VTSF","Nakhon Si Thammarat Airport",8.53962,99.9447,"medium","13"],["VTSG","Krabi International Airport",8.09559,98.98896,"large","82"],["VTSH","Songkhla Airport",7.18656,100.608,"medium","12"],["VTSK","Pattani Airport",6.78546,101.154,"medium","8"],["VTSM","Samui International Airport",9.54779,100.062,"large","64"],["VTSN","Cha Eian Airport",8.47115,99.9556,"medium","44"],["VTSP","Phuket International Airport",8.11326,98.3174,"large","82"],["VTSR","Ranong Airport",9.77762,98.5855,"medium","57"],["VTSS","Hat Yai International Airport",6.93321,100.393,"large","90"],["VTST","Trang Airport",7.50874,99.6166,"medium","67"],["VTSW","Phuket Airpark",8.01873,98.40291,"small","20"],["VTUD","Udon Thani International Airport",17.38619,102.78858,"large","579"],["VTUI","Sakon Nakhon Airport",17.1951,104.119,"medium","529"],["VTUJ","Surin Airport",14.8683,103.498,"medium","478"],["VTUK","Khon Kaen Airport",16.4666,102.784,"medium","670"],["VTUL","Loei Airport",17.4391,101.722,"medium","860"],["VTUN","Khorat Airport",14.93471,102.07895,"small","729"],["VTUO","Buri Ram Airport",15.2295,103.253,"medium","590"],["VTUQ","Nakhon Ratchasima Airport",14.9495,102.313,"medium","765"],["VTUR","Rob Muang Airport",16.0704,103.646,"small","459"],["VTUU","Ubon Ratchathani Airport",15.2513,104.87,"medium","406"],["VTUV","Roi Et Airport",16.1168,103.774,"medium","451"],["VTUW","Nakhon Phanom Airport",17.3838,104.643,"medium","587"],["VTUZ","Nam Phung Dam Airport",16.6522,102.967,"small",""]];
+const AP={};AIRPORTS.forEach(a=>AP[a[0]]={id:a[0],name:a[1],lat:a[2],lon:a[3],type:a[4],elev:a[5]});
+function customPts(){return store.get("vfr_points")||{}}
+function saveCustom(name,lat,lon){const c=customPts();c[name.toUpperCase()]={name,lat,lon};store.set("vfr_points",c);fillDatalist()}
+function fillDatalist(){const c=customPts();
+  $("#apList").innerHTML=Object.values(AP).filter(a=>/^VT/.test(a.id)).sort((x,y)=>x.id<y.id?-1:1).map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join("")+
+    Object.values(c).map(p=>`<option value="${esc(p.name)}">จุดที่บันทึก</option>`).join("")}
+/* แยก "พิกัด + ชื่อ" เช่น 47Q QU 27275 13325 (บทบ.ยว.3) */
+function splitCoordName(t){
+  let m=t.match(/^\s*(\d{1,2}\s*[C-Xc-x]\s*[A-Za-z]{2}\s*\d{1,5}\s*\d{0,5})\s*(.*)$/);
+  if(!m)m=t.match(/^\s*(-?\d+(?:\.\d+)?\s*[, ]\s*-?\d+(?:\.\d+)?)\s*(.*)$/);
+  if(!m)return null;return{coord:m[1],name:m[2].replace(/^[(\[]|[)\]]$/g,"").trim()}}
+/* ข้อความ → จุด {name,lat,lon,info} ลำดับ: ICAO → จุดที่บันทึก → พิกัด */
+function resolvePoint(text,remember=true){
+  const t=String(text||"").trim();if(!t)return null;const U=t.toUpperCase();
+  if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
+  const c=customPts()[U];if(c)return{name:c.name,lat:c.lat,lon:c.lon,info:"จุดที่บันทึกไว้"};
+  const s=splitCoordName(t);if(s){const p=parseCoord(s.coord);if(p){
+    if(s.name&&remember)saveCustom(s.name,p[0],p[1]);
+    return{name:s.name||"",lat:p[0],lon:p[1],info:s.name?"พิกัดที่ใส่ (บันทึกชื่อแล้ว)":"พิกัดที่ใส่"}}}
+  return null}
+/* ---------- ข้อมูล eAIP (import จากสคริปต์ eaip_update.py) ---------- */
+let EAIP=store.get("vfr_eaip");
+function applyEaip(){if(!EAIP||!EAIP.airports)return;
+  for(const[ic,a]of Object.entries(EAIP.airports)){if(a.lat==null)continue;
+    AP[ic]={...(AP[ic]||{}),id:ic,name:a.name||(AP[ic]&&AP[ic].name)||ic,lat:a.lat,lon:a.lon,elev:a.elev_ft??(AP[ic]&&AP[ic].elev),eaip:a}}}
+applyEaip();
+/* ระยะ (NM) จากจุดถึงเส้น leg แบบ local projection — แม่นพอสำหรับคัดสนามใกล้เส้นทาง */
+function distToSeg(p,a,b){const k=Math.cos(p[0]*D2R)*60,P=[p[1]*k,p[0]*60],A=[a[1]*k,a[0]*60],B=[b[1]*k,b[0]*60];
+  const dx=B[0]-A[0],dy=B[1]-A[1],L2=dx*dx+dy*dy;let t=L2?((P[0]-A[0])*dx+(P[1]-A[1])*dy)/L2:0;t=Math.max(0,Math.min(1,t));
+  return{d:Math.hypot(P[0]-(A[0]+t*dx),P[1]-(A[1]+t*dy)),t}}
+function routeAirports(nm){const W=state.wps;if(!W.length)return[];const out=[];
+  for(const a of Object.values(AP)){if(!a.eaip&&(a.type==="heliport"||!/^VT/.test(a.id)))continue;let best={d:1e9,pos:0};
+    if(W.length===1)best={d:gcDistNm([a.lat,a.lon],[W[0].lat,W[0].lon]),pos:0};
+    for(let i=0;i<W.length-1;i++){const r=distToSeg([a.lat,a.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);if(r.d<best.d)best={d:r.d,pos:i+r.t}}
+    if(best.d<=nm)out.push({...a,off:best.d,pos:best.pos})}
+  return out.sort((x,y)=>x.pos-y.pos)}
+function renderFreq(){
+  const nm=num($("#corridor").value,25);const list=routeAirports(nm);
+  const st=$("#eaipStatus");
+  if(EAIP){const age=Math.round((Date.now()-new Date(EAIP.edition))/864e5);
+    st.innerHTML=`ข้อมูล eAIP ฉบับ <b>${esc(EAIP.edition)}</b> (import ${esc(EAIP.fetched||"")}, ${Object.keys(EAIP.airports||{}).length} สนาม)`+(age>28?` · <span class="bad">ฉบับนี้อาจหมดอายุแล้ว (${age} วัน) ให้รันสคริปต์ใหม่</span>`:"");}
+  else st.innerHTML=`<span class="warnc">ยังไม่มีข้อมูลความถี่ — รัน eaip_update.py แล้วกด Import ข้อมูล eAIP</span> · ตอนนี้แสดงเฉพาะรายชื่อสนามใกล้เส้นทาง`;
+  const emer=`<div class="fcard emer"><h3>EMER</h3><div class="r"><b>Guard</b><span>121.5 / 243.0</span></div></div>`;
+  $("#freqList").innerHTML=emer+list.map(a=>{const e=a.eaip;
+    const comm=e?e.comm.map(c=>`<div class="r"><b>${esc(c.svc)}</b><span>${esc(c.freq)}${c.callsign?`<br><small>${esc(c.callsign)}</small>`:""}</span></div>`).join(""):"";
+    const nav=e?e.navaids.map(n=>`<div class="r"><b>${esc(n.type)}</b><span>${esc(n.id)} ${esc(n.freq)}</span></div>`).join(""):"";
+    const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.rwy.join(" / "))}</span></div>`:"";
+    return`<div class="fcard"><h3>${esc(a.id)} <small>${esc(a.name)}${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ยังไม่มีข้อมูล eAIP</span></div>`:""}</div>`}).join("");
+}
+function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";return}
+  if(!p){el.textContent="ไม่พบรหัส/ชื่อนี้ และอ่านเป็นพิกัดไม่ได้";el.className="res err";return}
+  el.className="res";el.innerHTML=`<b>${esc(p.name||"(ไม่มีชื่อ)")}</b> · ${esc(p.info)}<br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)} · ${fmtMgrs(toMgrs(p.lat,p.lon))}`}
+
+/* ---------- คำนวณการเดินอากาศ ---------- */
+function gcDistNm(a,b){const R=3440.065,f1=a[0]*D2R,f2=b[0]*D2R,df=f2-f1,dl=(b[1]-a[1])*D2R;
+  const h=Math.sin(df/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function trueCourse(a,b){const f1=a[0]*D2R,f2=b[0]*D2R,dl=(b[1]-a[1])*D2R;
+  return norm(Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))*R2D)}
+/* TAS จาก CAS ด้วย density ratio (ISA pressure alt + OAT จริง) */
+function tasFrom(cas,altFt,tempC){const p=Math.pow(1-6.8756e-6*altFt,5.2559),sig=p/((tempC+273.15)/288.15);return cas/Math.sqrt(sig)}
+/* wind triangle: คืน WCA (R+ L−) และ GS */
+function windTri(tc,tas,wd,wv){const ang=(wd-tc)*D2R,x=wv*Math.sin(ang)/tas;
+  if(Math.abs(x)>1)return{wca:NaN,gs:NaN};const wca=Math.asin(x)*R2D;
+  return{wca,gs:tas*Math.cos(wca*D2R)-wv*Math.cos(ang)}}
+
+/* ---------- state ---------- */
+let state=null;
+const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป บทบ.ยว.3",acft:"",date:"",depTime:"08:00",fuel0:500,burn:2.6,reserve:200,
+  depIn:"VTBH",dstIn:"47Q QU 27275 13325 บทบ.ยว.3",
+  g:{alt:1000,cas:80,wd:230,wv:15,temp:30,var:0},
+  wps:[{name:"VTBH",lat:14.9494,lon:100.643,vor:""},{name:"บทบ.ยว.3",lat:16.39053,lon:101.12801,vor:""}],
+  legs:[]};
+function blankLeg(){return{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp,dev:0,ate:""}}
+function syncLegs(){const need=Math.max(0,state.wps.length-1);while(state.legs.length<need)state.legs.push(blankLeg());state.legs.length=need}
+
+/* ---------- map ---------- */
+const map=L.map("map",{zoomControl:true}).setView([14.95,100.63],10);
+const sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagery © Esri"});
+const topo=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{maxZoom:17,attribution:"© OpenTopoMap © OSM"});
+const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"});
+const labels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
+sat.addTo(map);labels.addTo(map);
+const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm},{"ชื่อสถานที่":labels}).addTo(map);
+L.control.scale({imperial:true,metric:true}).addTo(map);
+const routeLayer=L.layerGroup().addTo(map);
+const apLayer=L.layerGroup();
+AIRPORTS.forEach(a=>{const mk=L.circleMarker([a[2],a[3]],{radius:a[4]==="heliport"?4:6,color:"#123c69",weight:2,fillColor:a[4]==="heliport"?"#fff":"#7fb2e8",fillOpacity:1})
+  .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);
+  mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
+apLayer.addTo(map);layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
+let addMode=true;
+
+/* ป้ายระยะคงเหลือ: จุดบนเส้นทางที่ระยะถึงปลายทางเป็นทวีคูณของ step (ไม่รวมจุด 0) */
+function remMarkers(rows){const step=num(state.remStep,10);if(!step||rows.length===0)return[];
+  const total=rows.reduce((s,r)=>s+r.dist,0);const out=[];let done=0;
+  rows.forEach((r,i)=>{const a=state.wps[i],b=state.wps[i+1];
+    for(let rem=Math.floor((total-done-1e-6)/step)*step;rem>0&&total-rem>=done;rem-=step){const f=(total-rem-done)/r.dist;if(f>1)break;if(f<0.03||f>0.97)continue;
+      out.push({rem,lat:a.lat+(b.lat-a.lat)*f,lon:a.lon+(b.lon-a.lon)*f})}
+    done+=r.dist});
+  return out}
+function drawMap(rows){
+  routeLayer.clearLayers();
+  const pts=state.wps.map(w=>[w.lat,w.lon]);
+  if(pts.length>1)L.polyline(pts,{color:"#d6198f",weight:4,opacity:.95}).addTo(routeLayer);
+  state.wps.forEach((w,i)=>{
+    const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:`<div class="wpicon">${i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
+      .bindTooltip(`${i+1}. ${w.name||"WP"}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
+    m.on("dragend",e=>{const p=e.target.getLatLng();w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render()});
+  });
+  rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
+    L.marker([(a[0]+b[0])/2,(a[1]+b[1])/2],{interactive:false,icon:L.divIcon({className:"",html:`<div class="legbox"><b>${isFinite(r.mh)?hdg(r.mh):"---"}°</b><span>${r.dist.toFixed(1)} NM</span><span>${mmss(r.ete)} m.</span><i>${isFinite(r.mhBack)?hdg(r.mhBack):"---"}°</i></div>`,iconSize:null,iconAnchor:[-34,30]})}).addTo(routeLayer)});
+  remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
+}
+map.on("click",e=>{if(!addMode)return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
+
+/* ---------- compute ---------- */
+function compute(){
+  syncLegs();
+  const rows=[];let cumMin=0;let fuel=num(state.fuel0,0);const burn=num(state.burn,0);
+  const [h,m]=(state.depTime||"00:00").split(":").map(Number);const dep=h*60+m;
+  const total=state.wps.slice(1).reduce((s,w,i)=>s+gcDistNm([state.wps[i].lat,state.wps[i].lon],[w.lat,w.lon]),0);
+  let rem=total;
+  for(let i=0;i<state.legs.length;i++){
+    const L1=state.legs[i],a=[state.wps[i].lat,state.wps[i].lon],b=[state.wps[i+1].lat,state.wps[i+1].lon];
+    const dist=gcDistNm(a,b),tc=trueCourse(a,b);
+    const tas=tasFrom(num(L1.cas,0),num(L1.alt,0),num(L1.temp,15));
+    const wt=windTri(tc,tas,num(L1.wd,0),num(L1.wv,0));
+    const th=tc+wt.wca, vr=num(state.g.var,0), mh=th+vr, ch=mh+num(L1.dev,0);
+    const back=windTri(norm(tc+180),tas,num(L1.wd,0),num(L1.wv,0));
+    const mhBack=norm(tc+180)+back.wca+vr;
+    const ete=dist/wt.gs*60; cumMin+=ete; rem-=dist;
+    const fLeg=ete*burn; fuel-=fLeg;
+    rows.push({dist,tc,tas,wca:wt.wca,gs:wt.gs,th,mh,ch,mhBack,ete,eta:dep+cumMin,rem:Math.max(0,rem),fLeg,fuel});
+  }
+  return{rows,total,cumMin,dep,fuel};
+}
+
+/* ---------- render ---------- */
+function cell(v,cls=""){return`<td class="c ${cls}">${v}</td>`}
+function inp(i,key,w="w-s"){const v=state.legs[i][key];return`<td class="${w}"><input data-leg="${i}" data-k="${key}" value="${v??""}" inputmode="decimal"></td>`}
+function render(){
+  const res=compute();const rv=state.reserve!==""&&state.reserve!=null?num(state.reserve):null;
+  // waypoints
+  $("#wpTable tbody").innerHTML=state.wps.map((w,i)=>`<tr>
+    <td><span class="wpnum">${i+1}</span></td>
+    <td class="name"><input data-wp="${i}" data-k="name" value="${esc(w.name)}"></td>
+    <td class="coord"><input data-wp="${i}" data-k="coord" value="${w.lat.toFixed(5)}, ${w.lon.toFixed(5)}"><span class="mgrs">MGRS ${fmtMgrs(toMgrs(w.lat,w.lon))}</span></td>
+    <td class="w-m"><input data-wp="${i}" data-k="vor" value="${esc(w.vor||"")}" style="width:130px"></td>
+    <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-act="up" data-i="${i}" aria-label="เลื่อนขึ้น">▲</button><button class="mini" data-act="down" data-i="${i}" aria-label="เลื่อนลง">▼</button><button class="mini" data-act="zoom" data-i="${i}">ดู</button><button class="mini" data-act="del" data-i="${i}" aria-label="ลบ">✕</button></div></td>
+  </tr>`).join("")||`<tr><td colspan="5" class="hint" style="padding:14px">ยังไม่มีจุด — คลิกบนแผนที่เพื่อเพิ่มจุดแรก (ต้นทาง)</td></tr>`;
+  // nav log
+  const body=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":(r.fuel<0?"bad":"");
+    return`<tr><td>${i+1}</td><td style="text-align:left">${esc(state.wps[i].name)} → ${esc(state.wps[i+1].name)}</td>
+    ${inp(i,"alt","w-m")}${inp(i,"wd")}${inp(i,"wv")}${inp(i,"temp")}${inp(i,"cas")}
+    ${cell(r.tas.toFixed(1))}${cell(hdg(r.tc))}${cell(isFinite(r.wca)?(r.wca>=0?"+":"")+r.wca.toFixed(1):"ลมแรงเกิน","",)}
+    ${cell(isFinite(r.th)?hdg(r.th):"–")}${cell(isFinite(r.mh)?hdg(r.mh):"–","mh")}${inp(i,"dev")}${cell(isFinite(r.ch)?hdg(r.ch):"–")}
+    ${cell(isFinite(r.mhBack)?hdg(r.mhBack):"–")}
+    ${cell(r.dist.toFixed(1))}${cell(r.rem.toFixed(1))}${cell(isFinite(r.gs)?r.gs.toFixed(0):"–")}
+    ${cell(mmss(r.ete))}${cell(hhmm(r.eta))}<td class="w-s"><input data-leg="${i}" data-k="ate" value="${esc(state.legs[i].ate||"")}" placeholder="mm:ss"></td>
+    ${cell(isFinite(r.fLeg)?r.fLeg.toFixed(1):"–")}${cell(isFinite(r.fuel)?r.fuel.toFixed(1):"–",fCls)}</tr>`}).join("");
+  const tot=res.rows.length?`<tr class="tot"><td colspan="15" style="text-align:right">รวม</td><td>${res.total.toFixed(1)}</td><td></td><td></td><td>${mmss(res.cumMin)}</td><td>${hhmm(res.dep+res.cumMin)}</td><td></td><td>${(res.cumMin*num(state.burn,0)).toFixed(1)}</td><td class="${rv!=null&&res.fuel<rv?"bad":""}">${res.fuel.toFixed(1)}</td></tr>`:"";
+  $("#navTable tbody").innerHTML=body+tot||`<tr><td colspan="23" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุดถึงจะคำนวณ leg ได้</td></tr>`;
+  // summary
+  $("#sDist").textContent=res.rows.length?res.total.toFixed(1)+" NM":"–";
+  $("#sEte").textContent=res.rows.length?mmss(res.cumMin):"–";
+  $("#sEta").textContent=res.rows.length?hhmm(res.dep+res.cumMin):"–";
+  const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
+  $("#exampleTag").hidden=!state.example;
+  drawMap(res.rows);renderFreq();
+  store.set("vfr_current",state);
+}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function markEdited(){if(state.example){state.example=false}}
+
+/* ---------- form binding ---------- */
+const fields={planName:"planName",acft:"acft",date:"date",depTime:"depTime",fuel0:"fuel0",burn:"burn",reserve:"reserve",sa:"sa",unitFreq:"unitFreq",remStep:"remStep"};
+const gfields={gAlt:"alt",gCas:"cas",gWd:"wd",gWv:"wv",gTemp:"temp",gVar:"var"};
+function fillForm(){["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
+  for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??""}
+for(const[id,k]of Object.entries(fields))$("#"+id).addEventListener("input",e=>{state[k]=e.target.value;markEdited();render()});
+for(const[id,k]of Object.entries(gfields))$("#"+id).addEventListener("input",e=>{state.g[k]=e.target.value;markEdited();if(k==="var")render()});
+$("#applyAll").onclick=()=>{state.legs.forEach(l=>Object.assign(l,{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp}));render();toast("ใช้ค่ากับทุก leg แล้ว")};
+
+$("#navTable").addEventListener("change",e=>{const t=e.target;if(t.dataset.leg==null)return;state.legs[+t.dataset.leg][t.dataset.k]=t.value;markEdited();render()});
+$("#wpTable").addEventListener("change",e=>{const t=e.target;if(t.dataset.wp==null)return;const w=state.wps[+t.dataset.wp];
+  if(t.dataset.k==="coord"){const p=resolvePoint(t.value);if(!p){toast("อ่านไม่ได้ ลอง ICAO, MGRS หรือ 14.88, 100.64");t.value=`${w.lat.toFixed(5)}, ${w.lon.toFixed(5)}`;return}
+    w.lat=p.lat;w.lon=p.lon;if(p.name&&(!w.name||/^WP\d+$/.test(w.name)))w.name=p.name;map.panTo([p.lat,p.lon])}
+  else w[t.dataset.k]=t.value;markEdited();render()});
+$("#wpTable").addEventListener("click",e=>{const b=e.target.closest("button[data-act]");if(!b)return;const i=+b.dataset.i,a=b.dataset.act,W=state.wps;
+  if(a==="del"){W.splice(i,1);state.legs.splice(Math.min(i,state.legs.length-1),1)}
+  if(a==="up"&&i>0)[W[i-1],W[i]]=[W[i],W[i-1]];
+  if(a==="down"&&i<W.length-1)[W[i+1],W[i]]=[W[i],W[i+1]];
+  if(a==="zoom"){map.setView([W[i].lat,W[i].lon],13);return}
+  markEdited();render()});
+$("#addMode").onclick=()=>{addMode=!addMode;const b=$("#addMode");b.classList.toggle("on",addMode);b.textContent="✚ คลิกแผนที่เพื่อเพิ่มจุด: "+(addMode?"เปิด":"ปิด")};
+$("#addManual").onclick=()=>{const c=map.getCenter();state.wps.push({name:"WP"+(state.wps.length+1),lat:+c.lat.toFixed(6),lon:+c.lng.toFixed(6),vor:""});markEdited();render();
+  const ins=document.querySelectorAll('#wpTable input[data-k="coord"]');const last=ins[ins.length-1];if(last){last.focus();last.select()}};
+$("#reverse").onclick=()=>{state.wps.reverse();state.legs.reverse();markEdited();render();toast("กลับเส้นทางแล้ว")};
+let clearArm=false;$("#clearAll").onclick=e=>{if(!clearArm){clearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยันล้าง";setTimeout(()=>{clearArm=false;e.target.textContent="ล้างทั้งหมด"},3000);return}
+  state.wps=[];state.legs=[];state.example=false;clearArm=false;e.target.textContent="ล้างทั้งหมด";render()};
+
+$("#corridor").addEventListener("input",renderFreq);
+$("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();fillDatalist();render();
+  toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
+
+/* ---------- ต้นทาง / ปลายทาง ---------- */
+["dep","dst"].forEach(k=>$("#"+k+"In").addEventListener("input",e=>{state[k+"In"]=e.target.value;showRes($("#"+k+"Res"),resolvePoint(e.target.value,false),e.target.value);store.set("vfr_current",state)}));
+$("#buildRoute").onclick=()=>{
+  const d=resolvePoint($("#depIn").value),a=resolvePoint($("#dstIn").value);
+  if(!d||!a){toast(!d?"ต้นทางอ่านไม่ได้":"ปลายทางอ่านไม่ได้");return}
+  const P=(p,def)=>({name:p.name||def,lat:p.lat,lon:p.lon,vor:""});
+  if(state.example||state.wps.length<2){state.wps=[P(d,"DEP"),P(a,"DEST")];state.legs=[]}
+  else{state.wps[0]=P(d,"DEP");state.wps[state.wps.length-1]=P(a,"DEST")}
+  markEdited();showRes($("#depRes"),d,"x");showRes($("#dstRes"),a,"x");render();fit();
+  toast(`${state.wps[0].name} → ${state.wps.at(-1).name}`)};
+$("#swapRoute").onclick=()=>{const t=$("#depIn").value;$("#depIn").value=$("#dstIn").value;$("#dstIn").value=t;
+  ["dep","dst"].forEach(k=>{state[k+"In"]=$("#"+k+"In").value;showRes($("#"+k+"Res"),resolvePoint(state[k+"In"],false),state[k+"In"])})};
+
+/* ---------- save / load ---------- */
+function plans(){return store.get("vfr_plans")||{}}
+function refreshSel(){const p=plans();$("#loadSel").innerHTML=`<option value="">เปิดแผนที่บันทึก…</option>`+Object.keys(p).sort().map(k=>`<option>${esc(k)}</option>`).join("")}
+$("#savePlan").onclick=()=>{const n=(state.planName||"").trim()||("แผน "+new Date().toLocaleString("th-TH"));state.planName=n;$("#planName").value=n;
+  const p=plans();p[n]=JSON.parse(JSON.stringify({...state,example:false}));toast(store.set("vfr_plans",p)?"บันทึกแล้ว: "+n:"บันทึกในเครื่องไม่ได้ ใช้ Export แทน");refreshSel()};
+$("#loadSel").onchange=e=>{const p=plans()[e.target.value];if(!p)return;state=JSON.parse(JSON.stringify(p));fillForm();render();fit();e.target.value=""};
+$("#delPlan").onclick=()=>{const p=plans();if(!p[state.planName]){toast("แผนนี้ยังไม่ได้บันทึก");return}delete p[state.planName];store.set("vfr_plans",p);refreshSel();toast("ลบแล้ว")};
+function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+const fname=()=>(state.planName||"vfr_plan").replace(/[\\/:*?"<>|]/g,"_");
+$("#exportJson").onclick=()=>download(fname()+".json",JSON.stringify(state,null,1),"application/json");
+$("#importJson").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const s=JSON.parse(t);if(!Array.isArray(s.wps))throw 0;state=s;state.g=state.g||EXAMPLE.g;state.legs=state.legs||[];fillForm();render();fit();toast("เปิดไฟล์แผนแล้ว")}catch(err){toast("ไฟล์นี้ไม่ใช่ไฟล์แผนของแอป")}});e.target.value=""};
+$("#exportCsv").onclick=()=>{const r=compute().rows;const H=["Leg","From","To","ALT","WD","WV","Temp","CAS","TAS","TC","WCA","TH","Var","MH","Dev","CH","MH_back","Dist","Rem","GS","ETE","ETA","FuelLeg","FuelRem","VOR"];
+  const lines=[H.join(",")].concat(r.map((x,i)=>{const l=state.legs[i];return[i+1,state.wps[i].name,state.wps[i+1].name,l.alt,l.wd,l.wv,l.temp,l.cas,x.tas.toFixed(1),hdg(x.tc),x.wca.toFixed(1),hdg(x.th),state.g.var,hdg(x.mh),l.dev,hdg(x.ch),hdg(x.mhBack),x.dist.toFixed(2),x.rem.toFixed(2),x.gs.toFixed(1),mmss(x.ete),hhmm(x.eta),x.fLeg.toFixed(1),x.fuel.toFixed(1),state.wps[i+1].vor||""].map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")}));
+  download(fname()+".csv","﻿"+lines.join("\n"),"text/csv")};
+
+/* ---------- Kneeboard PDF (A5) — ใช้หน้าพิมพ์ของเบราว์เซอร์ → Save as PDF ---------- */
+$("#kneePdf").onclick=()=>{
+  const res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
+  const W=state.wps,pv=$("#printView");
+  const cards=[...$("#freqList").children].slice(0,6).map(c=>c.outerHTML).join("");
+  const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
+    res.rows.map((r,i)=>`<tr><td>${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
+  pv.innerHTML=`<div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
+    <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.</div></div>
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}${cards}</div></div>${tbl}`;
+  const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
+  $("#pvMap").appendChild(mapEl);
+  const back=()=>{home.insertBefore(mapEl,next);map.invalidateSize();window.removeEventListener("afterprint",back)};
+  window.addEventListener("afterprint",back);
+  document.body.classList.add("printing");
+  const back2=()=>{document.body.classList.remove("printing");back()};
+  window.removeEventListener("afterprint",back);window.addEventListener("afterprint",back2,{once:true});
+  setTimeout(()=>{map.invalidateSize();fit();},50);
+  setTimeout(()=>{window.print();},2000)};
+
+/* ---------- Excel (.xlsx) แบบมีรูปแบบ ---------- */
+function loadScript(src){return new Promise((ok,no)=>{if(window.ExcelJS)return ok();const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+$("#exportXlsx").onclick=async()=>{
+  const res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
+  try{await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js")}catch(e){toast("โหลดตัวสร้าง Excel ไม่ได้ (ต้องต่อเน็ต)");return}
+  const wb=new ExcelJS.Workbook(),F={name:"Chakra Petch",size:12};
+  const thin={style:"thin"},B={top:thin,left:thin,bottom:thin,right:thin};
+  const head=(row,color="FF123C69")=>row.eachCell(c=>{c.font={...F,bold:true,color:{argb:"FFFFFFFF"}};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:color}};c.alignment={horizontal:"center",vertical:"middle",wrapText:true};c.border=B});
+  const body=row=>row.eachCell({includeEmpty:true},c=>{c.font=F;c.alignment={horizontal:"center",vertical:"middle"};c.border=B});
+  /* Sheet 1: Nav Log */
+  const ws=wb.addWorksheet("Nav Log",{pageSetup:{paperSize:9,orientation:"landscape",fitToPage:true,fitToWidth:1}});
+  const W=state.wps;
+  ws.mergeCells("A1:P1");const t=ws.getCell("A1");t.value=`VFR NAVIGATION LOG — ${W[0].name} → ${W.at(-1).name}`;t.font={...F,size:16,bold:true,color:{argb:"FF123C69"}};t.alignment={horizontal:"center"};
+  const info=[["ภารกิจ",state.planName||""],["Aircraft",state.acft||""],["วันที่",state.date||""],["เวลาเริ่มบิน",state.depTime||""],["SA (ft)",state.sa||""],["ความถี่หน่วย",state.unitFreq||""],
+    ["น้ำมันเริ่มต้น (lb)",num(state.fuel0,"")],["Burn (lb/นาที)",num(state.burn,"")],["สำรองขั้นต่ำ (lb)",num(state.reserve,"")],["Var",num(state.g.var,0)],["ระยะรวม (NM)",+res.total.toFixed(1)],["เวลารวม",mmss(res.cumMin)]];
+  info.forEach((p,i)=>{const r=3+Math.floor(i/3),c=1+(i%3)*4;ws.mergeCells(r,c,r,c+1);ws.mergeCells(r,c+2,r,c+3);const a=ws.getCell(r,c),b=ws.getCell(r,c+2);
+    a.value=p[0];b.value=p[1];a.font={...F,bold:true};b.font=F;a.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE9EEF5"}};[a,b].forEach(x=>{x.border=B;x.alignment={horizontal:"center"}})});
+  const H=["Leg","From → To","ALT","W/D","W/V","Temp","CAS","TAS","TC","WCA","TH","MH","Dev","CH","MH กลับ","Dist (NM)","Rem (NM)","GS","ETE","ETA","ATE","Fuel leg","Fuel rem"];
+  const hr=ws.getRow(8);hr.values=H;head(hr);hr.height=30;
+  res.rows.forEach((r,i)=>{const l=state.legs[i];const row=ws.getRow(9+i);
+    row.values=[i+1,`${W[i].name} → ${W[i+1].name}`,num(l.alt),num(l.wd),num(l.wv),num(l.temp),num(l.cas),+r.tas.toFixed(1),hdg(r.tc),+r.wca.toFixed(1),hdg(r.th),hdg(r.mh),num(l.dev,0),hdg(r.ch),hdg(r.mhBack),
+      +r.dist.toFixed(1),+r.rem.toFixed(1),+r.gs.toFixed(0),mmss(r.ete),hhmm(r.eta),l.ate||"",+r.fLeg.toFixed(1),+r.fuel.toFixed(1)];body(row);
+    [8,9,10,11,12,14,15,16,17,18,19,20,22,23].forEach(c=>row.getCell(c).fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE9F5EE"}});
+    row.getCell(12).font={...F,bold:true,size:14};
+    if(state.reserve&&r.fuel<num(state.reserve))row.getCell(23).font={...F,bold:true,color:{argb:"FFC0262D"}}});
+  const tr=ws.getRow(9+res.rows.length);tr.values=["Σ","รวม",...Array(13).fill(""),+res.total.toFixed(1),"","",mmss(res.cumMin),hhmm(res.dep+res.cumMin),"",+(res.cumMin*num(state.burn,0)).toFixed(1),+res.fuel.toFixed(1)];
+  body(tr);tr.eachCell(c=>c.font={...F,bold:true});
+  for(let c=1;c<=23;c++)ws.getColumn(c).width=c===1?6:c===2?30:10;
+  /* Sheet 2: Waypoints */
+  const w2=wb.addWorksheet("Waypoints");const h2=w2.getRow(1);h2.values=["#","ชื่อจุด","Lat","Lon","MGRS","VOR/Freq"];head(h2);
+  W.forEach((w,i)=>{const r=w2.getRow(2+i);r.values=[i+1,w.name,+w.lat.toFixed(5),+w.lon.toFixed(5),fmtMgrs(toMgrs(w.lat,w.lon)),w.vor||""];body(r)});
+  w2.columns=[{width:6},{width:22},{width:12},{width:12},{width:24},{width:18}];
+  /* Sheet 3: Frequencies */
+  const w3=wb.addWorksheet("Frequencies");const h3=w3.getRow(1);h3.values=["สนาม","ชื่อ","ห่างเส้นทาง (NM)","Service","Frequency","Call sign"];head(h3);
+  let rr=2;const add=v=>{const r=w3.getRow(rr++);r.values=v;body(r)};
+  add(["EMER","Guard","","EMER","121.5 / 243.0",""]);if(state.unitFreq)add(["หน่วย","","","",state.unitFreq,""]);
+  routeAirports(num($("#corridor").value,25)).forEach(a=>{const e=a.eaip;
+    if(e&&e.comm.length)e.comm.forEach(c=>add([a.id,a.name,+a.off.toFixed(1),c.svc,c.freq,c.callsign]));
+    else add([a.id,a.name,+a.off.toFixed(1),"","(ยังไม่มีข้อมูล eAIP)",""]);
+    if(e)e.navaids.forEach(n=>add([a.id,a.name,+a.off.toFixed(1),n.type+" "+n.id,n.freq,""]))});
+  w3.columns=[{width:9},{width:34},{width:16},{width:16},{width:26},{width:26}];
+  if(EAIP){const r=w3.getRow(rr+1);r.getCell(1).value=`ที่มา: eAIP Thailand ฉบับ ${EAIP.edition}`;r.getCell(1).font={...F,italic:true}}
+  const buf=await wb.xlsx.writeBuffer();
+  download(fname()+".xlsx",buf,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");toast("สร้างไฟล์ Excel แล้ว")};
+
+/* ---------- tabs ---------- */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
+  document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50)});
+
+/* ---------- boot ---------- */
+function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),{padding:[40,40]});else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
+state=store.get("vfr_current")||JSON.parse(JSON.stringify(EXAMPLE));
+if(!state.g)state.g={...EXAMPLE.g};
+if(state.remStep==null)state.remStep="10";
+fillDatalist();fillForm();refreshSel();render();fit();
+</script>
+</body>
+</html>
