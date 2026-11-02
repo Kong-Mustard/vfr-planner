@@ -136,6 +136,30 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
 }
+/* ---- QUIZ ---- */
+.qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
+.qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
+.qz-modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:14px 0}
+.qz-mode{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:4px;background:var(--panel)}
+.qz-mode b{font:700 17px var(--f-display);color:var(--ink)}.qz-mode span{font-size:13px;color:var(--muted)}
+.qz-mode[aria-pressed="true"]{border-color:var(--nav);background:var(--accent-soft)}
+.qz-mode:focus-visible{outline:2px solid var(--nav)}
+.qz-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qz-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:6px 0 14px}.qz-bar i{display:block;height:100%;background:var(--nav)}
+.qz-cat{font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.qz-q{font:600 20px/1.4 var(--f-body);margin:6px 0 10px;color:var(--ink)}
+.qz-ctx{border-left:3px solid var(--line);padding:4px 12px;margin:8px 0 12px;font-size:15px;color:var(--muted)}
+.qz-ctx .c{font-style:italic;color:var(--nav)}
+.qz-opts{display:flex;flex-direction:column;gap:8px}
+.qz-opt{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:10px;padding:12px 14px;font-size:17px;line-height:1.35;color:var(--ink);background:var(--panel)}
+.qz-opt:hover{border-color:var(--nav)}.qz-opt:focus-visible{outline:2px solid var(--nav)}
+.qz-opt.ok{border-color:#1f8a4c;background:color-mix(in srgb,#1f8a4c 12%,transparent)}
+.qz-opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.qz-opt[disabled]{cursor:default}
+.qz-ex{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--input);font-size:15px}
+.qz-ex b{display:block;margin-bottom:2px}
+.qz-score{font:700 48px var(--f-display);color:var(--nav)}
+.qz-review li{margin:8px 0;font-size:15px}
 /* ---- EMERGENCY ---- */
 .ep-wrap{display:grid;grid-template-columns:330px minmax(0,1fr);gap:12px;align-items:start}
 @media (max-width:860px){.ep-wrap{grid-template-columns:1fr}}
@@ -157,7 +181,13 @@ body.printing #printView{position:static;padding:0}
 .ep-main{padding:16px 18px;min-height:300px;font-size:17px;line-height:1.5}
 .ep-main h2{font:700 22px/1.25 var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 4px;text-wrap:balance}
 .ep-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin-bottom:12px}
-.ep-legend{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:6px 8px;margin-bottom:12px}
+.ep-legend{font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:16px}
+.warnchip{font:700 11px var(--f-body);color:var(--bad);border:1px solid var(--bad);border-radius:4px;padding:1px 6px}
+.cl .b-step{margin:4px 0;padding:10px 6px;border-bottom:1px solid var(--line)}
+.cl .b-step .tx{font-size:21px}
+.cl .b-cond{margin:16px 0 2px;font-size:17px}
+.cl .b-text{font-size:16px;color:var(--muted);margin:4px 0}
+.b-cond.hdr{font-style:normal;font-family:var(--f-display);font-size:18px;color:var(--bad);border-bottom:2px solid var(--bad);padding-bottom:2px}
 .ep-legend u{text-decoration-color:var(--bad);text-decoration-thickness:2px}
 .b-warning,.b-caution,.b-note{border-radius:8px;padding:8px 12px;margin:10px 0;font-size:15px}
 .b-warning{border:2px solid var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent);font-weight:600}
@@ -195,6 +225,7 @@ body.printing #printView{position:static;padding:0}
     <button class="tab" role="tab" data-tab="wx" aria-selected="false">3 · สภาพอากาศ<small>เร็วๆ นี้</small></button>
     <button class="tab" role="tab" data-tab="notam" aria-selected="false">4 · NOTAM<small>เร็วๆ นี้</small></button>
     <button class="tab emer" role="tab" data-tab="emer" aria-selected="false">5 · EMERGENCY</button>
+    <button class="tab" role="tab" data-tab="quiz" aria-selected="false">6 · ข้อสอบ</button>
   </nav>
 </header>
 
@@ -329,6 +360,9 @@ body.printing #printView{position:static;padding:0}
 <section id="tab-log" class="tabpanel card" hidden><div class="placeholder"><h3>Flight log</h3>ยังไม่เปิดใช้ — จะทำต่อจากแท็บวางแผน</div></section>
 <section id="tab-wx" class="tabpanel card" hidden><div class="placeholder"><h3>สภาพอากาศ</h3>ยังไม่เปิดใช้ — METAR/TAF ตามเส้นทาง, Windy, เรดาร์ฝน</div></section>
 <section id="tab-notam" class="tabpanel card" hidden><div class="placeholder"><h3>NOTAM</h3>ยังไม่เปิดใช้</div></section>
+<section id="tab-quiz" class="tabpanel" hidden>
+ <div class="card qz" id="qz"></div>
+</section>
 <section id="tab-emer" class="tabpanel" hidden>
  <div class="ep-wrap">
   <aside class="card ep-side">
@@ -715,28 +749,54 @@ $("#exportXlsx").onclick=async()=>{
   download(fname()+".xlsx",buf,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");toast("สร้างไฟล์ Excel แล้ว")};
 
 /* ---------- EMERGENCY (ข้อมูลจากไฟล์ที่ import — เก็บในเครื่องเท่านั้น ไม่อยู่ใน repo) ---------- */
-let EP=store.get("vfr_ep"),epSel=null,epMemOnly=false,epQuiz=false;
+let EP=store.get("vfr_ep"),epSel=null,epMemOnly=false,epQuiz=false,epFull=false;
+/* แปลงเป็น checklist สั้น: เฉพาะเงื่อนไข + ขั้นตอน */
+const ACTION=/(—|^LAND AS SOON|^AUTOROTATE|^EMER ENG|^EMER APU|^ESTABLISH)/;
+function epChecklist(p){const out=[];let prevCond=false;const hasStep=p.blocks.some(b=>b.k==="step");
+  p.blocks.forEach(b=>{
+    const tm=b.k==="sub"&&b.t.match(/^The term (.+?) is de/);
+    if(tm){out.push({k:"cond",t:tm[1].replace(/- /g,"").replace(/AIR-SPEED/,"AIRSPEED"),hdr:true});
+      const def=(b.t.split(/defined as /)[1]||"").split(/\. /)[0];
+      if(def&&!/^engine shutdown|^APU start|^manual control|^maneuvering/.test(def))out.push({k:"text",t:def.charAt(0).toUpperCase()+def.slice(1)+(def.endsWith(".")?"":".")});
+      prevCond=true;return}
+    if(b.k==="cond"||(b.k==="text"&&/^(On ground:|In flight:)/.test(b.t))||(b.k==="text"&&/^If\b/.test(b.t)&&b.t.length<140&&out.some(x=>x.k==="step"))){out.push({...b,k:"cond"});prevCond=true;return}
+    if(b.k==="step"){out.push(b);prevCond=false;return}
+    if(b.k==="text"&&((b.t.length<160&&ACTION.test(b.t)&&(prevCond||!hasStep))||(prevCond&&b.t.length<120&&!/^If\b/.test(b.t)))){out.push({...b,k:"step",n:null});prevCond=false;return}
+    if(b.k!=="cond")prevCond=false});
+  for(let i=out.length-1;i>=0;i--){if(out[i].k==="cond"&&(i===out.length-1||out[i+1].k==="cond")&&!out[i].hdr)out.splice(i,1)}
+  if(out.filter(x=>x.k==="step").length===1&&p.blocks.some(x=>x.k==="sub")){const subs=p.blocks.filter(x=>x.k==="sub"&&x.t.length<140);if(subs.length)out.push(...subs.map(x=>({k:"text",t:x.t})))}
+  while(out.length&&out[out.length-1].k==="cond")out.pop();
+  return out.some(b=>b.k==="step")?out:[]}
+const EP_SKIP=new Set(["9.24"]);
+function epActionable(p){return !EP_SKIP.has(p.id)&&epChecklist(p).length>0}
 function epRenderList(){const L=$("#epList");
   if(!EP){L.innerHTML="";$("#epSrc").textContent="";epRenderMain();return}
-  $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) บทที่ ${EP.chapter} · ${EP.procedures.length} หัวข้อ`;
-  const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="";
-  EP.procedures.forEach((p,i)=>{if(epMemOnly&&!p.memory)return;
-    if(q&&!(p.id+" "+p.title+" "+p.blocks.map(b=>b.t).join(" ")).toLowerCase().includes(q))return;
+  const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="",n=0;
+  const inTitle=p=>(p.id+" "+p.title).toLowerCase().includes(q);
+  const anyTitle=q&&EP.procedures.some(p=>epActionable(p)&&inTitle(p));
+  EP.procedures.forEach((p,i)=>{if(!epActionable(p))return;if(epMemOnly&&!p.memory)return;
+    if(q&&!(anyTitle?inTitle(p):p.blocks.map(b=>b.t).join(" ").toLowerCase().includes(q)))return;n++;
     if(p.section!==grp){grp=p.section;html+=`<div class="ep-grp">${esc(grp)}</div>`}
     html+=`<button class="ep-item${i===epSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${p.memory?'<span class="memdot">MEM</span>':""}</button>`});
+  $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
 function epRenderMain(){const M=$("#epMain");
   if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>กด <b>Import ข้อมูล EP</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
-  if(epSel==null){M.innerHTML=`<div class="ep-empty"><h3>เลือกหัวข้อ</h3>เลือก procedure จากรายการ หรือพิมพ์ค้นหา<br><span class="hint">ตัวกรอง "เฉพาะท่องจำ" แสดงเฉพาะหัวข้อที่มีขั้นตอนต้องจำ</span></div>`;return}
+  if(epSel==null){M.innerHTML=`<div class="ep-empty"><h3>เลือกเหตุฉุกเฉิน</h3>แตะหัวข้อทางซ้าย หรือพิมพ์ค้นหา เช่น <b>stab</b>, <b>fire</b>, <b>hyd</b><br><span class="hint">แสดงเป็น checklist สั้น — กด "รายละเอียดเต็ม" ถ้าต้องการอ่าน WARNING/คำอธิบาย</span></div>`;return}
   const p=EP.procedures[epSel];
-  const body=p.blocks.map(b=>{const t=esc(b.t);
+  const blocks=epFull?p.blocks:epChecklist(p);
+  const warnN=p.blocks.filter(b=>b.k==="warning").length,cauN=p.blocks.filter(b=>b.k==="caution").length;
+  const body=blocks.map(b=>{const t=esc(b.t);
     if(b.k==="step")return`<div class="b-step${b.u?" mem":""}"><span class="n${b.c?" circ":""}">${b.n??"•"}</span><span class="tx">${t}</span></div>`;
-    return`<div class="b-${b.k}">${t}</div>`}).join("");
-  M.innerHTML=`<h2>${esc(p.id)} ${esc(p.title)}</h2>
-   <div class="ep-meta"><span>${esc(EP.source)} หน้า ${esc(p.page)}</span>${p.memory?'<span class="memdot">MEMORY ITEMS</span>':""}
-    ${p.memory?`<button id="epQuizBtn" class="mini${epQuiz?" on":""}">${epQuiz?"เลิกโหมดท่องจำ":"โหมดท่องจำ (ซ่อนขั้นตอนที่ต้องจำ)"}</button>`:""}</div>
-   <div class="ep-legend"><u>ขีดเส้นใต้</u> = ต้องทำได้จากความจำ · ตัวเลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับเป็นผู้ทำ · ใช้อ้างอิง/ฝึกเท่านั้น ใช้ checklist (CL) จริงเสมอ</div>
-   <div class="${epQuiz?"quiz":""}" id="epBody">${body}</div>`;
+    return`<div class="b-${b.k}${b.hdr?" hdr":""}">${t}</div>`}).join("");
+  M.innerHTML=`<h2>${esc(p.title)}</h2>
+   <div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span>
+    ${!epFull&&(warnN||cauN)?`<span class="warnchip">${warnN?`WARNING ${warnN}`:""}${warnN&&cauN?" · ":""}${cauN?`CAUTION ${cauN}`:""}</span>`:""}
+    <button id="epFullBtn" class="mini">${epFull?"กลับเป็น checklist":"รายละเอียดเต็ม"}</button>
+    ${p.memory?`<button id="epQuizBtn" class="mini${epQuiz?" on":""}">${epQuiz?"เลิกโหมดท่องจำ":"โหมดท่องจำ"}</button>`:""}</div>
+   <div class="${epQuiz?"quiz":""} ${epFull?"":"cl"}" id="epBody">${body}</div>
+   <div class="ep-legend"><u>ขีดเส้นใต้</u> = ทำจากความจำ · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
+  $("#epFullBtn").onclick=()=>{epFull=!epFull;epRenderMain()};
   const qb=$("#epQuizBtn");if(qb)qb.onclick=()=>{epQuiz=!epQuiz;epRenderMain()};
   $("#epBody").onclick=e=>{const s=e.target.closest(".b-step.mem");if(s&&epQuiz)s.classList.toggle("show")}}
 $("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;epSel=+b.dataset.i;epRenderList();epRenderMain();
@@ -745,10 +805,65 @@ $("#epSearch").addEventListener("input",epRenderList);
 $("#epAll").onclick=()=>{epMemOnly=false;$("#epAll").classList.add("on");$("#epMem").classList.remove("on");epRenderList()};
 $("#epMem").onclick=()=>{epMemOnly=true;$("#epMem").classList.add("on");$("#epAll").classList.remove("on");epRenderList()};
 $("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.procedures))throw 0;
-  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain()}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
+  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
 let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EP"},3000);return}
   try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EP";epRenderList()};
 epRenderList();epRenderMain();
+
+/* ---------- ข้อสอบ (ใช้ข้อมูลชุดเดียวกับแท็บ EMERGENCY) ---------- */
+const QZ_MODES=[
+ {id:"ep-next",name:"EP: ขั้นตอนถัดไป",desc:"ให้หัวข้อฉุกเฉินและขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป"},
+ {id:"ep-id",name:"EP: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุฉุกเฉินใด"},
+ {id:"ข้อจำกัด",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit จากบทที่ 5"},
+ {id:"ระบบ",name:"ระบบอากาศยาน",desc:"ระบบเครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ บทที่ 2"},
+ {id:"mix",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
+let qzMode="mix",qzN=10,qz=null;
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function qzEpPool(){return EP?EP.procedures.filter(p=>epActionable(p)&&p.id!=="9.4").map(p=>({p,cl:epChecklist(p)})):[]}
+function qzMakeEpNext(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step").length>=2);if(!pool.length)return null;
+  const {p,cl}=pool[Math.floor(Math.random()*pool.length)];const idx=cl.map((b,i)=>b.k==="step"?i:-1).filter(i=>i>0&&cl.slice(0,i).some(b=>b.k==="step"));
+  const j=idx[Math.floor(Math.random()*idx.length)];const right=cl[j].t;
+  const others=shuf([...new Set(qzEpPool().filter(x=>x.p!==p).flatMap(x=>x.cl.filter(b=>b.k==="step").map(b=>b.t)))].filter(t=>t!==right&&!cl.some(b=>b.t===t))).slice(0,3);
+  const o=shuf([right,...others]);
+  return{cat:"EP · ขั้นตอนถัดไป",q:`${p.title} — ขั้นตอนถัดไปคืออะไร`,ctx:cl.slice(0,j),o,a:o.indexOf(right),ex:`ขั้นตอนที่ถูก: ${right}`,ref:`${EP.source} ${p.id} (หน้า ${p.page})`}}
+function qzMakeEpId(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step"&&b.u).length>=2);if(!pool.length)return null;
+  const {p,cl}=pool[Math.floor(Math.random()*pool.length)];
+  const others=shuf(qzEpPool().filter(x=>x.p!==p&&x.cl.map(b=>b.t).join()!==cl.map(b=>b.t).join()).map(x=>x.p.title)).filter((t,i,a)=>a.indexOf(t)===i&&t!==p.title).slice(0,3);
+  const o=shuf([p.title,...others]);
+  return{cat:"EP · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
+function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
+  const pick=m=>m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const b=bank.filter(x=>x.cat===m);if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
+    const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:`${EP.source} ${x.ref}`,key:x.id}})();
+  const modes=qzMode==="mix"?["ep-next","ep-id","ข้อจำกัด","ระบบ"]:[qzMode];const seen=new Set();let guard=0;
+  while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[qs.length%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
+  return shuf(qs)}
+function qzRender(){const R=$("#qz");
+  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>5 · EMERGENCY</b> แล้วกด <b>Import ข้อมูล EP</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
+  if(!qz){const bankN=(EP.quiz||[]).length;
+    R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EP สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
+     <div class="qz-modes">${QZ_MODES.map(m=>`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}"><b>${m.name}</b><span>${m.desc}</span></button>`).join("")}</div>
+     <div class="qz-row"><label style="flex-direction:row;align-items:center;gap:8px;font-size:15px">จำนวนข้อ <select id="qzN" style="width:auto">${[10,20,30].map(n=>`<option${n===qzN?" selected":""}>${n}</option>`).join("")}</select></label>
+     <button id="qzStart" class="primary">เริ่มทำข้อสอบ</button></div>`;
+    R.querySelectorAll(".qz-mode").forEach(b=>b.onclick=()=>{qzMode=b.dataset.m;qzRender()});
+    $("#qzN").onchange=e=>{qzN=+e.target.value};
+    $("#qzStart").onclick=()=>{const qs=qzBuild();if(!qs.length){toast("ไม่มีข้อสอบในหมวดนี้");return}qz={qs,i:0,score:0,ans:[]};qzRender()};return}
+  if(qz.i>=qz.qs.length){const wrong=qz.ans.filter(x=>!x.ok);const pct=Math.round(qz.score/qz.qs.length*100);
+    R.innerHTML=`<h2>ผลสอบ</h2><div class="qz-score">${qz.score}/${qz.qs.length}</div><p>${pct>=80?"ผ่าน ✓":"ทบทวนเพิ่ม"} (${pct}%)</p>
+     ${wrong.length?`<h3 style="font:600 16px var(--f-display);margin-top:16px">ข้อที่ตอบผิด</h3><ol class="qz-review">${wrong.map(x=>`<li><b>${esc(x.q.q)}</b><br>คำตอบที่ถูก: ${esc(x.q.o[x.q.a])}<br><span class="hint">${esc(x.q.ref)}</span></li>`).join("")}</ol>`:""}
+     <div class="btns" style="margin-top:14px"><button id="qzAgain" class="primary">ทำชุดใหม่</button><button id="qzMenu">เลือกหมวดอื่น</button></div>`;
+    $("#qzAgain").onclick=()=>{qz={qs:qzBuild(),i:0,score:0,ans:[]};qzRender()};$("#qzMenu").onclick=()=>{qz=null;qzRender()};return}
+  const q=qz.qs[qz.i];
+  const ctx=q.ctx&&q.ctx.length?`<div class="qz-ctx">${q.ctx.map(b=>b.k==="cond"?`<div class="c">${esc(b.t)}</div>`:`<div>${b.n?b.n+". ":"• "}${esc(b.t)}</div>`).join("")}</div>`:"";
+  R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)}</span><span class="hint">ข้อ ${qz.i+1}/${qz.qs.length} · ถูก ${qz.score}</span></div>
+   <div class="qz-bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div>
+   <div class="qz-q">${esc(q.q)}</div>${ctx}
+   <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}">${esc(t)}</button>`).join("")}</div><div id="qzEx"></div>`;
+  R.querySelectorAll(".qz-opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)qz.score++;qz.ans.push({q,ok});
+    R.querySelectorAll(".qz-opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.a)x.classList.add("ok")});if(!ok)b.classList.add("no");
+    $("#qzEx").innerHTML=`<div class="qz-ex"><b>${ok?"ถูกต้อง":"ยังไม่ถูก"}</b>${esc(q.ex)}<div class="hint">${esc(q.ref)}</div></div>
+      <div class="btns" style="margin-top:12px"><button id="qzNext" class="primary">${qz.i+1<qz.qs.length?"ข้อถัดไป":"ดูผล"}</button><button id="qzQuit">เลิก</button></div>`;
+    $("#qzNext").onclick=()=>{qz.i++;qzRender();$("#qz").scrollIntoView({block:"start"})};$("#qzQuit").onclick=()=>{qz=null;qzRender()};$("#qzNext").focus()})}
+qzRender();
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
