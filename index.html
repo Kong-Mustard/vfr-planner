@@ -416,6 +416,18 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   .disclaimer{font-size:14px}
   .pe-row{grid-template-columns:1fr 1fr}
 }
+/* หัวข้อแต่ละส่วนแยกสี */
+h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
+  border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
+.hd-blue{--c:#0a6cff!important}.hd-pink{--c:#d6198f!important}.hd-indigo{--c:#4f46e5!important}.hd-amber{--c:#b45309!important}
+.hd-red{--c:#dc2626!important}.hd-green{--c:#059669!important}.hd-teal{--c:#0e7490!important}.hd-violet{--c:#7c3aed!important}
+.hd-sky{--c:#0284c7!important}.hd-orange{--c:#ea580c!important}.hd-slate{--c:#475569!important}
+.card.section:has(h2.hd){border-top:4px solid var(--hc,transparent)}
+.card:has(.hd-blue){--hc:#0a6cff}.card:has(.hd-pink){--hc:#d6198f}.card:has(.hd-indigo){--hc:#4f46e5}.card:has(.hd-amber){--hc:#b45309}
+.card:has(.hd-red){--hc:#dc2626}.card:has(.hd-green){--hc:#059669}.card:has(.hd-teal){--hc:#0e7490}.card:has(.hd-violet){--hc:#7c3aed}
+.card:has(.hd-sky){--hc:#0284c7}.card:has(.hd-orange){--hc:#ea580c}.card:has(.hd-slate){--hc:#475569}
+:root[data-theme="dark"] h2.hd{color:color-mix(in srgb,var(--c) 65%,white)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2.hd{color:color-mix(in srgb,var(--c) 65%,white)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -442,7 +454,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   <div class="top">
     <div id="map"></div>
     <div class="card side">
-      <div class="sechead"><h2>แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
+      <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
       <div class="routebox">
         <label>ต้นทาง<input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
         <div id="depRes" class="res"></div>
@@ -498,7 +510,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 
   <div class="card section">
     <div class="sechead">
-      <h2>จุดเส้นทาง (Check points)</h2>
+      <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
       <div class="btns">
         <button id="addMode" class="on">✚ คลิกแผนที่เพื่อเพิ่มจุด: เปิด</button>
         <button id="addManual">เพิ่มจุดจากพิกัด</button>
@@ -515,7 +527,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 
   <div class="card section">
     <div class="sechead">
-      <h2>NAV LOG</h2>
+      <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
         <button id="goNavlog">แก้ไขใน NAVLOG เต็ม →</button>
         <button id="savePlan" class="primary">บันทึกแผน</button>
@@ -536,7 +548,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
   </div>
 
   <div class="card section" id="procCard">
-    <div class="sechead"><h2>ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
+    <div class="sechead"><h2 class="hd hd-amber">ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
     <div id="procList"></div>
     <details id="peBox" class="custbox" style="border-color:var(--accent)">
       <summary style="color:var(--accent)">Procedure / จุดรายงานที่กรอกเอง — <span id="peCount">0</span> รายการ</summary>
@@ -561,7 +573,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 
   <div class="card section" id="areaCard">
     <div class="sechead">
-      <h2>พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
+      <h2 class="hd hd-red">พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
       <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="areaShowD" checked style="width:auto"> แสดง Danger area บนแผนที่</label>
     </div>
     <div id="areaList"></div>
@@ -569,7 +581,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 
   <div class="card section">
     <div class="sechead">
-      <h2>ความถี่ตามเส้นทาง</h2>
+      <h2 class="hd hd-green">ความถี่ตามเส้นทาง</h2>
       <span class="emerchip">EMER 121.5 / 243.0</span>
       <div class="btns">
         <label style="flex-direction:row;align-items:center;gap:6px">รัศมีจากเส้นทาง<input id="corridor" type="number" value="25" style="width:70px"> NM</label>
@@ -607,7 +619,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 <section id="tab-log" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-    <div class="sechead"><h2>NAVLOG — <span id="nlTitle"></span></h2><span class="hint">ช่องเทา = กรอกได้ · ช่องฟ้า = คำนวณอัตโนมัติ · <span class="hlv">MH</span> = heading ที่ต้องถือ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
+    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="hint">ช่องเทา = กรอกได้ · ช่องฟ้า = คำนวณอัตโนมัติ · <span class="hlv">MH</span> = heading ที่ต้องถือ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
     <div class="nl-head" id="nlHead"></div>
     <div class="tablewrap"><table id="navTable">
       <thead><tr>
@@ -619,14 +631,14 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
     </table></div>
   </div>
   <div class="card section">
-    <div class="sechead"><h2>WEATHER LOG &amp; NOTES</h2></div>
+    <div class="sechead"><h2 class="hd hd-teal">WEATHER LOG &amp; NOTES</h2></div>
     <div class="tablewrap"><table id="wxLog" class="form-tbl">
       <thead><tr><th>Location</th><th>Ceiling / Visibility</th><th>Winds Aloft</th><th>Notes / NOTAMs</th><th>Frequency (TWR / APP / ATIS)</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
   <div class="card section">
-    <div class="sechead"><h2>FLIGHT PLAN</h2><span class="hint">ช่องที่เป็นตัวเทาเติมให้อัตโนมัติจากแผน — พิมพ์ทับได้</span></div>
+    <div class="sechead"><h2 class="hd hd-violet">FLIGHT PLAN</h2><span class="hint">ช่องที่เป็นตัวเทาเติมให้อัตโนมัติจากแผน — พิมพ์ทับได้</span></div>
     <div class="fp-grid" id="fpGrid"></div>
   </div>
  </div>
@@ -634,7 +646,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 <section id="tab-wx" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-    <div class="sechead"><h2>แผนที่ลม / ฝน</h2>
+    <div class="sechead"><h2 class="hd hd-sky">แผนที่ลม / ฝน</h2>
       <div class="btns">
         <a class="linkbtn" href="https://www.windy.com/?14.0,100.6,6" target="_blank" rel="noopener">Windy ↗</a>
         <a class="linkbtn" href="https://weather.tmd.go.th/" target="_blank" rel="noopener">กรมอุตุฯ เรดาร์ ↗</a>
@@ -654,31 +666,31 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
     <p class="hint" id="wxStatus"></p>
   </div>
   <div class="card section">
-    <div class="sechead"><h2>อากาศตามเส้นทาง</h2>
+    <div class="sechead"><h2 class="hd hd-teal">อากาศตามเส้นทาง</h2>
       <div class="btns"><button id="wxRoute" class="primary">ดึงพยากรณ์ตามเส้นทาง</button><button id="wxFill">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
     <p class="hint">เทียบ 3 โมเดล ณ เวลา ETA ของแต่ละจุดและระดับ ALT ของ leg · ปุ่ม "ใส่ลง NAV LOG" ใช้ค่าเฉลี่ยของโมเดลเป็นค่าตั้งต้นคร่าวๆ — แก้ได้ในแท็บ NAVLOG หลังเช็คอากาศจริง</p>
     <div class="tablewrap"><table id="wxRouteTbl"><tbody><tr><td class="hint" style="padding:14px">กด "ดึงพยากรณ์ตามเส้นทาง"</td></tr></tbody></table></div>
   </div>
   <div class="card section">
-    <div class="sechead"><h2>METAR / TAF</h2><span class="hint" id="metarSrc"></span></div>
+    <div class="sechead"><h2 class="hd hd-green">METAR / TAF</h2><span class="hint" id="metarSrc"></span></div>
     <div id="metarList"></div>
   </div>
  </div>
 </section>
 <section id="tab-notam" class="tabpanel" hidden>
  <div class="card section">
-  <div class="sechead"><h2>NOTAM</h2>
+  <div class="sechead"><h2 class="hd hd-orange">NOTAM</h2>
    <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">เปิด NOTAM Leaflet — AEROTHAI ↗</a></div>
   <p class="hint">วิธีใช้: เปิด NOTAM Leaflet ของ AEROTHAI → คัดลอกข้อความ NOTAM ทั้งหมด → วางในช่องด้านล่าง → แอปแยก NOTAM, วาดพื้นที่ (จาก Q-line/พิกัดในข้อความ) บนแผนที่แท็บ 1 และตรวจว่าเส้นทางตัดผ่านในช่วงเวลาที่บินหรือไม่</p>
   <div class="btns" id="notamLinks"></div>
  </div>
  <div class="card section">
-  <div class="sechead"><h2>วาง NOTAM</h2><div class="btns"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้าง</button></div></div>
+  <div class="sechead"><h2 class="hd hd-slate">วาง NOTAM</h2><div class="btns"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้าง</button></div></div>
   <textarea id="ntText" rows="8" class="nt-text" placeholder="วางข้อความ NOTAM ที่นี่ เช่น&#10;B1234/26 NOTAMN&#10;Q) VTBB/QRDCA/IV/BO/W/000/050/1449N10039E010&#10;A) VTBB B) 2611020100 C) 2611051000&#10;E) DANGER AREA ACTIVATED ..."></textarea>
   <p class="hint" id="ntInfo"></p>
  </div>
  <div class="card section">
-  <div class="sechead"><h2>NOTAM ที่เกี่ยวกับเส้นทาง</h2>
+  <div class="sechead"><h2 class="hd hd-red">NOTAM ที่เกี่ยวกับเส้นทาง</h2>
    <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="ntOnlyRoute" checked style="width:auto"> เฉพาะที่เกี่ยวกับเส้นทาง/เวลาบิน</label></div>
   <div id="ntList"></div>
  </div>
@@ -695,7 +707,7 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 </section>
 <section id="tab-conv" class="tabpanel" hidden>
  <div class="card section">
-  <div class="sechead"><h2>แปลงหน่วย</h2><span class="hint">พิมพ์ในช่องใดก็ได้ ช่องอื่นในการ์ดเดียวกันจะแปลงให้ทันที</span></div>
+  <div class="sechead"><h2 class="hd hd-violet">แปลงหน่วย</h2><span class="hint">พิมพ์ในช่องใดก็ได้ ช่องอื่นในการ์ดเดียวกันจะแปลงให้ทันที</span></div>
   <div id="cvWrap" class="cv"></div>
  </div>
 </section>
