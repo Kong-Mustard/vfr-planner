@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-02T07:11",
+ "fetched": "2026-11-02T07:15",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -3576,570 +3576,7361 @@
  "errors": [],
  "areas": [
   {
-   "raw": [
-    "VTP4 MUANG KOM Area bounded by lines joining successively the following points: 150700N 1005900E - 150700N 1005000E - 145500N 1005000E - 145500N 1005900E - 150700N 1005900E",
-    "FL 240 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : Bombing / Air Firing Area Time of activity : MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. H24 Permission to entry : Only authorized aircraft Inflight information : Chandy Tower freq. 134.75 MHz or 285.4 MHz Contact agency : Chandy Tower, Tel: +662 534 6000 ext. 25884"
-   ]
-  },
-  {
-   "raw": [
-    "VTP7 SATTAHIP Circle of 4 NM radius centred on point 123845N 1005300E",
-    "UNL / GND",
-    "Type of restriction : Naval Base Nature of hazard/activity : National security area Time of activity : H24 Permission to entry : Only authorized aircraft by RTN Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5600"
-   ]
-  },
-  {
-   "raw": [
-    "VTP36 KHAO SOIDAO TAI A semi-circle 17 NM radius of 125613N 1021250E from 0° to 180°",
-    "ALT 5 000 ft / GND",
-    "Type of restriction : RTN Area Nature of hazard/activity : Military operations Time of activity : Sunset to Sunrise Permission to entry : Only authorized aircraft by RTN Inflight information : Trat Approach freq. 120.25 MHz Contact agency : Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
-   ]
-  },
-  {
-   "raw": [
-    "VTP37 KHAO KHLONG OA A semi-circle 14 NM radius of 123419N 1023635E from 135° to 315°",
-    "ALT 5 000 ft / GND",
-    "Type of restriction : RTN Area Nature of hazard/activity : Military operations Time of activity : Sunset to Sunrise Permission to entry : Only authorized aircraft by RTN Inflight information : Trat Approach freq. 120.25 MHz Contact agency : Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
-   ]
-  },
-  {
-   "raw": [
-    "VTP38 KO CHANG - KO KHUD Area bounded by lines joining successively the following points: 121737N 1021424E - 120945N 1023432E - 114630N 1025324E - 113800N 1025530E - 113000N 1023000E - 120000N 1021100E - 121737N 1021424E",
-    "ALT 5 000 ft / GND",
-    "Type of restriction : RTN Area Nature of hazard/activity : Military operations Time of activity : Sunset to Sunrise Permission to entry : Only authorized aircraft by RTN Inflight information : Trat Approach freq. 120.25 MHz Contact agency : Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
-   ]
-  },
-  {
-   "raw": [
-    "VTR1 BANGKOK CITY Circle of 10 NM radius centred on point 134554N 1003218E",
-    "ALT 3 000 ft / GND",
-    "Type of restriction : Congested Area Nature of hazard/activity : - Time of acitivity : H24 Permission to entry : Only authorized aircraft by CAAT, except any aircraft operated under air traffic control services. CAAT may issue further temporary condition for flight operation within VT R1 by NOTAM. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Operations Management Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR2 CHITRLADA PALACE Circle of 1 NM radius centred on point 134605.18N 1003116.44E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR3 HUA HIN PALACE Circle of 1 NM radius centred on point 123522.19N 0995710.69E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : Notified by NOTAM Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Hua Hin Approach, AEROTHAI Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR5 PHU PHING PALACE Circle of 2 NM radius centred on point 184820N 0985357E",
-    "ALT 12 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : Notified by NOTAM Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Chiang Mai Approach, AEROTHAI Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR6 THAK SIN PALACE Circle of 5 NM radius centred on point 062522.11N 1015218.93E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : Notified by NOTAM Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Narathiwat Approach, AEROTHAI Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR8 KAMPHAENG SAEN JETTISON Area bounded by lines joining successively the following points: 125300N 1002000E - 125300N 1002500E - 123500N 1001700E - 123500N 1001130E - 125300N 1002000E",
-    "ALT 7 000 ft / GND",
-    "Type of restriction : RTAF Jettison Area Nature of hazard/activity : Jettison Area Time of activity : H24 Permission to entry : Only authorized aircraft Inflight information : Kamphaeng Saen Approach freq. 127.7 MHz or 237.0 MHz before entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel.+662 534 6000 ext 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTR11 KO HIN CHALAM, SATTAHIP Circle of 2 NM radius centred on point 122753N 1005819E",
-    "UNL / GND",
-    "Type of restriction : RTN Jettison Area / Ground and Air Gunnery Area Nature of hazard/activity : Military operations Time of activity : H24 Permission to entry : Only authorized aircraft by U-Tapao Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTR12 KO LUAM, PRACHUAP KHIRI KHAN Circle of 0.5 NM radius centred on point 114530N 0995000E",
-    "ALT 9 000 ft / GND",
-    "Type of restriction : RTN Jettison Area Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Permission to entry : Only authorized aircraft by RTN Inflight information : Prachuap Tower freq. 135.9 MHz or 236.6 MHz Contact agency : Wing 5, Prachuap Air Force Base Prachuap Khirikhan Province, Tel. +663 260 3919"
-   ]
-  },
-  {
-   "raw": [
-    "VTR13 KO SAMET, RAYONG Circle of 7.1 NM radius centred on point 121200N 1012100E",
-    "UNL / GND",
-    "Type of restriction : RTN Jettison Area / Ground Gunnery Area Nature of hazard/activity : Military operations Time of activity : H24 Permission to entry : Only authorized aircraft by U-Tapao Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTR15 UBON Area bounded by lines joining successively the following points: 151013N 1045610E - 151046N 1045642E - 151046N 1045749E - 150942N 1045649E - 150942N 1045642E - 151013N 1045610E",
-    "ALT 8 000 ft / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : H24 Permission to entry : Only authorized aircraft by RTAF Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz Contact agency : Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43512, 43508"
-   ]
-  },
-  {
-   "raw": [
-    "VTR51 SONGKHLA Area bounded by lines joining successively the following points: 0717N 09954E - 0717N 09959E - 0715N 09959E - 0713N 09954E - 0717N 09954E",
-    "ALT 5 000 ft / GND",
-    "Type of restriction : RTAF Jettison Area Nature of hazard/activity : Jettison Area Time of activity : Sunrise to Sunset Permission to entry : Only authorized aircraft by RTAF Inflight information : contact BIG SHELL control freq. 127.0 MHz or 331.3 MHz Contact agency : Air Defense Sector Operation Control 3, Tel. +667 726 8083"
-   ]
-  },
-  {
-   "raw": [
-    "VTR52 SONGKHLA Area bounded by lines joining successively the following points: 0629N 10032E - 0636N 10032E - 0636N 10038E - 0629N 10038E - 0629N 10032E",
-    "ALT 8 000 ft / GND",
-    "Type of restriction : RTAF Jettison Area Nature of hazard/activity : Jettison Area Time of activity : Sunrise to Sunset Permission to entry : Only authorized aircraft by RTAF Inflight information : BIG SHELL control freq. 127.0 MHz or 331.3 MHz Contact agency : Air Defense Sector Operation Control 3, Tel. +667 726 8083"
-   ]
-  },
-  {
-   "raw": [
-    "VTR62 EASTERN AREA Area bounded by lines joining successively the following points: 113800N 1025530E - 113000N 1023000E - 120945N 1023432E - 125613N 1021250E - 135000N 1021250E - 142800N 1031000E - 144500N 1040000E - 144500N 1044100E - 142400N 1045100E - then westward along the Thai-Cambodian border to the starting point.",
-    "ALT 13 000 ft / GND",
-    "Type of restriction : RTN Area Nature of hazard/activity : Military operations Time of activity : Sunset to Sunrise Permission to entry : Only authorized aircraft by RTN Inflight information : Trat Approach freq. 120.25 MHz Contact agency : Chanthaburi and Trat Border Defense Command, Tel. +663 931 2334, +663 931 1099"
-   ]
-  },
-  {
-   "raw": [
-    "VTR66 PHU PHAN PALACE Circle of 5 NM radius centred on point 170738.10N 1040119.76E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : Notified by NOTAM Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Sakon Nakhon Approach, AEROTHAI Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR68 NAM PHONG Area bounded by lines joining successively the following points: 164048.58N 1025559.19E - 163810.90N 1025605.94E - 164049.25N 1025706.67E - 163814.77N 1025708.31E",
-    "FL 150 / GND",
-    "Type of restriction : RTAF Jettison Area Nature of hazard/activity : RTAF Jettison Area Time of activity : MON-FRI, 0000-1000 Permission to entry : Only authorized aircraft by RTAF Inflight information : contact Khon Kaen Approach freq. 123.4 MHz or 236.6 MHz Contact agency : Wing 23 Air Traffic Control branch Tel. +662 534 6000 ext 45502, 45503 or Nam Phong Tower, Tel. +662 534 6000 ext 42305"
-   ]
-  },
-  {
-   "raw": [
-    "VTR79 PHIMANMAS PALACE Circle of 0.5 NM radius centred on point 123908N 1005848E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : Notified by NOTAM Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : U-Tapao Approach, Royal Thai Navy Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR80 SRAPATHUM PALACE Circle of 1 NM radius centred on point 134452.69N 1003155.92E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR81 JAKRIBONGKOT PALACE Circle of 1 NM radius centred on point 135648.31N 1003126.90E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR82 AMPHORN ROYAL PALACE Circle of 1 NM radius centred on point 134621.50N 1003040.28E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR83 SUKOTHAI PALACE Circle of 1 NM radius centred on point 134656.66N 1003033.51E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard, activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTR84 TIPPIMARN PALACE Circle of 1 NM radius centred on point 142929.82N 1013145.88E",
-    "ALT 7 500 ft / GND",
-    "Type of restriction : Royal Residence Area Nature of hazard/activity : - Time of activity : H24 Permission to entry : As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT. Inflight information : OSCAR Control Contact agency : CAAT, Air Navigation Service Standards Department"
-   ]
-  },
-  {
-   "raw": [
-    "VTD2 LOP BURI Area bounded by lines joining successively the following points: 150716N 1001010E - 150700N 1005000E - 145500N 1005000E - 145500N 1010525E - 144237N 1010529E - 143637N 1010525E - 143700N 1000900E - 150716N 1001010E",
-    "ALT 6000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Khok Kathiam Tower freq. 122.6 MHz or 238.6 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 2 Air Traffic Control branch, Tel. +662 534 6000 ext. 50520"
-   ]
-  },
-  {
-   "raw": [
-    "VTD3A KABIN BURI/WATTANA NAKHON, PRACHIN BURI Area bounded by lines joining successively the following points: 135900N 1022000E - 135900N 1025043E on the border then follow the boundary to 133000N 1022138E - 133000N 1022000E - 135900N 1022000E",
-    "FL 140 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz Pilots are advised to contact prior to entering. Contact agency : Wattana Nakhon Tower, Tel. +662 534 6000 ext. 42908, 42909"
-   ]
-  },
-  {
-   "raw": [
-    "VTD3B KABIN BURI/WATTANA NAKHON, PRACHIN BURI Area bounded by lines joining successively the following points: 135900N 1015400E - 135900N 1022000E - 133000N 1022000E - 133000N 1015400E - 135900N 1015400E",
-    "FL 140 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz Pilots are advised to contact prior to entering. Contact agency : Wattana Nakhon Tower, Tel. +662 534 6000 ext. 42908, 42909"
-   ]
-  },
-  {
-   "raw": [
-    "VTD5A PRACHUAP, KHIRI KHAN Area bounded by lines joining successively the following points: 120800N 0993409E on boundary to 120800N 1000953E - 114700N 1000347E - 114700N 0993851E on boundary then follow the boundary to 120800N 0993409E",
-    "ALT 6500 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Prachuap Tower freq. 135.9 MHz or 351.1 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 5 Air Traffic Control branch, Tel. +662 534 6000 ext. 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD5B PRACHUAP, KHIRI KHAN Area bounded by lines joining successively the following points: 114700N 0993851E on boundary to 114700N 1000347E - 112651N 0995458E - 112651N 0992422E on boundary then follow the boundary to 114700N 0993851E",
-    "ALT 6500 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Prachuap Tower freq. 135.9 MHz or 351.1 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 5 Air Traffic Control branch, Tel. +662 534 6000 ext. 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD6A BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI Area bounded by lines joining successively the following points: 141811N 1002501E - 141820N 1004015E - 135820N 1002641E - 140500N 1001251E - 141811N 1002501E",
-    "ALT 5000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : Everyday, 2300 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Don Mueang Approach freq. 119.4 MHz or 262.5 MHz Pilots are advised to contact prior to entering. Contact agency : 604 Squadron, Tel. +662 534 6000 ext. 22553"
-   ]
-  },
-  {
-   "raw": [
-    "VTD6B BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI Area bounded by lines joining successively the following points: 140500N 1001251E - 135820N 1002641E - 134604N 1002225E - 134630N 1001255E - 140500N 1001251E",
-    "ALT 5000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : Everyday, 2300 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Don Mueang Approach freq. 119.4 MHz or 262.5 MHz Pilots are advised to contact prior to entering. Contact agency : 604 Squadron, Tel. +662 534 6000 ext. 22553"
-   ]
-  },
-  {
-   "raw": [
-    "VTD8A RATCHABURI Area bounded by lines joining successively the following points: 134900N 0992300E - 135410N 0995819E - 132604N 1000707E then follow the coastline westward to 130000N 1000414E - 130000N 0994000E - 134900N 0992300E",
-    "FL 460 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTD8B RATCHABURI Area bounded by lines joining successively the following points: 133200N1001600E then follow the coastline westward to 132806N 1001320E - 132604N 1000707E - 135410N 0995819E - 135600N 1001100E - 134800N 1001100E - 133200N 1001600E",
-    "ALT 12000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTD8C KANCHANABURI Area bounded by lines joining successively the following points: 135253N 0994930E - 134900N 0992300E - 141500N 0992300E - 140930N 0995226E - then counterclockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 135253N 0994930E",
-    "ALT 9000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTD8D KANCHANABURI Area bounded by lines joining successively the following points: 135600N 1001100E - 135253N 0994930E - then clockwise along 45NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 140930N 0995226E - 140600N 1001100E - 135600N 1001100E",
-    "ALT 6000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTD8E SUPHAN BURI Area bounded by lines joining successively the following points:140930N 0995226E -141500N 0992300E -145400N 0995700E -143304N 1001310E -then counter clockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 140930N 0995226E",
-    "ALT 8000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522 Note: Training aircraft at FL200 and above will be authorized by Bangkok ACC."
-   ]
-  },
-  {
-   "raw": [
-    "VTD8F SUPHAN BURI Area bounded by lines joining successively the following points: 140600N 1001100E - 140930N 0995226E - then clockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 143304N 1001310E - 141900N 1002400E - 140600N 1001100E",
-    "ALT 6000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522 Note: Training aircraft at FL200 and above will be authorized by Bangkok ACC."
-   ]
-  },
-  {
-   "raw": [
-    "VTD8G SUPHAN BURI Area bounded by lines joining successively the following points: 142558N 0992300E - 142558N 0993232E - 141500N 0992300E - 142558N 0992300E",
-    "ALT 8000 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering. Contact agency : Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
-   ]
-  },
-  {
-   "raw": [
-    "VTD20 HUA HIN Area bounded by lines joining the following points: 1300N 09937E - 1300N 10010E - 1210N 10010E - then along the arc of 30 NM radius centred on HHN DVOR/DME ( 123804.04N 0995704.23E ) 1300N 09937E Excluding Hua Hin CTR , Hua Hin TMA and G458",
-    "ALT 11 000 ft / GND",
-    "Type of restriction : Civil Flight Training Area Nature of hazard/activity : Flight school training Time of activity : Sunrise to Sunset Inflight information : Hua Hin Approach freq. 126.2 MHz Contact agency : -"
-   ]
-  },
-  {
-   "raw": [
-    "VTD21 SATTAHIP BAY Area 1 Area bounded by lines joining successively the following points: 1220N 10030E - 1240N 10030E - 1240N 10040.8E - 1220N 10040.8E - 1220N 10030E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : RTN Gun Training Range for surface ships Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD22 KO KHRAM, SATTAHIP Area bounded by lines joining successively the following points: 1251.3N 10040E - 1251.3N 10051E - 1240N 10051E - 1240N 10040E - 1251.3N 10040E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Gun Training Range for surface ships and aircraft Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD23 KO PHAI Area bounded by lines joining successively the following points: 1250N 10030E - 1305N 10030E - 1305N 10045E - 1250N 10045E - 1250N 10030E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : RTN Gun Training Range for surface ships and aircraft Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD24 KO CHANG, TRAT Circle of 5 NM radius centred on point 1203.1N 10214.6E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Gun Training Range for surface ships and aircraft Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz, if unable contact Trat Approach freq. 120.25 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD25 KO TAO, CHUMPHON Circle of 5 NM radius centred on point 0956.6N 09959.8E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Weapon Training Range for surface ships and aircraft Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : Samui Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 7, Surat Thani Air Force Base, Tel. +667 744 1132"
-   ]
-  },
-  {
-   "raw": [
-    "VTD26 CHONG SAMAE SAN, SATTAHIP Area bounded by lines joining successively the following points: 1233.5N 10055.3E - 1237.3N 10055.3E - 1237.3N 10057.3E - 1233.5N 10057.3E - 1233.5N 10055.3E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Gun Training Range Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD27 PONG NAM RON, CHANTHABURI Area bounded by lines joining successively the following points: 1255.2N 10217.1E - 1250.6N 10220.4E - 1255.8N 10222.8E - 1259.5N 10221.4E - 1255.2N 10217.1E",
-    "ALT 8 000 ft / GND",
-    "Type of restriction : RTN Gun Training Range Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD28 SATTAHIP Area bounded by lines joining successively the following points: 1250.5N 10049.7E - 1251.3N 10051.7E - 1246.8N 10053.5E - 1245.8N 10051.6E - 1250.5N 10049.7E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Gun Training Range Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD29 HIN RAKIT PATTANI Circle of 3 NM radius centred on point 0644N 10144E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Weapon Training Range for surface ships and aircraft Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : Narathiwat Approach freq. 125.55 MHz Pilots are advised to contact prior to entering. Contact agency : 2nd Naval Area Command, Tel. +667 432 5804"
-   ]
-  },
-  {
-   "raw": [
-    "VTD30 W NAKHON RATCHASIMA Area 1 Area bounded by lines joining successively the following points: 144905.7N 1011547.8E - 162005.4N 1021047.3E - 160405.5N 1022847.2E - 145935.7N 1015947.5E - 144305.8N 1012247.8E",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1000 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD30 W NAKHON RATCHASIMA Area 2 Area bounded by lines joining successively the following points: 150905.7N 1021947.3E - 160005.5N 1024247.1E - 154905.6N 1032146.8E - 151305.7N 1032146.8E",
-    "UNL / GND"
-   ]
-  },
-  {
-   "raw": [
-    "VTD32 NAKHON RATCHASIMA Circle of 50 NM radius centred on point KRT TACAN ( 145606.0N 1020421.8E ). Excluding Khorat Control Zone and Buri Ram Terminal Control Area .",
-    "ALT 5 500 ft / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1400 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD33 NAKHON SAWAN, CHAI NAT Area1 Area bounded by lines joining successively the following points: 154125.79N 0994345.28E - 154124.14N 0995122.80E - 150656.33N 1000238.89E - 150006.18N 0995717.24E - 154125.79N 0994345.28E",
-    "FL 240 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Takhli Approach freq. 124.0 MHz or 325.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 4 Air Traffic Control branch, Tel. +662 534 6000 ext 53544, 53546"
-   ]
-  },
-  {
-   "raw": [
-    "VTD34 PHETCHABUN, PHICHIT Area 1 Area bounded by lines joining successively the following points: 151305.60N 1010147.90E - 151305.60N 1002648.10E - 152405.50N 1002148.20E - 161623.05N 1002148.10E - then follow the arc 30 NM counter clockwise from PSL DVOR/DME (164613.34N 1001728.70E) to 163458.20N 1004628.25E - 163205.30N 1012647.60E - 151305.60N 1010147.90E Excluding Airway W21",
-    "FL 280 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Takhli Approach freq. 124.0 MHz or 325.0 MHz or Phetchabun Approach freq. 126 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 4 Air Traffic Control branch, Tel. +662 534 6000 ext 53544, 53546"
-   ]
-  },
-  {
-   "raw": [
-    "VTD41A MAE RIM, CHIANG MAI Area bounded by lines joining successively the following points: 194129N 0981654E on Thai Myanmar border then follow the boundary to 202015N 0994829E - 185219N 0994829E - 185116N 0990719E then follow 10 NM arc counterclockwise from CHM TACAN (184612N 0985812E) to 185610N 0985657E - 194129N 0981654E Excluding Chiang Mai TMA and Chiang Rai TMA",
-    "FL 460 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Chiang Mai Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering. Contact agency: Wing 41 Air Traffic Control branch, Tel. +662 534 6000 ext 57504, 57503"
-   ]
-  },
-  {
-   "raw": [
-    "VTD41B CHOM THONG, CHIANG MAI Area bounded by lines joining successively the following points: 184700N 0974543E - 184700N 0984800E - 182000N 0985800E - 174121N 0985800E - 173000N 0980000E on Thai-Myanmar border then follow the boundary to starting point.",
-    "FL 460 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Chiang Mai Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering. Contact agency: Wing 41 Air Traffic Control branch, Tel. +662 534 6000 ext 57504, 57503"
-   ]
-  },
-  {
-   "raw": [
-    "VTD43 LOP BURI Area bounded by lines joining successively the following points: 151305.6N 1004748.0E - 162705.3N 1015547.4E - 162005.4N 1021047.3E - 144905.7N 1011547.8E",
-    "FL 350 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0100-0900 Inflight information : OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 129.75 MHz or 285.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD44 UBON, YASOTHON Area bounded by lines joining successively the following points: 152100N 1043800E - 152100N 1032200E - 161500N 1032200E - 152100N 1043800E",
-    "FL 200 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1000 Inflight information : OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43506, 43502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD45 UBON, SI SA KET Area bounded by lines joining successively the following points: 145800N 1053700E - 150400N 1050000E - 150200N 1045200E - 143800N 1034000E - 142500N 1034000E - then follow the boundary to 145800N 1053700E",
-    "UNL / ALT 3 000 ft",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1300 Inflight information : OSCAR Control freq. 127.0 or 331.3 MHz, if unable contact Khorat Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43506, 43502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD46 NAKHON RATCHASIMA Area bounded by 20 NM arc from KRT TACAN ( 145606.0N 1020421.8E ) beginning at point 143600N 1020200E - then counter clockwise, along the arc to 145100N 1022500E - 145100N 1032500E - 142200N 1032500E - then follow the boundary to 135600N 1024700E - 135600N 1015600E - 143600N 1020200E",
-    "FL 200 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1000 Inflight information : OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
-   ]
-  },
-  {
-   "raw": [
-    "VTD47 SAMUT SAKHON Area bounded by lines joining successively the following points: 134700N 1002700E - 133800N 1002700E - 132900N 1002100E - then follow the coast line to 133200N 1001600E - 134800N 1001100E - 134700N 1002700E",
-    "UNL / FL 120",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0130-0930 Inflight information : Bangkok Approach freq. 124.35 MHz or 274.5 MHz Pilots are advised to contact prior to entering. Contact agency : -"
-   ]
-  },
-  {
-   "raw": [
-    "VTD54 UBON Area bounded by 15 NM arc from UBL TACAN ( 151544.70N 1045300.00E ) beginning at point 152900N 1044900E - 152900N 1045300E - 161400N 1045500E - 161400N 1040900E - then along the arc to the starting point.",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Ubon Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 21 Air Traffic Control branch , Tel. +662 534 6000 ext 43506, 43502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD55 UBON Area bounded by 15 NM arc from UBL TACAN ( 151544.70N 1045300.00E ) beginning at point 152900N 1045300E - 161400N 1045500E - 161400N 1050100E then clockwise along the FIR boundary to 153600N 1053700E - 152700N 1050000E - then along the arc to the starting point.",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Ubon Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 46 Air Traffic Control branch , Tel. +662 534 6000 ext 55164, 55157"
-   ]
-  },
-  {
-   "raw": [
-    "VTD56 SONGKHLA Area bounded by lines joining successively the following points: 080843N 1003941E - 081826N 1005159E - 065600N 1012500E - 065600N 1004600E - 071100N 1003700E - 080843N 1003941E",
-    "FL 460 / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : BIG SHELL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Hat Yai Approach freq. 126.7 MHz or 301.5 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 56 Air Traffic Control branch, Tel. +662 534 6000 ext. 63555, 63520"
-   ]
-  },
-  {
-   "raw": [
-    "VTD58 SURAT THANI Area bounded by lines joining successively the following points: 112554.32N 0992354.41E Thai-Myanmar border to 105129.09N 0994016.74E - 092518.00N 0994006.00E - 083301.22N 0983331.55E - then follow the arc 30 NM clockwise from PUT DVOR/DME ( 080654.83N 0981822.69E ) to 083625.96N 0982432.98E - 090818.00N 0975118.00E - 092900.00N 0971600.00E - 095000.00N 0982500.00E - 100004.46N 0983705.87E - then follow the boundary to the starting point.",
-    "FL 390 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : Notified by NOTAM Inflight information : BIG SHELL Control freq. 127.0 MHz or 331.3 MHz, if unable, contact Surat Approach freq. 119.3 MHz or 236.6 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
-   ]
-  },
-  {
-   "raw": [
-    "VTD59 SURAT THANI Area 1 Area bounded by lines joining successively the following points: 1058.0N 09906.0E Thai-Myanmar border to 1058.0N 09934.5E - 0933.0N 09911.0E - then follow the arc 25 NM counter clockwise from STN DVOR/DME ( 090746.24N 0990805.09E ) to 0852.3N 09849.5E - 0833.0N 09833.5E - then follow the arc 30 NM counter clockwise from PUT DVOR/DME ( 080654.83N 0981822.69E ) to 0836.0N 09812.0E - 0929.0N 09736.0E - 0929.0N 09816.0E - 0950.0N 09825.0E - 0955.0N 09832.0E - then follow the boundary to the starting point. Excluding Chumpon TMA and Ranong TMA and CTR .",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1700 Inflight information : BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Surat Approach freq. 123.35 MHz or 240.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
-   ]
-  },
-  {
-   "raw": [
-    "VTD60 SURAT THANI Area 1 Area bounded by lines joining successively the following points: 092108.45N 0993149.01E - 103415.64N 0995439.12E - 094830.78N 1001754.79E - 081808.39N 1001550.28E - 081828.66N 0994352.24E - 083107.99N 0993638.33E - 085743.18N 0993640.94E - 092108.45N 0993149.01E",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1700 Inflight information : BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Samui Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
-   ]
-  },
-  {
-   "raw": [
-    "VTD61 SURAT THANI Area bounded by lines joining successively the following points: 0845.0N 09929.0E - 0827.0N 09951.0E - 0816.0N 09947.0E - 0828.0N 09842.0E - 0845.7N 09857.2E - then follow the arc 25 NM from STN DVOR/DME ( 090746.24N 0990805.09E ) counter clockwise to 0844.5N 09917.3E - 0840.4N 09919.7E - 0845.0N 09929.0E",
-    "ALT 7 000 ft / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2300-1700 Inflight information : BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Surat Approach freq. 123.35 MHz or 240.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
-   ]
-  },
-  {
-   "raw": [
-    "VTD63 UDON, LOEI Area 1 Udon, Loei Area bounded by lines joining successively the following points: 1750.8N 10235.5E on Thai-Laotian border then follow the arc 30 NM counter clockwise from UDN TACAN ( 1722.9N 10248.1E ) to 1700.0N 10228.0E - 1700.0N 10130.0E - 1744.0N 10130.0E - then eastward along the Thai-Laotian border to the starting point.",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD64 UDON, NONG KHAI (North Area) Area bounded by lines joining successively the following points: 1755.0N 10247.0E on Thai-Laotian border to 1753.0N 10247.5E - then follow the arc 30 NM clockwise from UDN TACAN ( 1722.9N 10248.1E ) to 1725.53N 10319.35E - 1731.94N 10441.36E then northward along the Thai-Laotian border to the starting point.",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 2200-1700 Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD64 UDON, NONG KHAI (South Area) Area bounded by lines joining successively the following points: 1725.53N 10319.35E then follow the arc 30 NM clockwise from UDN TACAN (1722.9N 10248.1E) to1709.0N 10315.8E -1630.0N 10409.2E - 1630.0N 10440.0E then northward along the Thai-Laotian border to 1731.94N 10441.36E then to the starting point.",
-    "UNL / GND",
-    "Type of restriction : RTAF Flying TrainingNature of hazard/activity : High speed combat manoeuvringTime of activity : MON - FRI, 2200-1700Inflight information : OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering.Contact agency : Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
-   ]
-  },
-  {
-   "raw": [
-    "VTD65 NORTHEASTERN AREA A circle 20 NM radius centred on point 1639.0N 10258.0E",
-    "FL 150 / GND",
-    "Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Bombing / Air Firing Area Time of activity : MON - FRI, 0000-1000 Inflight information : Khon Kaen Approach freq. 123.4 MHz or 240.0 MHz Pilots are advised to contact prior to entering. Contact agency : Air Operation Division, Tel. +662 280 2499"
-   ]
-  },
-  {
-   "raw": [
-    "VTD67 KANCHANABURI Area bounded by lines joining successively the following points: 1454.0N 09830.0E - 1454.0N 09957.0E - 1415.0N 09923.0E - 1349.0N 09923.0E - 1349.0N 09914.0E - 1435.0N 09830.0E - 1454.0N 09830.0E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : RTA Flying Training Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : Kanchanaburi Tower freq. 122.0 MHz Pilots are advised to contact prior to entering. Contact agency : Air Operation Division, Tel. +662 280 2499"
-   ]
-  },
-  {
-   "raw": [
-    "VTD70 CHANTHANBURI Area bounded by the line joining the following points 1253N 10213E - 1253N 10153E - 1313N 10153E - 1313N 10213E (Banchankhtem Kitchakut District Chanthaburi Province)",
-    "FL 150 / GND",
-    "Type of restriction : RTN Flight Training Area Nature of hazard/activity : Millitary flight training area Time of activity : MON - FRI, 0130-0930 except public holidays Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD71 GULF OF THAILAND Area bounded by the line joining the following points: 1100N 10135E - 1100N 10105E - 1200N 10045E - 1200N 10135E",
-    "FL 300 / GND",
-    "Type of restriction : RTN Flight Training Area Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering. Contact agency : Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
-   ]
-  },
-  {
-   "raw": [
-    "VTD74 PHANGNGA Area bounded by the lines joining successively the following points: Area 1 091500N 0971500E - 091500N 0974000E - 084500N 0974000E - 084500N 0971500E - 091500N 0971500E",
-    "FL 150 / GND",
-    "Type of restriction : RTN Weapon Training Range for surface ships Nature of hazard/activity : Military operations Time of activity : Notified by NOTAM Inflight information : Phuket Approach freq. 124.7 MHz or 284.0 MHz Pilots are advised to contact prior to entering. Contact agency : 3rd Naval Area Command, Tel. +667 639 1590"
-   ]
-  },
-  {
-   "raw": [
-    "VTD75 KHON KAEN Area bounded by the lines joining successively the following points: 163000N 1023700E - 161300N 1022200E - 163000N 1021700E - 163000N 1023700E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Civil Flight Training Area Nature of hazard/activity : Flight school training Time of activity : SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM Inflight information : Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering. Contact agency : -"
-   ]
-  },
-  {
-   "raw": [
-    "VTD76 KHON KAEN Area bounded by the lines joining successively the following point: 161700N 1025000E - 162000N 1031500E - 160000N 1031500E - 160000N 1025000E - 161700N 1025000E",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Civil Flight Training Area Nature of hazard/activity : Flight school training Time of activity : SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM Inflight information : Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering. Contact agency : -"
-   ]
-  },
-  {
-   "raw": [
-    "VTD77 KHON KAEN / ROI-ET Area bounded by the lines joining successively the following point: 160000N 1033915E - 154615N 1032430E - then along the arc of 30 NM radius centred on ROT DVOR/DME ( 160700.59N 1034619.45E ) 162800N 1032430E - 161400N 1033915E - then along the arc of 10 NM radius centred on ROT DVOR/DME to starting point.",
-    "ALT 6 000 ft / GND",
-    "Type of restriction : Civil Flight Training Area Nature of hazard/activity : Flight school training Time of activity : SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM Inflight information : Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering. Contact agency : -"
-   ]
-  },
-  {
-   "raw": [
-    "VTD461 PHITSANULOK Area bounded by lines joining successively the following points: 165257N 0992221E - 165300N 0995502E - 155216N 1001522E - 152300N 1001511E - 152300N 1000500E - 155216N 0994251E - 165257N 0992221E Excluding Phitsanulok TMA AND Sukhothai TMA",
-    "ALT 6500 ft / GND",
-    "AMC - Manageable Area Type of restriction : RTAF Flying Training Nature of hazard/activity : High speed combat manoeuvring Time of activity : MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. Inflight information : FOCAL freq. 127.0 MHz or 331.3 MHz, if unable contact Phitsanulok Approach freq. 120.7 MHz or 284.0 MHz Pilots are advised to contact prior to entering. Contact agency : Wing 46 Air Traffic Control branch , Tel. +662 534 6000 ext. 55164, 55157"
-   ]
+   "id": "VTP4",
+   "type": "P",
+   "name": "MUANG KOM",
+   "upper": "FL 240",
+   "lower": "GND",
+   "poly": [
+    [
+     15.11667,
+     100.98333
+    ],
+    [
+     15.11667,
+     100.83333
+    ],
+    [
+     14.91667,
+     100.83333
+    ],
+    [
+     14.91667,
+     100.98333
+    ],
+    [
+     15.11667,
+     100.98333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "MUANG KOM Area bounded by lines joining successively the following points: 150700N 1005900E - 150700N 1005000E - 145500N 1005000E - 145500N 1005900E - 150700N 1005900E",
+   "restriction": "RTAF Flying Training",
+   "activity": "Bombing / Air Firing Area",
+   "time": "MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM. H24",
+   "entry": "Only authorized aircraft",
+   "info": "Chandy Tower freq. 134.75 MHz or 285.4 MHz",
+   "contact": "Chandy Tower, Tel: +662 534 6000 ext. 25884"
+  },
+  {
+   "id": "VTP7",
+   "type": "P",
+   "name": "SATTAHIP",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     12.71245,
+     100.88333
+    ],
+    [
+     12.71144,
+     100.89519
+    ],
+    [
+     12.70843,
+     100.90669
+    ],
+    [
+     12.70352,
+     100.91748
+    ],
+    [
+     12.69686,
+     100.92723
+    ],
+    [
+     12.68865,
+     100.93564
+    ],
+    [
+     12.67913,
+     100.94247
+    ],
+    [
+     12.66861,
+     100.9475
+    ],
+    [
+     12.65739,
+     100.95057
+    ],
+    [
+     12.64582,
+     100.95161
+    ],
+    [
+     12.63425,
+     100.95057
+    ],
+    [
+     12.62304,
+     100.94748
+    ],
+    [
+     12.61251,
+     100.94245
+    ],
+    [
+     12.603,
+     100.93563
+    ],
+    [
+     12.59479,
+     100.92721
+    ],
+    [
+     12.58813,
+     100.91746
+    ],
+    [
+     12.58323,
+     100.90668
+    ],
+    [
+     12.58022,
+     100.89518
+    ],
+    [
+     12.57921,
+     100.88333
+    ],
+    [
+     12.58022,
+     100.87148
+    ],
+    [
+     12.58323,
+     100.85998
+    ],
+    [
+     12.58813,
+     100.8492
+    ],
+    [
+     12.59479,
+     100.83945
+    ],
+    [
+     12.603,
+     100.83103
+    ],
+    [
+     12.61251,
+     100.82421
+    ],
+    [
+     12.62304,
+     100.81918
+    ],
+    [
+     12.63425,
+     100.81609
+    ],
+    [
+     12.64582,
+     100.81505
+    ],
+    [
+     12.65739,
+     100.81609
+    ],
+    [
+     12.66861,
+     100.81916
+    ],
+    [
+     12.67913,
+     100.82419
+    ],
+    [
+     12.68865,
+     100.83102
+    ],
+    [
+     12.69686,
+     100.83943
+    ],
+    [
+     12.70352,
+     100.84918
+    ],
+    [
+     12.70843,
+     100.85997
+    ],
+    [
+     12.71144,
+     100.87147
+    ],
+    [
+     12.71245,
+     100.88333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SATTAHIP Circle of 4 NM radius centred on point 123845N 1005300E",
+   "restriction": "Naval Base",
+   "activity": "National security area",
+   "time": "H24",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5600"
+  },
+  {
+   "id": "VTP36",
+   "type": "P",
+   "name": "KHAO SOIDAO TAI",
+   "upper": "ALT 5 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.93694,
+     102.21389
+    ],
+    [
+     13.22008,
+     102.21389
+    ],
+    [
+     13.219,
+     102.23924
+    ],
+    [
+     13.21578,
+     102.26439
+    ],
+    [
+     13.21042,
+     102.28916
+    ],
+    [
+     13.20299,
+     102.31336
+    ],
+    [
+     13.19353,
+     102.33679
+    ],
+    [
+     13.18211,
+     102.35929
+    ],
+    [
+     13.16882,
+     102.38068
+    ],
+    [
+     13.15377,
+     102.40079
+    ],
+    [
+     13.13707,
+     102.41948
+    ],
+    [
+     13.11885,
+     102.4366
+    ],
+    [
+     13.09924,
+     102.45202
+    ],
+    [
+     13.07839,
+     102.46563
+    ],
+    [
+     13.05647,
+     102.47731
+    ],
+    [
+     13.03364,
+     102.48699
+    ],
+    [
+     13.01007,
+     102.49459
+    ],
+    [
+     12.98595,
+     102.50005
+    ],
+    [
+     12.96146,
+     102.50333
+    ],
+    [
+     12.93678,
+     102.50441
+    ],
+    [
+     12.9121,
+     102.50327
+    ],
+    [
+     12.88762,
+     102.49994
+    ],
+    [
+     12.86351,
+     102.49443
+    ],
+    [
+     12.83996,
+     102.48678
+    ],
+    [
+     12.81715,
+     102.47706
+    ],
+    [
+     12.79525,
+     102.46534
+    ],
+    [
+     12.77443,
+     102.45171
+    ],
+    [
+     12.75485,
+     102.43628
+    ],
+    [
+     12.73665,
+     102.41915
+    ],
+    [
+     12.71997,
+     102.40047
+    ],
+    [
+     12.70495,
+     102.38037
+    ],
+    [
+     12.69169,
+     102.35901
+    ],
+    [
+     12.6803,
+     102.33654
+    ],
+    [
+     12.67085,
+     102.31315
+    ],
+    [
+     12.66343,
+     102.289
+    ],
+    [
+     12.65809,
+     102.26428
+    ],
+    [
+     12.65487,
+     102.23918
+    ],
+    [
+     12.6538,
+     102.21389
+    ],
+    [
+     12.93694,
+     102.21389
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KHAO SOIDAO TAI A semi-circle 17 NM radius of 125613N 1021250E from 0° to 180°",
+   "restriction": "RTN Area",
+   "activity": "Military operations",
+   "time": "Sunset to Sunrise",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "Trat Approach freq. 120.25 MHz",
+   "contact": "Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
+  },
+  {
+   "id": "VTP37",
+   "type": "P",
+   "name": "KHAO KHLONG OA",
+   "upper": "ALT 5 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.57194,
+     102.60972
+    ],
+    [
+     12.40701,
+     102.77854
+    ],
+    [
+     12.39327,
+     102.76318
+    ],
+    [
+     12.3809,
+     102.74665
+    ],
+    [
+     12.36998,
+     102.72908
+    ],
+    [
+     12.36059,
+     102.7106
+    ],
+    [
+     12.35281,
+     102.69136
+    ],
+    [
+     12.3467,
+     102.6715
+    ],
+    [
+     12.3423,
+     102.65117
+    ],
+    [
+     12.33965,
+     102.63052
+    ],
+    [
+     12.33876,
+     102.60972
+    ],
+    [
+     12.33965,
+     102.58892
+    ],
+    [
+     12.3423,
+     102.56827
+    ],
+    [
+     12.3467,
+     102.54794
+    ],
+    [
+     12.35281,
+     102.52808
+    ],
+    [
+     12.36059,
+     102.50884
+    ],
+    [
+     12.36998,
+     102.49036
+    ],
+    [
+     12.3809,
+     102.47279
+    ],
+    [
+     12.39327,
+     102.45626
+    ],
+    [
+     12.40701,
+     102.4409
+    ],
+    [
+     12.422,
+     102.42682
+    ],
+    [
+     12.43812,
+     102.41412
+    ],
+    [
+     12.45527,
+     102.40292
+    ],
+    [
+     12.47331,
+     102.39328
+    ],
+    [
+     12.4921,
+     102.38529
+    ],
+    [
+     12.51149,
+     102.37901
+    ],
+    [
+     12.53135,
+     102.37448
+    ],
+    [
+     12.55151,
+     102.37174
+    ],
+    [
+     12.57183,
+     102.37082
+    ],
+    [
+     12.59216,
+     102.37171
+    ],
+    [
+     12.61233,
+     102.37441
+    ],
+    [
+     12.63219,
+     102.3789
+    ],
+    [
+     12.6516,
+     102.38515
+    ],
+    [
+     12.6704,
+     102.39312
+    ],
+    [
+     12.68845,
+     102.40273
+    ],
+    [
+     12.70561,
+     102.41392
+    ],
+    [
+     12.72176,
+     102.4266
+    ],
+    [
+     12.73677,
+     102.44068
+    ],
+    [
+     12.57194,
+     102.60972
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KHAO KHLONG OA A semi-circle 14 NM radius of 123419N 1023635E from 135° to 315°",
+   "restriction": "RTN Area",
+   "activity": "Military operations",
+   "time": "Sunset to Sunrise",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "Trat Approach freq. 120.25 MHz",
+   "contact": "Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
+  },
+  {
+   "id": "VTP38",
+   "type": "P",
+   "name": "KO CHANG - KO KHUD",
+   "upper": "ALT 5 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.29361,
+     102.24
+    ],
+    [
+     12.1625,
+     102.57556
+    ],
+    [
+     11.775,
+     102.89
+    ],
+    [
+     11.63333,
+     102.925
+    ],
+    [
+     11.5,
+     102.5
+    ],
+    [
+     12.0,
+     102.18333
+    ],
+    [
+     12.29361,
+     102.24
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO CHANG - KO KHUD Area bounded by lines joining successively the following points: 121737N 1021424E - 120945N 1023432E - 114630N 1025324E - 113800N 1025530E - 113000N 1023000E - 120000N 1021100E - 121737N 1021424E",
+   "restriction": "RTN Area",
+   "activity": "Military operations",
+   "time": "Sunset to Sunrise",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "Trat Approach freq. 120.25 MHz",
+   "contact": "Chanthaburi and Trat Border Defense, Tel. +663 931 2334, +663 931 1099"
+  },
+  {
+   "id": "VTR1",
+   "type": "R",
+   "name": "BANGKOK CITY",
+   "upper": "ALT 3 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.93155,
+     100.53833
+    ],
+    [
+     13.92902,
+     100.56813
+    ],
+    [
+     13.9215,
+     100.59702
+    ],
+    [
+     13.90923,
+     100.62412
+    ],
+    [
+     13.89256,
+     100.64862
+    ],
+    [
+     13.87202,
+     100.66975
+    ],
+    [
+     13.84823,
+     100.68689
+    ],
+    [
+     13.82191,
+     100.69951
+    ],
+    [
+     13.79386,
+     100.70722
+    ],
+    [
+     13.76494,
+     100.70981
+    ],
+    [
+     13.73602,
+     100.70718
+    ],
+    [
+     13.70798,
+     100.69943
+    ],
+    [
+     13.68168,
+     100.68678
+    ],
+    [
+     13.65791,
+     100.66963
+    ],
+    [
+     13.63739,
+     100.64849
+    ],
+    [
+     13.62074,
+     100.62402
+    ],
+    [
+     13.60848,
+     100.59694
+    ],
+    [
+     13.60097,
+     100.56809
+    ],
+    [
+     13.59845,
+     100.53833
+    ],
+    [
+     13.60097,
+     100.50857
+    ],
+    [
+     13.60848,
+     100.47972
+    ],
+    [
+     13.62074,
+     100.45264
+    ],
+    [
+     13.63739,
+     100.42817
+    ],
+    [
+     13.65791,
+     100.40703
+    ],
+    [
+     13.68168,
+     100.38988
+    ],
+    [
+     13.70798,
+     100.37723
+    ],
+    [
+     13.73602,
+     100.36948
+    ],
+    [
+     13.76494,
+     100.36685
+    ],
+    [
+     13.79386,
+     100.36944
+    ],
+    [
+     13.82191,
+     100.37715
+    ],
+    [
+     13.84823,
+     100.38977
+    ],
+    [
+     13.87202,
+     100.40691
+    ],
+    [
+     13.89256,
+     100.42804
+    ],
+    [
+     13.90923,
+     100.45254
+    ],
+    [
+     13.9215,
+     100.47964
+    ],
+    [
+     13.92902,
+     100.50853
+    ],
+    [
+     13.93155,
+     100.53833
+    ]
+   ],
+   "approx": false,
+   "geom_text": "BANGKOK CITY Circle of 10 NM radius centred on point 134554N 1003218E",
+   "restriction": "Congested Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "Only authorized aircraft by CAAT, except any aircraft operated under air traffic control services. CAAT may issue further temporary condition for flight operation within VT R1 by NOTAM.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Operations Management Department"
+  },
+  {
+   "id": "VTR2",
+   "type": "R",
+   "name": "CHITRLADA PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.78477,
+     100.52123
+    ],
+    [
+     13.78451,
+     100.52421
+    ],
+    [
+     13.78376,
+     100.5271
+    ],
+    [
+     13.78253,
+     100.5298
+    ],
+    [
+     13.78087,
+     100.53225
+    ],
+    [
+     13.77882,
+     100.53437
+    ],
+    [
+     13.77644,
+     100.53608
+    ],
+    [
+     13.77381,
+     100.53734
+    ],
+    [
+     13.771,
+     100.53812
+    ],
+    [
+     13.76811,
+     100.53838
+    ],
+    [
+     13.76522,
+     100.53812
+    ],
+    [
+     13.76241,
+     100.53734
+    ],
+    [
+     13.75978,
+     100.53608
+    ],
+    [
+     13.7574,
+     100.53437
+    ],
+    [
+     13.75535,
+     100.53225
+    ],
+    [
+     13.75369,
+     100.5298
+    ],
+    [
+     13.75246,
+     100.52709
+    ],
+    [
+     13.75171,
+     100.52421
+    ],
+    [
+     13.75145,
+     100.52123
+    ],
+    [
+     13.75171,
+     100.51825
+    ],
+    [
+     13.75246,
+     100.51537
+    ],
+    [
+     13.75369,
+     100.51266
+    ],
+    [
+     13.75535,
+     100.51021
+    ],
+    [
+     13.7574,
+     100.50809
+    ],
+    [
+     13.75978,
+     100.50638
+    ],
+    [
+     13.76241,
+     100.50512
+    ],
+    [
+     13.76522,
+     100.50434
+    ],
+    [
+     13.76811,
+     100.50408
+    ],
+    [
+     13.771,
+     100.50434
+    ],
+    [
+     13.77381,
+     100.50512
+    ],
+    [
+     13.77644,
+     100.50638
+    ],
+    [
+     13.77882,
+     100.50809
+    ],
+    [
+     13.78087,
+     100.51021
+    ],
+    [
+     13.78253,
+     100.51266
+    ],
+    [
+     13.78376,
+     100.51536
+    ],
+    [
+     13.78451,
+     100.51825
+    ],
+    [
+     13.78477,
+     100.52123
+    ]
+   ],
+   "approx": false,
+   "geom_text": "CHITRLADA PALACE Circle of 1 NM radius centred on point 134605.18N 1003116.44E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR3",
+   "type": "R",
+   "name": "HUA HIN PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.60616,
+     99.95297
+    ],
+    [
+     12.6059,
+     99.95593
+    ],
+    [
+     12.60515,
+     99.95881
+    ],
+    [
+     12.60392,
+     99.9615
+    ],
+    [
+     12.60226,
+     99.96394
+    ],
+    [
+     12.60021,
+     99.96604
+    ],
+    [
+     12.59783,
+     99.96775
+    ],
+    [
+     12.5952,
+     99.96901
+    ],
+    [
+     12.59239,
+     99.96978
+    ],
+    [
+     12.5895,
+     99.97004
+    ],
+    [
+     12.58661,
+     99.96978
+    ],
+    [
+     12.5838,
+     99.96901
+    ],
+    [
+     12.58117,
+     99.96775
+    ],
+    [
+     12.57879,
+     99.96604
+    ],
+    [
+     12.57674,
+     99.96394
+    ],
+    [
+     12.57508,
+     99.9615
+    ],
+    [
+     12.57385,
+     99.95881
+    ],
+    [
+     12.5731,
+     99.95593
+    ],
+    [
+     12.57284,
+     99.95297
+    ],
+    [
+     12.5731,
+     99.95001
+    ],
+    [
+     12.57385,
+     99.94713
+    ],
+    [
+     12.57508,
+     99.94444
+    ],
+    [
+     12.57674,
+     99.942
+    ],
+    [
+     12.57879,
+     99.9399
+    ],
+    [
+     12.58117,
+     99.93819
+    ],
+    [
+     12.5838,
+     99.93693
+    ],
+    [
+     12.58661,
+     99.93616
+    ],
+    [
+     12.5895,
+     99.9359
+    ],
+    [
+     12.59239,
+     99.93616
+    ],
+    [
+     12.5952,
+     99.93693
+    ],
+    [
+     12.59783,
+     99.93819
+    ],
+    [
+     12.60021,
+     99.9399
+    ],
+    [
+     12.60226,
+     99.942
+    ],
+    [
+     12.60392,
+     99.94444
+    ],
+    [
+     12.60515,
+     99.94713
+    ],
+    [
+     12.6059,
+     99.95001
+    ],
+    [
+     12.60616,
+     99.95297
+    ]
+   ],
+   "approx": false,
+   "geom_text": "HUA HIN PALACE Circle of 1 NM radius centred on point 123522.19N 0995710.69E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "Notified by NOTAM",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Hua Hin Approach, AEROTHAI",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR5",
+   "type": "R",
+   "name": "PHU PHING PALACE",
+   "upper": "ALT 12 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     18.83887,
+     98.89917
+    ],
+    [
+     18.83836,
+     98.90528
+    ],
+    [
+     18.83686,
+     98.91121
+    ],
+    [
+     18.83441,
+     98.91677
+    ],
+    [
+     18.83108,
+     98.92179
+    ],
+    [
+     18.82697,
+     98.92613
+    ],
+    [
+     18.82221,
+     98.92965
+    ],
+    [
+     18.81695,
+     98.93224
+    ],
+    [
+     18.81134,
+     98.93383
+    ],
+    [
+     18.80556,
+     98.93436
+    ],
+    [
+     18.79977,
+     98.93382
+    ],
+    [
+     18.79416,
+     98.93223
+    ],
+    [
+     18.7889,
+     98.92964
+    ],
+    [
+     18.78415,
+     98.92612
+    ],
+    [
+     18.78004,
+     98.92179
+    ],
+    [
+     18.77671,
+     98.91676
+    ],
+    [
+     18.77426,
+     98.9112
+    ],
+    [
+     18.77276,
+     98.90528
+    ],
+    [
+     18.77225,
+     98.89917
+    ],
+    [
+     18.77276,
+     98.89306
+    ],
+    [
+     18.77426,
+     98.88714
+    ],
+    [
+     18.77671,
+     98.88158
+    ],
+    [
+     18.78004,
+     98.87655
+    ],
+    [
+     18.78415,
+     98.87222
+    ],
+    [
+     18.7889,
+     98.8687
+    ],
+    [
+     18.79416,
+     98.86611
+    ],
+    [
+     18.79977,
+     98.86452
+    ],
+    [
+     18.80556,
+     98.86398
+    ],
+    [
+     18.81134,
+     98.86451
+    ],
+    [
+     18.81695,
+     98.8661
+    ],
+    [
+     18.82221,
+     98.86869
+    ],
+    [
+     18.82697,
+     98.87221
+    ],
+    [
+     18.83108,
+     98.87655
+    ],
+    [
+     18.83441,
+     98.88157
+    ],
+    [
+     18.83686,
+     98.88713
+    ],
+    [
+     18.83836,
+     98.89306
+    ],
+    [
+     18.83887,
+     98.89917
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHU PHING PALACE Circle of 2 NM radius centred on point 184820N 0985357E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "Notified by NOTAM",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Chiang Mai Approach, AEROTHAI",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR6",
+   "type": "R",
+   "name": "THAK SIN PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     6.50609,
+     101.87192
+    ],
+    [
+     6.50482,
+     101.88647
+    ],
+    [
+     6.50106,
+     101.90059
+    ],
+    [
+     6.49493,
+     101.91383
+    ],
+    [
+     6.4866,
+     101.92579
+    ],
+    [
+     6.47634,
+     101.93612
+    ],
+    [
+     6.46444,
+     101.9445
+    ],
+    [
+     6.45129,
+     101.95067
+    ],
+    [
+     6.43726,
+     101.95445
+    ],
+    [
+     6.4228,
+     101.95572
+    ],
+    [
+     6.40834,
+     101.95445
+    ],
+    [
+     6.39432,
+     101.95066
+    ],
+    [
+     6.38117,
+     101.94449
+    ],
+    [
+     6.36928,
+     101.93611
+    ],
+    [
+     6.35901,
+     101.92578
+    ],
+    [
+     6.35069,
+     101.91382
+    ],
+    [
+     6.34455,
+     101.90058
+    ],
+    [
+     6.3408,
+     101.88647
+    ],
+    [
+     6.33953,
+     101.87192
+    ],
+    [
+     6.3408,
+     101.85737
+    ],
+    [
+     6.34455,
+     101.84326
+    ],
+    [
+     6.35069,
+     101.83002
+    ],
+    [
+     6.35901,
+     101.81806
+    ],
+    [
+     6.36928,
+     101.80773
+    ],
+    [
+     6.38117,
+     101.79935
+    ],
+    [
+     6.39432,
+     101.79318
+    ],
+    [
+     6.40834,
+     101.78939
+    ],
+    [
+     6.4228,
+     101.78812
+    ],
+    [
+     6.43726,
+     101.78939
+    ],
+    [
+     6.45129,
+     101.79317
+    ],
+    [
+     6.46444,
+     101.79934
+    ],
+    [
+     6.47634,
+     101.80772
+    ],
+    [
+     6.4866,
+     101.81805
+    ],
+    [
+     6.49493,
+     101.83001
+    ],
+    [
+     6.50106,
+     101.84325
+    ],
+    [
+     6.50482,
+     101.85737
+    ],
+    [
+     6.50609,
+     101.87192
+    ]
+   ],
+   "approx": false,
+   "geom_text": "THAK SIN PALACE Circle of 5 NM radius centred on point 062522.11N 1015218.93E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "Notified by NOTAM",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Narathiwat Approach, AEROTHAI",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR8",
+   "type": "R",
+   "name": "KAMPHAENG SAEN JETTISON",
+   "upper": "ALT 7 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.88333,
+     100.33333
+    ],
+    [
+     12.88333,
+     100.41667
+    ],
+    [
+     12.58333,
+     100.28333
+    ],
+    [
+     12.58333,
+     100.19167
+    ],
+    [
+     12.88333,
+     100.33333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KAMPHAENG SAEN JETTISON Area bounded by lines joining successively the following points: 125300N 1002000E - 125300N 1002500E - 123500N 1001700E - 123500N 1001130E - 125300N 1002000E",
+   "restriction": "RTAF Jettison Area",
+   "activity": "Jettison Area",
+   "time": "H24",
+   "entry": "Only authorized aircraft",
+   "info": "Kamphaeng Saen Approach freq. 127.7 MHz or 237.0 MHz before entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel.+662 534 6000 ext 37517, 37522"
+  },
+  {
+   "id": "VTR11",
+   "type": "R",
+   "name": "KO HIN CHALAM, SATTAHIP",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     12.49803,
+     100.97194
+    ],
+    [
+     12.49752,
+     100.97786
+    ],
+    [
+     12.49602,
+     100.98361
+    ],
+    [
+     12.49357,
+     100.989
+    ],
+    [
+     12.49024,
+     100.99387
+    ],
+    [
+     12.48613,
+     100.99808
+    ],
+    [
+     12.48137,
+     101.00149
+    ],
+    [
+     12.47611,
+     101.004
+    ],
+    [
+     12.4705,
+     101.00554
+    ],
+    [
+     12.46472,
+     101.00605
+    ],
+    [
+     12.45893,
+     101.00554
+    ],
+    [
+     12.45333,
+     101.004
+    ],
+    [
+     12.44806,
+     101.00148
+    ],
+    [
+     12.44331,
+     100.99807
+    ],
+    [
+     12.4392,
+     100.99387
+    ],
+    [
+     12.43587,
+     100.989
+    ],
+    [
+     12.43342,
+     100.98361
+    ],
+    [
+     12.43192,
+     100.97786
+    ],
+    [
+     12.43141,
+     100.97194
+    ],
+    [
+     12.43192,
+     100.96602
+    ],
+    [
+     12.43342,
+     100.96027
+    ],
+    [
+     12.43587,
+     100.95488
+    ],
+    [
+     12.4392,
+     100.95001
+    ],
+    [
+     12.44331,
+     100.94581
+    ],
+    [
+     12.44806,
+     100.9424
+    ],
+    [
+     12.45333,
+     100.93988
+    ],
+    [
+     12.45893,
+     100.93834
+    ],
+    [
+     12.46472,
+     100.93783
+    ],
+    [
+     12.4705,
+     100.93834
+    ],
+    [
+     12.47611,
+     100.93988
+    ],
+    [
+     12.48137,
+     100.94239
+    ],
+    [
+     12.48613,
+     100.9458
+    ],
+    [
+     12.49024,
+     100.95001
+    ],
+    [
+     12.49357,
+     100.95488
+    ],
+    [
+     12.49602,
+     100.96027
+    ],
+    [
+     12.49752,
+     100.96602
+    ],
+    [
+     12.49803,
+     100.97194
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO HIN CHALAM, SATTAHIP Circle of 2 NM radius centred on point 122753N 1005819E",
+   "restriction": "RTN Jettison Area / Ground and Air Gunnery Area",
+   "activity": "Military operations",
+   "time": "H24",
+   "entry": "Only authorized aircraft by U-Tapao",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTR12",
+   "type": "R",
+   "name": "KO LUAM, PRACHUAP KHIRI KHAN",
+   "upper": "ALT 9 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     11.76666,
+     99.83333
+    ],
+    [
+     11.76653,
+     99.83481
+    ],
+    [
+     11.76616,
+     99.83624
+    ],
+    [
+     11.76554,
+     99.83758
+    ],
+    [
+     11.76471,
+     99.8388
+    ],
+    [
+     11.76368,
+     99.83985
+    ],
+    [
+     11.76249,
+     99.8407
+    ],
+    [
+     11.76118,
+     99.84132
+    ],
+    [
+     11.75978,
+     99.84171
+    ],
+    [
+     11.75833,
+     99.84184
+    ],
+    [
+     11.75688,
+     99.84171
+    ],
+    [
+     11.75548,
+     99.84132
+    ],
+    [
+     11.75417,
+     99.8407
+    ],
+    [
+     11.75298,
+     99.83985
+    ],
+    [
+     11.75195,
+     99.8388
+    ],
+    [
+     11.75112,
+     99.83758
+    ],
+    [
+     11.7505,
+     99.83624
+    ],
+    [
+     11.75013,
+     99.83481
+    ],
+    [
+     11.75,
+     99.83333
+    ],
+    [
+     11.75013,
+     99.83185
+    ],
+    [
+     11.7505,
+     99.83042
+    ],
+    [
+     11.75112,
+     99.82908
+    ],
+    [
+     11.75195,
+     99.82786
+    ],
+    [
+     11.75298,
+     99.82681
+    ],
+    [
+     11.75417,
+     99.82596
+    ],
+    [
+     11.75548,
+     99.82534
+    ],
+    [
+     11.75688,
+     99.82495
+    ],
+    [
+     11.75833,
+     99.82482
+    ],
+    [
+     11.75978,
+     99.82495
+    ],
+    [
+     11.76118,
+     99.82534
+    ],
+    [
+     11.76249,
+     99.82596
+    ],
+    [
+     11.76368,
+     99.82681
+    ],
+    [
+     11.76471,
+     99.82786
+    ],
+    [
+     11.76554,
+     99.82908
+    ],
+    [
+     11.76616,
+     99.83042
+    ],
+    [
+     11.76653,
+     99.83185
+    ],
+    [
+     11.76666,
+     99.83333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO LUAM, PRACHUAP KHIRI KHAN Circle of 0.5 NM radius centred on point 114530N 0995000E",
+   "restriction": "RTN Jettison Area",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "Prachuap Tower freq. 135.9 MHz or 236.6 MHz",
+   "contact": "Wing 5, Prachuap Air Force Base Prachuap Khirikhan Province, Tel. +663 260 3919"
+  },
+  {
+   "id": "VTR13",
+   "type": "R",
+   "name": "KO SAMET, RAYONG",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     12.31825,
+     101.35
+    ],
+    [
+     12.31646,
+     101.37102
+    ],
+    [
+     12.31112,
+     101.3914
+    ],
+    [
+     12.3024,
+     101.41052
+    ],
+    [
+     12.29058,
+     101.42779
+    ],
+    [
+     12.276,
+     101.44271
+    ],
+    [
+     12.25911,
+     101.4548
+    ],
+    [
+     12.24042,
+     101.46371
+    ],
+    [
+     12.22051,
+     101.46916
+    ],
+    [
+     12.19997,
+     101.47099
+    ],
+    [
+     12.17944,
+     101.46914
+    ],
+    [
+     12.15953,
+     101.46367
+    ],
+    [
+     12.14085,
+     101.45475
+    ],
+    [
+     12.12397,
+     101.44265
+    ],
+    [
+     12.1094,
+     101.42774
+    ],
+    [
+     12.09758,
+     101.41047
+    ],
+    [
+     12.08887,
+     101.39136
+    ],
+    [
+     12.08354,
+     101.371
+    ],
+    [
+     12.08175,
+     101.35
+    ],
+    [
+     12.08354,
+     101.329
+    ],
+    [
+     12.08887,
+     101.30864
+    ],
+    [
+     12.09758,
+     101.28953
+    ],
+    [
+     12.1094,
+     101.27226
+    ],
+    [
+     12.12397,
+     101.25735
+    ],
+    [
+     12.14085,
+     101.24525
+    ],
+    [
+     12.15953,
+     101.23633
+    ],
+    [
+     12.17944,
+     101.23086
+    ],
+    [
+     12.19997,
+     101.22901
+    ],
+    [
+     12.22051,
+     101.23084
+    ],
+    [
+     12.24042,
+     101.23629
+    ],
+    [
+     12.25911,
+     101.2452
+    ],
+    [
+     12.276,
+     101.25729
+    ],
+    [
+     12.29058,
+     101.27221
+    ],
+    [
+     12.3024,
+     101.28948
+    ],
+    [
+     12.31112,
+     101.3086
+    ],
+    [
+     12.31646,
+     101.32898
+    ],
+    [
+     12.31825,
+     101.35
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO SAMET, RAYONG Circle of 7.1 NM radius centred on point 121200N 1012100E",
+   "restriction": "RTN Jettison Area / Ground Gunnery Area",
+   "activity": "Military operations",
+   "time": "H24",
+   "entry": "Only authorized aircraft by U-Tapao",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTR15",
+   "type": "R",
+   "name": "UBON",
+   "upper": "ALT 8 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     15.17028,
+     104.93611
+    ],
+    [
+     15.17944,
+     104.945
+    ],
+    [
+     15.17944,
+     104.96361
+    ],
+    [
+     15.16167,
+     104.94694
+    ],
+    [
+     15.16167,
+     104.945
+    ],
+    [
+     15.17028,
+     104.93611
+    ]
+   ],
+   "approx": false,
+   "geom_text": "UBON Area bounded by lines joining successively the following points: 151013N 1045610E - 151046N 1045642E - 151046N 1045749E - 150942N 1045649E - 150942N 1045642E - 151013N 1045610E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "H24",
+   "entry": "Only authorized aircraft by RTAF",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz",
+   "contact": "Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43512, 43508"
+  },
+  {
+   "id": "VTR51",
+   "type": "R",
+   "name": "SONGKHLA",
+   "upper": "ALT 5 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     7.28333,
+     99.9
+    ],
+    [
+     7.28333,
+     99.98333
+    ],
+    [
+     7.25,
+     99.98333
+    ],
+    [
+     7.21667,
+     99.9
+    ],
+    [
+     7.28333,
+     99.9
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SONGKHLA Area bounded by lines joining successively the following points: 0717N 09954E - 0717N 09959E - 0715N 09959E - 0713N 09954E - 0717N 09954E",
+   "restriction": "RTAF Jettison Area",
+   "activity": "Jettison Area",
+   "time": "Sunrise to Sunset",
+   "entry": "Only authorized aircraft by RTAF",
+   "info": "contact BIG SHELL control freq. 127.0 MHz or 331.3 MHz",
+   "contact": "Air Defense Sector Operation Control 3, Tel. +667 726 8083"
+  },
+  {
+   "id": "VTR52",
+   "type": "R",
+   "name": "SONGKHLA",
+   "upper": "ALT 8 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     6.48333,
+     100.53333
+    ],
+    [
+     6.6,
+     100.53333
+    ],
+    [
+     6.6,
+     100.63333
+    ],
+    [
+     6.48333,
+     100.63333
+    ],
+    [
+     6.48333,
+     100.53333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SONGKHLA Area bounded by lines joining successively the following points: 0629N 10032E - 0636N 10032E - 0636N 10038E - 0629N 10038E - 0629N 10032E",
+   "restriction": "RTAF Jettison Area",
+   "activity": "Jettison Area",
+   "time": "Sunrise to Sunset",
+   "entry": "Only authorized aircraft by RTAF",
+   "info": "BIG SHELL control freq. 127.0 MHz or 331.3 MHz",
+   "contact": "Air Defense Sector Operation Control 3, Tel. +667 726 8083"
+  },
+  {
+   "id": "VTR62",
+   "type": "R",
+   "name": "EASTERN AREA",
+   "upper": "ALT 13 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     11.63333,
+     102.925
+    ],
+    [
+     11.5,
+     102.5
+    ],
+    [
+     12.1625,
+     102.57556
+    ],
+    [
+     12.93694,
+     102.21389
+    ],
+    [
+     13.83333,
+     102.21389
+    ],
+    [
+     14.46667,
+     103.16667
+    ],
+    [
+     14.75,
+     104.0
+    ],
+    [
+     14.75,
+     104.68333
+    ],
+    [
+     14.4,
+     104.85
+    ],
+    [
+     11.63333,
+     102.925
+    ]
+   ],
+   "approx": true,
+   "geom_text": "EASTERN AREA Area bounded by lines joining successively the following points: 113800N 1025530E - 113000N 1023000E - 120945N 1023432E - 125613N 1021250E - 135000N 1021250E - 142800N 1031000E - 144500N 1040000E - 144500N 1044100E - 142400N 1045100E - then westward along the Thai-Cambodian border to the starting point.",
+   "restriction": "RTN Area",
+   "activity": "Military operations",
+   "time": "Sunset to Sunrise",
+   "entry": "Only authorized aircraft by RTN",
+   "info": "Trat Approach freq. 120.25 MHz",
+   "contact": "Chanthaburi and Trat Border Defense Command, Tel. +663 931 2334, +663 931 1099"
+  },
+  {
+   "id": "VTR66",
+   "type": "R",
+   "name": "PHU PHAN PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     17.21053,
+     104.02216
+    ],
+    [
+     17.20926,
+     104.0373
+    ],
+    [
+     17.2055,
+     104.05198
+    ],
+    [
+     17.19937,
+     104.06575
+    ],
+    [
+     17.19104,
+     104.07819
+    ],
+    [
+     17.18077,
+     104.08893
+    ],
+    [
+     17.16887,
+     104.09764
+    ],
+    [
+     17.15572,
+     104.10406
+    ],
+    [
+     17.14169,
+     104.10798
+    ],
+    [
+     17.12723,
+     104.1093
+    ],
+    [
+     17.11277,
+     104.10797
+    ],
+    [
+     17.09875,
+     104.10403
+    ],
+    [
+     17.0856,
+     104.09761
+    ],
+    [
+     17.07371,
+     104.0889
+    ],
+    [
+     17.06345,
+     104.07815
+    ],
+    [
+     17.05513,
+     104.06571
+    ],
+    [
+     17.04899,
+     104.05195
+    ],
+    [
+     17.04524,
+     104.03729
+    ],
+    [
+     17.04397,
+     104.02216
+    ],
+    [
+     17.04524,
+     104.00703
+    ],
+    [
+     17.04899,
+     103.99237
+    ],
+    [
+     17.05513,
+     103.97861
+    ],
+    [
+     17.06345,
+     103.96617
+    ],
+    [
+     17.07371,
+     103.95542
+    ],
+    [
+     17.0856,
+     103.94671
+    ],
+    [
+     17.09875,
+     103.94029
+    ],
+    [
+     17.11277,
+     103.93635
+    ],
+    [
+     17.12723,
+     103.93502
+    ],
+    [
+     17.14169,
+     103.93634
+    ],
+    [
+     17.15572,
+     103.94026
+    ],
+    [
+     17.16887,
+     103.94668
+    ],
+    [
+     17.18077,
+     103.95539
+    ],
+    [
+     17.19104,
+     103.96613
+    ],
+    [
+     17.19937,
+     103.97857
+    ],
+    [
+     17.2055,
+     103.99234
+    ],
+    [
+     17.20926,
+     104.00702
+    ],
+    [
+     17.21053,
+     104.02216
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHU PHAN PALACE Circle of 5 NM radius centred on point 170738.10N 1040119.76E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "Notified by NOTAM",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Sakon Nakhon Approach, AEROTHAI",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR68",
+   "type": "R",
+   "name": "NAM PHONG",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     16.68016,
+     102.93311
+    ],
+    [
+     16.63636,
+     102.93498
+    ],
+    [
+     16.68035,
+     102.95185
+    ],
+    [
+     16.63744,
+     102.95231
+    ],
+    [
+     16.68016,
+     102.93311
+    ]
+   ],
+   "approx": false,
+   "geom_text": "NAM PHONG Area bounded by lines joining successively the following points: 164048.58N 1025559.19E - 163810.90N 1025605.94E - 164049.25N 1025706.67E - 163814.77N 1025708.31E",
+   "restriction": "RTAF Jettison Area",
+   "activity": "RTAF Jettison Area",
+   "time": "MON-FRI, 0000-1000",
+   "entry": "Only authorized aircraft by RTAF",
+   "info": "contact Khon Kaen Approach freq. 123.4 MHz or 236.6 MHz",
+   "contact": "Wing 23 Air Traffic Control branch Tel. +662 534 6000 ext 45502, 45503 or Nam Phong Tower, Tel. +662 534 6000 ext 42305"
+  },
+  {
+   "id": "VTR79",
+   "type": "R",
+   "name": "PHIMANMAS PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.66055,
+     100.98
+    ],
+    [
+     12.66042,
+     100.98148
+    ],
+    [
+     12.66005,
+     100.98292
+    ],
+    [
+     12.65943,
+     100.98427
+    ],
+    [
+     12.6586,
+     100.98549
+    ],
+    [
+     12.65757,
+     100.98654
+    ],
+    [
+     12.65638,
+     100.98739
+    ],
+    [
+     12.65507,
+     100.98802
+    ],
+    [
+     12.65367,
+     100.98841
+    ],
+    [
+     12.65222,
+     100.98853
+    ],
+    [
+     12.65077,
+     100.98841
+    ],
+    [
+     12.64937,
+     100.98802
+    ],
+    [
+     12.64806,
+     100.98739
+    ],
+    [
+     12.64687,
+     100.98654
+    ],
+    [
+     12.64584,
+     100.98549
+    ],
+    [
+     12.64501,
+     100.98427
+    ],
+    [
+     12.64439,
+     100.98292
+    ],
+    [
+     12.64402,
+     100.98148
+    ],
+    [
+     12.64389,
+     100.98
+    ],
+    [
+     12.64402,
+     100.97852
+    ],
+    [
+     12.64439,
+     100.97708
+    ],
+    [
+     12.64501,
+     100.97573
+    ],
+    [
+     12.64584,
+     100.97451
+    ],
+    [
+     12.64687,
+     100.97346
+    ],
+    [
+     12.64806,
+     100.97261
+    ],
+    [
+     12.64937,
+     100.97198
+    ],
+    [
+     12.65077,
+     100.97159
+    ],
+    [
+     12.65222,
+     100.97147
+    ],
+    [
+     12.65367,
+     100.97159
+    ],
+    [
+     12.65507,
+     100.97198
+    ],
+    [
+     12.65638,
+     100.97261
+    ],
+    [
+     12.65757,
+     100.97346
+    ],
+    [
+     12.6586,
+     100.97451
+    ],
+    [
+     12.65943,
+     100.97573
+    ],
+    [
+     12.66005,
+     100.97708
+    ],
+    [
+     12.66042,
+     100.97852
+    ],
+    [
+     12.66055,
+     100.98
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHIMANMAS PALACE Circle of 0.5 NM radius centred on point 123908N 1005848E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "Notified by NOTAM",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "U-Tapao Approach, Royal Thai Navy",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR80",
+   "type": "R",
+   "name": "SRAPATHUM PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.76463,
+     100.5322
+    ],
+    [
+     13.76437,
+     100.53518
+    ],
+    [
+     13.76362,
+     100.53806
+    ],
+    [
+     13.76239,
+     100.54077
+    ],
+    [
+     13.76073,
+     100.54322
+    ],
+    [
+     13.75868,
+     100.54534
+    ],
+    [
+     13.7563,
+     100.54705
+    ],
+    [
+     13.75367,
+     100.54831
+    ],
+    [
+     13.75086,
+     100.54909
+    ],
+    [
+     13.74797,
+     100.54935
+    ],
+    [
+     13.74508,
+     100.54909
+    ],
+    [
+     13.74227,
+     100.54831
+    ],
+    [
+     13.73964,
+     100.54705
+    ],
+    [
+     13.73726,
+     100.54533
+    ],
+    [
+     13.73521,
+     100.54322
+    ],
+    [
+     13.73355,
+     100.54077
+    ],
+    [
+     13.73232,
+     100.53806
+    ],
+    [
+     13.73157,
+     100.53518
+    ],
+    [
+     13.73131,
+     100.5322
+    ],
+    [
+     13.73157,
+     100.52922
+    ],
+    [
+     13.73232,
+     100.52634
+    ],
+    [
+     13.73355,
+     100.52363
+    ],
+    [
+     13.73521,
+     100.52118
+    ],
+    [
+     13.73726,
+     100.51907
+    ],
+    [
+     13.73964,
+     100.51735
+    ],
+    [
+     13.74227,
+     100.51609
+    ],
+    [
+     13.74508,
+     100.51531
+    ],
+    [
+     13.74797,
+     100.51505
+    ],
+    [
+     13.75086,
+     100.51531
+    ],
+    [
+     13.75367,
+     100.51609
+    ],
+    [
+     13.7563,
+     100.51735
+    ],
+    [
+     13.75868,
+     100.51906
+    ],
+    [
+     13.76073,
+     100.52118
+    ],
+    [
+     13.76239,
+     100.52363
+    ],
+    [
+     13.76362,
+     100.52634
+    ],
+    [
+     13.76437,
+     100.52922
+    ],
+    [
+     13.76463,
+     100.5322
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SRAPATHUM PALACE Circle of 1 NM radius centred on point 134452.69N 1003155.92E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR81",
+   "type": "R",
+   "name": "JAKRIBONGKOT PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.96341,
+     100.52414
+    ],
+    [
+     13.96315,
+     100.52712
+    ],
+    [
+     13.9624,
+     100.53001
+    ],
+    [
+     13.96117,
+     100.53272
+    ],
+    [
+     13.95951,
+     100.53517
+    ],
+    [
+     13.95746,
+     100.53729
+    ],
+    [
+     13.95508,
+     100.539
+    ],
+    [
+     13.95245,
+     100.54027
+    ],
+    [
+     13.94964,
+     100.54104
+    ],
+    [
+     13.94675,
+     100.5413
+    ],
+    [
+     13.94386,
+     100.54104
+    ],
+    [
+     13.94105,
+     100.54027
+    ],
+    [
+     13.93842,
+     100.539
+    ],
+    [
+     13.93604,
+     100.53729
+    ],
+    [
+     13.93399,
+     100.53517
+    ],
+    [
+     13.93233,
+     100.53272
+    ],
+    [
+     13.9311,
+     100.53001
+    ],
+    [
+     13.93035,
+     100.52712
+    ],
+    [
+     13.93009,
+     100.52414
+    ],
+    [
+     13.93035,
+     100.52116
+    ],
+    [
+     13.9311,
+     100.51827
+    ],
+    [
+     13.93233,
+     100.51556
+    ],
+    [
+     13.93399,
+     100.51311
+    ],
+    [
+     13.93604,
+     100.51099
+    ],
+    [
+     13.93842,
+     100.50928
+    ],
+    [
+     13.94105,
+     100.50801
+    ],
+    [
+     13.94386,
+     100.50724
+    ],
+    [
+     13.94675,
+     100.50698
+    ],
+    [
+     13.94964,
+     100.50724
+    ],
+    [
+     13.95245,
+     100.50801
+    ],
+    [
+     13.95508,
+     100.50928
+    ],
+    [
+     13.95746,
+     100.51099
+    ],
+    [
+     13.95951,
+     100.51311
+    ],
+    [
+     13.96117,
+     100.51556
+    ],
+    [
+     13.9624,
+     100.51827
+    ],
+    [
+     13.96315,
+     100.52116
+    ],
+    [
+     13.96341,
+     100.52414
+    ]
+   ],
+   "approx": false,
+   "geom_text": "JAKRIBONGKOT PALACE Circle of 1 NM radius centred on point 135648.31N 1003126.90E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR82",
+   "type": "R",
+   "name": "AMPHORN ROYAL PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.7893,
+     100.51119
+    ],
+    [
+     13.78904,
+     100.51417
+    ],
+    [
+     13.78829,
+     100.51706
+    ],
+    [
+     13.78706,
+     100.51976
+    ],
+    [
+     13.7854,
+     100.52221
+    ],
+    [
+     13.78335,
+     100.52433
+    ],
+    [
+     13.78097,
+     100.52604
+    ],
+    [
+     13.77834,
+     100.5273
+    ],
+    [
+     13.77553,
+     100.52808
+    ],
+    [
+     13.77264,
+     100.52834
+    ],
+    [
+     13.76975,
+     100.52808
+    ],
+    [
+     13.76694,
+     100.5273
+    ],
+    [
+     13.76431,
+     100.52604
+    ],
+    [
+     13.76193,
+     100.52433
+    ],
+    [
+     13.75988,
+     100.52221
+    ],
+    [
+     13.75822,
+     100.51976
+    ],
+    [
+     13.75699,
+     100.51705
+    ],
+    [
+     13.75624,
+     100.51417
+    ],
+    [
+     13.75598,
+     100.51119
+    ],
+    [
+     13.75624,
+     100.50821
+    ],
+    [
+     13.75699,
+     100.50533
+    ],
+    [
+     13.75822,
+     100.50262
+    ],
+    [
+     13.75988,
+     100.50017
+    ],
+    [
+     13.76193,
+     100.49805
+    ],
+    [
+     13.76431,
+     100.49634
+    ],
+    [
+     13.76694,
+     100.49508
+    ],
+    [
+     13.76975,
+     100.4943
+    ],
+    [
+     13.77264,
+     100.49404
+    ],
+    [
+     13.77553,
+     100.4943
+    ],
+    [
+     13.77834,
+     100.49508
+    ],
+    [
+     13.78097,
+     100.49634
+    ],
+    [
+     13.78335,
+     100.49805
+    ],
+    [
+     13.7854,
+     100.50017
+    ],
+    [
+     13.78706,
+     100.50262
+    ],
+    [
+     13.78829,
+     100.50532
+    ],
+    [
+     13.78904,
+     100.50821
+    ],
+    [
+     13.7893,
+     100.51119
+    ]
+   ],
+   "approx": false,
+   "geom_text": "AMPHORN ROYAL PALACE Circle of 1 NM radius centred on point 134621.50N 1003040.28E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR83",
+   "type": "R",
+   "name": "SUKOTHAI PALACE",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.79907,
+     100.50931
+    ],
+    [
+     13.79881,
+     100.51229
+    ],
+    [
+     13.79806,
+     100.51518
+    ],
+    [
+     13.79683,
+     100.51789
+    ],
+    [
+     13.79517,
+     100.52033
+    ],
+    [
+     13.79312,
+     100.52245
+    ],
+    [
+     13.79074,
+     100.52416
+    ],
+    [
+     13.78811,
+     100.52543
+    ],
+    [
+     13.7853,
+     100.5262
+    ],
+    [
+     13.78241,
+     100.52646
+    ],
+    [
+     13.77952,
+     100.5262
+    ],
+    [
+     13.77671,
+     100.52542
+    ],
+    [
+     13.77408,
+     100.52416
+    ],
+    [
+     13.7717,
+     100.52245
+    ],
+    [
+     13.76965,
+     100.52033
+    ],
+    [
+     13.76799,
+     100.51788
+    ],
+    [
+     13.76676,
+     100.51517
+    ],
+    [
+     13.76601,
+     100.51229
+    ],
+    [
+     13.76575,
+     100.50931
+    ],
+    [
+     13.76601,
+     100.50633
+    ],
+    [
+     13.76676,
+     100.50345
+    ],
+    [
+     13.76799,
+     100.50074
+    ],
+    [
+     13.76965,
+     100.49829
+    ],
+    [
+     13.7717,
+     100.49617
+    ],
+    [
+     13.77408,
+     100.49446
+    ],
+    [
+     13.77671,
+     100.4932
+    ],
+    [
+     13.77952,
+     100.49242
+    ],
+    [
+     13.78241,
+     100.49216
+    ],
+    [
+     13.7853,
+     100.49242
+    ],
+    [
+     13.78811,
+     100.49319
+    ],
+    [
+     13.79074,
+     100.49446
+    ],
+    [
+     13.79312,
+     100.49617
+    ],
+    [
+     13.79517,
+     100.49829
+    ],
+    [
+     13.79683,
+     100.50073
+    ],
+    [
+     13.79806,
+     100.50344
+    ],
+    [
+     13.79881,
+     100.50633
+    ],
+    [
+     13.79907,
+     100.50931
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SUKOTHAI PALACE Circle of 1 NM radius centred on point 134656.66N 1003033.51E",
+   "restriction": "Royal Residence Area Nature of hazard, activity : -",
+   "activity": "",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "Don Mueang Approach freq. 119.4 MHz or Bangkok Approach freq. 125.8 MHz or 262.5 MHz",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTR84",
+   "type": "R",
+   "name": "TIPPIMARN PALACE",
+   "upper": "ALT 7 500 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.50828,
+     101.52941
+    ],
+    [
+     14.50802,
+     101.5324
+    ],
+    [
+     14.50727,
+     101.53529
+    ],
+    [
+     14.50604,
+     101.53801
+    ],
+    [
+     14.50438,
+     101.54047
+    ],
+    [
+     14.50233,
+     101.54259
+    ],
+    [
+     14.49995,
+     101.54431
+    ],
+    [
+     14.49732,
+     101.54558
+    ],
+    [
+     14.49451,
+     101.54635
+    ],
+    [
+     14.49162,
+     101.54661
+    ],
+    [
+     14.48873,
+     101.54635
+    ],
+    [
+     14.48592,
+     101.54557
+    ],
+    [
+     14.48329,
+     101.54431
+    ],
+    [
+     14.48091,
+     101.54259
+    ],
+    [
+     14.47886,
+     101.54047
+    ],
+    [
+     14.4772,
+     101.53801
+    ],
+    [
+     14.47597,
+     101.53529
+    ],
+    [
+     14.47522,
+     101.5324
+    ],
+    [
+     14.47496,
+     101.52941
+    ],
+    [
+     14.47522,
+     101.52642
+    ],
+    [
+     14.47597,
+     101.52353
+    ],
+    [
+     14.4772,
+     101.52081
+    ],
+    [
+     14.47886,
+     101.51835
+    ],
+    [
+     14.48091,
+     101.51623
+    ],
+    [
+     14.48329,
+     101.51451
+    ],
+    [
+     14.48592,
+     101.51325
+    ],
+    [
+     14.48873,
+     101.51247
+    ],
+    [
+     14.49162,
+     101.51221
+    ],
+    [
+     14.49451,
+     101.51247
+    ],
+    [
+     14.49732,
+     101.51324
+    ],
+    [
+     14.49995,
+     101.51451
+    ],
+    [
+     14.50233,
+     101.51623
+    ],
+    [
+     14.50438,
+     101.51835
+    ],
+    [
+     14.50604,
+     101.52081
+    ],
+    [
+     14.50727,
+     101.52353
+    ],
+    [
+     14.50802,
+     101.52642
+    ],
+    [
+     14.50828,
+     101.52941
+    ]
+   ],
+   "approx": false,
+   "geom_text": "TIPPIMARN PALACE Circle of 1 NM radius centred on point 142929.82N 1013145.88E",
+   "restriction": "Royal Residence Area",
+   "activity": "-",
+   "time": "H24",
+   "entry": "As specified condition: Authorized aircraft; or HOSP or MEDEVAC aircraft, prior coordination with ATC is required . Any occurrence of entry into restricted area shall be reported to CAAT.",
+   "info": "OSCAR Control",
+   "contact": "CAAT, Air Navigation Service Standards Department"
+  },
+  {
+   "id": "VTD2",
+   "type": "D",
+   "name": "LOP BURI",
+   "upper": "ALT 6000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     15.12111,
+     100.16944
+    ],
+    [
+     15.11667,
+     100.83333
+    ],
+    [
+     14.91667,
+     100.83333
+    ],
+    [
+     14.91667,
+     101.09028
+    ],
+    [
+     14.71028,
+     101.09139
+    ],
+    [
+     14.61028,
+     101.09028
+    ],
+    [
+     14.61667,
+     100.15
+    ],
+    [
+     15.12111,
+     100.16944
+    ]
+   ],
+   "approx": false,
+   "geom_text": "LOP BURI Area bounded by lines joining successively the following points: 150716N 1001010E - 150700N 1005000E - 145500N 1005000E - 145500N 1010525E - 144237N 1010529E - 143637N 1010525E - 143700N 1000900E - 150716N 1001010E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Khok Kathiam Tower freq. 122.6 MHz or 238.6 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 2 Air Traffic Control branch, Tel. +662 534 6000 ext. 50520"
+  },
+  {
+   "id": "VTD3A",
+   "type": "D",
+   "name": "KABIN BURI/WATTANA NAKHON, PRACHIN BURI",
+   "upper": "FL 140",
+   "lower": "GND",
+   "poly": [
+    [
+     13.98333,
+     102.33333
+    ],
+    [
+     13.98333,
+     102.84528
+    ],
+    [
+     13.5,
+     102.36056
+    ],
+    [
+     13.5,
+     102.33333
+    ],
+    [
+     13.98333,
+     102.33333
+    ]
+   ],
+   "approx": true,
+   "geom_text": "KABIN BURI/WATTANA NAKHON, PRACHIN BURI Area bounded by lines joining successively the following points: 135900N 1022000E - 135900N 1025043E on the border then follow the boundary to 133000N 1022138E - 133000N 1022000E - 135900N 1022000E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wattana Nakhon Tower, Tel. +662 534 6000 ext. 42908, 42909"
+  },
+  {
+   "id": "VTD3B",
+   "type": "D",
+   "name": "KABIN BURI/WATTANA NAKHON, PRACHIN BURI",
+   "upper": "FL 140",
+   "lower": "GND",
+   "poly": [
+    [
+     13.98333,
+     101.9
+    ],
+    [
+     13.98333,
+     102.33333
+    ],
+    [
+     13.5,
+     102.33333
+    ],
+    [
+     13.5,
+     101.9
+    ],
+    [
+     13.98333,
+     101.9
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KABIN BURI/WATTANA NAKHON, PRACHIN BURI Area bounded by lines joining successively the following points: 135900N 1015400E - 135900N 1022000E - 133000N 1022000E - 133000N 1015400E - 135900N 1015400E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wattana Nakhon Tower, Tel. +662 534 6000 ext. 42908, 42909"
+  },
+  {
+   "id": "VTD5A",
+   "type": "D",
+   "name": "PRACHUAP, KHIRI KHAN",
+   "upper": "ALT 6500 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.13333,
+     99.56917
+    ],
+    [
+     12.13333,
+     100.16472
+    ],
+    [
+     11.78333,
+     100.06306
+    ],
+    [
+     11.78333,
+     99.6475
+    ],
+    [
+     12.13333,
+     99.56917
+    ]
+   ],
+   "approx": true,
+   "geom_text": "PRACHUAP, KHIRI KHAN Area bounded by lines joining successively the following points: 120800N 0993409E on boundary to 120800N 1000953E - 114700N 1000347E - 114700N 0993851E on boundary then follow the boundary to 120800N 0993409E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000-1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Prachuap Tower freq. 135.9 MHz or 351.1 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 5 Air Traffic Control branch, Tel. +662 534 6000 ext. 40555, 40556"
+  },
+  {
+   "id": "VTD5B",
+   "type": "D",
+   "name": "PRACHUAP, KHIRI KHAN",
+   "upper": "ALT 6500 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     11.78333,
+     99.6475
+    ],
+    [
+     11.78333,
+     100.06306
+    ],
+    [
+     11.4475,
+     99.91611
+    ],
+    [
+     11.4475,
+     99.40611
+    ],
+    [
+     11.78333,
+     99.6475
+    ]
+   ],
+   "approx": true,
+   "geom_text": "PRACHUAP, KHIRI KHAN Area bounded by lines joining successively the following points: 114700N 0993851E on boundary to 114700N 1000347E - 112651N 0995458E - 112651N 0992422E on boundary then follow the boundary to 114700N 0993851E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Prachuap Tower freq. 135.9 MHz or 351.1 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 5 Air Traffic Control branch, Tel. +662 534 6000 ext. 40555, 40556"
+  },
+  {
+   "id": "VTD6A",
+   "type": "D",
+   "name": "BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI",
+   "upper": "ALT 5000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.30306,
+     100.41694
+    ],
+    [
+     14.30556,
+     100.67083
+    ],
+    [
+     13.97222,
+     100.44472
+    ],
+    [
+     14.08333,
+     100.21417
+    ],
+    [
+     14.30306,
+     100.41694
+    ]
+   ],
+   "approx": false,
+   "geom_text": "BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI Area bounded by lines joining successively the following points: 141811N 1002501E - 141820N 1004015E - 135820N 1002641E - 140500N 1001251E - 141811N 1002501E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "Everyday, 2300 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Don Mueang Approach freq. 119.4 MHz or 262.5 MHz Pilots are advised to contact prior to entering.",
+   "contact": "604 Squadron, Tel. +662 534 6000 ext. 22553"
+  },
+  {
+   "id": "VTD6B",
+   "type": "D",
+   "name": "BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI",
+   "upper": "ALT 5000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.08333,
+     100.21417
+    ],
+    [
+     13.97222,
+     100.44472
+    ],
+    [
+     13.76778,
+     100.37361
+    ],
+    [
+     13.775,
+     100.21528
+    ],
+    [
+     14.08333,
+     100.21417
+    ]
+   ],
+   "approx": false,
+   "geom_text": "BANGKOK, NONTHABURI, NAKHON PATHOM, SUPHANBURI Area bounded by lines joining successively the following points: 140500N 1001251E - 135820N 1002641E - 134604N 1002225E - 134630N 1001255E - 140500N 1001251E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "Everyday, 2300 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Don Mueang Approach freq. 119.4 MHz or 262.5 MHz Pilots are advised to contact prior to entering.",
+   "contact": "604 Squadron, Tel. +662 534 6000 ext. 22553"
+  },
+  {
+   "id": "VTD8A",
+   "type": "D",
+   "name": "RATCHABURI",
+   "upper": "FL 460",
+   "lower": "GND",
+   "poly": [
+    [
+     13.81667,
+     99.38333
+    ],
+    [
+     13.90278,
+     99.97194
+    ],
+    [
+     13.43444,
+     100.11861
+    ],
+    [
+     13.0,
+     100.07056
+    ],
+    [
+     13.0,
+     99.66667
+    ],
+    [
+     13.81667,
+     99.38333
+    ]
+   ],
+   "approx": true,
+   "geom_text": "RATCHABURI Area bounded by lines joining successively the following points: 134900N 0992300E - 135410N 0995819E - 132604N 1000707E then follow the coastline westward to 130000N 1000414E - 130000N 0994000E - 134900N 0992300E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
+  },
+  {
+   "id": "VTD8B",
+   "type": "D",
+   "name": "RATCHABURI",
+   "upper": "ALT 12000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.53333,
+     100.26667
+    ],
+    [
+     13.46833,
+     100.22222
+    ],
+    [
+     13.43444,
+     100.11861
+    ],
+    [
+     13.90278,
+     99.97194
+    ],
+    [
+     13.93333,
+     100.18333
+    ],
+    [
+     13.8,
+     100.18333
+    ],
+    [
+     13.53333,
+     100.26667
+    ]
+   ],
+   "approx": true,
+   "geom_text": "RATCHABURI Area bounded by lines joining successively the following points: 133200N1001600E then follow the coastline westward to 132806N 1001320E - 132604N 1000707E - 135410N 0995819E - 135600N 1001100E - 134800N 1001100E - 133200N 1001600E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
+  },
+  {
+   "id": "VTD8C",
+   "type": "D",
+   "name": "KANCHANABURI",
+   "upper": "ALT 9000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.88139,
+     99.825
+    ],
+    [
+     13.81667,
+     99.38333
+    ],
+    [
+     14.25,
+     99.38333
+    ],
+    [
+     14.15833,
+     99.87389
+    ],
+    [
+     14.0912,
+     99.85111
+    ],
+    [
+     14.02218,
+     99.83535
+    ],
+    [
+     13.95203,
+     99.82636
+    ],
+    [
+     13.88139,
+     99.825
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KANCHANABURI Area bounded by lines joining successively the following points: 135253N 0994930E - 134900N 0992300E - 141500N 0992300E - 140930N 0995226E - then counterclockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 135253N 0994930E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
+  },
+  {
+   "id": "VTD8D",
+   "type": "D",
+   "name": "KANCHANABURI",
+   "upper": "ALT 6000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.93333,
+     100.18333
+    ],
+    [
+     13.88139,
+     99.825
+    ],
+    [
+     13.95203,
+     99.82636
+    ],
+    [
+     14.02218,
+     99.83535
+    ],
+    [
+     14.0912,
+     99.85111
+    ],
+    [
+     14.15833,
+     99.87389
+    ],
+    [
+     14.1,
+     100.18333
+    ],
+    [
+     13.93333,
+     100.18333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KANCHANABURI Area bounded by lines joining successively the following points: 135600N 1001100E - 135253N 0994930E - then clockwise along 45NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 140930N 0995226E - 140600N 1001100E - 135600N 1001100E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
+  },
+  {
+   "id": "VTD8E",
+   "type": "D",
+   "name": "SUPHAN BURI",
+   "upper": "ALT 8000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.15833,
+     99.87389
+    ],
+    [
+     14.25,
+     99.38333
+    ],
+    [
+     14.9,
+     99.95
+    ],
+    [
+     14.55111,
+     100.21944
+    ],
+    [
+     14.51433,
+     100.16295
+    ],
+    [
+     14.47509,
+     100.10849
+    ],
+    [
+     14.43136,
+     100.0578
+    ],
+    [
+     14.3835,
+     100.01128
+    ],
+    [
+     14.33187,
+     99.9693
+    ],
+    [
+     14.27686,
+     99.93216
+    ],
+    [
+     14.21891,
+     99.90015
+    ],
+    [
+     14.15833,
+     99.87389
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SUPHAN BURI Area bounded by lines joining successively the following points:140930N 0995226E -141500N 0992300E -145400N 0995700E -143304N 1001310E -then counter clockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 140930N 0995226E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522 Note: Training aircraft at FL200 and above will be authorized by Bangkok ACC."
+  },
+  {
+   "id": "VTD8F",
+   "type": "D",
+   "name": "SUPHAN BURI",
+   "upper": "ALT 6000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.1,
+     100.18333
+    ],
+    [
+     14.15833,
+     99.87389
+    ],
+    [
+     14.21891,
+     99.90015
+    ],
+    [
+     14.27686,
+     99.93216
+    ],
+    [
+     14.33187,
+     99.9693
+    ],
+    [
+     14.3835,
+     100.01128
+    ],
+    [
+     14.43136,
+     100.0578
+    ],
+    [
+     14.47509,
+     100.10849
+    ],
+    [
+     14.51433,
+     100.16295
+    ],
+    [
+     14.55111,
+     100.21944
+    ],
+    [
+     14.31667,
+     100.4
+    ],
+    [
+     14.1,
+     100.18333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SUPHAN BURI Area bounded by lines joining successively the following points: 140600N 1001100E - 140930N 0995226E - then clockwise along 45 NM arc radius centred on BKK VOR/DME (135336.8N 1003546.3E) to 143304N 1001310E - 141900N 1002400E - 140600N 1001100E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522 Note: Training aircraft at FL200 and above will be authorized by Bangkok ACC."
+  },
+  {
+   "id": "VTD8G",
+   "type": "D",
+   "name": "SUPHAN BURI",
+   "upper": "ALT 8000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.43278,
+     99.38333
+    ],
+    [
+     14.43278,
+     99.54222
+    ],
+    [
+     14.25,
+     99.38333
+    ],
+    [
+     14.43278,
+     99.38333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SUPHAN BURI Area bounded by lines joining successively the following points: 142558N 0992300E - 142558N 0993232E - 141500N 0992300E - 142558N 0992300E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1100 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "Kamphaeng Saen Approach freq. 127.75 MHz or 237.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Kamphaeng Saen Flying Training School Air Traffic Control branch, Tel. +662 534 6000 ext. 37517, 37522"
+  },
+  {
+   "id": "VTD20",
+   "type": "D",
+   "name": "HUA HIN",
+   "upper": "ALT 11 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     13.0,
+     99.61667
+    ],
+    [
+     13.0,
+     100.16667
+    ],
+    [
+     12.16667,
+     100.16667
+    ],
+    [
+     12.16244,
+     100.119
+    ],
+    [
+     12.1498,
+     100.07559
+    ],
+    [
+     12.14095,
+     100.03121
+    ],
+    [
+     12.13597,
+     99.9862
+    ],
+    [
+     12.1349,
+     99.94092
+    ],
+    [
+     12.13774,
+     99.89572
+    ],
+    [
+     12.14448,
+     99.85095
+    ],
+    [
+     12.15506,
+     99.80697
+    ],
+    [
+     12.1694,
+     99.76411
+    ],
+    [
+     12.18738,
+     99.72271
+    ],
+    [
+     12.20887,
+     99.6831
+    ],
+    [
+     12.2337,
+     99.64559
+    ],
+    [
+     12.26167,
+     99.61046
+    ],
+    [
+     12.29257,
+     99.578
+    ],
+    [
+     12.32615,
+     99.54846
+    ],
+    [
+     12.36216,
+     99.52207
+    ],
+    [
+     12.4003,
+     99.49904
+    ],
+    [
+     12.44028,
+     99.47955
+    ],
+    [
+     12.48179,
+     99.46375
+    ],
+    [
+     12.5245,
+     99.45178
+    ],
+    [
+     12.56808,
+     99.44372
+    ],
+    [
+     12.61218,
+     99.43965
+    ],
+    [
+     12.65646,
+     99.43959
+    ],
+    [
+     12.70057,
+     99.44355
+    ],
+    [
+     12.74417,
+     99.45151
+    ],
+    [
+     12.78691,
+     99.46339
+    ],
+    [
+     12.82845,
+     99.47911
+    ],
+    [
+     12.86847,
+     99.49854
+    ],
+    [
+     12.90666,
+     99.52154
+    ],
+    [
+     12.94271,
+     99.54792
+    ],
+    [
+     12.97633,
+     99.57749
+    ],
+    [
+     13.0,
+     99.61667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "HUA HIN Area bounded by lines joining the following points: 1300N 09937E - 1300N 10010E - 1210N 10010E - then along the arc of 30 NM radius centred on HHN DVOR/DME ( 123804.04N 0995704.23E ) 1300N 09937E Excluding Hua Hin CTR , Hua Hin TMA and G458",
+   "restriction": "Civil Flight Training Area",
+   "activity": "Flight school training",
+   "time": "Sunrise to Sunset",
+   "entry": "",
+   "info": "Hua Hin Approach freq. 126.2 MHz",
+   "contact": "-"
+  },
+  {
+   "id": "VTD21",
+   "type": "D",
+   "name": "SATTAHIP BAY",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.33333,
+     100.5
+    ],
+    [
+     12.66667,
+     100.5
+    ],
+    [
+     12.66667,
+     100.68
+    ],
+    [
+     12.33333,
+     100.68
+    ],
+    [
+     12.33333,
+     100.5
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SATTAHIP BAY Area 1 Area bounded by lines joining successively the following points: 1220N 10030E - 1240N 10030E - 1240N 10040.8E - 1220N 10040.8E - 1220N 10030E",
+   "restriction": "RTN Gun Training Range for surface ships",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD22",
+   "type": "D",
+   "name": "KO KHRAM, SATTAHIP",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     12.855,
+     100.66667
+    ],
+    [
+     12.855,
+     100.85
+    ],
+    [
+     12.66667,
+     100.85
+    ],
+    [
+     12.66667,
+     100.66667
+    ],
+    [
+     12.855,
+     100.66667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO KHRAM, SATTAHIP Area bounded by lines joining successively the following points: 1251.3N 10040E - 1251.3N 10051E - 1240N 10051E - 1240N 10040E - 1251.3N 10040E",
+   "restriction": "RTN Gun Training Range for surface ships and aircraft",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD23",
+   "type": "D",
+   "name": "KO PHAI",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.83333,
+     100.5
+    ],
+    [
+     13.08333,
+     100.5
+    ],
+    [
+     13.08333,
+     100.75
+    ],
+    [
+     12.83333,
+     100.75
+    ],
+    [
+     12.83333,
+     100.5
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO PHAI Area bounded by lines joining successively the following points: 1250N 10030E - 1305N 10030E - 1305N 10045E - 1250N 10045E - 1250N 10030E",
+   "restriction": "RTN Gun Training Range for surface ships and aircraft",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD24",
+   "type": "D",
+   "name": "KO CHANG, TRAT",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     12.13495,
+     102.24333
+    ],
+    [
+     12.13368,
+     102.25812
+    ],
+    [
+     12.12992,
+     102.27246
+    ],
+    [
+     12.12379,
+     102.28592
+    ],
+    [
+     12.11546,
+     102.29808
+    ],
+    [
+     12.10519,
+     102.30857
+    ],
+    [
+     12.0933,
+     102.31709
+    ],
+    [
+     12.08014,
+     102.32336
+    ],
+    [
+     12.06612,
+     102.32719
+    ],
+    [
+     12.05166,
+     102.32848
+    ],
+    [
+     12.0372,
+     102.32719
+    ],
+    [
+     12.02318,
+     102.32334
+    ],
+    [
+     12.01002,
+     102.31706
+    ],
+    [
+     11.99813,
+     102.30855
+    ],
+    [
+     11.98787,
+     102.29805
+    ],
+    [
+     11.97955,
+     102.2859
+    ],
+    [
+     11.97341,
+     102.27245
+    ],
+    [
+     11.96966,
+     102.25811
+    ],
+    [
+     11.96839,
+     102.24333
+    ],
+    [
+     11.96966,
+     102.22855
+    ],
+    [
+     11.97341,
+     102.21421
+    ],
+    [
+     11.97955,
+     102.20076
+    ],
+    [
+     11.98787,
+     102.18861
+    ],
+    [
+     11.99813,
+     102.17811
+    ],
+    [
+     12.01002,
+     102.1696
+    ],
+    [
+     12.02318,
+     102.16332
+    ],
+    [
+     12.0372,
+     102.15947
+    ],
+    [
+     12.05166,
+     102.15818
+    ],
+    [
+     12.06612,
+     102.15947
+    ],
+    [
+     12.08014,
+     102.1633
+    ],
+    [
+     12.0933,
+     102.16957
+    ],
+    [
+     12.10519,
+     102.17809
+    ],
+    [
+     12.11546,
+     102.18858
+    ],
+    [
+     12.12379,
+     102.20074
+    ],
+    [
+     12.12992,
+     102.2142
+    ],
+    [
+     12.13368,
+     102.22854
+    ],
+    [
+     12.13495,
+     102.24333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO CHANG, TRAT Circle of 5 NM radius centred on point 1203.1N 10214.6E",
+   "restriction": "RTN Gun Training Range for surface ships and aircraft",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz, if unable contact Trat Approach freq. 120.25 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD25",
+   "type": "D",
+   "name": "KO TAO, CHUMPHON",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     10.02661,
+     99.99667
+    ],
+    [
+     10.02534,
+     100.01136
+    ],
+    [
+     10.02158,
+     100.02559
+    ],
+    [
+     10.01545,
+     100.03895
+    ],
+    [
+     10.00712,
+     100.05103
+    ],
+    [
+     9.99685,
+     100.06145
+    ],
+    [
+     9.98496,
+     100.0699
+    ],
+    [
+     9.9718,
+     100.07613
+    ],
+    [
+     9.95778,
+     100.07994
+    ],
+    [
+     9.94332,
+     100.08122
+    ],
+    [
+     9.92886,
+     100.07993
+    ],
+    [
+     9.91484,
+     100.07611
+    ],
+    [
+     9.90168,
+     100.06988
+    ],
+    [
+     9.88979,
+     100.06143
+    ],
+    [
+     9.87953,
+     100.05101
+    ],
+    [
+     9.87121,
+     100.03893
+    ],
+    [
+     9.86507,
+     100.02558
+    ],
+    [
+     9.86132,
+     100.01135
+    ],
+    [
+     9.86005,
+     99.99667
+    ],
+    [
+     9.86132,
+     99.98199
+    ],
+    [
+     9.86507,
+     99.96776
+    ],
+    [
+     9.87121,
+     99.95441
+    ],
+    [
+     9.87953,
+     99.94233
+    ],
+    [
+     9.88979,
+     99.93191
+    ],
+    [
+     9.90168,
+     99.92346
+    ],
+    [
+     9.91484,
+     99.91723
+    ],
+    [
+     9.92886,
+     99.91341
+    ],
+    [
+     9.94332,
+     99.91212
+    ],
+    [
+     9.95778,
+     99.9134
+    ],
+    [
+     9.9718,
+     99.91721
+    ],
+    [
+     9.98496,
+     99.92344
+    ],
+    [
+     9.99685,
+     99.93189
+    ],
+    [
+     10.00712,
+     99.94231
+    ],
+    [
+     10.01545,
+     99.95439
+    ],
+    [
+     10.02158,
+     99.96775
+    ],
+    [
+     10.02534,
+     99.98198
+    ],
+    [
+     10.02661,
+     99.99667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KO TAO, CHUMPHON Circle of 5 NM radius centred on point 0956.6N 09959.8E",
+   "restriction": "RTN Weapon Training Range for surface ships and aircraft",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "Samui Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 7, Surat Thani Air Force Base, Tel. +667 744 1132"
+  },
+  {
+   "id": "VTD26",
+   "type": "D",
+   "name": "CHONG SAMAE SAN, SATTAHIP",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     12.55833,
+     100.92167
+    ],
+    [
+     12.62167,
+     100.92167
+    ],
+    [
+     12.62167,
+     100.955
+    ],
+    [
+     12.55833,
+     100.955
+    ],
+    [
+     12.55833,
+     100.92167
+    ]
+   ],
+   "approx": false,
+   "geom_text": "CHONG SAMAE SAN, SATTAHIP Area bounded by lines joining successively the following points: 1233.5N 10055.3E - 1237.3N 10055.3E - 1237.3N 10057.3E - 1233.5N 10057.3E - 1233.5N 10055.3E",
+   "restriction": "RTN Gun Training Range",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD27",
+   "type": "D",
+   "name": "PONG NAM RON, CHANTHABURI",
+   "upper": "ALT 8 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     12.92,
+     102.285
+    ],
+    [
+     12.84333,
+     102.34
+    ],
+    [
+     12.93,
+     102.38
+    ],
+    [
+     12.99167,
+     102.35667
+    ],
+    [
+     12.92,
+     102.285
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PONG NAM RON, CHANTHABURI Area bounded by lines joining successively the following points: 1255.2N 10217.1E - 1250.6N 10220.4E - 1255.8N 10222.8E - 1259.5N 10221.4E - 1255.2N 10217.1E",
+   "restriction": "RTN Gun Training Range",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD28",
+   "type": "D",
+   "name": "SATTAHIP",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     12.84167,
+     100.82833
+    ],
+    [
+     12.855,
+     100.86167
+    ],
+    [
+     12.78,
+     100.89167
+    ],
+    [
+     12.76333,
+     100.86
+    ],
+    [
+     12.84167,
+     100.82833
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SATTAHIP Area bounded by lines joining successively the following points: 1250.5N 10049.7E - 1251.3N 10051.7E - 1246.8N 10053.5E - 1245.8N 10051.6E - 1250.5N 10049.7E",
+   "restriction": "RTN Gun Training Range",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD29",
+   "type": "D",
+   "name": "HIN RAKIT PATTANI",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     6.7833,
+     101.73333
+    ],
+    [
+     6.78254,
+     101.74207
+    ],
+    [
+     6.78028,
+     101.75054
+    ],
+    [
+     6.7766,
+     101.75849
+    ],
+    [
+     6.77161,
+     101.76567
+    ],
+    [
+     6.76545,
+     101.77187
+    ],
+    [
+     6.75831,
+     101.7769
+    ],
+    [
+     6.75042,
+     101.78061
+    ],
+    [
+     6.742,
+     101.78288
+    ],
+    [
+     6.73333,
+     101.78364
+    ],
+    [
+     6.72465,
+     101.78288
+    ],
+    [
+     6.71624,
+     101.78061
+    ],
+    [
+     6.70834,
+     101.7769
+    ],
+    [
+     6.70121,
+     101.77187
+    ],
+    [
+     6.69505,
+     101.76567
+    ],
+    [
+     6.69006,
+     101.75848
+    ],
+    [
+     6.68638,
+     101.75054
+    ],
+    [
+     6.68412,
+     101.74207
+    ],
+    [
+     6.68336,
+     101.73333
+    ],
+    [
+     6.68412,
+     101.72459
+    ],
+    [
+     6.68638,
+     101.71612
+    ],
+    [
+     6.69006,
+     101.70818
+    ],
+    [
+     6.69505,
+     101.70099
+    ],
+    [
+     6.70121,
+     101.69479
+    ],
+    [
+     6.70834,
+     101.68976
+    ],
+    [
+     6.71624,
+     101.68605
+    ],
+    [
+     6.72465,
+     101.68378
+    ],
+    [
+     6.73333,
+     101.68302
+    ],
+    [
+     6.742,
+     101.68378
+    ],
+    [
+     6.75042,
+     101.68605
+    ],
+    [
+     6.75831,
+     101.68976
+    ],
+    [
+     6.76545,
+     101.69479
+    ],
+    [
+     6.77161,
+     101.70099
+    ],
+    [
+     6.7766,
+     101.70817
+    ],
+    [
+     6.78028,
+     101.71612
+    ],
+    [
+     6.78254,
+     101.72459
+    ],
+    [
+     6.7833,
+     101.73333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "HIN RAKIT PATTANI Circle of 3 NM radius centred on point 0644N 10144E",
+   "restriction": "RTN Weapon Training Range for surface ships and aircraft",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "Narathiwat Approach freq. 125.55 MHz Pilots are advised to contact prior to entering.",
+   "contact": "2nd Naval Area Command, Tel. +667 432 5804"
+  },
+  {
+   "id": "VTD30",
+   "type": "D",
+   "name": "W NAKHON RATCHASIMA",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     14.81825,
+     101.26328
+    ],
+    [
+     16.33483,
+     102.17981
+    ],
+    [
+     16.06819,
+     102.47978
+    ],
+    [
+     14.99325,
+     101.99653
+    ],
+    [
+     14.71828,
+     101.37994
+    ],
+    [
+     14.81825,
+     101.26328
+    ]
+   ],
+   "approx": false,
+   "geom_text": "W NAKHON RATCHASIMA Area 1 Area bounded by lines joining successively the following points: 144905.7N 1011547.8E - 162005.4N 1021047.3E - 160405.5N 1022847.2E - 145935.7N 1015947.5E - 144305.8N 1012247.8E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1000",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
+  },
+  {
+   "id": "VTD30",
+   "type": "D",
+   "name": "W NAKHON RATCHASIMA",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     15.15158,
+     102.32981
+    ],
+    [
+     16.00153,
+     102.71308
+    ],
+    [
+     15.81822,
+     103.363
+    ],
+    [
+     15.21825,
+     103.363
+    ],
+    [
+     15.15158,
+     102.32981
+    ]
+   ],
+   "approx": false,
+   "geom_text": "W NAKHON RATCHASIMA Area 2 Area bounded by lines joining successively the following points: 150905.7N 1021947.3E - 160005.5N 1024247.1E - 154905.6N 1032146.8E - 151305.7N 1032146.8E",
+   "restriction": "",
+   "activity": "",
+   "time": "",
+   "entry": "",
+   "info": "",
+   "contact": ""
+  },
+  {
+   "id": "VTD32",
+   "type": "D",
+   "name": "NAKHON RATCHASIMA",
+   "upper": "ALT 5 500 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     15.76777,
+     102.07272
+    ],
+    [
+     15.75507,
+     102.22297
+    ],
+    [
+     15.71736,
+     102.3686
+    ],
+    [
+     15.65579,
+     102.50514
+    ],
+    [
+     15.57226,
+     102.6284
+    ],
+    [
+     15.46933,
+     102.73463
+    ],
+    [
+     15.35016,
+     102.8206
+    ],
+    [
+     15.21839,
+     102.88371
+    ],
+    [
+     15.07804,
+     102.92208
+    ],
+    [
+     14.93339,
+     102.9346
+    ],
+    [
+     14.78883,
+     102.92094
+    ],
+    [
+     14.64876,
+     102.88156
+    ],
+    [
+     14.51742,
+     102.8177
+    ],
+    [
+     14.39877,
+     102.73134
+    ],
+    [
+     14.2964,
+     102.62511
+    ],
+    [
+     14.2134,
+     102.50224
+    ],
+    [
+     14.15227,
+     102.36645
+    ],
+    [
+     14.11483,
+     102.22183
+    ],
+    [
+     14.10223,
+     102.07272
+    ],
+    [
+     14.11483,
+     101.92361
+    ],
+    [
+     14.15227,
+     101.77899
+    ],
+    [
+     14.2134,
+     101.6432
+    ],
+    [
+     14.2964,
+     101.52033
+    ],
+    [
+     14.39877,
+     101.4141
+    ],
+    [
+     14.51742,
+     101.32774
+    ],
+    [
+     14.64876,
+     101.26388
+    ],
+    [
+     14.78883,
+     101.2245
+    ],
+    [
+     14.93339,
+     101.21084
+    ],
+    [
+     15.07804,
+     101.22336
+    ],
+    [
+     15.21839,
+     101.26173
+    ],
+    [
+     15.35016,
+     101.32484
+    ],
+    [
+     15.46933,
+     101.41081
+    ],
+    [
+     15.57226,
+     101.51704
+    ],
+    [
+     15.65579,
+     101.6403
+    ],
+    [
+     15.71736,
+     101.77684
+    ],
+    [
+     15.75507,
+     101.92247
+    ],
+    [
+     15.76777,
+     102.07272
+    ]
+   ],
+   "approx": false,
+   "geom_text": "NAKHON RATCHASIMA Circle of 50 NM radius centred on point KRT TACAN ( 145606.0N 1020421.8E ). Excluding Khorat Control Zone and Buri Ram Terminal Control Area .",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1400",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
+  },
+  {
+   "id": "VTD33",
+   "type": "D",
+   "name": "NAKHON SAWAN, CHAI NAT Area1",
+   "upper": "FL 240",
+   "lower": "GND",
+   "poly": [
+    [
+     15.6905,
+     99.72924
+    ],
+    [
+     15.69004,
+     99.85633
+    ],
+    [
+     15.11565,
+     100.04414
+    ],
+    [
+     15.00172,
+     99.95479
+    ],
+    [
+     15.6905,
+     99.72924
+    ]
+   ],
+   "approx": false,
+   "geom_text": "NAKHON SAWAN, CHAI NAT Area1 Area bounded by lines joining successively the following points: 154125.79N 0994345.28E - 154124.14N 0995122.80E - 150656.33N 1000238.89E - 150006.18N 0995717.24E - 154125.79N 0994345.28E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Takhli Approach freq. 124.0 MHz or 325.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 4 Air Traffic Control branch, Tel. +662 534 6000 ext 53544, 53546"
+  },
+  {
+   "id": "VTD34",
+   "type": "D",
+   "name": "PHETCHABUN, PHICHIT",
+   "upper": "FL 280",
+   "lower": "GND",
+   "poly": [
+    [
+     15.21822,
+     101.02997
+    ],
+    [
+     15.21822,
+     100.44669
+    ],
+    [
+     15.40153,
+     100.36339
+    ],
+    [
+     16.27307,
+     100.36336
+    ],
+    [
+     16.28334,
+     100.40775
+    ],
+    [
+     16.29492,
+     100.4516
+    ],
+    [
+     16.31013,
+     100.49424
+    ],
+    [
+     16.32885,
+     100.53534
+    ],
+    [
+     16.35092,
+     100.57459
+    ],
+    [
+     16.3762,
+     100.61169
+    ],
+    [
+     16.40448,
+     100.64636
+    ],
+    [
+     16.43555,
+     100.67834
+    ],
+    [
+     16.46918,
+     100.70737
+    ],
+    [
+     16.5051,
+     100.73325
+    ],
+    [
+     16.54305,
+     100.75576
+    ],
+    [
+     16.58283,
+     100.77451
+    ],
+    [
+     16.53481,
+     101.44656
+    ],
+    [
+     15.21822,
+     101.02997
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHETCHABUN, PHICHIT Area 1 Area bounded by lines joining successively the following points: 151305.60N 1010147.90E - 151305.60N 1002648.10E - 152405.50N 1002148.20E - 161623.05N 1002148.10E - then follow the arc 30 NM counter clockwise from PSL DVOR/DME (164613.34N 1001728.70E) to 163458.20N 1004628.25E - 163205.30N 1012647.60E - 151305.60N 1010147.90E Excluding Airway W21",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Takhli Approach freq. 124.0 MHz or 325.0 MHz or Phetchabun Approach freq. 126 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 4 Air Traffic Control branch, Tel. +662 534 6000 ext 53544, 53546"
+  },
+  {
+   "id": "VTD41A",
+   "type": "D",
+   "name": "MAE RIM, CHIANG MAI",
+   "upper": "FL 460",
+   "lower": "GND",
+   "poly": [
+    [
+     19.69139,
+     98.28167
+    ],
+    [
+     20.3375,
+     99.80806
+    ],
+    [
+     18.87194,
+     99.80806
+    ],
+    [
+     18.85444,
+     99.12194
+    ],
+    [
+     18.86677,
+     99.11322
+    ],
+    [
+     18.87844,
+     99.10356
+    ],
+    [
+     18.88926,
+     99.09284
+    ],
+    [
+     18.89913,
+     99.08115
+    ],
+    [
+     18.90797,
+     99.06857
+    ],
+    [
+     18.91573,
+     99.05522
+    ],
+    [
+     18.92232,
+     99.04118
+    ],
+    [
+     18.92771,
+     99.02658
+    ],
+    [
+     18.93185,
+     99.01153
+    ],
+    [
+     18.93471,
+     98.99615
+    ],
+    [
+     18.93625,
+     98.98056
+    ],
+    [
+     18.93648,
+     98.96489
+    ],
+    [
+     18.93611,
+     98.94917
+    ],
+    [
+     19.69139,
+     98.28167
+    ]
+   ],
+   "approx": true,
+   "geom_text": "MAE RIM, CHIANG MAI Area bounded by lines joining successively the following points: 194129N 0981654E on Thai Myanmar border then follow the boundary to 202015N 0994829E - 185219N 0994829E - 185116N 0990719E then follow 10 NM arc counterclockwise from CHM TACAN (184612N 0985812E) to 185610N 0985657E - 194129N 0981654E Excluding Chiang Mai TMA and Chiang Rai TMA",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Chiang Mai Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 41 Air Traffic Control branch, Tel. +662 534 6000 ext 57504, 57503"
+  },
+  {
+   "id": "VTD41B",
+   "type": "D",
+   "name": "CHOM THONG, CHIANG MAI",
+   "upper": "FL 460",
+   "lower": "GND",
+   "poly": [
+    [
+     18.78333,
+     97.76194
+    ],
+    [
+     18.78333,
+     98.8
+    ],
+    [
+     18.33333,
+     98.96667
+    ],
+    [
+     17.68917,
+     98.96667
+    ],
+    [
+     17.5,
+     98.0
+    ],
+    [
+     18.78333,
+     97.76194
+    ]
+   ],
+   "approx": true,
+   "geom_text": "CHOM THONG, CHIANG MAI Area bounded by lines joining successively the following points: 184700N 0974543E - 184700N 0984800E - 182000N 0985800E - 174121N 0985800E - 173000N 0980000E on Thai-Myanmar border then follow the boundary to starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "FOCAL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Chiang Mai Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 41 Air Traffic Control branch, Tel. +662 534 6000 ext 57504, 57503"
+  },
+  {
+   "id": "VTD43",
+   "type": "D",
+   "name": "LOP BURI",
+   "upper": "FL 350",
+   "lower": "GND",
+   "poly": [
+    [
+     15.21822,
+     100.79667
+    ],
+    [
+     16.45147,
+     101.92983
+    ],
+    [
+     16.33483,
+     102.17981
+    ],
+    [
+     14.81825,
+     101.26328
+    ],
+    [
+     15.21822,
+     100.79667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "LOP BURI Area bounded by lines joining successively the following points: 151305.6N 1004748.0E - 162705.3N 1015547.4E - 162005.4N 1021047.3E - 144905.7N 1011547.8E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0100-0900",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 129.75 MHz or 285.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
+  },
+  {
+   "id": "VTD44",
+   "type": "D",
+   "name": "UBON, YASOTHON",
+   "upper": "FL 200",
+   "lower": "GND",
+   "poly": [
+    [
+     15.35,
+     104.63333
+    ],
+    [
+     15.35,
+     103.36667
+    ],
+    [
+     16.25,
+     103.36667
+    ],
+    [
+     15.35,
+     104.63333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "UBON, YASOTHON Area bounded by lines joining successively the following points: 152100N 1043800E - 152100N 1032200E - 161500N 1032200E - 152100N 1043800E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1000",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43506, 43502"
+  },
+  {
+   "id": "VTD45",
+   "type": "D",
+   "name": "UBON, SI SA KET",
+   "upper": "UNL",
+   "lower": "ALT 3 000 ft",
+   "poly": [
+    [
+     14.96667,
+     105.61667
+    ],
+    [
+     15.06667,
+     105.0
+    ],
+    [
+     15.03333,
+     104.86667
+    ],
+    [
+     14.63333,
+     103.66667
+    ],
+    [
+     14.41667,
+     103.66667
+    ],
+    [
+     14.96667,
+     105.61667
+    ]
+   ],
+   "approx": true,
+   "geom_text": "UBON, SI SA KET Area bounded by lines joining successively the following points: 145800N 1053700E - 150400N 1050000E - 150200N 1045200E - 143800N 1034000E - 142500N 1034000E - then follow the boundary to 145800N 1053700E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1300",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 or 331.3 MHz, if unable contact Khorat Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 21 Air Traffic Control branch, Tel. +662 534 6000 ext 43506, 43502"
+  },
+  {
+   "id": "VTD46",
+   "type": "D",
+   "name": "NAKHON RATCHASIMA",
+   "upper": "FL 200",
+   "lower": "GND",
+   "poly": [
+    [
+     14.6,
+     102.03333
+    ],
+    [
+     14.85,
+     102.41667
+    ],
+    [
+     14.85,
+     103.41667
+    ],
+    [
+     14.36667,
+     103.41667
+    ],
+    [
+     13.93333,
+     102.78333
+    ],
+    [
+     13.93333,
+     101.93333
+    ],
+    [
+     14.6,
+     102.03333
+    ]
+   ],
+   "approx": true,
+   "geom_text": "NAKHON RATCHASIMA Area bounded by 20 NM arc from KRT TACAN ( 145606.0N 1020421.8E ) beginning at point 143600N 1020200E - then counter clockwise, along the arc to 145100N 1022500E - 145100N 1032500E - 142200N 1032500E - then follow the boundary to 135600N 1024700E - 135600N 1015600E - 143600N 1020200E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1000",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 or 331.3 MHz , if unable contact Khorat Approach freq. 129.75 MHz or 349.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 1 Air Traffic Control branch, Tel. +662 534 6000 ext 40555, 40556"
+  },
+  {
+   "id": "VTD47",
+   "type": "D",
+   "name": "SAMUT SAKHON",
+   "upper": "UNL",
+   "lower": "FL 120",
+   "poly": [
+    [
+     13.78333,
+     100.45
+    ],
+    [
+     13.63333,
+     100.45
+    ],
+    [
+     13.48333,
+     100.35
+    ],
+    [
+     13.53333,
+     100.26667
+    ],
+    [
+     13.8,
+     100.18333
+    ],
+    [
+     13.78333,
+     100.45
+    ]
+   ],
+   "approx": true,
+   "geom_text": "SAMUT SAKHON Area bounded by lines joining successively the following points: 134700N 1002700E - 133800N 1002700E - 132900N 1002100E - then follow the coast line to 133200N 1001600E - 134800N 1001100E - 134700N 1002700E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0130-0930",
+   "entry": "",
+   "info": "Bangkok Approach freq. 124.35 MHz or 274.5 MHz Pilots are advised to contact prior to entering.",
+   "contact": "-"
+  },
+  {
+   "id": "VTD54",
+   "type": "D",
+   "name": "UBON",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     15.48333,
+     104.81667
+    ],
+    [
+     15.48333,
+     104.88333
+    ],
+    [
+     16.23333,
+     104.91667
+    ],
+    [
+     16.23333,
+     104.15
+    ],
+    [
+     15.48015,
+     104.75627
+    ],
+    [
+     15.49274,
+     104.78294
+    ],
+    [
+     15.48333,
+     104.81667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "UBON Area bounded by 15 NM arc from UBL TACAN ( 151544.70N 1045300.00E ) beginning at point 152900N 1044900E - 152900N 1045300E - 161400N 1045500E - 161400N 1040900E - then along the arc to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Ubon Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 21 Air Traffic Control branch , Tel. +662 534 6000 ext 43506, 43502"
+  },
+  {
+   "id": "VTD55",
+   "type": "D",
+   "name": "UBON",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     15.48333,
+     104.88333
+    ],
+    [
+     16.23333,
+     104.91667
+    ],
+    [
+     16.23333,
+     105.01667
+    ],
+    [
+     15.6,
+     105.61667
+    ],
+    [
+     15.45,
+     105.0
+    ],
+    [
+     15.46448,
+     105.0357
+    ],
+    [
+     15.45072,
+     105.0536
+    ],
+    [
+     15.43549,
+     105.07016
+    ],
+    [
+     15.41891,
+     105.08527
+    ],
+    [
+     15.40111,
+     105.0988
+    ],
+    [
+     15.38223,
+     105.11064
+    ],
+    [
+     15.36241,
+     105.12071
+    ],
+    [
+     15.34181,
+     105.12892
+    ],
+    [
+     15.3206,
+     105.13521
+    ],
+    [
+     15.29893,
+     105.13954
+    ],
+    [
+     15.27698,
+     105.14186
+    ],
+    [
+     15.25491,
+     105.14217
+    ],
+    [
+     15.23291,
+     105.14046
+    ],
+    [
+     15.21113,
+     105.13675
+    ],
+    [
+     15.18976,
+     105.13106
+    ],
+    [
+     15.16895,
+     105.12344
+    ],
+    [
+     15.14888,
+     105.11394
+    ],
+    [
+     15.12969,
+     105.10265
+    ],
+    [
+     15.11154,
+     105.08966
+    ],
+    [
+     15.09456,
+     105.07506
+    ],
+    [
+     15.07889,
+     105.05896
+    ],
+    [
+     15.06466,
+     105.0415
+    ],
+    [
+     15.05196,
+     105.02281
+    ],
+    [
+     15.04091,
+     105.00303
+    ],
+    [
+     15.03158,
+     104.98232
+    ],
+    [
+     15.02406,
+     104.96084
+    ],
+    [
+     15.01839,
+     104.93876
+    ],
+    [
+     15.01462,
+     104.91625
+    ],
+    [
+     15.01278,
+     104.89348
+    ],
+    [
+     15.01289,
+     104.87064
+    ],
+    [
+     15.01494,
+     104.84789
+    ],
+    [
+     15.01892,
+     104.82542
+    ],
+    [
+     15.0248,
+     104.80339
+    ],
+    [
+     15.03253,
+     104.78199
+    ],
+    [
+     15.04206,
+     104.76138
+    ],
+    [
+     15.0533,
+     104.74172
+    ],
+    [
+     15.06617,
+     104.72315
+    ],
+    [
+     15.08057,
+     104.70584
+    ],
+    [
+     15.09639,
+     104.6899
+    ],
+    [
+     15.1135,
+     104.67547
+    ],
+    [
+     15.13178,
+     104.66266
+    ],
+    [
+     15.15107,
+     104.65157
+    ],
+    [
+     15.17124,
+     104.64228
+    ],
+    [
+     15.19211,
+     104.63487
+    ],
+    [
+     15.21354,
+     104.6294
+    ],
+    [
+     15.23535,
+     104.62591
+    ],
+    [
+     15.25737,
+     104.62442
+    ],
+    [
+     15.27943,
+     104.62496
+    ],
+    [
+     15.30136,
+     104.62751
+    ],
+    [
+     15.32299,
+     104.63205
+    ],
+    [
+     15.34414,
+     104.63856
+    ],
+    [
+     15.36466,
+     104.64698
+    ],
+    [
+     15.38438,
+     104.65725
+    ],
+    [
+     15.40315,
+     104.66929
+    ],
+    [
+     15.42082,
+     104.683
+    ],
+    [
+     15.43726,
+     104.69827
+    ],
+    [
+     15.45233,
+     104.71499
+    ],
+    [
+     15.46592,
+     104.73303
+    ],
+    [
+     15.47792,
+     104.75225
+    ],
+    [
+     15.48824,
+     104.77249
+    ],
+    [
+     15.49679,
+     104.7936
+    ],
+    [
+     15.50352,
+     104.81541
+    ],
+    [
+     15.50836,
+     104.83775
+    ],
+    [
+     15.51128,
+     104.86045
+    ],
+    [
+     15.48333,
+     104.88333
+    ]
+   ],
+   "approx": true,
+   "geom_text": "UBON Area bounded by 15 NM arc from UBL TACAN ( 151544.70N 1045300.00E ) beginning at point 152900N 1045300E - 161400N 1045500E - 161400N 1050100E then clockwise along the FIR boundary to 153600N 1053700E - 152700N 1050000E - then along the arc to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Ubon Approach freq. 123.5 MHz or 257.8 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 46 Air Traffic Control branch , Tel. +662 534 6000 ext 55164, 55157"
+  },
+  {
+   "id": "VTD56",
+   "type": "D",
+   "name": "SONGKHLA",
+   "upper": "FL 460",
+   "lower": "GND",
+   "poly": [
+    [
+     8.14528,
+     100.66139
+    ],
+    [
+     8.30722,
+     100.86639
+    ],
+    [
+     6.93333,
+     101.41667
+    ],
+    [
+     6.93333,
+     100.76667
+    ],
+    [
+     7.18333,
+     100.61667
+    ],
+    [
+     8.14528,
+     100.66139
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SONGKHLA Area bounded by lines joining successively the following points: 080843N 1003941E - 081826N 1005159E - 065600N 1012500E - 065600N 1004600E - 071100N 1003700E - 080843N 1003941E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "BIG SHELL Control freq. 127.0 MHz or 331.3 MHz, if unable contact Hat Yai Approach freq. 126.7 MHz or 301.5 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 56 Air Traffic Control branch, Tel. +662 534 6000 ext. 63555, 63520"
+  },
+  {
+   "id": "VTD58",
+   "type": "D",
+   "name": "SURAT THANI",
+   "upper": "FL 390",
+   "lower": "GND",
+   "poly": [
+    [
+     11.43176,
+     99.39845
+    ],
+    [
+     10.85808,
+     99.67132
+    ],
+    [
+     9.42167,
+     99.66833
+    ],
+    [
+     8.55034,
+     98.55876
+    ],
+    [
+     8.52508,
+     98.59515
+    ],
+    [
+     8.49845,
+     98.63034
+    ],
+    [
+     8.46886,
+     98.66303
+    ],
+    [
+     8.43656,
+     98.69297
+    ],
+    [
+     8.40178,
+     98.71992
+    ],
+    [
+     8.3648,
+     98.74369
+    ],
+    [
+     8.32589,
+     98.76409
+    ],
+    [
+     8.28537,
+     98.78096
+    ],
+    [
+     8.24354,
+     98.79417
+    ],
+    [
+     8.20073,
+     98.80363
+    ],
+    [
+     8.15726,
+     98.80925
+    ],
+    [
+     8.11347,
+     98.81101
+    ],
+    [
+     8.0697,
+     98.80889
+    ],
+    [
+     8.02628,
+     98.8029
+    ],
+    [
+     7.98354,
+     98.79309
+    ],
+    [
+     7.94182,
+     98.77954
+    ],
+    [
+     7.90143,
+     98.76236
+    ],
+    [
+     7.86269,
+     98.74167
+    ],
+    [
+     7.8259,
+     98.71764
+    ],
+    [
+     7.79133,
+     98.69046
+    ],
+    [
+     7.75925,
+     98.66032
+    ],
+    [
+     7.72991,
+     98.62747
+    ],
+    [
+     7.70353,
+     98.59215
+    ],
+    [
+     7.68031,
+     98.55464
+    ],
+    [
+     7.66044,
+     98.51523
+    ],
+    [
+     7.64406,
+     98.47422
+    ],
+    [
+     7.63131,
+     98.43191
+    ],
+    [
+     7.62227,
+     98.38865
+    ],
+    [
+     7.61702,
+     98.34475
+    ],
+    [
+     7.6156,
+     98.30056
+    ],
+    [
+     7.61802,
+     98.25641
+    ],
+    [
+     7.62425,
+     98.21265
+    ],
+    [
+     7.63427,
+     98.1696
+    ],
+    [
+     7.64797,
+     98.1276
+    ],
+    [
+     7.66527,
+     98.08697
+    ],
+    [
+     7.68602,
+     98.04802
+    ],
+    [
+     7.71008,
+     98.01106
+    ],
+    [
+     7.73725,
+     97.97636
+    ],
+    [
+     7.76732,
+     97.94418
+    ],
+    [
+     7.80007,
+     97.91479
+    ],
+    [
+     7.83525,
+     97.88841
+    ],
+    [
+     7.87258,
+     97.86523
+    ],
+    [
+     7.91177,
+     97.84544
+    ],
+    [
+     7.95253,
+     97.82918
+    ],
+    [
+     7.99455,
+     97.8166
+    ],
+    [
+     8.03749,
+     97.80778
+    ],
+    [
+     8.08104,
+     97.80279
+    ],
+    [
+     8.12485,
+     97.80167
+    ],
+    [
+     8.16859,
+     97.80444
+    ],
+    [
+     8.21192,
+     97.81106
+    ],
+    [
+     8.25451,
+     97.8215
+    ],
+    [
+     8.29603,
+     97.83568
+    ],
+    [
+     8.33616,
+     97.85348
+    ],
+    [
+     8.37459,
+     97.87476
+    ],
+    [
+     8.41103,
+     97.89938
+    ],
+    [
+     8.44519,
+     97.92713
+    ],
+    [
+     8.47681,
+     97.95781
+    ],
+    [
+     8.50565,
+     97.99117
+    ],
+    [
+     8.53149,
+     98.02697
+    ],
+    [
+     8.55412,
+     98.06492
+    ],
+    [
+     8.57337,
+     98.10473
+    ],
+    [
+     8.58909,
+     98.1461
+    ],
+    [
+     8.60116,
+     98.18871
+    ],
+    [
+     8.60949,
+     98.23223
+    ],
+    [
+     8.61401,
+     98.27631
+    ],
+    [
+     8.61469,
+     98.32063
+    ],
+    [
+     8.61152,
+     98.36484
+    ],
+    [
+     8.60721,
+     98.40916
+    ],
+    [
+     9.13833,
+     97.855
+    ],
+    [
+     9.48333,
+     97.26667
+    ],
+    [
+     9.83333,
+     98.41667
+    ],
+    [
+     10.00124,
+     98.6183
+    ],
+    [
+     11.43176,
+     99.39845
+    ]
+   ],
+   "approx": true,
+   "geom_text": "SURAT THANI Area bounded by lines joining successively the following points: 112554.32N 0992354.41E Thai-Myanmar border to 105129.09N 0994016.74E - 092518.00N 0994006.00E - 083301.22N 0983331.55E - then follow the arc 30 NM clockwise from PUT DVOR/DME ( 080654.83N 0981822.69E ) to 083625.96N 0982432.98E - 090818.00N 0975118.00E - 092900.00N 0971600.00E - 095000.00N 0982500.00E - 100004.46N 0983705.87E - then follow the boundary to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "BIG SHELL Control freq. 127.0 MHz or 331.3 MHz, if unable, contact Surat Approach freq. 119.3 MHz or 236.6 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
+  },
+  {
+   "id": "VTD59",
+   "type": "D",
+   "name": "SURAT THANI",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     10.96667,
+     99.1
+    ],
+    [
+     10.96667,
+     99.575
+    ],
+    [
+     9.55,
+     99.18333
+    ],
+    [
+     9.54576,
+     99.14536
+    ],
+    [
+     9.54506,
+     99.1081
+    ],
+    [
+     9.54112,
+     99.07104
+    ],
+    [
+     9.53397,
+     99.03449
+    ],
+    [
+     9.52366,
+     98.99871
+    ],
+    [
+     9.51028,
+     98.964
+    ],
+    [
+     9.49393,
+     98.93063
+    ],
+    [
+     9.47474,
+     98.89885
+    ],
+    [
+     9.45285,
+     98.86891
+    ],
+    [
+     9.42845,
+     98.84105
+    ],
+    [
+     9.40171,
+     98.81549
+    ],
+    [
+     9.37285,
+     98.79242
+    ],
+    [
+     9.3421,
+     98.77202
+    ],
+    [
+     9.30969,
+     98.75445
+    ],
+    [
+     9.27587,
+     98.73985
+    ],
+    [
+     9.24092,
+     98.72833
+    ],
+    [
+     9.2051,
+     98.71999
+    ],
+    [
+     9.1687,
+     98.71487
+    ],
+    [
+     9.13199,
+     98.71303
+    ],
+    [
+     9.09526,
+     98.71447
+    ],
+    [
+     9.0588,
+     98.71919
+    ],
+    [
+     9.0229,
+     98.72714
+    ],
+    [
+     8.98782,
+     98.73827
+    ],
+    [
+     8.95385,
+     98.75248
+    ],
+    [
+     8.92126,
+     98.76966
+    ],
+    [
+     8.89028,
+     98.78969
+    ],
+    [
+     8.87167,
+     98.825
+    ],
+    [
+     8.55,
+     98.55833
+    ],
+    [
+     8.56962,
+     98.51635
+    ],
+    [
+     8.58676,
+     98.47337
+    ],
+    [
+     8.59993,
+     98.42898
+    ],
+    [
+     8.60901,
+     98.38355
+    ],
+    [
+     8.61394,
+     98.33747
+    ],
+    [
+     8.61467,
+     98.29113
+    ],
+    [
+     8.61119,
+     98.24492
+    ],
+    [
+     8.6,
+     98.2
+    ],
+    [
+     9.48333,
+     97.6
+    ],
+    [
+     9.48333,
+     98.26667
+    ],
+    [
+     9.83333,
+     98.41667
+    ],
+    [
+     9.91667,
+     98.53333
+    ],
+    [
+     10.96667,
+     99.1
+    ]
+   ],
+   "approx": true,
+   "geom_text": "SURAT THANI Area 1 Area bounded by lines joining successively the following points: 1058.0N 09906.0E Thai-Myanmar border to 1058.0N 09934.5E - 0933.0N 09911.0E - then follow the arc 25 NM counter clockwise from STN DVOR/DME ( 090746.24N 0990805.09E ) to 0852.3N 09849.5E - 0833.0N 09833.5E - then follow the arc 30 NM counter clockwise from PUT DVOR/DME ( 080654.83N 0981822.69E ) to 0836.0N 09812.0E - 0929.0N 09736.0E - 0929.0N 09816.0E - 0950.0N 09825.0E - 0955.0N 09832.0E - then follow the boundary to the starting point. Excluding Chumpon TMA and Ranong TMA and CTR .",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1700",
+   "entry": "",
+   "info": "BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Surat Approach freq. 123.35 MHz or 240.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
+  },
+  {
+   "id": "VTD60",
+   "type": "D",
+   "name": "SURAT THANI",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     9.35235,
+     99.53028
+    ],
+    [
+     10.57101,
+     99.91087
+    ],
+    [
+     9.80855,
+     100.29855
+    ],
+    [
+     8.30233,
+     100.26397
+    ],
+    [
+     8.30796,
+     99.73118
+    ],
+    [
+     8.51889,
+     99.61065
+    ],
+    [
+     8.96199,
+     99.61137
+    ],
+    [
+     9.35235,
+     99.53028
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SURAT THANI Area 1 Area bounded by lines joining successively the following points: 092108.45N 0993149.01E - 103415.64N 0995439.12E - 094830.78N 1001754.79E - 081808.39N 1001550.28E - 081828.66N 0994352.24E - 083107.99N 0993638.33E - 085743.18N 0993640.94E - 092108.45N 0993149.01E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1700",
+   "entry": "",
+   "info": "BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Samui Approach freq. 129.6 MHz or 305.4 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
+  },
+  {
+   "id": "VTD61",
+   "type": "D",
+   "name": "SURAT THANI",
+   "upper": "ALT 7 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     8.75,
+     99.48333
+    ],
+    [
+     8.45,
+     99.85
+    ],
+    [
+     8.26667,
+     99.78333
+    ],
+    [
+     8.46667,
+     98.7
+    ],
+    [
+     8.76167,
+     98.95333
+    ],
+    [
+     8.74004,
+     98.98566
+    ],
+    [
+     8.72818,
+     99.02243
+    ],
+    [
+     8.7197,
+     99.06015
+    ],
+    [
+     8.71467,
+     99.09849
+    ],
+    [
+     8.71313,
+     99.13714
+    ],
+    [
+     8.7151,
+     99.17577
+    ],
+    [
+     8.72056,
+     99.21405
+    ],
+    [
+     8.72946,
+     99.25167
+    ],
+    [
+     8.74167,
+     99.28833
+    ],
+    [
+     8.67333,
+     99.32833
+    ],
+    [
+     8.75,
+     99.48333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "SURAT THANI Area bounded by lines joining successively the following points: 0845.0N 09929.0E - 0827.0N 09951.0E - 0816.0N 09947.0E - 0828.0N 09842.0E - 0845.7N 09857.2E - then follow the arc 25 NM from STN DVOR/DME ( 090746.24N 0990805.09E ) counter clockwise to 0844.5N 09917.3E - 0840.4N 09919.7E - 0845.0N 09929.0E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2300-1700",
+   "entry": "",
+   "info": "BIG SHELL control freq. 127.0 MHz or 331.3 MHz, if unable contact Surat Approach freq. 123.35 MHz or 240.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 7 Air Traffic Control branch, Tel. +662 534 6000 ext 65556, 65513"
+  },
+  {
+   "id": "VTD63",
+   "type": "D",
+   "name": "UDON, LOEI",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     17.84667,
+     102.59167
+    ],
+    [
+     17.82133,
+     102.55259
+    ],
+    [
+     17.79857,
+     102.51274
+    ],
+    [
+     17.77255,
+     102.47517
+    ],
+    [
+     17.74345,
+     102.44018
+    ],
+    [
+     17.71152,
+     102.40804
+    ],
+    [
+     17.677,
+     102.379
+    ],
+    [
+     17.64017,
+     102.35329
+    ],
+    [
+     17.60131,
+     102.33111
+    ],
+    [
+     17.56073,
+     102.31263
+    ],
+    [
+     17.51875,
+     102.298
+    ],
+    [
+     17.4757,
+     102.28732
+    ],
+    [
+     17.43191,
+     102.28068
+    ],
+    [
+     17.38774,
+     102.27813
+    ],
+    [
+     17.34353,
+     102.27968
+    ],
+    [
+     17.29962,
+     102.28532
+    ],
+    [
+     17.25636,
+     102.295
+    ],
+    [
+     17.21408,
+     102.30865
+    ],
+    [
+     17.17313,
+     102.32615
+    ],
+    [
+     17.13381,
+     102.34737
+    ],
+    [
+     17.09643,
+     102.37213
+    ],
+    [
+     17.06129,
+     102.40024
+    ],
+    [
+     17.02866,
+     102.43148
+    ],
+    [
+     17.0,
+     102.46667
+    ],
+    [
+     17.0,
+     101.5
+    ],
+    [
+     17.73333,
+     101.5
+    ],
+    [
+     17.84667,
+     102.59167
+    ]
+   ],
+   "approx": true,
+   "geom_text": "UDON, LOEI Area 1 Udon, Loei Area bounded by lines joining successively the following points: 1750.8N 10235.5E on Thai-Laotian border then follow the arc 30 NM counter clockwise from UDN TACAN ( 1722.9N 10248.1E ) to 1700.0N 10228.0E - 1700.0N 10130.0E - 1744.0N 10130.0E - then eastward along the Thai-Laotian border to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
+  },
+  {
+   "id": "VTD64",
+   "type": "D",
+   "name": "UDON, NONG KHAI (North Area)",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     17.91667,
+     102.78333
+    ],
+    [
+     17.88333,
+     102.79167
+    ],
+    [
+     17.88013,
+     102.83802
+    ],
+    [
+     17.87513,
+     102.88404
+    ],
+    [
+     17.86627,
+     102.92942
+    ],
+    [
+     17.85363,
+     102.9738
+    ],
+    [
+     17.83731,
+     103.01682
+    ],
+    [
+     17.81744,
+     103.05816
+    ],
+    [
+     17.79416,
+     103.09748
+    ],
+    [
+     17.76767,
+     103.13449
+    ],
+    [
+     17.73817,
+     103.16888
+    ],
+    [
+     17.70589,
+     103.20041
+    ],
+    [
+     17.67108,
+     103.22881
+    ],
+    [
+     17.63403,
+     103.25387
+    ],
+    [
+     17.59501,
+     103.2754
+    ],
+    [
+     17.55433,
+     103.29322
+    ],
+    [
+     17.51231,
+     103.30721
+    ],
+    [
+     17.46927,
+     103.31726
+    ],
+    [
+     17.4255,
+     103.3225
+    ],
+    [
+     17.53233,
+     104.68933
+    ],
+    [
+     17.91667,
+     102.78333
+    ]
+   ],
+   "approx": true,
+   "geom_text": "UDON, NONG KHAI (North Area) Area bounded by lines joining successively the following points: 1755.0N 10247.0E on Thai-Laotian border to 1753.0N 10247.5E - then follow the arc 30 NM clockwise from UDN TACAN ( 1722.9N 10248.1E ) to 1725.53N 10319.35E - 1731.94N 10441.36E then northward along the Thai-Laotian border to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
+  },
+  {
+   "id": "VTD64",
+   "type": "D",
+   "name": "UDON, NONG KHAI (South Area)",
+   "upper": "UNL",
+   "lower": "GND",
+   "poly": [
+    [
+     17.4255,
+     103.3225
+    ],
+    [
+     17.37799,
+     103.32522
+    ],
+    [
+     17.33045,
+     103.32241
+    ],
+    [
+     17.28338,
+     103.31488
+    ],
+    [
+     17.23722,
+     103.30269
+    ],
+    [
+     17.19236,
+     103.28596
+    ],
+    [
+     17.15,
+     103.26333
+    ],
+    [
+     16.5,
+     104.15333
+    ],
+    [
+     16.5,
+     104.66667
+    ],
+    [
+     17.53233,
+     104.68933
+    ],
+    [
+     17.4255,
+     103.3225
+    ]
+   ],
+   "approx": true,
+   "geom_text": "UDON, NONG KHAI (South Area) Area bounded by lines joining successively the following points: 1725.53N 10319.35E then follow the arc 30 NM clockwise from UDN TACAN (1722.9N 10248.1E) to1709.0N 10315.8E -1630.0N 10409.2E - 1630.0N 10440.0E then northward along the Thai-Laotian border to 1731.94N 10441.36E then to the starting point.",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 2200-1700",
+   "entry": "",
+   "info": "OSCAR Control freq. 127.0 MHz or 331.3 MHz, if unable contact Udon Approach freq. 126.2 MHz or 265.9 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 23 Air Traffic Control branch, Tel. +662 534 6000 ext 45512, 45502"
+  },
+  {
+   "id": "VTD65",
+   "type": "D",
+   "name": "NORTHEASTERN AREA",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     16.98311,
+     102.96667
+    ],
+    [
+     16.97804,
+     103.02715
+    ],
+    [
+     16.96299,
+     103.08578
+    ],
+    [
+     16.93841,
+     103.14078
+    ],
+    [
+     16.90506,
+     103.19046
+    ],
+    [
+     16.86395,
+     103.23331
+    ],
+    [
+     16.81634,
+     103.26804
+    ],
+    [
+     16.76367,
+     103.29358
+    ],
+    [
+     16.70756,
+     103.30918
+    ],
+    [
+     16.64971,
+     103.31436
+    ],
+    [
+     16.59188,
+     103.30897
+    ],
+    [
+     16.53582,
+     103.29319
+    ],
+    [
+     16.48323,
+     103.26751
+    ],
+    [
+     16.43571,
+     103.23272
+    ],
+    [
+     16.39471,
+     103.18986
+    ],
+    [
+     16.36145,
+     103.14025
+    ],
+    [
+     16.33695,
+     103.08539
+    ],
+    [
+     16.32194,
+     103.02694
+    ],
+    [
+     16.31689,
+     102.96667
+    ],
+    [
+     16.32194,
+     102.9064
+    ],
+    [
+     16.33695,
+     102.84795
+    ],
+    [
+     16.36145,
+     102.79309
+    ],
+    [
+     16.39471,
+     102.74348
+    ],
+    [
+     16.43571,
+     102.70062
+    ],
+    [
+     16.48323,
+     102.66583
+    ],
+    [
+     16.53582,
+     102.64015
+    ],
+    [
+     16.59188,
+     102.62437
+    ],
+    [
+     16.64971,
+     102.61898
+    ],
+    [
+     16.70756,
+     102.62416
+    ],
+    [
+     16.76367,
+     102.63976
+    ],
+    [
+     16.81634,
+     102.6653
+    ],
+    [
+     16.86395,
+     102.70003
+    ],
+    [
+     16.90506,
+     102.74288
+    ],
+    [
+     16.93841,
+     102.79256
+    ],
+    [
+     16.96299,
+     102.84756
+    ],
+    [
+     16.97804,
+     102.90619
+    ],
+    [
+     16.98311,
+     102.96667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "NORTHEASTERN AREA A circle 20 NM radius centred on point 1639.0N 10258.0E",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring Bombing / Air Firing Area",
+   "time": "MON - FRI, 0000-1000",
+   "entry": "",
+   "info": "Khon Kaen Approach freq. 123.4 MHz or 240.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Air Operation Division, Tel. +662 280 2499"
+  },
+  {
+   "id": "VTD67",
+   "type": "D",
+   "name": "KANCHANABURI",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     14.9,
+     98.5
+    ],
+    [
+     14.9,
+     99.95
+    ],
+    [
+     14.25,
+     99.38333
+    ],
+    [
+     13.81667,
+     99.38333
+    ],
+    [
+     13.81667,
+     99.23333
+    ],
+    [
+     14.58333,
+     98.5
+    ],
+    [
+     14.9,
+     98.5
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KANCHANABURI Area bounded by lines joining successively the following points: 1454.0N 09830.0E - 1454.0N 09957.0E - 1415.0N 09923.0E - 1349.0N 09923.0E - 1349.0N 09914.0E - 1435.0N 09830.0E - 1454.0N 09830.0E",
+   "restriction": "RTA Flying Training",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "Kanchanaburi Tower freq. 122.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Air Operation Division, Tel. +662 280 2499"
+  },
+  {
+   "id": "VTD70",
+   "type": "D",
+   "name": "CHANTHANBURI",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     12.88333,
+     102.21667
+    ],
+    [
+     12.88333,
+     101.88333
+    ],
+    [
+     13.21667,
+     101.88333
+    ],
+    [
+     13.21667,
+     102.21667
+    ],
+    [
+     12.88333,
+     102.21667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "CHANTHANBURI Area bounded by the line joining the following points 1253N 10213E - 1253N 10153E - 1313N 10153E - 1313N 10213E (Banchankhtem Kitchakut District Chanthaburi Province)",
+   "restriction": "RTN Flight Training Area",
+   "activity": "Millitary flight training area",
+   "time": "MON - FRI, 0130-0930 except public holidays",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD71",
+   "type": "D",
+   "name": "GULF OF THAILAND",
+   "upper": "FL 300",
+   "lower": "GND",
+   "poly": [
+    [
+     11.0,
+     101.58333
+    ],
+    [
+     11.0,
+     101.08333
+    ],
+    [
+     12.0,
+     100.75
+    ],
+    [
+     12.0,
+     101.58333
+    ],
+    [
+     11.0,
+     101.58333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "GULF OF THAILAND Area bounded by the line joining the following points: 1100N 10135E - 1100N 10105E - 1200N 10045E - 1200N 10135E",
+   "restriction": "RTN Flight Training Area",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "U-Tapao Approach freq. 119.7 MHz or 273.3 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Royal Thai Naval Air Division, Tel. +663 824 5193, +663 824 5196"
+  },
+  {
+   "id": "VTD74",
+   "type": "D",
+   "name": "PHANGNGA",
+   "upper": "FL 150",
+   "lower": "GND",
+   "poly": [
+    [
+     9.25,
+     97.25
+    ],
+    [
+     9.25,
+     97.66667
+    ],
+    [
+     8.75,
+     97.66667
+    ],
+    [
+     8.75,
+     97.25
+    ],
+    [
+     9.25,
+     97.25
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHANGNGA Area bounded by the lines joining successively the following points: Area 1 091500N 0971500E - 091500N 0974000E - 084500N 0974000E - 084500N 0971500E - 091500N 0971500E",
+   "restriction": "RTN Weapon Training Range for surface ships",
+   "activity": "Military operations",
+   "time": "Notified by NOTAM",
+   "entry": "",
+   "info": "Phuket Approach freq. 124.7 MHz or 284.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "3rd Naval Area Command, Tel. +667 639 1590"
+  },
+  {
+   "id": "VTD75",
+   "type": "D",
+   "name": "KHON KAEN",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     16.5,
+     102.61667
+    ],
+    [
+     16.21667,
+     102.36667
+    ],
+    [
+     16.5,
+     102.28333
+    ],
+    [
+     16.5,
+     102.61667
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KHON KAEN Area bounded by the lines joining successively the following points: 163000N 1023700E - 161300N 1022200E - 163000N 1021700E - 163000N 1023700E",
+   "restriction": "Civil Flight Training Area",
+   "activity": "Flight school training",
+   "time": "SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM",
+   "entry": "",
+   "info": "Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering.",
+   "contact": "-"
+  },
+  {
+   "id": "VTD76",
+   "type": "D",
+   "name": "KHON KAEN",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     16.28333,
+     102.83333
+    ],
+    [
+     16.33333,
+     103.25
+    ],
+    [
+     16.0,
+     103.25
+    ],
+    [
+     16.0,
+     102.83333
+    ],
+    [
+     16.28333,
+     102.83333
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KHON KAEN Area bounded by the lines joining successively the following point: 161700N 1025000E - 162000N 1031500E - 160000N 1031500E - 160000N 1025000E - 161700N 1025000E",
+   "restriction": "Civil Flight Training Area",
+   "activity": "Flight school training",
+   "time": "SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM",
+   "entry": "",
+   "info": "Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering.",
+   "contact": "-"
+  },
+  {
+   "id": "VTD77",
+   "type": "D",
+   "name": "KHON KAEN / ROI-ET",
+   "upper": "ALT 6 000 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     16.0,
+     103.65417
+    ],
+    [
+     15.77083,
+     103.40833
+    ],
+    [
+     15.79956,
+     103.37059
+    ],
+    [
+     15.8364,
+     103.34191
+    ],
+    [
+     15.87561,
+     103.31686
+    ],
+    [
+     15.91687,
+     103.29567
+    ],
+    [
+     15.95984,
+     103.2785
+    ],
+    [
+     16.00413,
+     103.26551
+    ],
+    [
+     16.04939,
+     103.25681
+    ],
+    [
+     16.09523,
+     103.25248
+    ],
+    [
+     16.14125,
+     103.25255
+    ],
+    [
+     16.18707,
+     103.25704
+    ],
+    [
+     16.2323,
+     103.2659
+    ],
+    [
+     16.27656,
+     103.27906
+    ],
+    [
+     16.31946,
+     103.29641
+    ],
+    [
+     16.36065,
+     103.31781
+    ],
+    [
+     16.39977,
+     103.34308
+    ],
+    [
+     16.43649,
+     103.372
+    ],
+    [
+     16.46667,
+     103.40833
+    ],
+    [
+     16.23333,
+     103.65417
+    ],
+    [
+     16.0,
+     103.65417
+    ]
+   ],
+   "approx": false,
+   "geom_text": "KHON KAEN / ROI-ET Area bounded by the lines joining successively the following point: 160000N 1033915E - 154615N 1032430E - then along the arc of 30 NM radius centred on ROT DVOR/DME ( 160700.59N 1034619.45E ) 162800N 1032430E - 161400N 1033915E - then along the arc of 10 NM radius centred on ROT DVOR/DME to starting point.",
+   "restriction": "Civil Flight Training Area",
+   "activity": "Flight school training",
+   "time": "SAT and SUN, 2300 - 1400 after this period will be notified by NOTAM",
+   "entry": "",
+   "info": "Roi Et Approach freq. 125.4MHz, if unable contact Khon Kaen Tower Pilots are advised to contact prior to entering.",
+   "contact": "-"
+  },
+  {
+   "id": "VTD461",
+   "type": "D",
+   "name": "PHITSANULOK",
+   "upper": "ALT 6500 ft",
+   "lower": "GND",
+   "poly": [
+    [
+     16.8825,
+     99.3725
+    ],
+    [
+     16.88333,
+     99.91722
+    ],
+    [
+     15.87111,
+     100.25611
+    ],
+    [
+     15.38333,
+     100.25306
+    ],
+    [
+     15.38333,
+     100.08333
+    ],
+    [
+     15.87111,
+     99.71417
+    ],
+    [
+     16.8825,
+     99.3725
+    ]
+   ],
+   "approx": false,
+   "geom_text": "PHITSANULOK Area bounded by lines joining successively the following points: 165257N 0992221E - 165300N 0995502E - 155216N 1001522E - 152300N 1001511E - 152300N 1000500E - 155216N 0994251E - 165257N 0992221E Excluding Phitsanulok TMA AND Sukhothai TMA",
+   "restriction": "RTAF Flying Training",
+   "activity": "High speed combat manoeuvring",
+   "time": "MON - FRI, 0000 - 1000 Planned activation time and level to be specified in AUP/UUP or NOTAM.",
+   "entry": "",
+   "info": "FOCAL freq. 127.0 MHz or 331.3 MHz, if unable contact Phitsanulok Approach freq. 120.7 MHz or 284.0 MHz Pilots are advised to contact prior to entering.",
+   "contact": "Wing 46 Air Traffic Control branch , Tel. +662 534 6000 ext. 55164, 55157"
   }
  ]
 }
