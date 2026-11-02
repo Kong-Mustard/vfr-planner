@@ -125,7 +125,47 @@ def freqs_of(text):
     return out
 
 
-def parse_ad2(icao, html):
+def section_text(soup, start_pat, end_pat, limit=8000):
+    """ข้อความระหว่างหัวข้อ เช่น AD 2.22 → AD 2.23"""
+    h = None
+    for t in soup.find_all(["h1", "h2", "h3", "h4", "h5", "div", "p"]):
+        tx = clean(t.get_text(" "))
+        if re.search(start_pat, tx) and len(tx) < 120:
+            h = t; break
+    if not h:
+        return ""
+    out = []
+    for el in h.find_all_next(string=True):
+        tx = clean(el)
+        if not tx:
+            continue
+        if re.search(end_pat, tx) and len(tx) < 120:
+            break
+        out.append(tx)
+        if sum(len(x) for x in out) > limit:
+            break
+    return " ".join(out)
+
+
+PT_RE = re.compile(r"([A-Z][A-Z0-9 ()/'.-]{1,40}?)\s*[:(,-]?\s*(\d{4,6}(?:\.\d+)?\s*[NS]\s*\d{5,7}(?:\.\d+)?\s*[EW])")
+
+
+def find_points(text, src):
+    pts = []
+    for m in PT_RE.finditer(text or ""):
+        name = clean(m.group(1)).strip(" (,-:")
+        if not name or len(name) < 2 or re.fullmatch(r"[\d ]+", name):
+            continue
+        cm = C_RE.search(m.group(2))
+        if not cm:
+            continue
+        lat, lon = _c(cm)
+        if 4 < lat < 22 and 96 < lon < 107:
+            pts.append({"name": name[-40:], "lat": lat, "lon": lon, "src": src})
+    return pts
+
+
+def parse_ad2(icao, html, url=""):
     soup = strip_markup(BeautifulSoup(html, "html.parser"))
     sec = tables_by_section(soup, r"AD\s*2")
     sec = {"2." + k: v for k, v in sec.items()}
@@ -185,6 +225,22 @@ def parse_ad2(icao, html):
         else:
             merged.append(e)
     ap["comm"] = [e for e in merged if e["freq"]]
+    # AD 2.24 charts (ชื่อ + ลิงก์ PDF)
+    ap["charts"] = []
+    from urllib.parse import urljoin
+    for tb in sec.get("2.24", []):
+        for tr in tb.find_all("tr"):
+            tds = tr.find_all(["td", "th"])
+            if len(tds) < 2:
+                continue
+            name = clean(tds[0].get_text(" "))
+            a = tr.find("a", href=True)
+            if not name or name.lower().startswith("chart name") or not a:
+                continue
+            ap["charts"].append({"name": name, "page": clean(a.get_text(" ")), "url": urljoin(url, a["href"])})
+    # AD 2.22 flight procedures (ข้อความ) + จุดที่มีพิกัด (reporting points ฯลฯ)
+    ap["proc"] = section_text(soup, icao + r"\s+AD\s*2\.22\b", icao + r"\s+AD\s*2\.23\b")
+    ap["points"] = find_points(ap["proc"], "AD 2.22") + find_points(section_text(soup, icao + r"\s+AD\s*2\.17\b", icao + r"\s+AD\s*2\.18\b", 4000), "AD 2.17")
     # AD 2.19 navaids
     for tb in sec.get("2.19", []):
         for r in rows(tb):
@@ -363,9 +419,9 @@ def main():
         url = root + f"VT-AD-2.{ic}-en-GB.html"
         try:
             raw = get(url)
-            if ic in ("VTPP", "VTBD") and "--debug" in sys.argv:
+            if ic in ("VTPP", "VTSB", "VTBH", "VTCC") and "--debug" in sys.argv:
                 debug_dump(f"AD2_{ic}.html", raw)
-            ap = parse_ad2(ic, raw)
+            ap = parse_ad2(ic, raw, url)
             nm = re.sub(r"^\s*" + ic + r"\s*[-—–]?\s*", "", names[ic])
             ap["name"] = "" if (not nm or "AERODROMES" in nm.upper()) else nm
             ap["url"] = url
@@ -385,6 +441,23 @@ def main():
         print(f"ENR 4.1 navaid {len(data['navaids'])} รายการ")
     except Exception as e:
         data["errors"].append(f"ENR 4.1: {e}")
+    # ENR 4.4 significant points (ชื่อจุด 5 ตัวอักษร + พิกัด) — ใช้พิมพ์ชื่อจุดในแอปได้
+    try:
+        raw = get(root + "VT-ENR-4.4-en-GB.html")
+        if "--debug" in sys.argv:
+            debug_dump("ENR_4.4.html", raw)
+        sp = []
+        for tb in strip_markup(BeautifulSoup(raw, "html.parser")).find_all("table"):
+            for r in rows(tb):
+                if r and re.fullmatch(r"[A-Z]{5}", r[0]):
+                    cm = C_RE.search(" ".join(r[1:3]))
+                    if cm:
+                        lat, lon = _c(cm)
+                        sp.append({"name": r[0], "lat": lat, "lon": lon})
+        data["sigpoints"] = sp
+        print(f"ENR 4.4 จุด {len(sp)} จุด")
+    except Exception as e:
+        data["errors"].append(f"ENR 4.4: {e}")
     # ENR 5.1 Prohibited / Restricted / Danger areas
     try:
         raw = get(root + "VT-ENR-5.1-en-GB.html")
