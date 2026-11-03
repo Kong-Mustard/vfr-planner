@@ -167,6 +167,9 @@ body.printing #printView{position:static;padding:0}
 .undo-bar a{font:700 18px/30px Arial,sans-serif}.undo-bar a.off{color:#bbb;pointer-events:none}
 .dbno{display:inline-block;font:800 12px var(--f-mono);color:#fff;background:#4f46e5;border-radius:6px;padding:1px 6px;white-space:nowrap}
 .dbpin{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 4px;border-radius:6px;background:#4f46e5;color:#fff;font:800 12px Arial,sans-serif;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.45)}
+.awlbl{display:inline-block;background:#1f3b8f;color:#fff;font:700 11px Arial,sans-serif;padding:1px 4px;border-radius:2px;white-space:nowrap}
+.navbox{display:inline-block;background:rgba(255,255,255,.93);color:#1f3b8f;border:1px solid #1f3b8f;border-radius:4px;padding:1px 5px;font:600 10px/1.25 Arial,sans-serif;white-space:nowrap;cursor:pointer}
+.navbox b{font-size:11px}.rose{pointer-events:none}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
@@ -554,6 +557,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
         <button id="goNavlog">แก้ไขใน NAVLOG เต็ม →</button>
+        <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener">เปิดใน SkyVector ↗</a>
         <button id="savePlan" class="primary">บันทึกแผน</button>
         <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
         <button id="delPlan">ลบแผนนี้</button>
@@ -933,7 +937,8 @@ const topo=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{maxZo
 const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"});
 const labels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
 sat.addTo(map);labels.addTo(map);
-const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm},{"ชื่อสถานที่":labels}).addTo(map);
+const chartBase=L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",{maxZoom:19,subdomains:"abcd",attribution:"© OpenStreetMap © CARTO"});
+const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm,"พื้นขาวแบบชาร์ต":chartBase},{"ชื่อสถานที่":labels}).addTo(map);
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
@@ -1916,6 +1921,29 @@ $("#dbImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then
 $("#dbCopyRoute").onclick=()=>{const txt=state.wps.map((w,i)=>{const m=dbMatch(w);return`${i+1}\t${m?"No."+m.no:"-"}\t${w.name}\t${fmtMgrs(toMgrs(w.lat,w.lon))}`}).join("\n");
   (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>{$("#dbPaste").value=txt;toast("คัดลอกไม่ได้ — ใส่ข้อความไว้ในกล่องวางแทน")})};
 dbRender();
+
+/* ---------- Enroute chart (แบบ SkyVector World Lo) จากข้อมูล eAIP: airways ENR 3, VOR/NDB ENR 4.1, fixes ENR 4.4 ---------- */
+const enrLayer=L.layerGroup();layerCtl.addOverlay(enrLayer,"Enroute chart (airway/VOR) eAIP");
+function roseSvg(){let t="";for(let a=0;a<360;a+=10){const r1=a%30?38:33,x1=40+38*Math.sin(a*D2R),y1=40-38*Math.cos(a*D2R),x2=40+r1*Math.sin(a*D2R),y2=40-r1*Math.cos(a*D2R);t+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`}
+  return`<svg width="80" height="80" viewBox="0 0 80 80" aria-hidden="true"><g stroke="#1f3b8f" stroke-width="1.2" fill="none"><circle cx="40" cy="40" r="38"/>${t}<path d="M40 2 L36 12 L44 12 Z" fill="#1f3b8f"/></g><circle cx="40" cy="40" r="3" fill="#1f3b8f"/></svg>`}
+const ROSE=roseSvg();
+function drawEnr(){enrLayer.clearLayers();if(!map.hasLayer(enrLayer)||!EAIP)return;const z=map.getZoom();if(z<6)return;const bb=map.getBounds().pad(0.3);
+  (EAIP.airways||[]).forEach(r=>{const P=r.pts.map(p=>[p.lat,p.lon]);if(!P.some(p=>bb.contains(p)))return;
+    L.polyline(P,{color:"#1f3b8f",weight:1.6,opacity:.85,interactive:false}).addTo(enrLayer);
+    if(z>=7)for(let i=0;i<P.length-1;i++){const m=[(P[i][0]+P[i+1][0])/2,(P[i][1]+P[i+1][1])/2];if(!bb.contains(m))continue;
+      L.marker(m,{interactive:false,icon:L.divIcon({className:"",html:`<span class="awlbl">${esc(r.id)}</span>`,iconSize:null,iconAnchor:[14,9]})}).addTo(enrLayer)}});
+  (EAIP.navaids||[]).forEach(n=>{if(n.lat==null||!bb.contains([n.lat,n.lon]))return;const vor=/VOR/.test(n.type);
+    if(vor&&z>=7)L.marker([n.lat,n.lon],{interactive:false,icon:L.divIcon({className:"rose",html:ROSE,iconSize:[80,80],iconAnchor:[40,40]})}).addTo(enrLayer);
+    L.marker([n.lat,n.lon],{icon:L.divIcon({className:"",html:`<span class="navbox">${esc(n.name.replace(/\s*(D?VOR|DME|NDB|TACAN)[\s/]*.*$/i,""))}<br><b>${esc((n.freq||"").replace(/\s*\(.*$/,""))} ${esc(n.id)}</b></span>`,iconSize:null,iconAnchor:[-14,30]})})
+      .bindTooltip(`${esc(n.name)} · ${esc(n.id)} ${esc(n.freq)}`).on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:n.id,lat:n.lat,lon:n.lon,vor:`${n.id} ${(n.freq||"").replace(/\s*\(.*$/,"")}`});markEdited();render();toast("เพิ่ม "+n.id)}).addTo(enrLayer)})}
+map.on("moveend overlayadd",drawEnr);
+/* เปิดเส้นทางเดียวกันใน SkyVector (ดูชาร์ต World VFR/Lo ของเขาเทียบ) */
+function svTok(w){const n=String(w.name||"").toUpperCase();if(AP[n]&&/^VT/.test(n))return n;if(sigPoint(n))return n;
+  const f=(v,d)=>{const a=Math.abs(v),D=Math.floor(a),M=Math.round((a-D)*60);return String(M===60?D+1:D).padStart(d,"0")+String(M===60?0:M).padStart(2,"0")};
+  return f(w.lat,2)+(w.lat>=0?"N":"S")+f(w.lon,3)+(w.lon>=0?"E":"W")}
+function skyVectorUrl(){const W=state.wps;if(!W.length)return"https://skyvector.com/";const c=map.getCenter();
+  return`https://skyvector.com/?ll=${c.lat.toFixed(4)},${c.lng.toFixed(4)}&zoom=3&fpl=${encodeURIComponent(W.map(svTok).join(" "))}`}
+$("#openSV").onclick=()=>{$("#openSV").href=skyVectorUrl()};
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};

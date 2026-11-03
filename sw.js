@@ -2,14 +2,14 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v10";
+const V = "vfr-v11";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
   "https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css"];
-const TILE_HOSTS = ["arcgisonline.com", "opentopomap.org", "tile.openstreetmap.org", "tilecache.rainviewer.com", "elevation-tiles-prod"];
+const TILE_HOSTS = ["arcgisonline.com", "opentopomap.org", "tile.openstreetmap.org", "tilecache.rainviewer.com", "elevation-tiles-prod", "basemaps.cartocdn.com"];
 const MAX_TILES = 6000;
 
 self.addEventListener("install", e => {
