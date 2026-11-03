@@ -117,6 +117,14 @@ tr.tot td{font-weight:700;background:var(--input)}
 .legbox span{padding:1px 4px}.legbox i{font-style:normal;border-top:1px solid #14233a;padding:1px 4px;color:#555}
 .remtag{background:#1d3fd1;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}
 #printView{display:none}
+.kb-map{padding:10px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}.kb-seg{flex-wrap:wrap}
+.kb-opts{display:flex;flex-wrap:wrap;gap:6px 16px}.kb-opts label{flex-direction:row;align-items:center;gap:6px;font-size:14px;color:var(--ink)}.kb-opts input{width:auto}.kb-opts label.dis{opacity:.45}
+body.pvprev #printView{width:auto!important;background:#525659;padding:72px 16px 24px!important}
+body.pvprev .pv-page{width:138mm;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
+.pv-bar b{font-size:17px}.pv-bar .hint{flex:1}
+body.printing #pvMap .leaflet-control:not(.leaflet-control-zoom):not(.leaflet-control-scale):not(.leaflet-control-attribution){display:none!important}
+body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#fff!important}
 .pv-head{display:flex;justify-content:space-between;align-items:center;border:2px solid #000;padding:1mm 2mm;gap:2mm}
 .pv-head h1{margin:0;font:700 15pt var(--f-display)}.pv-head .sa{color:#c0262d;font:700 12pt var(--f-display)}
 .pv-head .tot{text-align:right;font:700 10pt var(--f-mono)}
@@ -139,7 +147,8 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   nav.rail,main>*:not(#tab-plan),#tab-plan>div>*{display:none!important}
   #tab-plan,#tab-plan>div{display:block!important}
   #printView{display:block!important;width:138mm;font:9pt var(--f-body);color:#000}
-  .leaflet-control-container{display:none}
+  .leaflet-control-container,.pv-bar{display:none!important}
+  body.pvprev #printView{background:#fff!important;padding:0!important}body.pvprev .pv-page{box-shadow:none;padding:0;margin:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
 }
@@ -427,6 +436,32 @@ dialog.fpl .fpl-body{overflow:auto;display:grid;grid-template-columns:minmax(0,1
 .fpl-f textarea{resize:vertical;min-height:52px;color:var(--ink);background:var(--input);border:1px solid var(--line)}
 .fpl-f.req.empty input,.fpl-f.req.empty textarea{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 7%,var(--input))}
 .fpl-f.auto input,.fpl-f.auto textarea{border-color:var(--good);background:color-mix(in srgb,var(--good) 8%,var(--input))}
+.fp-paper{border:1.5px solid #111;background:#fff;color:#111;font-family:Arial,"Noto Sans Thai",sans-serif}
+.fp-title{text-align:center;font:700 20px Arial,sans-serif;padding:8px;border-bottom:1.5px solid #111;letter-spacing:.02em}
+.fp-row{position:relative;display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 16px;padding:12px 64px 10px 12px;border-bottom:1px solid #111}
+.fp-row.fp-gray{background:#f6f7f9}.fp-row.fp-last{border-bottom:0;padding-right:12px}
+.fp-tag{position:absolute;right:6px;top:5px;font:700 10.5px Inter,sans-serif;color:#0a6cff;background:#e8f0ff;border-radius:4px;padding:1px 6px}
+.fp-sym{font:800 20px Arial,sans-serif;align-self:center;white-space:nowrap}.fp-sym.big{font-size:22px;margin-top:6px}
+.fp-end{position:absolute;right:10px;bottom:12px;font:800 20px Arial,sans-serif}
+.fp-slash{font:800 22px Arial,sans-serif;align-self:center;margin-top:12px}
+.fp-k{font:800 24px Arial,sans-serif;align-self:center;margin-top:10px;min-width:30px}
+.fp-sup{text-align:center;font:600 12.5px Arial,sans-serif;padding:7px 10px;border-bottom:1px solid #111;background:#f6f7f9}
+.fp-utc{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;align-self:center;margin-top:12px;font-size:13px;color:#4b5563}
+.fp-utc input{width:20px!important;height:20px;flex:0 0 auto;margin:0}
+.fp-out{flex:1 1 100%;font-size:12.5px;color:#4b5563}.fp-out b{font-family:var(--f-mono);color:#111}
+.fp-paper .fpl-lab{font:700 11.5px Arial,sans-serif;color:#111;letter-spacing:.02em}
+.fp-paper .fpl-f input,.fp-paper .fpl-f textarea,.fp-paper .fpl-f select{background:#fff;border:1.3px solid #111;border-radius:2px;color:#111;font:700 17px ui-monospace,Menlo,Consolas,monospace}
+.fp-paper .fpl-f select{padding:6px 8px}
+.fp-paper .fpl-f.combf{flex:0 0 auto}
+.fp-paper input.comb{--cw:26px;width:calc(var(--n)*var(--cw) + 3px)!important;padding:7px 0 7px 8px;letter-spacing:calc(var(--cw) - .6em);font:700 17px ui-monospace,Menlo,Consolas,monospace;
+  background-image:repeating-linear-gradient(90deg,transparent 0 calc(var(--cw) - 1px),#9ca3af calc(var(--cw) - 1px) var(--cw));background-position:1px 0;background-size:calc(100% - var(--cw)) 34%;background-repeat:no-repeat;background-position-y:100%}
+.fp-paper .fpl-f.combf .fpl-h{max-width:calc(var(--n)*26px + 60px)}
+.fp-paper .fpl-f.auto input,.fp-paper .fpl-f.auto textarea{background-color:#ecfdf5;border-color:#059669}
+.fp-paper .fpl-f.req.empty input,.fp-paper .fpl-f.req.empty textarea{border-color:#dc2626;background-color:#fef2f2}
+.fp-paper .fpl-f.off{opacity:.45}.fp-paper .fpl-f.off input{background:repeating-linear-gradient(135deg,#f3f4f6 0 6px,#e5e7eb 6px 12px)}
+.fp-paper .fpl-x button{border:1.3px solid #111;border-radius:2px;min-width:36px;padding:5px 9px;background:#fff;color:#111}
+.fp-paper .fpl-x button.on{background:#fff;color:#dc2626;border-color:#dc2626;text-decoration:none;background-image:linear-gradient(45deg,transparent 46%,#dc2626 46% 54%,transparent 54%),linear-gradient(-45deg,transparent 46%,#dc2626 46% 54%,transparent 54%)}
+.fp-paper .fpl-x button:disabled{opacity:.6;cursor:not-allowed}
 .fpl-h{display:block;font-size:11.5px;line-height:1.35;color:#9ca3af;font-weight:400;margin-top:2px;max-width:100%}
 .fpl-body.nohint .fpl-h{display:none!important}
 dialog.fpl ::placeholder{color:#c4c9d1;font-weight:400;opacity:1}
@@ -593,7 +628,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .metar details summary{cursor:pointer;color:var(--muted);font:13px var(--f-body)}
 /* EMER หน้าแรก + โหมดทีละขั้น */
 .ep-home{display:flex;flex-direction:column;gap:10px}.ep-home h3{margin:8px 0 0;font:700 17px var(--f-display);color:var(--ink)}
-#epHomeQ{font-size:18px!important;min-height:52px!important;padding:12px 14px;border:2px solid var(--line)}
+#epHomeQ,#npHomeQ{font-size:18px!important;min-height:52px!important;padding:12px 14px;border:2px solid var(--line)}
 .ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .ep-big{all:unset;box-sizing:border-box;cursor:pointer;position:relative;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-left:7px solid var(--gc,#c62f24);border-radius:14px;padding:12px 12px 12px 54px;min-height:84px;display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .ep-big:hover{background:color-mix(in srgb,var(--gc) 10%,var(--panel));border-color:var(--gc)}.ep-big:focus-visible{outline:3px solid var(--gc);outline-offset:2px}
@@ -660,6 +695,14 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .ep-list .ep-item:nth-of-type(even){background:color-mix(in srgb,var(--ink) 6%,transparent)}
 .ep-list .ep-item:nth-of-type(even):hover,.ep-list .ep-item:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .ep-list .ep-item.sel{background:var(--accent-soft)!important;box-shadow:inset 4px 0 0 var(--accent)}
+/* กล่องเลือกชั้นแผนที่ของ Leaflet: input ไม่ยืดเต็มแถว · แผนที่ฐานที่เลือก = กรอบสี่เหลี่ยมแดง */
+.leaflet-control-layers label{display:block;flex-direction:row;font-size:14px;color:var(--ink);margin:2px 0;cursor:pointer}
+.leaflet-control-layers label>span,.leaflet-control-layers label>div{display:flex;align-items:center;gap:8px}
+.leaflet-control-layers input.leaflet-control-layers-selector{width:auto;min-width:0;margin:0;padding:0;flex:0 0 auto;accent-color:#dc2626}
+.leaflet-control-layers-base input.leaflet-control-layers-selector{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.leaflet-control-layers-base label{padding:5px 10px;border:2px solid transparent;border-radius:3px}
+.leaflet-control-layers-base label:has(input:checked){border-color:#dc2626;background:rgba(220,38,38,.08);font-weight:700}
+.leaflet-control-layers-overlays label{padding:3px 2px}
 /* SOP / DTD */
 .pstag{display:inline-block;margin-left:4px;font:800 11px var(--f-mono,monospace);color:#fff;background:#ea580c;border-radius:5px;padding:0 5px;vertical-align:middle}
 .sop-stats{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:15px;align-items:baseline}.sop-stats b{font-family:var(--f-mono,monospace)}
@@ -952,15 +995,15 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="nt-bar">
    <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">List</button><button id="ntViewMap">Map</button></div>
    <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
-   <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="10" min="1" max="50" style="width:64px"> NM</label>
-   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
+   <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="1" min="1" max="50" style="width:64px"> NM</label>
+   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> show hidden</label>
    <button id="ntRedraw">🔄 รีเฟรช</button>
   </div>
   <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
   <div id="ntList"></div>
   <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (ดูกล่องหมวดมุมซ้ายล่าง ติ๊กเพื่อซ่อน/แสดง) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
- <details class="card section custbox" id="ntPasteBox">
+ <details class="card section custbox" id="ntPasteBox" open>
   <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
   <p class="hint">คัดลอกข้อความ NOTAM รูปแบบ ICAO มาวาง แอปจะรวมกับชุดที่ดึงอัตโนมัติ (ตัวที่ซ้ำกันจะนับครั้งเดียว)</p>
   <div class="bm-box"><b>ดึงจากแผนที่ NOTAM ของ AEROTHAI (บนคอม)</b>
@@ -1057,9 +1100,13 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 <dialog id="kbDlg" class="kb" aria-labelledby="kbTitle">
   <div class="kb-head"><h2 id="kbTitle">เลือกความถี่ที่จะพิมพ์ลง Kneeboard</h2>
     <div class="btns"><button id="kbDA" class="mini">เฉพาะต้นทาง/ปลายทาง</button><button id="kbAll" class="mini">เลือกทั้งหมด</button><button id="kbNone" class="mini">ล้าง</button></div></div>
+  <div class="kb-map"><b>🗺️ แผนที่ใน Kneeboard</b>
+    <div class="seg kb-seg" id="kbMapSeg" role="group" aria-label="ชนิดแผนที่">
+      <button data-km="cur" class="on">ตามหน้าจอ</button><button data-km="sat">ดาวเทียม</button><button data-km="topo">ภูมิประเทศ</button><button data-km="osm">ถนน (OSM)</button><button data-km="chart">พื้นขาวชาร์ต</button><button data-km="route">✏️ เฉพาะเส้นทาง (วาดมือต่อ)</button></div>
+    <div class="kb-opts"><label><input type="checkbox" id="kbLayers" checked> พื้นที่ P/R/D · CTR · NOTAM · สนามบิน</label><label><input type="checkbox" id="kbDog" checked> กล่อง doghouse</label><label><input type="checkbox" id="kbNames" checked> ชื่อสถานที่</label></div></div>
   <div id="kbBody" class="kb-body"></div>
   <div class="kb-foot"><span id="kbCount" class="hint"></span>
-    <div class="btns"><button id="kbCancel">ยกเลิก</button><button id="kbGo" class="primary">พิมพ์ / Save PDF</button></div></div>
+    <div class="btns"><button id="kbCancel">ยกเลิก</button><button id="kbPrev">👁 ดูตัวอย่าง</button><button id="kbGo" class="primary">พิมพ์ / Save PDF</button></div></div>
 </dialog>
 <dialog id="fplDlg" class="kb fpl" aria-labelledby="fplTitle">
   <div class="kb-head"><h2 id="fplTitle">📄 ICAO Flight Plan</h2>
@@ -1821,8 +1868,9 @@ function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,buf=num($("#ntBuf")
 function ntLocal(d){return d?d.toLocaleString("en-GB",{timeZone:"Asia/Bangkok",day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}).replace(",",""):"PERM"}
 function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHidden").checked,W=state.wps;ntLayer.clearLayers();
   const pop=n=>`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> <small>${esc(n.id)}</small><br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,400))}`;
-  E.filter(n=>n.active&&(n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:ntCat(n).c,weight:n.hit?4:2.5,fillColor:ntCat(n).c,fillOpacity:.18,dashArray:P.src==="Q"?"7 4":null})
-    .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer)));
+  {const rel=n=>(n.inBuf||n.ap)&&n.active;
+  E.filter(n=>(n.active||hidden)&&!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)).forEach(n=>{const r=rel(n),c=ntCat(n).c;n.polys.forEach(P=>L.polygon(P.p,{color:c,weight:r?(n.hit?4:3):1.5,opacity:r?1:.8,fillColor:c,fillOpacity:r?.22:.08,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
+    .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer))})}
   {const cnt={};E.filter(n=>(hidden||n.active)&&(hidden||n.inBuf||n.ap)).forEach(n=>{const k=ntCat(n).k;cnt[k]=(cnt[k]||0)+1});
    $("#ntChips").innerHTML=`<button class="ntc${ntHideCat.size?"":" on"}" data-cat="*">ทั้งหมด</button>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<button class="ntc${ntHideCat.has(c.k)?"":" on"}" data-cat="${c.k}" style="--cc:${c.c}">${c.e} ${c.t} <b>${cnt[c.k]}</b></button>`).join("")}
   /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
@@ -1894,21 +1942,36 @@ ntLoadAuto();
 let npSel=null,npFull=false,npDone={};
 const NP_FLAG={"*":"ทำทุก thru-flight",".":"ต้องทำ operational check",O:"ถ้าติดตั้ง",N:"เฉพาะกลางคืน",I:"เฉพาะบินด้วยเครื่องวัด"};
 function npData(){return EP&&EP.normal?EP.normal:null}
+const NP_GROUPS=[
+ {t:"Mission Planning / วางแผนภารกิจ",e:"📋",c:"#2563eb",re:/CREW DUTIES|BRIEFING|MISSION|PERFORMANCE|WEIGHT/i},
+ {t:"Preflight / ตรวจภายนอก",e:"🔍",c:"#0891b2",re:/AREA \d|EXTERIOR/i},
+ {t:"Before Start / ก่อนติดเครื่อง",e:"🧰",c:"#7c3aed",re:/BEFORE STARTING|COCKPIT EQUIPMENT/i},
+ {t:"Start & Runup / ติดเครื่อง·รันอัพ",e:"🔑",c:"#ea580c",re:/STARTING ENGINES|RUNUP|RUN-UP/i},
+ {t:"Taxi & Takeoff / ขับเคลื่อน·วิ่งขึ้น",e:"🛫",c:"#16a34a",re:/TAXI|BEFORE TAKEOFF|HOVER|TAKEOFF/i},
+ {t:"Landing / ลงจอด",e:"🛬",c:"#0d9488",re:/LANDING/i},
+ {t:"Shutdown / ดับเครื่อง",e:"🅿️",c:"#64748b",re:/SHUTDOWN|LEAVING|PARKING/i},
+ {t:"Special Conditions / สภาวะพิเศษ",e:"🌩️",c:"#b45309",re:/./}];
+function npGroup(p){return NP_GROUPS.find(g=>g.re.test(p.title))}
 function npRenderList(){const D=npData(),L=$("#npList");if(!D){L.innerHTML="";npRenderMain();return}
   const q=$("#npSearch").value.trim().toLowerCase();let html="",grp="";
-  D.procedures.forEach((p,i)=>{if(!p.blocks.some(b=>b.k==="step"||b.k==="sub"))return;
-    if(q&&!(p.id+" "+p.title).toLowerCase().includes(q))return;
-    if(p.section!==grp){grp=p.section;html+=`<div class="ep-grp">${esc(grp)}</div>`}
+  const items=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub")&&(!q||(p.id+" "+p.title).toLowerCase().includes(q)));
+  NP_GROUPS.forEach(g=>items.filter(({p})=>npGroup(p)===g).forEach(({p,i})=>{
+    if(g.t!==grp){grp=g.t;html+=`<div class="ep-grp">${g.e} ${esc(grp)}</div>`}
     const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(npDone[i]||{}).length;
-    html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`});
+    html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();
   if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ 6 EMER</div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
-    M.innerHTML=`<div class="ep-home"><h2>NORMAL PROCEDURES</h2>${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
-      <p class="hint">เลือกขั้นตอนจากรายการด้านซ้าย เช่น BEFORE STARTING ENGINES, STARTING ENGINES, BEFORE TAXI · ติ๊กทีละข้อ หรือใช้ ▶ โหมดทีละขั้น</p></div>`;
-    M.onclick=e=>{const b=e.target.closest(".ep-chip");if(!b)return;npSel=+b.dataset.i;recentAdd("np",D.procedures[npSel].id);npRenderList();npRenderMain()};return}
+    const all=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub"));
+    const big=({p,i})=>{const g=npGroup(p),n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length;return`<button class="ep-big np" data-i="${i}" style="--gc:${g.c}"><span class="em">${g.e}</span><span class="id">${esc(p.id)} · ${n} ข้อ</span><span class="tt">${esc(p.title)}</span></button>`};
+    M.innerHTML=`<div class="ep-home"><input id="npHomeQ" type="search" placeholder="🔍 ค้นหา NORMAL Proc. เช่น before taxi, runup, shutdown" aria-label="ค้นหา NORMAL Proc.">
+      ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
+      ${NP_GROUPS.map(g=>{const L=all.filter(x=>npGroup(x.p)===g);return L.length?`<div class="ep-gh" style="--gc:${g.c}"><span>${g.e}</span>${g.t}<i>${L.length}</i></div><div class="ep-grid">${L.map(big).join("")}</div>`:""}).join("")}
+      <p class="hint">ติ๊กทีละข้อ หรือใช้ ▶ โหมดทีละขั้น · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
+    const qi=$("#npHomeQ");qi.oninput=()=>{const v=qi.value.toLowerCase().trim();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!!v&&!b.textContent.toLowerCase().includes(v));M.querySelectorAll(".ep-gh").forEach(h=>{const gr=h.nextElementSibling;h.hidden=gr.hidden=![...gr.children].some(b=>!b.hidden)})};
+    M.onclick=e=>{const b=e.target.closest(".ep-chip,.ep-big");if(!b)return;npSel=+b.dataset.i;recentAdd("np",D.procedures[npSel].id);npRenderList();npRenderMain()};return}
   M.onclick=null;
   const p=D.procedures[npSel],done=npDone[npSel]=npDone[npSel]||{};
   const warnN=p.blocks.filter(b=>b.k==="warning"||b.k==="caution").length;
@@ -1985,19 +2048,35 @@ $("#kbAll").onclick=()=>kbSetAll(()=>true);$("#kbNone").onclick=()=>kbSetAll(()=
 $("#kbCancel").onclick=()=>$("#kbDlg").close();
 $("#kneePdf").onclick=()=>{if(!compute().rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}kbRender();$("#kbDlg").showModal()};
 $("#kbGo").onclick=()=>{$("#kbDlg").close();kneePrint()};
+$("#kbPrev").onclick=()=>{$("#kbDlg").close();kneePrint(true)};
+let kbMapMode="cur";
+$("#kbMapSeg").onclick=e=>{const b=e.target.closest("[data-km]");if(!b)return;kbMapMode=b.dataset.km;$("#kbMapSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  const ro=kbMapMode==="route";["#kbLayers","#kbNames"].forEach(id=>{$(id).disabled=ro;$(id).closest("label").classList.toggle("dis",ro)})};
+/* ปรับแผนที่ชั่วคราวสำหรับ kneeboard แล้วคืนค่าเดิมหลังพิมพ์/ปิดตัวอย่าง */
+function kbMapApply(){const all=layerCtl._layers.map(o=>({l:o.layer,ov:o.overlay,name:o.name})).concat([{l:ctrLayer,ov:true},{l:gpsLayer,ov:true}]),
+    was=all.filter(o=>map.hasLayer(o.l)).map(o=>o.l),cls=[...document.body.classList];
+  const BASE={sat,topo,osm,chart:chartBase},ro=kbMapMode==="route";
+  if(kbMapMode!=="cur"){all.filter(o=>!o.ov).forEach(o=>map.removeLayer(o.l));if(BASE[kbMapMode])BASE[kbMapMode].addTo(map)}
+  if(ro||!$("#kbLayers").checked)all.filter(o=>o.ov&&o.l!==labels).forEach(o=>map.removeLayer(o.l));
+  if(ro||!$("#kbNames").checked)map.removeLayer(labels);else if(kbMapMode!=="cur"&&kbMapMode!=="sat"&&map.hasLayer(labels))map.removeLayer(labels);
+  if(!$("#kbDog").checked)document.body.classList.add("hide-hbox");
+  document.body.classList.toggle("pv-route",ro);
+  return()=>{all.forEach(o=>{const on=was.includes(o.l);if(on&&!map.hasLayer(o.l))o.l.addTo(map);if(!on&&map.hasLayer(o.l))map.removeLayer(o.l)});
+    document.body.className=cls.filter(c=>c!=="printing").join(" ");document.body.classList.remove("pv-route","pvprev")}}
 
 /* ---------- ICAO Flight Plan (FAA Form 7233-4) → PDF สำหรับยื่นหอบังคับการบิน ----------
    ช่องที่ sync กับหน้าวางแผน: ใช้ค่าอัตโนมัติจนกว่าผู้ใช้จะแก้เอง (ovr) · ช่องประจำจำไว้ใน vfr_fpl_def */
 const FPL_SYNC=["dep","eobt","speed","level","route","dest","eet","dof","endur"];
+const FPL_DING=["dNum","dCap","dColor"];
 /* ค่าเริ่มต้นตามแบบฟอร์มตัวอย่างของหน่วย (ช่องที่เปลี่ยนทุกเที่ยวเป็นตัวอย่างจางๆ ใน placeholder) */
 const FPL_DEF0={rules:"V",tof:"M",type:"H60",wake:"M",equip:"S",surv:"G",altn:"ZZZZ",color:"GREEN",utc7:true,
   sAll:true,sP:true,sD:true,sJ:true,jAll:true,jL:true,jF:true,jU:true,jV:true,dAll:true,dCover:true,nX:true};
 /* คำอธิบายสั้นๆ ใต้ช่อง (จากคู่มือ AEROTHAI และกองสนามบิน ศบบ.) */
 const FPL_HINT={addr:"ผู้รับข่าว (AFTN 8 ตัว)",filing:"วันเวลาที่ส่ง DDHHMM",orig:"สถานีต้นทาง 8 ตัว",
-  acid:"นามเรียกขาน ไม่เกิน 7 ตัว · ชื่อเต็มใส่ข้อ 18",rules:"V=VFR I=IFR Y=IFR→VFR Z=VFR→IFR",tof:"M=ทหาร G=ส่วนบุคคล S/N=สายการบิน X=อื่นๆ",
+  acid:"นามเรียกขาน ไม่เกิน 7 ตัว · ชื่อเต็มใส่ Item 18",rules:"V=VFR I=IFR Y=IFR→VFR Z=VFR→IFR",tof:"M=ทหาร G=ส่วนบุคคล S/N=สายการบิน X=อื่นๆ",
   num:"จำนวน ฮ. (บินหมู่ >1 ลำ)",type:"แบบ ฮ. ตาม ICAO Doc 8643",wake:"L ≤7 ตัน · M 7–136 ตัน · H >136 ตัน",
   equip:"วิทยุ/เครื่องช่วยนำร่อง S=VHF·VOR·ILS",surv:"ทรานสปอนเดอร์/ADS-B (N=ไม่มี)",
-  dep:"ICAO 4 ตัว · ไม่มีรหัส=ZZZZ (+DEP/ ข้อ 18)",eobt:"เวลาออกโดยประมาณ UTC · ยื่นก่อน ≥1 ชม.",speed:"N=นอต + 4 หลัก",level:"A=ร้อยฟุต (A010=1,000 ft) หรือ VFR",
+  dep:"ICAO 4 ตัว · ไม่มีรหัส=ZZZZ (+DEP/ Item 18)",eobt:"เวลาออกโดยประมาณ UTC · ยื่นก่อน ≥1 ชม.",speed:"N=นอต + 4 หลัก",level:"A=ร้อยฟุต (A010=1,000 ft) หรือ VFR",
   route:"VFR ไม่ตาม ATS route: DCT + จุดที่ผ่าน",dest:"ICAO 4 ตัว · ไม่มีรหัส=ZZZZ (+DEST/)",eet:"เวลาบินรวมถึงปลายทาง HHMM",
   altn:"สนามสำรอง · ไม่มีรหัส=ZZZZ (+ALTN/)",altn2:"สนามสำรองที่ 2",dof:"วันที่บิน YYMMDD (ตาม UTC)",
   o18:"เรียง: STS/ PBN/ … REG/ … ALTN/ RMK/ · ไม่มีข้อมูลใส่ 0",endur:"น้ำมันบินได้นาน HHMM",pob:"จำนวนคนบนเครื่องทั้งหมด 3 หลัก",
@@ -2026,7 +2105,7 @@ function fplAuto(){const res=compute(),W=state.wps,F=fplData().v,a={};if(W.lengt
   const mid=W.slice(1,-1).map(fplPt);a.route=mid.length?"DCT "+mid.join(" DCT "):"DCT";
   a.eet=res.rows.length?pad(Math.floor(Math.round(res.cumMin)/60),2)+pad(Math.round(res.cumMin)%60,2):"";
   const fu=num(state.fuel0,0),bu=num(state.burn,0);a.endur=fu>0&&bu>0?pad(Math.floor(fu/bu/60),2)+pad(Math.floor(fu/bu)%60,2):"";return a}
-function fplVal(k){const D=fplData();return FPL_SYNC.includes(k)&&!D.ovr[k]?(fplAuto()[k]||""):(D.v[k]??"")}
+function fplVal(k){const D=fplData();if(FPL_DING.includes(k)&&D.v.dAll)return"";return FPL_SYNC.includes(k)&&!D.ovr[k]?(fplAuto()[k]||""):(D.v[k]??"")}
 function fplItem18(){const g=fplVal,W=state.wps,p=[];
   const asc=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9 ]/g,"").trim();
   if(g("dep")==="ZZZZ"&&W[0])p.push("DEP/"+[asc(W[0].name),fplCoord(W[0])].filter(Boolean).join(" "));
@@ -2035,30 +2114,60 @@ function fplItem18(){const g=fplVal,W=state.wps,p=[];
 function fplMsg(){const g=k=>String(fplVal(k)||"").toUpperCase();
   return`(FPL-${g("acid")}-${g("rules")}${g("tof")}\n-${g("num")}${g("type")}/${g("wake")}-${g("equip")}/${g("surv")}\n-${g("dep")}${g("eobt")}\n-${g("speed")}${g("level")} ${g("route")}\n-${g("dest")}${g("eet")} ${g("altn")}${g("altn2")?" "+g("altn2"):""}\n-${fplItem18()||"0"})`}
 const FPL_REQ=["acid","type","dep","eobt","speed","level","route","dest","eet","pob","endur","pic"];
-function fplField(k,l,o={}){const D=fplData(),sync=FPL_SYNC.includes(k),auto=sync&&!D.ovr[k],v=fplVal(k),cls=`fpl-f${auto?" auto":""}${FPL_REQ.includes(k)?" req":""}${String(v).trim()?"":" empty"}`;
-  const tag=sync?(auto?'<span class="fpl-auto">อัตโนมัติ</span>':`<button class="fpl-rst" data-frst="${k}" title="กลับไปใช้ค่าจากหน้าวางแผน">แก้เอง ↺</button>`):"";
-  const st=`style="flex:${o.w?"0 0 "+o.w:"1 1 "+(o.min||"160px")}"`;
-  const ctl=o.sel?`<select data-fk="${k}">${o.sel.map(x=>`<option ${x===v?"selected":""}>${x}</option>`).join("")}</select>`
-    :o.area?`<textarea data-fk="${k}" rows="${o.area}" placeholder="${esc(o.ph||"")}">${esc(v)}</textarea>`
-    :`<input data-fk="${k}" value="${esc(v)}" ${o.max?`maxlength="${o.max}"`:""} placeholder="${esc(o.ph||"")}" autocomplete="off">`;
-  const h=FPL_HINT[k];return`<label class="${cls}" ${st}><span class="fpl-lab">${l} ${tag}</span>${ctl}${h?`<small class="fpl-h" title="${esc(h)}">${esc(h)}</small>`:""}</label>`}
-function fplBoxes(){const v=fplData().v;return FPL_BOX.map(([id,l,items,h])=>`<div class="fpl-f" style="flex:0 1 auto"><span class="fpl-lab">${l}</span><div class="fpl-x">${items.map(it=>typeof it==="string"?`<span class="sep">${it}</span>`:`<button type="button" data-fx="${it[0]}" class="${v[it[0]]?"on":""}" aria-pressed="${!!v[it[0]]}">${it[1]}</button>`).join("")}</div>${h?`<small class="fpl-h">${esc(h)}</small>`:""}</div>`).join("")}
-function fplRender(){const b=$("#fplBody");if(!b)return;const f=fplField;
+function fplField(k,l,o={}){const D=fplData(),sync=FPL_SYNC.includes(k),auto=sync&&!D.ovr[k],v=fplVal(k),off=FPL_DING.includes(k)&&D.v.dAll,
+    cls=`fpl-f${auto?" auto":""}${FPL_REQ.includes(k)?" req":""}${String(v).trim()?"":" empty"}${off?" off":""}${o.comb?" combf":""}`;
+  const tag=sync?(auto?'<span class="fpl-auto" title="ดึงจากหน้าวางแผน">อัตโนมัติ</span>':`<button class="fpl-rst" data-frst="${k}" title="กลับไปใช้ค่าจากหน้าวางแผน">แก้เอง ↺</button>`):"";
+  const st=o.comb?`style="--n:${o.comb}"`:`style="flex:${o.w?"0 0 "+o.w:"1 1 "+(o.min||"160px")}"`,dis=off?"disabled":"";
+  const ctl=o.sel?`<select data-fk="${k}" class="fp-box">${o.sel.map(x=>`<option ${x===v?"selected":""}>${x}</option>`).join("")}</select>`
+    :o.area?`<textarea data-fk="${k}" rows="${o.area}" placeholder="${esc(o.ph||"")}" ${dis}>${esc(v)}</textarea>`
+    :`<input data-fk="${k}" value="${esc(v)}" ${o.comb?`maxlength="${o.comb}" class="comb"`:o.max?`maxlength="${o.max}"`:""} placeholder="${esc(o.ph||"")}" autocomplete="off" spellcheck="false" ${dis}>`;
+  const h=off?"ขีดฆ่า D แล้ว (ไม่มีแพ)":FPL_HINT[k];
+  return`<label class="${cls}" ${st}><span class="fpl-lab">${l} ${tag}</span>${ctl}${h?`<small class="fpl-h" title="${esc(h)}">${esc(h)}</small>`:""}</label>`}
+function fplX(k,t){const v=fplData().v,off=k==="dCover"&&v.dAll,on=v[k]||off;return`<button type="button" data-fx="${k}" class="${on?"on":""}" aria-pressed="${!!on}" ${off?"disabled":""}>${t}</button>`}
+function fplBoxes(){return""}
+function fplRender(){const b=$("#fplBody");if(!b)return;const f=fplField,x=fplX,H=t=>`<small class="fpl-h">${t}</small>`,V=fplData().v;
   b.classList.toggle("nohint",!fplHintOn);$("#fplHintT").textContent=fplHintOn?"ซ่อนคำอธิบาย":"แสดงคำอธิบาย";
-  b.innerHTML=`
-  <div class="fpl-sec"><h3>หัวแบบฟอร์ม <small class="fpl-h" style="display:inline">เจ้าหน้าที่ผู้อนุมัติแผนเป็นผู้กรอก</small></h3><div class="fpl-row">${f("addr","Addressee(s)",{min:"260px",ph:"VTBBZQZX"})}${f("filing","Filing time",{w:"120px",max:6,ph:"DDHHMM"})}${f("orig","Originator",{w:"150px",max:8})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 7–10 · นามเรียกขาน กฎการบิน แบบ ฮ. อุปกรณ์</h3><div class="fpl-row">${f("acid","7 Aircraft ID",{w:"160px",max:7,ph:"BHK15"})}${f("rules","8 Flight rules",{w:"130px",sel:["V","I","Y","Z"]})}${f("tof","Type of flight",{w:"150px",sel:["M","G","S","N","X"]})}${f("num","9 Number",{w:"110px",max:2})}${f("type","Type of aircraft",{w:"140px",max:4})}${f("wake","Wake",{w:"130px",sel:["L","M","H"]})}${f("equip","10 Equipment",{w:"150px"})}${f("surv","/ Surveillance",{w:"160px"})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 13–16 · ต้นทาง เส้นทาง ปลายทาง</h3><label style="display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start;text-align:left;margin:-2px 0 10px;font-size:14px;color:var(--muted)"><input type="checkbox" data-fchk="utc7" style="width:20px;height:20px;flex:0 0 auto;margin:0" ${fplData().v.utc7?"checked":""}> เวลาในแผนเป็นเวลาไทย → แปลงเป็น UTC (−7 ชม.) ในช่อง Time</label>
-    <div class="fpl-row">${f("dep","13 Departure",{w:"160px",max:4})}${f("eobt","Time (UTC)",{w:"160px",max:4,ph:"HHMM"})}${f("speed","15 Speed",{w:"150px",max:5,ph:"N0150"})}${f("level","Level",{w:"150px",max:5,ph:"A010 / VFR"})}${f("dest","16 Destination",{w:"170px",max:4})}${f("eet","Total EET",{w:"150px",max:4,ph:"HHMM"})}${f("altn","ALTN",{w:"150px",max:4})}${f("altn2","2nd ALTN",{w:"130px",max:4})}</div>
-    <div class="fpl-row" style="margin-top:8px">${f("route","Route",{area:2,min:"100%"})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 18 · ข้อมูลอื่นๆ</h3><div class="fpl-row">${f("dof","DOF (YYMMDD)",{w:"160px",max:6})}${f("o18","ข้อความเพิ่ม",{area:2,min:"320px",ph:"ALTN/SAFETY AREA RMK/VFR FLIGHT TRAINING"})}</div>
-    <p class="hint" style="margin:6px 0 0">ข้อ 18 ที่จะพิมพ์: <b id="fpl18">${esc(fplItem18())}</b></p></div>
-  <div class="fpl-sec"><h3>ข้อ 19 · ข้อมูลเพิ่มเติม <small class="fpl-h" style="display:inline">ไม่ส่งในข่าว FPL · กดตัวอักษรเพื่อขีดฆ่า (= ไม่มี)</small></h3>
-    <div class="fpl-row">${f("endur","E/ Endurance (HHMM)",{w:"170px",max:4})}${f("pob","P/ Persons on board",{w:"170px",max:3,ph:"004"})}</div>
-    <div class="fpl-row" style="margin-top:10px">${fplBoxes()}</div>
-    <div class="fpl-row" style="margin-top:10px">${f("dNum","D/ จำนวน",{w:"90px",max:2})}${f("dCap","ความจุ",{w:"90px",max:3})}${f("dColor","สีแพ",{w:"160px"})}${f("color","A/ สีและเครื่องหมายอากาศยาน",{min:"220px"})}${f("rmk","N/ ข้อความ Remarks",{min:"220px"})}</div>
-    <div class="fpl-row" style="margin-top:10px">${f("pic","C/ Pilot-in-command",{min:"260px",ph:"LT.COL.XXXXX XXXXX"})}</div>
-    <div class="fpl-row" style="margin-top:10px">${f("filed","Filed by",{area:2,min:"200px",ph:"ชื่อผู้จัดทำ\nเบอร์โทร"})}${f("accepted","Accepted by",{area:2,min:"160px"})}${f("addl","Additional information",{area:2,min:"200px",ph:"SP33/SP08/SP06\nSQ 1115"})}</div></div>`;
+  b.innerHTML=`<div class="fp-paper">
+  <div class="fp-title">INTERNATIONAL FLIGHT PLAN</div>
+  <div class="fp-row fp-gray"><span class="fp-tag">หัวแบบฟอร์ม</span>
+    <div class="fp-sym">≪≡ FF →</div>${f("addr","ADDRESSEE(S)",{min:"300px",ph:"VTBBZQZX"})}
+    ${f("filing","FILING TIME",{comb:6,ph:"DDHHMM"})}${f("orig","ORIGINATOR",{comb:8})}<div class="fp-end">≪≡</div>
+    ${H("4 บรรทัดแรก เจ้าหน้าที่ผู้อนุมัติแผนการบินเป็นผู้กรอก")}</div>
+  <div class="fp-row"><span class="fp-tag">Item 3–8</span>
+    <div class="fpl-f"><span class="fpl-lab">3 MESSAGE TYPE</span><div class="fp-sym big">≪≡(FPL</div></div>
+    ${f("acid","7 AIRCRAFT IDENTIFICATION",{comb:7,ph:"BHK15"})}
+    ${f("rules","8 FLIGHT RULES",{w:"120px",sel:["V","I","Y","Z"]})}${f("tof","TYPE OF FLIGHT",{w:"150px",sel:["M","G","S","N","X"]})}<div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><span class="fp-tag">Item 9–10</span>
+    ${f("num","9 NUMBER",{comb:2})}${f("type","TYPE OF AIRCRAFT",{comb:4})}<div class="fp-slash">/</div>${f("wake","WAKE TURBULENCE CAT.",{w:"150px",sel:["L","M","H"]})}
+    ${f("equip","10 EQUIPMENT",{w:"150px"})}<div class="fp-slash">/</div>${f("surv","SURVEILLANCE",{w:"150px"})}<div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><span class="fp-tag">Item 13</span>
+    ${f("dep","13 DEPARTURE AERODROME",{comb:4})}${f("eobt","TIME (UTC)",{comb:4,ph:"HHMM"})}
+    <label class="fp-utc"><input type="checkbox" data-fchk="utc7" ${V.utc7?"checked":""}> เวลาในแผนเป็นเวลาไทย → แปลงเป็น UTC (−7 ชม.)</label><div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><span class="fp-tag">Item 15</span>
+    ${f("speed","15 CRUISING SPEED",{comb:5,ph:"N0150"})}${f("level","LEVEL",{comb:5,ph:"A010"})}${f("route","ROUTE",{area:2,min:"320px"})}</div>
+  <div class="fp-row"><span class="fp-tag">Item 16</span>
+    ${f("dest","16 DESTINATION AERODROME",{comb:4})}${f("eet","TOTAL EET (HR MIN)",{comb:4,ph:"HHMM"})}<div class="fp-slash">→</div>${f("altn","ALTN AERODROME",{comb:4})}<div class="fp-slash">→</div>${f("altn2","2ND ALTN AERODROME",{comb:4})}<div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><span class="fp-tag">Item 18</span>
+    ${f("dof","18 OTHER INFORMATION · DOF/",{comb:6})}${f("o18","ข้อความเพิ่ม (ALTN/ RMK/ …)",{area:2,min:"320px",ph:"ALTN/SAFETY AREA RMK/VFR FLIGHT TRAINING"})}
+    <div class="fp-out">Item 18 ที่จะพิมพ์: <b id="fpl18">${esc(fplItem18())}</b> )≪≡</div></div>
+  <div class="fp-sup">SUPPLEMENTARY INFORMATION (NOT TO BE TRANSMITTED IN FPL MESSAGES) · Item 19 <small class="fpl-h" style="display:inline">กดตัวอักษรเพื่อขีดฆ่า (= ไม่มี)</small></div>
+  <div class="fp-row">
+    <div class="fp-k">E/</div>${f("endur","ENDURANCE (HR MIN)",{comb:4})}
+    <div class="fp-k">P/</div>${f("pob","PERSONS ON BOARD",{comb:3,ph:"004"})}
+    <div class="fp-k">R/</div><div class="fpl-f"><span class="fpl-lab">EMERGENCY RADIO</span><div class="fpl-x">${x("rU","U")}${x("rV","V")}${x("rE","E")}</div>${H("UHF · VHF · ELT — ขีดฆ่าที่ไม่มี")}</div></div>
+  <div class="fp-row">
+    <div class="fp-k">S/</div><div class="fpl-f"><span class="fpl-lab">SURVIVAL EQUIPMENT</span><div class="fpl-x">${x("sAll","S")}<span class="sep">/</span>${x("sP","P")}${x("sD","D")}${x("sM","M")}${x("sJ","J")}</div>${H("S=ไม่มีเลย · P ขั้วโลก · D ทะเลทราย · M ทะเล · J ป่า")}</div>
+    <div class="fp-k">J/</div><div class="fpl-f"><span class="fpl-lab">JACKETS</span><div class="fpl-x">${x("jAll","J")}<span class="sep">/</span>${x("jL","L")}${x("jF","F")}${x("jU","U")}${x("jV","V")}</div>${H("J=ไม่มี · L ไฟ · F สีเรืองแสง · U/V วิทยุ")}</div></div>
+  <div class="fp-row">
+    <div class="fp-k">D/</div><div class="fpl-f"><span class="fpl-lab">DINGHIES</span><div class="fpl-x">${x("dAll","D")}</div>${H("ไม่มีแพ ขีดฆ่า D")}</div>
+    ${f("dNum","NUMBER",{comb:2})}${f("dCap","CAPACITY",{comb:3})}
+    <div class="fpl-f"><span class="fpl-lab">COVER</span><div class="fpl-x">${x("dCover","C")}</div>${H("ไม่มีผ้าคลุม ขีดฆ่า C")}</div>
+    ${f("dColor","COLOUR",{w:"170px"})}<div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><div class="fp-k">A/</div>${f("color","AIRCRAFT COLOUR AND MARKINGS",{min:"300px"})}</div>
+  <div class="fp-row"><div class="fp-k">N/</div><div class="fpl-f"><span class="fpl-lab">REMARKS</span><div class="fpl-x">${x("nX","N")}</div>${H("ไม่มีหมายเหตุ ขีดฆ่า N")}</div>${f("rmk","REMARKS",{min:"300px"})}<div class="fp-end">≪≡</div></div>
+  <div class="fp-row"><div class="fp-k">C/</div>${f("pic","PILOT-IN-COMMAND",{min:"300px",ph:"LT.COL.XXXXX XXXXX"})}<div class="fp-end">)≪≡</div></div>
+  <div class="fp-row fp-last">${f("filed","FILED BY",{area:2,min:"200px",ph:"ชื่อผู้จัดทำ\nเบอร์โทร"})}${f("accepted","ACCEPTED BY",{area:2,min:"160px"})}${f("addl","ADDITIONAL INFORMATION",{area:2,min:"200px",ph:"SP33/SP08/SP06\nSQ 1115"})}</div>
+  </div>`;
   fplMsgRender()}
 function fplMsgRender(){const m=$("#fplMsg");if(!m)return;m.textContent=fplMsg();const e=$("#fpl18");if(e)e.textContent=fplItem18();
   const miss=FPL_REQ.filter(k=>!String(fplVal(k)).trim());$("#fplWarn").innerHTML=miss.length?`<span style="color:var(--bad);font-weight:700">⚠ ยังไม่กรอก ${miss.length} ช่องหลัก</span>`:'<span class="ok" style="color:var(--good);font-weight:700">✓ ช่องหลักครบ</span>'}
@@ -2073,7 +2182,7 @@ $("#fplBody").addEventListener("input",e=>{const t=e.target,k=t.dataset.fk;if(!k
 $("#fplBody").addEventListener("change",e=>{const t=e.target;if(t.dataset.fchk){fplData().v[t.dataset.fchk]=t.checked;fplSaveDef(t.dataset.fchk);store.set("vfr_current",state);fplRender();fplSumRender()}});
 $("#fplBody").addEventListener("click",e=>{const r=e.target.closest("[data-frst]"),x=e.target.closest("[data-fx]");
   if(r){e.preventDefault();delete fplData().ovr[r.dataset.frst];store.set("vfr_current",state);fplRender();fplSumRender()}
-  if(x){const D=fplData(),k=x.dataset.fx;D.v[k]=!D.v[k];fplSaveDef(k);store.set("vfr_current",state);x.classList.toggle("on",D.v[k]);x.setAttribute("aria-pressed",D.v[k])}});
+  if(x){const D=fplData(),k=x.dataset.fx;D.v[k]=!D.v[k];fplSaveDef(k);store.set("vfr_current",state);x.classList.toggle("on",D.v[k]);x.setAttribute("aria-pressed",D.v[k]);if(k==="dAll"){const sc=$("#fplBody").scrollTop;fplRender();$("#fplBody").scrollTop=sc}}});
 $("#fplOpen").onclick=()=>{if(state.wps.length<2){toast("ต้องมีอย่างน้อย 2 จุด");return}fplRender();$("#fplDlg").showModal()};
 $("#fplClose").onclick=()=>$("#fplDlg").close();
 $("#fplHintT").onclick=()=>{fplHintOn=!fplHintOn;try{localStorage.setItem("vfr_fpl_hint",fplHintOn?"1":"0")}catch(e){}$("#fplBody").classList.toggle("nohint",!fplHintOn);$("#fplHintT").textContent=fplHintOn?"ซ่อนคำอธิบาย":"แสดงคำอธิบาย"};
@@ -2103,7 +2212,7 @@ async function fplBuild(){
   lines(fplItem18(),["FillText9","FillText10","FillText11","FillText12"],[533,549,550,503]);
   [["rules","Dropdown1"],["tof","Dropdown2"],["wake","Dropdown3"]].forEach(([k,n])=>{try{const d=form.getDropdown(n),v=clean(fplVal(k))||" ";d.select(d.getOptions().includes(v)?v:" ")}catch(e){console.warn(n,e)}});
   /* ช่องขีดฆ่า: วาดเครื่องหมาย X ลงบนหน้าเองเพื่อให้แสดงเหมือนกันทุกโปรแกรม แล้ว flatten ทั้งฟอร์ม */
-  const V=fplData().v,page=doc.getPages()[0],X=new Set();for(const k in FPL_CHK)FPL_CHK[k].forEach(n=>{try{const c=form.getCheckBox(n);c.uncheck();if(!V[k])return;
+  const V={...fplData().v},page=doc.getPages()[0],X=new Set();if(V.dAll)V.dCover=true;for(const k in FPL_CHK)FPL_CHK[k].forEach(n=>{try{const c=form.getCheckBox(n);c.uncheck();if(!V[k])return;
     const r=c.acroField.getWidgets()[0].getRectangle(),key=Math.round(r.x)+","+Math.round(r.y);if(X.has(key))return;X.add(key);const m=1.5;
     page.drawLine({start:{x:r.x+m,y:r.y+m},end:{x:r.x+r.width-m,y:r.y+r.height-m},thickness:1.6});page.drawLine({start:{x:r.x+m,y:r.y+r.height-m},end:{x:r.x+r.width-m,y:r.y+m},thickness:1.6})}catch(e){console.warn(n,e)}});
   form.getFields().forEach(f=>{if(f.constructor.name==="PDFCheckBox"||f instanceof PDFLib.PDFCheckBox)try{form.removeField(f)}catch(e){}});form.updateFieldAppearances(hv);form.flatten();
@@ -2121,22 +2230,24 @@ $("#fplPrev").addEventListener("close",()=>{$("#fplFrame").src="about:blank";if(
 $("#fplPrevDl").onclick=()=>$("#fplPdf").click();
 function kbCards(){return kbAirports().map(a=>{const its=kbItems(a).filter(it=>kbOn(a,it));if(!its.length)return"";
   return`<div class="fcard"><h3>${esc(a.id)}</h3>${its.map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
-function kneePrint(){
+function kneePrint(preview){
   const res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
   const W=state.wps,pv=$("#printView");
   const cards=kbCards();
   const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
     res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
   const q=qnhText();
-  pv.innerHTML=`<div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
+  pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard (A5)</b><span class="hint">ลากแผนที่/ซูมเพื่อจัดมุมได้ก่อนพิมพ์</span><button id="pvPrint" class="primary">พิมพ์ / Save PDF</button><button id="pvClose">✕ ปิด</button></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
-    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div>${cards}</div></div>${tbl}`;
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div>${cards}</div></div>${tbl}</div>`;
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
+  const restore=kbMapApply();
   $("#pvMap").appendChild(mapEl);
-  const back=()=>{document.body.classList.remove("printing");home.insertBefore(mapEl,next);map.invalidateSize()};
+  let done=false;const back=()=>{if(done)return;done=true;restore();document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
+  setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0},50);
+  if(preview){$("#pvClose").onclick=back;$("#pvPrint").onclick=()=>{window.addEventListener("afterprint",back,{once:true});window.print()};return}
   window.addEventListener("afterprint",back,{once:true});
-  document.body.classList.add("printing");
-  setTimeout(()=>{map.invalidateSize();fit();},50);
   setTimeout(()=>{window.print();},2000)}
 
 /* ---------- Excel (.xlsx) แบบมีรูปแบบ ---------- */
@@ -2211,16 +2322,16 @@ function favToggle(k,id){const L=favList(k),i=L.indexOf(id);i>=0?L.splice(i,1):L
 function recentList(k){return store.get("vfr_recent_"+k)||[]}function recentAdd(k,id){const L=recentList(k).filter(x=>x!==id);L.unshift(id);store.set("vfr_recent_"+k,L.slice(0,6))}
 /* หน้าแรก EMER: ปุ่มใหญ่สีแดงเฉพาะ EMER Proc. ที่มีขั้นท่องจำ */
 const EP_GROUPS=[
- {t:"ไฟไหม้",e:"🔥",c:"#dc2626",re:/FIRE/i},
- {t:"เครื่องยนต์",e:"🛠️",c:"#ea580c",re:/ENGINE|ENG\b|ENG \d|DEC\/EDECU|\bNP\b|TORQUE|COMPRESSOR|SHAFT|OIL BYPASS|CHIP ENG/i},
- {t:"ใบพัดหาง / ระบบส่งกำลัง",e:"⚙️",c:"#b45309",re:/TAIL ROTOR|T\/R|XMSN|INPUT MDL|MAIN MDL|PEDAL|TRANSMISSION/i},
- {t:"เชื้อเพลิง",e:"⛽",c:"#ca8a04",re:/FUEL/i},
- {t:"ไฟฟ้า",e:"⚡",c:"#7c3aed",re:/GEN \d|GEN 1|ELECTRICAL|BUS|CONV/i},
- {t:"ไฮดรอลิก / เซอร์โว",e:"💧",c:"#0284c7",re:/HYD|SERVO|RSVR|BOOST/i},
- {t:"ระบบควบคุมการบิน / สแตบ",e:"🎛️",c:"#0d9488",re:/STAB|FLIGHT CONTROL|PITCH|ROTOR BRAKE|VIBRATION/i},
- {t:"อวิโอนิกส์",e:"🖥️",c:"#4f46e5",re:/AVIONICS|EGI|FLT DIR|FD COUPLE/i},
- {t:"ลงน้ำ / ทิ้งสิ่งของ / อุปกรณ์ภารกิจ",e:"🌊",c:"#0e7490",re:/DITCH|JETTISON|HOIST|DE-ICE|STORES/i},
- {t:"อื่นๆ",e:"⚠️",c:"#64748b",re:/./}];
+ {t:"Fire / ไฟไหม้",e:"🔥",c:"#dc2626",re:/FIRE/i},
+ {t:"Engine / เครื่องยนต์",e:"🛠️",c:"#ea580c",re:/ENGINE|ENG\b|ENG \d|DEC\/EDECU|\bNP\b|TORQUE|COMPRESSOR|SHAFT|OIL BYPASS|CHIP ENG/i},
+ {t:"Tail Rotor & Drive / ใบพัดหาง·ระบบส่งกำลัง",e:"⚙️",c:"#b45309",re:/TAIL ROTOR|T\/R|XMSN|INPUT MDL|MAIN MDL|PEDAL|TRANSMISSION/i},
+ {t:"Fuel / เชื้อเพลิง",e:"⛽",c:"#ca8a04",re:/FUEL/i},
+ {t:"Electrical / ไฟฟ้า",e:"⚡",c:"#7c3aed",re:/GEN \d|GEN 1|ELECTRICAL|BUS|CONV/i},
+ {t:"Hydraulic & Servo / ไฮดรอลิก·เซอร์โว",e:"💧",c:"#0284c7",re:/HYD|SERVO|RSVR|BOOST/i},
+ {t:"Flight Controls & Stab / ระบบควบคุมการบิน·สแตบ",e:"🎛️",c:"#0d9488",re:/STAB|FLIGHT CONTROL|PITCH|ROTOR BRAKE|VIBRATION/i},
+ {t:"Avionics / อวิโอนิกส์",e:"🖥️",c:"#4f46e5",re:/AVIONICS|EGI|FLT DIR|FD COUPLE/i},
+ {t:"Ditching & Mission Equip. / ลงน้ำ·ทิ้งสิ่งของ·อุปกรณ์ภารกิจ",e:"🌊",c:"#0e7490",re:/DITCH|JETTISON|HOIST|DE-ICE|STORES/i},
+ {t:"Other / อื่นๆ",e:"⚠️",c:"#64748b",re:/./}];
 function epGroup(p){return EP_GROUPS.find(g=>g.re.test(p.title))}
 function epShort(t){return t.replace(/\s*Caution(s)? Appears?/gi,"").replace(/\s*Advisory (Does Not )?Appears?/gi,"").replace(/\(.*?\)/g,"").replace(/\s+/g," ").trim()}
 function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=new Map(EP.procedures.map((p,i)=>[p.id,i]));
