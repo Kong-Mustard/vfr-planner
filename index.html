@@ -410,7 +410,15 @@ dialog.kb{border:0;border-radius:22px;padding:0;width:min(720px,94vw);max-height
 .fpl-cta .fpl-go{font-size:30px;font-weight:700;color:#0284c7}
 :root[data-theme="dark"] .fpl-cta b,:root[data-theme="dark"] .fpl-cta .fpl-go{color:#7dd3fc}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fpl-cta b,:root:not([data-theme="light"]) .fpl-cta .fpl-go{color:#7dd3fc}}
+dialog.fpl,dialog.fplprev{--panel:#ffffff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#0a6cff;--accent-soft:#e8f0ff;--input:#f2f4f7;--warn:#d97706;--bad:#dc2626;--good:#059669;
+  color-scheme:light;background:#fff!important;color:#111827!important}
+dialog.fpl button:not(.primary):not(.fpl-rst):not(.on),dialog.fplprev button:not(.primary){background:#fff;color:#111827;border:1px solid #d1d5db}
+dialog.fpl input,dialog.fpl select,dialog.fpl textarea{color:#111827;background:#f2f4f7;border:1px solid #e5e7eb}
 dialog.fpl{width:min(980px,96vw);display:none;flex-direction:column}dialog.fpl[open]{display:flex}
+dialog.fplprev{width:min(900px,96vw);height:92vh;max-height:92vh;padding:0;border:0;border-radius:18px;display:none;flex-direction:column;overflow:hidden}dialog.fplprev[open]{display:flex}
+dialog.fplprev::backdrop{background:rgba(17,24,39,.55)}
+.fplprev-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #e5e7eb}.fplprev-bar b{flex:1;font-size:17px}
+dialog.fplprev iframe{flex:1;width:100%;border:0;background:#525659}
 dialog.fpl .fpl-body{overflow:auto;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:14px 18px;flex:1;min-height:0}
 .fpl-sec{border:1px solid var(--line);border-radius:14px;padding:10px 12px}.fpl-sec>h3{margin:0 0 8px;font-size:15px;color:var(--accent)}
 .fpl-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:flex-end}
@@ -1056,6 +1064,10 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="fpl-msg"><div class="fpl-msg-h"><b>ข้อความ FPL</b><span id="fplWarn" class="hint"></span></div><pre id="fplMsg"></pre></div>
   <div class="kb-foot"><span class="hint">ข้อมูลประจำ (ID เครื่อง, PIC, ผู้ยื่น ฯลฯ) จำไว้ในเครื่องนี้ใช้ครั้งถัดไป</span>
     <div class="btns"><button id="fplClose">ปิด</button><button id="fplCopy">คัดลอกข้อความ FPL</button><button id="fplView">ดูตัวอย่าง PDF</button><button id="fplPdf" class="primary">⬇ ดาวน์โหลด PDF</button></div></div>
+</dialog>
+<dialog id="fplPrev" class="fplprev" aria-labelledby="fplPrevT">
+  <div class="fplprev-bar"><b id="fplPrevT">ตัวอย่าง Flight Plan</b><a id="fplPrevTab" target="_blank" rel="noopener" class="hint" style="font-weight:600">เปิดในแท็บใหม่ ↗</a><button id="fplPrevDl" class="primary">⬇ ดาวน์โหลด PDF</button><button id="fplPrevClose">✕ ปิด</button></div>
+  <iframe id="fplFrame" title="ตัวอย่าง PDF Flight Plan"></iframe>
 </dialog>
 <div id="stepMode" class="step-mode" hidden role="dialog" aria-modal="true" aria-labelledby="smTitle">
   <div class="sm-top"><b id="smTitle"></b><span id="smProg" class="sm-prog"></span><button id="smClose" aria-label="ปิด">✕ ปิด</button></div>
@@ -2079,7 +2091,13 @@ async function fplBuild(){
   return new Blob([await doc.save()],{type:"application/pdf"})}
 function fplName(){const c=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"");return`FPL_${c(fplVal("acid"))||"ACFT"}_${c(fplVal("dep"))}-${c(fplVal("dest"))}_${c(fplVal("dof"))}.pdf`}
 $("#fplPdf").onclick=async()=>{const b=await fplBuild();if(!b)return;const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fplName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("ดาวน์โหลด "+fplName())};
-$("#fplView").onclick=async()=>{const w=window.open("","_blank");const b=await fplBuild();if(!b){if(w)w.close();return}const u=URL.createObjectURL(b);if(w)w.location=u;else location.href=u};
+/* ดูตัวอย่างในหน้าเดียวกัน (เปิดแท็บใหม่ด้วย blob แล้วได้ about:blank ในบางเบราว์เซอร์) */
+let fplPrevUrl=null;
+$("#fplView").onclick=async()=>{const b=await fplBuild();if(!b)return;if(fplPrevUrl)URL.revokeObjectURL(fplPrevUrl);fplPrevUrl=URL.createObjectURL(b);
+  $("#fplFrame").src=fplPrevUrl+"#toolbar=1&view=FitH";$("#fplPrevTab").href=fplPrevUrl;$("#fplPrevT").textContent="ตัวอย่าง · "+fplName();$("#fplPrev").showModal()};
+$("#fplPrevClose").onclick=()=>{$("#fplPrev").close()};
+$("#fplPrev").addEventListener("close",()=>{$("#fplFrame").src="about:blank";if(fplPrevUrl){URL.revokeObjectURL(fplPrevUrl);fplPrevUrl=null}});
+$("#fplPrevDl").onclick=()=>$("#fplPdf").click();
 function kbCards(){return kbAirports().map(a=>{const its=kbItems(a).filter(it=>kbOn(a,it));if(!its.length)return"";
   return`<div class="fcard"><h3>${esc(a.id)}</h3>${its.map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
 function kneePrint(){
