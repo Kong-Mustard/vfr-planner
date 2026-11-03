@@ -557,9 +557,12 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .ep-home{display:flex;flex-direction:column;gap:10px}.ep-home h3{margin:8px 0 0;font:700 17px var(--f-display);color:var(--ink)}
 #epHomeQ{font-size:18px!important;min-height:52px!important;padding:12px 14px;border:2px solid var(--line)}
 .ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
-.ep-big{all:unset;box-sizing:border-box;cursor:pointer;background:#c62f24;color:#fff;border-radius:16px;padding:14px;min-height:96px;display:flex;flex-direction:column;gap:6px;box-shadow:0 2px 0 #8f1f17}
-.ep-big:hover{background:#b02820}.ep-big:focus-visible{outline:3px solid #ffd400;outline-offset:2px}
-.ep-big .id{font:700 12px var(--f-mono);opacity:.8}.ep-big .tt{font:700 16.5px/1.25 var(--f-display);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ep-big{all:unset;box-sizing:border-box;cursor:pointer;position:relative;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-left:7px solid var(--gc,#c62f24);border-radius:14px;padding:12px 12px 12px 54px;min-height:84px;display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ep-big:hover{background:color-mix(in srgb,var(--gc) 10%,var(--panel));border-color:var(--gc)}.ep-big:focus-visible{outline:3px solid var(--gc);outline-offset:2px}
+.tabpanel .ep-big{padding:12px 12px 12px 56px!important;min-height:84px!important}
+.ep-big .em{position:absolute;left:12px;top:14px;font-size:28px;line-height:1}
+.ep-big .id{font:700 12px var(--f-mono);color:var(--gc)}
+.ep-gh{display:flex;align-items:center;gap:8px;margin:14px 0 2px;font:800 17px var(--f-display);color:var(--gc)}.ep-gh span{font-size:22px}.ep-gh i{font-style:normal;font:700 12px var(--f-mono);background:var(--gc);color:#fff;border-radius:999px;padding:1px 8px}.ep-big .tt{font:700 16.5px/1.25 var(--f-display);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .ep-chips{display:flex;flex-wrap:wrap;gap:8px}.ep-chip{border-radius:999px!important;border:2px solid var(--bad)!important;color:var(--bad)!important;background:var(--panel)!important;font-weight:600}
 .ep-chip.np{border-color:var(--accent)!important;color:var(--accent)!important}
 .step-mode{position:fixed;inset:0;z-index:4000;background:var(--panel);color:var(--ink);display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
@@ -602,9 +605,23 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .gh-xte b{font-family:var(--f-mono)}.gh-xte.warn b{color:#ffb020}
 .gh-area{background:#c62f24;border-radius:10px;padding:6px 8px;font-weight:700}
 .gh-acc{font-size:11.5px}
+.gh-near{background:rgba(255,255,255,.06);border-radius:10px;padding:6px 8px;display:flex;flex-direction:column;gap:2px}
+.gh-nt{font:700 11px var(--f-body);color:#9fb3c8;letter-spacing:.04em}
+.gh-nr{display:grid;grid-template-columns:48px 58px 62px 1fr;gap:6px;align-items:baseline;font:13px var(--f-mono)}.gh-nr b{font-family:var(--f-display)}.gh-rad{font-weight:700;color:#7dd3fc;text-align:right}
 .gh-btns{display:flex;gap:6px;flex-wrap:wrap}.gh-btns button{min-height:38px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);font:600 13.5px var(--f-body)}
 .gh-btns button.on{background:var(--accent);border-color:var(--accent)}
 .gps-own{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+/* แท็บด้านซ้าย: แต่ละแท็บมีสีของตัวเอง */
+.rail .tab[data-tab="plan"]{--tc:#3d8bff}.rail .tab[data-tab="log"]{--tc:#818cf8}.rail .tab[data-tab="wx"]{--tc:#22b8cf}.rail .tab[data-tab="notam"]{--tc:#fb923c}
+.rail .tab[data-tab="normal"]{--tc:#34d399}.rail .tab[data-tab="emer"]{--tc:#ef4444}.rail .tab[data-tab="conv"]{--tc:#a78bfa}.rail .tab[data-tab="wpdb"]{--tc:#f472b6}.rail .tab[data-tab="quiz"]{--tc:#facc15}
+.rail .tab i{color:var(--tc)}.rail .tab{border-left:3px solid transparent}
+.rail .tab:hover{background:color-mix(in srgb,var(--tc) 10%,transparent)}
+.rail .tab[aria-selected="true"]{background:color-mix(in srgb,var(--tc) 20%,transparent)!important;color:var(--tc)!important;border-left-color:var(--tc)}
+.rail .tab small{color:var(--tc);opacity:.85}
+/* รายการ NORMAL / EMER สลับสีแถว */
+.ep-list .ep-item:nth-of-type(even){background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.ep-list .ep-item:nth-of-type(even):hover,.ep-list .ep-item:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.ep-list .ep-item.sel{background:var(--accent-soft)!important;box-shadow:inset 4px 0 0 var(--accent)}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
   border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
@@ -628,7 +645,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <button class="tab" role="tab" data-tab="wx" aria-selected="false"><i>☁</i><small>3</small>อากาศ</button>
   <button class="tab" role="tab" data-tab="notam" aria-selected="false"><i>⚑</i><small>4</small>NOTAM</button>
   <button class="tab" role="tab" data-tab="normal" aria-selected="false"><i>✓</i><small>5</small>NORMAL</button>
-  <button class="tab emer" role="tab" data-tab="emer" aria-selected="false"><i>✚</i><small>6</small>EMER</button>
+  <button class="tab emer" role="tab" data-tab="emer" aria-selected="false"><i><svg width="26" height="24" viewBox="0 0 26 24" aria-hidden="true"><path d="M13 2 L24.5 22 H1.5 Z" fill="#ef4444" stroke="#111" stroke-width="2" stroke-linejoin="round"/><rect x="11.6" y="8" width="2.8" height="8" rx="1.2" fill="#fff"/><circle cx="13" cy="19" r="1.6" fill="#fff"/></svg></i><small>6</small>EMER</button>
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
   <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>WAYPOINT</button>
@@ -890,6 +907,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
    <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
    <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="10" min="1" max="50" style="width:64px"> NM</label>
    <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
+   <button id="ntRedraw">🔄 รีเฟรช</button>
   </div>
   <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
   <div id="ntList"></div>
@@ -1783,6 +1801,7 @@ $("#ntViewMap").onclick=()=>{ntView="map";ntSeg("#ntViewMap","#ntViewList");$("#
 $("#ntOrig").onclick=()=>{ntPlainMode=false;ntSeg("#ntOrig","#ntPlain");ntRender()};
 $("#ntPlain").onclick=()=>{ntPlainMode=true;ntSeg("#ntPlain","#ntOrig");ntRender()};
 $("#ntShowHidden").onchange=ntRender;
+$("#ntRedraw").onclick=()=>{ntRender();if(ntView==="map"){ntDrawMap();setTimeout(()=>ntMap&&ntMap.invalidateSize(),80)}const E=ntEval();toast(`แสดง NOTAM ${E.filter(n=>n.active).length} รายการที่มีผลช่วงเวลาบิน (รวม ${E.length})`)};
 $("#ntChips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
   if(k==="*")ntHideCat.clear();else if(!ntHideCat.size){NT_CATS.forEach(c=>{if(c.k!==k)ntHideCat.add(c.k)})}else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);
   if(NT_CATS.every(c=>ntHideCat.has(c.k)))ntHideCat.clear();ntRender()});
@@ -1792,7 +1811,7 @@ $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM
 $("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
 $("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
 $("#ntParse").onclick=()=>{NT=ntReadPaste($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
-  ntRender();const E=ntEval().filter(n=>n.manual),a=E.filter(n=>n.active).length,r=E.filter(n=>n.active&&(n.inBuf||n.ap)).length;
+  ntRender();if(ntView==="map"){ntDrawMap();setTimeout(()=>ntMap&&ntMap.invalidateSize(),80)}const E=ntEval().filter(n=>n.manual),a=E.filter(n=>n.active).length,r=E.filter(n=>n.active&&(n.inBuf||n.ap)).length;
   toast(NT.length?`อ่านได้ ${NT.length} NOTAM · มีผลช่วงเวลาบิน ${a} · ตามแนวเส้นทาง ${r}`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
 $("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
 try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntReadPaste(t)}}catch(e){}
@@ -1984,15 +2003,27 @@ function favList(k){return store.get("vfr_fav_"+k)||[]}function favHas(k,id){ret
 function favToggle(k,id){const L=favList(k),i=L.indexOf(id);i>=0?L.splice(i,1):L.unshift(id);store.set("vfr_fav_"+k,L)}
 function recentList(k){return store.get("vfr_recent_"+k)||[]}function recentAdd(k,id){const L=recentList(k).filter(x=>x!==id);L.unshift(id);store.set("vfr_recent_"+k,L.slice(0,6))}
 /* หน้าแรก EMER: ปุ่มใหญ่สีแดงเฉพาะ EMER Proc. ที่มีขั้นท่องจำ */
+const EP_GROUPS=[
+ {t:"ไฟไหม้",e:"🔥",c:"#dc2626",re:/FIRE/i},
+ {t:"เครื่องยนต์",e:"🛠️",c:"#ea580c",re:/ENGINE|ENG\b|ENG \d|DEC\/EDECU|\bNP\b|TORQUE|COMPRESSOR|SHAFT|OIL BYPASS|CHIP ENG/i},
+ {t:"ใบพัดหาง / ระบบส่งกำลัง",e:"⚙️",c:"#b45309",re:/TAIL ROTOR|T\/R|XMSN|INPUT MDL|MAIN MDL|PEDAL|TRANSMISSION/i},
+ {t:"เชื้อเพลิง",e:"⛽",c:"#ca8a04",re:/FUEL/i},
+ {t:"ไฟฟ้า",e:"⚡",c:"#7c3aed",re:/GEN \d|GEN 1|ELECTRICAL|BUS|CONV/i},
+ {t:"ไฮดรอลิก / เซอร์โว",e:"💧",c:"#0284c7",re:/HYD|SERVO|RSVR|BOOST/i},
+ {t:"ระบบควบคุมการบิน / สแตบ",e:"🎛️",c:"#0d9488",re:/STAB|FLIGHT CONTROL|PITCH|ROTOR BRAKE|VIBRATION/i},
+ {t:"อวิโอนิกส์",e:"🖥️",c:"#4f46e5",re:/AVIONICS|EGI|FLT DIR|FD COUPLE/i},
+ {t:"ลงน้ำ / ทิ้งสิ่งของ / อุปกรณ์ภารกิจ",e:"🌊",c:"#0e7490",re:/DITCH|JETTISON|HOIST|DE-ICE|STORES/i},
+ {t:"อื่นๆ",e:"⚠️",c:"#64748b",re:/./}];
+function epGroup(p){return EP_GROUPS.find(g=>g.re.test(p.title))}
 function epShort(t){return t.replace(/\s*Caution(s)? Appears?/gi,"").replace(/\s*Advisory (Does Not )?Appears?/gi,"").replace(/\(.*?\)/g,"").replace(/\s+/g," ").trim()}
 function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=new Map(EP.procedures.map((p,i)=>[p.id,i]));
   const memP=EP.procedures.map((p,i)=>({p,i})).filter(({p})=>epActionable(p)&&epChecklist(p).some(b=>b.k==="step"&&b.u)&&p.id!=="9.4");
-  const btn=({p,i})=>`<button class="ep-big" data-i="${i}"><span class="id">${esc(p.id)}</span><span class="tt">${esc(epShort(p.title))}</span></button>`;
+  const btn=({p,i})=>{const g=epGroup(p);return`<button class="ep-big" data-i="${i}" style="--gc:${g.c}"><span class="em">${g.e}</span><span class="id">${esc(p.id)}</span><span class="tt">${esc(epShort(p.title))}</span></button>`};
   const mini=k=>(k==="fav"?favList("ep"):recentList("ep")).map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip" data-i="${i}">${esc(EP.procedures[i].id)} ${esc(epShort(EP.procedures[i].title).slice(0,40))}</button>`).join("");
   const fav=mini("fav"),rec=mini("rec");
   M.innerHTML=`<div class="ep-home"><input id="epHomeQ" type="search" placeholder="🔍 ค้นหา EMER Proc. เช่น fire, hyd, stab, gen" value="${esc(q)}" aria-label="ค้นหา EMER Proc.">
     ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
-    <h3>EMER Proc. ที่มีขั้นท่องจำ <span class="hint">(${memP.length})</span></h3><div class="ep-grid">${memP.map(btn).join("")}</div>
+    <h3>EMER Proc. ที่มีขั้นท่องจำ <span class="hint">(${memP.length})</span></h3>${EP_GROUPS.map(g=>{const L=memP.filter(x=>epGroup(x.p)===g);return L.length?`<div class="ep-gh" style="--gc:${g.c}"><span>${g.e}</span>${g.t}<i>${L.length}</i></div><div class="ep-grid">${L.map(btn).join("")}</div>`:""}).join("")}
     <p class="hint">หัวข้ออื่นทั้งหมดอยู่ในรายการด้านซ้าย · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
   const qi=$("#epHomeQ");qi.oninput=()=>{$("#epSearch").value=qi.value;epRenderList();if(qi.value.trim()){const v=qi.value.toLowerCase();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(v))}else M.querySelectorAll(".ep-big").forEach(b=>b.hidden=false)};
   M.onclick=e=>{const b=e.target.closest(".ep-big,.ep-chip");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();$("#epMain").scrollIntoView({block:"start"})}}
@@ -2485,6 +2516,13 @@ function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(W.length<2)return;if(GPS.l
 function gpsXte(P,A,B){const k=Math.cos(P[0]*D2R)*60,px=P[1]*k,py=P[0]*60,ax=A[1]*k,ay=A[0]*60,bx=B[1]*k,by=B[0]*60;const cr=(bx-ax)*(py-ay)-(by-ay)*(px-ax),len=Math.hypot(bx-ax,by-ay)||1;return cr/len}
 function gpsArea(P,alt){let best=null;((EAIP&&EAIP.areas)||[]).forEach(a=>{if(!a.poly||a.poly.length<3)return;if(alt!=null){const lo=altFt(a.lower),hi=altFt(a.upper);if((isFinite(lo)&&alt<lo-500)||(isFinite(hi)&&alt>hi+500))return}let d;if(inPoly(P,a.poly))d=0;else{d=1e9;for(let i=0;i<a.poly.length-1;i++)d=Math.min(d,distToSeg(P,a.poly[i],a.poly[i+1]).d)}
   if(d<=3&&(!best||d<best.d||(d===best.d&&"PRD".indexOf(a.type)<"PRD".indexOf(best.a.type))))best={a,d}});return best}
+/* สนามที่ใกล้ที่สุด 4 แห่ง + Radial/DME จาก VOR ของสนามนั้น (ไม่มี VOR ใช้ตำแหน่งสนาม) — ไว้รายงานตำแหน่ง */
+function gpsNear(P){const vr=num(state.g.var,0),navs=((EAIP&&EAIP.navaids)||[]).filter(n=>n.lat!=null&&/VOR|TACAN|DME/.test(n.type));
+  return Object.values(AP).filter(a=>a.lat!=null&&a.type!=="heliport"&&(a.eaip||/^VT[A-Z]{2}$/.test(a.id))).map(a=>({a,d:gcDistNm(P,[a.lat,a.lon])})).sort((x,y)=>x.d-y.d).slice(0,4).map(({a,d})=>{
+    let st=null,sd=6;navs.forEach(v=>{const k=gcDistNm([a.lat,a.lon],[v.lat,v.lon])+(/VOR/.test(v.type)?0:3);if(k<sd){sd=k;st=v}});
+    let approx=null;if(!st&&a.eaip&&a.eaip.navaids){const n=a.eaip.navaids.find(x=>/VOR/.test(x.type))||a.eaip.navaids.find(x=>/TACAN/.test(x.type));if(n&&n.id)approx={id:String(n.id).split(/\s/)[0],t:/VOR/.test(n.type)?"VOR":"TACAN"}}
+    const S=st?[st.lat,st.lon]:[a.lat,a.lon],rad=norm(trueCourse(S,P)+vr),dme=gcDistNm(S,P);
+    return{id:a.id,name:a.name,d,brg:norm(trueCourse(P,[a.lat,a.lon])+vr),rad,dme,st:st?st.id:approx?"≈"+approx.id:null,stt:st?(/VOR/.test(st.type)?"VOR":"TACAN"):approx?approx.t:null}})}
 function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(!P)return;
   const mag=t=>t==null?"–":hdg(t+vr)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
   let nav="";if(W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],A=W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
@@ -2493,9 +2531,12 @@ function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHu
     nav=`<div class="gh-to">→ ${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">leg ${i+1}/${W.length-1}</span></div>
      <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div><span>ETA</span><b>${eta}</b></div></div>
      <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""} · MH ตามแผน <b>${row&&isFinite(row.mh)?hdg(row.mh)+"°":"–"}</b></div>`}
+  const near=gpsNear([P.lat,P.lon]);
+  const nearH=`<div class="gh-near"><div class="gh-nt">📍 สนามใกล้สุด · สำหรับรายงานตำแหน่ง (R = radial จาก VOR/TACAN ของสนาม · ≈ = ใช้ตำแหน่งสนามแทน)</div>${near.map(n=>`<div class="gh-nr"><b>${esc(n.id)}</b><span>${n.d.toFixed(1)} NM</span><span class="hint">BRG ${hdg(n.brg)}°</span><span class="gh-rad">R-${hdg(n.rad)} / ${n.dme.toFixed(1)} ${n.st?`NM ${esc(n.st)} ${n.stt}`:"NM จากสนาม"}</span></div>`).join("")}</div>`;
   const ar=gpsArea([P.lat,P.lon],P.alt!=null?P.alt:num(state.legs[Math.min(GPS.leg,state.legs.length-1)]&&state.legs[Math.min(GPS.leg,state.legs.length-1)].alt,null));
   h.innerHTML=`<div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div><span>TRK (M)</span><b>${mag(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div>${nav}
     ${ar?`<div class="gh-area">⚠ ${ar.d===0?"อยู่ใน":"ใกล้"} ${esc(ar.a.id)} ${esc(ar.a.name)} (${AREA_NAME[ar.a.type]}) ${ar.d?ar.d.toFixed(1)+" NM":""} · ${esc(ar.a.upper)}/${esc(ar.a.lower)}</div>`:""}
+    ${nearH}
     <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`}
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
