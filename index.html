@@ -979,7 +979,7 @@ const topo=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{maxZo
 const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"});
 const labels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
 sat.addTo(map);labels.addTo(map);
-const chartBase=L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",{maxZoom:19,subdomains:"abcd",attribution:"© OpenStreetMap © CARTO"});
+const chartBase=L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16})]);
 const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm,"พื้นขาวแบบชาร์ต":chartBase},{"ชื่อสถานที่":labels}).addTo(map);
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
@@ -1549,7 +1549,7 @@ async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cac
 function ntBuffer(){const W=state.wps,buf=num($("#ntBuf").value,10),polys=[];for(let i=0;i<W.length-1;i++){const a=[W[i].lat,W[i].lon],b=[W[i+1].lat,W[i+1].lon],tc=trueCourse(a,b);
   const off=(p,br)=>{const R=3440.065,d=buf/R,la=p[0]*D2R,lo=p[1]*D2R,t=br*D2R;const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(t));return[la2*R2D,(lo+Math.atan2(Math.sin(t)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2)))*R2D]};
   polys.push([off(a,tc-90),off(b,tc-90),off(b,tc+90),off(a,tc+90)])}W.forEach(w=>polys.push(circlePoly([w.lat,w.lon],buf)));return polys}
-function ntDrawMap(E){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",{maxZoom:18,subdomains:"abcd",attribution:"© OpenStreetMap © CARTO"}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
+function ntDrawMap(E){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}).addTo(ntMap);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
   ntMapLayer.clearLayers();const W=state.wps,pts=W.map(w=>[w.lat,w.lon]);
   ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
   if(pts.length>1)L.polyline(pts,{color:"#ff3d8b",weight:3}).addTo(ntMapLayer);
