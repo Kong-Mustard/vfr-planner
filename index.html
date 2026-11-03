@@ -453,6 +453,8 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
   background:var(--hl);color:var(--hl-ink);border:1.5px solid #e9c46a;font-size:14px;line-height:1.5}
 .backup-bar>div:first-child{flex:1 1 420px;min-width:0}.bk-info{display:block;font-weight:600;margin-top:2px}
 /* NOTAM briefing */
+.bm-box{border:1px dashed var(--accent);border-radius:12px;padding:10px 14px;margin:8px 0;font-size:14px}.bm-box ol{margin:6px 0;padding-left:20px}
+.bm-link{display:inline-block;background:var(--accent);color:#fff!important;border-radius:8px;padding:4px 10px;text-decoration:none;font-weight:700;cursor:grab}
 .nt-route{font-size:16px;padding:10px 12px;background:var(--input);border-radius:12px}.nt-pin{color:#ff3d8b}
 .nt-bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:4px 0 6px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{border:0;border-radius:0;padding:7px 16px;background:var(--panel)}
@@ -756,6 +758,12 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  <details class="card section custbox" id="ntPasteBox">
   <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
   <p class="hint">คัดลอกข้อความ NOTAM รูปแบบ ICAO มาวาง แอปจะรวมกับชุดที่ดึงอัตโนมัติ (ตัวที่ซ้ำกันจะนับครั้งเดียว)</p>
+  <div class="bm-box"><b>ดึงจากแผนที่ NOTAM ของ AEROTHAI (บนคอม)</b>
+   <ol><li>ลากปุ่มนี้ไปวางที่แถบ Bookmarks ของ Chrome: <a class="bm-link" href="javascript:(()=&gt;{const out=[],seen=new Set(),maps=[];for(const k of Object.keys(window)){try{const v=window[k];if(v&amp;&amp;v._layers&amp;&amp;typeof v.eachLayer===&#x27;function&#x27;&amp;&amp;v.getCenter)maps.push(v)}catch(e){}}if(!maps.length){alert(&#x27;ไม่พบแผนที่ในหน้านี้ — ส่งภาพหน้าจอให้ผู้พัฒนาดู&#x27;);return}const txt=c=&gt;{if(typeof c===&#x27;function&#x27;){try{c=c()}catch(e){c=&#x27;&#x27;}}const d=document.createElement(&#x27;div&#x27;);if(typeof c===&#x27;string&#x27;)d.innerHTML=c;else if(c&amp;&amp;c.nodeType)d.appendChild(c.cloneNode(true));d.style.cssText=&#x27;position:fixed;left:-9999px&#x27;;document.body.appendChild(d);const r=(d.innerText||d.textContent||&#x27;&#x27;).trim();d.remove();return r};maps.forEach(m=&gt;m.eachLayer(l=&gt;{if(seen.has(l))return;seen.add(l);let t=&#x27;&#x27;;if(l.getPopup&amp;&amp;l.getPopup())t=txt(l.getPopup().getContent());if(l.getTooltip&amp;&amp;l.getTooltip())t+=&#x27;\n&#x27;+txt(l.getTooltip().getContent());t=t.trim();if(!t)return;const it={t};try{if(l.getLatLng){const p=l.getLatLng();it.ll=[p.lat,p.lng]}if(l.getRadius&amp;&amp;!(l instanceof L.CircleMarker&amp;&amp;!(l instanceof L.Circle)))it.r=l.getRadius();if(l.getLatLngs){const f=a=&gt;Array.isArray(a)?a.flatMap(x=&gt;x&amp;&amp;x.lat!=null?[[x.lat,x.lng]]:f(x)):[];it.poly=f(l.getLatLngs())}}catch(e){}out.push(it)}));const s=JSON.stringify({src:&#x27;AEROTHAI&#x27;,at:new Date().toISOString(),items:out});const done=()=&gt;alert(&#x27;คัดลอก &#x27;+out.length+&#x27; รายการแล้ว — ไปวางในกล่อง วาง NOTAM เอง ของ VFR Planner&#x27;);navigator.clipboard?navigator.clipboard.writeText(s).then(done,()=&gt;prompt(&#x27;คัดลอกข้อความนี้&#x27;,s)):prompt(&#x27;คัดลอกข้อความนี้&#x27;,s)})()" onclick="event.preventDefault();toast('ลากปุ่มนี้ไปที่แถบ Bookmarks — ไม่ต้องกด')">📌 ดึง NOTAM → VFR Planner</a></li>
+   <li>ล็อกอิน AEROTHAI เปิดหน้า NOTAM Leaflet (แผนที่) ตามปกติ</li>
+   <li>กดบุ๊กมาร์ก 📌 — ระบบจะคัดลอกข้อมูล NOTAM ทุกจุดบนแผนที่ (ข้อความ + ขอบเขตพื้นที่)</li>
+   <li>กลับมาวางในกล่องด้านล่าง แล้วกด อ่าน NOTAM</li></ol>
+   <p class="hint">ทำงานในเบราว์เซอร์ของก้องเอง ไม่ส่งรหัสหรือข้อมูลไปที่อื่น</p></div>
   <textarea id="ntText" rows="7" class="nt-text" placeholder="B1234/26 NOTAMN&#10;Q) VTBB/QRDCA/IV/BO/W/000/050/1449N10039E010&#10;A) VTBB B) 2611020100 C) 2611051000&#10;E) DANGER AREA ACTIVATED ..."></textarea>
   <div class="btns" style="margin-top:6px"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้างที่วางเอง</button></div>
  </details>
@@ -1499,6 +1507,16 @@ function ntParse(txt,extra){const parts=String(txt).replace(/\r/g,"").split(/(?=
     else if(cs.length>=3)n.polys.push({p:cs,src:"E"});
     else if(qc){const c=ntCoord(qc[1]),r=+qc[2];if(c&&r&&r<999)n.polys.push({p:circlePoly(c,r),src:"Q",c,r})}
     return n})}
+/* ข้อมูลจากบุ๊กมาร์ก AEROTHAI: {src,items:[{t,ll,r,poly}]} */
+function ntFromLeaflet(o){const out=[];(o.items||[]).forEach((it,i)=>{const t=String(it.t||"");let n=ntParse(t)[0];
+  if(!n){const id=(t.match(/\b([A-Z]\d{4}\/\d{2})\b/)||[])[1]||("AT-"+(i+1));const g=k=>{const m=t.match(new RegExp(`\\b${k}\\)\\s*([^\\n]*)`));return m?m[1].trim():""};
+    const loc=(t.match(/\bA\)\s*([A-Z]{4})/)||t.match(/\b(VT[A-Z]{2})\b/)||[])[1]||"VTBB";
+    n={id,raw:t,q:"",code:(t.match(/\bQ[A-Z]{4}\b/)||[""])[0],lower:0,upper:999,loc,from:ntTime(g("B")),to:/PERM/.test(g("C"))?null:ntTime(g("C")),est:false,sched:g("D"),text:g("E")||t.replace(/\s+/g," ").slice(0,600),polys:[],keyword:t.split("\n")[0].slice(0,60)}}
+  if(it.poly&&it.poly.length>=3)n.polys=[{p:it.poly,src:"E"}];
+  else if(it.ll&&it.r)n.polys=[{p:circlePoly(it.ll,it.r/1852),src:"E",c:it.ll,r:it.r/1852}];
+  else if(it.ll&&!n.polys.length)n.polys=[{p:circlePoly(it.ll,1),src:"E",c:it.ll,r:1}];
+  n.src="AEROTHAI";out.push(n)});return out}
+function ntReadPaste(txt){const t=String(txt||"").trim();if(t.startsWith("{")){try{const o=JSON.parse(t);if(o&&o.items)return ntFromLeaflet(o)}catch(e){}}return ntParse(t)}
 function ntAll(){const seen=new Set(),out=[];const add=n=>{const k=n.loc+"|"+n.id;if(seen.has(k))return;seen.add(k);out.push(n)};
   (NT_AUTO||[]).forEach(add);NT.forEach(n=>add({...n,manual:true}));return out}
 function ntFlightWindow(){const res=compute(),date=state.date||new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
@@ -1533,7 +1551,7 @@ function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHi
   const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${ntSev(n)} ${n.active?"":"off"}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
     <div class="nti-h"><b>${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
     <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
-    ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?'<span class="tag">วางเอง</span>':""}
+    ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
     ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
   $("#ntList").innerHTML=groups.map(g=>`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):'<p class="hint">No NOTAM available.</p>'}</div>`).join("");
   const [t0,t1]=ntFlightWindow();const fe=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap)).length;
@@ -1566,10 +1584,10 @@ $("#ntShowHidden").onchange=ntRender;$("#ntBuf").addEventListener("input",ntRend
 $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
 $("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
 $("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
-$("#ntParse").onclick=()=>{NT=ntParse($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
+$("#ntParse").onclick=()=>{NT=ntReadPaste($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
   ntRender();toast(NT.length?`อ่านได้ ${NT.length} NOTAM`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
 $("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
-try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntParse(t)}}catch(e){}
+try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntReadPaste(t)}}catch(e){}
 ntLoadAuto();
 
 /* ---------- NORMAL PROCEDURES (บทที่ 8) — checklist ติ๊กได้ ---------- */
