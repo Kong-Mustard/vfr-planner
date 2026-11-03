@@ -15,3 +15,6 @@ __pycache__/
 emergency*.json
 TM_*
 *.pdf
+
+# แบบฟอร์ม ICAO Flight Plan เปล่า (ไม่มีข้อมูลบุคคล)
+!fpl_template.pdf
