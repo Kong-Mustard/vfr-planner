@@ -165,6 +165,8 @@ body.printing #printView{position:static;padding:0}
 @media (max-width:760px){.fp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .fp-grid input{font:500 14px var(--f-body)}
 .undo-bar a{font:700 18px/30px Arial,sans-serif}.undo-bar a.off{color:#bbb;pointer-events:none}
+.dbno{display:inline-block;font:800 12px var(--f-mono);color:#fff;background:#4f46e5;border-radius:6px;padding:1px 6px;white-space:nowrap}
+.dbpin{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 4px;border-radius:6px;background:#4f46e5;color:#fff;font:800 12px Arial,sans-serif;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.45)}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
@@ -461,7 +463,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <button class="tab emer" role="tab" data-tab="emer" aria-selected="false"><i>✚</i><small>6</small>EMER</button>
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
-  <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>8</small>ข้อสอบ</button>
+  <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>WAYPOINT</button>
+  <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>9</small>ข้อสอบ</button>
   <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
 </nav>
 
@@ -541,7 +544,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </div>
     <p class="hint">ลากกลางเส้นสีชมพูบนแผนที่เพื่อแทรกจุดใหม่ระหว่าง 2 จุดได้ · พิกัดพิมพ์ได้ทั้งแบบทศนิยม <code>14.8812, 100.6431</code> หรือ MGRS <code>47PQS 1234 5678</code> · ลากหมุดบนแผนที่เพื่อย้ายจุดได้</p>
     <div class="tablewrap"><table id="wpTable">
-      <thead><tr><th>#</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
+      <thead><tr><th>#</th><th>No. หน่วย</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -733,6 +736,28 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div id="cvWrap" class="cv"></div>
  </div>
 </section>
+<section id="tab-wpdb" class="tabpanel" hidden>
+ <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="card section">
+   <div class="sechead"><h2 class="hd hd-indigo">Waypoint มาตรฐานหน่วย</h2>
+    <div class="btns"><button id="dbAdd" class="primary">＋ เพิ่มแถว</button><button id="dbExport">Export</button>
+     <button type="button" onclick="document.getElementById('dbImport').click()">Import ไฟล์</button><input id="dbImport" type="file" accept=".json,.csv,.txt,application/json,text/csv" hidden>
+     <button id="dbClear">ลบทั้งหมด</button></div></div>
+   <p class="hint">ตารางเลข waypoint ที่หน่วยใช้เป็นมาตรฐาน · เก็บในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export/Import เพื่อย้ายไปเครื่องอื่น · ในช่องต้นทาง/ปลายทาง/พิกัด พิมพ์ <code>No.12</code> หรือ <code>#12</code> เพื่อเรียกจุดนั้นได้เลย</p>
+   <details class="custbox" style="border-color:var(--accent)"><summary style="color:var(--accent)">วางตารางจาก Excel / ข้อความ</summary>
+    <p class="hint">คัดลอกจาก Excel แล้ววางได้เลย บรรทัดละ 1 จุด รูปแบบ: <code>เลข  ชื่อ  พิกัด MGRS  หมายเหตุ</code> เช่น <code>1	VTBH	47P PS 76283 53429</code> หรือ <code>No.2 VTBD 47P PR 12345 67890</code> · พิกัดแบบทศนิยม <code>14.94, 100.64</code> ก็ได้</p>
+    <textarea id="dbPaste" rows="6" class="nt-text" placeholder="1	VTBH	47P PS 76283 53429&#10;2	VTBD	47P ..."></textarea>
+    <div class="btns" style="margin-top:6px"><button id="dbPasteAdd" class="primary">เพิ่ม / อัปเดตตามเลข</button><button id="dbPasteReplace">แทนที่ทั้งตาราง</button></div>
+    <p id="dbPasteInfo" class="hint"></p></details>
+   <div class="tablewrap"><table id="dbTable"><thead><tr><th>No.</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="card section">
+   <div class="sechead"><h2 class="hd hd-pink">รายการกรอกเข้าเครื่อง (เส้นทางปัจจุบัน)</h2><div class="btns"><button id="dbCopyRoute">คัดลอกเป็นข้อความ</button></div></div>
+   <p class="hint">เรียงตามลำดับเส้นทาง · จุดที่ยังไม่มีเลขหน่วยจะขึ้นเตือนสีแดง ให้เพิ่มลงตารางด้านบนหรือเลือกจุดจากตาราง</p>
+   <div class="tablewrap"><table id="dbRoute"><thead><tr><th>ลำดับ</th><th>No.</th><th>ชื่อ</th><th>MGRS</th></tr></thead><tbody></tbody></table></div>
+  </div>
+ </div>
+</section>
 <section id="tab-quiz" class="tabpanel" hidden>
  <div class="card qz" id="qz"></div>
 </section>
@@ -795,7 +820,7 @@ function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show")
 function mmss(min){if(!isFinite(min))return"–";const s=Math.round(min*60);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 function hhmm(totalMin){if(!isFinite(totalMin))return"–";const m=Math.round(totalMin);return String(Math.floor(m/60)%24).padStart(2,"0")+":"+String(((m%60)+60)%60).padStart(2,"0")}
 function toMgrs(lat,lon){try{return mgrs.forward([lon,lat],5)}catch(e){return""}}
-function fmtMgrs(s){const m=s.match(/^(\d{1,2}[A-Z])([A-Z]{2})(\d+)$/);if(!m)return s;const h=m[3].length/2;return m[1]+m[2]+" "+m[3].slice(0,h)+" "+m[3].slice(h)}
+function fmtMgrs(s){const m=s.match(/^(\d{1,2}[A-Z])([A-Z]{2})(\d+)$/);if(!m)return s;const h=m[3].length/2;return m[1]+" "+m[2]+" "+m[3].slice(0,h)+" "+m[3].slice(h)}
 /* แปลงข้อความพิกัด → [lat,lon] รับทศนิยม หรือ MGRS */
 function parseCoord(txt){
   const t=String(txt).trim().toUpperCase();
@@ -822,6 +847,8 @@ function splitCoordName(t){
 function resolvePoint(text,remember=true){
   const t=String(text||"").trim();if(!t)return null;const U=t.toUpperCase();
   if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
+  const dn=U.match(/^(?:NO\.?\s*|#)(\d+)$/);const dbp=dn?dbAll().find(x=>String(x.no)===String(+dn[1])):dbAll().find(x=>String(x.name).toUpperCase()===U);
+  if(dbp&&dbp.lat!=null)return{name:dbp.name||("No."+dbp.no),lat:dbp.lat,lon:dbp.lon,info:`Waypoint หน่วย No.${dbp.no}${dbp.note?" · "+dbp.note:""}`};
   const c=customPts()[U];if(c)return{name:c.name,lat:c.lat,lon:c.lon,info:"จุดที่บันทึกไว้"};
   const sp=typeof sigPoint==="function"&&sigPoint(U);if(sp)return{name:sp.name,lat:sp.lat,lon:sp.lon,info:"Significant point (eAIP ENR 4.4)"};
   const s=splitCoordName(t);if(s){const p=parseCoord(s.coord);if(p){
@@ -1054,14 +1081,15 @@ function render(){
   // waypoints
   $("#wpTable tbody").innerHTML=state.wps.map((w,i)=>`<tr>
     <td><span class="wpnum${w.rp?" rpt":""}" title="${w.rp?"จุดรายงาน / procedure":""}">${i+1}</span></td>
+    <td>${dbBadge(w)}</td>
     <td class="name"><input data-wp="${i}" data-k="name" value="${esc(w.name)}"></td>
     <td class="coord"><input data-wp="${i}" data-k="coord" value="${w.lat.toFixed(5)}, ${w.lon.toFixed(5)}"><span class="mgrs">MGRS ${fmtMgrs(toMgrs(w.lat,w.lon))}</span></td>
     <td class="w-m"><input data-wp="${i}" data-k="vor" value="${esc(w.vor||"")}" style="width:130px"></td>
     <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-act="up" data-i="${i}" aria-label="เลื่อนขึ้น">▲</button><button class="mini" data-act="down" data-i="${i}" aria-label="เลื่อนลง">▼</button><button class="mini" data-act="zoom" data-i="${i}">ดู</button><button class="mini" data-act="del" data-i="${i}" aria-label="ลบ">✕</button></div></td>
-  </tr>`).join("")||`<tr><td colspan="5" class="hint" style="padding:14px">ยังไม่มีจุด — คลิกบนแผนที่เพื่อเพิ่มจุดแรก (ต้นทาง)</td></tr>`;
+  </tr>`).join("")||`<tr><td colspan="6" class="hint" style="padding:14px">ยังไม่มีจุด — คลิกบนแผนที่เพื่อเพิ่มจุดแรก (ต้นทาง)</td></tr>`;
   // nav log
   const body=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":(r.fuel<0?"bad":"");
-    return`<tr><td>${i+1}</td><td style="text-align:left">${esc(state.wps[i].name)} → ${esc(state.wps[i+1].name)}</td>
+    return`<tr><td>${i+1}</td><td style="text-align:left">${dbNoTxt(state.wps[i])}${esc(state.wps[i].name)} → ${dbNoTxt(state.wps[i+1])}${esc(state.wps[i+1].name)}</td>
     ${inp(i,"alt","w-m")}${inp(i,"wd")}${inp(i,"wv")}${inp(i,"temp")}${inp(i,"cas")}
     ${cell(r.tas.toFixed(1))}${cell(hdg(r.tc))}${cell(isFinite(r.wca)?(r.wca>=0?"+":"")+r.wca.toFixed(1):"ลมแรงเกิน","",)}
     ${cell(isFinite(r.th)?hdg(r.th):"–")}${cell(num(state.g.var,0))}${cell(isFinite(r.mh)?hdg(r.mh):"–","mh")}${inp(i,"dev")}${cell(isFinite(r.ch)?hdg(r.ch):"–")}
@@ -1073,7 +1101,7 @@ function render(){
   $("#navTable tbody").innerHTML=body+tot||`<tr><td colspan="25" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุดถึงจะคำนวณ leg ได้</td></tr>`;
   // NAV LOG ย่อ (แท็บ 1)
   $("#navMini tbody").innerHTML=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":"";
-    const rp=state.wps[i+1].rp;return`<tr${rp?' class="rprow"':""}><td style="text-align:left">${rp?'<span title="จุดรายงาน">▲ </span>':""}<b>${esc(state.wps[i+1].name)}</b></td><td>${esc(state.legs[i].alt??"")}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td>
+    const rp=state.wps[i+1].rp;return`<tr${rp?' class="rprow"':""}><td style="text-align:left">${rp?'<span title="จุดรายงาน">▲ </span>':""}${dbNoTxt(state.wps[i+1])}<b>${esc(state.wps[i+1].name)}</b></td><td>${esc(state.legs[i].alt??"")}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td>
       <td class="c mh">${isFinite(r.mh)?hdg(r.mh):"–"}°</td><td class="c">${isFinite(r.mhBack)?hdg(r.mhBack):"–"}°</td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td>
       <td class="c">${mmss(r.ete)}</td><td class="c eta">${hhmm(r.eta)}</td><td class="c ${fCls}">${isFinite(r.fuel)?r.fuel.toFixed(0):"–"}</td></tr>`}).join("")
     ||`<tr><td colspan="11" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุด</td></tr>`;
@@ -1085,7 +1113,7 @@ function render(){
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
   $("#exampleTag").hidden=!state.example;
   qnhFill();if(typeof fillProcSelects==="function")fillProcSelects();
-  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();if(typeof dbRouteRender==="function"&&document.getElementById("dbRoute"))dbRouteRender();
   store.set("vfr_current",state);histSched();
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
@@ -1518,7 +1546,7 @@ function kneePrint(){
   const W=state.wps,pv=$("#printView");
   const cards=kbCards();
   const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
-    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
+    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
   const q=qnhText();
   pv.innerHTML=`<div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
@@ -1833,6 +1861,62 @@ function sideSet(col){const sd=$(".top>.side"),b=$("#sideToggle");sd.classList.t
   b.textContent=col?"ขยาย ▾":"ยุบ ▴";try{localStorage.setItem("vfr_side",col?"1":"0")}catch(e){}setTimeout(()=>map.invalidateSize(),50)}
 $("#sideToggle").onclick=()=>sideSet(!$(".top>.side").classList.contains("collapsed"));
 try{if(localStorage.getItem("vfr_side")==="1")sideSet(true)}catch(e){}
+/* ---------- Waypoint มาตรฐานหน่วย (No.x) — localStorage "vfr_wpdb" เท่านั้น ---------- */
+function dbAll(){return store.get("vfr_wpdb")||[]}
+function dbSave(L){L.sort((a,b)=>(+a.no||1e9)-(+b.no||1e9));return store.set("vfr_wpdb",L)}
+function dbMatch(w){if(!w)return null;const L=dbAll(),n=String(w.name||"").toUpperCase().trim();
+  return L.find(x=>x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<0.05)||L.find(x=>String(x.name).toUpperCase()===n&&x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<1)||null}
+function dbBadge(w){const m=dbMatch(w);return m?`<span class="dbno">No.${esc(m.no)}</span>`:`<span class="hint">—</span>`}
+function dbNoTxt(w,plain){const m=dbMatch(w);return m?(plain?`No.${esc(m.no)} `:`<span class="dbno">No.${esc(m.no)}</span> `):""}
+const DB_COORD=/(\d{1,2}\s*[C-X]\s*[A-Z]{2}\s*\d{2,5}\s*\d{0,5}|-?\d{1,2}\.\d+\s*,\s*-?\d{2,3}\.\d+)/i;
+function dbParse(txt){const ok=[],bad=[];String(txt).replace(/\r/g,"").split("\n").forEach((line,li)=>{const l=line.trim();if(!l)return;
+  if(/^(no\.?|เลข|ลำดับ)\s*[\t,]/i.test(l)&&!/\d/.test(l.split(/[\t,]/)[0]))return; /* แถวหัวตาราง */
+  const m=l.match(DB_COORD);if(!m){bad.push(li+1);return}
+  const pre=l.slice(0,m.index).replace(/[\t,;]+/g," ").trim(),post=l.slice(m.index+m[0].length).replace(/^[\t,; ]+/,"").trim();
+  const pm=pre.match(/^(?:no\.?\s*|#)?(\d+)[.):\-\s]*(.*)$/i);if(!pm){bad.push(li+1);return}
+  const p=parseCoord(m[0].replace(/\s+/g," "));if(!p){bad.push(li+1);return}
+  ok.push({no:String(+pm[1]),name:pm[2].trim(),lat:+p[0].toFixed(6),lon:+p[1].toFixed(6),mgrs:fmtMgrs(toMgrs(p[0],p[1])),note:post})});return{ok,bad}}
+function dbMerge(items,replace){const L=replace?[]:dbAll();items.forEach(it=>{const i=L.findIndex(x=>String(x.no)===String(it.no));if(i>=0)L[i]=it;else L.push(it)});dbSave(L);return L.length}
+function dbRender(){const L=dbAll(),dup=new Set(),seen=new Set();L.forEach(x=>{if(seen.has(String(x.no)))dup.add(String(x.no));seen.add(String(x.no))});
+  $("#dbTable tbody").innerHTML=L.map((x,i)=>`<tr><td class="w-s"><input data-db="${i}" data-k="no" value="${esc(x.no)}" class="${dup.has(String(x.no))?"bad":""}" style="width:64px"></td>
+    <td class="name"><input data-db="${i}" data-k="name" value="${esc(x.name)}"></td>
+    <td class="coord"><input data-db="${i}" data-k="coord" value="${esc(x.mgrs||"")}" placeholder="47P PS 76283 53429"></td>
+    <td><span class="hint">${x.lat!=null?`${x.lat.toFixed(5)}, ${x.lon.toFixed(5)}`:'<span class="bad">ไม่มีพิกัด</span>'}</span></td>
+    <td class="name"><input data-db="${i}" data-k="note" value="${esc(x.note||"")}"></td>
+    <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-dbact="add" data-i="${i}" title="เพิ่มลงเส้นทาง (ก่อนจุดสุดท้าย)">＋เส้นทาง</button><button class="mini" data-dbact="zoom" data-i="${i}">ดู</button><button class="mini" data-dbact="del" data-i="${i}" aria-label="ลบ">✕</button></div></td></tr>`).join("")
+    ||`<tr><td colspan="6" class="placeholder" style="text-align:left;padding:16px"><b>ยังไม่มีตาราง waypoint ของหน่วย</b><br><span class="hint">วางตารางจาก Excel ในกล่อง "วางตารางจาก Excel / ข้อความ" หรือกด ＋ เพิ่มแถว · ตัวอย่างรูปแบบ: <code>1  VTBH  47P PS 76283 53429</code></span></td></tr>`;
+  if(dup.size)toast("มีเลขซ้ำ: No."+[...dup].join(", "));dbRouteRender();dbDraw()}
+function dbRouteRender(){const W=state?state.wps:[];
+  $("#dbRoute tbody").innerHTML=W.map((w,i)=>{const m=dbMatch(w);return`<tr><td>${i+1}</td><td>${m?`<span class="dbno">No.${esc(m.no)}</span>`:`<span class="area-alert">ยังไม่มีเลข</span>`}</td><td style="text-align:left">${esc(w.name)}</td><td>${fmtMgrs(toMgrs(w.lat,w.lon))}</td></tr>`}).join("")
+    ||`<tr><td colspan="4" class="hint" style="padding:14px">ยังไม่มีเส้นทาง</td></tr>`}
+const dbLayer=L.layerGroup();layerCtl.addOverlay(dbLayer,"Waypoint หน่วย (No.)");
+function dbDraw(){dbLayer.clearLayers();dbAll().forEach(x=>{if(x.lat==null)return;
+  L.marker([x.lat,x.lon],{icon:L.divIcon({className:"",html:`<span class="dbpin">${esc(x.no)}</span>`,iconSize:null,iconAnchor:[12,12]})})
+   .bindTooltip(`No.${esc(x.no)} ${esc(x.name)}<br>${esc(x.mgrs||"")}`).on("click",e=>{L.DomEvent.stopPropagation(e);dbAddToRoute(x)}).addTo(dbLayer)})}
+function dbAddToRoute(x){const w={name:x.name||("No."+x.no),lat:x.lat,lon:x.lon,vor:""};const W=state.wps;
+  if(W.length<2){W.push(w)}else{const at=W.length-1;W.splice(at,0,w);state.legs.splice(at-1,0,{...(state.legs[at-1]||blankLeg()),ate:"",fact:""})}markEdited();render();toast(`เพิ่ม No.${x.no} ${x.name}`)}
+$("#dbTable").addEventListener("change",e=>{const t=e.target;if(t.dataset.db==null)return;const L=dbAll(),x=L[+t.dataset.db];if(!x)return;
+  if(t.dataset.k==="coord"){const v=t.value.trim();if(!v){x.lat=x.lon=null;x.mgrs=""}else{const p=parseCoord(v);if(!p){toast("อ่านพิกัดไม่ได้ ใช้ MGRS เช่น 47P PS 76283 53429");t.value=x.mgrs||"";return}x.lat=+p[0].toFixed(6);x.lon=+p[1].toFixed(6);x.mgrs=fmtMgrs(toMgrs(p[0],p[1]))}}
+  else x[t.dataset.k]=t.dataset.k==="no"?String(+t.value||t.value).trim():t.value.trim();
+  dbSave(L);dbRender();render()});
+$("#dbTable").addEventListener("click",e=>{const b=e.target.closest("button[data-dbact]");if(!b)return;const L=dbAll(),x=L[+b.dataset.i];if(!x)return;
+  if(b.dataset.dbact==="del"){L.splice(+b.dataset.i,1);dbSave(L);dbRender();render()}
+  if(b.dataset.dbact==="zoom"&&x.lat!=null){document.querySelector('.tab[data-tab="plan"]').click();setTimeout(()=>{if(!map.hasLayer(dbLayer))dbLayer.addTo(map);map.setView([x.lat,x.lon],12)},120)}
+  if(b.dataset.dbact==="add"&&x.lat!=null)dbAddToRoute(x)});
+$("#dbAdd").onclick=()=>{const L=dbAll();const n=L.reduce((m,x)=>Math.max(m,+x.no||0),0)+1;L.push({no:String(n),name:"",lat:null,lon:null,mgrs:"",note:""});dbSave(L);dbRender();
+  const ins=document.querySelectorAll('#dbTable input[data-k="name"]');const last=[...ins].find(i=>+i.dataset.db===L.findIndex(x=>x.no===String(n)));if(last)last.focus()};
+const dbPasteDo=replace=>{const r=dbParse($("#dbPaste").value);if(!r.ok.length){$("#dbPasteInfo").innerHTML='<span class="bad">อ่านไม่ได้เลย — ตรวจว่าแต่ละบรรทัดมี เลข ชื่อ และพิกัด</span>';return}
+  const n=dbMerge(r.ok,replace);$("#dbPasteInfo").innerHTML=`นำเข้า ${r.ok.length} จุด (รวม ${n} จุด)`+(r.bad.length?` · <span class="bad">อ่านไม่ได้บรรทัดที่ ${r.bad.join(", ")}</span>`:"");dbRender();render()};
+$("#dbPasteAdd").onclick=()=>dbPasteDo(false);
+let dbRepArm=false;$("#dbPasteReplace").onclick=e=>{if(!dbRepArm){dbRepArm=true;e.target.textContent="กดอีกครั้งเพื่อแทนที่ทั้งตาราง";setTimeout(()=>{dbRepArm=false;e.target.textContent="แทนที่ทั้งตาราง"},3000);return}dbRepArm=false;e.target.textContent="แทนที่ทั้งตาราง";dbPasteDo(true)};
+let dbClrArm=false;$("#dbClear").onclick=e=>{if(!dbClrArm){dbClrArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยันลบ";setTimeout(()=>{dbClrArm=false;e.target.textContent="ลบทั้งหมด"},3000);return}dbClrArm=false;e.target.textContent="ลบทั้งหมด";store.set("vfr_wpdb",[]);dbRender();render()};
+$("#dbExport").onclick=()=>download("waypoint_หน่วย.json",JSON.stringify(dbAll(),null,1),"application/json");
+$("#dbImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{let items=null;try{const d=JSON.parse(t);if(Array.isArray(d))items=d.filter(x=>x&&x.no!=null)}catch(err){}
+  if(!items)items=dbParse(t).ok;if(!items.length){toast("ไฟล์นี้อ่านไม่ได้");return}const n=dbMerge(items,false);dbRender();render();toast(`นำเข้า ${items.length} จุด (รวม ${n})`)});e.target.value=""};
+$("#dbCopyRoute").onclick=()=>{const txt=state.wps.map((w,i)=>{const m=dbMatch(w);return`${i+1}\t${m?"No."+m.no:"-"}\t${w.name}\t${fmtMgrs(toMgrs(w.lat,w.lon))}`}).join("\n");
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>{$("#dbPaste").value=txt;toast("คัดลอกไม่ได้ — ใส่ข้อความไว้ในกล่องวางแทน")})};
+dbRender();
+
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
 function histSnap(){const o={...state};delete o.kbSel;return JSON.stringify(o)}
