@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-03T04:21",
+ "fetched": "2026-11-03T04:24",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -788,7 +788,163 @@
      "src": "AD 2.17"
     }
    ],
-   "airspace_text": "VTBD AD 2.17 ATS AIRSPACE 1 Designation and lateral limits Don Mueang Aerodrome Traffic Zone (ATZ) a circle , radius 5 NM centred on VTBD ARP ( 135452N 1003620E ) 2 Vertical limits 2000 ft / AGL 3 Airspace classification C 4 ATS unit call sign Language(s) Don Mueang Tower English , Thai 5 Transition altitude 11000 ft MSL 6 Remarks NIL",
+   "airspace": {
+    "name": "VTBD ATZ",
+    "poly": [
+     [
+      13.99772,
+      100.60556
+     ],
+     [
+      13.99645,
+      100.62046
+     ],
+     [
+      13.99269,
+      100.63491
+     ],
+     [
+      13.98656,
+      100.64847
+     ],
+     [
+      13.97823,
+      100.66072
+     ],
+     [
+      13.96796,
+      100.6713
+     ],
+     [
+      13.95607,
+      100.67987
+     ],
+     [
+      13.94291,
+      100.68619
+     ],
+     [
+      13.92889,
+      100.69006
+     ],
+     [
+      13.91443,
+      100.69135
+     ],
+     [
+      13.89996,
+      100.69005
+     ],
+     [
+      13.88594,
+      100.68617
+     ],
+     [
+      13.87279,
+      100.67985
+     ],
+     [
+      13.8609,
+      100.67127
+     ],
+     [
+      13.85064,
+      100.66069
+     ],
+     [
+      13.84232,
+      100.64844
+     ],
+     [
+      13.83618,
+      100.63489
+     ],
+     [
+      13.83243,
+      100.62045
+     ],
+     [
+      13.83116,
+      100.60556
+     ],
+     [
+      13.83243,
+      100.59067
+     ],
+     [
+      13.83618,
+      100.57623
+     ],
+     [
+      13.84232,
+      100.56268
+     ],
+     [
+      13.85064,
+      100.55043
+     ],
+     [
+      13.8609,
+      100.53985
+     ],
+     [
+      13.87279,
+      100.53127
+     ],
+     [
+      13.88594,
+      100.52495
+     ],
+     [
+      13.89996,
+      100.52107
+     ],
+     [
+      13.91443,
+      100.51977
+     ],
+     [
+      13.92889,
+      100.52106
+     ],
+     [
+      13.94291,
+      100.52493
+     ],
+     [
+      13.95607,
+      100.53125
+     ],
+     [
+      13.96796,
+      100.53982
+     ],
+     [
+      13.97823,
+      100.5504
+     ],
+     [
+      13.98656,
+      100.56265
+     ],
+     [
+      13.99269,
+      100.57621
+     ],
+     [
+      13.99645,
+      100.59066
+     ],
+     [
+      13.99772,
+      100.60556
+     ]
+    ],
+    "approx": false,
+    "vert": "2000 ft / AGL",
+    "cls": "C",
+    "text": "Don Mueang Aerodrome Traffic Zone (ATZ) a circle , radius 5 NM centred on VTBD ARP ( 135452N 1003620E )"
+   },
    "name": "",
    "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html"
   },
@@ -2855,7 +3011,163 @@
    ],
    "proc": "VTBS AD 2.22 FLIGHT PROCEDURES 1. Provision of ATS Surveillance Services 1.1 Bangkok Approach is responsible for providing ATS Surveillance services to aircraft operating within Bangkok Terminal Control Area and Bangkok Control Zone (see ENR 2.1 BANGKOK TERMINAL CONTROL AREA/CONTROL ZONE) 1.2 Arriving aircraft intending to land at Suvarnabhumi International Airport (VTBS) will be transferred to Suvarnabhumi Arrival on frequency 121.1 MHz. 2. Approach Procedures 2.1 All procedures are designed to maximize departure and arrival capacity in Bangkok TMA and to minimize noise disturbance in areas overflown. 2.2 The final approach may be carried out by means of ILS or other available instrument approach system at the discretion of the pilot. 2.3 The spacing provided between aircraft will be designed to achieve maximum runway utilization within the parameters of safe separation minima including vortex effect and runway occupancy. It is important to validity of the separation provide, and to the achievement of optimum runway capacity, that runway occupancy time is kept to a minimum consistent with the prevailing conditions. 2.4 Under the ATS surveillance system, the horizontal separation minimum shall be 5 NM except within Bangkok TMA , Bangkok CTR and Suvarnabhumi ATZ a reduced horizontal separation minimum of 3 NM may be applied. 2.5 Missed approach 2.5.1 As directed by ATC . 2.5.2 In the absence of instructions from ATC , aircraft shall follow the missed approach procedures which contained on the Instrument Approach Charts. (see VTBS AD 2.24 ) 3. Standard Instrument Departures/Arrivals (RNAV SIDs/STARs) 3.1 Aircraft departing from Suvarnabhumi International Airport will normally be assigned the RNAV SID s detailed as in the table and additional information in VTBS AD 2.24. OUTBOUND ROUTES SIDs NAME SID VTBS JET PROPELLER 20R 02L 20L 02R 19 01 20R 02L 20L 02R 19 01 A1, Y14 SELKA 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U Y16 LIPLI 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U G474, L880 DOSBU 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U B204, N506, R468 GOMES 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U N891 RYN 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U R201, M904, Y11 BUT 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U M757 KASNI 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U A464, M751, W19 REGOS 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U G458 UKERA 3E 3F 3G 3H 3J 3K HOTEL 1P 1Q 1R 1S 1T 1U W31 HHN 3E 3F 3G 3H 3J 3K HOTEL 1P 1Q 1R 1S 1T 1U Y8 VANKO 3E 3F 3G 3H 3J 3K M502 BONVO 3E 3F 3G 3H 3J 3K L301 PASTO 3E 3F 3G 3H 3J 3K G463, P646 TARED 3E 3F 3G 3H 3J 3K L507 NUNLI 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U Y26 OLVUK 3E 3F 3G 3H 3J 3K Y27 UGUVO 3E 3F 3G 3H 3J 3K A464 SEMBO 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U W9 BLAFF 1P 1Q 1R 1S 1T 1U B346, W21, W39 NOBER 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U R474 ALBOS 3E 3F 3G 3H 3J 3K 1P 1Q 1R 1S 1T 1U Note: Pilots of Non-RNAV equipped aircraft shall inform ATC and request for vectors. 3.2 Aircraft arriving at Suvarnabhumi International Airport will normally be assigned the RNAV STARs detailed as in the table and additional information in VTBS AD 2.24. INBOUND ROUTES TRANSITION WAYPOINT STAR VTBS 19/20L/20R 01/02L/02R W1, Y1, Y2 UBLOD EASTE 2C EASTE 2D Y13 RUKSA G474, L880 ANREN TUMGA 2C TUMGA 2D M633 DULEM N506, R468 GOMES P629 NUGPA N891 RYN Y12 ALEMI R201 BUT A464, M751, W19 GUTSO LEBIM 2C LEBIM 2D M769, Y98 SURMA G458, W31, Y99 HOTEL M502 BONVO WILLA 2C WILLA 2D L301 PASTO L524 IBETO G463, P646 TARED L507 IGONI A464 SEMBO NORTA 2C NORTA 2D W9, Y7, Y28 TL B346, W21, W39 NOBER R474 ALBOS Note: Pilots of Non-RNAV equipped aircraft shall inform ATC and request for vectors. 4. Speed Control and Altitude Restrictions Promulgation in Bangkok TMA In order to facilitate the air traffic flow procedure of departing and arriving aircraft within Bangkok TMA, speed control procedures and altitude restrictions must be applied to optimize the spacing between aircraft and reduce the overall delay of traffic. 4.1 Speed control 4.1.1 Speed control shall be in force at all times unless otherwise instructed. Pilots will be individually advised by ATC when speed control is cancelled. 4.1.2 All departing and arriving aircraft are to apply speed of not more than IAS 250 kt when flying at or below altitude of 10000 ft. 4.1.3 Departing aircraft shall comply with speed control restrictions as published in the RNAV SIDs Procedures unless otherwise advised by ATC. 4.1.4 Arriving aircraft shall comply with speed control restrictions as published on the RNAV STARs Charts and Instrument Approach Procedures unless otherwise advised by ATC. 4.1.5 En route and terminal holding speed shall be in accordance with ICAO standard holding speeds requirement. Pilots shall resume speed control procedures when leaving the holding fix. 4.1.6 ATC may issue further speed adjustment instructions during various flight phases or/and when required by traffic situation. 4.1.7 All speed restrictions are to be flown as accurately as possible. If unable to conform to these procedures, pilots should immediately inform ATC and state the speed to be used so that an alternative action can be taken. 4.2 Altitude restrictions When a departing aircraft on a SID is cleared to climb to a level higher than the initially cleared level or the level(s) specified in the SID, the aircraft shall nevertheless follow the published vertical profile, unless such restrictions are explicitly cancelled by ATC. 4.2.1 Departing aircraft intending to cruise below the transition level shall follow an appropriate SID track and comply with individual ATC climb instructions. 4.2.2 When an arriving aircraft on a STAR is cleared to descend to a level lower than the level or the level(s) specified in the STAR, the aircraft shall nevertheless follow the published vertical, unless such restrictions are explicitly cancelled by ATC. Published minimum levels based on terrain clearance shall always be strictly applied. 4.2.3 To facilitate safe traffic integration and provide vertical separation between converging traffic in Bangkok TMA, pilots shall plan their descent profile in accordance with the published STAR procedures or their descent profile against distance to touchdown. 4.2.4 All altitude restrictions are to be flown as accurately as possible. If unable to conform to these restrictions, pilots should immediately inform ATC so that an alternative action can be taken. 5. TCAS RA Warning Avoidance of unnecessary TCAS RA warning, aircraft shall strictly use rate of climb or rate of descent at 1500 fpm or less within 2000 ft to the assigned altitude or flight level, then use rate of climb or rate of descend at 1000 fpm or less within 1000 ft to the assigned altitude or flight level when flight crew is made aware of another aircraft at or approaching an adjacent altitude or flight level, unless otherwise instructed by ATC. 6. Operational for safety and more effective Air Traffic Management in Bangkok TMA . Suvarnabhumi Departure shall be established to provide Air Traffic Control Service at Suvarnabhumi International airport, the operational procedures shall be as follows: 6.1 All departing aircraft, before transferring to relevant approach sectors, are strictly required to contact Suvarnabhumi Departure on frequency 119.25 MHz immediately after airborne unless otherwise instructed by ATC. 6.2 Pilot shall be reminded that, to reduce communication workload, the departure frequency shall not be included in take off clearance. 7. Reduce communication workload 7.1 To reduce communication workload, additional Arrival Control Frequency 126.30 MHz shall be established and used during the congested traffic periods. The control of arriving aircraft shall be transferred from Arrival Control frequency 121.1 MHz to Arrival Control frequency 126.30 MHz. 8. Delay during severe weather 8.1 All aircraft may be delayed. Departure/arrival interval will be applied as follows: 4 minutes or more between successive departures on the same SID or between aircraft intending to fly in the direction where severe weather is reported 4 minutes or more between successive arrivals on the same STAR/at the same IAWP or between aircraft intending to fly in the direction where severe weather is reported 8.2 When severe weather has an effect on landing/ take-off, domestic flights intending to land at Suvarnabhumi International Airport may be requested to delay at airport of departure. 9. VFR Flights at VTBS 9.1 Special VFR Flight A pilot wishing to conduct special VFR flight is to call Bangkok Approach on frequency 125.8 MHz for special VFR clearance.",
    "points": [],
-   "airspace_text": "VTBS AD 2.17 ATS AIRSPACE 1 Designation and lateral limits Suvarnabhumi Aerodrome Traffic Zone (ATZ) a circle, radius 5 NM centred on 134109N 1004456E ( ARP ) 2 Vertical limits SFC to 2000 ft . MSL 3 Airspace classification C 4 ATS unit call sign Language(s) Suvarnabhumi Tower English , Thai 5 Transition altitude 11000 ft MSL 6 Remarks See VTBS AD 2.20 section 1",
+   "airspace": {
+    "name": "VTBS ATZ",
+    "poly": [
+     [
+      13.76911,
+      100.74889
+     ],
+     [
+      13.76784,
+      100.76378
+     ],
+     [
+      13.76408,
+      100.77821
+     ],
+     [
+      13.75795,
+      100.79176
+     ],
+     [
+      13.74962,
+      100.804
+     ],
+     [
+      13.73935,
+      100.81456
+     ],
+     [
+      13.72746,
+      100.82313
+     ],
+     [
+      13.7143,
+      100.82944
+     ],
+     [
+      13.70028,
+      100.8333
+     ],
+     [
+      13.68582,
+      100.8346
+     ],
+     [
+      13.67135,
+      100.83329
+     ],
+     [
+      13.65733,
+      100.82942
+     ],
+     [
+      13.64418,
+      100.8231
+     ],
+     [
+      13.63229,
+      100.81453
+     ],
+     [
+      13.62203,
+      100.80397
+     ],
+     [
+      13.61371,
+      100.79173
+     ],
+     [
+      13.60757,
+      100.7782
+     ],
+     [
+      13.60382,
+      100.76377
+     ],
+     [
+      13.60255,
+      100.74889
+     ],
+     [
+      13.60382,
+      100.73401
+     ],
+     [
+      13.60757,
+      100.71958
+     ],
+     [
+      13.61371,
+      100.70605
+     ],
+     [
+      13.62203,
+      100.69381
+     ],
+     [
+      13.63229,
+      100.68325
+     ],
+     [
+      13.64418,
+      100.67468
+     ],
+     [
+      13.65733,
+      100.66836
+     ],
+     [
+      13.67135,
+      100.66449
+     ],
+     [
+      13.68582,
+      100.66318
+     ],
+     [
+      13.70028,
+      100.66448
+     ],
+     [
+      13.7143,
+      100.66834
+     ],
+     [
+      13.72746,
+      100.67465
+     ],
+     [
+      13.73935,
+      100.68322
+     ],
+     [
+      13.74962,
+      100.69378
+     ],
+     [
+      13.75795,
+      100.70602
+     ],
+     [
+      13.76408,
+      100.71957
+     ],
+     [
+      13.76784,
+      100.734
+     ],
+     [
+      13.76911,
+      100.74889
+     ]
+    ],
+    "approx": false,
+    "vert": "SFC to 2000 ft . MSL",
+    "cls": "C",
+    "text": "Suvarnabhumi Aerodrome Traffic Zone (ATZ) a circle, radius 5 NM centred on 134109N 1004456E ( ARP )"
+   },
    "name": "Bangkok/ Suvarnabhumi International Airport",
    "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBS-en-GB.html"
   },
@@ -3041,7 +3353,163 @@
    ],
    "proc": "VTBU AD 2.22 FLIGHT PROCEDURES 1. GENERAL PROCEDURES 1.1 All aircraft flying within U-TAPAO Controlled airspaces shall be provided Approach Control procedural Service. 1.2 All Aircraft shall obtain appropriate ATC Clearance before penetrating the affected airspace. 1.3 Except when necessary for take-off or landing, or except when specifically authorized by the U-tapao Approach Control, an IFR flight shall be flown at a level which is not below the Minimum Altitude for the aircraft operating IFR flight within BUT TMA or, minimum flight altitude has been established, descend below this level is only permitted in accordance with published Instrument Approach Procedures or ATS Routes Structure or Minimum Sector Altitude or when the aircraft having reported the terrain in-sight and has been cleared for the visual approach. 1.4 Transition level is FL 130 and transition altitude is altitude 11 000 ft. 2. OPERATING PROCEDURES AND ESTABLISHMENT OF STANDARD DEPARTURE CHART – INSTRUMENT (SID) In order to enhance ATS efficiency, Air Traffic safety and avoiding congested area in Bangkok Terminal Control Area, operational implementation to enhance Air Traffic Flow Management and Safety for aircraft intending to depart at U-TAPAO Rayong Pattaya International airport (VTBU) via R201 will be applied as follows: DEPARTURE PROCEDURES FOR IFR AIRCRAFT WITH RNP1 CAPABILITY FLIGHT PLAN FILING : BUT R201 BKK ...FPL RTE... RNAV SID FOR RWY 18 : BKK1A RNAV SID FOR RWY 36 : BKK1B",
    "points": [],
-   "airspace_text": "VTBU AD 2.17 ATS AIRSPACE 1 Designation and lateral limits U-Tapao Aerodrome Traffic Zone (ATZ) a circle, radius 5 NM centred on 124047N 1010018E (ARP) 2 Vertical limits up to but not including 2000 ft / AGL 3 Airspace classification C 4 ATS unit call sign Language(s) U-Tapao Tower English , Thai 5 Transition altitude 11000 ft MSL 6 Remarks NIL",
+   "airspace": {
+    "name": "VTBU ATZ",
+    "poly": [
+     [
+      12.763,
+      101.005
+     ],
+     [
+      12.76173,
+      101.01983
+     ],
+     [
+      12.75797,
+      101.0342
+     ],
+     [
+      12.75184,
+      101.04769
+     ],
+     [
+      12.74351,
+      101.05988
+     ],
+     [
+      12.73324,
+      101.0704
+     ],
+     [
+      12.72135,
+      101.07894
+     ],
+     [
+      12.70819,
+      101.08522
+     ],
+     [
+      12.69417,
+      101.08907
+     ],
+     [
+      12.67971,
+      101.09036
+     ],
+     [
+      12.66525,
+      101.08906
+     ],
+     [
+      12.65123,
+      101.0852
+     ],
+     [
+      12.63807,
+      101.07891
+     ],
+     [
+      12.62618,
+      101.07037
+     ],
+     [
+      12.61592,
+      101.05985
+     ],
+     [
+      12.6076,
+      101.04767
+     ],
+     [
+      12.60146,
+      101.03419
+     ],
+     [
+      12.59771,
+      101.01982
+     ],
+     [
+      12.59644,
+      101.005
+     ],
+     [
+      12.59771,
+      100.99018
+     ],
+     [
+      12.60146,
+      100.97581
+     ],
+     [
+      12.6076,
+      100.96233
+     ],
+     [
+      12.61592,
+      100.95015
+     ],
+     [
+      12.62618,
+      100.93963
+     ],
+     [
+      12.63807,
+      100.93109
+     ],
+     [
+      12.65123,
+      100.9248
+     ],
+     [
+      12.66525,
+      100.92094
+     ],
+     [
+      12.67971,
+      100.91964
+     ],
+     [
+      12.69417,
+      100.92093
+     ],
+     [
+      12.70819,
+      100.92478
+     ],
+     [
+      12.72135,
+      100.93106
+     ],
+     [
+      12.73324,
+      100.9396
+     ],
+     [
+      12.74351,
+      100.95012
+     ],
+     [
+      12.75184,
+      100.96231
+     ],
+     [
+      12.75797,
+      100.9758
+     ],
+     [
+      12.76173,
+      100.99017
+     ],
+     [
+      12.763,
+      101.005
+     ]
+    ],
+    "approx": false,
+    "vert": "up to but not including 2000 ft / AGL",
+    "cls": "C",
+    "text": "U-Tapao Aerodrome Traffic Zone (ATZ) a circle, radius 5 NM centred on 124047N 1010018E (ARP)"
+   },
    "name": "Rayong/ U-Tapao Rayong Pattaya International Airport",
    "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBU-en-GB.html"
   },
@@ -11921,7 +12389,163 @@
      "src": "AD 2.17"
     }
    ],
-   "airspace_text": "VTSY AD 2.17 ATS AIRSPACE 1 Designation and lateral limits BETONG AERODROME TRAFFIC ZONE (ATZ), a circle radius 5 nm centred on BET DVOR/DME ( 054708N 1010839E ) 2 Vertical limits 4000 ft / AGL 3 Airspace classification D 4 ATS unit call sign Language(s) BETONG TOWER English, Thai 5 Transition altitude 11000 ft 6 Remarks NIL",
+   "airspace": {
+    "name": "VTSY ATZ",
+    "poly": [
+     [
+      5.86884,
+      101.14417
+     ],
+     [
+      5.86757,
+      101.15871
+     ],
+     [
+      5.86381,
+      101.1728
+     ],
+     [
+      5.85768,
+      101.18603
+     ],
+     [
+      5.84935,
+      101.19798
+     ],
+     [
+      5.83909,
+      101.2083
+     ],
+     [
+      5.82719,
+      101.21666
+     ],
+     [
+      5.81404,
+      101.22283
+     ],
+     [
+      5.80001,
+      101.2266
+     ],
+     [
+      5.78555,
+      101.22787
+     ],
+     [
+      5.77109,
+      101.2266
+     ],
+     [
+      5.75707,
+      101.22282
+     ],
+     [
+      5.74392,
+      101.21665
+     ],
+     [
+      5.73203,
+      101.20828
+     ],
+     [
+      5.72176,
+      101.19797
+     ],
+     [
+      5.71344,
+      101.18602
+     ],
+     [
+      5.7073,
+      101.17279
+     ],
+     [
+      5.70355,
+      101.1587
+     ],
+     [
+      5.70228,
+      101.14417
+     ],
+     [
+      5.70355,
+      101.12964
+     ],
+     [
+      5.7073,
+      101.11555
+     ],
+     [
+      5.71344,
+      101.10232
+     ],
+     [
+      5.72176,
+      101.09037
+     ],
+     [
+      5.73203,
+      101.08006
+     ],
+     [
+      5.74392,
+      101.07169
+     ],
+     [
+      5.75707,
+      101.06552
+     ],
+     [
+      5.77109,
+      101.06174
+     ],
+     [
+      5.78555,
+      101.06047
+     ],
+     [
+      5.80001,
+      101.06174
+     ],
+     [
+      5.81404,
+      101.06551
+     ],
+     [
+      5.82719,
+      101.07168
+     ],
+     [
+      5.83909,
+      101.08004
+     ],
+     [
+      5.84935,
+      101.09036
+     ],
+     [
+      5.85768,
+      101.10231
+     ],
+     [
+      5.86381,
+      101.11554
+     ],
+     [
+      5.86757,
+      101.12963
+     ],
+     [
+      5.86884,
+      101.14417
+     ]
+    ],
+    "approx": false,
+    "vert": "4000 ft / AGL",
+    "cls": "D",
+    "text": "BETONG AERODROME TRAFFIC ZONE (ATZ), a circle radius 5 nm centred on BET DVOR/DME ( 054708N 1010839E )"
+   },
    "name": "Yala/ Betong",
    "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSY-en-GB.html"
   },
@@ -17280,7 +17904,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -17300,7 +17924,7 @@
      "lon": 102.760556
     },
     {
-     "name": "∆ SANOT",
+     "name": "SANOT",
      "lat": 14.859444,
      "lon": 103.43
     },
@@ -17315,7 +17939,7 @@
      "lon": 104.367222
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     },
@@ -17351,7 +17975,7 @@
      "lon": 104.425833
     },
     {
-     "name": "unknown reference: NAV-DVORDME",
+     "name": "",
      "lat": 16.561667,
      "lon": 104.765556
     }
@@ -17362,7 +17986,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     },
@@ -17383,7 +18007,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     },
@@ -17399,7 +18023,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -17409,7 +18033,7 @@
      "lon": 99.167778
     },
     {
-     "name": "∆ TOPAS",
+     "name": "TOPAS",
      "lat": 17.487778,
      "lon": 99.399444
     },
@@ -17424,12 +18048,12 @@
      "lon": 100.263333
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
     {
-     "name": "∆ POLAK",
+     "name": "POLAK",
      "lat": 13.351667,
      "lon": 100.581667
     },
@@ -17444,7 +18068,7 @@
      "lon": 100.581667
     },
     {
-     "name": "∆ DIRAX",
+     "name": "DIRAX",
      "lat": 11.001944,
      "lon": 100.546667
     },
@@ -17479,7 +18103,7 @@
      "lon": 100.413611
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     },
@@ -17510,7 +18134,7 @@
      "lon": 98.833611
     },
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -17525,7 +18149,7 @@
      "lon": 99.567222
     },
     {
-     "name": "CHIANG RAI DVOR /DME ( CTR )",
+     "name": "CTR",
      "lat": 19.948889,
      "lon": 99.883056
     },
@@ -17541,12 +18165,12 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     },
     {
-     "name": "unknown reference: NAV-VORDME-",
+     "name": "",
      "lat": 15.196667,
      "lon": 105.738056
     }
@@ -17573,7 +18197,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     },
@@ -17594,7 +18218,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "unknown reference: NAV-DVORDME",
+     "name": "",
      "lat": 18.010278,
      "lon": 102.540556
     },
@@ -17604,7 +18228,7 @@
      "lon": 102.005833
     },
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     },
@@ -17614,7 +18238,7 @@
      "lon": 101.826389
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     }
@@ -17625,7 +18249,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -17635,7 +18259,7 @@
      "lon": 100.668333
     },
     {
-     "name": "PHETCHABUN DVOR /DME ( PCB )",
+     "name": "PCB",
      "lat": 16.676111,
      "lon": 101.196667
     },
@@ -17661,7 +18285,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     },
@@ -17671,7 +18295,7 @@
      "lon": 103.3575
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -17681,7 +18305,7 @@
      "lon": 104.243333
     },
     {
-     "name": "unknown reference: NAV-DVORDME",
+     "name": "",
      "lat": 16.561667,
      "lon": 104.765556
     }
@@ -17692,7 +18316,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -17733,7 +18357,7 @@
      "lon": 98.302222
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -17744,7 +18368,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -17779,7 +18403,7 @@
      "lon": 99.258889
     },
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -17794,7 +18418,7 @@
      "lon": 98.624722
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -17805,7 +18429,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -17831,12 +18455,12 @@
      "lon": 98.496944
     },
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     },
@@ -17856,7 +18480,7 @@
      "lon": 104.756111
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -17867,7 +18491,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -17898,12 +18522,12 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
     {
-     "name": "U-TAPAO DVOR /DME ( BUT )",
+     "name": "BUT",
      "lat": 12.666667,
      "lon": 101.000556
     }
@@ -17919,7 +18543,7 @@
      "lon": 98.698333
     },
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     },
@@ -17929,7 +18553,7 @@
      "lon": 100.396111
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     }
@@ -17940,7 +18564,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -17976,7 +18600,7 @@
      "lon": 98.678889
     },
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -17986,17 +18610,17 @@
      "lon": 99.628611
     },
     {
-     "name": "∆ IKISU",
+     "name": "IKISU",
      "lat": 18.794167,
      "lon": 100.063611
     },
     {
-     "name": "∆ CRIST",
+     "name": "CRIST",
      "lat": 18.797778,
      "lon": 100.226111
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     },
@@ -18012,7 +18636,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG RAI DVOR /DME ( CTR )",
+     "name": "CTR",
      "lat": 19.948889,
      "lon": 99.883056
     },
@@ -18022,7 +18646,7 @@
      "lon": 100.201944
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     },
@@ -18053,7 +18677,7 @@
      "lon": 98.081111
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -18084,7 +18708,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     },
@@ -18100,7 +18724,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -18131,7 +18755,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -18167,7 +18791,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "unknown reference: NAV-DVORDME",
+     "name": "",
      "lat": 18.010278,
      "lon": 102.540556
     },
@@ -18177,7 +18801,7 @@
      "lon": 102.629444
     },
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -18192,7 +18816,7 @@
      "lon": 103.458889
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -18207,7 +18831,7 @@
      "lon": 104.466667
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -18218,7 +18842,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -18228,7 +18852,7 @@
      "lon": 101.028333
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     },
@@ -18238,7 +18862,7 @@
      "lon": 102.473611
     },
     {
-     "name": "unknown reference: NAV-DVORDME",
+     "name": "",
      "lat": 18.010278,
      "lon": 102.540556
     }
@@ -18249,7 +18873,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -18269,12 +18893,12 @@
      "lon": 99.804444
     },
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
     {
-     "name": "∆ VININ",
+     "name": "VININ",
      "lat": 9.631667,
      "lon": 100.294444
     },
@@ -18284,7 +18908,7 @@
      "lon": 100.493333
     },
     {
-     "name": "∆ EMELA",
+     "name": "EMELA",
      "lat": 10.213611,
      "lon": 101.124722
     },
@@ -18299,7 +18923,7 @@
      "lon": 101.856389
     },
     {
-     "name": "∆ ANOBO",
+     "name": "ANOBO",
      "lat": 11.056389,
      "lon": 102.245
     },
@@ -18315,7 +18939,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -18325,7 +18949,7 @@
      "lon": 98.811111
     },
     {
-     "name": "KRABI DVOR /DME ( KBI )",
+     "name": "KBI",
      "lat": 8.1075,
      "lon": 98.9775
     },
@@ -18340,12 +18964,12 @@
      "lon": 100.920278
     },
     {
-     "name": "∆ SUPIN",
+     "name": "SUPIN",
      "lat": 8.576389,
      "lon": 101.071944
     },
     {
-     "name": "∆ MUBAN",
+     "name": "MUBAN",
      "lat": 8.911389,
      "lon": 101.497778
     },
@@ -18355,7 +18979,7 @@
      "lon": 101.575278
     },
     {
-     "name": "∆ TONIK",
+     "name": "TONIK",
      "lat": 9.293333,
      "lon": 101.985278
     },
@@ -18371,7 +18995,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -18386,7 +19010,7 @@
      "lon": 101.436667
     },
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     },
@@ -18396,7 +19020,7 @@
      "lon": 103.011111
     },
     {
-     "name": "∆ RAMBU",
+     "name": "RAMBU",
      "lat": 15.098333,
      "lon": 103.388611
     },
@@ -18411,7 +19035,7 @@
      "lon": 104.350556
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -18422,7 +19046,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -18437,7 +19061,7 @@
      "lon": 103.458889
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -18452,7 +19076,7 @@
      "lon": 104.466667
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -18463,7 +19087,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -18478,7 +19102,7 @@
      "lon": 102.781944
     },
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     },
@@ -18488,7 +19112,7 @@
      "lon": 103.285278
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -18503,7 +19127,7 @@
      "lon": 104.466667
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -18514,7 +19138,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     },
@@ -18524,7 +19148,7 @@
      "lon": 102.5925
     },
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     },
@@ -18534,12 +19158,12 @@
      "lon": 103.148889
     },
     {
-     "name": "SAKON NAKHON DVOR /DME ( SKN )",
+     "name": "SKN",
      "lat": 17.214167,
      "lon": 104.136667
     },
     {
-     "name": "NAKHON PHANOM DVOR /DME ( NKP ",
+     "name": "NKP",
      "lat": 17.388333,
      "lon": 104.638333
     }
@@ -18550,7 +19174,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -18570,7 +19194,7 @@
      "lon": 98.614722
     },
     {
-     "name": "MAE SOT DVOR /DME ( MST )",
+     "name": "MST",
      "lat": 16.697778,
      "lon": 98.541667
     }
@@ -18581,12 +19205,12 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "TAKHLI NDB ( TL )",
+     "name": "TL",
      "lat": 15.275833,
      "lon": 100.2975
     },
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     }
@@ -18597,7 +19221,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "MAE HONG SON DVOR /DME ( MHS )",
+     "name": "MHS",
      "lat": 19.319722,
      "lon": 97.912222
     },
@@ -18612,7 +19236,7 @@
      "lon": 98.577222
     },
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -18627,7 +19251,7 @@
      "lon": 99.560833
     },
     {
-     "name": "∆ SARIM",
+     "name": "SARIM",
      "lat": 17.508333,
      "lon": 99.793611
     },
@@ -18637,7 +19261,7 @@
      "lon": 100.007778
     },
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -18652,7 +19276,7 @@
      "lon": 100.2975
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
@@ -18663,7 +19287,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "KAMPHAENG SAEN DVOR /DME ( KPS",
+     "name": "KPS",
      "lat": 14.165556,
      "lon": 99.954167
     },
@@ -18673,7 +19297,7 @@
      "lon": 99.956944
     },
     {
-     "name": "TAKHLI NDB ( TL )",
+     "name": "TL",
      "lat": 15.275833,
      "lon": 100.2975
     }
@@ -18684,7 +19308,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -18694,17 +19318,17 @@
      "lon": 99.628611
     },
     {
-     "name": "∆ IKISU",
+     "name": "IKISU",
      "lat": 18.794167,
      "lon": 100.063611
     },
     {
-     "name": "∆ CRIST",
+     "name": "CRIST",
      "lat": 18.797778,
      "lon": 100.226111
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     }
@@ -18715,7 +19339,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "LAMPANG DVOR /DME ( LPN )",
+     "name": "LPN",
      "lat": 18.276667,
      "lon": 99.502222
     },
@@ -18725,7 +19349,7 @@
      "lon": 99.929444
     },
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     }
@@ -18736,7 +19360,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -18746,7 +19370,7 @@
      "lon": 98.765278
     },
     {
-     "name": "TRANG DVOR /DME ( TRN )",
+     "name": "TRN",
      "lat": 7.508889,
      "lon": 99.626111
     },
@@ -18756,7 +19380,7 @@
      "lon": 99.925556
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     }
@@ -18767,7 +19391,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -18787,12 +19411,12 @@
      "lon": 99.939444
     },
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     },
     {
-     "name": "∆ PANKU",
+     "name": "PANKU",
      "lat": 17.343056,
      "lon": 100.935
     },
@@ -18802,7 +19426,7 @@
      "lon": 101.205278
     },
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     },
@@ -18817,7 +19441,7 @@
      "lon": 102.253889
     },
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -18827,7 +19451,7 @@
      "lon": 103.293056
     },
     {
-     "name": "SAKON NAKHON DVOR /DME ( SKN )",
+     "name": "SKN",
      "lat": 17.214167,
      "lon": 104.136667
     }
@@ -18838,12 +19462,12 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "∆ PANKU",
+     "name": "PANKU",
      "lat": 17.343056,
      "lon": 100.935
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     },
@@ -18853,7 +19477,7 @@
      "lon": 102.448611
     },
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     }
@@ -18864,7 +19488,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "RANONG DVOR /DME ( RAN )",
+     "name": "RAN",
      "lat": 9.778056,
      "lon": 98.583611
     },
@@ -18874,7 +19498,7 @@
      "lon": 98.863333
     },
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -18889,7 +19513,7 @@
      "lon": 100.101944
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     }
@@ -18900,12 +19524,12 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
     {
-     "name": "∆ POLAK",
+     "name": "POLAK",
      "lat": 13.351667,
      "lon": 100.581667
     },
@@ -18920,7 +19544,7 @@
      "lon": 100.581667
     },
     {
-     "name": "∆ DIRAX",
+     "name": "DIRAX",
      "lat": 11.001944,
      "lon": 100.546667
     },
@@ -18945,7 +19569,7 @@
      "lon": 100.920278
     },
     {
-     "name": "∆ ADNEP",
+     "name": "ADNEP",
      "lat": 8.062222,
      "lon": 101.055
     },
@@ -18966,7 +19590,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -18981,7 +19605,7 @@
      "lon": 99.567222
     },
     {
-     "name": "CHIANG RAI DVOR /DME ( CTR )",
+     "name": "CTR",
      "lat": 19.948889,
      "lon": 99.883056
     }
@@ -18992,7 +19616,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -19002,7 +19626,7 @@
      "lon": 100.668333
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     },
@@ -19012,7 +19636,7 @@
      "lon": 102.402222
     },
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     }
@@ -19023,7 +19647,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -19038,12 +19662,12 @@
      "lon": 100.211944
     },
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     },
     {
-     "name": "∆ IKISU",
+     "name": "IKISU",
      "lat": 18.794167,
      "lon": 100.063611
     },
@@ -19053,7 +19677,7 @@
      "lon": 99.961389
     },
     {
-     "name": "CHIANG RAI DVOR /DME ( CTR )",
+     "name": "CTR",
      "lat": 19.948889,
      "lon": 99.883056
     }
@@ -19064,7 +19688,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -19074,7 +19698,7 @@
      "lon": 100.057778
     },
     {
-     "name": "∆ PIVUT",
+     "name": "PIVUT",
      "lat": 17.778889,
      "lon": 99.764722
     },
@@ -19084,7 +19708,7 @@
      "lon": 99.699444
     },
     {
-     "name": "LAMPANG DVOR /DME ( LPN )",
+     "name": "LPN",
      "lat": 18.276667,
      "lon": 99.502222
     }
@@ -19095,7 +19719,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -19110,7 +19734,7 @@
      "lon": 99.341389
     },
     {
-     "name": "TRANG DVOR /DME ( TRN )",
+     "name": "TRN",
      "lat": 7.508889,
      "lon": 99.626111
     }
@@ -19121,7 +19745,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "SUKHOTHAI NDB ( THS )",
+     "name": "THS",
      "lat": 17.235278,
      "lon": 99.821944
     },
@@ -19131,7 +19755,7 @@
      "lon": 100.06
     },
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     },
@@ -19141,7 +19765,7 @@
      "lon": 100.396111
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     }
@@ -19152,7 +19776,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "MAE SOT DVOR /DME ( MST )",
+     "name": "MST",
      "lat": 16.697778,
      "lon": 98.541667
     },
@@ -19172,12 +19796,12 @@
      "lon": 99.252222
     },
     {
-     "name": "∆ IGPOP",
+     "name": "IGPOP",
      "lat": 16.833889,
      "lon": 99.785556
     },
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -19187,12 +19811,12 @@
      "lon": 100.809444
     },
     {
-     "name": "PHETCHABUN DVOR /DME ( PCB )",
+     "name": "PCB",
      "lat": 16.676111,
      "lon": 101.196667
     },
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     }
@@ -19203,7 +19827,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -19223,7 +19847,7 @@
      "lon": 101.488333
     },
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     }
@@ -19234,7 +19858,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -19244,7 +19868,7 @@
      "lon": 99.475278
     },
     {
-     "name": "NAKHON SI THAMMARAT DVOR /DME ",
+     "name": "NKS",
      "lat": 8.541667,
      "lon": 99.946944
     },
@@ -19254,7 +19878,7 @@
      "lon": 100.235
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     }
@@ -19265,7 +19889,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -19280,7 +19904,7 @@
      "lon": 100.451667
     },
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     },
@@ -19290,7 +19914,7 @@
      "lon": 100.201944
     },
     {
-     "name": "CHIANG RAI DVOR /DME ( CTR )",
+     "name": "CTR",
      "lat": 19.948889,
      "lon": 99.883056
     }
@@ -19311,12 +19935,12 @@
      "lon": 100.080556
     },
     {
-     "name": "∆ UKERA",
+     "name": "UKERA",
      "lat": 12.035278,
      "lon": 100.019444
     },
     {
-     "name": "HUA HIN DVOR /DME ( HHN )",
+     "name": "HHN",
      "lat": 12.634444,
      "lon": 99.951111
     },
@@ -19326,7 +19950,7 @@
      "lon": 100.33
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
@@ -19357,7 +19981,7 @@
      "lon": 100.158611
     },
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
@@ -19367,7 +19991,7 @@
      "lon": 99.770556
     },
     {
-     "name": "∆ ADLAL",
+     "name": "ADLAL",
      "lat": 9.302778,
      "lon": 99.518333
     },
@@ -19377,7 +20001,7 @@
      "lon": 99.380833
     },
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -19407,7 +20031,7 @@
      "lon": 99.015833
     },
     {
-     "name": "KRABI DVOR /DME ( KBI )",
+     "name": "KBI",
      "lat": 8.1075,
      "lon": 98.9775
     },
@@ -19417,7 +20041,7 @@
      "lon": 99.318056
     },
     {
-     "name": "TRANG DVOR /DME ( TRN )",
+     "name": "TRN",
      "lat": 7.508889,
      "lon": 99.626111
     }
@@ -19428,7 +20052,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -19448,12 +20072,12 @@
      "lon": 99.804444
     },
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
     {
-     "name": "∆ VININ",
+     "name": "VININ",
      "lat": 9.631667,
      "lon": 100.294444
     },
@@ -19473,12 +20097,12 @@
      "lon": 101.8375
     },
     {
-     "name": "TRAT NDB ( TRT )",
+     "name": "TRT",
      "lat": 12.274444,
      "lon": 102.313889
     },
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     }
@@ -19494,7 +20118,7 @@
      "lon": 99.761944
     },
     {
-     "name": "CHUM PHON DVOR /DME ( CPN )",
+     "name": "CPN",
      "lat": 10.711111,
      "lon": 99.365556
     },
@@ -19504,7 +20128,7 @@
      "lon": 98.853333
     },
     {
-     "name": "RANONG DVOR /DME ( RAN )",
+     "name": "RAN",
      "lat": 9.778056,
      "lon": 98.583611
     },
@@ -19519,7 +20143,7 @@
      "lon": 98.388889
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -19545,12 +20169,12 @@
      "lon": 100.285833
     },
     {
-     "name": "NAKHON SI THAMMARAT DVOR /DME ",
+     "name": "NKS",
      "lat": 8.541667,
      "lon": 99.946944
     },
     {
-     "name": "TRANG DVOR /DME ( TRN )",
+     "name": "TRN",
      "lat": 7.508889,
      "lon": 99.626111
     }
@@ -19561,7 +20185,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -19581,7 +20205,7 @@
      "lon": 98.433889
     },
     {
-     "name": "MAE HONG SON DVOR /DME ( MHS )",
+     "name": "MHS",
      "lat": 19.319722,
      "lon": 97.912222
     }
@@ -19597,7 +20221,7 @@
      "lon": 103.011111
     },
     {
-     "name": "BURI RAM DVOR /DME ( BRM )",
+     "name": "BRM",
      "lat": 15.239444,
      "lon": 103.258889
     },
@@ -19607,7 +20231,7 @@
      "lon": 103.515833
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     }
@@ -19623,7 +20247,7 @@
      "lon": 100.668333
     },
     {
-     "name": "PHETCHABUN DVOR /DME ( PCB )",
+     "name": "PCB",
      "lat": 16.676111,
      "lon": 101.196667
     },
@@ -19633,7 +20257,7 @@
      "lon": 101.531667
     },
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     }
@@ -19644,7 +20268,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "PHRAE DVOR /DME ( PAE )",
+     "name": "PAE",
      "lat": 18.134167,
      "lon": 100.166111
     },
@@ -19654,7 +20278,7 @@
      "lon": 100.344444
     },
     {
-     "name": "PHETCHABUN DVOR /DME ( PCB )",
+     "name": "PCB",
      "lat": 16.676111,
      "lon": 101.196667
     }
@@ -19705,7 +20329,7 @@
      "lon": 101.433333
     },
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     },
@@ -19761,7 +20385,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "CHUM PHAE DVOR /DME ( CMP )",
+     "name": "CMP",
      "lat": 16.635278,
      "lon": 101.988889
     },
@@ -19787,7 +20411,7 @@
      "lon": 101.481389
     },
     {
-     "name": "BETONG DVOR/DME ( BET )",
+     "name": "BET",
      "lat": 5.785556,
      "lon": 101.144167
     }
@@ -19798,7 +20422,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "NAKHON SI THAMMARAT DVOR /DME ",
+     "name": "NKS",
      "lat": 8.541667,
      "lon": 99.946944
     },
@@ -19814,7 +20438,7 @@
    "page": "3.1",
    "pts": [
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
@@ -19824,7 +20448,7 @@
      "lon": 100.314444
     },
     {
-     "name": "∆ APUSA",
+     "name": "APUSA",
      "lat": 10.015833,
      "lon": 100.335278
     },
@@ -19845,7 +20469,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -19866,7 +20490,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -19907,7 +20531,7 @@
      "lon": 98.081111
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -19918,7 +20542,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -19944,7 +20568,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -19965,7 +20589,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -19991,7 +20615,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "NAN DVOR /DME ( NAN )",
+     "name": "NAN",
      "lat": 18.809167,
      "lon": 100.7825
     },
@@ -20023,7 +20647,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20054,7 +20678,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20090,7 +20714,7 @@
      "lon": 99.893611
     },
     {
-     "name": "∆ APUSA",
+     "name": "APUSA",
      "lat": 10.015833,
      "lon": 100.335278
     },
@@ -20110,7 +20734,7 @@
      "lon": 100.588333
     },
     {
-     "name": "∆ SUPIN",
+     "name": "SUPIN",
      "lat": 8.576389,
      "lon": 101.071944
     },
@@ -20167,7 +20791,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     },
@@ -20177,12 +20801,12 @@
      "lon": 101.856389
     },
     {
-     "name": "∆ TONIK",
+     "name": "TONIK",
      "lat": 9.293333,
      "lon": 101.985278
     },
     {
-     "name": "∆ DUGON",
+     "name": "DUGON",
      "lat": 8.023611,
      "lon": 102.096944
     },
@@ -20198,7 +20822,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -20219,12 +20843,12 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
     {
-     "name": "∆ POLAK",
+     "name": "POLAK",
      "lat": 13.351667,
      "lon": 100.581667
     },
@@ -20239,7 +20863,7 @@
      "lon": 100.581667
     },
     {
-     "name": "∆ IDAGA",
+     "name": "IDAGA",
      "lat": 11.001944,
      "lon": 100.896667
     },
@@ -20249,7 +20873,7 @@
      "lon": 101.124722
     },
     {
-     "name": "∆ MUBAN",
+     "name": "MUBAN",
      "lat": 8.911389,
      "lon": 101.497778
     },
@@ -20270,7 +20894,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20326,7 +20950,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20387,7 +21011,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20397,7 +21021,7 @@
      "lon": 100.851667
     },
     {
-     "name": "U-TAPAO DVOR /DME ( BUT )",
+     "name": "BUT",
      "lat": 12.666667,
      "lon": 101.000556
     },
@@ -20407,17 +21031,17 @@
      "lon": 101.087222
     },
     {
-     "name": "∆ DIPUN",
+     "name": "DIPUN",
      "lat": 12.0825,
      "lon": 101.169722
     },
     {
-     "name": "∆ SIRAT",
+     "name": "SIRAT",
      "lat": 10.580556,
      "lon": 101.611111
     },
     {
-     "name": "∆ TONIK",
+     "name": "TONIK",
      "lat": 9.293333,
      "lon": 101.985278
     },
@@ -20433,7 +21057,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20469,7 +21093,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20479,12 +21103,12 @@
      "lon": 101.18
     },
     {
-     "name": "RAYONG DVOR /DME ( RYN )",
+     "name": "RYN",
      "lat": 12.778611,
      "lon": 101.676389
     },
     {
-     "name": "∆ ANOBO",
+     "name": "ANOBO",
      "lat": 11.056389,
      "lon": 102.245
     },
@@ -20500,7 +21124,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -20521,7 +21145,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20557,7 +21181,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20578,7 +21202,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -20604,7 +21228,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     },
@@ -20650,7 +21274,7 @@
      "lon": 98.682222
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -20666,7 +21290,7 @@
      "lon": 99.893611
     },
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
@@ -20691,7 +21315,7 @@
      "lon": 99.221944
     },
     {
-     "name": "KRABI DVOR /DME ( KBI )",
+     "name": "KBI",
      "lat": 8.1075,
      "lon": 98.9775
     }
@@ -20702,7 +21326,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -20712,7 +21336,7 @@
      "lon": 98.388889
     },
     {
-     "name": "∆ ANDAX",
+     "name": "ANDAX",
      "lat": 9.078056,
      "lon": 98.595833
     },
@@ -20722,7 +21346,7 @@
      "lon": 98.809722
     },
     {
-     "name": "CHUM PHON DVOR /DME ( CPN )",
+     "name": "CPN",
      "lat": 10.711111,
      "lon": 99.365556
     },
@@ -20753,7 +21377,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -20763,12 +21387,12 @@
      "lon": 99.321389
     },
     {
-     "name": "∆ KEXIL",
+     "name": "KEXIL",
      "lat": 17.701111,
      "lon": 99.498333
     },
     {
-     "name": "∆ IGPOP",
+     "name": "IGPOP",
      "lat": 16.833889,
      "lon": 99.785556
     },
@@ -20783,7 +21407,7 @@
      "lon": 100.2975
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
@@ -20794,7 +21418,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20829,7 +21453,7 @@
      "lon": 99.258889
     },
     {
-     "name": "SURAT THANI DVOR /DME ( STN )",
+     "name": "STN",
      "lat": 9.129444,
      "lon": 99.134722
     },
@@ -20844,7 +21468,7 @@
      "lon": 98.624722
     },
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     }
@@ -20860,7 +21484,7 @@
      "lon": 100.34
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     }
@@ -20876,7 +21500,7 @@
      "lon": 100.541111
     },
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     }
@@ -20892,7 +21516,7 @@
      "lon": 100.851667
     },
     {
-     "name": "U-TAPAO DVOR /DME ( BUT )",
+     "name": "BUT",
      "lat": 12.666667,
      "lon": 101.000556
     },
@@ -20902,7 +21526,7 @@
      "lon": 101.087222
     },
     {
-     "name": "∆ NOMEP",
+     "name": "NOMEP",
      "lat": 11.641667,
      "lon": 101.081667
     },
@@ -20954,7 +21578,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -20990,7 +21614,7 @@
      "lon": 101.886389
     },
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     }
@@ -21001,7 +21625,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "∆ SANOT",
+     "name": "SANOT",
      "lat": 14.859444,
      "lon": 103.43
     },
@@ -21022,7 +21646,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -21058,7 +21682,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
@@ -21068,7 +21692,7 @@
      "lon": 100.314444
     },
     {
-     "name": "∆ APUSA",
+     "name": "APUSA",
      "lat": 10.015833,
      "lon": 100.335278
     },
@@ -21084,7 +21708,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "HAT YAI DVOR /DME ( HTY )",
+     "name": "HTY",
      "lat": 6.934167,
      "lon": 100.388056
     },
@@ -21104,7 +21728,7 @@
      "lon": 101.329167
     },
     {
-     "name": "BETONG DVOR/DME ( BET )",
+     "name": "BET",
      "lat": 5.785556,
      "lon": 101.144167
     }
@@ -21130,7 +21754,7 @@
      "lon": 101.329167
     },
     {
-     "name": "BETONG DVOR/DME ( BET )",
+     "name": "BET",
      "lat": 5.785556,
      "lon": 101.144167
     }
@@ -21141,7 +21765,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -21156,7 +21780,7 @@
      "lon": 101.436667
     },
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     },
@@ -21181,7 +21805,7 @@
      "lon": 104.350556
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -21192,7 +21816,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -21207,7 +21831,7 @@
      "lon": 103.458889
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -21222,7 +21846,7 @@
      "lon": 104.466667
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -21233,7 +21857,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "UDON DVOR /DME ( UDN )",
+     "name": "UDN",
      "lat": 17.384722,
      "lon": 102.775
     },
@@ -21248,7 +21872,7 @@
      "lon": 102.781944
     },
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     },
@@ -21258,7 +21882,7 @@
      "lon": 103.285278
     },
     {
-     "name": "ROI-ET DVOR /DME ( ROT )",
+     "name": "ROT",
      "lat": 16.116944,
      "lon": 103.772222
     },
@@ -21273,7 +21897,7 @@
      "lon": 104.466667
     },
     {
-     "name": "UBON DVOR /DME ( UBL )",
+     "name": "UBL",
      "lat": 15.245278,
      "lon": 104.865833
     }
@@ -21284,7 +21908,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "KHORAT DVOR /DME ( KRT )",
+     "name": "KRT",
      "lat": 14.917222,
      "lon": 102.139722
     },
@@ -21294,7 +21918,7 @@
      "lon": 102.5925
     },
     {
-     "name": "KHON KAEN DVOR /DME ( KKN )",
+     "name": "KKN",
      "lat": 16.470833,
      "lon": 102.788056
     },
@@ -21304,12 +21928,12 @@
      "lon": 103.148889
     },
     {
-     "name": "SAKON NAKHON DVOR /DME ( SKN )",
+     "name": "SKN",
      "lat": 17.214167,
      "lon": 104.136667
     },
     {
-     "name": "NAKHON PHANOM DVOR /DME ( NKP ",
+     "name": "NKP",
      "lat": 17.388333,
      "lon": 104.638333
     }
@@ -21352,7 +21976,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -21387,7 +22011,7 @@
      "lon": 99.096944
     },
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     }
@@ -21398,7 +22022,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     },
@@ -21438,7 +22062,7 @@
      "lon": 100.06
     },
     {
-     "name": "∆ IKISU",
+     "name": "IKISU",
      "lat": 18.794167,
      "lon": 100.063611
     },
@@ -21464,12 +22088,12 @@
      "lon": 100.201944
     },
     {
-     "name": "∆ CRIST",
+     "name": "CRIST",
      "lat": 18.797778,
      "lon": 100.226111
     },
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     },
@@ -21484,7 +22108,7 @@
      "lon": 100.2975
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
@@ -21500,7 +22124,7 @@
      "lon": 99.955
     },
     {
-     "name": "PHITSANULOK DVOR /DME ( PSL )",
+     "name": "PSL",
      "lat": 16.770278,
      "lon": 100.291389
     }
@@ -21521,7 +22145,7 @@
      "lon": 98.889444
     },
     {
-     "name": "MAE SOT DVOR /DME ( MST )",
+     "name": "MST",
      "lat": 16.697778,
      "lon": 98.541667
     }
@@ -21532,7 +22156,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     },
@@ -21611,7 +22235,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "LOEI DVOR /DME ( LOY )",
+     "name": "LOY",
      "lat": 17.446944,
      "lon": 101.723056
     },
@@ -21627,7 +22251,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "CHIANG MAI DVOR /DME ( CMA )",
+     "name": "CMA",
      "lat": 18.766111,
      "lon": 98.961111
     },
@@ -21658,7 +22282,7 @@
      "lon": 98.871944
     },
     {
-     "name": "MAE SOT DVOR /DME ( MST )",
+     "name": "MST",
      "lat": 16.697778,
      "lon": 98.541667
     }
@@ -21674,7 +22298,7 @@
      "lon": 99.371944
     },
     {
-     "name": "∆ OTGOL",
+     "name": "OTGOL",
      "lat": 9.218333,
      "lon": 99.546667
     },
@@ -21684,7 +22308,7 @@
      "lon": 99.770556
     },
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     }
@@ -21695,7 +22319,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "NAKHON SI THAMMARAT DVOR /DME ",
+     "name": "NKS",
      "lat": 8.541667,
      "lon": 99.946944
     },
@@ -21716,7 +22340,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "SAMUI DVOR /DME ( SMU )",
+     "name": "SMU",
      "lat": 9.546944,
      "lon": 100.061667
     },
@@ -21726,7 +22350,7 @@
      "lon": 100.266667
     },
     {
-     "name": "∆ PAGLU",
+     "name": "PAGLU",
      "lat": 9.263611,
      "lon": 100.285833
     },
@@ -21808,7 +22432,7 @@
      "lon": 100.473611
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
@@ -21819,7 +22443,7 @@
    "page": "3.3",
    "pts": [
     {
-     "name": "PHUKET DVOR /DME ( PUT )",
+     "name": "PUT",
      "lat": 8.113889,
      "lon": 98.306944
     },
@@ -21829,7 +22453,7 @@
      "lon": 98.811111
     },
     {
-     "name": "KRABI DVOR /DME ( KBI )",
+     "name": "KBI",
      "lat": 8.1075,
      "lon": 98.9775
     },
@@ -21889,7 +22513,7 @@
      "lon": 100.385
     },
     {
-     "name": "BANGKOK DVOR /DME ( BKK )",
+     "name": "BKK",
      "lat": 13.893611,
      "lon": 100.596111
     }
