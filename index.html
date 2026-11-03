@@ -463,7 +463,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .nt-grp h3{margin:14px 0 6px;font:700 19px var(--f-display);color:var(--ink)}
 .nti{position:relative;background:var(--input);border-radius:14px;padding:12px 14px 12px 20px;margin-bottom:8px;cursor:pointer;overflow:hidden}
 .nti::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#3d6fb6}
-.nti.red::before{background:#c62f24}.nti.yellow::before{background:#d4a300}.nti.off{opacity:.55}
+.nti::before{background:var(--cc,#3d6fb6)!important}.nti.off{opacity:.55}
 .nti:focus-visible{outline:2px solid var(--accent)}
 .nti-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.nti-h b{font:700 17px var(--f-display)}
 .nti-id{font:600 13px var(--f-mono);color:var(--muted);white-space:nowrap}
@@ -471,6 +471,9 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .nti .tag{display:inline-block;font:700 11px var(--f-body);border-radius:4px;padding:1px 6px;margin:6px 6px 0 0;color:#fff;background:var(--muted)}.nti .tag.hit{background:var(--bad)}
 .nti-body pre{white-space:pre-wrap;font:13px/1.45 var(--f-mono);background:var(--panel);border-radius:8px;padding:8px;margin:6px 0 0}
 .ntpin{width:22px;height:22px;border-radius:50% 50% 50% 0;background:#e53935;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.nt-legend{background:rgba(20,24,32,.88);color:#e5e7eb;border-radius:10px;padding:8px 10px;font:12.5px var(--f-body);max-width:260px}
+.nt-legend b{display:block;margin-bottom:4px}.nt-legend label{display:flex;align-items:center;gap:6px;color:#e5e7eb;font-size:12.5px;padding:2px 0;cursor:pointer;flex-direction:row}
+.nt-legend input{width:14px;height:14px}.nt-legend i{display:inline-block;width:14px;height:10px;border-radius:2px}.nt-legend span{margin-left:auto;opacity:.7}.nt-legend small{display:block;opacity:.7;margin-top:4px}
 #ntMap{height:62vh;min-height:380px;border-radius:14px}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
@@ -753,7 +756,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
    <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
   </div>
   <div id="ntList"></div>
-  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · วงสีเหลือง = NOTAM ตามแนวเส้นทาง (แดง = เส้นทางตัดผ่าน) · เส้นเทาบาง = NOTAM อื่นที่มีผลช่วงเวลาบิน · เปิด show hidden เพื่อดูที่ไม่อยู่ในช่วงเวลาบิน (เส้นประ) · แตะเพื่อดูรายละเอียด</p></div>
+  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (ดูกล่องหมวดมุมซ้ายล่าง ติ๊กเพื่อซ่อน/แสดง) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
  <details class="card section custbox" id="ntPasteBox">
   <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
@@ -1495,6 +1498,19 @@ const N_EXP=[[/\bRWY\b/g,"runway"],[/\bTWY\b/g,"taxiway"],[/\bCLSD\b/g,"closed"]
 function ntPlainText(n){if(n.plain&&n.plain.trim())return n.plain.trim();let t=" "+n.text+" ";N_EXP.forEach(([r,w])=>t=t.replace(r,w));t=t.trim().replace(/\b[A-Z]{2,}\b/g,w=>/^(VT[A-Z]{2}|VTBB|FL|GND|AMSL|AGL|NM|UTC|ICAO|ATC|VFR|IFR|DVOR|VOR|NDB|DME|ILS|TWR|APP)$/.test(w)?w:w.toLowerCase());return t.charAt(0).toUpperCase()+t.slice(1)}
 function ntTitle(n){const c=n.code||"",sub=QSUBJ[c.slice(1,3)],cond=QCOND[c.slice(3,5)];
   if(sub)return`${sub}${cond?" "+cond:""}`;const k=n.keyword?String(n.keyword):"";return k?k.charAt(0).toUpperCase()+k.slice(1).toLowerCase():(n.text||"").split(/[.\n]/)[0].slice(0,50)}
+/* หมวดสีของ NOTAM (ใช้ทั้งรายการและแผนที่) */
+const NT_CATS=[
+ {k:"rst",t:"Restricted / Prohibited",c:"#ef4444",re:/^Q(RR|RP|RT|RA|RO)/},
+ {k:"dng",t:"Danger / ยิงอาวุธ / ฝึกทหาร",c:"#f97316",re:/^Q(RD|RM|WM|WE|WD|WH|WF|WR)/},
+ {k:"pje",t:"กระโดดร่ม (PJE)",c:"#c084fc",re:/^QWP/},
+ {k:"uav",t:"UAV / โดรน",c:"#22d3ee",re:/^QWU/},
+ {k:"fly",t:"การบินฝึก / แสดง / ร่อน / บอลลูน",c:"#facc15",re:/^Q(WA|WB|WV|WG|WC|WL|WZ|WT|WJ|WS|WW)/},
+ {k:"pho",t:"ถ่ายภาพทางอากาศ / สำรวจ",c:"#f472b6",re:/^QWY/},
+ {k:"obs",t:"สิ่งกีดขวาง",c:"#a3e635",re:/^Q(OB|OL)/},
+ {k:"ad",t:"สนามบิน / ทางวิ่ง / ไฟ",c:"#60a5fa",re:/^Q(M|F|L)/},
+ {k:"nav",t:"เครื่องช่วยเดินอากาศ / ATS / อื่นๆ",c:"#cbd5e1",re:/./}];
+function ntCat(n){return NT_CATS.find(c=>c.re.test(n.code||"Q"))}
+let ntHideCat=new Set();
 function ntSev(n){const c=n.code||"";if(/^Q(R[PRDT]|WM|WD|WH|WE|WP)/.test(c)||/LC$/.test(c)&&/^Q(M|F)/.test(c))return"red";if(/^Q(WU|OB|W)/.test(c)||/(AS|AU|LT|HW)$/.test(c))return"yellow";return"blue"}
 function ntParse(txt,extra){const parts=String(txt).replace(/\r/g,"").split(/(?=\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC]\b)/).map(s=>s.trim()).filter(s=>/NOTAM[NRC]/.test(s));
   return parts.map(raw=>{const one=raw.replace(/\n/g," ");const g=k=>{const m=one.match(new RegExp(`\\b${k}\\)\\s*(.*?)(?=\\s+[A-G]\\)\\s|$)`));return m?m[1].trim():""};
@@ -1535,7 +1551,7 @@ function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,buf=num($("#ntBuf")
 function ntLocal(d){return d?d.toLocaleString("en-GB",{timeZone:"Asia/Bangkok",day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}).replace(",",""):"PERM"}
 function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHidden").checked,W=state.wps;ntLayer.clearLayers();
   const pop=n=>`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> <small>${esc(n.id)}</small><br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,400))}`;
-  E.filter(n=>n.active&&(n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:n.hit?"#dc2626":"#d4a300",weight:n.hit?3:2,fillOpacity:.08,dashArray:P.src==="Q"?"5 4":null})
+  E.filter(n=>n.active&&(n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:ntCat(n).c,weight:n.hit?4:2.5,fillColor:ntCat(n).c,fillOpacity:.18,dashArray:P.src==="Q"?"7 4":null})
     .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer)));
   /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
   const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
@@ -1548,7 +1564,7 @@ function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHi
   if(dst&&dst!==dep)addG(`${dst}${AP[dst]?" · "+AP[dst].name:""} (ปลายทาง)`,E.filter(n=>n.loc===dst&&show(n)));
   addG(`พื้นที่ตามแนวเส้นทาง ±${buf} NM (FIR / area)`,E.filter(n=>!used.has(n)&&n.inBuf&&show(n)));
   if(hidden)addG("อื่นๆ (ไม่เกี่ยวกับเส้นทาง)",E.filter(n=>!used.has(n)));
-  const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${ntSev(n)} ${n.active?"":"off"}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
+  const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${n.active?"":"off"}" style="--cc:${ntCat(n).c}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
     <div class="nti-h"><b>${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
     <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
     ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
@@ -1567,15 +1583,19 @@ async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cac
 function ntBuffer(){const W=state.wps,buf=num($("#ntBuf").value,10),polys=[];for(let i=0;i<W.length-1;i++){const a=[W[i].lat,W[i].lon],b=[W[i+1].lat,W[i+1].lon],tc=trueCourse(a,b);
   const off=(p,br)=>{const R=3440.065,d=buf/R,la=p[0]*D2R,lo=p[1]*D2R,t=br*D2R;const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(t));return[la2*R2D,(lo+Math.atan2(Math.sin(t)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2)))*R2D]};
   polys.push([off(a,tc-90),off(b,tc-90),off(b,tc+90),off(a,tc+90)])}W.forEach(w=>polys.push(circlePoly([w.lat,w.lon],buf)));return polys}
-function ntDrawMap(E){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}).addTo(ntMap);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
+function ntLegend(cnt){if(!ntMap)return;if(!ntMap._lg){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","nt-legend");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
+    d.addEventListener("change",e=>{const k=e.target.dataset.cat;if(!k)return;e.target.checked?ntHideCat.delete(k):ntHideCat.add(k);ntDrawMap(null,true)});return d}});ntMap._lg=new C().addTo(ntMap)}
+  ntMap._lg.getContainer().innerHTML=`<b>หมวด NOTAM</b>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<label><input type="checkbox" data-cat="${c.k}" ${ntHideCat.has(c.k)?"":"checked"}><i style="background:${c.c}"></i>${c.t} <span>${cnt[c.k]}</span></label>`).join("")+'<small>เส้นหนา/สีเข้ม = ตามแนวเส้นทาง</small>'}
+function ntDrawMap(E,keepView){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}).addTo(ntMap);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
   ntMapLayer.clearLayers();const W=state.wps,pts=W.map(w=>[w.lat,w.lon]);
   ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
   if(pts.length>1)L.polyline(pts,{color:"#ff3d8b",weight:3}).addTo(ntMapLayer);
   W.forEach((w,i)=>{if(i===0||i===W.length-1)L.marker([w.lat,w.lon],{icon:L.divIcon({className:"",html:'<div class="ntpin"></div>',iconSize:[22,30],iconAnchor:[11,30]})}).bindTooltip(esc(w.name),{permanent:true,direction:"right",offset:[8,-18]}).addTo(ntMapLayer)});
-  const sh=$("#ntShowHidden").checked,rel=n=>n.inBuf||n.ap;
-  (E||ntEval()).filter(n=>n.active||sh).sort((a,b)=>rel(a)-rel(b)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,rel(n)&&n.active?{color:n.hit?"#ff5a5a":"#ffd400",weight:2.5,fillColor:n.hit?"#ff5a5a":"#ffd400",fillOpacity:.12,dashArray:P.src==="Q"?"6 4":null}:{color:"#9aa4b2",weight:1,fillOpacity:.04,dashArray:n.active?null:"3 4"})
-    .bindPopup(`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> ${esc(n.id)}<br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,300))}`).addTo(ntMapLayer)));
-  setTimeout(()=>{ntMap.invalidateSize();if(pts.length>1)ntMap.fitBounds(pts,{padding:[30,30]});else ntMap.setView([14.5,100.8],6)},50)}
+  const sh=$("#ntShowHidden").checked,rel=n=>n.inBuf||n.ap;const EE=(E||ntEval()).filter(n=>n.active||sh),cnt={};
+  EE.forEach(n=>{if(n.polys.length){const c=ntCat(n).k;cnt[c]=(cnt[c]||0)+1}});ntLegend(cnt);
+  EE.filter(n=>!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)||b.polys.length-a.polys.length).forEach(n=>{const col=ntCat(n).c,r=rel(n)&&n.active;n.polys.forEach(P=>L.polygon(P.p,{color:col,weight:r?(n.hit?4:3):1.6,fillColor:col,fillOpacity:r?.28:.12,opacity:r?1:.85,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
+    .bindPopup(`<b style="color:${col}">■</b> <b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> ${esc(n.id)}<br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,300))}`).addTo(ntMapLayer))});
+  if(!keepView)setTimeout(()=>{ntMap.invalidateSize();if(pts.length>1)ntMap.fitBounds(pts,{padding:[30,30]});else ntMap.setView([14.5,100.8],6)},50)}
 const ntSeg=(on,off)=>{$(on).classList.add("on");$(off).classList.remove("on")};
 $("#ntViewList").onclick=()=>{ntView="list";ntSeg("#ntViewList","#ntViewMap");$("#ntList").hidden=false;$("#ntMapWrap").hidden=true};
 $("#ntViewMap").onclick=()=>{ntView="map";ntSeg("#ntViewMap","#ntViewList");$("#ntList").hidden=true;$("#ntMapWrap").hidden=false;ntDrawMap()};
