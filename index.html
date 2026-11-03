@@ -453,6 +453,10 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
   background:var(--hl);color:var(--hl-ink);border:1.5px solid #e9c46a;font-size:14px;line-height:1.5}
 .backup-bar>div:first-child{flex:1 1 420px;min-width:0}.bk-info{display:block;font-weight:600;margin-top:2px}
 /* NOTAM briefing */
+.nt-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+.ntc{border-radius:999px!important;border:2px solid var(--cc,var(--line))!important;background:var(--panel)!important;color:var(--muted)!important;font-weight:600;padding:6px 12px!important;min-height:38px!important}
+.ntc.on{background:color-mix(in srgb,var(--cc,var(--accent)) 22%,var(--panel))!important;color:var(--ink)!important}
+.ntc b{margin-left:4px}.nti-e{font-size:18px;margin-right:2px}
 .bm-box{border:1px dashed var(--accent);border-radius:12px;padding:10px 14px;margin:8px 0;font-size:14px}.bm-box ol{margin:6px 0;padding-left:20px}
 .bm-link{display:inline-block;background:var(--accent);color:#fff!important;border-radius:8px;padding:4px 10px;text-decoration:none;font-weight:700;cursor:grab}
 .nt-route{font-size:16px;padding:10px 12px;background:var(--input);border-radius:12px}.nt-pin{color:#ff3d8b}
@@ -475,6 +479,116 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .nt-legend b{display:block;margin-bottom:4px}.nt-legend label{display:flex;align-items:center;gap:6px;color:#e5e7eb;font-size:12.5px;padding:2px 0;cursor:pointer;flex-direction:row}
 .nt-legend input{width:14px;height:14px}.nt-legend i{display:inline-block;width:14px;height:10px;border-radius:2px}.nt-legend span{margin-left:auto;opacity:.7}.nt-legend small{display:block;opacity:.7;margin-top:4px}
 #ntMap{height:62vh;min-height:380px;border-radius:14px}
+
+/* NAVLOG บนอุปกรณ์พกพา: เลือกกลุ่มคอลัมน์ (บนคอมแสดง 25 คอลัมน์ตามเดิม) */
+.nl-grp{display:none;margin-bottom:8px}
+@media (max-width:900px){
+  .nl-grp{display:inline-flex}
+  #navTable:not(.g-all) tr.tot{display:none}
+  #navTable td:nth-child(2),#navTable th:nth-child(2){position:sticky;left:0;background:var(--panel);z-index:1}
+  #navTable.g-basic tr>*:nth-child(3),
+  #navTable.g-basic tr>*:nth-child(4),
+  #navTable.g-basic tr>*:nth-child(5),
+  #navTable.g-basic tr>*:nth-child(6),
+  #navTable.g-basic tr>*:nth-child(7),
+  #navTable.g-basic tr>*:nth-child(8),
+  #navTable.g-basic tr>*:nth-child(9),
+  #navTable.g-basic tr>*:nth-child(10),
+  #navTable.g-basic tr>*:nth-child(11),
+  #navTable.g-basic tr>*:nth-child(12),
+  #navTable.g-basic tr>*:nth-child(14),
+  #navTable.g-basic tr>*:nth-child(15),
+  #navTable.g-basic tr>*:nth-child(18),
+  #navTable.g-basic tr>*:nth-child(23),
+  #navTable.g-basic tr>*:nth-child(24),
+  #navTable.g-basic tr>*:nth-child(25){display:none}
+  #navTable.g-wind tr>*:nth-child(16),
+  #navTable.g-wind tr>*:nth-child(17),
+  #navTable.g-wind tr>*:nth-child(18),
+  #navTable.g-wind tr>*:nth-child(19),
+  #navTable.g-wind tr>*:nth-child(20),
+  #navTable.g-wind tr>*:nth-child(21),
+  #navTable.g-wind tr>*:nth-child(22),
+  #navTable.g-wind tr>*:nth-child(23),
+  #navTable.g-wind tr>*:nth-child(24),
+  #navTable.g-wind tr>*:nth-child(25){display:none}
+  #navTable.g-fuel tr>*:nth-child(3),
+  #navTable.g-fuel tr>*:nth-child(4),
+  #navTable.g-fuel tr>*:nth-child(5),
+  #navTable.g-fuel tr>*:nth-child(6),
+  #navTable.g-fuel tr>*:nth-child(7),
+  #navTable.g-fuel tr>*:nth-child(8),
+  #navTable.g-fuel tr>*:nth-child(9),
+  #navTable.g-fuel tr>*:nth-child(10),
+  #navTable.g-fuel tr>*:nth-child(11),
+  #navTable.g-fuel tr>*:nth-child(12),
+  #navTable.g-fuel tr>*:nth-child(13),
+  #navTable.g-fuel tr>*:nth-child(14),
+  #navTable.g-fuel tr>*:nth-child(15),
+  #navTable.g-fuel tr>*:nth-child(16),
+  #navTable.g-fuel tr>*:nth-child(17),
+  #navTable.g-fuel tr>*:nth-child(18),
+  #navTable.g-fuel tr>*:nth-child(19),
+  #navTable.g-fuel tr>*:nth-child(22){display:none}
+}
+/* ---- ใช้งานด้วยนิ้วง่ายขึ้น (ทุกแท็บยกเว้นแท็บ 1) ---- */
+.tabpanel:not(#tab-plan) button{min-height:44px;font-size:15.5px;padding:10px 16px}
+.tabpanel:not(#tab-plan) .mini{min-height:36px;font-size:14px;padding:6px 12px}
+.tabpanel:not(#tab-plan) input:not([type=checkbox]):not([type=radio]):not([type=range]),.tabpanel:not(#tab-plan) select{font-size:16px;min-height:44px}
+.tabpanel:not(#tab-plan) td input{min-height:38px;font-size:15px}
+.tabpanel:not(#tab-plan) input[type=checkbox]{width:20px;height:20px}
+.tabpanel:not(#tab-plan) table{font-size:14.5px}
+.tabpanel:not(#tab-plan) .hint{font-size:13.5px}
+.tabpanel:not(#tab-plan) label{font-size:14px}
+/* อากาศ */
+.wx-ctl .chk{font-size:17px!important;font-weight:600}.wx-ctl .chk input{width:22px!important;height:22px!important}
+@media (min-width:1000px){#wxMap{height:calc(100vh - 200px);min-height:640px}}
+.wxs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.wxs-ap{background:var(--input);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-size:15px}
+.wxs-h{display:flex;align-items:center;gap:8px}.wxs-h b{font:800 22px var(--f-display)}.wxs-h .fc{font-size:13px;padding:2px 8px}
+.wxs-big{font:800 22px var(--f-mono);color:var(--accent)}
+.wxs-risk{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.wxs-risk span{background:color-mix(in srgb,var(--warn) 15%,transparent);color:var(--ink);border:1px solid var(--warn);border-radius:999px;padding:4px 12px;font-weight:600}
+.wxs-ok{margin-top:10px;font-weight:600;color:var(--good)}
+.wxs-tbl{margin-top:10px}.wxs-tbl td{text-align:center}
+.metar-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.metar-d{display:flex;flex-wrap:wrap;gap:6px 16px;margin:6px 0;font:15px var(--f-body)}.metar-d i{font-style:normal;margin-right:4px}
+.metar details summary{cursor:pointer;color:var(--muted);font:13px var(--f-body)}
+/* EMER หน้าแรก + โหมดทีละขั้น */
+.ep-home{display:flex;flex-direction:column;gap:10px}.ep-home h3{margin:8px 0 0;font:700 17px var(--f-display);color:var(--ink)}
+#epHomeQ{font-size:18px!important;min-height:52px!important;padding:12px 14px;border:2px solid var(--line)}
+.ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.ep-big{all:unset;box-sizing:border-box;cursor:pointer;background:#c62f24;color:#fff;border-radius:16px;padding:14px;min-height:96px;display:flex;flex-direction:column;gap:6px;box-shadow:0 2px 0 #8f1f17}
+.ep-big:hover{background:#b02820}.ep-big:focus-visible{outline:3px solid #ffd400;outline-offset:2px}
+.ep-big .id{font:700 12px var(--f-mono);opacity:.8}.ep-big .tt{font:700 16.5px/1.25 var(--f-display);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ep-chips{display:flex;flex-wrap:wrap;gap:8px}.ep-chip{border-radius:999px!important;border:2px solid var(--bad)!important;color:var(--bad)!important;background:var(--panel)!important;font-weight:600}
+.ep-chip.np{border-color:var(--accent)!important;color:var(--accent)!important}
+.step-mode{position:fixed;inset:0;z-index:4000;background:var(--panel);color:var(--ink);display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+.step-mode[hidden]{display:none!important}
+.sm-top{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}.sm-top b{font:700 18px var(--f-display);flex:1;min-width:0}
+.step-mode.emer .sm-top{background:#c62f24;color:#fff}.step-mode.emer .sm-top button{color:#fff;border-color:#fff;background:transparent}
+.sm-prog{font:700 16px var(--f-mono);white-space:nowrap}
+.sm-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 6vw;gap:18px;cursor:pointer;overflow:auto}
+.sm-cond{font:italic 600 22px/1.35 var(--f-body);color:var(--accent)}
+.sm-text{font:700 clamp(28px,4.4vw,52px)/1.3 var(--f-display)}.sm-n{display:inline-block;min-width:1.4em;color:var(--muted);margin-right:.3em}
+.sm-mem{text-decoration:underline;text-decoration-color:var(--bad);text-decoration-thickness:4px;text-underline-offset:8px}
+.sm-tag{display:inline-block;margin-top:14px;font:700 15px var(--f-body);color:#fff;background:var(--bad);border-radius:999px;padding:4px 14px}
+.sm-bar{display:grid;grid-template-columns:1fr 2fr;gap:12px;padding:14px 18px;border-top:1px solid var(--line)}.sm-bar button{min-height:64px!important;font-size:20px!important;font-weight:700}
+/* แปลงหน่วย */
+.cv1{display:flex;flex-direction:column;gap:14px;max-width:820px}
+.cv-chips{display:flex;flex-wrap:wrap;gap:6px}
+.cv-row1{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+.cv-row1 input{font:800 24px var(--f-mono)!important;min-height:56px!important}.cv-row1 select{min-height:56px!important;font-size:17px!important}
+#cvSwap{min-height:56px;font-size:22px;padding:0 16px}
+.cv-res{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;background:var(--accent-soft);border-radius:16px;padding:14px 18px}
+.cv-res b{font:800 40px var(--f-mono);color:var(--accent)}.cv-res span{font-size:17px;color:var(--muted)}
+.cv-all{display:flex;flex-wrap:wrap;gap:8px 18px;font:600 16px var(--f-mono)}.cv-all i{font-style:normal;color:var(--muted);font-family:var(--f-body)}
+.cv1 h3{margin:4px 0 0;font:700 16px var(--f-display)}.cv-pre{display:flex;flex-wrap:wrap;gap:8px}.cv-dens{max-width:280px}
+@media (max-width:620px){.cv-row1{grid-template-columns:1fr auto 1fr}.cv-row1 input{grid-column:1/-1}}
+/* ข้อสอบ: สถิติ */
+.qz-sh{font:700 17px var(--f-display);margin:18px 0 6px}.qz-stats{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.qz-st{display:grid;grid-template-columns:minmax(0,190px) 1fr 52px auto;gap:10px;align-items:center;font-size:15px}
+.qz-sbar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.qz-sbar i{display:block;height:100%}
+@media (max-width:620px){.qz-st{grid-template-columns:1fr 50px}.qz-st .qz-sbar,.qz-st .hint{grid-column:1/-1}}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
   border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
@@ -685,6 +799,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="hint">ช่องเทา = กรอกได้ · ช่องฟ้า = คำนวณอัตโนมัติ · <span class="hlv">MH</span> = heading ที่ต้องถือ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
     <div class="nl-head" id="nlHead"></div>
+    <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
       <thead><tr>
         <th>Leg</th><th>From → To</th><th>ALT</th><th>W/D</th><th>W/V</th><th>Temp</th><th>CAS</th><th>TAS</th>
@@ -709,6 +824,11 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 </section>
 <section id="tab-wx" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="card section">
+    <div class="sechead"><h2 class="hd hd-teal">สรุปอากาศตามเส้นทาง</h2>
+      <div class="btns"><button id="wxSumRefresh">ดึงใหม่</button><button id="wxFill2" class="primary">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
+    <div id="wxSum" class="wx-sum"></div>
+  </div>
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-sky">แผนที่ลม / ฝน</h2>
       <div class="btns">
@@ -745,7 +865,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  <div style="display:flex;flex-direction:column;gap:12px">
  <div class="card section">
   <div class="sechead"><h2 class="hd hd-orange">NOTAM Briefing</h2>
-   <div class="btns"><button id="ntRefresh" class="primary">ดึง NOTAM ล่าสุด</button>
+   <div class="btns"><button id="ntRefresh" class="primary">ดึง NOTAM ล่าสุด</button><button id="ntPasteAero">📋 วางจาก AEROTHAI</button>
     <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">AEROTHAI NOTAM Leaflet ↗</a></div></div>
   <div class="nt-route" id="ntRoute"></div>
   <p class="hint" id="ntInfo"></p>
@@ -755,6 +875,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
    <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="10" min="1" max="50" style="width:64px"> NM</label>
    <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
   </div>
+  <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
   <div id="ntList"></div>
   <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (ดูกล่องหมวดมุมซ้ายล่าง ติ๊กเพื่อซ่อน/แสดง) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
@@ -784,8 +905,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 </section>
 <section id="tab-conv" class="tabpanel" hidden>
  <div class="card section">
-  <div class="sechead"><h2 class="hd hd-violet">แปลงหน่วย</h2><span class="hint">พิมพ์ในช่องใดก็ได้ ช่องอื่นในการ์ดเดียวกันจะแปลงให้ทันที</span></div>
-  <div id="cvWrap" class="cv"></div>
+  <div class="sechead"><h2 class="hd hd-violet">แปลงหน่วย</h2></div>
+  <div id="cvWrap"></div>
  </div>
 </section>
 <section id="tab-wpdb" class="tabpanel" hidden>
@@ -825,7 +946,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div id="epList" class="ep-list"></div>
     <div class="ep-foot">
       <p id="epSrc" class="hint"></p>
-      <div class="btns"><button type="button" onclick="document.getElementById('epImport').click()">Import ข้อมูล EP</button><button id="epClear">ลบข้อมูล EP</button></div>
+      <div class="btns"><button type="button" onclick="document.getElementById('epImport').click()">Import ข้อมูล EMER Proc.</button><button id="epClear">ลบข้อมูล EMER Proc.</button></div>
       <input id="epImport" type="file" accept=".json,application/json" hidden>
     </div>
   </aside>
@@ -833,7 +954,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  </div>
 </section>
 <footer class="backup-bar" role="note">
-  <div><b>⚠ ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</b> — แผน, waypoint หน่วย, ข้อมูล EP, สนาม/procedure ที่กรอกเอง ไม่ซิงก์ข้ามเครื่อง และอาจหายถ้าล้างข้อมูลเบราว์เซอร์ ควรสำรองเป็นประจำ
+  <div><b>⚠ ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</b> — แผน, waypoint หน่วย, ข้อมูล EMER Proc., สนาม/procedure ที่กรอกเอง ไม่ซิงก์ข้ามเครื่อง และอาจหายถ้าล้างข้อมูลเบราว์เซอร์ ควรสำรองเป็นประจำ
     <span id="bkInfo" class="bk-info"></span></div>
   <div class="btns"><button id="bkSave" class="primary">สำรองข้อมูลทั้งหมด</button><button type="button" onclick="document.getElementById('bkLoad').click()">กู้คืนจากไฟล์สำรอง</button><input id="bkLoad" type="file" accept=".json,application/json" hidden></div>
 </footer>
@@ -845,6 +966,11 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="kb-foot"><span id="kbCount" class="hint"></span>
     <div class="btns"><button id="kbCancel">ยกเลิก</button><button id="kbGo" class="primary">พิมพ์ / Save PDF</button></div></div>
 </dialog>
+<div id="stepMode" class="step-mode" hidden role="dialog" aria-modal="true" aria-labelledby="smTitle">
+  <div class="sm-top"><b id="smTitle"></b><span id="smProg" class="sm-prog"></span><button id="smClose" aria-label="ปิด">✕ ปิด</button></div>
+  <div class="sm-body"><div id="smCond" class="sm-cond"></div><div id="smText" class="sm-text"></div></div>
+  <div class="sm-bar"><button id="smPrev">◀ ก่อนหน้า</button><button id="smNext" class="primary">ถัดไป ▶</button></div>
+</div>
 <div id="toast" class="toast"></div>
 <div id="v3d" class="v3d" hidden>
   <div class="v3d-bar">
@@ -1190,6 +1316,9 @@ for(const[id,k]of Object.entries(gfields))$("#"+id).addEventListener("input",e=>
 $("#boxScale").addEventListener("input",e=>{state.boxScale=+e.target.value;render()});
 $("#boxRotMode").addEventListener("change",e=>{state.boxRotMode=e.target.value;state.boxRot={};render()});
 $("#boxRotReset").onclick=()=>{state.boxRot={};render();toast("รีเซ็ตการหมุนแล้ว")};
+document.querySelector(".nl-grp").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const t=$("#navTable");["basic","wind","fuel","all"].forEach(g=>t.classList.toggle("g-"+g,g===b.dataset.g));
+  document.querySelectorAll(".nl-grp button").forEach(x=>x.classList.toggle("on",x===b))});
+$("#navTable").classList.add("g-basic");
 $("#goNavlog").onclick=()=>document.querySelector('.tab[data-tab="log"]').click();
 $("#applyAll").onclick=()=>{state.legs.forEach(l=>Object.assign(l,{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp}));render();toast("ใช้ค่ากับทุก leg แล้ว")};
 
@@ -1383,16 +1512,50 @@ $("#wxFill").onclick=async()=>{if(!wxRouteData)await wxRouteFetch();if(!wxRouteD
   state.legs.forEach((l,i)=>{const p=wxRouteData.find(x=>x.kind==="mid"&&x.leg===i);const a=p&&wxAvg(p);if(!a)return;
     l.wd=Math.round(a.dir/10)*10||360;l.wv=Math.round(a.spd);if(a.tp!=null)l.temp=Math.round(a.tp);n++});
   if(!n){toast("ไม่มีข้อมูลลมสำหรับ leg");return}state.windSrc=`พยากรณ์เฉลี่ย ECMWF/GFS/ICON (Open-Meteo) ดึงเมื่อ ${new Date().toLocaleString("th-TH")}`;
-  markEdited();render();toast(`ใส่ลมลง NAV LOG ${n} leg แล้ว — ตรวจ/แก้ได้ในแท็บ NAVLOG`)};
+  markEdited();render();wxSumRender();toast(`ใส่ลมลง NAV LOG ${n} leg แล้ว — ตรวจ/แก้ได้ในแท็บ NAVLOG`)};
 ["wxModel","wxLevel"].forEach(id=>$("#"+id).addEventListener("change",wxLoadGrid));
 $("#wxTime").addEventListener("input",wxDrawWind);$("#wxWind").addEventListener("change",wxDrawWind);$("#wxRadar").addEventListener("change",wxLoadRadar);
+/* METAR → ภาษาอ่านง่าย */
+let metarCache=null;
+const WXC={TS:"พายุฟ้าคะนอง",SHRA:"ฝนซู่",RA:"ฝน",DZ:"ฝนละออง",BR:"หมอกน้ำค้าง (Mist)",FG:"หมอก",HZ:"ฟ้าหลัว (Haze)",FU:"ควัน",DU:"ฝุ่น",SQ:"ลมกระโชกแรง",GR:"ลูกเห็บ",VCSH:"ฝนซู่บริเวณใกล้",VCTS:"พายุฟ้าคะนองบริเวณใกล้",TSRA:"พายุฟ้าคะนอง+ฝน"};
+function metarParts(raw){const r=" "+String(raw||"")+" ",o={};let m;
+  if((m=r.match(/\s(\d{3}|VRB)(\d{2,3})(?:G(\d{2,3}))?KT\s/)))o.wind=m[2]==="00"&&m[1]!=="VRB"?"ลมสงบ":`${m[1]==="VRB"?"ทิศแปรปรวน":m[1]+"°"} ${+m[2]} kt${m[3]?` กระโชก ${+m[3]} kt`:""}`;
+  if(/\sCAVOK\s/.test(r)){o.vis="≥10 km";o.cloud="ไม่มีเมฆสำคัญ (CAVOK)"}
+  else if((m=r.match(/KT\s(?:\d{3}V\d{3}\s)?(\d{4})\s/)))o.vis=m[1]==="9999"?"≥10 km":(+m[1]>=5000?(+m[1]/1000)+" km":+m[1]+" m");
+  const cl=[...r.matchAll(/\s(FEW|SCT|BKN|OVC|VV)(\d{3})(CB|TCU)?(?=\s)/g)].map(x=>`${x[1]} ${(+x[2]*100).toLocaleString("en-US")} ft${x[3]?" "+x[3]:""}`);
+  if(cl.length)o.cloud=cl.join(", ");else if(/\s(NSC|SKC|NCD|CLR)\s/.test(r))o.cloud="ไม่มีเมฆสำคัญ";
+  const wx=r.trim().split(/\s+/).filter(t=>/^([+-]?)(VC)?(TS|SH)?(RA|DZ|BR|FG|HZ|FU|DU|SQ|GR)?$/.test(t)&&/(TS|SH|RA|DZ|BR|FG|HZ|FU|DU|SQ|GR)/.test(t));
+  const wxt=wx.map(t=>{const k=t.replace(/[+-]/,"");return(t[0]==="+"?"หนัก ":t[0]==="-"?"เบา ":"")+(WXC[k]||WXC[k.replace(/^VC/,"")]||k)});if(wxt.length)o.wx=wxt.join(", ");
+  if((m=r.match(/\s(M?\d{2})\/(M?\d{2})\s/))){const t=v=>v[0]==="M"?-+v.slice(1):+v;o.temp=`${t(m[1])}°C / จุดน้ำค้าง ${t(m[2])}°C`}
+  if((m=r.match(/\s\d{2}(\d{2})(\d{2})Z\s/)))o.time=`${m[1]}:${m[2]}Z (${String((+m[1]+7)%24).padStart(2,"0")}:${m[2]} น.)`;
+  return o}
+function metarDecode(raw){const o=metarParts(raw);return`<div class="metar-d">${[["🕒","เวลา",o.time],["💨","ลม",o.wind],["👁️","ทัศนวิสัย",o.vis],["☁️","เมฆ",o.cloud],["🌧️","สภาพอากาศ",o.wx],["🌡️","อุณหภูมิ",o.temp]].filter(x=>x[2]).map(([i,k,v])=>`<span><i>${i}</i>${k} <b>${esc(v)}</b></span>`).join("")}</div>`}
+function wxKey(){return JSON.stringify([state.wps.map(w=>[w.lat.toFixed(3),w.lon.toFixed(3)]),state.date,state.depTime,state.legs.map(l=>l.alt)])}
+let wxKeyDone=null;
+async function wxAuto(force){if(state.wps.length<2){wxSumRender();return}const k=wxKey();if(!force&&k===wxKeyDone&&wxRouteData){wxSumRender();return}wxKeyDone=k;$("#wxSum").innerHTML='<p class="hint">กำลังดึงพยากรณ์ตามเส้นทาง…</p>';await wxRouteFetch();wxSumRender()}
+function wxSumRender(){const box=$("#wxSum");if(!box)return;const W=state.wps;if(W.length<2){box.innerHTML='<p class="hint">สร้างเส้นทางในแท็บ 1 ก่อน</p>';return}
+  const ap=(name,role)=>{const ic=String(name).toUpperCase(),m=metarCache&&metarCache.metar[ic];const o=m?metarParts(m.raw):{};
+    return`<div class="wxs-ap"><div class="wxs-h"><span class="hint">${role}</span><b>${esc(ic)}</b>${m&&m.cat?`<span class="fc ${m.cat}">${m.cat}</span>`:""}</div>
+      ${m?`<div class="wxs-row">💨 <b>${esc(o.wind||"–")}</b></div><div class="wxs-row">👁️ <b>${esc(o.vis||"–")}</b> · ☁️ <b>${esc(o.cloud||"–")}</b></div>${o.wx?`<div class="wxs-row">🌧️ <b>${esc(o.wx)}</b></div>`:""}<div class="wxs-row hint">METAR ${esc(o.time||"")}</div>`:'<div class="wxs-row hint">ไม่มี METAR (สนามทหารบางแห่งไม่มีในระบบสากล)</div>'}</div>`};
+  const q=qnhText();
+  const legs=wxRouteData?state.legs.map((l,i)=>{const p=wxRouteData.find(x=>x.kind==="mid"&&x.leg===i),a=p&&wxAvg(p);return a?`<tr><td>${esc(W[i].name)} → ${esc(W[i+1].name)}</td><td>${esc(l.alt)} ft</td><td><b>${hdg(a.dir)}° / ${Math.round(a.spd)} kt</b>${a.spread>8?' <span class="spread" title="โมเดลต่างกันมาก">ไม่แน่นอน</span>':""}</td><td>${a.tp!=null?Math.round(a.tp)+"°C":"–"}</td><td>NAV LOG: ${esc(l.wd)}°/${esc(l.wv)} kt</td></tr>`:""}).join(""):"";
+  const risk=wxRouteData?(()=>{const M=Object.keys(WX_MODELS),mx=k=>Math.max(0,...wxRouteData.flatMap(p=>M.map(m=>p.per[m][k]).filter(v=>v!=null)));const out=[];
+    if(mx("pr")>=1)out.push(`🌧️ ฝนตามเส้นทาง สูงสุด ${mx("pr").toFixed(1)} mm/h`);if(mx("cape")>=1000)out.push(`⛈️ CAPE ${Math.round(mx("cape"))} — มีโอกาสพายุฟ้าคะนอง`);if(mx("cl")>=70)out.push(`☁️ เมฆต่ำปกคลุม ${Math.round(mx("cl"))}%`);
+    const vs=wxRouteData.flatMap(p=>M.map(m=>p.per[m].vis).filter(v=>v!=null));if(vs.length&&Math.min(...vs)<5000)out.push(`👁️ ทัศนวิสัยต่ำสุด ${(Math.min(...vs)/1000).toFixed(1)} km`);return out})():[];
+  box.innerHTML=`<div class="wxs-grid">${ap(W[0].name,"ต้นทาง")}${ap(W.at(-1).name,"ปลายทาง")}<div class="wxs-ap wxs-qnh"><div class="wxs-h"><span class="hint">QNH</span></div><div class="wxs-big">${esc(q)}</div><div class="hint">แก้ได้ที่ช่อง QNH ด้านล่าง หรือกด "ใช้ QNH นี้" ใน METAR</div></div></div>
+    ${risk.length?`<div class="wxs-risk">${risk.map(r=>`<span>${r}</span>`).join("")}</div>`:wxRouteData?'<div class="wxs-ok">✅ ไม่พบฝน/พายุ/เมฆต่ำมากตามเส้นทางจากพยากรณ์</div>':""}
+    ${legs?`<div class="tablewrap"><table class="wxs-tbl"><thead><tr><th>Leg</th><th>ALT</th><th>ลมพยากรณ์ (เฉลี่ย 3 โมเดล)</th><th>Temp</th><th>ค่าใน NAV LOG ตอนนี้</th></tr></thead><tbody>${legs}</tbody></table></div><p class="hint">ลมพยากรณ์เป็นค่าคร่าวๆ — กด "ใส่ลม/อุณหภูมิลง NAV LOG" แล้วยังแก้เองได้ในแท็บ 2</p>`:'<p class="hint">ยังไม่มีพยากรณ์ตามเส้นทาง (ต้องต่อเน็ต)</p>'}`}
+$("#wxSumRefresh").onclick=()=>{wxAuto(true);metarLoad()};
+$("#wxFill2").onclick=()=>$("#wxFill").click();
 /* METAR/TAF จาก metar.json (GitHub ดึงทุก 30 นาที) */
 async function metarLoad(){const box=$("#metarList");
   try{const d=await(await fetch("metar.json",{cache:"no-cache"})).json();const W=state.wps.map(w=>w.name.toUpperCase());
     const near=routeAirports(num($("#corridor").value,25)).map(a=>a.id);const ids=[...new Set([...W,...near])].filter(i=>d.metar[i]||d.taf[i]);
     const age=Math.round((Date.now()-new Date(d.fetched.replace("Z",":00Z")))/60000);
     $("#metarSrc").textContent=`aviationweather.gov · อัปเดต ${age} นาทีที่แล้ว · สนามตามเส้นทาง`;
-    box.innerHTML=ids.length?ids.map(i=>{const m=d.metar[i],t=d.taf[i];const qh=m?metarQnh(m.raw):null;return`<div class="metar"><b>${i}</b>${m&&m.cat?`<span class="fc ${m.cat}">${m.cat}</span>`:""}${qh?`<span class="qnhchip">QNH ${(qh/HPA_PER_INHG).toFixed(2)} / ${Math.round(qh)}</span><button class="mini qnhuse" data-qnh="${qh}">ใช้ค่านี้</button>`:""}<br>${m?esc(m.raw):"ไม่มี METAR"}${t?`<br><span style="color:var(--muted)">${esc(t.raw)}</span>`:""}</div>`}).join("")
+    metarCache=d;wxSumRender();
+    box.innerHTML=ids.length?ids.map(i=>{const m=d.metar[i],t=d.taf[i];const qh=m?metarQnh(m.raw):null;return`<div class="metar"><div class="metar-h"><b>${i}</b>${m&&m.cat?`<span class="fc ${m.cat}">${m.cat}</span>`:""}${qh?`<span class="qnhchip">QNH ${(qh/HPA_PER_INHG).toFixed(2)} / ${Math.round(qh)}</span><button class="mini qnhuse" data-qnh="${qh}">ใช้ QNH นี้</button>`:""}</div>
+      ${m?metarDecode(m.raw):'<p class="hint">ไม่มี METAR</p>'}<details><summary>ข้อความดิบ METAR${t?" / TAF":""}</summary><code>${m?esc(m.raw):""}</code>${t?`<br><code style="color:var(--muted)">${esc(t.raw)}</code>`:""}</details></div>`}).join("")
       :`<p class="hint">ไม่มี METAR/TAF ของสนามตามเส้นทาง (สนามทหารบางแห่งไม่มีในระบบสากล)</p>`}
   catch(e){box.innerHTML=`<p class="hint">ยังไม่มีไฟล์ METAR/TAF หรือออฟไลน์อยู่</p>`}}
 
@@ -1500,15 +1663,15 @@ function ntTitle(n){const c=n.code||"",sub=QSUBJ[c.slice(1,3)],cond=QCOND[c.slic
   if(sub)return`${sub}${cond?" "+cond:""}`;const k=n.keyword?String(n.keyword):"";return k?k.charAt(0).toUpperCase()+k.slice(1).toLowerCase():(n.text||"").split(/[.\n]/)[0].slice(0,50)}
 /* หมวดสีของ NOTAM (ใช้ทั้งรายการและแผนที่) */
 const NT_CATS=[
- {k:"rst",t:"Restricted / Prohibited",c:"#ef4444",re:/^Q(RR|RP|RT|RA|RO)/},
- {k:"dng",t:"Danger / ยิงอาวุธ / ฝึกทหาร",c:"#f97316",re:/^Q(RD|RM|WM|WE|WD|WH|WF|WR)/},
- {k:"pje",t:"กระโดดร่ม (PJE)",c:"#c084fc",re:/^QWP/},
- {k:"uav",t:"UAV / โดรน",c:"#22d3ee",re:/^QWU/},
- {k:"fly",t:"การบินฝึก / แสดง / ร่อน / บอลลูน",c:"#facc15",re:/^Q(WA|WB|WV|WG|WC|WL|WZ|WT|WJ|WS|WW)/},
- {k:"pho",t:"ถ่ายภาพทางอากาศ / สำรวจ",c:"#f472b6",re:/^QWY/},
- {k:"obs",t:"สิ่งกีดขวาง",c:"#a3e635",re:/^Q(OB|OL)/},
- {k:"ad",t:"สนามบิน / ทางวิ่ง / ไฟ",c:"#60a5fa",re:/^Q(M|F|L)/},
- {k:"nav",t:"เครื่องช่วยเดินอากาศ / ATS / อื่นๆ",c:"#cbd5e1",re:/./}];
+ {k:"rst",e:"🚫",t:"Restricted / Prohibited",c:"#ef4444",re:/^Q(RR|RP|RT|RA|RO)/},
+ {k:"dng",e:"💥",t:"Danger / ยิงอาวุธ / ฝึกทหาร",c:"#f97316",re:/^Q(RD|RM|WM|WE|WD|WH|WF|WR)/},
+ {k:"pje",e:"🪂",t:"กระโดดร่ม (PJE)",c:"#c084fc",re:/^QWP/},
+ {k:"uav",e:"🛸",t:"UAV / โดรน",c:"#22d3ee",re:/^QWU/},
+ {k:"fly",e:"✈️",t:"การบินฝึก / แสดง / ร่อน / บอลลูน",c:"#facc15",re:/^Q(WA|WB|WV|WG|WC|WL|WZ|WT|WJ|WS|WW)/},
+ {k:"pho",e:"📷",t:"ถ่ายภาพทางอากาศ / สำรวจ",c:"#f472b6",re:/^QWY/},
+ {k:"obs",e:"🏗️",t:"สิ่งกีดขวาง",c:"#a3e635",re:/^Q(OB|OL)/},
+ {k:"ad",e:"🛬",t:"สนามบิน / ทางวิ่ง / ไฟ",c:"#60a5fa",re:/^Q(M|F|L)/},
+ {k:"nav",e:"📡",t:"เครื่องช่วยเดินอากาศ / ATS / อื่นๆ",c:"#cbd5e1",re:/./}];
 function ntCat(n){return NT_CATS.find(c=>c.re.test(n.code||"Q"))}
 let ntHideCat=new Set();
 function ntSev(n){const c=n.code||"";if(/^Q(R[PRDT]|WM|WD|WH|WE|WP)/.test(c)||/LC$/.test(c)&&/^Q(M|F)/.test(c))return"red";if(/^Q(WU|OB|W)/.test(c)||/(AS|AU|LT|HW)$/.test(c))return"yellow";return"blue"}
@@ -1553,19 +1716,21 @@ function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHi
   const pop=n=>`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> <small>${esc(n.id)}</small><br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,400))}`;
   E.filter(n=>n.active&&(n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:ntCat(n).c,weight:n.hit?4:2.5,fillColor:ntCat(n).c,fillOpacity:.18,dashArray:P.src==="Q"?"7 4":null})
     .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer)));
+  {const cnt={};E.filter(n=>(hidden||n.active)&&(hidden||n.inBuf||n.ap)).forEach(n=>{const k=ntCat(n).k;cnt[k]=(cnt[k]||0)+1});
+   $("#ntChips").innerHTML=`<button class="ntc${ntHideCat.size?"":" on"}" data-cat="*">ทั้งหมด</button>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<button class="ntc${ntHideCat.has(c.k)?"":" on"}" data-cat="${c.k}" style="--cc:${c.c}">${c.e} ${c.t} <b>${cnt[c.k]}</b></button>`).join("")}
   /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
   const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
   const buf=num($("#ntBuf").value,10),mids=routeAirports(buf).map(a=>a.id).filter(x=>x!==dep&&x!==dst);
   const groups=[];const used=new Set();
   const addG=(title,list)=>{groups.push({title,list});list.forEach(n=>used.add(n))};
-  const show=n=>hidden||n.active;
+  const show=n=>(hidden||n.active)&&!ntHideCat.has(ntCat(n).k);
   if(dep)addG(`${dep}${AP[dep]?" · "+AP[dep].name:""} (ต้นทาง)`,E.filter(n=>n.loc===dep&&show(n)));
   mids.forEach(ic=>{const l=E.filter(n=>n.loc===ic&&show(n));if(l.length)addG(`${ic}${AP[ic]?" · "+AP[ic].name:""}`,l)});
   if(dst&&dst!==dep)addG(`${dst}${AP[dst]?" · "+AP[dst].name:""} (ปลายทาง)`,E.filter(n=>n.loc===dst&&show(n)));
   addG(`พื้นที่ตามแนวเส้นทาง ±${buf} NM (FIR / area)`,E.filter(n=>!used.has(n)&&n.inBuf&&show(n)));
   if(hidden)addG("อื่นๆ (ไม่เกี่ยวกับเส้นทาง)",E.filter(n=>!used.has(n)));
   const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${n.active?"":"off"}" style="--cc:${ntCat(n).c}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
-    <div class="nti-h"><b>${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
+    <div class="nti-h"><b><span class="nti-e">${ntCat(n).e}</span> ${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
     <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
     ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
     ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
@@ -1585,7 +1750,7 @@ function ntBuffer(){const W=state.wps,buf=num($("#ntBuf").value,10),polys=[];for
   polys.push([off(a,tc-90),off(b,tc-90),off(b,tc+90),off(a,tc+90)])}W.forEach(w=>polys.push(circlePoly([w.lat,w.lon],buf)));return polys}
 function ntLegend(cnt){if(!ntMap)return;if(!ntMap._lg){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","nt-legend");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
     d.addEventListener("change",e=>{const k=e.target.dataset.cat;if(!k)return;e.target.checked?ntHideCat.delete(k):ntHideCat.add(k);ntDrawMap(null,true)});return d}});ntMap._lg=new C().addTo(ntMap)}
-  ntMap._lg.getContainer().innerHTML=`<b>หมวด NOTAM</b>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<label><input type="checkbox" data-cat="${c.k}" ${ntHideCat.has(c.k)?"":"checked"}><i style="background:${c.c}"></i>${c.t} <span>${cnt[c.k]}</span></label>`).join("")+'<small>เส้นหนา/สีเข้ม = ตามแนวเส้นทาง</small>'}
+  ntMap._lg.getContainer().innerHTML=`<b>หมวด NOTAM</b>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<label><input type="checkbox" data-cat="${c.k}" ${ntHideCat.has(c.k)?"":"checked"}><i style="background:${c.c}"></i>${c.e} ${c.t} <span>${cnt[c.k]}</span></label>`).join("")+'<small>เส้นหนา/สีเข้ม = ตามแนวเส้นทาง</small>'}
 function ntDrawMap(E,keepView){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}).addTo(ntMap);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
   ntMapLayer.clearLayers();const W=state.wps,pts=W.map(w=>[w.lat,w.lon]);
   ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
@@ -1601,7 +1766,12 @@ $("#ntViewList").onclick=()=>{ntView="list";ntSeg("#ntViewList","#ntViewMap");$(
 $("#ntViewMap").onclick=()=>{ntView="map";ntSeg("#ntViewMap","#ntViewList");$("#ntList").hidden=true;$("#ntMapWrap").hidden=false;ntDrawMap()};
 $("#ntOrig").onclick=()=>{ntPlainMode=false;ntSeg("#ntOrig","#ntPlain");ntRender()};
 $("#ntPlain").onclick=()=>{ntPlainMode=true;ntSeg("#ntPlain","#ntOrig");ntRender()};
-$("#ntShowHidden").onchange=ntRender;$("#ntBuf").addEventListener("input",ntRender);
+$("#ntShowHidden").onchange=ntRender;
+$("#ntChips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
+  if(k==="*")ntHideCat.clear();else if(!ntHideCat.size){NT_CATS.forEach(c=>{if(c.k!==k)ntHideCat.add(c.k)})}else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);
+  if(NT_CATS.every(c=>ntHideCat.has(c.k)))ntHideCat.clear();ntRender()});
+$("#ntPasteAero").onclick=async()=>{try{const t=await navigator.clipboard.readText();if(!t||!/NOTAM|"items"/.test(t))throw 0;$("#ntText").value=t;$("#ntParse").click()}
+  catch(e){$("#ntPasteBox").open=true;$("#ntText").focus();toast("กด Ctrl+V ในกล่อง แล้วกด อ่าน NOTAM")}};$("#ntBuf").addEventListener("input",ntRender);
 $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
 $("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
 $("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
@@ -1626,7 +1796,12 @@ function npRenderList(){const D=npData(),L=$("#npList");if(!D){L.innerHTML="";np
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();
   if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ 6 EMER</div>`;return}
-  if(npSel==null){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">เลือกขั้นตอน</h3>เช่น BEFORE STARTING ENGINES, STARTING ENGINES, BEFORE TAXI…<br><span class="hint">แตะแต่ละขั้นตอนเพื่อติ๊กว่าทำแล้ว</span></div>`;return}
+  if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
+    const fav=mk(favList("np")),rec=mk(recentList("np"));
+    M.innerHTML=`<div class="ep-home"><h2>NORMAL PROCEDURES</h2>${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
+      <p class="hint">เลือกขั้นตอนจากรายการด้านซ้าย เช่น BEFORE STARTING ENGINES, STARTING ENGINES, BEFORE TAXI · ติ๊กทีละข้อ หรือใช้ ▶ โหมดทีละขั้น</p></div>`;
+    M.onclick=e=>{const b=e.target.closest(".ep-chip");if(!b)return;npSel=+b.dataset.i;recentAdd("np",D.procedures[npSel].id);npRenderList();npRenderMain()};return}
+  M.onclick=null;
   const p=D.procedures[npSel],done=npDone[npSel]=npDone[npSel]||{};
   const warnN=p.blocks.filter(b=>b.k==="warning"||b.k==="caution").length;
   const body=p.blocks.map((b,k)=>{if(b.k==="step"||b.k==="sub"){const fl=(b.f||"").split("").filter(c=>NP_FLAG[c]).map(c=>`<span class="np-f" title="${NP_FLAG[c]}">${c==="."?"★":c}</span>`).join("");
@@ -1635,13 +1810,15 @@ function npRenderMain(){const M=$("#npMain"),D=npData();
     return`<div class="b-${b.k}">${esc(b.t)}</div>`}).join("");
   const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(done).length;
   M.innerHTML=`<h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
-    ${!npFull&&warnN?`<span class="warnchip">WARNING/CAUTION ${warnN}</span>`:""}<button id="npFullBtn" class="mini">${npFull?"ซ่อน WARNING/NOTE":"แสดง WARNING/NOTE"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
+    ${!npFull&&warnN?`<span class="warnchip">WARNING/CAUTION ${warnN}</span>`:""}<button id="npStepBtn" class="mini primary">▶ โหมดทีละขั้น</button><button id="npStarBtn" class="mini${favHas("np",p.id)?" on":""}">${favHas("np",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button><button id="npFullBtn" class="mini">${npFull?"ซ่อน WARNING/NOTE":"แสดง WARNING/NOTE"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
     <div id="npBody">${body}</div>
     <div class="ep-legend">* = ทำทุก thru-flight · ★ = ต้องทำ operational check · O = ถ้าติดตั้ง · N = กลางคืน · I = บินด้วยเครื่องวัด · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
-  $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
+  $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};
+  $("#npStarBtn").onclick=()=>{favToggle("np",p.id);npRenderMain()};
+  $("#npStepBtn").onclick=()=>stepOpen(p.title,p.blocks.filter(b=>b.k==="step"||b.k==="sub"||b.k==="cond").map((b,k)=>({k:b.k==="cond"?"cond":"step",t:b.t,n:b.n,bi:p.blocks.indexOf(b)})),"np");$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
   $("#npBody").onchange=e=>{const s=e.target.closest(".np-step");if(!s)return;const k=s.dataset.k;if(e.target.checked)done[k]=1;else delete done[k];s.classList.toggle("done",e.target.checked);
     M.querySelector(".ep-meta .np-prog").textContent=`ทำแล้ว ${Object.keys(done).length}/${n}`;npRenderList()}}
-$("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;npSel=+b.dataset.i;npRenderList();npRenderMain();if(window.innerWidth<=860)$("#npMain").scrollIntoView({behavior:"smooth"})});
+$("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;npSel=+b.dataset.i;recentAdd("np",npData().procedures[npSel].id);npRenderList();npRenderMain();if(window.innerWidth<=860)$("#npMain").scrollIntoView({behavior:"smooth"})});
 $("#npSearch").addEventListener("input",npRenderList);
 
 /* ---------- AD 2.22 procedures / AD 2.24 charts / จุดรายงาน ---------- */
@@ -1786,6 +1963,23 @@ function epChecklist(p){const out=[];let prevCond=false;const hasStep=p.blocks.s
   return out.some(b=>b.k==="step")?out:[]}
 const EP_SKIP=new Set(["9.24"]);
 function epActionable(p){return !EP_SKIP.has(p.id)&&epChecklist(p).length>0}
+/* ติดดาว / ใช้ล่าสุด (เก็บในเครื่อง) */
+function favList(k){return store.get("vfr_fav_"+k)||[]}function favHas(k,id){return favList(k).includes(id)}
+function favToggle(k,id){const L=favList(k),i=L.indexOf(id);i>=0?L.splice(i,1):L.unshift(id);store.set("vfr_fav_"+k,L)}
+function recentList(k){return store.get("vfr_recent_"+k)||[]}function recentAdd(k,id){const L=recentList(k).filter(x=>x!==id);L.unshift(id);store.set("vfr_recent_"+k,L.slice(0,6))}
+/* หน้าแรก EMER: ปุ่มใหญ่สีแดงเฉพาะ EMER Proc. ที่มีขั้นท่องจำ */
+function epShort(t){return t.replace(/\s*Caution(s)? Appears?/gi,"").replace(/\s*Advisory (Does Not )?Appears?/gi,"").replace(/\(.*?\)/g,"").replace(/\s+/g," ").trim()}
+function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=new Map(EP.procedures.map((p,i)=>[p.id,i]));
+  const memP=EP.procedures.map((p,i)=>({p,i})).filter(({p})=>epActionable(p)&&epChecklist(p).some(b=>b.k==="step"&&b.u)&&p.id!=="9.4");
+  const btn=({p,i})=>`<button class="ep-big" data-i="${i}"><span class="id">${esc(p.id)}</span><span class="tt">${esc(epShort(p.title))}</span></button>`;
+  const mini=k=>(k==="fav"?favList("ep"):recentList("ep")).map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip" data-i="${i}">${esc(EP.procedures[i].id)} ${esc(epShort(EP.procedures[i].title).slice(0,40))}</button>`).join("");
+  const fav=mini("fav"),rec=mini("rec");
+  M.innerHTML=`<div class="ep-home"><input id="epHomeQ" type="search" placeholder="🔍 ค้นหา EMER Proc. เช่น fire, hyd, stab, gen" value="${esc(q)}" aria-label="ค้นหา EMER Proc.">
+    ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
+    <h3>EMER Proc. ที่มีขั้นท่องจำ <span class="hint">(${memP.length})</span></h3><div class="ep-grid">${memP.map(btn).join("")}</div>
+    <p class="hint">หัวข้ออื่นทั้งหมดอยู่ในรายการด้านซ้าย · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
+  const qi=$("#epHomeQ");qi.oninput=()=>{$("#epSearch").value=qi.value;epRenderList();if(qi.value.trim()){const v=qi.value.toLowerCase();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(v))}else M.querySelectorAll(".ep-big").forEach(b=>b.hidden=false)};
+  M.onclick=e=>{const b=e.target.closest(".ep-big,.ep-chip");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();$("#epMain").scrollIntoView({block:"start"})}}
 function epRenderList(){const L=$("#epList");
   if(!EP){L.innerHTML="";$("#epSrc").textContent="";epRenderMain();return}
   const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="",n=0;
@@ -1798,9 +1992,9 @@ function epRenderList(){const L=$("#epList");
   $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
 function epRenderMain(){const M=$("#epMain");
-  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>กด <b>Import ข้อมูล EP</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
-  if(epSel==null){M.innerHTML=`<div class="ep-empty"><h3>เลือกเหตุฉุกเฉิน</h3>แตะหัวข้อทางซ้าย หรือพิมพ์ค้นหา เช่น <b>stab</b>, <b>fire</b>, <b>hyd</b><br><span class="hint">แสดงเป็น checklist สั้น — กด "รายละเอียดเต็ม" ถ้าต้องการอ่าน WARNING/คำอธิบาย</span></div>`;return}
-  const p=EP.procedures[epSel];
+  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>กด <b>Import ข้อมูล EMER Proc.</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
+  if(epSel==null){epHome(M);return}
+  const p=EP.procedures[epSel];M.onclick=null;
   const blocks=epFull?p.blocks:epChecklist(p);
   const warnN=p.blocks.filter(b=>b.k==="warning").length,cauN=p.blocks.filter(b=>b.k==="caution").length;
   const body=blocks.map(b=>{const t=esc(b.t);
@@ -1809,32 +2003,45 @@ function epRenderMain(){const M=$("#epMain");
   M.innerHTML=`<h2>${esc(p.title)}</h2>
    <div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span>
     ${!epFull&&(warnN||cauN)?`<span class="warnchip">${warnN?`WARNING ${warnN}`:""}${warnN&&cauN?" · ":""}${cauN?`CAUTION ${cauN}`:""}</span>`:""}
+    <button id="epHomeBtn" class="mini">← หน้าแรก</button><button id="epStepBtn" class="mini primary">▶ โหมดทีละขั้น</button>
+    <button id="epStarBtn" class="mini${favHas("ep",p.id)?" on":""}">${favHas("ep",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button>
     <button id="epFullBtn" class="mini">${epFull?"กลับเป็น checklist":"รายละเอียดเต็ม"}</button>
     ${p.memory?`<button id="epQuizBtn" class="mini${epQuiz?" on":""}">${epQuiz?"เลิกโหมดท่องจำ":"โหมดท่องจำ"}</button>`:""}</div>
    <div class="${epQuiz?"quiz":""} ${epFull?"":"cl"}" id="epBody">${body}</div>
    <div class="ep-legend"><u>ขีดเส้นใต้</u> = ทำจากความจำ · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
   $("#epFullBtn").onclick=()=>{epFull=!epFull;epRenderMain()};
+  $("#epHomeBtn").onclick=()=>{epSel=null;epRenderList();epRenderMain()};
+  $("#epStarBtn").onclick=()=>{favToggle("ep",p.id);epRenderMain()};
+  $("#epStepBtn").onclick=()=>stepOpen(p.title,epChecklist(p).map(b=>({k:b.k==="step"?"step":"cond",t:b.t,n:b.n,mem:!!b.u})),"emer");
   const qb=$("#epQuizBtn");if(qb)qb.onclick=()=>{epQuiz=!epQuiz;epRenderMain()};
   $("#epBody").onclick=e=>{const s=e.target.closest(".b-step.mem");if(s&&epQuiz)s.classList.toggle("show")}}
-$("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;epSel=+b.dataset.i;epRenderList();epRenderMain();
+$("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();
   if(window.innerWidth<=860)$("#epMain").scrollIntoView({behavior:"smooth"})});
 $("#epSearch").addEventListener("input",epRenderList);
 $("#epAll").onclick=()=>{epMemOnly=false;$("#epAll").classList.add("on");$("#epMem").classList.remove("on");epRenderList()};
 $("#epMem").onclick=()=>{epMemOnly=true;$("#epMem").classList.add("on");$("#epAll").classList.remove("on");epRenderList()};
 $("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.procedures))throw 0;
-  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}if(typeof npRenderList==="function"){npSel=null;npRenderList();npRenderMain()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EP")}});e.target.value=""};
-let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EP"},3000);return}
-  try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EP";epRenderList()};
+  EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}if(typeof npRenderList==="function"){npSel=null;npRenderList();npRenderMain()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EMER Proc.")}});e.target.value=""};
+let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EMER Proc."},3000);return}
+  try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EMER Proc.";epRenderList()};
 epRenderList();epRenderMain();
 
 /* ---------- ข้อสอบ (ใช้ข้อมูลชุดเดียวกับแท็บ EMERGENCY) ---------- */
 const QZ_MODES=[
- {id:"ep-next",name:"EP: ขั้นตอนถัดไป",desc:"ให้หัวข้อฉุกเฉินและขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป"},
- {id:"ep-id",name:"EP: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุฉุกเฉินใด"},
+ {id:"ep-next",name:"EMER Proc.: ขั้นตอนถัดไป",desc:"ให้หัวข้อฉุกเฉินและขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป"},
+ {id:"ep-id",name:"EMER Proc.: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุฉุกเฉินใด"},
  {id:"ข้อจำกัด",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit จากบทที่ 5"},
  {id:"ระบบ",name:"ระบบอากาศยาน",desc:"ระบบเครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ บทที่ 2"},
  {id:"mix",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
 let qzMode="mix",qzN=10,qz=null;
+/* สถิติ + ข้อที่เคยผิด (เก็บในเครื่อง) */
+function qzWrong(){return store.get("vfr_qz_wrong")||[]}
+function qzKey(q){return q.key||q.q+"|"+q.o[q.a]}
+function qzRecord(q,ok){const st=store.get("vfr_qz_stats")||{},c=st[q.cat]=st[q.cat]||{n:0,ok:0};c.n++;if(ok)c.ok++;store.set("vfr_qz_stats",st);
+  let W=qzWrong().filter(x=>qzKey(x)!==qzKey(q));if(!ok)W.unshift({cat:q.cat,q:q.q,o:q.o,a:q.a,ex:q.ex,ref:q.ref,ctx:q.ctx,key:q.key});store.set("vfr_qz_wrong",W.slice(0,150))}
+function qzStatsHtml(){const st=store.get("vfr_qz_stats")||{},ks=Object.keys(st);if(!ks.length)return"";
+  return`<h3 class="qz-sh">สถิติของคุณ</h3><div class="qz-stats">${ks.map(k=>{const c=st[k],p=Math.round(c.ok/c.n*100);return`<div class="qz-st"><span>${esc(k)}</span><div class="qz-sbar"><i style="width:${p}%;background:${p>=80?"var(--good)":p>=60?"var(--warn)":"var(--bad)"}"></i></div><b>${p}%</b><span class="hint">${c.ok}/${c.n} ข้อ</span></div>`}).join("")}</div>
+   <button id="qzResetStats" class="mini">ล้างสถิติ</button>`}
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 function qzEpPool(){return EP?EP.procedures.filter(p=>epActionable(p)&&p.id!=="9.4").map(p=>({p,cl:epChecklist(p)})):[]}
 function qzMakeEpNext(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step").length>=2);if(!pool.length)return null;
@@ -1842,12 +2049,12 @@ function qzMakeEpNext(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="st
   const j=idx[Math.floor(Math.random()*idx.length)];const right=cl[j].t;
   const others=shuf([...new Set(qzEpPool().filter(x=>x.p!==p).flatMap(x=>x.cl.filter(b=>b.k==="step").map(b=>b.t)))].filter(t=>t!==right&&!cl.some(b=>b.t===t))).slice(0,3);
   const o=shuf([right,...others]);
-  return{cat:"EP · ขั้นตอนถัดไป",q:`${p.title} — ขั้นตอนถัดไปคืออะไร`,ctx:cl.slice(0,j),o,a:o.indexOf(right),ex:`ขั้นตอนที่ถูก: ${right}`,ref:`${EP.source} ${p.id} (หน้า ${p.page})`}}
+  return{cat:"EMER Proc. · ขั้นตอนถัดไป",q:`${p.title} — ขั้นตอนถัดไปคืออะไร`,ctx:cl.slice(0,j),o,a:o.indexOf(right),ex:`ขั้นตอนที่ถูก: ${right}`,ref:`${EP.source} ${p.id} (หน้า ${p.page})`}}
 function qzMakeEpId(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step"&&b.u).length>=2);if(!pool.length)return null;
   const {p,cl}=pool[Math.floor(Math.random()*pool.length)];
   const others=shuf(qzEpPool().filter(x=>x.p!==p&&x.cl.map(b=>b.t).join()!==cl.map(b=>b.t).join()).map(x=>x.p.title)).filter((t,i,a)=>a.indexOf(t)===i&&t!==p.title).slice(0,3);
   const o=shuf([p.title,...others]);
-  return{cat:"EP · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
+  return{cat:"EMER Proc. · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
   const pick=m=>m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const b=bank.filter(x=>x.cat===m);if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
     const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:`${EP.source} ${x.ref}`,key:x.id}})();
@@ -1855,14 +2062,16 @@ function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[qs.length%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
-  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>5 · EMERGENCY</b> แล้วกด <b>Import ข้อมูล EP</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
+  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>5 · EMERGENCY</b> แล้วกด <b>Import ข้อมูล EMER Proc.</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
   if(!qz){const bankN=(EP.quiz||[]).length;
-    R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EP สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
+    R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EMER Proc. สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
      <div class="qz-modes">${QZ_MODES.map(m=>`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}"><b>${m.name}</b><span>${m.desc}</span></button>`).join("")}</div>
      <div class="qz-row"><label style="flex-direction:row;align-items:center;gap:8px;font-size:15px">จำนวนข้อ <select id="qzN" style="width:auto">${[10,20,30].map(n=>`<option${n===qzN?" selected":""}>${n}</option>`).join("")}</select></label>
-     <button id="qzStart" class="primary">เริ่มทำข้อสอบ</button></div>`;
+     <button id="qzStart" class="primary">เริ่มทำข้อสอบ</button>${qzWrong().length?`<button id="qzReview">ทบทวนข้อที่เคยผิด (${qzWrong().length})</button>`:""}</div>${qzStatsHtml()}`;
     R.querySelectorAll(".qz-mode").forEach(b=>b.onclick=()=>{qzMode=b.dataset.m;qzRender()});
     $("#qzN").onchange=e=>{qzN=+e.target.value};
+    const rv=$("#qzReview");if(rv)rv.onclick=()=>{const qs=shuf(qzWrong()).slice(0,qzN).map(x=>({...x,review:true}));qz={qs,i:0,score:0,ans:[]};qzRender()};
+    const rs=$("#qzResetStats");if(rs)rs.onclick=()=>{store.set("vfr_qz_stats",{});qzRender()};
     $("#qzStart").onclick=()=>{const qs=qzBuild();if(!qs.length){toast("ไม่มีข้อสอบในหมวดนี้");return}qz={qs,i:0,score:0,ans:[]};qzRender()};return}
   if(qz.i>=qz.qs.length){const wrong=qz.ans.filter(x=>!x.ok);const pct=Math.round(qz.score/qz.qs.length*100);
     R.innerHTML=`<h2>ผลสอบ</h2><div class="qz-score">${qz.score}/${qz.qs.length}</div><p>${pct>=80?"ผ่าน ✓":"ทบทวนเพิ่ม"} (${pct}%)</p>
@@ -1875,7 +2084,7 @@ function qzRender(){const R=$("#qz");
    <div class="qz-bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div>
    <div class="qz-q">${esc(q.q)}</div>${ctx}
    <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}">${esc(t)}</button>`).join("")}</div><div id="qzEx"></div>`;
-  R.querySelectorAll(".qz-opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)qz.score++;qz.ans.push({q,ok});
+  R.querySelectorAll(".qz-opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)qz.score++;qz.ans.push({q,ok});qzRecord(q,ok);
     R.querySelectorAll(".qz-opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.a)x.classList.add("ok")});if(!ok)b.classList.add("no");
     $("#qzEx").innerHTML=`<div class="qz-ex"><b>${ok?"ถูกต้อง":"ยังไม่ถูก"}</b>${esc(q.ex)}<div class="hint">${esc(q.ref)}</div></div>
       <div class="btns" style="margin-top:12px"><button id="qzNext" class="primary">${qz.i+1<qz.qs.length?"ข้อถัดไป":"ดูผล"}</button><button id="qzQuit">เลิก</button></div>`;
@@ -1994,23 +2203,34 @@ const CONV=[
  {t:"น้ำหนัก",u:[["lb",0.45359237],["kg",1]]},
  {t:"ปริมาตร",u:[["US gal",3.785412],["L",1],["Imp gal",4.54609]]},
  {t:"น้ำมัน (น้ำหนัก ↔ ปริมาตร)",fuel:true,u:[["lb",0.45359237],["kg",1],["US gal",null],["L",null]]}];
-function cvRender(){$("#cvWrap").innerHTML=CONV.map((c,ci)=>`<div class="card cv-card" style="box-shadow:none;border:1px solid var(--line)"><h3>${c.t}</h3>
-  ${c.u.map((u,ui)=>`<div class="cv-row"><input type="number" inputmode="decimal" step="any" data-cv="${ci}" data-u="${ui}" aria-label="${c.t} ${u[0]}"><span>${u[0]}</span></div>`).join("")}
-  ${c.fuel?`<label>ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="number" step="0.01" value="${(state&&state.fuelDens)||6.7}"></label><p class="hint" style="margin:0">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L) — แก้ตามอุณหภูมิ/ชนิดน้ำมัน</p>`:""}</div>`).join("")}
-function cvCalc(src){const ci=+src.dataset.cv,c=CONV[ci],ui=+src.dataset.u,v=num(src.value),ins=[...document.querySelectorAll(`[data-cv="${ci}"]`)];
-  ins.forEach(x=>x.parentNode.classList.toggle("src",x===src));if(v==null){ins.forEach(x=>{if(x!==src)x.value=""});return}
-  let base;const r=(x,d=4)=>String(+x.toFixed(d));
-  if(c.temp){const C=ui===0?v:ui===1?(v-32)*5/9:v-273.15;base=[C,C*9/5+32,C+273.15];ins.forEach((x,i)=>{if(x!==src)x.value=r(base[i],2)});return}
-  const f=c.u.map(u=>u[1]);if(c.fuel){const kgPerGal=num($("#cvDens").value,6.7)*0.45359237;f[2]=kgPerGal;f[3]=kgPerGal/3.785412}
-  base=v*f[ui];ins.forEach((x,i)=>{if(x!==src)x.value=r(base/f[i])})}
+/* ตัวแปลงเดียว: เลือกหมวด → ใส่ค่า → จากหน่วย ⇄ เป็นหน่วย */
+let CV={c:3,from:0,to:1,v:"29.92"};
+const CV_PRE=[["QNH inHg → hPa",3,0,1],["QNH hPa → inHg",3,1,0],["น้ำมัน lb → US gal",7,0,2],["น้ำมัน US gal → lb",7,2,0],["kt → km/h",1,0,1],["ft → m",2,0,1],["NM → km",0,0,1],["°C → °F",4,0,1]];
+function cvFactors(c){const f=c.u.map(u=>u[1]);if(c.fuel){const kg=num(state&&state.fuelDens,6.7)*0.45359237;f[2]=kg;f[3]=kg/3.785412}return f}
+function cvConv(ci,v,a,b){const c=CONV[ci];if(c.temp){const C=a===0?v:a===1?(v-32)*5/9:v-273.15;return[C,C*9/5+32,C+273.15][b]}const f=cvFactors(c);return v*f[a]/f[b]}
+const cvFmt=x=>!isFinite(x)?"–":Math.abs(x)>=100?(+x.toFixed(1)).toLocaleString("en-US"):String(+x.toFixed(Math.abs(x)>=10?2:4));
+function cvRender(){const c=CONV[CV.c],v=num(CV.v);const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
+  $("#cvWrap").innerHTML=`<div class="cv1">
+   <div class="cv-chips">${CONV.map((x,i)=>`<button class="ntc${i===CV.c?" on":""}" data-cvc="${i}">${x.t}</button>`).join("")}</div>
+   <div class="cv-row1"><input id="cvV" type="number" inputmode="decimal" step="any" value="${esc(CV.v)}" aria-label="ค่า"><select id="cvFrom" aria-label="จากหน่วย">${opts(CV.from)}</select>
+     <button id="cvSwap" aria-label="สลับหน่วย">⇄</button><select id="cvTo" aria-label="เป็นหน่วย">${opts(CV.to)}</select></div>
+   <div class="cv-res"><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b><span>${c.u[CV.to][0]}</span></div>
+   ${c.fuel?`<label class="cv-dens">ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="number" step="0.01" value="${num(state&&state.fuelDens,6.7)}"></label><p class="hint">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L)</p>`:""}
+   <div class="cv-all">${v==null?"":c.u.map((u,i)=>i===CV.from?"":`<span>${cvFmt(cvConv(CV.c,v,CV.from,i))} <i>${u[0]}</i></span>`).join("")}</div>
+   <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
-$("#cvWrap").addEventListener("input",e=>{if(e.target.dataset.cv!=null)cvCalc(e.target);
-  if(e.target.id==="cvDens"){state.fuelDens=num(e.target.value,6.7);store.set("vfr_current",state);const s=document.querySelector(".cv-row.src input");if(s)cvCalc(s)}});
+$("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;CV.from=0;CV.to=Math.min(1,CONV[CV.c].u.length-1);cvRender()}
+  if(t.id==="cvSwap"){[CV.from,CV.to]=[CV.to,CV.from];cvRender()}
+  if(t.dataset.pre!=null){const x=CV_PRE[+t.dataset.pre];CV.c=x[1];CV.from=x[2];CV.to=x[3];cvRender();$("#cvV").focus();$("#cvV").select()}});
+$("#cvWrap").addEventListener("input",e=>{const t=e.target;if(t.id==="cvV"){CV.v=t.value;const pos=t.selectionStart;cvRender();const n=$("#cvV");n.focus();try{n.setSelectionRange(pos,pos)}catch(err){}}
+  if(t.id==="cvDens"){state.fuelDens=num(t.value,6.7);store.set("vfr_current",state);const k=t.selectionStart;cvRender();const n=$("#cvDens");n.focus()}});
+$("#cvWrap").addEventListener("change",e=>{const t=e.target;if(t.id==="cvFrom")CV.from=+t.value;if(t.id==="cvTo")CV.to=+t.value;if(t.id==="cvFrom"||t.id==="cvTo")cvRender()});
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
   document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50);
-  if(t.dataset.tab==="wx")setTimeout(()=>{wxInit();wxMap.invalidateSize();wxDrawRoute();metarLoad()},50)});
+  if(t.dataset.tab==="wx")setTimeout(()=>{wxInit();wxMap.invalidateSize();wxDrawRoute();metarLoad();wxAuto()},50)});
 
 /* ---------- offline (PWA) ---------- */
 function netChip(){const c=$("#netChip");const on=navigator.onLine;c.className="netchip "+(on?"on":"off");c.textContent=on?"ออนไลน์":"ออฟไลน์ — ใช้ข้อมูลที่เก็บไว้"}
@@ -2187,6 +2407,20 @@ let bkArm=null;$("#bkLoad").onchange=e=>{const f=e.target.files[0];e.target.valu
   if(bkArm!==f.name){bkArm=f.name;toast(`ไฟล์สำรอง ${new Date(o.backup).toLocaleDateString("th-TH")} · ${ks.length} รายการ — เลือกไฟล์เดิมอีกครั้งเพื่อยืนยันกู้คืน (ข้อมูลปัจจุบันจะถูกแทนที่)`);setTimeout(()=>bkArm=null,15000);return}
   bkArm=null;ks.forEach(k=>localStorage.setItem(k,JSON.stringify(o.data[k])));toast("กู้คืนแล้ว กำลังโหลดใหม่…");setTimeout(()=>location.reload(),800)})};
 bkInfo();
+
+/* ---------- โหมดทีละขั้น (EMER / NORMAL) ---------- */
+let SM=null;
+function stepOpen(title,items,kind){const steps=[];let cond="";items.forEach(it=>{if(it.k==="cond"){cond=it.t;return}steps.push({...it,cond});cond=""});
+  if(!steps.length){toast("ไม่มีขั้นตอนให้แสดง");return}SM={title,steps,i:0,kind};$("#stepMode").hidden=false;$("#stepMode").classList.toggle("emer",kind==="emer");document.body.style.overflow="hidden";stepShow();$("#smNext").focus()}
+function stepShow(){const s=SM.steps[SM.i];$("#smTitle").textContent=SM.title;$("#smProg").textContent=`ขั้น ${SM.i+1} / ${SM.steps.length}`;
+  $("#smCond").textContent=s.cond||"";$("#smText").innerHTML=`${s.n!=null?`<span class="sm-n">${esc(s.n)}</span>`:""}<span class="${s.mem?"sm-mem":""}">${esc(s.t)}</span>${s.mem?'<div class="sm-tag">ท่องจำ</div>':""}`;
+  $("#smPrev").disabled=SM.i===0;$("#smNext").textContent=SM.i+1<SM.steps.length?"ถัดไป ▶":"✓ จบ"}
+function stepGo(d){if(!SM)return;if(d>0&&SM.kind==="np"&&npSel!=null){const s=SM.steps[SM.i];if(s.bi!=null){(npDone[npSel]=npDone[npSel]||{})[s.bi]=1}}
+  if(SM.i+d>=SM.steps.length){stepClose();return}SM.i=Math.max(0,SM.i+d);stepShow()}
+function stepClose(){$("#stepMode").hidden=true;document.body.style.overflow="";const k=SM&&SM.kind;SM=null;if(k==="np"){npRenderMain();npRenderList()}}
+$("#smNext").onclick=()=>stepGo(1);$("#smPrev").onclick=()=>stepGo(-1);$("#smClose").onclick=stepClose;
+document.addEventListener("keydown",e=>{if(!SM)return;if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){e.preventDefault();stepGo(1)}else if(e.key==="ArrowLeft"){e.preventDefault();stepGo(-1)}else if(e.key==="Escape")stepClose()});
+$("#stepMode").addEventListener("click",e=>{if(e.target.closest(".sm-body")){const r=e.currentTarget.getBoundingClientRect();stepGo(e.clientX<r.left+r.width*0.3?-1:1)}});
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
