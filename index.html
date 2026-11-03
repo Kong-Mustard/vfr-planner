@@ -452,6 +452,24 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .backup-bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;
   background:var(--hl);color:var(--hl-ink);border:1.5px solid #e9c46a;font-size:14px;line-height:1.5}
 .backup-bar>div:first-child{flex:1 1 420px;min-width:0}.bk-info{display:block;font-weight:600;margin-top:2px}
+/* NOTAM briefing */
+.nt-route{font-size:16px;padding:10px 12px;background:var(--input);border-radius:12px}.nt-pin{color:#ff3d8b}
+.nt-bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:4px 0 6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{border:0;border-radius:0;padding:7px 16px;background:var(--panel)}
+.seg button.on{background:#fbb4a5;color:#5a1d12}
+.nt-chk{flex-direction:row;align-items:center;gap:6px;font-size:14px;color:var(--ink)}
+.nt-grp h3{margin:14px 0 6px;font:700 19px var(--f-display);color:var(--ink)}
+.nti{position:relative;background:var(--input);border-radius:14px;padding:12px 14px 12px 20px;margin-bottom:8px;cursor:pointer;overflow:hidden}
+.nti::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#3d6fb6}
+.nti.red::before{background:#c62f24}.nti.yellow::before{background:#d4a300}.nti.off{opacity:.55}
+.nti:focus-visible{outline:2px solid var(--accent)}
+.nti-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.nti-h b{font:700 17px var(--f-display)}
+.nti-id{font:600 13px var(--f-mono);color:var(--muted);white-space:nowrap}
+.nti-t{font-style:italic;color:var(--muted);margin-top:4px;font-size:14px}
+.nti .tag{display:inline-block;font:700 11px var(--f-body);border-radius:4px;padding:1px 6px;margin:6px 6px 0 0;color:#fff;background:var(--muted)}.nti .tag.hit{background:var(--bad)}
+.nti-body pre{white-space:pre-wrap;font:13px/1.45 var(--f-mono);background:var(--panel);border-radius:8px;padding:8px;margin:6px 0 0}
+.ntpin{width:22px;height:22px;border-radius:50% 50% 50% 0;background:#e53935;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+#ntMap{height:62vh;min-height:380px;border-radius:14px}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
   border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
@@ -719,21 +737,28 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  </div>
 </section>
 <section id="tab-notam" class="tabpanel" hidden>
+ <div style="display:flex;flex-direction:column;gap:12px">
  <div class="card section">
-  <div class="sechead"><h2 class="hd hd-orange">NOTAM</h2>
-   <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">เปิด NOTAM Leaflet — AEROTHAI ↗</a></div>
-  <p class="hint">วิธีใช้: เปิด NOTAM Leaflet ของ AEROTHAI → คัดลอกข้อความ NOTAM ทั้งหมด → วางในช่องด้านล่าง → แอปแยก NOTAM, วาดพื้นที่ (จาก Q-line/พิกัดในข้อความ) บนแผนที่แท็บ 1 และตรวจว่าเส้นทางตัดผ่านในช่วงเวลาที่บินหรือไม่</p>
-  <div class="btns" id="notamLinks"></div>
- </div>
- <div class="card section">
-  <div class="sechead"><h2 class="hd hd-slate">วาง NOTAM</h2><div class="btns"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้าง</button></div></div>
-  <textarea id="ntText" rows="8" class="nt-text" placeholder="วางข้อความ NOTAM ที่นี่ เช่น&#10;B1234/26 NOTAMN&#10;Q) VTBB/QRDCA/IV/BO/W/000/050/1449N10039E010&#10;A) VTBB B) 2611020100 C) 2611051000&#10;E) DANGER AREA ACTIVATED ..."></textarea>
+  <div class="sechead"><h2 class="hd hd-orange">NOTAM Briefing</h2>
+   <div class="btns"><button id="ntRefresh" class="primary">ดึง NOTAM ล่าสุด</button>
+    <a class="linkbtn" href="https://www.aerothai.aero/CASServices/Login.aspx?application=AIM&amp;returnurl=https://notamthai.aerothai.aero/Login.aspx&amp;originalReturnUrl=/NotamLeaflet.aspx" target="_blank" rel="noopener">AEROTHAI NOTAM Leaflet ↗</a></div></div>
+  <div class="nt-route" id="ntRoute"></div>
   <p class="hint" id="ntInfo"></p>
- </div>
- <div class="card section">
-  <div class="sechead"><h2 class="hd hd-red">NOTAM ที่เกี่ยวกับเส้นทาง</h2>
-   <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="ntOnlyRoute" checked style="width:auto"> เฉพาะที่เกี่ยวกับเส้นทาง/เวลาบิน</label></div>
+  <div class="nt-bar">
+   <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">List</button><button id="ntViewMap">Map</button></div>
+   <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
+   <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="10" min="1" max="50" style="width:64px"> NM</label>
+   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
+  </div>
   <div id="ntList"></div>
+  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · วงสีเหลือง/แดง = พื้นที่ NOTAM (จาก Q-line หรือพิกัดในข้อความ) · แตะเพื่อดูรายละเอียด</p></div>
+ </div>
+ <details class="card section custbox" id="ntPasteBox">
+  <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
+  <p class="hint">คัดลอกข้อความ NOTAM รูปแบบ ICAO มาวาง แอปจะรวมกับชุดที่ดึงอัตโนมัติ (ตัวที่ซ้ำกันจะนับครั้งเดียว)</p>
+  <textarea id="ntText" rows="7" class="nt-text" placeholder="B1234/26 NOTAMN&#10;Q) VTBB/QRDCA/IV/BO/W/000/050/1449N10039E010&#10;A) VTBB B) 2611020100 C) 2611051000&#10;E) DANGER AREA ACTIVATED ..."></textarea>
+  <div class="btns" style="margin-top:6px"><button id="ntParse" class="primary">อ่าน NOTAM</button><button id="ntClear">ล้างที่วางเอง</button></div>
+ </details>
  </div>
 </section>
 <section id="tab-normal" class="tabpanel" hidden>
@@ -1430,51 +1455,122 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#v3d").hidden)c
 
 /* ---------- NOTAM: วางข้อความจาก AEROTHAI → แยก/วาด/ตรวจเส้นทาง ---------- */
 const ntLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(ntLayer,"NOTAM area");
-let NT=[];
+let NT=[],NT_AUTO=null,ntView="list",ntPlainMode=false,ntMap=null,ntMapLayer=null,ntOpen=new Set();
 function ntCoord(s){const m=String(s).match(/(\d{4}(?:\d{2})?(?:\.\d+)?)([NS])\s*(\d{5}(?:\d{2})?(?:\.\d+)?)([EW])/);if(!m)return null;
   const dm=(v,dd)=>{const ip=v.split(".")[0],d=+v.slice(0,dd),r=v.slice(dd);return ip.length-dd===4?d+ +r.slice(0,2)/60+ +r.slice(2)/3600:d+ +r/60};
   return[dm(m[1],2)*(m[2]==="S"?-1:1),dm(m[3],3)*(m[4]==="W"?-1:1)]}
 function ntTime(s){const m=String(s||"").match(/(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})/);return m?new Date(Date.UTC(2000+ +m[1],+m[2]-1,+m[3],+m[4],+m[5])):null}
 function circlePoly(c,nm){const out=[];for(let b=0;b<=360;b+=10){const R=3440.065,d=nm/R,br=b*D2R,la=c[0]*D2R,lo=c[1]*D2R;
   const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(br)),lo2=lo+Math.atan2(Math.sin(br)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2));out.push([la2*R2D,lo2*R2D])}return out}
-function ntParse(txt){const parts=String(txt).replace(/\r/g,"").split(/(?=\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC]\b)/).map(s=>s.trim()).filter(s=>/NOTAM[NRC]/.test(s));
+/* Q-code → หัวเรื่องอ่านง่าย (ICAO Doc 8126) */
+const QSUBJ={MR:"Runway",MX:"Taxiway",MA:"Movement area",MN:"Apron",MP:"Aircraft stands",MS:"Stopway",MT:"Threshold",MD:"Declared distances",MK:"Parking area",
+ FA:"Aerodrome",FH:"Helicopter landing area",FP:"Heliport",FU:"Fuel",FF:"Fire fighting",FS:"Snow removal",
+ LA:"Approach lighting",LR:"Runway lights",LX:"Taxiway lights",LT:"Threshold lights",LP:"PAPI",LV:"VASIS",LH:"High intensity rwy lights",LL:"Low intensity rwy lights",LB:"Aerodrome beacon",
+ IC:"ILS",IG:"Glide path",IL:"Localizer",ID:"DME (ILS)",IM:"Middle marker",IO:"Outer marker",NV:"VOR",ND:"DME",NB:"NDB",NT:"VORTAC",NN:"TACAN",NM:"VOR/DME",NA:"All radio nav facilities",
+ GA:"GNSS",GW:"GNSS",CA:"Air/ground facility",CE:"En-route surveillance radar",CS:"SSR",CP:"PAR",CT:"Terminal radar",CG:"GCA",
+ AA:"Minimum altitude",AC:"Class B/C/D/E airspace",AD:"ADIZ",AE:"Control area",AF:"FIR",AH:"Upper control area",AL:"Minimum usable FL",AN:"RNAV route",AO:"Oceanic control area",AP:"Reporting point",AR:"ATS route",AT:"TMA",AU:"UIR",AV:"Upper advisory area",AX:"Intersection",AZ:"ATZ",
+ SA:"ATIS",SB:"ARO",SC:"Area control centre",SE:"Flight information service",SF:"AFIS",SL:"Flow control",SO:"Oceanic control",SP:"Approach control",SS:"Flight service station",ST:"Aerodrome control tower",SU:"Upper area control",SV:"VOLMET",SY:"Upper advisory service",
+ PA:"STAR",PB:"Standard VFR arrival",PD:"SID",PE:"Standard VFR departure",PF:"Flow control procedure",PH:"Holding procedure",PI:"Instrument approach",PK:"VFR approach",PL:"Obstacle clearance limit",PM:"Aerodrome minima",PO:"Obstacle clearance altitude",PR:"Radio failure procedure",PT:"Transition altitude",PU:"Missed approach",PX:"Minimum holding altitude",PZ:"ADIZ procedure",
+ OA:"Aeronautical information service",OB:"Obstacle",OE:"Aircraft entry requirements",OL:"Obstacle lights",OR:"Rescue coordination centre",
+ RA:"Airspace reservation",RD:"Danger area",RM:"Military operating area",RO:"Overflying",RP:"Prohibited area",RR:"Restricted area",RT:"Temporary restricted area",
+ WA:"Air display",WB:"Aerobatics",WC:"Captive balloon/kite",WD:"Demolition of explosives",WE:"Exercises",WF:"Air refuelling",WG:"Glider flying",WH:"Blasting",WJ:"Banner/target towing",WL:"Ascent of free balloon",WM:"Missile, gun or rocket firing",WP:"Parachute jumping",WR:"Radioactive materials",WS:"Burning or blowing gas",WT:"Mass movement of aircraft",WU:"Unmanned aircraft activities",WV:"Formation flight",WW:"Significant volcanic activity",WY:"Aerial survey",WZ:"Model flying",
+ KK:"Checklist"};
+const QCOND={LC:"closed",AS:"unserviceable",AU:"not available",AH:"hours of service changed",AK:"resumed normal operation",AL:"operative (subject to conditions)",AO:"operational",AP:"prior permission required",
+ CA:"activated",CC:"completed",CD:"deactivated",CE:"erected",CH:"changed",CL:"realigned",CM:"displaced",CN:"cancelled",CO:"operating",CP:"reduced power",CR:"temporarily replaced",CS:"installed",CT:"on test",
+ HW:"work in progress",HX:"concentration of birds",HV:"work completed",HA:"braking action",LA:"operating on auxiliary power",LB:"reserved for aircraft based therein",LD:"unsafe",LE:"operating without auxiliary power",LF:"interference",LH:"unserviceable for heavy aircraft",LI:"closed to IFR",LK:"operating as fixed light",LL:"usable for length/width",LN:"closed to night operations",LP:"prohibited",LR:"aircraft restricted to runways and taxiways",LS:"subject to interruption",LT:"limited",LV:"closed to VFR",LW:"will take place",LX:"operating but caution advised",
+ TT:"trigger NOTAM",XX:""};
+const N_EXP=[[/\bRWY\b/g,"runway"],[/\bTWY\b/g,"taxiway"],[/\bCLSD\b/g,"closed"],[/\bU\/S\b/g,"unserviceable"],[/\bACT\b/g,"active"],[/\bAD\b/g,"aerodrome"],[/\bAP\b/g,"airport"],[/\bFLT\b/g,"flight"],[/\bACFT\b/g,"aircraft"],
+ [/\bBTN\b/g,"between"],[/\bDUE\b/g,"due to"],[/\bWIP\b/g,"work in progress"],[/\bAVBL\b/g,"available"],[/\bOPS\b/g,"operations"],[/\bAGL\b/g,"above ground"],[/\bAMSL\b/g,"above mean sea level"],[/\bSFC\b/g,"surface"],[/\bUNL\b/g,"unlimited"],
+ [/\bFM\b/g,"from"],[/\bTIL\b/g,"until"],[/\bAPCH\b/g,"approach"],[/\bDEP\b/g,"departure"],[/\bARR\b/g,"arrival"],[/\bTKOF\b/g,"takeoff"],[/\bLDG\b/g,"landing"],[/\bOBST\b/g,"obstacle"],[/\bLGT\b/g,"light"],[/\bHGT\b/g,"height"],
+ [/\bELEV\b/g,"elevation"],[/\bPSN\b/g,"position"],[/\bCTN\b/g,"caution"],[/\bEXC\b/g,"except"],[/\bMAINT\b/g,"maintenance"],[/\bCONST\b/g,"construction"],[/\bTEMPO\b/g,"temporarily"],[/\bUAV\b/g,"drone (UAV)"],[/\bUAS\b/g,"drone (UAS)"],
+ [/\bRADIUS\b/g,"radius"],[/\bCENTERED\b|\bCENTRED\b/g,"centred"],[/\bAREA\b/g,"area"],[/\bVIS\b/g,"visibility"],[/\bNIL\b/g,"none"],[/\bFREQ\b/g,"frequency"],[/\bSKED\b/g,"scheduled"],[/\bMON\b/g,"Mon"],[/\bDLY\b/g,"daily"]];
+function ntPlainText(n){if(n.plain&&n.plain.trim())return n.plain.trim();let t=" "+n.text+" ";N_EXP.forEach(([r,w])=>t=t.replace(r,w));t=t.trim().toLowerCase();return t.charAt(0).toUpperCase()+t.slice(1)}
+function ntTitle(n){const c=n.code||"",sub=QSUBJ[c.slice(1,3)],cond=QCOND[c.slice(3,5)];
+  if(sub)return`${sub}${cond?" "+cond:""}`;const k=n.keyword?String(n.keyword):"";return k?k.charAt(0).toUpperCase()+k.slice(1).toLowerCase():(n.text||"").split(/[.\n]/)[0].slice(0,50)}
+function ntSev(n){const c=n.code||"";if(/^Q(R[PRDT]|WM|WD|WH|WE|WP)/.test(c)||/LC$/.test(c)&&/^Q(M|F)/.test(c))return"red";if(/^Q(WU|OB|W)/.test(c)||/(AS|AU|LT|HW)$/.test(c))return"yellow";return"blue"}
+function ntParse(txt,extra){const parts=String(txt).replace(/\r/g,"").split(/(?=\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC]\b)/).map(s=>s.trim()).filter(s=>/NOTAM[NRC]/.test(s));
   return parts.map(raw=>{const one=raw.replace(/\n/g," ");const g=k=>{const m=one.match(new RegExp(`\\b${k}\\)\\s*(.*?)(?=\\s+[A-G]\\)\\s|$)`));return m?m[1].trim():""};
     const id=(raw.match(/^([A-Z]\d{4}\/\d{2})/)||[])[1]||"";const q=g("Q");const qp=q.split("/");const n={id,raw,q,code:qp[1]||"",lower:+qp[5]||0,upper:+qp[6]||999,
-      loc:g("A"),from:ntTime(g("B")),to:/PERM/.test(g("C"))?null:ntTime(g("C")),est:/EST/.test(g("C")),sched:g("D"),text:g("E"),polys:[]};
+      loc:(g("A").split(/\s+/)[0]||"").toUpperCase(),from:ntTime(g("B")),to:/PERM/.test(g("C"))?null:ntTime(g("C")),est:/EST/.test(g("C")),sched:g("D"),text:g("E"),polys:[],...(extra||{})};
     const qc=qp[7]&&qp[7].match(/(\d{4}[NS]\d{5}[EW])(\d{3})/);
-    // พื้นที่จากข้อความ E: polygon (≥3 พิกัด) หรือวงกลม "RADIUS x NM"
     const cs=[...n.text.matchAll(/\d{4,6}(?:\.\d+)?[NS]\s*\d{5,7}(?:\.\d+)?[EW]/g)].map(m=>ntCoord(m[0])).filter(Boolean);
-    const rad=n.text.match(/RADIUS\s*(?:OF\s*)?(\d+(?:\.\d+)?)\s*(NM|KM)/i);
-    if(rad&&cs.length){const r=+rad[1]*(rad[2].toUpperCase()==="KM"?0.54:1);n.polys.push({p:circlePoly(cs[0],r),src:"E"})}
+    const rad=n.text.match(/RADIUS\s*(?:OF\s*)?(\d+(?:\.\d+)?)\s*(NM|KM|M)\b/i);
+    if(rad&&cs.length){const u=rad[2].toUpperCase(),r=+rad[1]*(u==="KM"?0.54:u==="M"?0.00054:1);n.polys.push({p:circlePoly(cs[0],Math.max(r,0.3)),src:"E"})}
     else if(cs.length>=3)n.polys.push({p:cs,src:"E"});
-    else if(qc){const c=ntCoord(qc[1]),r=+qc[2];if(c&&r&&r<999)n.polys.push({p:circlePoly(c,r),src:"Q"})}
+    else if(qc){const c=ntCoord(qc[1]),r=+qc[2];if(c&&r&&r<999)n.polys.push({p:circlePoly(c,r),src:"Q",c,r})}
     return n})}
+function ntAll(){const seen=new Set(),out=[];const add=n=>{const k=n.loc+"|"+n.id;if(seen.has(k))return;seen.add(k);out.push(n)};
+  (NT_AUTO||[]).forEach(add);NT.forEach(n=>add({...n,manual:true}));return out}
 function ntFlightWindow(){const res=compute(),date=state.date||new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
   const t0=new Date(`${date}T00:00:00+07:00`);t0.setMinutes(t0.getMinutes()+res.dep);const t1=new Date(t0.getTime()+(res.cumMin||60)*60000);return[t0,t1]}
-function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,names=new Set(W.map(w=>w.name.toUpperCase())),near=new Set(routeAirports(num($("#corridor").value,25)).map(a=>a.id));
-  const alts=state.legs.map(l=>num(l.alt,0));const maxFL=Math.max(0,...alts)/100;
-  return NT.map(n=>{const active=(!n.from||n.from<=t1)&&(!n.to||n.to>=t0);
-    let hit=false;if(n.polys.length&&W.length>1)for(const P of n.polys){for(let i=0;i<W.length-1&&!hit;i++){const p=[W[i].lat,W[i].lon],q=[W[i+1].lat,W[i+1].lon],k=Math.max(2,Math.ceil(gcDistNm(p,q)/0.5));
-      for(let j=0;j<=k;j++){const t=j/k;if(inPoly([p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t],P.p)){hit=true;break}}}}
+function ntRouteDist(pt){const W=state.wps;if(W.length<2)return W.length?gcDistNm(pt,[W[0].lat,W[0].lon]):1e9;let d=1e9;for(let i=0;i<W.length-1;i++)d=Math.min(d,distToSeg(pt,[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]).d);return d}
+function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,buf=num($("#ntBuf").value,10),names=new Set(W.map(w=>String(w.name).toUpperCase()));
+  const near=new Set(routeAirports(buf).map(a=>a.id));const alts=state.legs.map(l=>num(l.alt,0));const maxFL=Math.max(0,...alts)/100;
+  return ntAll().filter(n=>!/^QKK/.test(n.code)||$("#ntShowHidden").checked).map(n=>{const active=(!n.from||n.from<=t1)&&(!n.to||n.to>=t0);
+    let hit=false,inBuf=false;
+    if(n.polys.length&&W.length>1)for(const P of n.polys){
+      for(let i=0;i<W.length-1&&!hit;i++){const p=[W[i].lat,W[i].lon],q=[W[i+1].lat,W[i+1].lon],k=Math.max(2,Math.ceil(gcDistNm(p,q)/0.5));
+        for(let j=0;j<=k;j++){const t=j/k;if(inPoly([p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t],P.p)){hit=true;break}}}
+      if(!inBuf)inBuf=P.c?ntRouteDist(P.c)-P.r<=buf:P.p.some(v=>ntRouteDist(v)<=buf)}
     const levelOK=!(n.lower>maxFL+5)||!alts.length;const ap=names.has(n.loc)||near.has(n.loc);
-    return{...n,active,hit:hit&&levelOK,ap}})}
-function ntRender(){const E=ntEval(),only=$("#ntOnlyRoute").checked;ntLayer.clearLayers();
-  E.forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:"#8b3fd6",weight:n.hit&&n.active?3:1.5,fillOpacity:.12,dashArray:P.src==="Q"?"5 4":null})
-    .on("click",e=>infoClick(e,()=>`<b>${esc(n.id)} ${esc(n.loc)}</b><br>${esc(n.code)} · FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc(n.text.slice(0,300))}${P.src==="Q"?"<br><i>วงกลมจาก Q-line (ประมาณ)</i>":""}`)).addTo(ntLayer)));
-  const fmt=d=>d?d.toISOString().slice(0,16).replace("T"," ")+"Z":"PERM";
-  const L2=E.filter(n=>!only||(n.active&&(n.hit||n.ap))).sort((a,b)=>(b.hit-a.hit)||(b.ap-a.ap));
-  $("#ntList").innerHTML=L2.length?L2.map(n=>`<div class="nt ${n.hit?"hit":n.ap?"ap":""} ${n.active?"":"off"}"><b>${esc(n.id)}</b> ${esc(n.loc)}
-    ${n.hit?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${n.ap?'<span class="tag ap">สนามตามเส้นทาง</span>':""}${n.active?'<span class="tag act">มีผลช่วงเวลาบิน</span>':'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>'}
-    <br>${fmt(n.from)} → ${fmt(n.to)}${n.est?" EST":""}${n.sched?` · ${esc(n.sched)}`:""} · FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc(n.text)}</div>`).join("")
-    :`<p class="hint">${NT.length?"ไม่มี NOTAM ที่เกี่ยวกับเส้นทาง/เวลาบิน (เอาเครื่องหมายถูกออกเพื่อดูทั้งหมด)":"ยังไม่ได้วาง NOTAM"}</p>`;
-  const [t0,t1]=ntFlightWindow();$("#ntInfo").textContent=NT.length?`อ่านได้ ${NT.length} NOTAM · มีพื้นที่ ${NT.filter(n=>n.polys.length).length} · ช่วงเวลาบิน ${fmt(t0)}–${fmt(t1)} · วางเมื่อ ${store.get("vfr_notam_t")||"–"}`:"";
-  const links=[...new Set(state.wps.map(w=>w.name.toUpperCase()).filter(x=>/^VT[A-Z]{2}$/.test(x)))];
-  $("#notamLinks").innerHTML=`<a class="linkbtn" href="https://notams.aim.faa.gov/notamSearch/nsapp.html#/" target="_blank" rel="noopener">FAA NOTAM Search ↗</a>`+(links.length?`<span class="hint">ICAO ตามเส้นทาง: <b>${links.concat("VTBB").join(" ")}</b></span>`:"")}
-$("#ntParse").onclick=()=>{NT=ntParse($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}store.set("vfr_notam_t",new Date().toLocaleString("th-TH"));
+    return{...n,active,hit:hit&&levelOK,inBuf:(inBuf||hit)&&levelOK,ap}})}
+function ntLocal(d){return d?d.toLocaleString("en-GB",{timeZone:"Asia/Bangkok",day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}).replace(",",""):"PERM"}
+function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHidden").checked,W=state.wps;ntLayer.clearLayers();
+  const pop=n=>`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> <small>${esc(n.id)}</small><br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,400))}`;
+  E.filter(n=>n.active&&(n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:n.hit?"#dc2626":"#d4a300",weight:n.hit?3:2,fillOpacity:.08,dashArray:P.src==="Q"?"5 4":null})
+    .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer)));
+  /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
+  const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
+  const buf=num($("#ntBuf").value,10),mids=routeAirports(buf).map(a=>a.id).filter(x=>x!==dep&&x!==dst);
+  const groups=[];const used=new Set();
+  const addG=(title,list)=>{groups.push({title,list});list.forEach(n=>used.add(n))};
+  const show=n=>hidden||n.active;
+  if(dep)addG(`${dep}${AP[dep]?" · "+AP[dep].name:""} (ต้นทาง)`,E.filter(n=>n.loc===dep&&show(n)));
+  mids.forEach(ic=>{const l=E.filter(n=>n.loc===ic&&show(n));if(l.length)addG(`${ic}${AP[ic]?" · "+AP[ic].name:""}`,l)});
+  if(dst&&dst!==dep)addG(`${dst}${AP[dst]?" · "+AP[dst].name:""} (ปลายทาง)`,E.filter(n=>n.loc===dst&&show(n)));
+  addG(`พื้นที่ตามแนวเส้นทาง ±${buf} NM (FIR / area)`,E.filter(n=>!used.has(n)&&n.inBuf&&show(n)));
+  if(hidden)addG("อื่นๆ (ไม่เกี่ยวกับเส้นทาง)",E.filter(n=>!used.has(n)));
+  const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${ntSev(n)} ${n.active?"":"off"}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
+    <div class="nti-h"><b>${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
+    <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
+    ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?'<span class="tag">วางเอง</span>':""}
+    ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
+  $("#ntList").innerHTML=groups.map(g=>`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):'<p class="hint">No NOTAM available.</p>'}</div>`).join("");
+  const [t0,t1]=ntFlightWindow();const fe=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap)).length;
+  $("#ntRoute").innerHTML=W.length>1?`<span class="nt-pin">●</span> <b>${esc(W[0].name)}</b> <span class="hint">→</span> <span class="nt-pin">●</span> <b>${esc(W.at(-1).name)}</b> <span class="hint">· ช่วงบิน ${ntLocal(t0)} – ${ntLocal(t1)} · เกี่ยวข้อง ${fe} รายการ</span>`:'<span class="hint">ยังไม่มีเส้นทาง — สร้างเส้นทางในแท็บ 1 ก่อน</span>';
+  const a=NT_AUTO_META;$("#ntInfo").innerHTML=(a?`ดึงอัตโนมัติจาก ${esc(a.source)} · อัปเดต ${a.age} · ${a.n} NOTAM`:'<span class="warnc">ยังไม่มีชุด NOTAM อัตโนมัติ — ใช้การวางเองด้านล่างได้</span>')+(a&&a.err?` · <span class="bad">ดึงรอบล่าสุดไม่สำเร็จ (${esc(a.err)})</span>`:"")+(NT.length?` · วางเอง ${NT.length}`:"");
+  if(ntView==="map")ntDrawMap(E)}
+let NT_AUTO_META=null;
+async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cache:force?"reload":"no-cache"})).json();
+  NT_AUTO=[];(d.notams||[]).forEach(x=>{const p=ntParse(x.icao,{plain:x.plain||"",keyword:x.keyword||"",auto:true});if(p.length){if(!p[0].loc)p[0].loc=x.loc;NT_AUTO.push(p[0])}});
+  const age=Math.round((Date.now()-new Date(String(d.fetched).replace("Z",":00Z")))/60000);
+  NT_AUTO_META={source:d.source||"",n:NT_AUTO.length,age:isFinite(age)?(age<90?age+" นาทีที่แล้ว":Math.round(age/60)+" ชม.ที่แล้ว"):"–",err:d.last_error?(d.last_error.errors||[])[0]:""}}
+  catch(e){if(!NT_AUTO)NT_AUTO_META=null}if(state)ntRender()}
+function ntBuffer(){const W=state.wps,buf=num($("#ntBuf").value,10),polys=[];for(let i=0;i<W.length-1;i++){const a=[W[i].lat,W[i].lon],b=[W[i+1].lat,W[i+1].lon],tc=trueCourse(a,b);
+  const off=(p,br)=>{const R=3440.065,d=buf/R,la=p[0]*D2R,lo=p[1]*D2R,t=br*D2R;const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(t));return[la2*R2D,(lo+Math.atan2(Math.sin(t)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2)))*R2D]};
+  polys.push([off(a,tc-90),off(b,tc-90),off(b,tc+90),off(a,tc+90)])}W.forEach(w=>polys.push(circlePoly([w.lat,w.lon],buf)));return polys}
+function ntDrawMap(E){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",{maxZoom:18,subdomains:"abcd",attribution:"© OpenStreetMap © CARTO"}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
+  ntMapLayer.clearLayers();const W=state.wps,pts=W.map(w=>[w.lat,w.lon]);
+  ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
+  if(pts.length>1)L.polyline(pts,{color:"#ff3d8b",weight:3}).addTo(ntMapLayer);
+  W.forEach((w,i)=>{if(i===0||i===W.length-1)L.marker([w.lat,w.lon],{icon:L.divIcon({className:"",html:'<div class="ntpin"></div>',iconSize:[22,30],iconAnchor:[11,30]})}).bindTooltip(esc(w.name),{permanent:true,direction:"right",offset:[8,-18]}).addTo(ntMapLayer)});
+  (E||ntEval()).filter(n=>n.active&&($("#ntShowHidden").checked||n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:n.hit?"#ff5a5a":"#ffd400",weight:2,fill:false,dashArray:P.src==="Q"?"6 4":null})
+    .bindPopup(`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> ${esc(n.id)}<br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,300))}`).addTo(ntMapLayer)));
+  setTimeout(()=>{ntMap.invalidateSize();if(pts.length>1)ntMap.fitBounds(pts,{padding:[30,30]});else ntMap.setView([14.5,100.8],6)},50)}
+const ntSeg=(on,off)=>{$(on).classList.add("on");$(off).classList.remove("on")};
+$("#ntViewList").onclick=()=>{ntView="list";ntSeg("#ntViewList","#ntViewMap");$("#ntList").hidden=false;$("#ntMapWrap").hidden=true};
+$("#ntViewMap").onclick=()=>{ntView="map";ntSeg("#ntViewMap","#ntViewList");$("#ntList").hidden=true;$("#ntMapWrap").hidden=false;ntDrawMap()};
+$("#ntOrig").onclick=()=>{ntPlainMode=false;ntSeg("#ntOrig","#ntPlain");ntRender()};
+$("#ntPlain").onclick=()=>{ntPlainMode=true;ntSeg("#ntPlain","#ntOrig");ntRender()};
+$("#ntShowHidden").onchange=ntRender;$("#ntBuf").addEventListener("input",ntRender);
+$("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
+$("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
+$("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
+$("#ntParse").onclick=()=>{NT=ntParse($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
   ntRender();toast(NT.length?`อ่านได้ ${NT.length} NOTAM`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
 $("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
-$("#ntOnlyRoute").onchange=ntRender;
 try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntParse(t)}}catch(e){}
+ntLoadAuto();
 
 /* ---------- NORMAL PROCEDURES (บทที่ 8) — checklist ติ๊กได้ ---------- */
 let npSel=null,npFull=false,npDone={};
