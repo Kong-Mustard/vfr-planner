@@ -171,7 +171,7 @@ body.printing #printView{position:static;padding:0}
 .navbox{display:inline-block;background:rgba(255,255,255,.93);color:#1f3b8f;border:1px solid #1f3b8f;border-radius:4px;padding:1px 5px;font:600 10px/1.25 Arial,sans-serif;white-space:nowrap;cursor:pointer}
 .navbox b{font-size:11px}.rose{pointer-events:none}
 .vis-ctl{background:var(--panel)}
-.vis-panel{padding:10px 12px;max-height:60vh;overflow:auto;width:250px;color:var(--ink);font:13px var(--f-body)}
+.vis-panel{padding:10px 12px;max-height:max(240px,calc(100vh - 420px));overflow:auto;width:250px;color:var(--ink);font:13px var(--f-body)}
 .vis-pre{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.vis-pre .mini{padding:3px 8px;font-size:12px}
 .vis-g{border-top:1px solid var(--line);padding:6px 0}.vis-g b{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
 .vis-g label{flex-direction:row;align-items:center;gap:8px;color:var(--ink);font-size:13.5px;padding:3px 0;cursor:pointer}
@@ -1992,7 +1992,7 @@ function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
 function visSync(){document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis))}
-function visPreset(name){const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>visSet(v.k,on.has(v.k),true));visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
+function visPreset(name){const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
 const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
   const groups=[...new Set(VIS.map(v=>v.g))];
   d.innerHTML=`<a href="#" class="btn3d" id="visBtn" title="เลือกชั้นข้อมูลที่จะแสดง">◧ ชั้นข้อมูล</a><div id="visPanel" class="vis-panel" hidden>
