@@ -170,6 +170,15 @@ body.printing #printView{position:static;padding:0}
 .awlbl{display:inline-block;background:#1f3b8f;color:#fff;font:700 11px Arial,sans-serif;padding:1px 4px;border-radius:2px;white-space:nowrap}
 .navbox{display:inline-block;background:rgba(255,255,255,.93);color:#1f3b8f;border:1px solid #1f3b8f;border-radius:4px;padding:1px 5px;font:600 10px/1.25 Arial,sans-serif;white-space:nowrap;cursor:pointer}
 .navbox b{font-size:11px}.rose{pointer-events:none}
+.vis-ctl{background:var(--panel)}
+.vis-panel{padding:10px 12px;max-height:60vh;overflow:auto;width:250px;color:var(--ink);font:13px var(--f-body)}
+.vis-pre{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.vis-pre .mini{padding:3px 8px;font-size:12px}
+.vis-g{border-top:1px solid var(--line);padding:6px 0}.vis-g b{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+.vis-g label{flex-direction:row;align-items:center;gap:8px;color:var(--ink);font-size:13.5px;padding:3px 0;cursor:pointer}
+.vis-g input{width:18px;height:18px;accent-color:var(--accent)}
+.vis-g i{display:inline-block;width:12px;height:12px;border-radius:3px}
+body.hide-hbox .hbox,body.hide-hbox .leaflet-overlay-pane path[stroke-dasharray="4 3"]{display:none}
+body.hide-rem .remtag{display:none}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
@@ -1221,7 +1230,7 @@ function areaPopup(a){return`<b>${esc(a.id)} ${esc(a.name)}</b> (${AREA_NAME[a.t
 function drawAreas(){Object.values(areaLayers).forEach(l=>l.clearLayers());const A=(EAIP&&EAIP.areas)||[];
   A.forEach(a=>{if(!a.poly||a.poly.length<3)return;
     L.polygon(a.poly,{color:AREA_COL[a.type],weight:1.5,fillOpacity:a.type==="D"?.08:.15,dashArray:a.approx?"6 4":null}).bindPopup(areaPopup(a)).bindTooltip(`${a.id} ${a.name}`,{sticky:true}).addTo(areaLayers[a.type])});
-  if(!$("#areaShowD").checked)map.removeLayer(areaLayers.D)}
+  if(typeof drawCtr==="function")drawCtr()}
 function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];
   if((a[0]>pt[0])!==(b[0]>pt[0])&&pt[1]<(b[1]-a[1])*(pt[0]-a[0])/(b[0]-a[0])+a[1])c=!c}return c}
 function routeAreas(){const A=(EAIP&&EAIP.areas)||[],W=state.wps,hits=[];if(W.length<1)return hits;
@@ -1249,7 +1258,7 @@ function renderAreas(){const box=$("#areaList");
       ${a.entry?`<small>การเข้า: ${esc(a.entry)}</small>`:""}${a.info?`<small>ติดต่อ: ${esc(a.info)}</small>`:""}
       ${a.approx?`<small><i>ขอบเขตบางส่วนตามแนวชายแดน/ชายฝั่ง วาดแบบประมาณ — ตรวจกับ eAIP</i></small>`:""}</div></details>`}).join("");}
 function W_name(i){const W=state.wps;return W.length>1?`${W[i].name}→${W[i+1].name}`:W[0].name}
-$("#areaShowD").onchange=e=>{e.target.checked?areaLayers.D.addTo(map):map.removeLayer(areaLayers.D)};
+$("#areaShowD").onchange=e=>visSet("D",e.target.checked);
 
 /* ---------- สภาพอากาศ: Open-Meteo (ECMWF/GFS/ICON), RainViewer, METAR/TAF ---------- */
 const WX_MODELS={ecmwf_ifs025:"ECMWF",gfs_seamless:"GFS",icon_seamless:"ICON"};
@@ -1944,6 +1953,58 @@ function svTok(w){const n=String(w.name||"").toUpperCase();if(AP[n]&&/^VT/.test(
 function skyVectorUrl(){const W=state.wps;if(!W.length)return"https://skyvector.com/";const c=map.getCenter();
   return`https://skyvector.com/?ll=${c.lat.toFixed(4)},${c.lng.toFixed(4)}&zoom=3&fpl=${encodeURIComponent(W.map(svTok).join(" "))}`}
 $("#openSV").onclick=()=>{$("#openSV").href=skyVectorUrl()};
+
+/* ---------- Control zone (CTR/ATZ) จาก AD 2.17 ---------- */
+const ctrLayer=L.layerGroup().addTo(map);
+function drawCtr(){ctrLayer.clearLayers();Object.entries((EAIP&&EAIP.airports)||{}).forEach(([ic,a])=>{const sp=a.airspace;if(!sp||!sp.poly)return;
+  L.polygon(sp.poly,{color:"#a1249e",weight:2,dashArray:sp.approx?"4 4":"10 5",fillColor:"#a1249e",fillOpacity:.04})
+   .bindTooltip(`${esc(sp.name)}${sp.cls?" · Class "+esc(sp.cls):""}${sp.vert?"<br>"+esc(sp.vert):""}`,{sticky:true}).addTo(ctrLayer)})}
+drawCtr();
+
+/* ---------- เปิด/ปิดการมองเห็นชั้นข้อมูลบนแผนที่ (จำค่าในเครื่อง) ---------- */
+const VIS=[
+ {k:"route",t:"เส้นทาง + จุด",g:"เส้นทาง",L:()=>routeLayer},
+ {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
+ {k:"rem",t:"ป้ายระยะคงเหลือ",g:"เส้นทาง",css:"hide-rem"},
+ {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
+ {k:"ctr",t:"Control zone (CTR/ATZ)",g:"สนามบิน",L:()=>ctrLayer},
+ {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
+ {k:"P",t:"Prohibited",g:"พื้นที่",L:()=>areaLayers.P,c:"#d1242f"},
+ {k:"R",t:"Restricted",g:"พื้นที่",L:()=>areaLayers.R,c:"#e07a00"},
+ {k:"D",t:"Danger",g:"พื้นที่",L:()=>areaLayers.D,c:"#2f6fd6"},
+ {k:"nt",t:"NOTAM",g:"พื้นที่",L:()=>ntLayer},
+ {k:"enr",t:"Airway / VOR (enroute)",g:"เดินอากาศ",L:()=>enrLayer},
+ {k:"sp",t:"Significant points",g:"เดินอากาศ",L:()=>spLayer},
+ {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
+ {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
+const VIS_PRESET={
+ "ทั้งหมด":"route hbox rem ap ctr rp P R D nt",
+ "เฉพาะเส้นทาง":"route hbox rem",
+ "เฉพาะ Danger":"route D",
+ "P / R / D":"route P R D",
+ "เฉพาะ CTR":"route ap ctr",
+ "Enroute":"route ap enr sp",
+ "ซ่อนทั้งหมด":""};
+let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
+function visOn(k){const v=VIS.find(x=>x.k===k);if(v.css)return!document.body.classList.contains(v.css);return map.hasLayer(v.L())}
+function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
+  if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
+  if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
+function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
+function visSync(){document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis))}
+function visPreset(name){const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>visSet(v.k,on.has(v.k),true));visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
+const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
+  const groups=[...new Set(VIS.map(v=>v.g))];
+  d.innerHTML=`<a href="#" class="btn3d" id="visBtn" title="เลือกชั้นข้อมูลที่จะแสดง">◧ ชั้นข้อมูล</a><div id="visPanel" class="vis-panel" hidden>
+    <div class="vis-pre">${Object.keys(VIS_PRESET).map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
+    ${groups.map(g=>`<div class="vis-g"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
+  L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
+  d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync()};
+  d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&(c.dataset.vis==="enr"||c.dataset.vis==="sp")){drawEnr();drawSig()}}});
+  d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre)});return d}});
+new CtlVis().addTo(map);
+map.on("overlayadd overlayremove",()=>{visSave()});
+if(visState)VIS.forEach(v=>{if(v.k in visState)visSet(v.k,visState[v.k],true)});
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};

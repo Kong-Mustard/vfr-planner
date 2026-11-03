@@ -406,17 +406,17 @@ def parse_enr51(html):
     return out
 
 
-RTE = re.compile(r"^\s*(?:[▲△▼*]\s*)?([A-Z]{1,2}\d{1,3}[A-Z]?)(?:\s|$|\()")
+RTE = re.compile(r"^\s*(?:[▲△▼*]\s*)?(?!FL\d|SFC|GND)([A-Z]{1,2}\d{1,3}[A-Z]?)(?:\s|$|\()")
 
 
 def parse_enr3(html, page):
     """ENR 3.x ATS routes → [{id, page, pts:[{name,lat,lon}]}] (อ่านแบบลำดับแถว: แถวชื่อเส้นทาง แล้วตามด้วยแถวจุดที่มีพิกัด)"""
     soup = strip_markup(BeautifulSoup(html, "html.parser"))
-    out, cur, sample = [], None, []
+    out, cur, sample, pend = [], None, [], ""
     for tb in soup.find_all("table"):
         for r in rows(tb):
             line = " ".join(r)
-            if len(sample) < 25:
+            if 10 <= len(sample) < 40 or len(sample) < 10:
                 sample.append(line[:160])
             lat, lon = parse_coord(line)
             if lat is None:
@@ -425,16 +425,22 @@ def parse_enr3(html, page):
                     lat, lon = _c(cm)
             if lat is None:
                 m = RTE.match(line)
-                if m and len(line) < 140:
+                if m and len(line) < 140 and not re.search(r"Route availability|Remarks", line[:40]) or (m and "Route availability" in line):
                     cur = {"id": m.group(1), "page": page, "pts": []}
                     out.append(cur)
+                    pend = ""
+                else:
+                    pm = re.search(r"\(([A-Z]{2,5})\)|\b([A-Z]{5})\b", line)
+                    if pm and len(line) < 80:
+                        pend = pm.group(1) or pm.group(2)
                 continue
             if cur is None:
                 continue
             m = COORD.search(line) or C_RE.search(line)
             name = re.sub(r"[▲△▼◆◇●○*]", " ", line[:m.start()] if m else line)
             idm = re.search(r"\(([A-Z]{2,5})\)", name)
-            name = (idm.group(1) if idm else clean(name))[:30]
+            name = (idm.group(1) if idm else clean(name))[:30] or pend
+            pend = ""
             if not cur["pts"] or (cur["pts"][-1]["lat"], cur["pts"][-1]["lon"]) != (lat, lon):
                 cur["pts"].append({"name": name, "lat": lat, "lon": lon})
     return [r for r in out if len(r["pts"]) >= 2], sample
