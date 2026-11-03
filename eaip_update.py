@@ -390,6 +390,40 @@ def parse_enr51(html):
     return out
 
 
+RTE = re.compile(r"^\s*(?:[▲△▼*]\s*)?([A-Z]{1,2}\d{1,3}[A-Z]?)(?:\s|$|\()")
+
+
+def parse_enr3(html, page):
+    """ENR 3.x ATS routes → [{id, page, pts:[{name,lat,lon}]}] (อ่านแบบลำดับแถว: แถวชื่อเส้นทาง แล้วตามด้วยแถวจุดที่มีพิกัด)"""
+    soup = strip_markup(BeautifulSoup(html, "html.parser"))
+    out, cur, sample = [], None, []
+    for tb in soup.find_all("table"):
+        for r in rows(tb):
+            line = " ".join(r)
+            if len(sample) < 25:
+                sample.append(line[:160])
+            lat, lon = parse_coord(line)
+            if lat is None:
+                cm = C_RE.search(line)
+                if cm:
+                    lat, lon = _c(cm)
+            if lat is None:
+                m = RTE.match(line)
+                if m and len(line) < 140:
+                    cur = {"id": m.group(1), "page": page, "pts": []}
+                    out.append(cur)
+                continue
+            if cur is None:
+                continue
+            m = COORD.search(line) or C_RE.search(line)
+            name = re.sub(r"[▲△▼◆◇●○*]", " ", line[:m.start()] if m else line)
+            idm = re.search(r"\(([A-Z]{2,5})\)", name)
+            name = clean(idm.group(1) if idm else name.split("  ")[0])[:30]
+            if not cur["pts"] or (cur["pts"][-1]["lat"], cur["pts"][-1]["lon"]) != (lat, lon):
+                cur["pts"].append({"name": name, "lat": lat, "lon": lon})
+    return [r for r in out if len(r["pts"]) >= 2], sample
+
+
 def debug_dump(name, html):
     import os
     os.makedirs("debug", exist_ok=True)
@@ -458,6 +492,17 @@ def main():
         print(f"ENR 4.4 จุด {len(sp)} จุด")
     except Exception as e:
         data["errors"].append(f"ENR 4.4: {e}")
+    # ENR 3.x ATS routes (airways) — ใช้วาดเส้นแบบ enroute chart
+    data["airways"], data["enr3_sample"] = [], {}
+    for pg in ("3.1", "3.2", "3.3", "3.4"):
+        try:
+            raw = get(root + f"VT-ENR-{pg}-en-GB.html")
+            aw, sample = parse_enr3(raw, pg)
+            data["airways"] += aw
+            data["enr3_sample"][pg] = sample
+            print(f"ENR {pg} เส้นทาง {len(aw)} เส้น")
+        except Exception as e:
+            data["errors"].append(f"ENR {pg}: {e}")
     # ENR 5.1 Prohibited / Restricted / Danger areas
     try:
         raw = get(root + "VT-ENR-5.1-en-GB.html")
