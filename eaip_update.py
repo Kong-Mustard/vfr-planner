@@ -240,7 +240,23 @@ def parse_ad2(icao, html, url=""):
             ap["charts"].append({"name": name, "page": clean(a.get_text(" ")), "url": urljoin(url, a["href"])})
     # AD 2.22 flight procedures (ข้อความ) + จุดที่มีพิกัด (reporting points ฯลฯ)
     ap["proc"] = section_text(soup, icao + r"\s+AD\s*2\.22\b", icao + r"\s+AD\s*2\.23\b")
-    ap["points"] = find_points(ap["proc"], "AD 2.22") + find_points(section_text(soup, icao + r"\s+AD\s*2\.17\b", icao + r"\s+AD\s*2\.18\b", 4000), "AD 2.17")
+    t17 = section_text(soup, icao + r"\s+AD\s*2\.17\b", icao + r"\s+AD\s*2\.18\b", 4000)
+    ap["points"] = find_points(ap["proc"], "AD 2.22") + find_points(t17, "AD 2.17")
+    # ATS airspace (CTR/ATZ) จาก AD 2.17 → polygon สำหรับชั้น "Control zone" ในแอป
+    try:
+        m = re.search(r"lateral limits?(.*?)(?:\b2\s*\.?\s*Vertical|Vertical limits?)", t17, re.I | re.S)
+        lat_txt = (m.group(1) if m else t17.split("Vertical")[0])[:1500]
+        poly, approx = parse_geom(lat_txt)
+        vm = re.search(r"Vertical limits?\s*(.{0,80}?)(?:\b3\s*\.?\s*Airspace|Airspace class|$)", t17, re.I | re.S)
+        cm = re.search(r"Airspace class(?:ification)?\s*:?\s*([A-G])\b", t17, re.I)
+        nm = re.search(r"\b([A-Z][A-Z ]{2,30}\s(?:CTR|ATZ|CTA|TMA))\b", t17)
+        if poly and len(poly) >= 4:
+            ap["airspace"] = {"name": nm.group(1) if nm else icao + " CTR", "poly": [[round(a, 5), round(b, 5)] for a, b in poly],
+                              "approx": approx, "vert": clean(vm.group(1)) if vm else "", "cls": cm.group(1) if cm else "", "text": clean(lat_txt)[:400]}
+        elif t17:
+            ap["airspace_text"] = clean(t17)[:500]
+    except Exception as e:
+        ap["airspace_err"] = str(e)[:120]
     # AD 2.19 navaids
     for tb in sec.get("2.19", []):
         for r in rows(tb):
