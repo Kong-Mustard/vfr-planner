@@ -418,7 +418,7 @@ def parse_enr3(html, page):
             m = COORD.search(line) or C_RE.search(line)
             name = re.sub(r"[▲△▼◆◇●○*]", " ", line[:m.start()] if m else line)
             idm = re.search(r"\(([A-Z]{2,5})\)", name)
-            name = clean(idm.group(1) if idm else name.split("  ")[0])[:30]
+            name = (idm.group(1) if idm else clean(name))[:30]
             if not cur["pts"] or (cur["pts"][-1]["lat"], cur["pts"][-1]["lon"]) != (lat, lon):
                 cur["pts"].append({"name": name, "lat": lat, "lon": lon})
     return [r for r in out if len(r["pts"]) >= 2], sample
