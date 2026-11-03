@@ -164,6 +164,7 @@ body.printing #printView{position:static;padding:0}
 .fp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}
 @media (max-width:760px){.fp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .fp-grid input{font:500 14px var(--f-body)}
+.undo-bar a{font:700 18px/30px Arial,sans-serif}.undo-bar a.off{color:#bbb;pointer-events:none}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
@@ -959,7 +960,7 @@ function drawMap(rows){
     const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
     const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${hboxSvg(r,s)}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
-    mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state)});
+    mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
     mk.on("add",()=>hboxRotInit(mk,key));if(mk._icon)hboxRotInit(mk,key)});
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
@@ -1035,7 +1036,7 @@ function hboxRotInit(mk,key){const el=mk._icon;if(!el||el._rotInit)return;el._ro
     const b=el.getBoundingClientRect(),cx=b.left+b.width/2,cy=b.top+b.height/2;let deg=0;
     const mv=ev=>{deg=Math.round(norm(Math.atan2(ev.clientX-cx,-(ev.clientY-cy))*R2D)/5)*5;wrap.style.transform=`rotate(${deg}deg)`};
     const up=()=>{h.removeEventListener("pointermove",mv);h.removeEventListener("pointerup",up);h.removeEventListener("pointercancel",up);
-      mk.dragging.enable();map.dragging.enable();state.boxRot=state.boxRot||{};state.boxRot[key]=deg%360;store.set("vfr_current",state)};
+      mk.dragging.enable();map.dragging.enable();state.boxRot=state.boxRot||{};state.boxRot[key]=deg%360;store.set("vfr_current",state);histSched()};
     h.addEventListener("pointermove",mv);h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
 function hboxSvg(r,s){const w=Math.round(92*s),hgt=Math.round(150*s);
   return`<svg width="${w}" height="${hgt}" viewBox="0 0 92 150" aria-hidden="true">
@@ -1085,7 +1086,7 @@ function render(){
   $("#exampleTag").hidden=!state.example;
   qnhFill();if(typeof fillProcSelects==="function")fillProcSelects();
   drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();
-  store.set("vfr_current",state);
+  store.set("vfr_current",state);histSched();
 }
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function markEdited(){if(state.example){state.example=false}}
@@ -1832,6 +1833,23 @@ function sideSet(col){const sd=$(".top>.side"),b=$("#sideToggle");sd.classList.t
   b.textContent=col?"ขยาย ▾":"ยุบ ▴";try{localStorage.setItem("vfr_side",col?"1":"0")}catch(e){}setTimeout(()=>map.invalidateSize(),50)}
 $("#sideToggle").onclick=()=>sideSet(!$(".top>.side").classList.contains("collapsed"));
 try{if(localStorage.getItem("vfr_side")==="1")sideSet(true)}catch(e){}
+/* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
+const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
+function histSnap(){const o={...state};delete o.kbSel;return JSON.stringify(o)}
+function histPush(){HIST.t=null;if(HIST.lock)return;const j=histSnap();if(j===HIST.cur)return;
+  if(HIST.cur!=null){HIST.u.push(HIST.cur);if(HIST.u.length>HIST.MAX)HIST.u.shift();HIST.r.length=0}HIST.cur=j;histBtns()}
+function histSched(){if(HIST.lock)return;clearTimeout(HIST.t);HIST.t=setTimeout(histPush,500)}
+function histApply(j){HIST.lock=true;const kb=state.kbSel;state=JSON.parse(j);state.kbSel=kb;HIST.cur=j;fillForm();render();HIST.lock=false;histBtns()}
+function undo(){if(HIST.t){clearTimeout(HIST.t);histPush()}if(!HIST.u.length){toast("ย้อนกลับไม่ได้อีกแล้ว");return}HIST.r.push(HIST.cur);histApply(HIST.u.pop());toast("ย้อนกลับ ↶")}
+function redo(){if(!HIST.r.length){toast("ไม่มีขั้นที่จะทำซ้ำ");return}HIST.u.push(HIST.cur);histApply(HIST.r.pop());toast("ทำซ้ำ ↷")}
+function histBtns(){const u=document.getElementById("btnUndo"),r=document.getElementById("btnRedo");if(u)u.classList.toggle("off",!HIST.u.length);if(r)r.classList.toggle("off",!HIST.r.length)}
+document.addEventListener("keydown",e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey)return;const t=e.target;
+  if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return; /* ในช่องกรอก ใช้ undo ของช่องนั้นตามปกติ */
+  const k=e.key.toLowerCase();if(k==="z"&&!e.shiftKey){e.preventDefault();undo()}else if(k==="y"||(k==="z"&&e.shiftKey)){e.preventDefault();redo()}});
+const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar undo-bar");
+  d.innerHTML=`<a href="#" id="btnUndo" class="off" title="ย้อนกลับ (Ctrl+Z)" aria-label="ย้อนกลับ">↶</a><a href="#" id="btnRedo" class="off" title="ทำซ้ำ (Ctrl+Y)" aria-label="ทำซ้ำ">↷</a>`;
+  L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
+new CtlUndo().addTo(map);
 /* ---------- boot ---------- */
 function fitPad(){return innerWidth>=1000&&!$(".top>.side").classList.contains("collapsed")&&!document.body.classList.contains("mapfull")&&!document.body.classList.contains("printing")?{paddingTopLeft:[430,40],paddingBottomRight:[60,40]}:{padding:[40,40]}}
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),fitPad());else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
