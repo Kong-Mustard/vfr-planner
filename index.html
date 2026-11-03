@@ -164,6 +164,7 @@ body.printing #printView{position:static;padding:0}
 .fp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px}
 @media (max-width:760px){.fp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .fp-grid input{font:500 14px var(--f-body)}
+.leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
 .hrot{position:absolute;left:50%;top:-22px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:#0a6cff;color:#fff;
@@ -537,7 +538,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <button id="clearAll">ล้างทั้งหมด</button>
       </div>
     </div>
-    <p class="hint">พิกัดพิมพ์ได้ทั้งแบบทศนิยม <code>14.8812, 100.6431</code> หรือ MGRS <code>47PQS 1234 5678</code> · ลากหมุดบนแผนที่เพื่อย้ายจุดได้</p>
+    <p class="hint">ลากกลางเส้นสีชมพูบนแผนที่เพื่อแทรกจุดใหม่ระหว่าง 2 จุดได้ · พิกัดพิมพ์ได้ทั้งแบบทศนิยม <code>14.8812, 100.6431</code> หรือ MGRS <code>47PQS 1234 5678</code> · ลากหมุดบนแผนที่เพื่อย้ายจุดได้</p>
     <div class="tablewrap"><table id="wpTable">
       <thead><tr><th>#</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
@@ -922,10 +923,28 @@ function remMarkers(rows){const step=num(state.remStep,10);if(!step||rows.length
       out.push({rem,lat:a.lat+(b.lat-a.lat)*f,lon:a.lon+(b.lon-a.lon)*f})}
     done+=r.dist});
   return out}
+function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPropagation();
+  const W=state.wps,a=[W[i].lat,W[i].lon],b=[W[i+1].lat,W[i+1].lon],x0=ev.clientX,y0=ev.clientY;let moved=false,ll=null;
+  map.dragging.disable();map.closeTooltip&&routeLayer.eachLayer(l=>l.closeTooltip&&l.closeTooltip());
+  const ghost=L.polyline([a,a,b],{color:"#d6198f",weight:3,dashArray:"6 6",interactive:false}).addTo(map);
+  const dot=L.circleMarker(a,{radius:7,color:"#fff",weight:2,fillColor:"#d6198f",fillOpacity:1,interactive:false});
+  const mv=e=>{if(!moved&&Math.hypot(e.clientX-x0,e.clientY-y0)<6)return;moved=true;ll=map.mouseEventToLatLng(e);
+    ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map)};
+  const up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);
+    map.removeLayer(ghost);if(map.hasLayer(dot))map.removeLayer(dot);setTimeout(()=>map.dragging.enable(),0);
+    if(!moved||!ll)return;
+    W.splice(i+1,0,{name:"WP"+(i+2),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""});
+    const base=state.legs[i]?{...state.legs[i],ate:"",fact:""}:blankLeg();state.legs.splice(i+1,0,base);
+    window._suppressClick=Date.now();markEdited();render();toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
+  document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
 function drawMap(rows){
   routeLayer.clearLayers();
   const pts=state.wps.map(w=>[w.lat,w.lon]);
-  if(pts.length>1)L.polyline(pts,{color:"#d6198f",weight:4,opacity:.95}).addTo(routeLayer);
+  if(pts.length>1)L.polyline(pts,{color:"#d6198f",weight:4,opacity:.95,interactive:false}).addTo(routeLayer);
+  /* ลากกลางเส้นเพื่อแทรกจุด (แบบ SkyVector): เส้นโปร่งใสกว้างๆ ไว้จับง่าย */
+  for(let i=0;i<pts.length-1;i++){const hit=L.polyline([pts[i],pts[i+1]],{color:"#d6198f",weight:22,opacity:0,bubblingMouseEvents:false,className:"leghit"}).addTo(routeLayer);
+    hit.bindTooltip("ลากเพื่อแทรกจุด",{sticky:true,direction:"top",offset:[0,-8]});
+    if(hit._path)hit._path.addEventListener("pointerdown",ev=>legDragStart(ev,i))}
   state.wps.forEach((w,i)=>{
     const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${w.name||"WP"}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
@@ -946,7 +965,7 @@ function drawMap(rows){
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
-map.on("click",e=>{if(pePick!=null){peTakePick(e.latlng);return}if(!addMode||(typeof pick!=="undefined"&&pick))return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
+map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(!addMode||(typeof pick!=="undefined"&&pick))return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
 
 /* ---------- compute ---------- */
 function compute(){
