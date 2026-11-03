@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-03T18:10Z",
+"fetched": "2026-11-03T19:19Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -882,15 +882,6 @@
 "plain": " ",
 "start": "11/03/2026 1600",
 "end": "11/03/2026 2100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4360/26",
-"icao": "A4360/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611031230 C) 2611031900\r\nE) RWY 02R/20L CLSD EXC FOR CROSSING OPS\r\n   RMK/CROSSING OPS WILL BE ESTABLISHED AT ONE OF THE FLW LOCATIONS:\r\n   -NORTHERN INT: CROSS RWY 02R/20L BTN TWY W AND TWY E3\r\n   -SOUTHERN INT: CROSS RWY 02R/20L BTN TWY Z AND TWY E17",
-"plain": " ",
-"start": "11/03/2026 1230",
-"end": "11/03/2026 1900",
 "keyword": "INTERNATIONAL"
 },
 {
