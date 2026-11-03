@@ -519,13 +519,12 @@ def main():
     except Exception as e:
         data["errors"].append(f"ENR 4.4: {e}")
     # ENR 3.x ATS routes (airways) — ใช้วาดเส้นแบบ enroute chart
-    data["airways"], data["enr3_sample"] = [], {}
+    data["airways"] = []
     for pg in ("3.1", "3.2", "3.3", "3.4"):
         try:
             raw = get(root + f"VT-ENR-{pg}-en-GB.html")
             aw, sample = parse_enr3(raw, pg)
             data["airways"] += aw
-            data["enr3_sample"][pg] = sample
             print(f"ENR {pg} เส้นทาง {len(aw)} เส้น")
         except Exception as e:
             data["errors"].append(f"ENR {pg}: {e}")
