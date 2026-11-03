@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-03T10:16Z",
+"fetched": "2026-11-03T11:16Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -873,15 +873,6 @@
 "plain": " ",
 "start": "11/03/2026 1100",
 "end": "11/03/2026 1500",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7258/26",
-"icao": "J7258/26 NOTAMN\r\nQ) VTBB/QRRCA/IV/BO/W/000/060/1239N10059E001\r\nA) VTBB B) 2610302300 C) 2611031100\r\nE) VT R79 ACT\r\nF) GND G) 6000FT AGL",
-"plain": " ",
-"start": "10/30/2026 2300",
-"end": "11/03/2026 1100",
 "keyword": "INTERNATIONAL"
 },
 {
