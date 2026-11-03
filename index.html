@@ -421,13 +421,17 @@ dialog.fplprev::backdrop{background:rgba(17,24,39,.55)}
 dialog.fplprev iframe{flex:1;width:100%;border:0;background:#525659}
 dialog.fpl .fpl-body{overflow:auto;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:14px 18px;flex:1;min-height:0}
 .fpl-sec{border:1px solid var(--line);border-radius:14px;padding:10px 12px}.fpl-sec>h3{margin:0 0 8px;font-size:15px;color:var(--accent)}
-.fpl-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:flex-end}
+.fpl-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:flex-start}
 .fpl-f{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted);min-width:0}
 .fpl-f input,.fpl-f select,.fpl-f textarea{font:600 16px var(--f-mono);text-transform:uppercase;padding:7px 9px;border-radius:10px;width:100%;box-sizing:border-box}
 .fpl-f textarea{resize:vertical;min-height:52px;color:var(--ink);background:var(--input);border:1px solid var(--line)}
 .fpl-f.req.empty input,.fpl-f.req.empty textarea{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 7%,var(--input))}
 .fpl-f.auto input,.fpl-f.auto textarea{border-color:var(--good);background:color-mix(in srgb,var(--good) 8%,var(--input))}
-.fpl-lab{display:flex;gap:4px 6px;align-items:center;flex-wrap:wrap;min-height:20px}
+.fpl-h{display:block;font-size:11.5px;line-height:1.35;color:#9ca3af;font-weight:400;margin-top:2px;max-width:100%}
+.fpl-body.nohint .fpl-h{display:none!important}
+dialog.fpl ::placeholder{color:#c4c9d1;font-weight:400;opacity:1}
+dialog.fpl textarea[data-fk="filed"]::placeholder{font-size:13px}
+.fpl-lab{display:flex;gap:6px;align-items:center;white-space:nowrap;min-height:20px}
 .fpl-auto{font-size:11px;font-weight:700;color:#fff;background:var(--good);border-radius:6px;padding:0 5px}
 .fpl-rst{font-size:11px;font-weight:700;color:#fff;background:var(--warn);border:0;border-radius:6px;padding:1px 6px;cursor:pointer;min-height:0}
 .fpl-x{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -1059,7 +1063,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 </dialog>
 <dialog id="fplDlg" class="kb fpl" aria-labelledby="fplTitle">
   <div class="kb-head"><h2 id="fplTitle">📄 ICAO Flight Plan</h2>
-    <span class="hint">ช่องสีเขียว <span class="fpl-auto">อัตโนมัติ</span> ดึงจากหน้าวางแผนและอัปเดตตามแผน · แก้ได้ทุกช่อง (แก้แล้วกด ↺ เพื่อกลับไปใช้ค่าจากแผน) · พิมพ์ภาษาอังกฤษเท่านั้น</span></div>
+    <span class="hint">ช่องสีเขียว <span class="fpl-auto">อัตโนมัติ</span> ดึงจากหน้าวางแผน · แก้ได้ทุกช่อง (↺ กลับไปใช้ค่าจากแผน) · ตัวอักษรจาง = ตัวอย่าง ยังไม่ได้กรอก</span><button id="fplHintT" class="mini" type="button">ซ่อนคำอธิบาย</button></div>
   <div id="fplBody" class="kb-body fpl-body"></div>
   <div class="fpl-msg"><div class="fpl-msg-h"><b>ข้อความ FPL</b><span id="fplWarn" class="hint"></span></div><pre id="fplMsg"></pre></div>
   <div class="kb-foot"><span class="hint">ข้อมูลประจำ (ID เครื่อง, PIC, ผู้ยื่น ฯลฯ) จำไว้ในเครื่องนี้ใช้ครั้งถัดไป</span>
@@ -1985,12 +1989,27 @@ $("#kbGo").onclick=()=>{$("#kbDlg").close();kneePrint()};
 /* ---------- ICAO Flight Plan (FAA Form 7233-4) → PDF สำหรับยื่นหอบังคับการบิน ----------
    ช่องที่ sync กับหน้าวางแผน: ใช้ค่าอัตโนมัติจนกว่าผู้ใช้จะแก้เอง (ovr) · ช่องประจำจำไว้ใน vfr_fpl_def */
 const FPL_SYNC=["dep","eobt","speed","level","route","dest","eet","dof","endur"];
-const FPL_DEF0={rules:"V",tof:"M",type:"H60",wake:"M",equip:"S",surv:"G",altn:"ZZZZ",color:"GREEN",utc7:true};
-const FPL_BOX=[["r","R/ วิทยุฉุกเฉิน",[["rU","UHF"],["rV","VHF"],["rE","ELT"]]],
-  ["s","S/ อุปกรณ์ยังชีพ",[["sAll","S"],"/",["sP","P"],["sD","D"],["sM","M"],["sJ","J"]]],
-  ["j","J/ เสื้อชูชีพ",[["jAll","J"],"/",["jL","L"],["jF","F"],["jU","U"],["jV","V"]]],
-  ["d","D/ แพยาง",[["dAll","D"],"/",["dCover","C (Cover)"]]],["n","N/ Remarks",[["nX","N"]]]];
-function fplData(){state.fpl=state.fpl||{v:{...FPL_DEF0,...(store.get("vfr_fpl_def")||{})},ovr:{}};state.fpl.v=state.fpl.v||{};state.fpl.ovr=state.fpl.ovr||{};return state.fpl}
+/* ค่าเริ่มต้นตามแบบฟอร์มตัวอย่างของหน่วย (ช่องที่เปลี่ยนทุกเที่ยวเป็นตัวอย่างจางๆ ใน placeholder) */
+const FPL_DEF0={rules:"V",tof:"M",type:"H60",wake:"M",equip:"S",surv:"G",altn:"ZZZZ",color:"GREEN",utc7:true,
+  sAll:true,sP:true,sD:true,sJ:true,jAll:true,jL:true,jF:true,jU:true,jV:true,dAll:true,dCover:true,nX:true};
+/* คำอธิบายสั้นๆ ใต้ช่อง (จากคู่มือ AEROTHAI และกองสนามบิน ศบบ.) */
+const FPL_HINT={addr:"ผู้รับข่าว (AFTN 8 ตัว)",filing:"วันเวลาที่ส่ง DDHHMM",orig:"สถานีต้นทาง 8 ตัว",
+  acid:"นามเรียกขาน ไม่เกิน 7 ตัว · ชื่อเต็มใส่ข้อ 18",rules:"V=VFR I=IFR Y=IFR→VFR Z=VFR→IFR",tof:"M=ทหาร G=ส่วนบุคคล S/N=สายการบิน X=อื่นๆ",
+  num:"จำนวน ฮ. (บินหมู่ >1 ลำ)",type:"แบบ ฮ. ตาม ICAO Doc 8643",wake:"L ≤7 ตัน · M 7–136 ตัน · H >136 ตัน",
+  equip:"วิทยุ/เครื่องช่วยนำร่อง S=VHF·VOR·ILS",surv:"ทรานสปอนเดอร์/ADS-B (N=ไม่มี)",
+  dep:"ICAO 4 ตัว · ไม่มีรหัส=ZZZZ (+DEP/ ข้อ 18)",eobt:"เวลาออกโดยประมาณ UTC · ยื่นก่อน ≥1 ชม.",speed:"N=นอต + 4 หลัก",level:"A=ร้อยฟุต (A010=1,000 ft) หรือ VFR",
+  route:"VFR ไม่ตาม ATS route: DCT + จุดที่ผ่าน",dest:"ICAO 4 ตัว · ไม่มีรหัส=ZZZZ (+DEST/)",eet:"เวลาบินรวมถึงปลายทาง HHMM",
+  altn:"สนามสำรอง · ไม่มีรหัส=ZZZZ (+ALTN/)",altn2:"สนามสำรองที่ 2",dof:"วันที่บิน YYMMDD (ตาม UTC)",
+  o18:"เรียง: STS/ PBN/ … REG/ … ALTN/ RMK/ · ไม่มีข้อมูลใส่ 0",endur:"น้ำมันบินได้นาน HHMM",pob:"จำนวนคนบนเครื่องทั้งหมด 3 หลัก",
+  dNum:"จำนวนแพ",dCap:"จุคนรวม",dColor:"สีแพ",color:"สีและเครื่องหมายของ ฮ.",rmk:"อุปกรณ์ยังชีพอื่น/หมายเหตุ",
+  pic:"ชื่อนักบินผู้บังคับอากาศยาน",filed:"ผู้จัดทำ/ผู้ยื่นแผน",accepted:"เจ้าหน้าที่ผู้รับแผนลงนาม",addl:"เช่น SQ (ทบ. ใช้ 11XX)"};
+const FPL_BOX=[["r","R/ วิทยุฉุกเฉิน",[["rU","UHF"],["rV","VHF"],["rE","ELT"]],"ขีดฆ่าวิทยุที่ไม่มี"],
+  ["s","S/ อุปกรณ์ยังชีพ",[["sAll","S"],"/",["sP","P"],["sD","D"],["sM","M"],["sJ","J"]],"S=ไม่มีเลย · P ขั้วโลก D ทะเลทราย M ทะเล J ป่า"],
+  ["j","J/ เสื้อชูชีพ",[["jAll","J"],"/",["jL","L"],["jF","F"],["jU","U"],["jV","V"]],"J=ไม่มี · L ไฟ F สีเรืองแสง U/V วิทยุ"],
+  ["d","D/ แพยาง",[["dAll","D"],"/",["dCover","C (Cover)"]],"ไม่มีแพ ขีดฆ่า D และ C · C=มีผ้าคลุม"],["n","N/ Remarks",[["nX","N"]],"ไม่มีหมายเหตุ ขีดฆ่า N"]];
+function fplData(){state.fpl=state.fpl||{v:{...FPL_DEF0,...(store.get("vfr_fpl_def")||{})},ovr:{}};state.fpl.v=state.fpl.v||{};state.fpl.ovr=state.fpl.ovr||{};
+  for(const k in FPL_DEF0)if(state.fpl.v[k]===undefined)state.fpl.v[k]=FPL_DEF0[k];return state.fpl}
+let fplHintOn=(()=>{try{return localStorage.getItem("vfr_fpl_hint")!=="0"}catch(e){return true}})();
 const pad=(n,l)=>String(Math.max(0,Math.round(n))).padStart(l,"0");
 function fplCoord(w){const f=(v,d,h)=>{const a=Math.abs(v),D=Math.floor(a);let M=Math.round((a-D)*60),DD=D;if(M===60){M=0;DD++}return pad(DD,d)+pad(M,2)+h};return f(w.lat,2,w.lat>=0?"N":"S")+f(w.lon,3,w.lon>=0?"E":"W")}
 function fplPt(w){const n=String(w.name||"").toUpperCase().trim();
@@ -2008,11 +2027,11 @@ function fplAuto(){const res=compute(),W=state.wps,F=fplData().v,a={};if(W.lengt
   a.eet=res.rows.length?pad(Math.floor(Math.round(res.cumMin)/60),2)+pad(Math.round(res.cumMin)%60,2):"";
   const fu=num(state.fuel0,0),bu=num(state.burn,0);a.endur=fu>0&&bu>0?pad(Math.floor(fu/bu/60),2)+pad(Math.floor(fu/bu)%60,2):"";return a}
 function fplVal(k){const D=fplData();return FPL_SYNC.includes(k)&&!D.ovr[k]?(fplAuto()[k]||""):(D.v[k]??"")}
-function fplItem18(){const g=fplVal,W=state.wps,p=[];if(g("dof"))p.push("DOF/"+g("dof"));
+function fplItem18(){const g=fplVal,W=state.wps,p=[];
   const asc=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9 ]/g,"").trim();
   if(g("dep")==="ZZZZ"&&W[0])p.push("DEP/"+[asc(W[0].name),fplCoord(W[0])].filter(Boolean).join(" "));
   if(g("dest")==="ZZZZ"&&W.length>1){const w=W[W.length-1];p.push("DEST/"+[asc(w.name),fplCoord(w)].filter(Boolean).join(" "))}
-  if(g("o18"))p.push(g("o18"));return p.join(" ").toUpperCase()}
+  if(g("dof"))p.push("DOF/"+g("dof"));if(g("o18"))p.push(g("o18"));return p.join(" ").toUpperCase()}
 function fplMsg(){const g=k=>String(fplVal(k)||"").toUpperCase();
   return`(FPL-${g("acid")}-${g("rules")}${g("tof")}\n-${g("num")}${g("type")}/${g("wake")}-${g("equip")}/${g("surv")}\n-${g("dep")}${g("eobt")}\n-${g("speed")}${g("level")} ${g("route")}\n-${g("dest")}${g("eet")} ${g("altn")}${g("altn2")?" "+g("altn2"):""}\n-${fplItem18()||"0"})`}
 const FPL_REQ=["acid","type","dep","eobt","speed","level","route","dest","eet","pob","endur","pic"];
@@ -2022,23 +2041,24 @@ function fplField(k,l,o={}){const D=fplData(),sync=FPL_SYNC.includes(k),auto=syn
   const ctl=o.sel?`<select data-fk="${k}">${o.sel.map(x=>`<option ${x===v?"selected":""}>${x}</option>`).join("")}</select>`
     :o.area?`<textarea data-fk="${k}" rows="${o.area}" placeholder="${esc(o.ph||"")}">${esc(v)}</textarea>`
     :`<input data-fk="${k}" value="${esc(v)}" ${o.max?`maxlength="${o.max}"`:""} placeholder="${esc(o.ph||"")}" autocomplete="off">`;
-  return`<label class="${cls}" ${st}><span class="fpl-lab">${l} ${tag}</span>${ctl}</label>`}
-function fplBoxes(){const v=fplData().v;return FPL_BOX.map(([id,l,items])=>`<div class="fpl-f" style="flex:0 1 auto"><span class="fpl-lab">${l}</span><div class="fpl-x">${items.map(it=>typeof it==="string"?`<span class="sep">${it}</span>`:`<button type="button" data-fx="${it[0]}" class="${v[it[0]]?"on":""}" aria-pressed="${!!v[it[0]]}">${it[1]}</button>`).join("")}</div></div>`).join("")}
+  const h=FPL_HINT[k];return`<label class="${cls}" ${st}><span class="fpl-lab">${l} ${tag}</span>${ctl}${h?`<small class="fpl-h" title="${esc(h)}">${esc(h)}</small>`:""}</label>`}
+function fplBoxes(){const v=fplData().v;return FPL_BOX.map(([id,l,items,h])=>`<div class="fpl-f" style="flex:0 1 auto"><span class="fpl-lab">${l}</span><div class="fpl-x">${items.map(it=>typeof it==="string"?`<span class="sep">${it}</span>`:`<button type="button" data-fx="${it[0]}" class="${v[it[0]]?"on":""}" aria-pressed="${!!v[it[0]]}">${it[1]}</button>`).join("")}</div>${h?`<small class="fpl-h">${esc(h)}</small>`:""}</div>`).join("")}
 function fplRender(){const b=$("#fplBody");if(!b)return;const f=fplField;
+  b.classList.toggle("nohint",!fplHintOn);$("#fplHintT").textContent=fplHintOn?"ซ่อนคำอธิบาย":"แสดงคำอธิบาย";
   b.innerHTML=`
-  <div class="fpl-sec"><h3>หัวแบบฟอร์ม (ถ้ามี)</h3><div class="fpl-row">${f("addr","Addressee(s)",{min:"260px",ph:"VTBBZQZX"})}${f("filing","Filing time",{w:"120px",max:6,ph:"DDHHMM"})}${f("orig","Originator",{w:"150px",max:8})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 7–10 · อากาศยาน</h3><div class="fpl-row">${f("acid","7 Aircraft ID",{w:"140px",max:7,ph:"BHK15"})}${f("rules","8 Flight rules",{w:"110px",sel:["V","I","Y","Z"]})}${f("tof","Type of flight",{w:"110px",sel:["M","G","S","N","X"]})}${f("num","9 Number",{w:"90px",max:2})}${f("type","Type of aircraft",{w:"120px",max:4})}${f("wake","Wake",{w:"90px",sel:["L","M","H"]})}${f("equip","10 Equipment",{w:"130px"})}${f("surv","/ Surveillance",{w:"120px"})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 13–16 · เส้นทาง</h3><label style="display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start;text-align:left;margin:-2px 0 10px;font-size:14px;color:var(--muted)"><input type="checkbox" data-fchk="utc7" style="width:20px;height:20px;flex:0 0 auto;margin:0" ${fplData().v.utc7?"checked":""}> เวลาในแผนเป็นเวลาไทย → แปลงเป็น UTC (−7 ชม.) ในช่อง Time</label>
-    <div class="fpl-row">${f("dep","13 Departure",{w:"120px",max:4})}${f("eobt","Time (UTC)",{w:"120px",max:4,ph:"HHMM"})}${f("speed","15 Speed",{w:"120px",max:5,ph:"N0120"})}${f("level","Level",{w:"110px",max:5,ph:"A010 / VFR"})}${f("dest","16 Destination",{w:"130px",max:4})}${f("eet","Total EET",{w:"110px",max:4,ph:"HHMM"})}${f("altn","ALTN",{w:"100px",max:4})}${f("altn2","2nd ALTN",{w:"100px",max:4})}</div>
+  <div class="fpl-sec"><h3>หัวแบบฟอร์ม <small class="fpl-h" style="display:inline">เจ้าหน้าที่ผู้อนุมัติแผนเป็นผู้กรอก</small></h3><div class="fpl-row">${f("addr","Addressee(s)",{min:"260px",ph:"VTBBZQZX"})}${f("filing","Filing time",{w:"120px",max:6,ph:"DDHHMM"})}${f("orig","Originator",{w:"150px",max:8})}</div></div>
+  <div class="fpl-sec"><h3>ข้อ 7–10 · นามเรียกขาน กฎการบิน แบบ ฮ. อุปกรณ์</h3><div class="fpl-row">${f("acid","7 Aircraft ID",{w:"160px",max:7,ph:"BHK15"})}${f("rules","8 Flight rules",{w:"130px",sel:["V","I","Y","Z"]})}${f("tof","Type of flight",{w:"150px",sel:["M","G","S","N","X"]})}${f("num","9 Number",{w:"110px",max:2})}${f("type","Type of aircraft",{w:"140px",max:4})}${f("wake","Wake",{w:"130px",sel:["L","M","H"]})}${f("equip","10 Equipment",{w:"150px"})}${f("surv","/ Surveillance",{w:"160px"})}</div></div>
+  <div class="fpl-sec"><h3>ข้อ 13–16 · ต้นทาง เส้นทาง ปลายทาง</h3><label style="display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start;text-align:left;margin:-2px 0 10px;font-size:14px;color:var(--muted)"><input type="checkbox" data-fchk="utc7" style="width:20px;height:20px;flex:0 0 auto;margin:0" ${fplData().v.utc7?"checked":""}> เวลาในแผนเป็นเวลาไทย → แปลงเป็น UTC (−7 ชม.) ในช่อง Time</label>
+    <div class="fpl-row">${f("dep","13 Departure",{w:"160px",max:4})}${f("eobt","Time (UTC)",{w:"160px",max:4,ph:"HHMM"})}${f("speed","15 Speed",{w:"150px",max:5,ph:"N0150"})}${f("level","Level",{w:"150px",max:5,ph:"A010 / VFR"})}${f("dest","16 Destination",{w:"170px",max:4})}${f("eet","Total EET",{w:"150px",max:4,ph:"HHMM"})}${f("altn","ALTN",{w:"150px",max:4})}${f("altn2","2nd ALTN",{w:"130px",max:4})}</div>
     <div class="fpl-row" style="margin-top:8px">${f("route","Route",{area:2,min:"100%"})}</div></div>
-  <div class="fpl-sec"><h3>ข้อ 18 · ข้อมูลอื่น</h3><div class="fpl-row">${f("dof","DOF (YYMMDD)",{w:"140px",max:6})}${f("o18","ข้อความเพิ่ม",{area:2,min:"320px",ph:"ALTN/SAFETY AREA RMK/VFR FLIGHT TRAINING"})}</div>
+  <div class="fpl-sec"><h3>ข้อ 18 · ข้อมูลอื่นๆ</h3><div class="fpl-row">${f("dof","DOF (YYMMDD)",{w:"160px",max:6})}${f("o18","ข้อความเพิ่ม",{area:2,min:"320px",ph:"ALTN/SAFETY AREA RMK/VFR FLIGHT TRAINING"})}</div>
     <p class="hint" style="margin:6px 0 0">ข้อ 18 ที่จะพิมพ์: <b id="fpl18">${esc(fplItem18())}</b></p></div>
-  <div class="fpl-sec"><h3>ข้อ 19 · ข้อมูลเพิ่มเติม <span class="hint" style="font-weight:500">กดตัวอักษรเพื่อขีดฆ่า (= ไม่มี)</span></h3>
-    <div class="fpl-row">${f("endur","E/ Endurance (HHMM)",{w:"170px",max:4})}${f("pob","P/ Persons on board",{w:"160px",max:3,ph:"004"})}</div>
+  <div class="fpl-sec"><h3>ข้อ 19 · ข้อมูลเพิ่มเติม <small class="fpl-h" style="display:inline">ไม่ส่งในข่าว FPL · กดตัวอักษรเพื่อขีดฆ่า (= ไม่มี)</small></h3>
+    <div class="fpl-row">${f("endur","E/ Endurance (HHMM)",{w:"170px",max:4})}${f("pob","P/ Persons on board",{w:"170px",max:3,ph:"004"})}</div>
     <div class="fpl-row" style="margin-top:10px">${fplBoxes()}</div>
     <div class="fpl-row" style="margin-top:10px">${f("dNum","D/ จำนวน",{w:"90px",max:2})}${f("dCap","ความจุ",{w:"90px",max:3})}${f("dColor","สีแพ",{w:"160px"})}${f("color","A/ สีและเครื่องหมายอากาศยาน",{min:"220px"})}${f("rmk","N/ ข้อความ Remarks",{min:"220px"})}</div>
-    <div class="fpl-row" style="margin-top:10px">${f("pic","C/ Pilot-in-command",{min:"260px",ph:"LT.COL.XXXX XXXX"})}</div>
-    <div class="fpl-row" style="margin-top:10px">${f("filed","Filed by",{area:2,min:"200px"})}${f("accepted","Accepted by",{area:2,min:"160px"})}${f("addl","Additional information",{area:2,min:"200px",ph:"SQ 1115"})}</div></div>`;
+    <div class="fpl-row" style="margin-top:10px">${f("pic","C/ Pilot-in-command",{min:"260px",ph:"LT.COL.XXXXX XXXXX"})}</div>
+    <div class="fpl-row" style="margin-top:10px">${f("filed","Filed by",{area:2,min:"200px",ph:"ชื่อผู้จัดทำ\nเบอร์โทร"})}${f("accepted","Accepted by",{area:2,min:"160px"})}${f("addl","Additional information",{area:2,min:"200px",ph:"SP33/SP08/SP06\nSQ 1115"})}</div></div>`;
   fplMsgRender()}
 function fplMsgRender(){const m=$("#fplMsg");if(!m)return;m.textContent=fplMsg();const e=$("#fpl18");if(e)e.textContent=fplItem18();
   const miss=FPL_REQ.filter(k=>!String(fplVal(k)).trim());$("#fplWarn").innerHTML=miss.length?`<span style="color:var(--bad);font-weight:700">⚠ ยังไม่กรอก ${miss.length} ช่องหลัก</span>`:'<span class="ok" style="color:var(--good);font-weight:700">✓ ช่องหลักครบ</span>'}
@@ -2056,6 +2076,7 @@ $("#fplBody").addEventListener("click",e=>{const r=e.target.closest("[data-frst]
   if(x){const D=fplData(),k=x.dataset.fx;D.v[k]=!D.v[k];fplSaveDef(k);store.set("vfr_current",state);x.classList.toggle("on",D.v[k]);x.setAttribute("aria-pressed",D.v[k])}});
 $("#fplOpen").onclick=()=>{if(state.wps.length<2){toast("ต้องมีอย่างน้อย 2 จุด");return}fplRender();$("#fplDlg").showModal()};
 $("#fplClose").onclick=()=>$("#fplDlg").close();
+$("#fplHintT").onclick=()=>{fplHintOn=!fplHintOn;try{localStorage.setItem("vfr_fpl_hint",fplHintOn?"1":"0")}catch(e){}$("#fplBody").classList.toggle("nohint",!fplHintOn);$("#fplHintT").textContent=fplHintOn?"ซ่อนคำอธิบาย":"แสดงคำอธิบาย"};
 $("#fplCopy").onclick=()=>{(navigator.clipboard?navigator.clipboard.writeText(fplMsg()):Promise.reject()).then(()=>toast("คัดลอกข้อความ FPL แล้ว"),()=>toast("คัดลอกไม่ได้"))};
 function loadLib(src,g){return new Promise((ok,no)=>{if(window[g])return ok();const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
 /* ชื่อช่องในไฟล์ฟอร์ม (fpl_template.pdf) */
