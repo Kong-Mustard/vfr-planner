@@ -1,0 +1,23 @@
+# ดึง NOTAM ของสนามในไทยทุก 1 ชั่วโมง → notam.json (แอปโหลดเองในแท็บ NOTAM)
+name: Update NOTAM
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+  push:
+    paths: [notam_update.py, .github/workflows/notam.yml]
+permissions:
+  contents: write
+concurrency: { group: data-commit, cancel-in-progress: false }
+jobs:
+  notam:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 notam_update.py
+      - name: Commit
+        run: |
+          git config user.name "eaip-bot"; git config user.email "eaip-bot@users.noreply.github.com"
+          git add notam.json
+          git diff --cached --quiet || git commit -m "อัปเดต NOTAM"
+          git pull --rebase; git push
