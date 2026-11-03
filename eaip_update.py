@@ -250,6 +250,9 @@ def parse_ad2(icao, html, url=""):
         vm = re.search(r"Vertical limits?\s*(.{0,80}?)(?:\b3\s*\.?\s*Airspace|Airspace class|$)", t17, re.I | re.S)
         cm = re.search(r"Airspace class(?:ification)?\s*:?\s*([A-G])\b", t17, re.I)
         nm = re.search(r"\b([A-Z][A-Z ]{2,30}\s(?:CTR|ATZ|CTA|TMA))\b", t17)
+        kind = re.search(r"\((CTR|ATZ|CTA|TMA)\)|\b(CTR|ATZ)\b", t17)
+        if not nm and kind:
+            nm = re.match(r"(.*)", icao + " " + (kind.group(1) or kind.group(2)))
         if poly and len(poly) >= 4:
             ap["airspace"] = {"name": nm.group(1) if nm else icao + " CTR", "poly": [[round(a, 5), round(b, 5)] for a, b in poly],
                               "approx": approx, "vert": clean(vm.group(1)) if vm else "", "cls": cm.group(1) if cm else "", "text": clean(lat_txt)[:400]}
@@ -339,7 +342,7 @@ def parse_geom(g):
         fr = re.search(r"from\s*(\d+)\s*°?\s*to\s*(\d+)", g[m.end():])
         b1, b2 = (float(fr.group(1)), float(fr.group(2))) if fr else (0, 180)
         return [c] + _arc(c, r, b1, b2, True) + [c], approx
-    m = re.search(r"circle\s+(?:of\s+)?(\d+(?:\.\d+)?)\s*NM radius", g, re.I)
+    m = re.search(r"circle\s+(?:of\s+)?(\d+(?:\.\d+)?)\s*NM radius", g, re.I) or re.search(r"circle\s*,?\s*(?:with\s+)?radius\s*(?:of\s*)?(\d+(?:\.\d+)?)\s*NM", g, re.I)
     if m and "arc" not in g.lower():
         c = _c(C_RE.search(g, m.end())); r = float(m.group(1))
         return _arc(c, r, 0, 360, True, 10), approx
@@ -430,7 +433,7 @@ def parse_enr3(html, page):
                     out.append(cur)
                     pend = ""
                 else:
-                    pm = re.search(r"\(([A-Z]{2,5})\)|\b([A-Z]{5})\b", line)
+                    pm = re.search(r"\(\s*([A-Z]{2,5})\s*\)|\b([A-Z]{5})\b", line)
                     if pm and len(line) < 80:
                         pend = pm.group(1) or pm.group(2)
                 continue
@@ -438,7 +441,8 @@ def parse_enr3(html, page):
                 continue
             m = COORD.search(line) or C_RE.search(line)
             name = re.sub(r"[▲△▼◆◇●○*]", " ", line[:m.start()] if m else line)
-            idm = re.search(r"\(([A-Z]{2,5})\)", name)
+            name = re.sub(r"unknown reference:\s*\S+|[∆Δ]", " ", name)
+            idm = re.search(r"\(\s*([A-Z]{2,5})\s*\)", name)
             name = (idm.group(1) if idm else clean(name))[:30] or pend
             pend = ""
             if not cur["pts"] or (cur["pts"][-1]["lat"], cur["pts"][-1]["lon"]) != (lat, lon):
