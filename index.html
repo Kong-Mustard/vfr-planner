@@ -753,7 +753,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
    <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto"> show hidden</label>
   </div>
   <div id="ntList"></div>
-  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · วงสีเหลือง/แดง = พื้นที่ NOTAM (จาก Q-line หรือพิกัดในข้อความ) · แตะเพื่อดูรายละเอียด</p></div>
+  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · วงสีเหลือง = NOTAM ตามแนวเส้นทาง (แดง = เส้นทางตัดผ่าน) · เส้นเทาบาง = NOTAM อื่นที่มีผลช่วงเวลาบิน · เปิด show hidden เพื่อดูที่ไม่อยู่ในช่วงเวลาบิน (เส้นประ) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
  <details class="card section custbox" id="ntPasteBox">
   <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
@@ -1518,7 +1518,7 @@ function ntFromLeaflet(o){const out=[];(o.items||[]).forEach((it,i)=>{const t=St
   n.src="AEROTHAI";out.push(n)});return out}
 function ntReadPaste(txt){const t=String(txt||"").trim();if(t.startsWith("{")){try{const o=JSON.parse(t);if(o&&o.items)return ntFromLeaflet(o)}catch(e){}}return ntParse(t)}
 function ntAll(){const seen=new Set(),out=[];const add=n=>{const k=n.loc+"|"+n.id;if(seen.has(k))return;seen.add(k);out.push(n)};
-  (NT_AUTO||[]).forEach(add);NT.forEach(n=>add({...n,manual:true}));return out}
+  NT.forEach(n=>add({...n,manual:true}));(NT_AUTO||[]).forEach(add);return out}
 function ntFlightWindow(){const res=compute(),date=state.date||new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
   const t0=new Date(`${date}T00:00:00+07:00`);t0.setMinutes(t0.getMinutes()+res.dep);const t1=new Date(t0.getTime()+(res.cumMin||60)*60000);return[t0,t1]}
 function ntRouteDist(pt){const W=state.wps;if(W.length<2)return W.length?gcDistNm(pt,[W[0].lat,W[0].lon]):1e9;let d=1e9;for(let i=0;i<W.length-1;i++)d=Math.min(d,distToSeg(pt,[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]).d);return d}
@@ -1572,7 +1572,8 @@ function ntDrawMap(E){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileL
   ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
   if(pts.length>1)L.polyline(pts,{color:"#ff3d8b",weight:3}).addTo(ntMapLayer);
   W.forEach((w,i)=>{if(i===0||i===W.length-1)L.marker([w.lat,w.lon],{icon:L.divIcon({className:"",html:'<div class="ntpin"></div>',iconSize:[22,30],iconAnchor:[11,30]})}).bindTooltip(esc(w.name),{permanent:true,direction:"right",offset:[8,-18]}).addTo(ntMapLayer)});
-  (E||ntEval()).filter(n=>n.active&&($("#ntShowHidden").checked||n.inBuf||n.ap)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,{color:n.hit?"#ff5a5a":"#ffd400",weight:2,fill:false,dashArray:P.src==="Q"?"6 4":null})
+  const sh=$("#ntShowHidden").checked,rel=n=>n.inBuf||n.ap;
+  (E||ntEval()).filter(n=>n.active||sh).sort((a,b)=>rel(a)-rel(b)).forEach(n=>n.polys.forEach(P=>L.polygon(P.p,rel(n)&&n.active?{color:n.hit?"#ff5a5a":"#ffd400",weight:2.5,fillColor:n.hit?"#ff5a5a":"#ffd400",fillOpacity:.12,dashArray:P.src==="Q"?"6 4":null}:{color:"#9aa4b2",weight:1,fillOpacity:.04,dashArray:n.active?null:"3 4"})
     .bindPopup(`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> ${esc(n.id)}<br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,300))}`).addTo(ntMapLayer)));
   setTimeout(()=>{ntMap.invalidateSize();if(pts.length>1)ntMap.fitBounds(pts,{padding:[30,30]});else ntMap.setView([14.5,100.8],6)},50)}
 const ntSeg=(on,off)=>{$(on).classList.add("on");$(off).classList.remove("on")};
@@ -1585,7 +1586,8 @@ $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM
 $("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
 $("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
 $("#ntParse").onclick=()=>{NT=ntReadPaste($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
-  ntRender();toast(NT.length?`อ่านได้ ${NT.length} NOTAM`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
+  ntRender();const E=ntEval().filter(n=>n.manual),a=E.filter(n=>n.active).length,r=E.filter(n=>n.active&&(n.inBuf||n.ap)).length;
+  toast(NT.length?`อ่านได้ ${NT.length} NOTAM · มีผลช่วงเวลาบิน ${a} · ตามแนวเส้นทาง ${r}`:"ไม่พบรูปแบบ NOTAM (ต้องมี เช่น B1234/26 NOTAMN)")};
 $("#ntClear").onclick=()=>{$("#ntText").value="";NT=[];try{localStorage.removeItem("vfr_notam")}catch(e){}ntRender()};
 try{const t=localStorage.getItem("vfr_notam");if(t){$("#ntText").value=t;NT=ntReadPaste(t)}}catch(e){}
 ntLoadAuto();
