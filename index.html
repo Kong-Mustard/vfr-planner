@@ -754,7 +754,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="card section">
    <div class="sechead"><h2 class="hd hd-indigo">Waypoint มาตรฐานหน่วย</h2>
     <div class="btns"><button id="dbAdd" class="primary">＋ เพิ่มแถว</button><button id="dbExport">Export</button>
-     <button type="button" onclick="document.getElementById('dbImport').click()">Import ไฟล์</button><input id="dbImport" type="file" accept=".json,.csv,.txt,application/json,text/csv" hidden>
+     <button type="button" onclick="document.getElementById('dbImport').click()">Import ไฟล์ (Excel DTD / JSON)</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden>
      <button id="dbClear">ลบทั้งหมด</button></div></div>
    <p class="hint">ตารางเลข waypoint ที่หน่วยใช้เป็นมาตรฐาน · เก็บในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export/Import เพื่อย้ายไปเครื่องอื่น · ในช่องต้นทาง/ปลายทาง/พิกัด พิมพ์ <code>No.12</code> หรือ <code>#12</code> เพื่อเรียกจุดนั้นได้เลย</p>
    <details class="custbox" style="border-color:var(--accent)"><summary style="color:var(--accent)">วางตารางจาก Excel / ข้อความ</summary>
@@ -1891,11 +1891,14 @@ function dbParse(txt){const ok=[],bad=[];String(txt).replace(/\r/g,"").split("\n
   const p=parseCoord(m[0].replace(/\s+/g," "));if(!p){bad.push(li+1);return}
   ok.push({no:String(+pm[1]),name:pm[2].trim(),lat:+p[0].toFixed(6),lon:+p[1].toFixed(6),mgrs:fmtMgrs(toMgrs(p[0],p[1])),note:post})});return{ok,bad}}
 function dbMerge(items,replace){const L=replace?[]:dbAll();items.forEach(it=>{const i=L.findIndex(x=>String(x.no)===String(it.no));if(i>=0)L[i]=it;else L.push(it)});dbSave(L);return L.length}
+function dbWarn(x){if(x.lat==null)return"ไม่มีพิกัด";if(x.lat<4||x.lat>21||x.lon<96||x.lon>106.5)return"พิกัดอยู่นอกประเทศไทย";
+  const ic=String(x.name||"").toUpperCase().slice(0,4),a=/^VT[A-Z]{2}$/.test(ic)&&AP[ic];if(a&&a.lat!=null){const d=gcDistNm([x.lat,x.lon],[a.lat,a.lon]);if(d>3)return`ห่างจาก ${ic} (${a.eaip?"eAIP":"OurAirports"}) ${d.toFixed(1)} NM`}
+  const dup=dbAll().filter(y=>String(y.no)!==String(x.no)&&y.lat!=null&&String(y.name).toUpperCase()===String(x.name).toUpperCase());if(dup.length&&dup.some(y=>gcDistNm([x.lat,x.lon],[y.lat,y.lon])>0.1))return`ชื่อซ้ำกับ No.${dup.map(y=>y.no).join(", ")} แต่พิกัดต่างกัน`;return""}
 function dbRender(){const L=dbAll(),dup=new Set(),seen=new Set();L.forEach(x=>{if(seen.has(String(x.no)))dup.add(String(x.no));seen.add(String(x.no))});
   $("#dbTable tbody").innerHTML=L.map((x,i)=>`<tr><td class="w-s"><input data-db="${i}" data-k="no" value="${esc(x.no)}" class="${dup.has(String(x.no))?"bad":""}" style="width:64px"></td>
     <td class="name"><input data-db="${i}" data-k="name" value="${esc(x.name)}"></td>
     <td class="coord"><input data-db="${i}" data-k="coord" value="${esc(x.mgrs||"")}" placeholder="47P PS 76283 53429"></td>
-    <td><span class="hint">${x.lat!=null?`${x.lat.toFixed(5)}, ${x.lon.toFixed(5)}`:'<span class="bad">ไม่มีพิกัด</span>'}</span></td>
+    <td><span class="hint">${x.lat!=null?`${x.lat.toFixed(5)}, ${x.lon.toFixed(5)}`:""}</span>${(w=>w?`<br><span class="area-alert" style="font-size:11px">⚠ ${esc(w)}</span>`:"")(dbWarn(x))}</td>
     <td class="name"><input data-db="${i}" data-k="note" value="${esc(x.note||"")}"></td>
     <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-dbact="add" data-i="${i}" title="เพิ่มลงเส้นทาง (ก่อนจุดสุดท้าย)">＋เส้นทาง</button><button class="mini" data-dbact="zoom" data-i="${i}">ดู</button><button class="mini" data-dbact="del" data-i="${i}" aria-label="ลบ">✕</button></div></td></tr>`).join("")
     ||`<tr><td colspan="6" class="placeholder" style="text-align:left;padding:16px"><b>ยังไม่มีตาราง waypoint ของหน่วย</b><br><span class="hint">วางตารางจาก Excel ในกล่อง "วางตารางจาก Excel / ข้อความ" หรือกด ＋ เพิ่มแถว · ตัวอย่างรูปแบบ: <code>1  VTBH  47P PS 76283 53429</code></span></td></tr>`;
@@ -1925,7 +1928,24 @@ $("#dbPasteAdd").onclick=()=>dbPasteDo(false);
 let dbRepArm=false;$("#dbPasteReplace").onclick=e=>{if(!dbRepArm){dbRepArm=true;e.target.textContent="กดอีกครั้งเพื่อแทนที่ทั้งตาราง";setTimeout(()=>{dbRepArm=false;e.target.textContent="แทนที่ทั้งตาราง"},3000);return}dbRepArm=false;e.target.textContent="แทนที่ทั้งตาราง";dbPasteDo(true)};
 let dbClrArm=false;$("#dbClear").onclick=e=>{if(!dbClrArm){dbClrArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยันลบ";setTimeout(()=>{dbClrArm=false;e.target.textContent="ลบทั้งหมด"},3000);return}dbClrArm=false;e.target.textContent="ลบทั้งหมด";store.set("vfr_wpdb",[]);dbRender();render()};
 $("#dbExport").onclick=()=>download("waypoint_หน่วย.json",JSON.stringify(dbAll(),null,1),"application/json");
-$("#dbImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{let items=null;try{const d=JSON.parse(t);if(Array.isArray(d))items=d.filter(x=>x&&x.no!=null)}catch(err){}
+/* อ่านไฟล์ Excel แบบตาราง DTD ของหน่วย (ชีต Waypoints-LL หรือ Waypoints-MGRS) */
+async function dbFromXlsx(f){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
+  const ws=wb.worksheets.find(w=>/waypoint.*ll/i.test(w.name))||wb.worksheets.find(w=>/waypoint/i.test(w.name));if(!ws)throw new Error("ไม่พบชีต Waypoint");
+  const val=c=>{const v=c&&c.value;return v&&typeof v==="object"?(v.result??v.text??(v.richText?v.richText.map(t=>t.text).join(""):"")):v};
+  let hdr=null,col={};const out=[];
+  ws.eachRow((row,ri)=>{const cells=[];row.eachCell({includeEmpty:true},(c,ci)=>cells[ci]=val(c));
+    if(!hdr){const i=cells.findIndex(v=>/DTD\s*ID|^ID$/i.test(String(v||"")));if(i>0){hdr=ri;cells.forEach((v,ci)=>{const t=String(v||"").toUpperCase();
+      if(/DTD|^ID$/.test(t))col.id=ci;if(/DESC/.test(t))col.desc=ci;if(/MGRS/.test(t))col.mgrs=ci;if(/^LAT/.test(t))col.lat=ci;if(/^LON/.test(t))col.lon=ci;if(/FIX/.test(t))col.fix=ci;if(/ELEV/.test(t))col.elev=ci})}return}
+    const id=String(cells[col.id]||"").trim();if(!id)return;const no=cells[1]!=null&&String(cells[1]).trim()!==""?String(cells[1]).trim():String(out.length+1);
+    let lat=+cells[col.lat],lon=+cells[col.lon];const mg=String(cells[col.mgrs]||"").trim();
+    if(!(isFinite(lat)&&isFinite(lon))||(lat===0&&lon===0)){const p=mg?parseCoord(mg):null;lat=p?p[0]:null;lon=p?p[1]:null}
+    if(lat===0&&lon===0){lat=lon=null}
+    const note=[cells[col.desc],cells[col.fix]].filter(v=>v!=null&&String(v).trim()).join(" · ");
+    out.push({no:String(+no||no),name:id.replace(/^\//,"").trim(),dtd:id,lat:lat!=null?+(+lat).toFixed(6):null,lon:lon!=null?+(+lon).toFixed(6):null,mgrs:mg||(lat!=null?fmtMgrs(toMgrs(lat,lon)):""),note,elev:cells[col.elev]??""})});
+  if(!out.length)throw new Error("ไม่พบแถวข้อมูล");return out}
+$("#dbImport").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
+  if(/\.xlsx$/i.test(f.name)){try{const items=await dbFromXlsx(f);const n=dbMerge(items,true);dbRender();render();const bad=items.filter(x=>dbWarn(x)).length;toast(`นำเข้า ${items.length} จุดจาก ${f.name}`+(bad?` · ตรวจ ${bad} จุด`:""))}catch(err){toast("อ่าน Excel ไม่ได้: "+err.message)}return}
+  f.text().then(t=>{let items=null;try{const d=JSON.parse(t);if(Array.isArray(d))items=d.filter(x=>x&&x.no!=null)}catch(err){}
   if(!items)items=dbParse(t).ok;if(!items.length){toast("ไฟล์นี้อ่านไม่ได้");return}const n=dbMerge(items,false);dbRender();render();toast(`นำเข้า ${items.length} จุด (รวม ${n})`)});e.target.value=""};
 $("#dbCopyRoute").onclick=()=>{const txt=state.wps.map((w,i)=>{const m=dbMatch(w);return`${i+1}\t${m?"No."+m.no:"-"}\t${w.name}\t${fmtMgrs(toMgrs(w.lat,w.lon))}`}).join("\n");
   (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>{$("#dbPaste").value=txt;toast("คัดลอกไม่ได้ — ใส่ข้อความไว้ในกล่องวางแทน")})};
