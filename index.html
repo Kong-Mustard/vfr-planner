@@ -589,6 +589,22 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .qz-st{display:grid;grid-template-columns:minmax(0,190px) 1fr 52px auto;gap:10px;align-items:center;font-size:15px}
 .qz-sbar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.qz-sbar i{display:block;height:100%}
 @media (max-width:620px){.qz-st{grid-template-columns:1fr 50px}.qz-st .qz-sbar,.qz-st .hint{grid-column:1/-1}}
+/* GPS */
+.gps-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.gps-btn{min-height:44px;font:700 15px var(--f-body);border-radius:12px;background:var(--panel);border:2px solid var(--line);padding:8px 14px;box-shadow:var(--shadow)}
+.gps-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.gps-hud{background:rgba(17,24,39,.92);color:#fff;border-radius:16px;padding:10px 12px;width:min(360px,calc(100vw - 40px));box-shadow:0 8px 24px rgba(0,0,0,.4);font:14px var(--f-body);display:flex;flex-direction:column;gap:6px}
+.gps-hud .hint{color:#aab4c3}.gh-wait{padding:6px 2px}
+.gh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.gh-grid.top{grid-template-columns:repeat(3,1fr)}
+.gh-grid div{background:rgba(255,255,255,.08);border-radius:10px;padding:5px 6px;text-align:center}
+.gh-grid span{display:block;font:700 10.5px var(--f-body);letter-spacing:.06em;color:#9fb3c8}.gh-grid b{font:800 21px var(--f-mono)}.gh-grid i{font-style:normal;font-size:11px;color:#9fb3c8;margin-left:2px}
+.gh-to{font-size:16px}.gh-to b{font:800 18px var(--f-display)}
+.gh-xte b{font-family:var(--f-mono)}.gh-xte.warn b{color:#ffb020}
+.gh-area{background:#c62f24;border-radius:10px;padding:6px 8px;font-weight:700}
+.gh-acc{font-size:11.5px}
+.gh-btns{display:flex;gap:6px;flex-wrap:wrap}.gh-btns button{min-height:38px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);font:600 13.5px var(--f-body)}
+.gh-btns button.on{background:var(--accent);border-color:var(--accent)}
+.gps-own{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 /* หัวข้อแต่ละส่วนแยกสี */
 h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent);
   border-left:6px solid var(--c);border-radius:8px;padding:5px 12px 5px 10px;font-size:19px}
@@ -2421,6 +2437,66 @@ function stepClose(){$("#stepMode").hidden=true;document.body.style.overflow="";
 $("#smNext").onclick=()=>stepGo(1);$("#smPrev").onclick=()=>stepGo(-1);$("#smClose").onclick=stepClose;
 document.addEventListener("keydown",e=>{if(!SM)return;if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){e.preventDefault();stepGo(1)}else if(e.key==="ArrowLeft"){e.preventDefault();stepGo(-1)}else if(e.key==="Escape")stepClose()});
 $("#stepMode").addEventListener("click",e=>{if(e.target.closest(".sm-body")){const r=e.currentTarget.getBoundingClientRect();stepGo(e.clientX<r.left+r.width*0.3?-1:1)}});
+
+/* ---------- GPS (ตำแหน่งจากอุปกรณ์ผ่านเบราว์เซอร์ — ใช้ได้ออฟไลน์ ไม่ส่งตำแหน่งไปไหน) ---------- */
+const GPS={on:false,watch:null,last:null,trk:null,leg:0,follow:true,sim:null,lock:null,mk:null,acc:null,crumb:null,pts:[]};
+const gpsLayer=L.layerGroup().addTo(map);
+function gpsIcon(trk){return L.divIcon({className:"",html:`<svg class="gps-own" width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(${trk??0}deg)"><circle cx="22" cy="22" r="20" fill="rgba(10,108,255,.18)"/><path d="M22 4 L31 34 L22 28 L13 34 Z" fill="#0a6cff" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>`,iconSize:[44,44],iconAnchor:[22,22]})}
+const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=L.DomUtil.create("div","gps-wrap");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
+  d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิดตำแหน่ง GPS ของอุปกรณ์">📍 GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
+  d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
+new GpsCtl().addTo(map);
+function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
+  $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();
+  if(navigator.wakeLock)navigator.wakeLock.request("screen").then(l=>GPS.lock=l).catch(()=>{});
+  if(sim){gpsSimStart();return}
+  if(!navigator.geolocation){toast("อุปกรณ์นี้ไม่รองรับ GPS ในเบราว์เซอร์");return}
+  GPS.watch=navigator.geolocation.watchPosition(p=>{const c=p.coords;gpsFix(c.latitude,c.longitude,c.speed!=null&&c.speed>=0?c.speed*1.94384:null,c.heading!=null&&!isNaN(c.heading)&&c.speed>1?c.heading:null,c.altitude!=null?c.altitude*3.28084:null,c.accuracy,p.timestamp)},
+    e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
+      $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
+function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
+  if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();GPS.mk=GPS.acc=GPS.crumb=null;
+  $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true}
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="จุดก่อนหน้า">◀</button><button data-g="next" title="ข้ามไปจุดถัดไป">▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างเส้นทางที่บินมา">🧹</button><button data-g="off">✕</button></div>`}
+document.addEventListener("click",e=>{const b=e.target.closest("#gpsHud [data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
+  if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
+  if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
+  if(g==="clear"){GPS.pts=[];if(GPS.crumb)GPS.crumb.setLatLngs([])}
+  if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
+  if(GPS.last)gpsHud();else $("#gpsHud").querySelector(".gh-btns").outerHTML=gpsBtns()});
+map.on("dragstart",()=>{if(GPS.on&&GPS.follow){GPS.follow=false;const b=document.querySelector('#gpsHud [data-g="follow"]');if(b)b.classList.remove("on")}});
+/* จำลองการบินตามเส้นทาง (ทดสอบบนคอมที่ไม่มี GPS) — เร็ว ×10 */
+function gpsSimStart(){if(state.wps.length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}const P=routePath();let d=0,t=Date.now();
+  GPS.sim=setInterval(()=>{const now=Date.now(),dt=(now-t)/3600000*10;t=now;const a=posAt(P,d),gs=a.s.gs;d+=gs*dt;if(d>=P.total){clearInterval(GPS.sim);GPS.sim=null;toast("จำลองถึงปลายทางแล้ว");return}
+    const b=posAt(P,d);gpsFix(b.ll[1],b.ll[0],gs,trueCourse([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]),a.s.alt,10,now)},500);toast("จำลองการบินตามเส้นทาง (เร็ว ×10)")}
+function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
+  if((gs==null||trk==null)&&L0){const dd=gcDistNm([L0.lat,L0.lon],pt),dh=(ts-L0.ts)/3600000;if(dd>0.01&&dh>=2/3600){const g2=dd/dh;if(gs==null&&g2<=250)gs=g2;if(trk==null&&g2<=250)trk=trueCourse([L0.lat,L0.lon],pt)}}
+  if(trk==null&&L0)trk=L0.trk;GPS.last={lat,lon,gs,trk,alt,acc,ts};
+  if(!GPS.mk){GPS.acc=L.circle(pt,{radius:acc||0,color:"#0a6cff",weight:1,fillOpacity:.08,interactive:false}).addTo(gpsLayer);
+    GPS.crumb=L.polyline([],{color:"#0a6cff",weight:3,opacity:.7,dashArray:"2 6",interactive:false}).addTo(gpsLayer);GPS.mk=L.marker(pt,{icon:gpsIcon(trk),interactive:false,zIndexOffset:2000}).addTo(gpsLayer)}
+  GPS.mk.setLatLng(pt);GPS.mk.setIcon(gpsIcon(trk));GPS.acc.setLatLng(pt).setRadius(acc||0);
+  const lp=GPS.pts.at(-1);if(!lp||gcDistNm(lp,pt)>0.02){GPS.pts.push(pt);if(GPS.pts.length>3000)GPS.pts.shift();GPS.crumb.setLatLngs(GPS.pts)}
+  gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud()}
+/* เลือก leg อัตโนมัติ: ผ่านจุดหมาย (ใกล้กว่า 0.5 NM หรือเลยแนวตั้งฉาก) → ไปจุดถัดไป */
+function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(W.length<2)return;if(GPS.leg>W.length-2)GPS.leg=W.length-2;
+  if(!GPS.started){let best=0,bd=1e9;for(let i=0;i<W.length-1;i++){const r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);if(r.d<bd){bd=r.d;best=i}}GPS.leg=best;GPS.started=true}
+  const i=GPS.leg,r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);
+  if(i<W.length-2&&(gcDistNm([P.lat,P.lon],[W[i+1].lat,W[i+1].lon])<0.5||r.t>=0.999)){GPS.leg++;toast("ผ่าน "+W[i+1].name+" → ไป "+W[i+2].name)}}
+function gpsXte(P,A,B){const k=Math.cos(P[0]*D2R)*60,px=P[1]*k,py=P[0]*60,ax=A[1]*k,ay=A[0]*60,bx=B[1]*k,by=B[0]*60;const cr=(bx-ax)*(py-ay)-(by-ay)*(px-ax),len=Math.hypot(bx-ax,by-ay)||1;return cr/len}
+function gpsArea(P,alt){let best=null;((EAIP&&EAIP.areas)||[]).forEach(a=>{if(!a.poly||a.poly.length<3)return;if(alt!=null){const lo=altFt(a.lower),hi=altFt(a.upper);if((isFinite(lo)&&alt<lo-500)||(isFinite(hi)&&alt>hi+500))return}let d;if(inPoly(P,a.poly))d=0;else{d=1e9;for(let i=0;i<a.poly.length-1;i++)d=Math.min(d,distToSeg(P,a.poly[i],a.poly[i+1]).d)}
+  if(d<=3&&(!best||d<best.d||(d===best.d&&"PRD".indexOf(a.type)<"PRD".indexOf(best.a.type))))best={a,d}});return best}
+function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(!P)return;
+  const mag=t=>t==null?"–":hdg(t+vr)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
+  let nav="";if(W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],A=W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
+    xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
+    const now=new Date(),eta=ete!=null?new Date(now.getTime()+ete*60000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–";
+    nav=`<div class="gh-to">→ ${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">leg ${i+1}/${W.length-1}</span></div>
+     <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div><span>ETA</span><b>${eta}</b></div></div>
+     <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""} · MH ตามแผน <b>${row&&isFinite(row.mh)?hdg(row.mh)+"°":"–"}</b></div>`}
+  const ar=gpsArea([P.lat,P.lon],P.alt!=null?P.alt:num(state.legs[Math.min(GPS.leg,state.legs.length-1)]&&state.legs[Math.min(GPS.leg,state.legs.length-1)].alt,null));
+  h.innerHTML=`<div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div><span>TRK (M)</span><b>${mag(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div>${nav}
+    ${ar?`<div class="gh-area">⚠ ${ar.d===0?"อยู่ใน":"ใกล้"} ${esc(ar.a.id)} ${esc(ar.a.name)} (${AREA_NAME[ar.a.type]}) ${ar.d?ar.d.toFixed(1)+" NM":""} · ${esc(ar.a.upper)}/${esc(ar.a.lower)}</div>`:""}
+    <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`}
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
