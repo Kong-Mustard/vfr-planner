@@ -2,14 +2,15 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v32";
+const V = "vfr-v33";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json", "notam.json",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
   "https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css",
-  "fpl_template.pdf", "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"];
+  "fpl_template.pdf", "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+  "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js", "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"];
 const TILE_HOSTS = ["arcgisonline.com", "opentopomap.org", "tile.openstreetmap.org", "tilecache.rainviewer.com", "elevation-tiles-prod", "basemaps.cartocdn.com"];
 const MAX_TILES = 6000;
 
@@ -33,9 +34,11 @@ self.addEventListener("fetch", e => {
   // ภาพแผนที่: cache-first
   if (TILE_HOSTS.some(h => url.hostname.includes(h))) {
     e.respondWith(caches.open("vfr-tiles").then(async c => {
-      const hit = await c.match(req); if (hit) return hit;
+      const hit = await c.match(req);
+      // คำขอแบบ CORS (เช่น ตอนสร้าง PDF จากภาพ) ใช้ภาพที่เก็บแบบ opaque ไม่ได้ → ดึงใหม่
+      if (hit && !(req.mode === "cors" && hit.type === "opaque")) return hit;
       try { const res = await fetch(req); if (res.ok || res.type === "opaque") { c.put(req, res.clone()); if (Math.random() < 0.02) trimTiles(); } return res; }
-      catch (err) { return new Response("", { status: 504 }); }
+      catch (err) { return hit || new Response("", { status: 504 }); }
     }));
     return;
   }
