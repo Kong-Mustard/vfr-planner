@@ -123,7 +123,9 @@ body.pvprev #printView{width:auto!important;background:#525659;padding:var(--pvt
 body.pvprev .pv-page{width:var(--pvpw,138mm);min-height:var(--pvph,200mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
 body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:var(--pvph,200mm);border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
 .pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
-.pv-bar{flex-wrap:wrap}.pv-panel{display:none}
+.pv-bar{flex-wrap:wrap}.data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:12px}.data-grid .dwide{grid-column:1/-1}
+.backup-box{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.pv-panel{display:none}
 .kb-seg{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));border-radius:6px!important;gap:0}.kb-seg button{border-radius:0!important;border:1px solid var(--line)!important;margin:-1px 0 0 -1px;padding:8px 6px!important;text-align:center}
 .kb-seg button.on{background:#fee2e2!important;color:#b91c1c!important;border:2px solid #dc2626!important;position:relative;z-index:1;font-weight:700}
 .pp-sec{border-bottom:1px solid #e5e7eb;padding:4px 0 8px}.pp-sec>summary,.pv-ctlw>summary{cursor:pointer;font:800 15px var(--f-display);color:#123c69;padding:6px 0;list-style-position:inside}
@@ -207,6 +209,12 @@ body.printing #printView{position:static;padding:0}
 .navbox{display:inline-block;background:rgba(255,255,255,.93);color:#1f3b8f;border:1px solid #1f3b8f;border-radius:4px;padding:1px 5px;font:600 10px/1.25 Arial,sans-serif;white-space:nowrap;cursor:pointer}
 .navbox b{font-size:11px}.rose{pointer-events:none}
 .vis-ctl{background:var(--panel)}
+.vis-base{display:grid;grid-template-columns:1fr 1fr;margin:4px 0 2px}.vis-base button{border-radius:0;border:1px solid var(--line);margin:-1px 0 0 -1px;padding:6px 4px;font-size:12.5px;background:var(--panel);color:var(--ink)}
+.vis-base button.on{border:2px solid #dc2626;color:#b91c1c;background:#fee2e2;font-weight:700;position:relative;z-index:1}
+.map-tools{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.map-tools>.mt-toggle{display:block;background:var(--panel);color:var(--ink);border-radius:10px;padding:6px 10px;font:700 13px var(--f-body);box-shadow:0 1px 5px rgba(0,0,0,.35);text-decoration:none}
+.map-tools .mt-body{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.map-tools .mt-body>.leaflet-control{margin:0!important;float:none;clear:none}
+.map-tools.collapsed .mt-body{display:none}.map-tools.collapsed .mt-toggle span{display:none}
 .vis-panel{padding:10px 12px;max-height:max(240px,calc(100vh - 420px));overflow:auto;width:250px;color:var(--ink);font:13px var(--f-body)}
 .vis-pre{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.vis-pre .mini{padding:3px 8px;font-size:12px}
 .vis-g{border-top:1px solid var(--line);padding:6px 0}.vis-g b{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
@@ -714,7 +722,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .gps-own{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 /* แท็บด้านซ้าย: แต่ละแท็บมีสีของตัวเอง */
 .rail .tab[data-tab="plan"]{--tc:#3d8bff}.rail .tab[data-tab="log"]{--tc:#818cf8}.rail .tab[data-tab="wx"]{--tc:#22b8cf}.rail .tab[data-tab="notam"]{--tc:#fb923c}
-.rail .tab[data-tab="normal"]{--tc:#34d399}.rail .tab[data-tab="emer"]{--tc:#ef4444}.rail .tab[data-tab="conv"]{--tc:#a78bfa}.rail .tab[data-tab="wpdb"]{--tc:#f472b6}.rail .tab[data-tab="quiz"]{--tc:#facc15}
+.rail .tab[data-tab="normal"]{--tc:#34d399}.rail .tab[data-tab="emer"]{--tc:#ef4444}.rail .tab[data-tab="conv"]{--tc:#a78bfa}.rail .tab[data-tab="wpdb"]{--tc:#f472b6}.rail .tab[data-tab="data"]{--tc:#94a3b8}.rail .tab[data-tab="quiz"]{--tc:#facc15}
 .rail .tab i{color:var(--tc)}.rail .tab{border-left:3px solid transparent}
 .rail .tab:hover{background:color-mix(in srgb,var(--tc) 10%,transparent)}
 .rail .tab[aria-selected="true"]{background:color-mix(in srgb,var(--tc) 20%,transparent)!important;color:var(--tc)!important;border-left-color:var(--tc)}
@@ -767,7 +775,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
   <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>WAYPOINT</button>
-  <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>9</small>ข้อสอบ</button>
+  <button class="tab" role="tab" data-tab="data" aria-selected="false"><i>💾</i><small>9</small>ข้อมูล</button>
+  <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>10</small>ข้อสอบ</button>
   <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
 </nav>
 
@@ -857,19 +866,15 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="sechead">
       <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
-        <button id="goNavlog">แก้ไขใน NAVLOG เต็ม →</button>
-        <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener">เปิดใน SkyVector ↗</a>
         <button id="savePlan" class="primary">บันทึกแผน</button>
         <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
         <button id="delPlan">ลบแผนนี้</button>
         <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
         <button id="exportXlsx">Export Excel (.xlsx)</button>
-        <button id="exportCsv">Export CSV</button>
-        <button id="exportJson">Export ไฟล์แผน</button>
-        <label class="btnlike" style="display:inline-flex"><input id="importJson" type="file" accept=".json,application/json" hidden><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button></label>
+        <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
       </div>
     </div>
-    <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG ข้อมูลเชื่อมกันทั้งสองแท็บ</p>
+    <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
     <div class="tablewrap"><table id="navMini" class="mini-tbl">
       <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
       <tbody></tbody>
@@ -915,11 +920,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <div class="btns">
         <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="freqDet" style="width:auto"> แสดงชื่อเรียก/รายละเอียด</label>
         <label style="flex-direction:row;align-items:center;gap:6px">รัศมีจากเส้นทาง<input id="corridor" type="number" value="25" style="width:70px"> NM</label>
-        <button type="button" onclick="document.getElementById('importEaip').click()">Import ข้อมูล eAIP</button>
-        <input id="importEaip" type="file" accept=".json,application/json" hidden>
       </div>
     </div>
-    <p id="eaipStatus" class="hint"></p>
     <div id="freqList" class="freqgrid"></div>
     <details id="custBox" class="custbox">
       <summary>สนามที่กรอกเอง (สนามทหาร / ไม่มีใน eAIP) — <span id="custCount">0</span> แห่ง</summary>
@@ -967,10 +969,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <thead><tr><th>Location</th><th>Ceiling / Visibility</th><th>Winds Aloft</th><th>Notes / NOTAMs</th><th>Frequency (TWR / APP / ATIS)</th></tr></thead>
       <tbody></tbody>
     </table></div>
-  </div>
-  <div class="card section">
-    <div class="sechead"><h2 class="hd hd-violet">FLIGHT PLAN</h2><span class="hint">ช่องที่เป็นตัวเทาเติมให้อัตโนมัติจากแผน — พิมพ์ทับได้</span></div>
-    <div class="fp-grid" id="fpGrid"></div>
   </div>
  </div>
 </section>
@@ -1025,7 +1023,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
    <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">List</button><button id="ntViewMap">Map</button></div>
    <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
    <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="1" min="1" max="50" style="width:64px"> NM</label>
-   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> show hidden</label>
+   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> แสดงบนแผนที่ทั้งหมด</label>
    <button id="ntRedraw">🔄 รีเฟรช</button>
   </div>
   <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
@@ -1065,13 +1063,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 <section id="tab-wpdb" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-   <div class="sechead"><h2 class="hd hd-indigo">SOP / DTD จาก FalconView</h2>
-    <div class="btns"><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel จาก FalconView</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
-   <p class="hint">ขั้นตอน: วางแผนในแอปนี้ → ดู "รายการเตรียมคีย์" → คีย์ใน FalconView → write การ์ด + export Excel → Import Excel กลับมาที่นี่ → ดู "ตรวจความพร้อม" ก่อนเสียบการ์ด · ข้อมูลเก็บในเครื่องนี้เท่านั้น</p>
-   <div id="sopInfo" class="sop-info"></div>
-   <div id="sopDiff"></div>
-  </div>
-  <div class="card section">
    <div class="sechead"><h2 class="hd hd-green">ตรวจความพร้อมก่อนเสียบการ์ด</h2><div class="btns"><button id="chkCopy">คัดลอกผลตรวจ</button></div></div>
    <div id="chkBox"></div>
   </div>
@@ -1098,6 +1089,35 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   </div>
  </div>
 </section>
+<section id="tab-data" class="tabpanel" hidden>
+ <div class="data-grid">
+  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-green">1. ข้อมูล eAIP</h2>
+    <div class="btns"><button type="button" onclick="document.getElementById('importEaip').click()">Import ไฟล์ eAIP เอง</button><input id="importEaip" type="file" accept=".json,application/json" hidden></div></div>
+   <p id="eaipStatus" class="hint"></p>
+   <p class="hint">ปกติแอปดึงให้อัตโนมัติทุก 5 วัน (ความถี่ สนามบิน navaid airway พื้นที่ P/R/D CTR) — ใช้ปุ่มนี้เฉพาะเมื่อมีไฟล์ eaip_data.json ที่ต้องการใช้แทน</p></div>
+  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-red">2. ข้อมูล TM (EMER / NORMAL)</h2>
+    <div class="btns"><button class="primary" type="button" onclick="document.getElementById('epImport').click()">Import emergency_data.json</button><button id="epClear">ลบข้อมูล TM</button><input id="epImport" type="file" accept=".json,application/json" hidden></div></div>
+   <p id="dataTm" class="hint"></p>
+   <p class="hint">ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต</p></div>
+  <div class="card section dbox dwide">
+   <div class="sechead"><h2 class="hd hd-indigo">3. SOP / DTD จาก FalconView</h2>
+    <div class="btns"><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel จาก FalconView</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
+   <p class="hint">ขั้นตอน: วางแผนในแอปนี้ → ดู "รายการเตรียมคีย์" → คีย์ใน FalconView → write การ์ด + export Excel → Import Excel กลับมาที่นี่ → ดู "ตรวจความพร้อม" ก่อนเสียบการ์ด · ข้อมูลเก็บในเครื่องนี้เท่านั้น</p>
+   <div id="sopInfo" class="sop-info"></div>
+   <div id="sopDiff"></div>
+  </div>
+
+  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-orange">4. ไฟล์แผนการบิน</h2>
+    <div class="btns"><button id="exportJson">Export แผนปัจจุบัน</button><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button><input id="importJson" type="file" accept=".json,application/json" hidden></div></div>
+   <p class="hint">ไฟล์ .json ของแผนเดียว ใช้ส่งต่อแผนให้เครื่องอื่น (แผนที่บันทึกในเครื่องเปิดได้จากปุ่ม "เปิดแผนที่บันทึก…" ในแท็บ 1)</p></div>
+  <div class="card section dbox dwide"><div class="sechead"><h2 class="hd hd-indigo">5. สำรอง / กู้คืนข้อมูลทั้งหมด</h2></div>
+   <div class="backup-box">
+  <div><b>⚠ ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</b> — แผน, waypoint หน่วย, ข้อมูล EMER Proc., สนาม/procedure ที่กรอกเอง ไม่ซิงก์ข้ามเครื่อง และอาจหายถ้าล้างข้อมูลเบราว์เซอร์ ควรสำรองเป็นประจำ
+    <span id="bkInfo" class="bk-info"></span></div>
+  <div class="btns"><button id="bkSave" class="primary">สำรองข้อมูลทั้งหมด</button><button type="button" onclick="document.getElementById('bkLoad').click()">กู้คืนจากไฟล์สำรอง</button><input id="bkLoad" type="file" accept=".json,application/json" hidden></div>
+</div></div>
+ </div>
+</section>
 <section id="tab-quiz" class="tabpanel" hidden>
  <div class="card qz" id="qz"></div>
 </section>
@@ -1113,18 +1133,12 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div id="epList" class="ep-list"></div>
     <div class="ep-foot">
       <p id="epSrc" class="hint"></p>
-      <div class="btns"><button type="button" onclick="document.getElementById('epImport').click()">Import ข้อมูล EMER Proc.</button><button id="epClear">ลบข้อมูล EMER Proc.</button></div>
-      <input id="epImport" type="file" accept=".json,application/json" hidden>
     </div>
   </aside>
   <article class="card ep-main" id="epMain"></article>
  </div>
 </section>
-<footer class="backup-bar" role="note">
-  <div><b>⚠ ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</b> — แผน, waypoint หน่วย, ข้อมูล EMER Proc., สนาม/procedure ที่กรอกเอง ไม่ซิงก์ข้ามเครื่อง และอาจหายถ้าล้างข้อมูลเบราว์เซอร์ ควรสำรองเป็นประจำ
-    <span id="bkInfo" class="bk-info"></span></div>
-  <div class="btns"><button id="bkSave" class="primary">สำรองข้อมูลทั้งหมด</button><button type="button" onclick="document.getElementById('bkLoad').click()">กู้คืนจากไฟล์สำรอง</button><input id="bkLoad" type="file" accept=".json,application/json" hidden></div>
-</footer>
+
 </main>
 <dialog id="kbDlg" class="kb" aria-labelledby="kbTitle">
   <div class="kb-head"><h2 id="kbTitle">เลือกความถี่ที่จะพิมพ์ลง Kneeboard</h2>
@@ -1300,7 +1314,11 @@ const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:
 const labels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
 sat.addTo(map);labels.addTo(map);
 const chartBase=L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}),L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16})]);
-const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm,"พื้นขาวแบบชาร์ต":chartBase},{"ชื่อสถานที่":labels}).addTo(map);
+/* ไม่แสดงกล่องชั้นแผนที่ของ Leaflet แล้ว (รวมไว้ในปุ่ม "ชั้นข้อมูล") — เก็บไว้เป็นทะเบียนชั้นภายในแอป */
+const layerCtl=L.control.layers({"ดาวเทียม":sat,"ภูมิประเทศ (Topo)":topo,"ถนน (OSM)":osm,"พื้นขาวแบบชาร์ต":chartBase},{"ชื่อสถานที่":labels});
+const BASES=[["sat","ดาวเทียม",sat],["topo","ภูมิประเทศ",topo],["osm","ถนน (OSM)",osm],["chart","พื้นขาวชาร์ต",chartBase]];
+function baseSet(k){const b=BASES.find(x=>x[0]===k)||BASES[0];BASES.forEach(x=>{if(x!==b&&map.hasLayer(x[2]))map.removeLayer(x[2])});if(!map.hasLayer(b[2]))b[2].addTo(map);b[2].bringToBack&&b[2].bringToBack();try{localStorage.setItem("vfr_base",b[0])}catch(e){}document.querySelectorAll("#visPanel [data-base]").forEach(x=>x.classList.toggle("on",x.dataset.base===b[0]))}
+function baseCur(){const b=BASES.find(x=>map.hasLayer(x[2]));return b?b[0]:"sat"}
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
@@ -1392,13 +1410,6 @@ function cell(v,cls=""){return`<td class="c ${cls}">${v}</td>`}
 function inp(i,key,w="w-s"){const v=state.legs[i][key];return`<td class="${w}"><input data-leg="${i}" data-k="${key}" value="${v??""}" inputmode="decimal"></td>`}
 /* ---------- NAVLOG เต็ม (แท็บ 2): หัวแผน, Weather log, Flight plan ---------- */
 const WX_ROWS=["Departure","Enroute 1","Enroute 2","Destination","Alternate"];
-const FP_FIELDS=[["type","1. Type"],["ident","2. Aircraft Ident"],["acftType","3. Acft Type/Equip"],["tas","4. True Airspeed"],
- ["dep","5. Departure Pt"],["depTime","6. Depart Time"],["alt","7. Cruising Alt"],["route","8. Route of Flight"],
- ["dest","9. Destination"],["ete","10. Est Time Enroute"],["remarks","11. Remarks"],["fob","12. Fuel on Board"],
- ["altn","13. Alternate"],["pilot","14. Pilot Name/Info"],["aboard","15. # Aboard"],["color","16. Color of Aircraft"]];
-function fpAuto(res){const W=state.wps,r0=res.rows[0];return{type:"VFR",ident:state.acft||"",acftType:"UH-60M",tas:r0?r0.tas.toFixed(0)+" kt":"",
-  dep:W[0]?W[0].name:"",depTime:state.depTime||"",alt:state.g.alt?state.g.alt+" ft":"",route:W.map(w=>w.name).join(" – "),
-  dest:W.length?W[W.length-1].name:"",ete:res.rows.length?mmss(res.cumMin):"",fob:state.fuel0?state.fuel0+" lb":""}}
 function apFreqText(name){const a=AP[String(name||"").toUpperCase()];if(!a||!a.eaip)return"";
   return a.eaip.comm.filter(c=>/TWR|APP|ATIS/.test(c.svc)).map(c=>`${c.svc} ${c.freq.split(" / ")[0]}`).join(" · ")}
 function renderNavlogExtras(res){
@@ -1406,18 +1417,16 @@ function renderNavlogExtras(res){
   $("#nlHead").innerHTML=[["Aircraft",state.acft||"–"],["Date",state.date||"–"],["เริ่มบิน",state.depTime||"–"],["น้ำมันเริ่ม",(state.fuel0||"–")+" lb"],
     ["Burn",(state.burn||"–")+" lb/นาที"],["สำรองขั้นต่ำ",(state.reserve||"–")+" lb"],["QNH",qnhText()],["ระยะรวม",res.rows.length?res.total.toFixed(1)+" NM":"–"],["เวลารวม",res.rows.length?mmss(res.cumMin):"–"]]
     .map(([k,v])=>`<span>${k}: <b>${esc(v)}</b></span>`).join("")+(state.windSrc?`<span class="hint" style="flex-basis:100%">ลม/อุณหภูมิตั้งต้นจาก ${esc(state.windSrc)} — ค่าคร่าวๆ ตรวจและแก้ก่อนบิน</span>`:"");
-  const act=document.activeElement;if(act&&(act.closest("#wxLog")||act.closest("#fpGrid")))return;
-  state.wxlog=state.wxlog||{};state.fp=state.fp||{};
-  const locName={Departure:W[0]&&W[0].name,Destination:W.length>1&&W[W.length-1].name,Alternate:state.fp.altn};
+  const act=document.activeElement;if(act&&act.closest("#wxLog"))return;
+  state.wxlog=state.wxlog||{};const altn=state.fpl&&state.fpl.v&&state.fpl.v.altn;
+  const locName={Departure:W[0]&&W[0].name,Destination:W.length>1&&W[W.length-1].name,Alternate:altn&&altn!=="ZZZZ"?altn:""};
   $("#wxLog tbody").innerHTML=WX_ROWS.map(rw=>{const d=state.wxlog[rw]||{};
     return`<tr><td>${rw}${locName[rw]?` <span class="hint">(${esc(locName[rw])})</span>`:""}</td>${["cv","wind","notes","freq"].map(k=>
       `<td><input data-wx="${rw}" data-k="${k}" value="${esc(d[k]||"")}" placeholder="${k==="freq"?esc(apFreqText(locName[rw])):""}"></td>`).join("")}</tr>`}).join("");
-  const auto=fpAuto(res);
-  $("#fpGrid").innerHTML=FP_FIELDS.map(([k,l])=>`<label>${l}<input data-fp="${k}" value="${esc(state.fp[k]||"")}" placeholder="${esc(auto[k]||"")}"></label>`).join("");
 }
 document.addEventListener("input",e=>{const t=e.target;
   if(t.dataset.wx){state.wxlog=state.wxlog||{};(state.wxlog[t.dataset.wx]=state.wxlog[t.dataset.wx]||{})[t.dataset.k]=t.value;store.set("vfr_current",state)}
-  if(t.dataset.fp){state.fp=state.fp||{};state.fp[t.dataset.fp]=t.value;store.set("vfr_current",state)}});
+});
 /* RWY: จับคู่ทิศตรงข้าม เช่น 16/34/05/23 → 16-34, 05-23 */
 function rwyPairs(list){const L=(list||[]).map(String),used=new Set(),out=[];
   const opp=d=>{const m=d.match(/^(\d{2})([LRC]?)$/);if(!m)return null;const n=((+m[1]+18-1)%36)+1;return String(n).padStart(2,"0")+({L:"R",R:"L",C:"C"}[m[2]]||"")};
@@ -1502,7 +1511,6 @@ $("#boxRotReset").onclick=()=>{state.boxRot={};render();toast("รีเซ็�
 document.querySelector(".nl-grp").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const t=$("#navTable");["basic","wind","fuel","all"].forEach(g=>t.classList.toggle("g-"+g,g===b.dataset.g));
   document.querySelectorAll(".nl-grp button").forEach(x=>x.classList.toggle("on",x===b))});
 $("#navTable").classList.add("g-basic");
-$("#goNavlog").onclick=()=>document.querySelector('.tab[data-tab="log"]').click();
 $("#applyAll").onclick=()=>{state.legs.forEach(l=>Object.assign(l,{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp}));render();toast("ใช้ค่ากับทุก leg แล้ว")};
 
 $("#navTable").addEventListener("change",e=>{const t=e.target;if(t.dataset.leg==null)return;state.legs[+t.dataset.leg][t.dataset.k]=t.value;markEdited();render()});
@@ -1574,10 +1582,6 @@ function download(name,text,type){const a=document.createElement("a");a.href=URL
 const fname=()=>(state.planName||"vfr_plan").replace(/[\\/:*?"<>|]/g,"_");
 $("#exportJson").onclick=()=>download(fname()+".json",JSON.stringify(state,null,1),"application/json");
 $("#importJson").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const s=JSON.parse(t);if(!Array.isArray(s.wps))throw 0;state=s;state.g=state.g||EXAMPLE.g;state.legs=state.legs||[];fillForm();render();fit();toast("เปิดไฟล์แผนแล้ว")}catch(err){toast("ไฟล์นี้ไม่ใช่ไฟล์แผนของแอป")}});e.target.value=""};
-$("#exportCsv").onclick=()=>{const r=compute().rows;const H=["Leg","From","To","ALT","WD","WV","Temp","CAS","TAS","TC","WCA","TH","Var","MH","Dev","CH","MH_back","Dist","Rem","GS","ETE","ETA","FuelLeg","FuelRem","VOR"];
-  const lines=[H.join(",")].concat(r.map((x,i)=>{const l=state.legs[i];return[i+1,state.wps[i].name,state.wps[i+1].name,l.alt,l.wd,l.wv,l.temp,l.cas,x.tas.toFixed(1),hdg(x.tc),x.wca.toFixed(1),hdg(x.th),state.g.var,hdg(x.mh),l.dev,hdg(x.ch),hdg(x.mhBack),x.dist.toFixed(2),x.rem.toFixed(2),x.gs.toFixed(1),mmss(x.ete),hhmm(x.eta),x.fLeg.toFixed(1),x.fuel.toFixed(1),state.wps[i+1].vor||""].map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")}));
-  download(fname()+".csv","﻿"+lines.join("\n"),"text/csv")};
-
 /* ---------- พื้นที่ P/R/D จาก eAIP ENR 5.1 ---------- */
 const AREA_COL={P:"#d1242f",R:"#e07a00",D:"#2f6fd6"},AREA_NAME={P:"Prohibited",R:"Restricted",D:"Danger"};
 const areaLayers={P:L.layerGroup().addTo(map),R:L.layerGroup().addTo(map),D:L.layerGroup().addTo(map)};
@@ -1856,7 +1860,7 @@ const NT_CATS=[
  {k:"ad",e:"🛬",t:"สนามบิน / ทางวิ่ง / ไฟ",c:"#60a5fa",re:/^Q(M|F|L)/},
  {k:"nav",e:"📡",t:"เครื่องช่วยเดินอากาศ / ATS / อื่นๆ",c:"#cbd5e1",re:/./}];
 function ntCat(n){return NT_CATS.find(c=>c.re.test(n.code||"Q"))}
-let ntHideCat=new Set();
+let ntHideCat=new Set();const ntMore=new Set();
 function ntSev(n){const c=n.code||"";if(/^Q(R[PRDT]|WM|WD|WH|WE|WP)/.test(c)||/LC$/.test(c)&&/^Q(M|F)/.test(c))return"red";if(/^Q(WU|OB|W)/.test(c)||/(AS|AU|LT|HW)$/.test(c))return"yellow";return"blue"}
 function ntParse(txt,extra){const parts=String(txt).replace(/\r/g,"").split(/(?=\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC]\b)/).map(s=>s.trim()).filter(s=>/NOTAM[NRC]/.test(s));
   return parts.map(raw=>{const one=raw.replace(/\n/g," ");const g=k=>{const m=one.match(new RegExp(`\\b${k}\\)\\s*(.*?)(?=\\s+[A-G]\\)\\s|$)`));return m?m[1].trim():""};
@@ -1906,19 +1910,23 @@ function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHi
   const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
   const buf=num($("#ntBuf").value,10),mids=routeAirports(buf).map(a=>a.id).filter(x=>x!==dep&&x!==dst);
   const groups=[];const used=new Set();
-  const addG=(title,list)=>{groups.push({title,list});list.forEach(n=>used.add(n))};
-  const show=n=>(hidden||n.active)&&!ntHideCat.has(ntCat(n).k);
+  /* แสดงเฉพาะรายการที่เกี่ยวข้อง (มีผลในช่วงเวลาบิน) — ที่เหลือซ่อนไว้ให้กด "ดูเพิ่ม" เอง */
+  const cat=n=>!ntHideCat.has(ntCat(n).k);
+  const addG=(title,all,collapsed)=>{const list=collapsed?[]:all.filter(n=>n.active),extra=collapsed?all:all.filter(n=>!n.active);groups.push({title,list,extra});all.forEach(n=>used.add(n))};
+  const show=n=>cat(n);
   if(dep)addG(`${dep}${AP[dep]?" · "+AP[dep].name:""} (ต้นทาง)`,E.filter(n=>n.loc===dep&&show(n)));
   mids.forEach(ic=>{const l=E.filter(n=>n.loc===ic&&show(n));if(l.length)addG(`${ic}${AP[ic]?" · "+AP[ic].name:""}`,l)});
   if(dst&&dst!==dep)addG(`${dst}${AP[dst]?" · "+AP[dst].name:""} (ปลายทาง)`,E.filter(n=>n.loc===dst&&show(n)));
   addG(`พื้นที่ตามแนวเส้นทาง ±${buf} NM (FIR / area)`,E.filter(n=>!used.has(n)&&n.inBuf&&show(n)));
-  if(hidden)addG("อื่นๆ (ไม่เกี่ยวกับเส้นทาง)",E.filter(n=>!used.has(n)));
+  addG("อื่นๆ (ไม่เกี่ยวกับเส้นทาง)",E.filter(n=>!used.has(n)&&cat(n)),true);
   const item=n=>{const k=n.loc+"|"+n.id,open=ntOpen.has(k);return`<div class="nti ${n.active?"":"off"}" style="--cc:${ntCat(n).c}" data-k="${esc(k)}" role="button" tabindex="0" aria-expanded="${open}">
     <div class="nti-h"><b><span class="nti-e">${ntCat(n).e}</span> ${esc(n.loc)}: ${esc(ntTitle(n))}</b><span class="nti-id">${esc(n.id)}</span></div>
     <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
     ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
     ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
-  $("#ntList").innerHTML=groups.map(g=>`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):'<p class="hint">No NOTAM available.</p>'}</div>`).join("");
+  $("#ntList").innerHTML=groups.filter(g=>g.list.length||g.extra.length||!/^อื่นๆ/.test(g.title)).map(g=>{const op=ntMore.has(g.title);
+    return`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):/^อื่นๆ/.test(g.title)?"":`<p class="hint">${g.extra.length?"ไม่มี NOTAM ที่มีผลในช่วงเวลาบิน":"No NOTAM available."}</p>`}
+    ${g.extra.length?`<button class="nt-more mini" data-more="${esc(g.title)}">${op?"▲ ซ่อน":"▼ ดูเพิ่ม"} ${g.extra.length} รายการ${/^อื่นๆ/.test(g.title)?"":" (ไม่อยู่ในช่วงเวลาบิน)"}</button>${op?g.extra.map(item).join(""):""}`:""}</div>`}).join("");
   const [t0,t1]=ntFlightWindow();const fe=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap)).length;
   $("#ntRoute").innerHTML=W.length>1?`<span class="nt-pin">●</span> <b>${esc(W[0].name)}</b> <span class="hint">→</span> <span class="nt-pin">●</span> <b>${esc(W.at(-1).name)}</b> <span class="hint">· ช่วงบิน ${ntLocal(t0)} – ${ntLocal(t1)} · เกี่ยวข้อง ${fe} รายการ</span>`:'<span class="hint">ยังไม่มีเส้นทาง — สร้างเส้นทางในแท็บ 1 ก่อน</span>';
   const a=NT_AUTO_META;$("#ntInfo").innerHTML=(a?`ดึงอัตโนมัติจาก ${esc(a.source)} · อัปเดต ${a.age} · ${a.n} NOTAM`:'<span class="warnc">ยังไม่มีชุด NOTAM อัตโนมัติ — ใช้การวางเองด้านล่างได้</span>')+(a&&a.err?` · <span class="bad">ดึงรอบล่าสุดไม่สำเร็จ (${esc(a.err)})</span>`:"")+(NT.length?` · วางเอง ${NT.length}`:"");
@@ -1958,7 +1966,7 @@ $("#ntChips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]"
 $("#ntPasteAero").onclick=async()=>{try{const t=await navigator.clipboard.readText();if(!t||!/NOTAM|"items"/.test(t))throw 0;$("#ntText").value=t;$("#ntParse").click()}
   catch(e){$("#ntPasteBox").open=true;$("#ntText").focus();toast("กด Ctrl+V ในกล่อง แล้วกด อ่าน NOTAM")}};$("#ntBuf").addEventListener("input",ntRender);
 $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
-$("#ntList").addEventListener("click",e=>{const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
+$("#ntList").addEventListener("click",e=>{const mb=e.target.closest("[data-more]");if(mb){const t=mb.dataset.more;ntMore.has(t)?ntMore.delete(t):ntMore.add(t);ntRender();return}const it=e.target.closest(".nti");if(!it)return;const k=it.dataset.k;ntOpen.has(k)?ntOpen.delete(k):ntOpen.add(k);ntRender()});
 $("#ntList").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nti")){e.preventDefault();e.target.click()}});
 $("#ntParse").onclick=()=>{NT=ntReadPaste($("#ntText").value);try{localStorage.setItem("vfr_notam",$("#ntText").value)}catch(e){}
   ntRender();if(ntView==="map"){ntDrawMap();setTimeout(()=>ntMap&&ntMap.invalidateSize(),80)}const E=ntEval().filter(n=>n.manual),a=E.filter(n=>n.active).length,r=E.filter(n=>n.active&&(n.inBuf||n.ap)).length;
@@ -2456,7 +2464,7 @@ function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=ne
     <p class="hint">หัวข้ออื่นทั้งหมดอยู่ในรายการด้านซ้าย · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
   const qi=$("#epHomeQ");qi.oninput=()=>{$("#epSearch").value=qi.value;epRenderList();if(qi.value.trim()){const v=qi.value.toLowerCase();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(v))}else M.querySelectorAll(".ep-big").forEach(b=>b.hidden=false)};
   M.onclick=e=>{const b=e.target.closest(".ep-big,.ep-chip");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();$("#epMain").scrollIntoView({block:"start"})}}
-function epRenderList(){const L=$("#epList");
+function epRenderList(){const L=$("#epList");{const dt=$("#dataTm");if(dt)dt.innerHTML=EP?`มีข้อมูลแล้ว: <b>${esc(EP.source||"")}</b> (${esc(EP.date||"")}) · EMER ${EP.procedures.length} หัวข้อ`+(EP.normal?` · NORMAL ${EP.normal.procedures.length} หัวข้อ`:""):'<b style="color:var(--bad)">ยังไม่มีข้อมูล</b> — กด Import แล้วเลือกไฟล์ emergency_data.json'}
   if(!EP){L.innerHTML="";$("#epSrc").textContent="";epRenderMain();return}
   const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="",n=0;
   const inTitle=p=>(p.id+" "+p.title).toLowerCase().includes(q);
@@ -2943,12 +2951,13 @@ function visPreset(name){const on=new Set(VIS_PRESET[name].split(" ").filter(Boo
 const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
   const groups=[...new Set(VIS.map(v=>v.g))];
   d.innerHTML=`<a href="#" class="btn3d" id="visBtn" title="เลือกชั้นข้อมูลที่จะแสดง">◧ ชั้นข้อมูล</a><div id="visPanel" class="vis-panel" hidden>
+    <div class="vis-g"><b>แผนที่ฐาน</b><div class="vis-base">${BASES.map(b=>`<button type="button" data-base="${b[0]}" class="${baseCur()===b[0]?"on":""}">${b[1]}</button>`).join("")}</div></div>
     <div class="vis-pre">${Object.keys(VIS_PRESET).map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
     ${groups.map(g=>`<div class="vis-g"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync()};
   d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&(c.dataset.vis==="enr"||c.dataset.vis==="sp")){drawEnr();drawSig()}}});
-  d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre)});return d}});
+  d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
 map.on("overlayadd overlayremove",()=>{visSave()});
 if(visState)VIS.forEach(v=>{if(v.k in visState)visSet(v.k,visState[v.k],true)});
@@ -3069,6 +3078,15 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
   d.innerHTML=`<a href="#" id="btnUndo" class="off" title="ย้อนกลับ (Ctrl+Z)" aria-label="ย้อนกลับ">↶</a><a href="#" id="btnRedo" class="off" title="ทำซ้ำ (Ctrl+Y)" aria-label="ทำซ้ำ">↷</a>`;
   L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
 new CtlUndo().addTo(map);
+try{const b=localStorage.getItem("vfr_base");if(b)baseSet(b)}catch(e){}
+/* รวมปุ่มบนแผนที่ (ยกเว้น GPS) เป็นแถบเครื่องมือเดียวที่ยุบ/ขยายได้ */
+{const CtlTools=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","map-tools");
+  d.innerHTML='<a href="#" class="mt-toggle" title="แสดง/ซ่อนเครื่องมือแผนที่">🧰 <span>เครื่องมือ</span></a><div class="mt-body"></div>';
+  L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
+  let open;try{open=localStorage.getItem("vfr_tools")}catch(e){}open=open==null?innerWidth>=1000:open==="1";d.classList.toggle("collapsed",!open);
+  d.querySelector(".mt-toggle").onclick=e=>{e.preventDefault();const c=d.classList.toggle("collapsed");try{localStorage.setItem("vfr_tools",c?"0":"1")}catch(e){}};return d}});
+ const tools=new CtlTools().addTo(map),body=tools.getContainer().querySelector(".mt-body");
+ [".leaflet-control-zoom",".vis-ctl"].concat([...map.getContainer().querySelectorAll(".leaflet-top.leaflet-right>.leaflet-bar")].filter(x=>x.querySelector(".btn3d")&&!x.classList.contains("vis-ctl")),[".undo-bar"]).forEach(q=>{const el=typeof q==="string"?map.getContainer().querySelector(q):q;if(el&&el!==tools.getContainer())body.appendChild(el)})}
 /* ---------- boot ---------- */
 function fitPad(){return innerWidth>=1000&&!$(".top>.side").classList.contains("collapsed")&&!document.body.classList.contains("mapfull")&&!document.body.classList.contains("printing")?{paddingTopLeft:[430,40],paddingBottomRight:[60,40]}:{padding:[40,40]}}
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),fitPad());else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
