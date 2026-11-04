@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-04T23:06Z",
+"fetched": "2026-11-04T23:59Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -792,42 +792,6 @@
 "plain": " ",
 "start": "09/07/2026 0100",
 "end": "11/05/2026 0100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "A4370/26",
-"icao": "A4370/26 NOTAMN\r\nQ) VTBB/QANCA/I/BO/E/130/460/1354N10036E999\r\nA) VTBB B) 2611040000 C) 2611042359\r\nE) CDR Y5 (RNAV 2) AVBL FOR FLIGHT PLANNING AS FLW:\r\n   PERIOD      : MEA LOWER/UPPER LIMITS\r\n   0000-0159     FL130/FL460\r\n   0200-0400     FL270/FL460\r\n   0401-0559     FL130/FL460\r\n   0600-0800     FL270/FL460\r\n   0801-1329     FL130/FL460\r\n   1330-1430     FL370/FL460\r\n   1431-2359     FL130/FL460",
-"plain": " ",
-"start": "11/04/2026 0000",
-"end": "11/04/2026 2359",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4376/26",
-"icao": "A4376/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611041900 C) 2611042330\r\nE) RWY 02L/20R CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/04/2026 1900",
-"end": "11/04/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4380/26",
-"icao": "A4380/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611041900 C) 2611042330\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY F\r\n   -TWY F1 TO TWY F12\r\n   -TWY F15\r\n   -TWY W\r\n   -TWY Y\r\n   -TWY Z",
-"plain": " ",
-"start": "11/04/2026 1900",
-"end": "11/04/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4382/26",
-"icao": "A4382/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611041900 C) 2611042330\r\nE) TWY J BTN TWY C AND TWY J2 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/04/2026 1900",
-"end": "11/04/2026 2330",
 "keyword": "INTERNATIONAL"
 },
 {
