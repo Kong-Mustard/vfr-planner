@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-04T15:14Z",
+"fetched": "2026-11-04T16:17Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -849,6 +849,15 @@
 "keyword": "INTERNATIONAL"
 },
 {
+"loc": "VTBD",
+"id": "A4385/26",
+"icao": "A4385/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611041558 C) 2611042200\r\nE) ILS RWY 21L U/S",
+"plain": " ",
+"start": "11/04/2026 1558",
+"end": "11/04/2026 2200",
+"keyword": "INTERNATIONAL"
+},
+{
 "loc": "VTBS",
 "id": "A4378/26",
 "icao": "A4378/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611042030 C) 2611042145\r\nE) RWY 01/19 CLSD DUE TO WIP",
@@ -864,15 +873,6 @@
 "plain": " ",
 "start": "11/04/2026 1600",
 "end": "11/04/2026 2100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBL",
-"id": "J7287/26",
-"icao": "J7287/26 NOTAMN\r\nQ) VTBB/QWELW/IV/BO/AW/000/045/1452N10040E025\r\nA) VTBL B) 2611031150 C) 2611041605\r\nD) DAILY 1150-1605\r\nE) NIGHT FLYING TRAINING WILL TAKE PLACE RADIUS 25NM CENTRE\r\n   145228.70N1003948.20E (EXCLUDING VT P4)\r\nF) GND G) 4500FT AMSL",
-"plain": " ",
-"start": "11/03/2026 1150",
-"end": "11/04/2026 1605",
 "keyword": "INTERNATIONAL"
 },
 {
