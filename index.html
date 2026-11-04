@@ -120,8 +120,8 @@ tr.tot td{font-weight:700;background:var(--input)}
 .kb-map{padding:10px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}.kb-seg{flex-wrap:wrap}
 .kb-opts{display:flex;flex-wrap:wrap;gap:6px 16px}.kb-opts label{flex-direction:row;align-items:center;gap:6px;font-size:14px;color:var(--ink)}.kb-opts input{width:auto}.kb-opts label.dis{opacity:.45}
 body.pvprev #printView{width:auto!important;background:#525659;padding:var(--pvtop,72px) 16px 24px!important}
-body.pvprev .pv-page{width:138mm;min-height:200mm;box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
-body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:200mm;border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
+body.pvprev .pv-page{width:var(--pvpw,138mm);min-height:var(--pvph,200mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
+body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:var(--pvph,200mm);border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
 .pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
 .pv-bar{flex-wrap:wrap}.pv-bar b{font-size:17px}.pv-bar .hint{flex:1}
 .pv-ctl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;flex-basis:100%;font-size:13px}.pv-ctl label{display:flex;flex-direction:row;align-items:center;gap:6px;color:#111;font-size:13px}
@@ -139,6 +139,13 @@ body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#ff
 #printView{--panel:#fff;--ink:#000;--muted:#555;--line:#bbb;--nav:#123c69;--accent:#0a4fd1;--input:#fff;color-scheme:light}
 #printView .fcard{background:#fff!important;color:#000!important}#printView .fcard .r span{text-align:right;overflow-wrap:anywhere}
 #printView.pv-notbl .pv-tbl{display:none}
+body.printing #pvMap .remtag{font-size:calc(11px*var(--pvrem,1));padding:calc(1px*var(--pvrem,1)) calc(5px*var(--pvrem,1))}
+body.printing #pvMap .wpicon{transform:scale(var(--pvwp,1))}
+body.printing #pvMap .leaflet-overlay-pane path[stroke="#d6198f"],body.printing #pvMap .leaflet-overlay-pane path[stroke="#ff3d8b"]{stroke-width:calc(4px*var(--pvline,1))}
+#printView .pv-head h1{font-size:calc(15pt*var(--pvhd,1))}#printView .pv-head .tot{font-size:calc(10pt*var(--pvhd,1))}#printView .pv-head .sa{font-size:calc(12pt*var(--pvhd,1))}
+#printView .pv-tbl{font-size:var(--pvtfs,8pt)}#printView .pv-tbl th{font-size:var(--pvtfs,8pt)}
+#printView .pv-unit{font-size:calc(var(--pvfs,7.5pt)*1.45)}
+body.pvprev .pv-ed{outline:1px dashed transparent;cursor:text}body.pvprev .pv-ed:hover{outline-color:#60a5fa}body.pvprev .pv-ed:focus{outline:2px solid #2563eb;background:#eff6ff}
 .pv-side .fcard h3{font-size:9pt;margin:0}.pv-side .fcard h3 small{display:none}
 .pv-side .fcard .r{padding:0}
 .pv-unit{border:2px solid #e07a00;font:700 11pt var(--f-display);padding:1mm 2mm;color:#e07a00}
@@ -841,7 +848,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <button id="savePlan" class="primary">บันทึกแผน</button>
         <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
         <button id="delPlan">ลบแผนนี้</button>
-        <button id="kneePdf" class="primary">Kneeboard PDF (A5)</button>
+        <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
         <button id="exportXlsx">Export Excel (.xlsx)</button>
         <button id="exportCsv">Export CSV</button>
         <button id="exportJson">Export ไฟล์แผน</button>
@@ -928,7 +935,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 <section id="tab-log" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="hint">ช่องเทา = กรอกได้ · ช่องฟ้า = คำนวณอัตโนมัติ · <span class="hlv">MH</span> = heading ที่ต้องถือ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
+    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><button id="kneePdf2" class="primary">Kneeboard PDF (A5 / A4)</button><span class="hint">ช่องเทา = กรอกได้ · ช่องฟ้า = คำนวณอัตโนมัติ · <span class="hlv">MH</span> = heading ที่ต้องถือ · ข้อมูลเชื่อมกับแท็บ 1</span></div>
     <div class="nl-head" id="nlHead"></div>
     <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
@@ -2055,6 +2062,7 @@ const kbSetAll=f=>{state.kbSel=state.kbSel||{};kbAirports().forEach(a=>kbItems(a
 $("#kbAll").onclick=()=>kbSetAll(()=>true);$("#kbNone").onclick=()=>kbSetAll(()=>false);$("#kbDA").onclick=()=>kbSetAll(a=>kbDefault(a));
 $("#kbCancel").onclick=()=>$("#kbDlg").close();
 $("#kneePdf").onclick=()=>{if(!compute().rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}kbRender();$("#kbDlg").showModal()};
+$("#kneePdf2").onclick=()=>$("#kneePdf").click();
 $("#kbGo").onclick=()=>{$("#kbDlg").close();kneePrint()};
 $("#kbPrev").onclick=()=>{$("#kbDlg").close();kneePrint(true)};
 let kbMapMode="cur";
@@ -2250,36 +2258,51 @@ $("#fplPrevDl").onclick=()=>$("#fplPdf").click();
 function kbCards(){return kbAirports().map(a=>{const its=kbItems(a).filter(it=>kbOn(a,it));if(!its.length)return"";
   return`<div class="fcard"><h3>${esc(a.id)}</h3>${its.map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
 const UNIT_FREQS=["FALCON 127.0","OSCAR 127.0","BIGSHELL 127.0"];
-const KB_LAY0={dog:1,rem:"10",mapw:86,maph:124,fs:7.5,tbl:true};
+const KB_LAY0={paper:"A5",dog:1,rem:"10",mapw:86,maph:124,fs:7.5,tbl:true,remsz:1,wpsz:1,hd:1,tfs:8,line:1};
+const KB_PAPER={A5:{w:138,h:200,mapw:86,maph:124},A4:{w:200,h:287,mapw:128,maph:186}};
+function setPageSize(paper){let st=document.getElementById("pvPageSize");if(!st){st=document.createElement("style");st.id="pvPageSize";document.head.appendChild(st)}
+  st.textContent=`@media print{@page{size:${paper==="A4"?"A4":"A5"} portrait;margin:5mm}#printView{width:${(KB_PAPER[paper]||KB_PAPER.A5).w}mm!important}}`}
 function kbLay(){let o={};try{o=JSON.parse(localStorage.getItem("vfr_kb_lay")||"{}")}catch(e){}return{...KB_LAY0,...o}}
 function kbLaySave(o){try{localStorage.setItem("vfr_kb_lay",JSON.stringify(o))}catch(e){}}
 function kneePrint(preview){
   const KL=kbLay(),res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
   const W=state.wps,pv=$("#printView");
+  const prevTab=document.querySelector('.rail .tab[aria-selected="true"]');if(prevTab&&prevTab.dataset.tab!=="plan")document.querySelector('.rail .tab[data-tab="plan"]').click();
   const cards=kbCards();
   const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
     res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
   const q=qnhText();
-  pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard (A5)</b><span class="hint">ลากแผนที่/ซูม และลากกล่อง doghouse ได้ · <span id="pvFit"></span></span><button id="pvPrint" class="primary">พิมพ์ / Save PDF</button><button id="pvClose">✕ ปิด</button>
+  pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard</b><span class="hint">ลากแผนที่/ซูม · ลากกล่อง doghouse · <b>คลิกที่ตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้</b> (มีผลกับใบนี้เท่านั้น) · <span id="pvFit"></span></span><button id="pvPrint" class="primary">พิมพ์ / Save PDF</button><button id="pvClose">✕ ปิด</button>
     <div class="pv-ctl"><label>ความถี่หน่วย <select id="pvUnit">${[...new Set(["",...UNIT_FREQS,state.unitFreq||""])].map(v=>`<option value="${esc(v)}" ${v===(state.unitFreq||"")?"selected":""}>${v?esc(v):"— ไม่แสดง —"}</option>`).join("")}</select></label>
-      <label>Doghouse <input type="range" data-kl="dog" min="0.5" max="1.5" step="0.1" value="${KL.dog}"></label>
+      <label>กระดาษ <select data-kl="paper">${["A5","A4"].map(v=>`<option ${v===KL.paper?"selected":""}>${v}</option>`).join("")}</select></label>
+      <label>Doghouse <input type="range" data-kl="dog" min="0.5" max="1.8" step="0.1" value="${KL.dog}"></label>
       <label>ป้ายระยะ <select data-kl="rem">${[["0","ปิด"],["5","5 NM"],["10","10 NM"],["20","20 NM"],["25","25 NM"],["50","50 NM"]].map(([v,t])=>`<option value="${v}" ${v===String(KL.rem)?"selected":""}>${t}</option>`).join("")}</select></label>
-      <label>กว้างแผนที่ <input type="range" data-kl="mapw" min="60" max="128" step="2" value="${KL.mapw}"></label>
-      <label>สูงแผนที่ <input type="range" data-kl="maph" min="80" max="170" step="2" value="${KL.maph}"></label>
-      <label>ตัวอักษรความถี่ <input type="range" data-kl="fs" min="6" max="10" step="0.5" value="${KL.fs}"></label>
+      <label>กว้างแผนที่ <input type="range" data-kl="mapw" min="60" max="${(KB_PAPER[KL.paper]||KB_PAPER.A5).w-10}" step="2" value="${KL.mapw}"></label>
+      <label>สูงแผนที่ <input type="range" data-kl="maph" min="80" max="${(KB_PAPER[KL.paper]||KB_PAPER.A5).h-20}" step="2" value="${KL.maph}"></label>
+      <label>ขนาดป้ายระยะ <input type="range" data-kl="remsz" min="0.6" max="1.8" step="0.1" value="${KL.remsz}"></label>
+      <label>หมุดจุด <input type="range" data-kl="wpsz" min="0.6" max="1.8" step="0.1" value="${KL.wpsz}"></label>
+      <label>เส้นทาง <input type="range" data-kl="line" min="0.5" max="2.5" step="0.25" value="${KL.line}"></label>
+      <label>หัวกระดาษ <input type="range" data-kl="hd" min="0.7" max="1.6" step="0.1" value="${KL.hd}"></label>
+      <label>ตัวอักษรความถี่ <input type="range" data-kl="fs" min="6" max="12" step="0.5" value="${KL.fs}"></label>
+      <label>ตัวอักษรตาราง <input type="range" data-kl="tfs" min="6" max="12" step="0.5" value="${KL.tfs}"></label>
       <label><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}> ตารางนำทาง</label><button id="pvReset" class="mini">ค่าเริ่มต้น</button></div></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
     <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div>${cards}</div></div>${tbl}</div>`;
+  if(preview)pv.querySelectorAll(".pv-head h1,.pv-head .tot,.pv-head .sa,.pv-unit,.emerchip,.pv-side .fcard h3,.pv-side .fcard .r b,.pv-side .fcard .r span,.pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
   const restore=kbMapApply(),orig={boxScale:state.boxScale,remStep:state.remStep};
-  const applyKL=()=>{pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
+  const applyKL=()=>{const P=KB_PAPER[KL.paper]||KB_PAPER.A5;pv.style.setProperty("--pvpw",P.w+"mm");pv.style.setProperty("--pvph",P.h+"mm");setPageSize(KL.paper);
+    pv.style.setProperty("--pvrem",KL.remsz);pv.style.setProperty("--pvwp",KL.wpsz);pv.style.setProperty("--pvhd",KL.hd);pv.style.setProperty("--pvtfs",KL.tfs+"pt");pv.style.setProperty("--pvline",KL.line);
+    pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
     state.boxScale=KL.dog;state.remStep=String(KL.rem);render();map.invalidateSize();
-    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f){const lim=200*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า A5 — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า A5"}};
+    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl");render();document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
-  if(preview){pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:e.target.tagName==="SELECT"?e.target.value:+e.target.value;kbLaySave(KL);applyKL()});
+  if(preview){pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:e.target.tagName==="SELECT"?e.target.value:+e.target.value;
+      if(k==="paper"){const P=KB_PAPER[KL.paper];KL.mapw=P.mapw;KL.maph=P.maph;["mapw","maph"].forEach(q=>{const el=pv.querySelector(`[data-kl="${q}"]`);el.max=q==="mapw"?P.w-10:P.h-20;el.value=KL[q]})}
+      kbLaySave(KL);applyKL();if(k==="paper")setTimeout(()=>{map.invalidateSize();fit()},60)});
     $("#pvUnit").onchange=e=>{state.unitFreq=e.target.value;$("#unitFreq").value=state.unitFreq;store.set("vfr_current",state);const side=pv.querySelector(".pv-side");let u=side.querySelector(".pv-unit");
       if(!state.unitFreq){if(u)u.remove()}else{if(!u){u=document.createElement("div");u.className="pv-unit";side.prepend(u)}u.textContent=state.unitFreq}applyKL()};
     $("#pvReset").onclick=()=>{Object.assign(KL,KB_LAY0);kbLaySave(KL);pv.querySelectorAll("[data-kl]").forEach(el=>{const v=KL[el.dataset.kl];if(el.type==="checkbox")el.checked=!!v;else el.value=v});applyKL()};$("#pvClose").onclick=back;$("#pvPrint").onclick=()=>{window.addEventListener("afterprint",back,{once:true});window.print()};return}
