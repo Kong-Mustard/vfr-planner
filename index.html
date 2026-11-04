@@ -322,6 +322,7 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .ep-filter{display:flex;gap:4px}.ep-filter button{flex:1}
 .ep-filter button.on{background:var(--bad);border-color:var(--bad);color:#fff}
 .ep-list{overflow:auto;display:flex;flex-direction:column;gap:2px;min-height:120px}
+.ep-list>*{flex-shrink:0!important}.ep-list{overflow-x:hidden}.ep-item>span{min-width:0;overflow-wrap:anywhere}
 @media (max-width:860px){.ep-list{max-height:40vh}}
 .ep-grp{font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 6px 2px}
 .ep-item{all:unset;display:grid;grid-template-columns:52px 1fr auto;gap:6px;align-items:baseline;padding:7px 6px;border-radius:6px;cursor:pointer;font:500 14px/1.3 var(--f-body);color:var(--ink)}
