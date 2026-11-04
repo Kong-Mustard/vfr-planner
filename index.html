@@ -130,6 +130,20 @@ body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";posit
 .backup-box{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
 #procCard{--panel:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--input:#f2f4f7;--accent:#0a6cff;--accent-soft:#e8f0ff;color-scheme:light;background:#fff!important;color:#111827}
 #procCard button:not(.primary),#procCard select,#procCard input,#procCard textarea{background:#f2f4f7;color:#111827}
+.pv-free-tools{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px}.pv-free-tools[hidden]{display:none}
+.pv-free-tools button{min-width:36px;padding:5px 9px!important;font-size:13px!important;min-height:0!important}.pv-free-tools label{display:inline-flex;flex-direction:row;align-items:center;gap:2px;font-size:16px}.pv-free-tools input[type=color]{width:30px;height:28px;padding:0;border:0;background:none}
+.pv-free .pv-page{position:relative;height:var(--pvph,200mm);min-height:0!important;overflow:hidden;padding:0!important}
+body.pvprev .pv-free .pv-page::after{display:none}
+.pv-blk{position:absolute;box-sizing:border-box}.pv-blk>.blk-in{width:100%;height:100%}.pv-blk.is-txt>.blk-in,.pv-blk:not(.is-map):not(.is-box)>.blk-in{height:auto}
+.pv-blk.is-map #pvMap,.pv-blk.is-map #pvMap #map{width:100%!important;height:100%!important}
+.pv-blk.is-txt>.blk-in{min-height:1.4em;font:10pt var(--f-body);color:#000;padding:1mm}
+.pv-blk.is-box{border:1.5px solid #000}
+.pv-blk .pv-side,.pv-blk .pv-tbl{width:100%}
+.blk-h,.blk-r{display:none}
+body.pvprev .pv-free .pv-blk:hover{outline:1px dashed #60a5fa}body.pvprev .pv-free .pv-blk.sel{outline:2px solid #2563eb}
+body.pvprev .pv-free .pv-blk:hover>.blk-h,body.pvprev .pv-free .pv-blk.sel>.blk-h{display:grid;place-items:center;position:absolute;left:-2px;top:-22px;width:28px;height:22px;background:#2563eb;color:#fff;border-radius:6px 6px 0 0;cursor:move;touch-action:none;font-size:14px;z-index:1001}
+body.pvprev .pv-free .pv-blk:hover>.blk-r,body.pvprev .pv-free .pv-blk.sel>.blk-r{display:block;position:absolute;right:-7px;bottom:-7px;width:16px;height:16px;background:#fff;border:2px solid #2563eb;border-radius:3px;cursor:nwse-resize;touch-action:none;z-index:1001}
+body.pv-snap .pv-blk{outline:none!important}body.pv-snap .blk-h,body.pv-snap .blk-r{display:none!important}
 .pv-panel{display:none}
 .kb-seg{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));border-radius:6px!important;gap:0}.kb-seg button{border-radius:0!important;border:1px solid var(--line)!important;margin:-1px 0 0 -1px;padding:8px 6px!important;text-align:center}
 .kb-seg button.on{background:#fee2e2!important;color:#b91c1c!important;border:2px solid #dc2626!important;position:relative;z-index:1;font-weight:700}
@@ -181,7 +195,7 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   nav.rail,main>*:not(#tab-plan),#tab-plan>div>*{display:none!important}
   #tab-plan,#tab-plan>div{display:block!important}
   #printView{display:block!important;width:138mm;font:9pt var(--f-body);color:#000}
-  .leaflet-control-container,.pv-bar,.pv-panel{display:none!important}
+  .leaflet-control-container,.pv-bar,.pv-panel,.blk-h,.blk-r{display:none!important}.pv-blk{outline:none!important}
   body.pvprev #printView{background:#fff!important;padding:0!important}body.pvprev .pv-page{box-shadow:none;padding:0;margin:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
@@ -2332,6 +2346,45 @@ async function kbSavePdf(pv,KL){const btn=$("#pvPdf"),old=btn.textContent;btn.di
     const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast("บันทึก "+name)}
   catch(e){document.body.classList.remove("pv-snap");toast("สร้าง PDF ไม่ได้: "+(e.message||e)+" (ครั้งแรกต้องต่อเน็ต)")}
   finally{btn.disabled=false;btn.textContent=old}}
+/* ---------- Kneeboard จัดหน้าอิสระ (แบบ PowerPoint): ลาก/ย่อขยายบล็อก เพิ่มกล่องข้อความ จัดรูปแบบ ---------- */
+function pvFreeLoad(paper){try{return JSON.parse(localStorage.getItem("vfr_kb_free_"+paper))||{on:false,blocks:{}}}catch(e){return{on:false,blocks:{}}}}
+function pvFreeStore(paper,o){try{localStorage.setItem("vfr_kb_free_"+paper,JSON.stringify(o))}catch(e){}}
+function pvFreeOn(pv,KL){const pg=pv.querySelector(".pv-page");if(!pg||pv.classList.contains("pv-free"))return;
+  const z0=pg.style.zoom;pg.style.zoom="";const base=pg.getBoundingClientRect();const L=pvFreeLoad(KL.paper);L.blocks=L.blocks||{};let zTop=10;
+  const mk=(id,el,box,opt={})=>{const b=document.createElement("div");b.className="pv-blk"+(opt.map?" is-map":"")+(opt.cls?" "+opt.cls:"");b.dataset.blk=id;
+    const sv=L.blocks[id]||{};const x=sv.x??box.x,y=sv.y??box.y,w=sv.w??box.w,h=sv.h??box.h;
+    Object.assign(b.style,{left:x+"px",top:y+"px",width:w+"px"});if(opt.map||opt.fixedH)b.style.height=(h||120)+"px";if(sv.z)b.style.zIndex=sv.z;if(sv.hidden)b.hidden=true;
+    const inn=document.createElement("div");inn.className="blk-in";if(sv.fz)inn.style.zoom=sv.fz;if(el)inn.appendChild(el);else{inn.innerHTML=sv.html||opt.html||"";if(opt.edit){inn.contentEditable="true";inn.classList.add("pv-ed")}}
+    b.appendChild(inn);b.insertAdjacentHTML("beforeend",'<span class="blk-h" title="ลากเพื่อย้าย">⠿</span><span class="blk-r" title="ลากเพื่อย่อ/ขยาย"></span>');pg.appendChild(b);return b};
+  const rel=el=>{const r=el.getBoundingClientRect();return{x:r.left-base.left,y:r.top-base.top,w:r.width,h:r.height}};
+  /* วัดตำแหน่งทุกส่วนก่อน แล้วค่อยย้ายเข้ากล่อง (ย้ายทีละอันจะทำให้ส่วนอื่นเลื่อน) */
+  const parts=[[".pv-head","head"],["#pvMap","map"],[".pv-side","side"],[".pv-tbl","tbl"]].map(([q,id])=>{const el=pg.querySelector(q);return el?{el,id,bx:rel(el)}:null}).filter(Boolean);
+  parts.forEach(({el,id,bx})=>mk(id,el,bx,{map:id==="map"}));
+  Object.keys(L.blocks).filter(k=>/^(txt|box)-/.test(k)).forEach(k=>{const sv=L.blocks[k];mk(k,null,{x:sv.x,y:sv.y,w:sv.w,h:sv.h},k.startsWith("box")?{fixedH:true,cls:"is-box"}:{edit:true,cls:"is-txt"})});
+  const body=pg.querySelector(".pv-body");if(body)body.remove();
+  pv.classList.add("pv-free");pg.style.zoom=z0;pv.querySelector(".pv-free-tools").hidden=false;$("#pvFreeBtn").textContent="✕ ปิดจัดหน้าอิสระ";
+  const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px");setTimeout(()=>map.invalidateSize(),50);
+  const save=()=>{const o=pvFreeLoad(KL.paper);o.on=true;o.blocks={};pg.querySelectorAll(".pv-blk").forEach(b=>{const id=b.dataset.blk,inn=b.querySelector(".blk-in");
+      o.blocks[id]={x:parseFloat(b.style.left),y:parseFloat(b.style.top),w:parseFloat(b.style.width),h:b.style.height?parseFloat(b.style.height):null,z:+b.style.zIndex||0,hidden:b.hidden,fz:inn.style.zoom?+inn.style.zoom:0};
+      if(/^(txt|box)-/.test(id))o.blocks[id].html=/^txt-/.test(id)?inn.innerHTML:""});pvFreeStore(KL.paper,o)};
+  let sel=null;const select=b=>{pg.querySelectorAll(".pv-blk.sel").forEach(x=>x.classList.remove("sel"));sel=b;if(b){b.classList.add("sel");b.style.zIndex=++zTop}};
+  pg.addEventListener("pointerdown",e=>{const b=e.target.closest(".pv-blk");if(!b){select(null);return}select(b);
+    const h=e.target.closest(".blk-h"),r=e.target.closest(".blk-r");if(!h&&!r)return;e.preventDefault();e.stopPropagation();
+    const zz=parseFloat(pg.style.zoom)||1,sx=e.clientX,sy=e.clientY,ox=parseFloat(b.style.left),oy=parseFloat(b.style.top),ow=b.offsetWidth,oh=b.offsetHeight,fixH=!!b.style.height;
+    const mv=ev=>{const dx=(ev.clientX-sx)/zz,dy=(ev.clientY-sy)/zz;if(h){b.style.left=Math.round(ox+dx)+"px";b.style.top=Math.round(oy+dy)+"px"}
+      else{b.style.width=Math.max(40,Math.round(ow+dx))+"px";if(fixH)b.style.height=Math.max(24,Math.round(oh+dy))+"px";if(b.classList.contains("is-map"))map.invalidateSize()}};
+    const up=()=>{removeEventListener("pointermove",mv);removeEventListener("pointerup",up);if(b.classList.contains("is-map"))map.invalidateSize();save()};
+    addEventListener("pointermove",mv);addEventListener("pointerup",up)},true);
+  pg.addEventListener("input",()=>save());
+  const tools=pv.querySelector(".pv-free-tools");
+  tools.onmousedown=e=>{if(e.target.closest("button"))e.preventDefault()}; /* ไม่ให้เสียตำแหน่งข้อความที่เลือก */
+  tools.onclick=e=>{const f=e.target.closest("[data-fx]"),z=e.target.closest("[data-fz]");
+    if(f){document.execCommand(f.dataset.fx,false,null);save()}
+    if(z&&sel){const inn=sel.querySelector(".blk-in");if(sel.classList.contains("is-map")){toast("ย่อ/ขยายแผนที่ด้วยการลากมุมกล่อง");return}const v=Math.min(2.5,Math.max(.5,(parseFloat(inn.style.zoom)||1)+(+z.dataset.fz)*.1));inn.style.zoom=v.toFixed(2);save()}};
+  $("#pvColor").oninput=e=>{document.execCommand("foreColor",false,e.target.value);save()};
+  $("#pvAddTxt").onclick=()=>{const id="txt-"+Date.now();const b=mk(id,null,{x:30,y:Math.round(pg.offsetHeight*0.45),w:220},{edit:true,cls:"is-txt",html:"พิมพ์ข้อความ"});select(b);save();b.querySelector(".blk-in").focus()};
+  $("#pvAddBox").onclick=()=>{const id="box-"+Date.now();const b=mk(id,null,{x:40,y:40,w:160,h:90},{fixedH:true,cls:"is-box"});select(b);save()};
+  $("#pvDelBlk").onclick=()=>{if(!sel){toast("แตะเลือกกล่องก่อน");return}if(/^(txt|box)-/.test(sel.dataset.blk))sel.remove();else sel.hidden=true;sel=null;save();toast("ลบแล้ว (กด ↺ จัดหน้าใหม่ เพื่อคืนค่า)")}}
 /* ย้ายส่วนเลือกความถี่ + ชนิดแผนที่ จากหน้าต่าง Kneeboard มาไว้ข้างหน้าตัวอย่าง แล้วย้ายกลับเมื่อปิด */
 let kbPanelSaved=null;
 function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map"),dlg.querySelector(".kb-head .btns"),$("#kbCount"),$("#kbBody")];
@@ -2348,7 +2401,14 @@ function kneePrint(preview){
   const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
     res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
   const q=qnhText();
-  pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard</b><span class="hint">ลากแผนที่/ซูม · ลากกล่อง doghouse · <b>คลิกที่ตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้</b> (มีผลกับใบนี้เท่านั้น) · <span id="pvFit"></span></span><button id="pvPdf" class="primary" title="สร้างไฟล์ PDF ในเครื่อง (ใช้บน iPad / มือถือได้)">📄 บันทึก PDF</button><button id="pvPrint">🖨️ พิมพ์</button><button id="pvClose">✕ ปิด</button>
+  pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard</b><span class="hint">ลากแผนที่/ซูม · ลากกล่อง doghouse · <b>คลิกที่ตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้</b> (มีผลกับใบนี้เท่านั้น) · <span id="pvFit"></span></span><button id="pvFreeBtn" title="ลาก/ย่อขยายแต่ละส่วน เพิ่มกล่องข้อความ จัดรูปแบบตัวอักษร">✏️ จัดหน้าอิสระ</button><button id="pvPdf" class="primary" title="สร้างไฟล์ PDF ในเครื่อง (ใช้บน iPad / มือถือได้)">📄 บันทึก PDF</button><button id="pvPrint">🖨️ พิมพ์</button><button id="pvClose">✕ ปิด</button>
+    <div class="pv-free-tools" hidden><b>จัดหน้า:</b>
+      <button data-fx="bold" title="ตัวหนา"><b>B</b></button><button data-fx="italic" title="ตัวเอียง"><i>I</i></button><button data-fx="underline" title="ขีดเส้นใต้"><u>U</u></button>
+      <label title="สีตัวอักษร">🎨<input type="color" id="pvColor" value="#c62f24"></label>
+      <button data-fx="justifyLeft" title="ชิดซ้าย">⯇≡</button><button data-fx="justifyCenter" title="กึ่งกลาง">≡</button><button data-fx="justifyRight" title="ชิดขวา">≡⯈</button>
+      <button data-fz="-1" title="ย่อกล่องที่เลือก">A−</button><button data-fz="1" title="ขยายกล่องที่เลือก">A+</button>
+      <button id="pvAddTxt">➕ กล่องข้อความ</button><button id="pvAddBox">▭ กรอบ</button><button id="pvDelBlk">🗑 ลบที่เลือก</button><button id="pvFreeReset">↺ จัดหน้าใหม่</button>
+      <span class="hint">ลาก ⠿ เพื่อย้าย · ลากมุมขวาล่างเพื่อย่อขยาย · แตะกล่องเพื่อเลือก · เลือกข้อความแล้วกด B / I / U / สี</span></div>
     <details class="pv-ctlw" ${innerWidth<900?"":"open"}><summary>⚙️ ปรับขนาด / รูปแบบ</summary><div class="pv-ctl"><label>ความถี่หน่วย <select id="pvUnit">${[...new Set(["",...UNIT_FREQS,state.unitFreq||""])].map(v=>`<option value="${esc(v)}" ${v===(state.unitFreq||"")?"selected":""}>${v?esc(v):"— ไม่แสดง —"}</option>`).join("")}</select></label>
       <label>กระดาษ <select data-kl="paper">${["A5","A4"].map(v=>`<option ${v===KL.paper?"selected":""}>${v}</option>`).join("")}</select></label>
       <label>Doghouse <input type="range" data-kl="dog" min="0.5" max="1.8" step="0.1" value="${KL.dog}"></label>
@@ -2371,9 +2431,9 @@ function kneePrint(preview){
     pv.style.setProperty("--pvrem",KL.remsz);pv.style.setProperty("--pvwp",KL.wpsz);pv.style.setProperty("--pvhd",KL.hd);pv.style.setProperty("--pvtfs",KL.tfs+"pt");pv.style.setProperty("--pvline",KL.line);
     pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
     state.boxScale=KL.dog;state.remStep=String(KL.rem);render();map.invalidateSize();
-    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
+    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
   if(preview){kbPanelOpen(pv);
@@ -2386,6 +2446,10 @@ function kneePrint(preview){
       if(!state.unitFreq){if(u)u.remove()}else{if(!u){u=document.createElement("div");u.className="pv-unit";side.prepend(u)}u.textContent=state.unitFreq}applyKL()};
     $("#pvReset").onclick=()=>{Object.assign(KL,KB_LAY0);kbLaySave(KL);pv.querySelectorAll("[data-kl]").forEach(el=>{const v=KL[el.dataset.kl];if(el.type==="checkbox")el.checked=!!v;else el.value=v});applyKL()};$("#pvClose").onclick=back;$("#pvPrint").onclick=()=>{if(isIOSApp()){toast("แอปบนหน้าจอโฮมของ iPad สั่งพิมพ์ไม่ได้ — ใช้ 📄 บันทึก PDF แล้วพิมพ์จากไฟล์");return}window.addEventListener("afterprint",back,{once:true});window.print()};
     $("#pvPdf").onclick=()=>kbSavePdf(pv,KL);
+    const reopen=()=>{back();setTimeout(()=>kneePrint(true),60)};
+    $("#pvFreeBtn").onclick=()=>{const L=pvFreeLoad(KL.paper);if(pv.classList.contains("pv-free")){L.on=false;pvFreeStore(KL.paper,L);reopen()}else{L.on=true;pvFreeStore(KL.paper,L);pvFreeOn(pv,KL)}};
+    $("#pvFreeReset").onclick=()=>{pvFreeStore(KL.paper,{on:true,blocks:{}});reopen()};
+    if(pvFreeLoad(KL.paper).on)setTimeout(()=>pvFreeOn(pv,KL),260);
     const fitView=()=>{const pg=pv.querySelector(".pv-page"),bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px");if(!pg)return;
       pg.style.zoom="";const avail=pv.clientWidth-(innerWidth>1000?412:32),w=pg.offsetWidth;pg.style.zoom=w>avail?Math.max(.4,avail/w).toFixed(3):"";map.invalidateSize()};
     pv.querySelector(".pv-ctlw").addEventListener("toggle",fitView);addEventListener("resize",fitView);window._pvFit=fitView;setTimeout(fitView,120);return}
