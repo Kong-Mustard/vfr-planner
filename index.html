@@ -123,8 +123,13 @@ body.pvprev #printView{width:auto!important;background:#525659;padding:var(--pvt
 body.pvprev .pv-page{width:var(--pvpw,138mm);min-height:var(--pvph,200mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
 body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:var(--pvph,200mm);border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
 .pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
-.pv-bar{flex-wrap:wrap}.data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:12px}.data-grid .dwide{grid-column:1/-1}
+.pv-bar{flex-wrap:wrap}.data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:1500px;width:100%;margin:0 auto}.data-grid .dwide{grid-column:1/-1}
+@media (max-width:900px){.data-grid{grid-template-columns:minmax(0,1fr)}}
+#tab-data .hint,#tab-data .dhelp{color:var(--ink);opacity:.86;font-size:14.5px;line-height:1.55}
+.dhelp{margin:8px 0 0;padding-left:20px}.dhelp li{margin:3px 0}.dhelp b{opacity:1}
 .backup-box{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+#procCard{--panel:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--input:#f2f4f7;--accent:#0a6cff;--accent-soft:#e8f0ff;color-scheme:light;background:#fff!important;color:#111827}
+#procCard button:not(.primary),#procCard select,#procCard input,#procCard textarea{background:#f2f4f7;color:#111827}
 .pv-panel{display:none}
 .kb-seg{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));border-radius:6px!important;gap:0}.kb-seg button{border-radius:0!important;border:1px solid var(--line)!important;margin:-1px 0 0 -1px;padding:8px 6px!important;text-align:center}
 .kb-seg button.on{background:#fee2e2!important;color:#b91c1c!important;border:2px solid #dc2626!important;position:relative;z-index:1;font-weight:700}
@@ -682,6 +687,8 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .sm-prog{font:700 16px var(--f-mono);white-space:nowrap}
 .sm-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 6vw;gap:18px;cursor:pointer;overflow:auto}
 .sm-cond{font:italic 600 22px/1.35 var(--f-body);color:var(--accent)}
+.sm-side{font:500 16px/1.4 var(--f-body);color:var(--muted);opacity:.85;border-left:3px solid var(--line);padding:4px 10px;max-width:900px}.sm-side:empty{display:none}.sm-lab{font:700 12px var(--f-body);letter-spacing:.06em;color:var(--accent);margin-right:4px}
+.sm-w{font-size:17px!important;margin:0!important}
 .sm-text{font:700 clamp(28px,4.4vw,52px)/1.3 var(--f-display)}.sm-n{display:inline-block;min-width:1.4em;color:var(--muted);margin-right:.3em}
 .sm-mem{text-decoration:underline;text-decoration-color:var(--bad);text-decoration-thickness:4px;text-underline-offset:8px}
 .sm-tag{display:inline-block;margin-top:14px;font:700 15px var(--f-body);color:#fff;background:var(--bad);border-radius:999px;padding:4px 14px}
@@ -906,14 +913,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </details>
   </div>
 
-  <div class="card section" id="areaCard">
-    <div class="sechead">
-      <h2 class="hd hd-red">พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
-      <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="areaShowD" checked style="width:auto"> แสดง Danger area บนแผนที่</label>
-    </div>
-    <div id="areaList"></div>
-  </div>
-
   <div class="card section">
     <div class="sechead">
       <h2 class="hd hd-green">ความถี่ตามเส้นทาง</h2>
@@ -944,6 +943,14 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <input id="cImport" type="file" accept=".json,application/json" hidden>
       </div>
     </details>
+  </div>
+
+  <div class="card section" id="areaCard">
+    <div class="sechead">
+      <h2 class="hd hd-red">พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
+      <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="areaShowD" checked style="width:auto"> แสดง Danger area บนแผนที่</label>
+    </div>
+    <div id="areaList"></div>
   </div>
  </div>
  <aside id="printView" aria-hidden="true"></aside>
@@ -1095,23 +1102,38 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-green">1. ข้อมูล eAIP</h2>
     <div class="btns"><button type="button" onclick="document.getElementById('importEaip').click()">Import ไฟล์ eAIP เอง</button><input id="importEaip" type="file" accept=".json,application/json" hidden></div></div>
    <p id="eaipStatus" class="hint"></p>
-   <p class="hint">ปกติแอปดึงให้อัตโนมัติทุก 5 วัน (ความถี่ สนามบิน navaid airway พื้นที่ P/R/D CTR) — ใช้ปุ่มนี้เฉพาะเมื่อมีไฟล์ eaip_data.json ที่ต้องการใช้แทน</p></div>
+   <ul class="dhelp"><li><b>ใช้กับ:</b> ความถี่ สนามบิน navaid airway พื้นที่ P/R/D และ CTR ในแท็บ 1, Kneeboard และ Flight Plan</li>
+    <li><b>อัปเดต:</b> ระบบดึงจาก AIP Thailand ให้อัตโนมัติทุก 5 วัน — เปิดแอปตอนต่อเน็ตก็ได้ชุดล่าสุดเอง ไม่ต้องกดอะไร</li>
+    <li><b>กดปุ่ม Import เมื่อ:</b> ได้ไฟล์ eaip_data.json มาจากที่อื่นและต้องการใช้แทนชุดอัตโนมัติ</li>
+    <li><b>ตรวจ:</b> ดูวันที่ฉบับด้านบน ถ้าเก่าเกิน 28 วันแอปจะขึ้นเตือน — ตรวจกับ AIP ฉบับปัจจุบันเสมอ</li></ul></div>
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-red">2. ข้อมูล TM (EMER / NORMAL)</h2>
     <div class="btns"><button class="primary" type="button" onclick="document.getElementById('epImport').click()">Import emergency_data.json</button><button id="epClear">ลบข้อมูล TM</button><input id="epImport" type="file" accept=".json,application/json" hidden></div></div>
    <p id="dataTm" class="hint"></p>
-   <p class="hint">ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต</p></div>
+   <ul class="dhelp"><li><b>ใช้กับ:</b> แท็บ 5 NORMAL, แท็บ 6 EMER และแท็บ 10 ข้อสอบ</li>
+    <li><b>ไฟล์:</b> emergency_data.json (แปลงจาก TM 1-70-RTA-H60M-10) — อยู่ในโฟลเดอร์ Project วางแผนการบิน</li>
+    <li><b>ทำครั้งเดียวต่อเครื่อง</b> — Import ใหม่เมื่อ TM ออกฉบับแก้ไข แล้วตรวจวันที่ฉบับด้านบน</li>
+    <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
    <div class="sechead"><h2 class="hd hd-indigo">3. SOP / DTD จาก FalconView</h2>
     <div class="btns"><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel จาก FalconView</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
-   <p class="hint">ขั้นตอน: วางแผนในแอปนี้ → ดู "รายการเตรียมคีย์" → คีย์ใน FalconView → write การ์ด + export Excel → Import Excel กลับมาที่นี่ → ดู "ตรวจความพร้อม" ก่อนเสียบการ์ด · ข้อมูลเก็บในเครื่องนี้เท่านั้น</p>
+   <ol class="dhelp"><li>วางแผนเส้นทางในแท็บ 1 แล้วไปแท็บ 8 ดู <b>"รายการเตรียมคีย์"</b> — จุดและความถี่ที่ยังไม่มีในการ์ด พร้อมเลขช่องที่เสนอ</li>
+    <li>คีย์รายการนั้นใน FalconView แล้ว <b>write การ์ด</b> และ <b>export Excel</b> (SOP_COMCoordinate)</li>
+    <li>กดปุ่ม <b>Import Excel จาก FalconView</b> ด้านขวา — แอปเก็บ waypoint และ preset วิทยุไว้ในเครื่อง</li>
+    <li>ถ้าไฟล์ใหม่ต่างจากข้อมูลเดิม จะขึ้นรายการที่เปลี่ยนให้ตรวจ พร้อมปุ่มย้อนกลับ</li>
+    <li>กลับไปแท็บ 8 ดู <b>"ตรวจความพร้อมก่อนเสียบการ์ด"</b> ต้องเป็น ✓ ทุกรายการ</li></ol>
    <div id="sopInfo" class="sop-info"></div>
    <div id="sopDiff"></div>
   </div>
 
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-orange">4. ไฟล์แผนการบิน</h2>
     <div class="btns"><button id="exportJson">Export แผนปัจจุบัน</button><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button><input id="importJson" type="file" accept=".json,application/json" hidden></div></div>
-   <p class="hint">ไฟล์ .json ของแผนเดียว ใช้ส่งต่อแผนให้เครื่องอื่น (แผนที่บันทึกในเครื่องเปิดได้จากปุ่ม "เปิดแผนที่บันทึก…" ในแท็บ 1)</p></div>
-  <div class="card section dbox dwide"><div class="sechead"><h2 class="hd hd-indigo">5. สำรอง / กู้คืนข้อมูลทั้งหมด</h2></div>
+   <ul class="dhelp"><li><b>Export:</b> บันทึกแผนที่เปิดอยู่เป็นไฟล์ .json หนึ่งไฟล์ (เส้นทาง ลม น้ำมัน Flight Plan ครบ)</li>
+    <li><b>Import:</b> เปิดไฟล์แผนจากเพื่อนหรือจากอีกเครื่อง — แผนที่เปิดอยู่จะถูกแทนที่</li>
+    <li><b>ต่างจาก "บันทึกแผน" ในแท็บ 1:</b> ปุ่มนั้นเก็บไว้ในเครื่องนี้เท่านั้น ส่วนไฟล์นี้เอาไปใช้เครื่องอื่นได้</li></ul></div>
+  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-indigo">5. สำรอง / กู้คืนข้อมูลทั้งหมด</h2></div>
+   <ul class="dhelp"><li><b>สำรอง:</b> รวมแผนทั้งหมด waypoint/preset หน่วย ข้อมูล TM สนามที่กรอกเอง เป็นไฟล์เดียว — ควรทำทุกครั้งหลัง Import ข้อมูลใหม่</li>
+    <li><b>กู้คืน:</b> ใช้ย้ายไปเครื่องใหม่ หรือเมื่อข้อมูลหาย (ล้างเบราว์เซอร์ / Safari ลบข้อมูลเว็บที่ไม่ได้เปิด 7 วัน)</li>
+    <li>เก็บไฟล์สำรองไว้ที่ปลอดภัย เพราะมีข้อมูลหน่วยอยู่ด้วย</li></ul>
    <div class="backup-box">
   <div><b>⚠ ข้อมูลที่บันทึกอยู่ในเบราว์เซอร์ของเครื่องนี้เท่านั้น</b> — แผน, waypoint หน่วย, ข้อมูล EMER Proc., สนาม/procedure ที่กรอกเอง ไม่ซิงก์ข้ามเครื่อง และอาจหายถ้าล้างข้อมูลเบราว์เซอร์ ควรสำรองเป็นประจำ
     <span id="bkInfo" class="bk-info"></span></div>
@@ -1166,7 +1188,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 </dialog>
 <div id="stepMode" class="step-mode" hidden role="dialog" aria-modal="true" aria-labelledby="smTitle">
   <div class="sm-top"><b id="smTitle"></b><span id="smProg" class="sm-prog"></span><button id="smClose" aria-label="ปิด">✕ ปิด</button></div>
-  <div class="sm-body"><div id="smCond" class="sm-cond"></div><div id="smText" class="sm-text"></div></div>
+  <div class="sm-body"><div id="smPrevT" class="sm-side"></div><div id="smCond" class="sm-cond"></div><div id="smWarn"></div><div id="smText" class="sm-text"></div><div id="smNextT" class="sm-side"></div></div>
   <div class="sm-bar"><button id="smPrev">◀ ก่อนหน้า</button><button id="smNext" class="primary">ถัดไป ▶</button></div>
 </div>
 <div id="toast" class="toast"></div>
@@ -2015,7 +2037,7 @@ function npRenderMain(){const M=$("#npMain"),D=npData();
   const warnN=p.blocks.filter(b=>b.k==="warning"||b.k==="caution").length;
   const body=p.blocks.map((b,k)=>{if(b.k==="step"||b.k==="sub"){const fl=(b.f||"").split("").filter(c=>NP_FLAG[c]).map(c=>`<span class="np-f" title="${NP_FLAG[c]}">${c==="."?"★":c}</span>`).join("");
       return`<label class="np-step ${b.k==="sub"?"sub":""} ${done[k]?"done":""}" data-k="${k}"><input type="checkbox" ${done[k]?"checked":""}><span class="n${b.c?" circ":""}">${esc(b.n??"•")}${b.k==="step"?".":")"}</span><span class="tx">${fl}${esc(b.t)}</span></label>`}
-    if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:"";
+    if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:(b.k==="warning"||b.k==="caution")?`<div class="b-${b.k}">${esc(b.t)}</div>`:"";
     return`<div class="b-${b.k}">${esc(b.t)}</div>`}).join("");
   const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(done).length;
   M.innerHTML=`<h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
@@ -2024,7 +2046,7 @@ function npRenderMain(){const M=$("#npMain"),D=npData();
     <div class="ep-legend">* = ทำทุก thru-flight · ★ = ต้องทำ operational check · O = ถ้าติดตั้ง · N = กลางคืน · I = บินด้วยเครื่องวัด · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
   $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};
   $("#npStarBtn").onclick=()=>{favToggle("np",p.id);npRenderMain()};
-  $("#npStepBtn").onclick=()=>stepOpen(p.title,p.blocks.filter(b=>b.k==="step"||b.k==="sub"||b.k==="cond").map((b,k)=>({k:b.k==="cond"?"cond":"step",t:b.t,n:b.n,bi:p.blocks.indexOf(b)})),"np");$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
+  $("#npStepBtn").onclick=()=>stepOpen(p.title,p.blocks.filter(b=>["step","sub","cond","warning","caution"].includes(b.k)).map((b,k)=>({k:b.k==="cond"||b.k==="warning"||b.k==="caution"?b.k:"step",t:b.t,n:b.n,bi:p.blocks.indexOf(b)})),"np");$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
   $("#npBody").onchange=e=>{const s=e.target.closest(".np-step");if(!s)return;const k=s.dataset.k;if(e.target.checked)done[k]=1;else delete done[k];s.classList.toggle("done",e.target.checked);
     M.querySelector(".ep-meta .np-prog").textContent=`ทำแล้ว ${Object.keys(done).length}/${n}`;npRenderList()}}
 $("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;npSel=+b.dataset.i;recentAdd("np",npData().procedures[npSel].id);npRenderList();npRenderMain();if(window.innerWidth<=860)$("#npMain").scrollIntoView({behavior:"smooth"})});
@@ -2421,6 +2443,7 @@ let EP=store.get("vfr_ep"),epSel=null,epMemOnly=false,epQuiz=false,epFull=false;
 const ACTION=/(—|^LAND AS SOON|^AUTOROTATE|^EMER ENG|^EMER APU|^ESTABLISH)/;
 function epChecklist(p){const out=[];let prevCond=false;const hasStep=p.blocks.some(b=>b.k==="step");
   p.blocks.forEach(b=>{
+    if(b.k==="warning"||b.k==="caution"){out.push(b);return} /* แสดง WARNING/CAUTION เสมอ กันลืม */
     const tm=b.k==="sub"&&b.t.match(/^The term (.+?) is de/);
     if(tm){out.push({k:"cond",t:tm[1].replace(/- /g,"").replace(/AIR-SPEED/,"AIRSPEED"),hdr:true});
       const def=(b.t.split(/defined as /)[1]||"").split(/\. /)[0];
@@ -2433,6 +2456,7 @@ function epChecklist(p){const out=[];let prevCond=false;const hasStep=p.blocks.s
   for(let i=out.length-1;i>=0;i--){if(out[i].k==="cond"&&(i===out.length-1||out[i+1].k==="cond")&&!out[i].hdr)out.splice(i,1)}
   if(out.filter(x=>x.k==="step").length===1&&p.blocks.some(x=>x.k==="sub")){const subs=p.blocks.filter(x=>x.k==="sub"&&x.t.length<140);if(subs.length)out.push(...subs.map(x=>({k:"text",t:x.t})))}
   while(out.length&&out[out.length-1].k==="cond")out.pop();
+  for(let i=out.length-1;i>=0;i--){if(out[i].k==="cond"&&out[i+1]&&(out[i+1].k==="warning"||out[i+1].k==="caution")&&!out.slice(i+1).some(x=>x.k==="step"))out.splice(i,1)}
   return out.some(b=>b.k==="step")?out:[]}
 const EP_SKIP=new Set(["9.24"]);
 function epActionable(p){return !EP_SKIP.has(p.id)&&epChecklist(p).length>0}
@@ -2497,7 +2521,7 @@ function epRenderMain(){const M=$("#epMain");
   $("#epFullBtn").onclick=()=>{epFull=!epFull;epRenderMain()};
   $("#epHomeBtn").onclick=()=>{epSel=null;epRenderList();epRenderMain()};
   $("#epStarBtn").onclick=()=>{favToggle("ep",p.id);epRenderMain()};
-  $("#epStepBtn").onclick=()=>stepOpen(p.title,epChecklist(p).map(b=>({k:b.k==="step"?"step":"cond",t:b.t,n:b.n,mem:!!b.u})),"emer");
+  $("#epStepBtn").onclick=()=>stepOpen(p.title,epChecklist(p).map(b=>({k:b.k==="step"?"step":b.k==="warning"||b.k==="caution"?b.k:"cond",t:b.t,n:b.n,mem:!!b.u})),"emer");
   const qb=$("#epQuizBtn");if(qb)qb.onclick=()=>{epQuiz=!epQuiz;epRenderMain()};
   $("#epBody").onclick=e=>{const s=e.target.closest(".b-step.mem");if(s&&epQuiz)s.classList.toggle("show")}}
 $("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();
@@ -2980,9 +3004,13 @@ bkInfo();
 
 /* ---------- โหมดทีละขั้น (EMER / NORMAL) ---------- */
 let SM=null;
-function stepOpen(title,items,kind){const steps=[];let cond="";items.forEach(it=>{if(it.k==="cond"){cond=it.t;return}steps.push({...it,cond});cond=""});
+function stepOpen(title,items,kind){const steps=[];let cond="",warns=[];items.forEach(it=>{if(it.k==="cond"){cond=it.t;return}if(it.k==="warning"||it.k==="caution"){warns.push(it);return}steps.push({...it,cond,warns});cond="";warns=[]});
+  if(warns.length&&steps.length)steps[steps.length-1].after=warns;
   if(!steps.length){toast("ไม่มีขั้นตอนให้แสดง");return}SM={title,steps,i:0,kind};$("#stepMode").hidden=false;$("#stepMode").classList.toggle("emer",kind==="emer");document.body.style.overflow="hidden";stepShow();$("#smNext").focus()}
 function stepShow(){const s=SM.steps[SM.i];$("#smTitle").textContent=SM.title;$("#smProg").textContent=`ขั้น ${SM.i+1} / ${SM.steps.length}`;
+  const W=[...(s.warns||[]),...(s.after||[])];$("#smWarn").innerHTML=W.map(w=>`<div class="b-${w.k} sm-w">${esc(w.t)}</div>`).join("");
+  const nb=(x,lab)=>x?`<span class="sm-lab">${lab}</span> ${x.n!=null?`<b>${esc(x.n)}.</b> `:""}${esc(x.t)}`:"";
+  $("#smPrevT").innerHTML=nb(SM.steps[SM.i-1],"◀ ก่อนหน้า");$("#smNextT").innerHTML=nb(SM.steps[SM.i+1],"ถัดไป ▶")||(SM.i+1===SM.steps.length?'<span class="sm-lab">ขั้นสุดท้าย</span>':"");
   $("#smCond").textContent=s.cond||"";$("#smText").innerHTML=`${s.n!=null?`<span class="sm-n">${esc(s.n)}</span>`:""}<span class="${s.mem?"sm-mem":""}">${esc(s.t)}</span>${s.mem?'<div class="sm-tag">ท่องจำ</div>':""}`;
   $("#smPrev").disabled=SM.i===0;$("#smNext").textContent=SM.i+1<SM.steps.length?"ถัดไป ▶":"✓ จบ"}
 function stepGo(d){if(!SM)return;if(d>0&&SM.kind==="np"&&npSel!=null){const s=SM.steps[SM.i];if(s.bi!=null){(npDone[npSel]=npDone[npSel]||{})[s.bi]=1}}
