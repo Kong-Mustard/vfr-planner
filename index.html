@@ -123,7 +123,14 @@ body.pvprev #printView{width:auto!important;background:#525659;padding:var(--pvt
 body.pvprev .pv-page{width:var(--pvpw,138mm);min-height:var(--pvph,200mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
 body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:var(--pvph,200mm);border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
 .pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
-.pv-bar{flex-wrap:wrap}.pv-bar b{font-size:17px}.pv-bar .hint{flex:1}
+.pv-bar{flex-wrap:wrap}.pv-panel{display:none}
+body.pvprev .pv-panel{display:block;position:fixed;left:0;top:var(--pvtop,72px);bottom:0;width:380px;overflow:auto;background:#fff;color:#111;padding:10px 12px 20px;box-shadow:2px 0 12px rgba(0,0,0,.35);z-index:3001;font:14px var(--f-body)}
+body.pvprev .pv-panel h3{margin:10px 0 6px;font:800 15px var(--f-display);color:#123c69}
+body.pvprev .pv-panel .kb-map{padding:0;border:0}body.pvprev .pv-panel .kb-map>b{display:none}body.pvprev .pv-panel .kb-body{max-height:none;padding:6px 0;grid-template-columns:1fr;overflow:visible}
+body.pvprev .pv-panel .pp-btns .btns{flex-wrap:wrap}body.pvprev .pv-panel .pp-count{font-size:12.5px;margin:4px 0}
+body.pvprev #printView{padding-left:396px!important}
+@media (max-width:1000px){body.pvprev .pv-panel{position:static;width:auto;box-shadow:none;margin:0 0 12px}body.pvprev #printView{padding-left:16px!important}}
+.pv-bar b{font-size:17px}.pv-bar .hint{flex:1}
 .pv-ctl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;flex-basis:100%;font-size:13px}.pv-ctl label{display:flex;flex-direction:row;align-items:center;gap:6px;color:#111;font-size:13px}
 .pv-ctl input[type=range]{width:110px;padding:0}.pv-ctl select{width:auto;padding:4px 6px;font-size:13px;background:#f2f4f7;color:#111}.pv-ctl input[type=checkbox]{width:auto}
 .pv-warn{color:#dc2626;font-weight:700}
@@ -137,7 +144,7 @@ body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#ff
 .pv-side{display:flex;flex-direction:column;gap:1.5mm}
 .pv-side .fcard{border-width:1.5px;padding:1mm 1.5mm;font-size:var(--pvfs,7.5pt);break-inside:avoid}
 #printView{--panel:#fff;--ink:#000;--muted:#555;--line:#bbb;--nav:#123c69;--accent:#0a4fd1;--input:#fff;color-scheme:light}
-#printView .fcard{background:#fff!important;color:#000!important}#printView .fcard .r span{text-align:right;overflow-wrap:anywhere}
+#printView .fcard{background:#fff!important;color:#000!important}#printView .fcard .r b{white-space:normal;flex:0 1 auto;max-width:58%}#printView .fcard .r span{text-align:right;flex:1 1 auto;overflow-wrap:break-word}
 #printView.pv-notbl .pv-tbl{display:none}
 body.printing #pvMap .remtag{font-size:calc(11px*var(--pvrem,1));padding:calc(1px*var(--pvrem,1)) calc(5px*var(--pvrem,1))}
 body.printing #pvMap .wpicon{transform:scale(var(--pvwp,1))}
@@ -161,7 +168,7 @@ body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overf
   nav.rail,main>*:not(#tab-plan),#tab-plan>div>*{display:none!important}
   #tab-plan,#tab-plan>div{display:block!important}
   #printView{display:block!important;width:138mm;font:9pt var(--f-body);color:#000}
-  .leaflet-control-container,.pv-bar{display:none!important}
+  .leaflet-control-container,.pv-bar,.pv-panel{display:none!important}
   body.pvprev #printView{background:#fff!important;padding:0!important}body.pvprev .pv-page{box-shadow:none;padding:0;margin:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body.printing #printView{position:static;padding:0}
@@ -2053,6 +2060,7 @@ function kbRender(){const A=kbAirports();
     return`<div class="kb-ap"><h4><input type="checkbox" data-kbap="${esc(a.id)}" ${all?"checked":""} aria-label="เลือกทั้งสนาม ${esc(a.id)}"> ${esc(a.id)} <span class="hint">${a.off.toFixed(0)} NM จากเส้นทาง</span></h4>
       ${its.map(it=>`<label><input type="checkbox" data-kb="${esc(it.k)}" data-ap="${esc(a.id)}" ${kbOn(a,it)?"checked":""}><b style="color:var(--accent);min-width:48px">${esc(it.svc)}</b>${esc(it.txt)}</label>`).join("")}</div>`}).join("")
     ||`<p class="hint">ยังไม่มีข้อมูลความถี่ของสนามตามเส้นทาง</p>`;
+  if(window._pvCards)window._pvCards();
   const c=kbCountTxt();$("#kbCount").innerHTML=`เลือก ${c.n} รายการ จาก ${c.cards} สนาม`+(c.over?` · <b class="bad">อาจล้นกระดาษ A5 — ลดลงอีกหน่อย</b>`:" · พอดีกระดาษ")}
 $("#kbBody").addEventListener("change",e=>{const t=e.target;state.kbSel=state.kbSel||{};
   if(t.dataset.kb)state.kbSel[t.dataset.kb]=t.checked;
@@ -2067,7 +2075,8 @@ $("#kbGo").onclick=()=>{$("#kbDlg").close();kneePrint()};
 $("#kbPrev").onclick=()=>{$("#kbDlg").close();kneePrint(true)};
 let kbMapMode="cur";
 $("#kbMapSeg").onclick=e=>{const b=e.target.closest("[data-km]");if(!b)return;kbMapMode=b.dataset.km;$("#kbMapSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
-  const ro=kbMapMode==="route";["#kbLayers","#kbNames"].forEach(id=>{$(id).disabled=ro;$(id).closest("label").classList.toggle("dis",ro)})};
+  const ro=kbMapMode==="route";["#kbLayers","#kbNames"].forEach(id=>{$(id).disabled=ro;$(id).closest("label").classList.toggle("dis",ro)});if(window._pvRemap)window._pvRemap()};
+["#kbLayers","#kbDog","#kbNames"].forEach(id=>$(id).addEventListener("change",()=>{if(window._pvRemap)window._pvRemap()}));
 /* ปรับแผนที่ชั่วคราวสำหรับ kneeboard แล้วคืนค่าเดิมหลังพิมพ์/ปิดตัวอย่าง */
 function kbMapApply(){const all=layerCtl._layers.map(o=>({l:o.layer,ov:o.overlay,name:o.name})).concat([{l:ctrLayer,ov:true},{l:gpsLayer,ov:true}]),
     was=all.filter(o=>map.hasLayer(o.l)).map(o=>o.l),cls=[...document.body.classList];
@@ -2264,6 +2273,14 @@ function setPageSize(paper){let st=document.getElementById("pvPageSize");if(!st)
   st.textContent=`@media print{@page{size:${paper==="A4"?"A4":"A5"} portrait;margin:5mm}#printView{width:${(KB_PAPER[paper]||KB_PAPER.A5).w}mm!important}}`}
 function kbLay(){let o={};try{o=JSON.parse(localStorage.getItem("vfr_kb_lay")||"{}")}catch(e){}return{...KB_LAY0,...o}}
 function kbLaySave(o){try{localStorage.setItem("vfr_kb_lay",JSON.stringify(o))}catch(e){}}
+/* ย้ายส่วนเลือกความถี่ + ชนิดแผนที่ จากหน้าต่าง Kneeboard มาไว้ข้างหน้าตัวอย่าง แล้วย้ายกลับเมื่อปิด */
+let kbPanelSaved=null;
+function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map"),dlg.querySelector(".kb-head .btns"),$("#kbCount"),$("#kbBody")];
+  kbPanelSaved=nodes.map(n=>({n,p:n.parentNode,nx:n.nextSibling}));
+  const panel=document.createElement("div");panel.className="pv-panel";panel.innerHTML='<h3>🗺️ แผนที่</h3><div class="pp-map"></div><h3>📻 ความถี่ที่จะพิมพ์</h3><div class="pp-btns"></div><div class="pp-count"></div><div class="pp-body"></div>';
+  panel.querySelector(".pp-map").appendChild(nodes[0]);panel.querySelector(".pp-btns").appendChild(nodes[1]);panel.querySelector(".pp-count").appendChild(nodes[2]);panel.querySelector(".pp-body").appendChild(nodes[3]);
+  pv.appendChild(panel);kbRender()}
+function kbPanelHome(){if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
 function kneePrint(preview){
   const KL=kbLay(),res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
   const W=state.wps,pv=$("#printView");
@@ -2287,20 +2304,23 @@ function kneePrint(preview){
       <label>ตัวอักษรตาราง <input type="range" data-kl="tfs" min="6" max="12" step="0.5" value="${KL.tfs}"></label>
       <label><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}> ตารางนำทาง</label><button id="pvReset" class="mini">ค่าเริ่มต้น</button></div></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
-    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div>${cards}</div></div>${tbl}</div>`;
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div><div class="pv-cards">${cards}</div></div></div>${tbl}</div>`;
   if(preview)pv.querySelectorAll(".pv-head h1,.pv-head .tot,.pv-head .sa,.pv-unit,.emerchip,.pv-side .fcard h3,.pv-side .fcard .r b,.pv-side .fcard .r span,.pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
-  const restore=kbMapApply(),orig={boxScale:state.boxScale,remStep:state.remStep};
+  let restore=kbMapApply();const orig={boxScale:state.boxScale,remStep:state.remStep};
   const applyKL=()=>{const P=KB_PAPER[KL.paper]||KB_PAPER.A5;pv.style.setProperty("--pvpw",P.w+"mm");pv.style.setProperty("--pvph",P.h+"mm");setPageSize(KL.paper);
     pv.style.setProperty("--pvrem",KL.remsz);pv.style.setProperty("--pvwp",KL.wpsz);pv.style.setProperty("--pvhd",KL.hd);pv.style.setProperty("--pvtfs",KL.tfs+"pt");pv.style.setProperty("--pvline",KL.line);
     pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
     state.boxScale=KL.dog;state.remStep=String(KL.rem);render();map.invalidateSize();
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
-  if(preview){pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:e.target.tagName==="SELECT"?e.target.value:+e.target.value;
+  if(preview){kbPanelOpen(pv);
+    window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
+    window._pvCards=()=>{const c=pv.querySelector(".pv-cards");if(c){c.innerHTML=kbCards();c.querySelectorAll(".fcard h3,.fcard .r b,.fcard .r span").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}applyKL()};
+    pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:e.target.tagName==="SELECT"?e.target.value:+e.target.value;
       if(k==="paper"){const P=KB_PAPER[KL.paper];KL.mapw=P.mapw;KL.maph=P.maph;["mapw","maph"].forEach(q=>{const el=pv.querySelector(`[data-kl="${q}"]`);el.max=q==="mapw"?P.w-10:P.h-20;el.value=KL[q]})}
       kbLaySave(KL);applyKL();if(k==="paper")setTimeout(()=>{map.invalidateSize();fit()},60)});
     $("#pvUnit").onchange=e=>{state.unitFreq=e.target.value;$("#unitFreq").value=state.unitFreq;store.set("vfr_current",state);const side=pv.querySelector(".pv-side");let u=side.querySelector(".pv-unit");
