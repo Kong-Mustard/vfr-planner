@@ -214,7 +214,7 @@ body.printing #printView{position:static;padding:0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .disclaimer{color:#ffe08a;background:#3a2e08;border-color:#7a5d12}}
 .emerchip{font:700 13px var(--f-mono);color:var(--bad);border:2px solid var(--bad);border-radius:6px;padding:3px 8px;white-space:nowrap}
 .mini-tbl td{font-size:15px;padding:6px}.mini-tbl td.mh{font-size:18px;font-weight:700}
-.linkbtn{display:inline-block;font:600 14px var(--f-body);background:var(--nav);color:var(--panel);padding:8px 12px;border-radius:7px;text-decoration:none}
+.linkbtn{display:inline-flex;align-items:center;gap:4px;line-height:1.2;font:600 14px var(--f-body);background:var(--nav);color:var(--panel);padding:8px 12px;border-radius:7px;text-decoration:none}
 .nl-head{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;margin-bottom:8px}
 .nl-head span b{font-family:var(--f-mono)}
 .form-tbl td{padding:3px}.form-tbl td:first-child{font-weight:600;text-align:left;white-space:nowrap}
@@ -773,11 +773,13 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .rail .logo{border:0;cursor:pointer;padding:0}.rail .logo.ifr{background:#7c3aed}.rail .logo:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .sa-info{display:block;font:500 13px/1.5 var(--f-body);color:var(--ink);margin-top:-4px;background:color-mix(in srgb,#b45309 8%,transparent);border-radius:8px;padding:6px 8px}.sa-info:empty{display:none}.sa-info select{width:auto;padding:0 4px;font-size:12px;min-height:0}.sa-info .sa-v{color:#b45309}.sa-info button{padding:1px 8px;min-height:0}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
+.sa-float{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:800;pointer-events:auto}
+.wp-hint{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 8px}.wp-hint span{white-space:nowrap}.wp-hint code{font-size:11px}
 .rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
 .swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
 .hitag{background:#c62f24;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}.hitag-wrap{background:none;border:0}.hitag-wrap .hitag{cursor:pointer;display:inline-block}
 .apmk{display:flex;flex-direction:column;align-items:center;overflow:visible}.ap-e{font-size:17px;line-height:22px;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 1px 1px rgba(0,0,0,.6))}
-.ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}
+.ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}.ap-lo .ap-e{font-size:12px;line-height:16px}.ap-vlo .apmk.ap-minor{display:none}
 .wpdbl{background:#123c69;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:4px;white-space:nowrap;border:1px solid #fff}
 .undo-bar a{display:grid!important;place-items:center}
 #mfWp{position:fixed;left:12px;top:12px;z-index:2600;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;background:var(--panel);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
@@ -936,13 +938,12 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
       <button id="fplOpen" class="fpl-cta" type="button"><span class="fpl-ic" aria-hidden="true">📄</span><span class="fpl-tx"><b>สร้าง PDF Flight Plan</b><small id="fplSum">ICAO Flight Plan สำหรับยื่นหอบังคับการบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
       <div class="btns">
-        <span class="hint tap-hint">แตะแผนที่ = เมนูเพิ่มจุด · Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span>
         <button id="addManual">เพิ่มจุดจากพิกัด</button>
         <button id="reverse">กลับเส้นทาง</button>
         <button id="clearAll">ล้างทั้งหมด</button>
       </div>
     </div>
-    <p class="hint">ลากกลางเส้นสีชมพูบนแผนที่เพื่อแทรกจุดใหม่ระหว่าง 2 จุดได้ · พิกัดพิมพ์ได้ทั้งแบบทศนิยม <code>14.8812, 100.6431</code> หรือ MGRS <code>47PQS 1234 5678</code> · ลากหมุดบนแผนที่เพื่อย้ายจุดได้</p>
+    <p class="hint wp-hint"><span>👆 แตะแผนที่ = เมนูเพิ่มจุด</span><span>⚡ Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span><span>↔ ลากกลางเส้นชมพู = แทรกจุด</span><span>✋ ลากหมุด = ย้าย · แตะหมุด = ลบ</span><span>พิกัด: <code>14.8812, 100.6431</code> หรือ <code>47PQS 1234 5678</code></span></p>
     <div class="tablewrap"><table id="wpTable">
       <thead><tr><th>#</th><th>No. หน่วย</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
@@ -1425,11 +1426,11 @@ L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
 AIRPORTS.forEach(a=>{const hp=a[4]==="heliport",nm=String(a[1]).replace(/\s*(International\s+)?(Airport|Airfield|Heliport|Air Base|Airstrip)\b/gi,"").trim()||a[0];
-  const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk",html:`<span class="ap-e">${hp?"🚁":"✈️"}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
+  const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk"+(/^VT[A-Z]{2}$/.test(a[0])?"":" ap-minor"),html:`<span class="ap-e">${hp?"🚁":"✈️"}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
   .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);
   mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
 apLayer.addTo(map);
-{const zc=()=>map.getContainer().classList.toggle("ap-lo",map.getZoom()<8);map.on("zoomend",zc);zc()}layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
+{const zc=()=>{const c=map.getContainer().classList;c.toggle("ap-lo",map.getZoom()<8);c.toggle("ap-vlo",map.getZoom()<7)};map.on("zoomend",zc);zc()}layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
 let pePick=null;
 
 /* คลิกพื้นที่บนแผนที่: ถ้าอยู่ในโหมดเพิ่มจุด/เลือกพิกัด ให้ทำงานเหมือนคลิกแผนที่ ไม่งั้นเปิดรายละเอียด */
@@ -1458,6 +1459,10 @@ function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPro
     window._suppressClick=Date.now();markEdited();render();const f=typeof snapNear==="function"?snapNear(ll):null;
     if(f)ifrSnapAsk(W[i+1],i+1,f);else toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
   document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
+/* ป้ายบอกระยะ: ซูมออกจนป้ายชนกัน → ซ่อนบางป้ายอัตโนมัติ (เว้นตอนพิมพ์ Kneeboard ที่เลือกระยะเอง) */
+let remMk=[];function remThin(){if(document.body.classList.contains("printing"))return remMk.forEach(m=>{const e=m.getElement();if(e)e.style.display=""});let last=null;
+  remMk.forEach(m=>{const e=m.getElement();if(!e)return;const p=map.latLngToContainerPoint(m.getLatLng());const ok=!last||p.distanceTo(last)>=34;e.style.display=ok?"":"none";if(ok)last=p})}
+map.on("zoomend",()=>remThin());
 function drawMap(rows){
   routeLayer.clearLayers();
   const pts=state.wps.map(w=>[w.lat,w.lon]);
@@ -1487,7 +1492,7 @@ function drawMap(rows){
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
     mk.on("add",()=>hboxRotInit(mk,key));if(mk._icon)hboxRotInit(mk,key)});
-  remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
+  remMk=remMarkers(rows).map(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"remmk",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));remThin();
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
 map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
@@ -1618,7 +1623,7 @@ function render(){
     <td class="name"><input data-wp="${i}" data-k="name" value="${esc(w.name)}"></td>
     <td class="coord"><input data-wp="${i}" data-k="coord" value="${w.lat.toFixed(5)}, ${w.lon.toFixed(5)}"><span class="mgrs">MGRS ${fmtMgrs(toMgrs(w.lat,w.lon))}</span></td>
     <td class="w-m"><input data-wp="${i}" data-k="vor" value="${esc(w.vor||"")}" style="width:130px"></td>
-    <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-act="up" data-i="${i}" aria-label="เลื่อนขึ้น">▲</button><button class="mini" data-act="down" data-i="${i}" aria-label="เลื่อนลง">▼</button><button class="mini" data-act="zoom" data-i="${i}">ดู</button><button class="mini" data-act="del" data-i="${i}" aria-label="ลบ">✕</button></div></td>
+    <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-act="up" data-i="${i}" aria-label="เลื่อนขึ้น">▲</button><button class="mini" data-act="down" data-i="${i}" aria-label="เลื่อนลง">▼</button><button class="mini" data-act="zoom" data-i="${i}" title="ซูมไปที่จุดนี้" aria-label="ซูมไปที่จุด">⌖</button><button class="mini" data-act="del" data-i="${i}" aria-label="ลบ">✕</button></div></td>
   </tr>`).join("")||`<tr><td colspan="6" class="hint" style="padding:14px">ยังไม่มีจุด — คลิกบนแผนที่เพื่อเพิ่มจุดแรก (ต้นทาง)</td></tr>`;
   // nav log
   const body=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":(r.fuel<0?"bad":"");
@@ -1819,7 +1824,7 @@ async function wxLoadGrid(){const model=$("#wxModel").value,lv=$("#wxLevel").val
     const arr=Array.isArray(d)?d:[d];const nx=Math.round((LO2-LO1)/ST)+1,ny=Math.round((LA1-LA2)/ST)+1;
     wxGrid={model,lv,nx,ny,la1:LA1,lo1:LO1,st:ST,times:arr[0].hourly.time,pts:arr.map(p=>({s:p.hourly[vars.split(",")[0]],d:p.hourly[vars.split(",")[1]]}))};
     $("#wxTime").max=wxGrid.times.length-1;{const now=new Date().toLocaleString("sv-SE",{timeZone:"Asia/Bangkok"}).slice(0,13).replace(" ","T")+":00";const ni=wxGrid.times.indexOf(now);if(ni>=0&&!wxGrid._set){$("#wxTime").value=ni;wxGrid._set=1}}$("#wxStatus").dataset.grid=`ลม ${WX_MODELS[model]} ${$("#wxLevel").selectedOptions[0].text} (Open-Meteo)`;wxStatus();wxDrawWind()}
-  catch(e){$("#wxStatus").dataset.grid="โหลดข้อมูลลมไม่ได้ (ต้องต่อเน็ต) "+(e.message||"");wxStatus()}}
+  catch(e){$("#wxStatus").dataset.grid=navigator.onLine?"โหลดข้อมูลลมไม่ได้ตอนนี้ — ลองกดดึงใหม่อีกครั้ง":"โหลดข้อมูลลมไม่ได้ (ไม่ได้ต่อเน็ต)";console.warn("wx grid",e);wxStatus()}}
 function wxDrawWind(){if(!wxGrid)return;const t=+$("#wxTime").value;$("#wxTimeLbl").textContent=wxGrid.times[t].replace("T"," ")+" น.";
   if(wxVel){wxMap.removeLayer(wxVel);wxVel=null}if(!$("#wxWind").checked||typeof L.velocityLayer!=="function")return;
   const U=[],V=[];wxGrid.pts.forEach(p=>{const s=p.s[t],d=p.d[t];if(s==null||d==null){U.push(0);V.push(0);return}const [u,v]=uv(d,s);U.push(u);V.push(v)});
@@ -1852,7 +1857,7 @@ async function wxRouteFetch(){const S=routeSamples();if(S.length<1){toast("ย�
           const tp=lo.tp!=null&&hi.tp!=null?lo.tp+(hi.tp-lo.tp)*f:null;const [dd,ss]=dirspd(u,v);w={u,v,dir:dd,spd:ss,tp}}
         per[m]={w,cl:g("cloud_cover_low"),pr:g("precipitation"),vis:g("visibility"),cape:g("cape")}});
       return{...s,ti,per}});
-    wxRenderRoute()}catch(e){tb.innerHTML=`<tr><td class="hint" style="padding:14px">ดึงพยากรณ์ไม่ได้ (ต้องต่อเน็ต) ${esc(e.message||"")}</td></tr>`}}
+    wxRenderRoute()}catch(e){tb.innerHTML=`<tr><td class="hint" style="padding:14px">${navigator.onLine?"ดึงพยากรณ์ไม่ได้ตอนนี้ (เซิร์ฟเวอร์พยากรณ์ไม่ตอบ) — ลองกดอีกครั้ง":"ดึงพยากรณ์ไม่ได้ (ไม่ได้ต่อเน็ต)"}</td></tr>`}}
 function wxAvg(p){const ws=Object.values(p.per).map(x=>x.w).filter(Boolean);if(!ws.length)return null;
   const u=ws.reduce((a,w)=>a+w.u,0)/ws.length,v=ws.reduce((a,w)=>a+w.v,0)/ws.length,[d,s]=dirspd(u,v),tps=ws.map(w=>w.tp).filter(x=>x!=null);
   const spread=Math.max(...ws.map(w=>Math.hypot(w.u-u,w.v-v)));return{dir:d,spd:s,tp:tps.length?tps.reduce((a,b)=>a+b)/tps.length:null,spread}}
@@ -1980,7 +1985,7 @@ function saAsk(r,sig){if(typeof tapClose==="function")tapClose();document.queryS
   const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
   b.querySelector(".sa-no").onclick=close;b.querySelector(".sa-del").onclick=()=>{close();saHidden=sig;saMark(r);toast("ลบป้ายจุดสูงสุดแล้ว")};
   requestAnimationFrame(()=>b.classList.add("in"))}
-function saChip(t){if(!saCtl){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","sa-chip");L.DomEvent.disableClickPropagation(d);return d}});saCtl=new C().addTo(map)}
+function saChip(t){if(!saCtl){const d=L.DomUtil.create("div","sa-chip sa-float",map.getContainer());L.DomEvent.disableClickPropagation(d);saCtl={getContainer:()=>d}}
   const el=saCtl.getContainer();el.textContent=t;el.hidden=!t;el.title="Safety Altitude ตามเส้นทาง (ดูรายละเอียดที่ช่อง SA ในแท็บ 1)"}
 /* เต็มจอ: ปุ่มอยู่มุมขวาล่างใกล้ GPS · ในโหมดเต็มจอย้ายกรอบ "จุดเส้นทาง" มาลอยบนแผนที่เพื่อจัดการ waypoint ได้ */
 let mfHome=null;
@@ -2159,7 +2164,7 @@ function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHi
     ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
     ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
   $("#ntList").innerHTML=groups.filter(g=>g.list.length||g.extra.length||!/^อื่นๆ/.test(g.title)).map(g=>{const op=ntMore.has(g.title);
-    return`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):/^อื่นๆ/.test(g.title)?"":`<p class="hint">${g.extra.length?"ไม่มี NOTAM ที่มีผลในช่วงเวลาบิน":"No NOTAM available."}</p>`}
+    return`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):/^อื่นๆ/.test(g.title)?"":`<p class="hint">${g.extra.length?"ไม่มี NOTAM ที่มีผลในช่วงเวลาบิน":"ไม่มี NOTAM"}</p>`}
     ${g.extra.length?`<button class="nt-more mini" data-more="${esc(g.title)}">${op?"▲ ซ่อน":"▼ ดูเพิ่ม"} ${g.extra.length} รายการ${/^อื่นๆ/.test(g.title)?"":" (ไม่อยู่ในช่วงเวลาบิน)"}</button>${op?g.extra.map(item).join(""):""}`:""}</div>`}).join("");
   const [t0,t1]=ntFlightWindow();const fe=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap)).length;
   $("#ntRoute").innerHTML=W.length>1?`<span class="nt-pin">●</span> <b>${esc(W[0].name)}</b> <span class="hint">→</span> <span class="nt-pin">●</span> <b>${esc(W.at(-1).name)}</b> <span class="hint">· ช่วงบิน ${ntLocal(t0)} – ${ntLocal(t1)} · เกี่ยวข้อง ${fe} รายการ</span>`:'<span class="hint">ยังไม่มีเส้นทาง — สร้างเส้นทางในแท็บ 1 ก่อน</span>';
