@@ -2,10 +2,10 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v46";
+const V = "vfr-v47";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json", "notam.json",
-  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css",
-  "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js",
+  "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
+  "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
   "https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css",
@@ -45,7 +45,8 @@ self.addEventListener("fetch", e => {
   }
   // ไลบรารี/ฟอนต์จาก CDN: cache-first
   if (/cdnjs|jsdelivr|unpkg|fonts\.(googleapis|gstatic)/.test(url.hostname)) {
-    e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(res => { const cp = res.clone(); caches.open(V).then(c => c.put(req, cp)); return res; })));
+    // เก็บเฉพาะไฟล์ที่โหลดสำเร็จ (ไม่เก็บ 404/500 ค้างไว้) · คำขอแบบ CORS (มี integrity) ใช้ไฟล์ opaque เดิมไม่ได้
+    e.respondWith(caches.match(req).then(hit => (hit && !(req.mode === "cors" && hit.type === "opaque")) ? hit : fetch(req).then(res => { if (res.ok) { const cp = res.clone(); caches.open(V).then(c => c.put(req, cp)); } return res; }).catch(() => hit || Response.error())));
     return;
   }
   // หน้าแอปและข้อมูลของแอป + พยากรณ์: network-first
