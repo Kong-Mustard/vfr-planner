@@ -329,6 +329,8 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .snapask p{margin:9px 0 2px}.snapask .sa-c{color:#6b7684;font-size:11px}.snapask .sa-b{display:flex;gap:8px;margin-top:10px}
 .snapask button{flex:1;border:0;border-radius:9px;padding:9px 6px;font:600 12.5px system-ui,sans-serif;cursor:pointer}
 .snapask .sa-no{background:#eef1f5;color:#3b4654}.snapask .sa-yes{background:#123b7a;color:#fff}.snapask button:hover{filter:brightness(1.08)}
+.wpask .sa-h .wpicon{flex:0 0 26px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:#d6198f;color:#fff;font:700 12px system-ui,sans-serif}
+.wpask .sa-h b{color:#1b2430}.wpask .sa-del{background:#d1242f}
 @media (pointer:coarse){.snapask{width:280px}.snapask button{padding:12px 6px;font-size:14px}}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
 .ifrpop table{border-collapse:collapse;margin:4px 0;font-size:12px}.ifrpop .ifrg{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:4px 0;font-size:12px}.ifrpop .ifrg span{color:#666}.ifrpop .ifrg b{font-weight:600;color:#222}.ifrpop .ifrseg{border-top:1px solid #ddd;margin-top:5px;padding-top:4px}.ifrpop .btn{margin-top:4px}
 .rptri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid #ffd400;filter:drop-shadow(0 0 1px #000)}
@@ -1446,13 +1448,14 @@ function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPro
   const ghost=L.polyline([a,a,b],{color:"#d6198f",weight:3,dashArray:"6 6",interactive:false}).addTo(map);
   const dot=L.circleMarker(a,{radius:7,color:"#fff",weight:2,fillColor:"#d6198f",fillOpacity:1,interactive:false});
   const mv=e=>{if(!moved&&Math.hypot(e.clientX-x0,e.clientY-y0)<6)return;moved=true;ll=map.mouseEventToLatLng(e);
-    ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map)};
+    ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map);if(FLMODE==="I"&&typeof ifrSnapHint==="function")ifrSnapHint(ll)};
   const up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);
-    map.removeLayer(ghost);if(map.hasLayer(dot))map.removeLayer(dot);setTimeout(()=>map.dragging.enable(),0);
+    map.removeLayer(ghost);if(map.hasLayer(dot))map.removeLayer(dot);setTimeout(()=>map.dragging.enable(),0);if(typeof ifrSnapHint==="function")ifrSnapHint(null);
     if(!moved){window._suppressClick=Date.now();if(typeof tapMenu==="function")tapMenu(map.mouseEventToLatLng(ev));return}if(!ll)return;
     W.splice(i+1,0,{name:"WP"+(i+2),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""});
     const base=state.legs[i]?{...state.legs[i],ate:"",fact:""}:blankLeg();state.legs.splice(i+1,0,base);
-    window._suppressClick=Date.now();markEdited();render();toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
+    window._suppressClick=Date.now();markEdited();render();const f=FLMODE==="I"&&typeof ifrNear==="function"?ifrNear(ll):null;
+    if(f)ifrSnapAsk(W[i+1],i+1,f);else toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
   document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
 function drawMap(rows){
   routeLayer.clearLayers();
@@ -1469,6 +1472,7 @@ function drawMap(rows){
       .bindTooltip(`${i+1}. ${w.name||"WP"}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
     m.on("drag",e=>{if(FLMODE==="I")ifrSnapHint(e.target.getLatLng())});
+    m.on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();wpAsk(i)});
     m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);const f=FLMODE==="I"?ifrNear(p):null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f)});
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
@@ -1489,6 +1493,20 @@ map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<40
   if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng)});
 /* แตะแผนที่ → หมุดจาง + เมนูเล็ก (ไม่มีโหมดเปิด/ปิด) · Shift+คลิก หรือ แตะค้าง/คลิกขวา = เพิ่มทันที */
 let tapGhost=null,tapBox=null;
+/* แตะจุดเส้นทางบนแผนที่ → ถามลบ (ไม่ต้องเลื่อนลงไปหาในตาราง) */
+function wpAsk(i){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.remove());const w=state.wps[i];if(!w)return;
+  const b=document.createElement("div");b.className="snapask wpask";const n=state.wps.length;
+  b.innerHTML=`<div class="sa-h"><span class="wpicon">${i+1}</span><div><b>${esc(w.name||"WP")}</b><small>${i===0?"ต้นทาง":i===n-1?"ปลายทาง":"จุดที่ "+(i+1)} · ${fmtMgrs(toMgrs(w.lat,w.lon))}</small></div></div>
+   <p>ลบจุดนี้ออกจากเส้นทางหรือไม่?</p><small class="sa-c">ลากหมุดเพื่อย้ายตำแหน่งได้ · กด Ctrl+Z เพื่อย้อนกลับ</small>
+   <div class="sa-b"><button class="sa-no">ปิด</button><button class="sa-yes sa-del">🗑 ลบจุด ${i+1}</button></div>`;
+  map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
+  const ll=L.latLng(w.lat,w.lon),place=()=>{const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;
+    let x=pt.x-bw/2,y=pt.y-bh-22;if(y<8)y=pt.y+22;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));b.style.left=x+"px";b.style.top=y+"px"};
+  place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k)};
+  const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
+  b.querySelector(".sa-no").onclick=close;
+  b.querySelector(".sa-del").onclick=()=>{close();const nm=w.name||"WP";state.wps.splice(i,1);if(state.wps.length<2)state.legs=[];else state.legs.splice(Math.min(i,state.legs.length-1),1);markEdited();render();toast(`ลบ ${nm} แล้ว · Ctrl+Z เพื่อย้อนกลับ`)};
+  requestAnimationFrame(()=>b.classList.add("in"))}
 function tapClose(){if(tapBox){tapBox.remove();tapBox=null}if(tapGhost){map.removeLayer(tapGhost);tapGhost=null}map.off("move zoom",tapPlace)}
 function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerPoint(tapGhost.getLatLng()),C=map.getSize(),bw=tapBox.offsetWidth,bh=tapBox.offsetHeight;
   let x=pt.x-bw/2,y=pt.y-bh-30;if(y<8)y=pt.y+16;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));tapBox.style.left=x+"px";tapBox.style.top=y+"px"}
@@ -1500,7 +1518,7 @@ function tapSnap(ll){if(FLMODE==="I"&&typeof ifrNear==="function"){const f=ifrNe
   return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:best.lat,lon:best.lon,lab:"Waypoint หน่วย No."+best.no}:null}
 function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render()}
 function tapAddDirect(ll){tapClose();const w={name:"WP"+(state.wps.length+1),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""};state.wps.push(w);markEdited();render();toast("เพิ่ม "+w.name)}
-function tapMenu(ll,info){if(tapBox){tapClose();return}  // แตะที่อื่นตอนเมนูเปิด = ยกเลิก
+function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){tapClose();return}  // แตะที่อื่นตอนเมนูเปิด = ยกเลิก
   const sn=tapSnap(ll),W=state.wps,leg=tapNearLeg(ll),n=W.length;
   tapGhost=L.marker(ll,{interactive:false,zIndexOffset:800,icon:L.divIcon({className:"tapghost",html:`<i>${n+1}</i>`,iconSize:[26,26],iconAnchor:[13,13]})}).addTo(map);
   const b=document.createElement("div");b.className="tapask";
@@ -3384,7 +3402,7 @@ function redo(){if(!HIST.r.length){toast("ไม่มีขั้นที่�
 function histBtns(){const u=document.getElementById("btnUndo"),r=document.getElementById("btnRedo");if(u)u.classList.toggle("off",!HIST.u.length);if(r)r.classList.toggle("off",!HIST.r.length)}
 document.addEventListener("keydown",e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey)return;const t=e.target;
   if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return; /* ในช่องกรอก ใช้ undo ของช่องนั้นตามปกติ */
-  const k=e.key.toLowerCase();if(k==="z"&&!e.shiftKey){e.preventDefault();undo()}else if(k==="y"||(k==="z"&&e.shiftKey)){e.preventDefault();redo()}});
+  const c=e.code,k=c==="KeyZ"?"z":c==="KeyY"?"y":e.key.toLowerCase();if(k==="z"&&!e.shiftKey){e.preventDefault();undo()}else if(k==="y"||(k==="z"&&e.shiftKey)){e.preventDefault();redo()}});
 const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar undo-bar");
   d.innerHTML=`<a href="#" id="btnUndo" class="off" title="ย้อนกลับ (Ctrl+Z)" aria-label="ย้อนกลับ"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></a><a href="#" id="btnRedo" class="off" title="ทำซ้ำ (Ctrl+Y)" aria-label="ทำซ้ำ"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m15 14 5-5-5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></a>`;
   L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
