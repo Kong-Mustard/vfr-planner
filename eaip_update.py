@@ -412,6 +412,46 @@ def parse_enr51(html):
 RTE = re.compile(r"^\s*(?:[▲△▼*]\s*)?(?!FL\d|SFC|GND)([A-Z]{1,2}\d{1,3}[A-Z]?)(?:\s|$|\()")
 
 
+SEG_TRK = re.compile(r"(\d{3})\s*°\s*(\d{3})\s*°")
+SEG_DST = re.compile(r"(\d+(?:\.\d+)?)\s*NM")
+SEG_LIM = re.compile(r"(FL\s*\d{2,3}|UNL|\d[\d ]*\s*ft|SFC|GND)\s+(FL\s*\d{2,3}|\d[\d ]*\s*ft|SFC|GND)")
+
+
+def _alt(v):
+    v = v.replace(" ", "")
+    return v.replace("ft", " ft") if "ft" in v else v
+
+
+def parse_seg(line):
+    """แถวข้อมูลช่วงเส้นทาง: Track MAG ↓↑, Dist, Upper/Lower, Minimum flight altitude, Lateral limits, FL series, class"""
+    t, d = SEG_TRK.search(line), SEG_DST.search(line)
+    if not t or not d:
+        return None
+    sg = {"trk": t.group(1), "rtrk": t.group(2), "dist": float(d.group(1))}
+    rest = line[d.end():]
+    lm = SEG_LIM.search(rest)
+    if lm:
+        sg["up"], sg["lo"] = _alt(lm.group(1)), _alt(lm.group(2))
+        tail = rest[lm.end():]
+        lm2 = SEG_LIM.match(tail.strip())
+        if lm2:
+            tail = tail.strip()[lm2.end():]
+        mf = re.match(r"\s*(\d[\d ]{0,6}?)\s*ft\b", tail)
+        if mf:
+            sg["mfa"] = int(mf.group(1).replace(" ", ""))
+            tail = tail[mf.end():]
+        ll = re.match(r"\s*(\d{1,2}(?:\.\d)?)\b", tail)
+        if ll:
+            sg["ll"] = float(ll.group(1))
+    fs = re.findall(r"\b(Odd|Even)\b", rest)
+    if fs:
+        sg["fl"] = "/".join(fs)
+    c = re.search(r"\[\s*Class\s*([A-G])\s*\]", rest)
+    if c:
+        sg["cls"] = c.group(1)
+    return sg
+
+
 def parse_enr3(html, page):
     """ENR 3.x ATS routes → [{id, page, pts:[{name,lat,lon}]}] (อ่านแบบลำดับแถว: แถวชื่อเส้นทาง แล้วตามด้วยแถวจุดที่มีพิกัด)"""
     soup = strip_markup(BeautifulSoup(html, "html.parser"))
@@ -426,6 +466,11 @@ def parse_enr3(html, page):
                 cm = C_RE.search(line)
                 if cm:
                     lat, lon = _c(cm)
+            if lat is None and cur is not None and cur["pts"]:
+                sg = parse_seg(line)
+                if sg and "seg" not in cur["pts"][-1]:
+                    cur["pts"][-1]["seg"] = sg
+                    continue
             if lat is None:
                 m = RTE.match(line)
                 if m and len(line) < 140 and not re.search(r"Route availability|Remarks", line[:40]) or (m and "Route availability" in line):
@@ -440,13 +485,18 @@ def parse_enr3(html, page):
             if cur is None:
                 continue
             m = COORD.search(line) or C_RE.search(line)
-            name = re.sub(r"[▲△▼◆◇●○*]", " ", line[:m.start()] if m else line)
+            head = line[:m.start()] if m else line
+            req = bool(re.search(r"[△∆Δ]", head))
+            name = re.sub(r"[▲△▼◆◇●○*]", " ", head)
             name = re.sub(r"unknown reference:\s*\S+|[∆Δ]", " ", name)
             idm = re.search(r"\(\s*([A-Z]{2,5})\s*\)", name)
             name = (idm.group(1) if idm else clean(name))[:30] or pend
             pend = ""
             if not cur["pts"] or (cur["pts"][-1]["lat"], cur["pts"][-1]["lon"]) != (lat, lon):
-                cur["pts"].append({"name": name, "lat": lat, "lon": lon})
+                pt = {"name": name, "lat": lat, "lon": lon}
+                if req:
+                    pt["req"] = 1   # △ = on request (ไม่บังคับรายงาน) · ▲ = compulsory
+                cur["pts"].append(pt)
     return [r for r in out if len(r["pts"]) >= 2], sample
 
 

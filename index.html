@@ -306,6 +306,10 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .rp-list{display:flex;flex-wrap:wrap;gap:6px}
 .rp{font:600 13px var(--f-mono);border:1px solid var(--line);border-radius:6px;padding:3px 8px;background:var(--panel);cursor:pointer}
 .rp:hover{border-color:var(--accent)}
+.ifrmk{background:none;border:0}.ifrmk svg{display:block;filter:drop-shadow(0 0 1px #fff)}
+.ifr-n{position:absolute;left:50%;top:12px;transform:translateX(-50%);font:700 8.5px/1 system-ui,sans-serif;color:#123b7a;white-space:nowrap;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff;pointer-events:none}
+.ifr-lo .ifr-n{display:none}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
+.ifrpop table{border-collapse:collapse;margin:4px 0;font-size:12px}.ifrpop .ifrg{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:4px 0;font-size:12px}.ifrpop .ifrg span{color:#666}.ifrpop .ifrg b{font-weight:600;color:#222}.ifrpop .ifrseg{border-top:1px solid #ddd;margin-top:5px;padding-top:4px}.ifrpop .btn{margin-top:4px}
 .rptri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid #ffd400;filter:drop-shadow(0 0 1px #000)}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
@@ -1633,7 +1637,7 @@ $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(
   store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();render();
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -1840,7 +1844,7 @@ new Ctl3D().addTo(map);
    I: เตรียมไว้สำหรับ MEA / MOCA / MSA จาก eAIP (ยังไม่ได้ดึง) */
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 function modeSet(m,quiet){FLMODE=m==="I"?"I":"V";try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
-  document.body.classList.toggle("mode-ifr",FLMODE==="I");saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
+  document.body.classList.toggle("mode-ifr",FLMODE==="I");if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
 function terrTile(x,y){const k=x+"/"+y;if(terrCache.has(k))return terrCache.get(k);
@@ -2180,6 +2184,27 @@ function drawSig(){spLayer.clearLayers();if(!map.hasLayer(spLayer)||map.getZoom(
   ((EAIP&&EAIP.sigpoints)||[]).forEach(s=>{if(b.contains([s.lat,s.lon]))L.marker([s.lat,s.lon],{icon:L.divIcon({className:"",html:'<div class="rptri" style="border-bottom-color:#7fb2e8"></div>',iconSize:[14,12],iconAnchor:[7,6]})})
     .bindTooltip(s.name,{permanent:map.getZoom()>=10,direction:"right",className:"leglabel"}).on("click",()=>{state.wps.push({name:s.name,lat:s.lat,lon:s.lon,vor:""});markEdited();render();toast("เพิ่ม "+s.name)}).addTo(spLayer)})}
 map.on("moveend overlayadd",drawSig);
+/* ---------- โหมด IFR: จุดรายงาน (▲ compulsory / △ on request) + airway จาก eAIP ENR 3 / ENR 4.4 ---------- */
+const ifrLayer=L.layerGroup();
+function ifrPts(){const M=new Map();(EAIP&&EAIP.airways||[]).forEach(r=>r.pts.forEach((p,i)=>{const k=p.name;let o=M.get(k);
+    if(!o){o={name:p.name,lat:p.lat,lon:p.lon,comp:false,aw:[]};M.set(k,o)}if(!p.req)o.comp=true;o.aw.push({r,i})}));
+  ((EAIP&&EAIP.sigpoints)||[]).forEach(s=>{if(!M.has(s.name))M.set(s.name,{name:s.name,lat:s.lat,lon:s.lon,comp:null,aw:[]})});return[...M.values()]}
+function segHtml(r,i){const a=r.pts[i],b=r.pts[i+1],g=a.seg||{};const row=(k,v)=>v==null||v===""?"":`<span>${k}</span><b>${esc(String(v))}</b>`;
+  return`<div class="ifrseg"><b>${esc(r.id)}</b> ${esc(a.name)} → ${esc(b.name)}<div class="ifrg">${row("Track MAG",g.trk?`${g.trk}° / ${g.rtrk}°`:"")}${row("Dist",g.dist!=null?g.dist+" NM":"")}
+   ${row("Upper / Lower",g.up?`${g.up} / ${g.lo}`:"")}${row("Min flight alt",g.mfa?g.mfa.toLocaleString("en-US")+" ft":"")}${row("Lateral limits",g.ll!=null?g.ll+" NM":"")}${row("FL series",g.fl)}${row("Class",g.cls)}</div><span class="hint">eAIP ENR ${esc(r.page)} · ${esc(EAIP.edition||"")}</span></div>`}
+function ifrTri(c){return c===false?'<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 1 L12 11 H1 Z" fill="#fff" stroke="#123b7a" stroke-width="1.6"/></svg>'
+  :`<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 1 L12 11 H1 Z" fill="${c?"#123b7a":"#7fa6d8"}" stroke="#fff" stroke-width=".8"/></svg>`}
+function drawIfr(){ifrLayer.clearLayers();if(FLMODE!=="I"||!EAIP){map.removeLayer(ifrLayer);return}
+  (EAIP.airways||[]).forEach(r=>{for(let i=0;i<r.pts.length-1;i++){const a=r.pts[i],b=r.pts[i+1];
+    L.polyline([[a.lat,a.lon],[b.lat,b.lon]],{color:"#123b7a",weight:1.4,opacity:.7,className:"ifr-aw"}).bindPopup(()=>`<div class="ifrpop">${segHtml(r,i)}</div>`).addTo(ifrLayer)}});
+  ifrPts().forEach(p=>{const t=p.comp===false?"On request (△)":p.comp?"Compulsory (▲)":"Significant point (ENR 4.4)";
+    L.marker([p.lat,p.lon],{icon:L.divIcon({className:"ifrmk",html:`${ifrTri(p.comp)}<span class="ifr-n">${esc(p.name)}</span>`,iconSize:[13,12],iconAnchor:[6,6]})})
+     .bindPopup(()=>`<div class="ifrpop"><b>${esc(p.name)}</b> · ${t}<br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}${p.aw.length?`<br>Airway: ${[...new Set(p.aw.map(x=>x.r.id))].map(esc).join(", ")}`:""}
+       ${p.aw.filter(x=>x.i<x.r.pts.length-1&&x.r.pts[x.i].seg).map(x=>segHtml(x.r,x.i)).join("")}<button class="btn sm ifr-add">+ เพิ่มเป็นจุดเส้นทาง</button></div>`,{maxWidth:280})
+     .on("popupopen",e=>{const bt=e.popup.getElement().querySelector(".ifr-add");if(bt)bt.onclick=()=>{state.wps.push({name:p.name,lat:p.lat,lon:p.lon,vor:""});markEdited();render();map.closePopup();toast("เพิ่ม "+p.name)}}).addTo(ifrLayer)});
+  ifrLayer.addTo(map);ifrZoom()}
+function ifrZoom(){map.getContainer().classList.toggle("ifr-lo",map.getZoom()<7)}
+map.on("zoomend",ifrZoom);
 /* ENR 4.4 significant points → พิมพ์ชื่อจุดในช่องต้นทาง/ปลายทาง/พิกัดได้ */
 function sigPoint(name){const S=(EAIP&&EAIP.sigpoints)||[];const n=String(name||"").toUpperCase().trim();return S.find(s=>s.name===n)}
 
@@ -3107,15 +3132,16 @@ const VIS=[
  {k:"nt",t:"NOTAM",g:"พื้นที่",L:()=>ntLayer},
  {k:"enr",t:"Airway / VOR (enroute)",g:"เดินอากาศ",L:()=>enrLayer},
  {k:"sp",t:"Significant points",g:"เดินอากาศ",L:()=>spLayer},
+ {k:"ifr",t:"จุดรายงาน IFR + airway (โหมด I)",g:"เดินอากาศ",css:"hide-ifr"},
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem hi ap ctr rp P R D nt",
- "เฉพาะเส้นทาง":"route hbox rem hi",
+ "ทั้งหมด":"route hbox rem hi ap ctr rp P R D nt ifr",
+ "เฉพาะเส้นทาง":"route hbox rem hi ifr",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
  "เฉพาะ CTR":"route ap ctr",
- "Enroute":"route ap enr sp",
+ "Enroute":"route ap enr sp ifr",
  "ซ่อนทั้งหมด":""};
 let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
 function visOn(k){const v=VIS.find(x=>x.k===k);if(v.css)return!document.body.classList.contains(v.css);return map.hasLayer(v.L())}
@@ -3303,7 +3329,7 @@ fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
-  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 </script>
 </body>
 </html>
