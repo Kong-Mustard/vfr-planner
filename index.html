@@ -324,7 +324,7 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .ifrring span{position:absolute;left:50%;top:-20px;transform:translateX(-50%);background:#e0322b;color:#fff;font:700 11px/1 system-ui,sans-serif;padding:3px 6px;border-radius:5px;white-space:nowrap}
 @keyframes ifrPulse{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.35);opacity:.35}}
 .snapask{position:absolute;z-index:1200;width:260px;background:#fff;color:#1b2430;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.28),0 0 0 1px rgba(18,59,122,.12);font-size:13px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .16s,transform .16s}
-.snapask.in{opacity:1;transform:none}.snapask .sa-h{display:flex;gap:9px;align-items:center}.snapask .sa-h svg{width:22px;height:20px}
+.snapask.in{opacity:1;transform:none}.snapask .sa-h{display:flex;gap:9px;align-items:center}.snapask .sa-h svg{width:22px;height:20px}.snapask .sa-ico{flex:0 0 auto;display:grid;place-items:center;min-width:24px;font-size:20px}.snapask .sa-ico .rptri{display:block}
 .snapask .sa-h b{font-size:16px;letter-spacing:.5px;color:#123b7a}.snapask .sa-h small{display:block;color:#6b7684;font-size:11px}
 .snapask p{margin:9px 0 2px}.snapask .sa-c{color:#6b7684;font-size:11px}.snapask .sa-b{display:flex;gap:8px;margin-top:10px}
 .snapask button{flex:1;border:0;border-radius:9px;padding:9px 6px;font:600 12.5px system-ui,sans-serif;cursor:pointer}
@@ -1448,13 +1448,13 @@ function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPro
   const ghost=L.polyline([a,a,b],{color:"#d6198f",weight:3,dashArray:"6 6",interactive:false}).addTo(map);
   const dot=L.circleMarker(a,{radius:7,color:"#fff",weight:2,fillColor:"#d6198f",fillOpacity:1,interactive:false});
   const mv=e=>{if(!moved&&Math.hypot(e.clientX-x0,e.clientY-y0)<6)return;moved=true;ll=map.mouseEventToLatLng(e);
-    ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map);if(FLMODE==="I"&&typeof ifrSnapHint==="function")ifrSnapHint(ll)};
+    ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map);if(typeof ifrSnapHint==="function")ifrSnapHint(ll)};
   const up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);
     map.removeLayer(ghost);if(map.hasLayer(dot))map.removeLayer(dot);setTimeout(()=>map.dragging.enable(),0);if(typeof ifrSnapHint==="function")ifrSnapHint(null);
     if(!moved){window._suppressClick=Date.now();if(typeof tapMenu==="function")tapMenu(map.mouseEventToLatLng(ev));return}if(!ll)return;
     W.splice(i+1,0,{name:"WP"+(i+2),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""});
     const base=state.legs[i]?{...state.legs[i],ate:"",fact:""}:blankLeg();state.legs.splice(i+1,0,base);
-    window._suppressClick=Date.now();markEdited();render();const f=FLMODE==="I"&&typeof ifrNear==="function"?ifrNear(ll):null;
+    window._suppressClick=Date.now();markEdited();render();const f=typeof snapNear==="function"?snapNear(ll):null;
     if(f)ifrSnapAsk(W[i+1],i+1,f);else toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
   document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
 function drawMap(rows){
@@ -1471,9 +1471,9 @@ function drawMap(rows){
     const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${w.name||"WP"}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
-    m.on("drag",e=>{if(FLMODE==="I")ifrSnapHint(e.target.getLatLng())});
+    m.on("drag",e=>ifrSnapHint(e.target.getLatLng()));
     m.on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();wpAsk(i)});
-    m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);const f=FLMODE==="I"?ifrNear(p):null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f)});
+    m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);let f=snapNear(p);if(f&&f.name===w.name)f=null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f)});
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
     const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
@@ -1512,17 +1512,14 @@ function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerP
   let x=pt.x-bw/2,y=pt.y-bh-30;if(y<8)y=pt.y+16;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));tapBox.style.left=x+"px";tapBox.style.top=y+"px"}
 function tapNearLeg(ll){const W=state.wps;if(W.length<2)return-1;const P=map.latLngToContainerPoint(ll);let bi=-1,bd=Infinity;
   for(let i=0;i<W.length-1;i++){const a=map.latLngToContainerPoint([W[i].lat,W[i].lon]),b=map.latLngToContainerPoint([W[i+1].lat,W[i+1].lon]),d=L.LineUtil.pointToSegmentDistance(P,a,b);if(d<bd){bd=d;bi=i}}return bi}
-function tapSnap(ll){if(FLMODE==="I"&&typeof ifrNear==="function"){const f=ifrNear(ll);if(f)return{name:f.name,lat:f.lat,lon:f.lon,lab:f.comp===false?"△ On request":f.comp?"▲ Compulsory":"Significant point"}}
-  const P=map.latLngToContainerPoint(ll),R=matchMedia("(pointer:coarse)").matches?42:28;let best=null,bd=R;
-  (typeof dbAll==="function"?dbAll():[]).forEach(x=>{if(x.lat==null)return;const d=P.distanceTo(map.latLngToContainerPoint([x.lat,x.lon]));if(d<bd){bd=d;best=x}});
-  return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:best.lat,lon:best.lon,lab:"Waypoint หน่วย No."+best.no}:null}
+function tapSnap(ll){return typeof snapNear==="function"?snapNear(ll):null}
 function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render()}
 function tapAddDirect(ll){tapClose();const w={name:"WP"+(state.wps.length+1),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""};state.wps.push(w);markEdited();render();toast("เพิ่ม "+w.name)}
 function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){tapClose();return}  // แตะที่อื่นตอนเมนูเปิด = ยกเลิก
   const sn=tapSnap(ll),W=state.wps,leg=tapNearLeg(ll),n=W.length;
   tapGhost=L.marker(ll,{interactive:false,zIndexOffset:800,icon:L.divIcon({className:"tapghost",html:`<i>${n+1}</i>`,iconSize:[26,26],iconAnchor:[13,13]})}).addTo(map);
   const b=document.createElement("div");b.className="tapask";
-  b.innerHTML=`${sn?`<button class="ta-snap"><span class="ta-i">◎</span><span><b>ใช้ ${esc(sn.name)}</b><small>${esc(sn.lab)}</small></span></button>`:""}
+  b.innerHTML=`${sn?`<button class="ta-snap"><span class="ta-i">${sn.ico||"◎"}</span><span><b>ใช้ ${esc(sn.name)}</b><small>${esc(sn.lab)}</small></span></button>`:""}
    <button class="ta-add"><span class="ta-i">＋</span><span><b>เพิ่มเป็นจุดที่ ${n+1}</b><small>${n?"ต่อท้ายเส้นทาง":"จุดเริ่มต้น"}</small></span></button>
    ${leg>=0?`<button class="ta-ins"><span class="ta-i">⤵</span><span><b>แทรกระหว่าง ${leg+1} → ${leg+2}</b><small>${esc(W[leg].name||"")} → ${esc(W[leg+1].name||"")}</small></span></button>`:""}
    ${info?`<button class="ta-info"><span class="ta-i">ℹ</span><span><b>ข้อมูลพื้นที่ตรงนี้</b></span></button>`:""}
@@ -1533,7 +1530,7 @@ function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){
   const q=c=>b.querySelector(c);
   q(".ta-add").onclick=()=>{const w=mk(null);tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
   if(q(".ta-ins"))q(".ta-ins").onclick=()=>{const w=mk(null);w.name="WP"+(leg+2);tapClose();tapInsert(w,leg);toast(`แทรกจุดที่ ${leg+2}`)};
-  if(q(".ta-snap"))q(".ta-snap").onclick=()=>{const w=mk(sn);tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
+  if(q(".ta-snap"))q(".ta-snap").onclick=()=>{const w=mk(sn);if(sn.vor)w.vor=sn.vor;if(sn.rp)w.rp=true;tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
   if(q(".ta-info"))q(".ta-info").onclick=()=>{tapClose();L.popup().setLatLng(ll).setContent(info()).openOn(map)};
   q(".ta-x").onclick=tapClose}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&tapBox)tapClose()});
@@ -1918,11 +1915,9 @@ new Ctl3D().addTo(map);
    I: เตรียมไว้สำหรับ MEA / MOCA / MSA จาก eAIP (ยังไม่ได้ดึง) */
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 /* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
-function ifrBase(){if(typeof baseSet!=="function")return;let cur="sat";try{cur=localStorage.getItem("vfr_base")||"sat"}catch(e){}
-  if(FLMODE==="I"){if(cur!=="chart"){try{localStorage.setItem("vfr_base_v",cur)}catch(e){}}baseSet("chart")}
-  else{let pv=null;try{pv=localStorage.getItem("vfr_base_v");localStorage.removeItem("vfr_base_v")}catch(e){}if(pv&&cur==="chart")baseSet(pv)}}
+function ifrBase(quiet){if(typeof baseSet!=="function")return;if(FLMODE==="I")baseSet("chart");else if(!quiet)baseSet("sat")}  // I = พื้นขาวชาร์ต · กลับ V = ดาวเทียม
 function modeSet(m,quiet){FLMODE=m==="I"?"I":"V";try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
-  document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase();if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
+  document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase(quiet);if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
 function terrTile(x,y){const k=x+"/"+y;if(terrCache.has(k))return terrCache.get(k);
@@ -2286,13 +2281,25 @@ const IFR_TOUCH=matchMedia("(pointer:coarse)").matches;
 let IFR_CACHE=null;function ifrList(){if(!IFR_CACHE||IFR_CACHE.src!==EAIP)IFR_CACHE={src:EAIP,pts:EAIP?ifrPts():[]};return IFR_CACHE.pts}
 function ifrNear(ll){if(!EAIP)return null;const P=map.latLngToContainerPoint(ll),R=IFR_TOUCH?42:28;let best=null,bd=R;
   ifrList().forEach(p=>{const d=P.distanceTo(map.latLngToContainerPoint([p.lat,p.lon]));if(d<bd){bd=d;best=p}});return best}
+/* จุดที่ "ดูด" ได้: โหมด I = จุดรายงาน IFR · โหมด V = จุดรายงาน VFR (AD 2) / waypoint หน่วย / สนามบิน-ฮ. / VOR-NDB */
+let VFR_CACHE=null;
+function vfrList(){const t=Date.now();if(VFR_CACHE&&VFR_CACHE.src===EAIP&&t-VFR_CACHE.t<3000)return VFR_CACHE.pts;const out=[];
+  const real=p=>!/\b(ARP|DVOR|VOR|NDB|TACAN|DME|LOC|ILS|GP)\b/.test(p.name);
+  Object.values(AP).forEach(a=>{(a.eaip&&a.eaip.points||[]).filter(real).forEach(p=>{if(p.lat!=null)out.push({name:String(p.name).slice(0,20),lat:p.lat,lon:p.lon,lab:`จุดรายงาน VFR · ${a.id}`,ico:'<div class="rptri"></div>',rp:true,pr:0})})});
+  (typeof dbAll==="function"?dbAll():[]).forEach(x=>{if(x.lat!=null)out.push({name:String(x.name||("No."+x.no)).slice(0,20),lat:x.lat,lon:x.lon,lab:"Waypoint หน่วย No."+x.no,ico:`<span class="dbno">No.${esc(x.no)}</span>`,pr:0})});
+  ((EAIP&&EAIP.navaids)||[]).forEach(n=>{if(n.lat!=null){const f=(n.freq||"").replace(/\s*\(.*$/,"");out.push({name:n.id,lat:n.lat,lon:n.lon,vor:`${n.id} ${f}`,lab:`${n.name} · ${f}`,ico:"📡",pr:1})}});
+  Object.values(AP).forEach(a=>{if(a.lat==null)return;const hp=a.type==="heliport";out.push({name:/^VT[A-Z]{2}$/.test(a.id)?a.id:String(a.name).replace(/\s*(International\s+)?(Airport|Airfield|Heliport|Air Base|Airstrip)\b/gi,"").trim().slice(0,20)||a.id,
+    lat:a.lat,lon:a.lon,lab:`${a.name}${/^VT/.test(a.id)?" · "+a.id:""}`,ico:hp?"🚁":"✈️",pr:2})});
+  VFR_CACHE={src:EAIP,t,pts:out};return out}
+function snapNear(ll){if(FLMODE==="I"){const f=ifrNear(ll);if(f)return Object.assign({},f,{lab:(f.comp===false?"On request":f.comp?"Compulsory":"Significant point")+(f.aw.length?" · "+[...new Set(f.aw.map(x=>x.r.id))].join(", "):""),ico:ifrTri(f.comp)})}
+  const P=map.latLngToContainerPoint(ll),R=IFR_TOUCH?42:28;let best=null,bd=R;
+  vfrList().forEach(p=>{if(FLMODE==="I"&&p.pr>0)return;const d=P.distanceTo(map.latLngToContainerPoint([p.lat,p.lon]))+p.pr*4;if(d<bd){bd=d;best=p}});return best}
 let ifrRing=null;
-function ifrSnapHint(ll){const f=ll&&ifrNear(ll);if(!f){if(ifrRing){map.removeLayer(ifrRing);ifrRing=null}return}
+function ifrSnapHint(ll){const f=ll&&snapNear(ll);if(!f){if(ifrRing){map.removeLayer(ifrRing);ifrRing=null}return}
   if(!ifrRing)ifrRing=L.marker([f.lat,f.lon],{interactive:false,zIndexOffset:900,icon:L.divIcon({className:"ifrring",html:"<i></i><span></span>",iconSize:[34,34],iconAnchor:[17,17]})}).addTo(map);
   ifrRing.setLatLng([f.lat,f.lon]);const el=ifrRing.getElement();if(el)el.querySelector("span").textContent=f.name}
 function ifrSnapAsk(w,i,f){document.querySelectorAll(".snapask").forEach(x=>x.remove());const box=document.createElement("div");box.className="snapask";
-  const aw=[...new Set(f.aw.map(x=>x.r.id))];const t=f.comp===false?"On request":f.comp?"Compulsory":"Significant point";
-  box.innerHTML=`<div class="sa-h">${ifrTri(f.comp)}<div><b>${esc(f.name)}</b><small>${t}${aw.length?" · "+aw.map(esc).join(", "):""}</small></div></div>
+  box.innerHTML=`<div class="sa-h"><span class="sa-ico">${f.ico||""}</span><div><b>${esc(f.name)}</b><small>${esc(f.lab||"")}</small></div></div>
    <p>ใช้จุด <b>${esc(f.name)}</b> เป็น waypoint ${i+1} หรือไม่?</p><small class="sa-c">${f.lat.toFixed(5)}, ${f.lon.toFixed(5)} · ${fmtMgrs(toMgrs(f.lat,f.lon))}</small>
    <div class="sa-b"><button class="sa-no">ไม่ใช้</button><button class="sa-yes">✓ ใช้ ${esc(f.name)}</button></div>`;
   map.getContainer().appendChild(box);L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);
@@ -2301,7 +2308,7 @@ function ifrSnapAsk(w,i,f){document.querySelectorAll(".snapask").forEach(x=>x.re
   place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);box.remove();document.removeEventListener("keydown",esc_)};
   const esc_=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",esc_);
   box.querySelector(".sa-no").onclick=close;
-  box.querySelector(".sa-yes").onclick=()=>{close();const W=state.wps[i];if(!W)return;Object.assign(W,{name:f.name,lat:f.lat,lon:f.lon});markEdited();render();toast(`WP ${i+1} = ${f.name}`)};
+  box.querySelector(".sa-yes").onclick=()=>{close();const W=state.wps[i];if(!W)return;Object.assign(W,{name:f.name,lat:f.lat,lon:f.lon});if(f.vor)W.vor=f.vor;if(f.rp)W.rp=true;markEdited();render();toast(`WP ${i+1} = ${f.name}`)};
   requestAnimationFrame(()=>box.classList.add("in"));box.querySelector(".sa-yes").focus({preventScroll:true})}
 function ifrZoom(){map.getContainer().classList.toggle("ifr-lo",map.getZoom()<7)}
 map.on("zoomend",ifrZoom);
@@ -3213,7 +3220,7 @@ $("#openSV").onclick=()=>{$("#openSV").href=skyVectorUrl()};
 /* ---------- Control zone (CTR/ATZ) จาก AD 2.17 ---------- */
 const ctrLayer=L.layerGroup().addTo(map);
 function drawCtr(){ctrLayer.clearLayers();Object.entries((EAIP&&EAIP.airports)||{}).forEach(([ic,a])=>{const sp=a.airspace;if(!sp||!sp.poly)return;
-  L.polygon(sp.poly,{color:"#a1249e",weight:2,dashArray:sp.approx?"4 4":"10 5",fillColor:"#a1249e",fillOpacity:.04})
+  L.polygon(sp.poly,{color:"#8d0f8a",weight:2.8,opacity:1,dashArray:sp.approx?"5 4":"12 5",fillColor:"#a1249e",fillOpacity:.13})
    .bindTooltip(`${esc(sp.name)}${sp.cls?" · Class "+esc(sp.cls):""}${sp.vert?"<br>"+esc(sp.vert):""}`,{sticky:true}).addTo(ctrLayer)})}
 drawCtr();
 
