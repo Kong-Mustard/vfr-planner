@@ -235,6 +235,8 @@ body.printing #printView{position:static;padding:0}
 .map-tools>.mt-toggle{display:block;background:var(--panel);color:var(--ink);border-radius:10px;padding:6px 10px;font:700 13px var(--f-body);box-shadow:0 1px 5px rgba(0,0,0,.35);text-decoration:none}
 .map-tools .mt-body{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.map-tools .mt-body>.leaflet-control{margin:0!important;float:none;clear:none}
 .map-tools.collapsed .mt-body{display:none}
+.vis-ctl{position:relative}.vis-ctl .vis-panel{position:absolute;right:calc(100% + 8px);top:0;background:var(--panel);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);border:1px solid var(--line)}
+@media (max-width:520px){.vis-ctl .vis-panel{width:min(270px,calc(100vw - 110px))}}
 .vis-panel{padding:10px 12px;max-height:70vh;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:270px;color:var(--ink);font:13px var(--f-body)}
 .vis-pre{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.vis-pre .mini{padding:3px 8px;font-size:12px}
 .vis-g{border-top:1px solid var(--line);padding:6px 0}.vis-g b{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
@@ -774,6 +776,34 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .sa-info{display:block;font:500 13px/1.5 var(--f-body);color:var(--ink);margin-top:-4px;background:color-mix(in srgb,#b45309 8%,transparent);border-radius:8px;padding:6px 8px}.sa-info:empty{display:none}.sa-info select{width:auto;padding:0 4px;font-size:12px;min-height:0}.sa-info .sa-v{color:#b45309}.sa-info button{padding:1px 8px;min-height:0}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
 .sa-float{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:800;pointer-events:auto}
+/* ค่าเริ่มต้น leg แบบย่อ */
+.legdef-h{display:flex;align-items:center;justify-content:space-between;margin:2px 0 6px}.legdef-h h2{font-size:13px;margin:0}
+.legdef{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.7fr) minmax(0,1fr);gap:6px}.legdef label{display:flex;flex-direction:column;gap:3px;font-weight:600}
+.legdef small{font-weight:500;color:var(--muted);font-size:10.5px;margin-left:3px;display:inline}.legdef label{flex-wrap:nowrap}.legdef input{width:100%;min-width:0;padding:8px 6px;text-align:center}
+.legdef label>span:first-child{white-space:nowrap}.legdef .ld-w2{display:flex;align-items:center;gap:2px}.legdef .ld-wind i{font-style:normal;color:var(--muted)}
+@media (max-width:420px){.legdef{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){body.gps-touch .top>.side{display:none}}
+.gps-hud.gps-strip{background:#111827}
+/* วันที่/เวลา บน iPad/iOS ไม่ล้นกล่อง */
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;min-width:0;width:100%;max-width:100%;box-sizing:border-box;display:block;min-height:42px;text-align:left}
+input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0}
+.grid2>label{min-width:0}
+/* แถบลัดไปหัวข้อ (ธีมขาว) + ปุ่มกลับขึ้นบน */
+.jumpbar{display:flex;gap:8px;flex-wrap:wrap;background:#fff;border-radius:14px;padding:8px;box-shadow:0 1px 2px rgba(17,24,39,.06),0 4px 14px rgba(17,24,39,.08)}
+.jumpbar button{background:#fff;color:#1b2430;border:1px solid #dfe4ea;border-radius:999px;padding:7px 13px;font:600 13.5px var(--f-body);cursor:pointer;white-space:nowrap}
+.jumpbar button:hover{background:#f1f4f8;border-color:#c9d1db}.jumpbar button:active{transform:scale(.97)}
+@media (min-width:1000px){.jumpbar .jb-side{display:none}}
+@media (max-width:760px){.jumpbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.jumpbar::-webkit-scrollbar{display:none}}
+.card.jump-hit{animation:jumpHit 1.2s ease-out}@keyframes jumpHit{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+.totop{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:1400;width:48px;height:48px;border-radius:50%;padding:0;background:#fff;color:#1b2430;border:1px solid #dfe4ea;
+  font:800 22px/1 var(--f-body);box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s}
+.totop.show{opacity:1;transform:none}.totop[hidden]{display:none}
+@media (max-width:760px){.totop{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+/* แผนการบินบน iPad/มือถือ: หัวข้อไม่ลอยทับเนื้อหา */
+@media (max-width:999px){.side>.sechead{position:static;margin:0 0 6px;padding:0;background:none}}
+/* กล่อง heading: แตะเพื่อปรับขนาด */
+.snapask.hbpop{width:300px}.hbpop .hb-row{display:flex;align-items:center;gap:8px;margin-top:8px}.hbpop input[type=range]{flex:1}.hbpop .hb-v{font:700 13px var(--f-mono);min-width:40px;text-align:right}
+.hbpop .hb-row button{width:36px;height:34px;padding:0;border-radius:9px;background:#eef1f5;color:#1b2430;border:0;font:700 18px var(--f-body)}
 .wp-hint{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 8px}.wp-hint span{white-space:nowrap}.wp-hint code{font-size:11px}
 .rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
 .swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
@@ -805,6 +835,33 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .gh-near{background:rgba(255,255,255,.06);border-radius:10px;padding:6px 8px;display:flex;flex-direction:column;gap:2px}
 .gh-nt{font:700 11px var(--f-body);color:#9fb3c8;letter-spacing:.04em}
 .gh-nr{display:grid;grid-template-columns:48px 58px 62px 1fr;gap:6px;align-items:baseline;font:13px var(--f-mono)}.gh-nr b{font-family:var(--f-display)}.gh-rad{font-weight:700;color:#7dd3fc;text-align:right}
+.gh-row{display:flex;flex-direction:column;gap:6px}.gh-navc{display:flex;flex-direction:column;gap:6px;min-width:0}
+.gh-near>summary{cursor:pointer;list-style:none}.gh-near>summary::-webkit-details-marker{display:none}
+.rail-handle{display:none}
+body.gps-touch{padding-left:calc(14px + env(safe-area-inset-left,0px))}
+body.gps-touch nav.rail{transform:translateX(-100%);transition:transform .25s ease;box-shadow:none}
+body.gps-touch.rail-peek nav.rail{transform:none;box-shadow:6px 0 24px rgba(0,0,0,.35)}
+body.gps-touch .rail-handle{display:grid;place-items:center;position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:1501;width:24px;height:76px;padding:0;border-radius:0 12px 12px 0;
+  background:var(--panel);color:var(--ink);border:1px solid var(--line);border-left:0;font:800 18px var(--f-body);box-shadow:2px 0 10px rgba(0,0,0,.25);transition:left .25s ease}
+body.gps-touch.rail-peek .rail-handle{left:96px}
+body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
+.gps-hud.gps-strip{position:absolute;left:8px;right:8px;bottom:8px;width:auto;z-index:1000;max-height:52%;overflow:auto;padding:8px 10px;border-radius:14px;gap:6px;background:#111827;box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+.gps-strip .gh-row{flex-direction:row;align-items:stretch;gap:8px}
+.gps-strip .gh-grid.top{flex:0 0 auto;grid-template-columns:repeat(3,minmax(66px,1fr))}
+.gps-strip .gh-navc{flex:1;gap:4px}.gps-strip .gh-to{font-size:14px}.gps-strip .gh-grid b{font-size:19px}
+.gps-strip .gh-grid div{display:flex;flex-direction:column;justify-content:center;padding:4px 6px}
+.gps-strip .gh-xte{font-size:13px}.gps-strip .gh-area{padding:4px 8px;font-size:13px}.gps-strip .gh-acc{display:none}
+.gps-strip .gh-near{padding:5px 8px}.gps-strip .gh-btns{flex-wrap:nowrap;overflow-x:auto}.gps-strip .gh-btns button{min-height:36px;flex:0 0 auto}
+@media (max-width:760px){
+  body.gps-touch{padding-left:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  body.gps-touch nav.rail{transform:translateY(100%)}body.gps-touch.rail-peek nav.rail{transform:none}
+  body.gps-touch .rail-handle{left:50%;top:auto;bottom:0;transform:translateX(-50%);width:76px;height:24px;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:0;transition:bottom .25s}
+  body.gps-touch.rail-peek .rail-handle{left:50%;bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+  body.gps-touch:not(.mapfull) #map{height:calc(100dvh - 40px)!important;min-height:520px}
+  .gps-hud.gps-strip{left:6px;right:6px;bottom:6px;padding:6px 8px;max-height:58%}
+  .gps-strip .gh-grid b{font-size:17px}.gps-strip .gh-grid span{font-size:9.5px}.gps-strip .gh-grid i{font-size:10px}
+  .gps-strip .gh-row{flex-direction:column}.gps-strip .gh-grid{grid-template-columns:repeat(4,1fr)}.gps-strip .gh-grid.top{grid-template-columns:repeat(3,1fr)}
+}
 .gh-btns{display:flex;gap:6px;flex-wrap:wrap}.gh-btns button{min-height:38px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);font:600 13.5px var(--f-body)}
 .gh-btns button.on{background:var(--accent);border-color:var(--accent)}
 .gps-own{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
@@ -871,6 +928,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 <main>
 <p class="disclaimer" role="note">⚠ แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง</p>
 <!-- ============ TAB 1 ============ -->
+<button type="button" id="toTop" class="totop" aria-label="กลับขึ้นด้านบน" title="กลับขึ้นด้านบน" hidden>↑</button>
 <section id="tab-plan" class="tabpanel">
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="top">
@@ -907,22 +965,21 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900" style="background:var(--hl);font-weight:800"></label>
         <label hidden>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="FALCON 127.0"><option value="OSCAR 127.0"><option value="BIGSHELL 127.0"></datalist></label>
         <div id="saInfo" class="sa-info" style="grid-column:1/-1"></div>
-        <label>ขนาดกล่อง heading<input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1"></label>
+        <input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1" hidden>
         <label hidden>การหมุนกล่อง heading<select id="boxRotMode"><option value="mh">หันตาม heading (MH)</option><option value="track">หันตามแนวเส้นทาง (TC)</option><option value="0">ตั้งตรง</option></select></label>
         <div class="btns" hidden><button id="boxRotReset" type="button" class="mini">รีเซ็ตการหมุนทุกกล่อง</button></div>
-        <label>ป้ายบอกระยะ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
+        <label hidden>ป้ายบอกระยะ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
       </div>
       <div>
-        <h2 style="font-size:13px;margin-bottom:6px">ค่าเริ่มต้นทุก leg</h2>
-        <div class="grid2">
-          <label>ALT (ft)<input id="gAlt" type="number" inputmode="numeric"></label>
-          <label>CAS (kt)<input id="gCas" type="number" inputmode="decimal"></label>
-          <label>Wind Dir (°T)<input id="gWd" type="number" inputmode="numeric"></label>
-          <label>Wind Vel (kt)<input id="gWv" type="number" inputmode="numeric"></label>
-          <label>Temp (°C)<input id="gTemp" type="number" inputmode="decimal"></label>
-          <label>Var (W+, E−)<input id="gVar" type="number" step="0.1" inputmode="decimal"></label>
+        <div class="legdef-h"><h2>ค่าเริ่มต้นทุก leg</h2><button id="applyAll" type="button" class="mini">ใช้กับทุก leg</button></div>
+        <div class="legdef">
+          <label><span>ALT <small>ft</small></span><input id="gAlt" type="number" inputmode="numeric"></label>
+          <label><span>CAS <small>kt</small></span><input id="gCas" type="number" inputmode="decimal"></label>
+          <label class="ld-wind"><span>ลม <small>°T / kt</small></span><span class="ld-w2"><input id="gWd" type="number" inputmode="numeric" aria-label="ทิศลม"><i>/</i><input id="gWv" type="number" inputmode="numeric" aria-label="ความเร็วลม"></span></label>
+          <label><span>Temp <small>°C</small></span><input id="gTemp" type="number" inputmode="decimal"></label>
+          <input id="gVar" type="number" hidden>
         </div>
-        <div class="btns" style="margin-top:8px"><button id="applyAll">ใช้ค่านี้กับทุก leg</button></div>
+        <p class="hint" style="margin:4px 0 0">แก้ราย leg (รวม Var) ได้ในแท็บ 2 NAVLOG</p>
       </div>
       <div class="summary">
         <div><span>ระยะรวม</span><b id="sDist">–</b></div>
@@ -933,7 +990,15 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </div>
   </div>
 
-  <div class="card section">
+  <nav class="jumpbar" id="jumpBar" aria-label="ไปยังหัวข้อ">
+    <button type="button" data-jump=".top>.side" class="jb-side">✈️ แผนการบิน</button>
+    <button type="button" data-jump="#wpCard">📍 จุดเส้นทาง</button>
+    <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
+    <button type="button" data-jump="#procCard">🛬 เข้า-ออกสนาม · Charts</button>
+    <button type="button" data-jump="#freqCard">📻 ความถี่</button>
+    <button type="button" data-jump="#areaCard">⚠️ พื้นที่ P/R/D</button>
+  </nav>
+  <div class="card section" id="wpCard">
     <div class="sechead">
       <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
       <button id="fplOpen" class="fpl-cta" type="button"><span class="fpl-ic" aria-hidden="true">📄</span><span class="fpl-tx"><b>สร้าง PDF Flight Plan</b><small id="fplSum">ICAO Flight Plan สำหรับยื่นหอบังคับการบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
@@ -950,7 +1015,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </table></div>
   </div>
 
-  <div class="card section">
+  <div class="card section" id="navCard">
     <div class="sechead">
       <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
@@ -993,7 +1058,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </details>
   </div>
 
-  <div class="card section">
+  <div class="card section" id="freqCard">
     <div class="sechead">
       <h2 class="hd hd-green">ความถี่ตามเส้นทาง</h2>
       <span class="emerchip">EMER 121.5 / 243.0</span>
@@ -1491,6 +1556,7 @@ function drawMap(rows){
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
+    mk.on("click",ev=>{if(ev.originalEvent&&ev.originalEvent.target.closest&&ev.originalEvent.target.closest(".hrot"))return;L.DomEvent.stop(ev);window._suppressClick=Date.now();hbAsk(ev.target.getLatLng())});
     mk.on("add",()=>hboxRotInit(mk,key));if(mk._icon)hboxRotInit(mk,key)});
   remMk=remMarkers(rows).map(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"remmk",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));remThin();
 }
@@ -1513,6 +1579,20 @@ function wpAsk(i){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.
   b.querySelector(".sa-no").onclick=close;
   b.querySelector(".sa-del").onclick=()=>{close();const nm=w.name||"WP";state.wps.splice(i,1);if(state.wps.length<2)state.legs=[];else state.legs.splice(Math.min(i,state.legs.length-1),1);markEdited();render();toast(`ลบ ${nm} แล้ว · Ctrl+Z เพื่อย้อนกลับ`)};
   requestAnimationFrame(()=>b.classList.add("in"))}
+/* แตะกล่อง heading (doghouse) → ปรับขนาดกล่องทุกกล่อง */
+function hbAsk(ll){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.remove());const b=document.createElement("div");b.className="snapask wpask hbpop";
+  const v=()=>Math.round((+state.boxScale||1)*100)+"%";
+  b.innerHTML=`<div class="sa-h"><span class="sa-ico">⬡</span><div><b>ขนาดกล่อง heading</b><small>ปรับทุกกล่องพร้อมกัน · ลากกล่องเพื่อย้าย · ดับเบิลคลิก = ตำแหน่งเดิม</small></div></div>
+   <div class="hb-row"><button type="button" data-hb="-1" aria-label="เล็กลง">−</button><input type="range" min="0.6" max="2" step="0.1" value="${+state.boxScale||1}" aria-label="ขนาดกล่อง"><button type="button" data-hb="1" aria-label="ใหญ่ขึ้น">＋</button><span class="hb-v">${v()}</span></div>
+   <div class="sa-b"><button class="sa-no">ค่าเดิม 100%</button><button class="sa-yes">✓ เสร็จ</button></div>`;
+  map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
+  const place=()=>{const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;let x=pt.x+60,y=pt.y-bh/2;if(x+bw>C.x-8)x=pt.x-bw-60;
+    x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));b.style.left=x+"px";b.style.top=y+"px"};
+  const rg=b.querySelector("input"),set=x=>{state.boxScale=Math.max(.6,Math.min(2,Math.round(x*10)/10));rg.value=state.boxScale;b.querySelector(".hb-v").textContent=v();$("#boxScale").value=state.boxScale;render();store.set("vfr_current",state)};
+  rg.oninput=()=>set(+rg.value);b.querySelectorAll("[data-hb]").forEach(x=>x.onclick=()=>set((+state.boxScale||1)+0.1*+x.dataset.hb));
+  place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k);histSched&&histSched()};
+  const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
+  b.querySelector(".sa-no").onclick=()=>set(1);b.querySelector(".sa-yes").onclick=close;requestAnimationFrame(()=>b.classList.add("in"))}
 function tapClose(){if(tapBox){tapBox.remove();tapBox=null}if(tapGhost){map.removeLayer(tapGhost);tapGhost=null}map.off("move zoom",tapPlace)}
 function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerPoint(tapGhost.getLatLng()),C=map.getSize(),bw=tapBox.offsetWidth,bh=tapBox.offsetHeight;
   let x=pt.x-bw/2,y=pt.y-bh-30;if(y<8)y=pt.y+16;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));tapBox.style.left=x+"px";tapBox.style.top=y+"px"}
@@ -3303,7 +3383,8 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
     ${groups.map(g=>`<div class="vis-g"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
-    if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(220,Math.min(mr.bottom,innerHeight)-pr.top-130)+"px"}};
+    if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
+  document.addEventListener("pointerdown",e=>{const p=d.querySelector("#visPanel");if(!p.hidden&&!e.target.closest(".vis-ctl"))p.hidden=true},true);
   d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&(c.dataset.vis==="enr"||c.dataset.vis==="sp")){drawEnr();drawSig()}}});
   d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
@@ -3374,7 +3455,7 @@ const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=
   d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
 new GpsCtl().addTo(map);
 function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
-  $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();
+  $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();gpsTouchMode(true);
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(l=>GPS.lock=l).catch(()=>{});
   if(sim){gpsSimStart();return}
   if(!navigator.geolocation){toast("อุปกรณ์นี้ไม่รองรับ GPS ในเบราว์เซอร์");return}
@@ -3383,7 +3464,7 @@ function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
 function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=null;
-  $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true}
+  $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="จุดก่อนหน้า">◀</button><button data-g="next" title="ข้ามไปจุดถัดไป">▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างเส้นทางที่บินมา">🧹</button><button data-g="off">✕</button></div>`}
 document.addEventListener("click",e=>{const b=e.target.closest("#gpsHud [data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
@@ -3428,12 +3509,25 @@ function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHu
      <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div><span>ETA</span><b>${eta}</b></div></div>
      <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""} · MH ตามแผน <b>${row&&isFinite(row.mh)?hdg(row.mh)+"°":"–"}</b></div>`}
   const near=gpsNear([P.lat,P.lon]);
-  const nearH=`<div class="gh-near"><div class="gh-nt">📍 สนามใกล้สุด · สำหรับรายงานตำแหน่ง (R = radial จาก VOR/TACAN ของสนาม · ≈ = ใช้ตำแหน่งสนามแทน)</div>${near.map(n=>`<div class="gh-nr"><b>${esc(n.id)}</b><span>${n.d.toFixed(1)} NM</span><span class="hint">BRG ${hdg(n.brg)}°</span><span class="gh-rad">R-${hdg(n.rad)} / ${n.dme.toFixed(1)} ${n.st?`NM ${esc(n.st)} ${n.stt}`:"NM จากสนาม"}</span></div>`).join("")}</div>`;
+  const strip=document.body.classList.contains("gps-touch"),n0=near[0];
+  const nearH=`<details class="gh-near"${!strip||GPS.nearOpen?" open":""}><summary class="gh-nt">📍 สนามใกล้สุด${strip&&n0?` · <b>${esc(n0.id)}</b> ${n0.d.toFixed(1)} NM · R-${hdg(n0.rad)}`:" · สำหรับรายงานตำแหน่ง (R = radial จาก VOR/TACAN ของสนาม · ≈ = ใช้ตำแหน่งสนามแทน)"}</summary>${near.map(n=>`<div class="gh-nr"><b>${esc(n.id)}</b><span>${n.d.toFixed(1)} NM</span><span class="hint">BRG ${hdg(n.brg)}°</span><span class="gh-rad">R-${hdg(n.rad)} / ${n.dme.toFixed(1)} ${n.st?`NM ${esc(n.st)} ${n.stt}`:"NM จากสนาม"}</span></div>`).join("")}</details>`;
   const ar=gpsArea([P.lat,P.lon],P.alt!=null?P.alt:num(state.legs[Math.min(GPS.leg,state.legs.length-1)]&&state.legs[Math.min(GPS.leg,state.legs.length-1)].alt,null));
-  h.innerHTML=`<div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div><span>TRK (M)</span><b>${mag(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div>${nav}
+  h.innerHTML=`<div class="gh-row"><div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div><span>TRK (M)</span><b>${mag(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div><div class="gh-navc">${nav}</div></div>
     ${ar?`<div class="gh-area">⚠ ${ar.d===0?"อยู่ใน":"ใกล้"} ${esc(ar.a.id)} ${esc(ar.a.name)} (${AREA_NAME[ar.a.type]}) ${ar.d?ar.d.toFixed(1)+" NM":""} · ${esc(ar.a.upper)}/${esc(ar.a.lower)}</div>`:""}
     ${nearH}
-    <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`}
+    <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`;
+  const dn=h.querySelector(".gh-near");if(dn)dn.ontoggle=()=>{if(strip){GPS.nearOpen=dn.open;gpsStripH()}};gpsStripH()}
+/* อุปกรณ์สัมผัส (iPad/มือถือ): เปิด GPS → แผงข้อมูลย้ายไปแถบล่างของแผนที่ + ยุบเมนูซ้าย (แตะแถบเล็กเพื่อเปิด) */
+const GPS_TOUCH=()=>matchMedia("(pointer:coarse)").matches;
+function gpsStripH(){const h=$("#gpsHud");map.getContainer().style.setProperty("--gpsH",document.body.classList.contains("gps-touch")&&h&&!h.hidden?(h.offsetHeight+14)+"px":"0px")}
+function gpsTouchMode(on){const h=$("#gpsHud"),B=document.body;if(on&&!GPS_TOUCH())return;B.classList.toggle("gps-touch",!!on);B.classList.remove("rail-peek");
+  if(on){h.classList.add("gps-strip");map.getContainer().appendChild(h);L.DomEvent.disableClickPropagation(h);L.DomEvent.disableScrollPropagation(h)}
+  else{h.classList.remove("gps-strip");const w=document.querySelector(".gps-wrap");if(w)w.appendChild(h)}
+  setTimeout(()=>{map.invalidateSize();gpsStripH()},280)}
+{const hb=document.createElement("button");hb.type="button";hb.id="railHandle";hb.className="rail-handle";hb.setAttribute("aria-label","เปิดเมนูแท็บ");hb.textContent="›";document.body.appendChild(hb);
+  const gl=()=>{const pk=document.body.classList.contains("rail-peek");hb.textContent=innerWidth<=760?(pk?"﹀":"︿"):(pk?"‹":"›")};gl();addEventListener("resize",gl);
+  hb.onclick=()=>{document.body.classList.toggle("rail-peek");gl()};
+  document.querySelector("nav.rail").addEventListener("click",e=>{if(e.target.closest(".tab")&&document.body.classList.contains("gps-touch")){document.body.classList.remove("rail-peek");gl()}})}
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
@@ -3453,6 +3547,11 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
   L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
 new CtlUndo().addTo(map);
 modeSet(FLMODE,true);
+/* แถบลัดไปหัวข้อ + ปุ่มกลับขึ้นบน */
+$("#jumpBar").addEventListener("click",e=>{const b=e.target.closest("[data-jump]");if(!b)return;const t=document.querySelector(b.dataset.jump);if(!t)return;
+  const y=t.getBoundingClientRect().top+scrollY-10;scrollTo({top:y,behavior:"smooth"});t.classList.remove("jump-hit");void t.offsetWidth;t.classList.add("jump-hit")});
+{const tt=$("#toTop");let sh=false;const on=()=>{const v=scrollY>500;if(v===sh)return;sh=v;if(v){tt.hidden=false;requestAnimationFrame(()=>tt.classList.add("show"))}else{tt.classList.remove("show");setTimeout(()=>{if(!sh)tt.hidden=true},200)}};
+  addEventListener("scroll",on,{passive:true});tt.onclick=()=>scrollTo({top:0,behavior:"smooth"})}
 try{const b=localStorage.getItem("vfr_base");if(b)baseSet(b)}catch(e){}
 /* รวมปุ่มบนแผนที่ (ยกเว้น GPS) เป็นแถบเครื่องมือเดียวที่ยุบ/ขยายได้ */
 {const CtlTools=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","map-tools");
