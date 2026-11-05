@@ -774,7 +774,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
 .rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
 .swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
-.hitag{background:#c62f24;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}body.hide-hi .hitag{display:none}
+.hitag{background:#c62f24;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}.hitag-wrap{background:none;border:0}.hitag-wrap .hitag{cursor:pointer;display:inline-block}
 .apmk{display:flex;flex-direction:column;align-items:center;overflow:visible}.ap-e{font-size:17px;line-height:22px;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 1px 1px rgba(0,0,0,.6))}
 .ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}
 .wpdbl{background:#123c69;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:4px;white-space:nowrap;border:1px solid #fff}
@@ -1945,8 +1945,23 @@ function saShow(){const r=SA_RES,info=$("#saInfo");if(!r||!info)return;const f=v
   $("#saUse").onclick=e=>{e.preventDefault();state.sa=String(r.sa);$("#sa").value=state.sa;store.set("vfr_current",state);render();toast("ตั้ง SA = "+f(r.sa)+" ft")};
   $("#saBuf").onchange=e=>{state.saBuf=+e.target.value;store.set("vfr_current",state);saSched(true)}}
 var saCtl=null,saLayer=null;
+var saHidden="";  // ป้ายที่ผู้ใช้กดลบแล้ว (จำตามตำแหน่ง/ความสูง — เส้นทางเปลี่ยน ป้ายใหม่จะขึ้นเอง)
 function saMark(r){if(!saLayer)saLayer=L.layerGroup().addTo(map);saLayer.clearLayers();if(!r||!r.max||r.max.la==null)return;
-  L.marker([r.max.la,r.max.lo],{interactive:false,zIndexOffset:900,icon:L.divIcon({className:"",html:`<span class="hitag">▲ ${Math.round(r.max.ft).toLocaleString("en-US")} ft</span>`,iconSize:null,iconAnchor:[-6,9]})}).addTo(saLayer)}
+  const sig=r.max.la.toFixed(4)+","+r.max.lo.toFixed(4)+","+Math.round(r.max.ft);if(sig===saHidden)return;
+  L.marker([r.max.la,r.max.lo],{zIndexOffset:900,icon:L.divIcon({className:"hitag-wrap",html:`<span class="hitag" title="แตะเพื่อดู/ลบป้าย">▲ ${Math.round(r.max.ft).toLocaleString("en-US")} ft</span>`,iconSize:null,iconAnchor:[-6,9]})})
+   .on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();saAsk(r,sig)}).addTo(saLayer)}
+function saAsk(r,sig){if(typeof tapClose==="function")tapClose();document.querySelectorAll(".snapask").forEach(x=>x.remove());const f=v=>Math.round(v).toLocaleString("en-US");
+  const b=document.createElement("div");b.className="snapask wpask";const ll=L.latLng(r.max.la,r.max.lo);
+  b.innerHTML=`<div class="sa-h"><span class="sa-ico" style="color:#c62f24">▲</span><div><b>${f(r.max.ft)} ft</b><small>จุดสูงสุดในเส้นทาง ±${r.buf} NM · ${fmtMgrs(toMgrs(r.max.la,r.max.lo))}</small></div></div>
+   <p>SA = ${f(r.max.ft)} + 1,000 → <b>${f(r.sa)} ft</b> MSL <small>(ปัดขึ้นหลักร้อย)</small></p><small class="sa-c">ลบเฉพาะป้ายบนแผนที่ · ถ้าเปลี่ยนเส้นทาง ป้ายใหม่จะขึ้นเอง</small>
+   <div class="sa-b"><button class="sa-no">ปิด</button><button class="sa-yes sa-del">🗑 ลบป้าย</button></div>`;
+  map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
+  const place=()=>{const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;
+    let x=pt.x-bw/2+30,y=pt.y-bh-18;if(y<8)y=pt.y+22;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));b.style.left=x+"px";b.style.top=y+"px"};
+  place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k)};
+  const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
+  b.querySelector(".sa-no").onclick=close;b.querySelector(".sa-del").onclick=()=>{close();saHidden=sig;saMark(r);toast("ลบป้ายจุดสูงสุดแล้ว")};
+  requestAnimationFrame(()=>b.classList.add("in"))}
 function saChip(t){if(!saCtl){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","sa-chip");L.DomEvent.disableClickPropagation(d);return d}});saCtl=new C().addTo(map)}
   const el=saCtl.getContainer();el.textContent=t;el.hidden=!t;el.title="Safety Altitude ตามเส้นทาง (ดูรายละเอียดที่ช่อง SA ในแท็บ 1)"}
 /* เต็มจอ: ปุ่มอยู่มุมขวาล่างใกล้ GPS · ในโหมดเต็มจอย้ายกรอบ "จุดเส้นทาง" มาลอยบนแผนที่เพื่อจัดการ waypoint ได้ */
@@ -3229,7 +3244,6 @@ const VIS=[
  {k:"route",t:"เส้นทาง + จุด",g:"เส้นทาง",L:()=>routeLayer},
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
  {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
- {k:"hi",t:"จุดสูงสุดในเส้นทาง (SA)",g:"เส้นทาง",css:"hide-hi"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
  {k:"ctr",t:"Control zone (CTR/ATZ)",g:"สนามบิน",L:()=>ctrLayer},
  {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
@@ -3243,8 +3257,8 @@ const VIS=[
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem hi ap ctr rp P R D nt ifr",
- "เฉพาะเส้นทาง":"route hbox rem hi ifr",
+ "ทั้งหมด":"route hbox rem ap ctr rp P R D nt ifr",
+ "เฉพาะเส้นทาง":"route hbox rem ifr",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
  "เฉพาะ CTR":"route ap ctr",
