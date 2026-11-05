@@ -309,6 +309,17 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .ifrmk{background:none;border:0}.ifrmk svg{display:block;filter:drop-shadow(0 0 1px #fff)}
 .ifr-n{position:absolute;left:50%;top:12px;transform:translateX(-50%);font:700 8.5px/1 system-ui,sans-serif;color:#123b7a;white-space:nowrap;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff;pointer-events:none}
 .ifr-lo .ifr-n{display:none}
+.tapghost i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(214,51,132,.35);border:2px dashed #d63384;color:#fff;font:700 12px system-ui,sans-serif;font-style:normal;animation:tapIn .18s ease-out}
+@keyframes tapIn{from{transform:scale(.4);opacity:0}}
+.tapask{position:absolute;z-index:1200;width:232px;background:#fff;color:#1b2430;border-radius:14px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.06);opacity:0;transform:translateY(6px) scale(.97);transition:opacity .15s,transform .15s}
+.tapask.in{opacity:1;transform:none}
+.tapask>button{display:flex;gap:10px;align-items:center;width:100%;border:0;background:none;text-align:left;padding:8px 8px;border-radius:9px;cursor:pointer;color:inherit;font:inherit}
+.tapask>button:hover{background:#f1f4f8}.tapask b{display:block;font-size:13px;font-weight:600}.tapask small{display:block;color:#6b7684;font-size:11px}
+.tapask .ta-i{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#fbe7f1;color:#d63384;font-size:15px;font-weight:700}
+.tapask .ta-snap .ta-i{background:#e3ecf8;color:#123b7a}.tapask .ta-info .ta-i{background:#eef1f5;color:#3b4654}
+.tapask .ta-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #eceff3;margin-top:4px;padding:6px 8px 2px}
+.tapask .ta-x{border:0;background:#eef1f5;color:#3b4654;border-radius:7px;padding:5px 10px;font:600 12px system-ui,sans-serif;cursor:pointer}
+@media (pointer:coarse){.tapask{width:260px}.tapask>button{padding:11px 8px}.tapask b{font-size:14px}}
 .ifrring{pointer-events:none}.ifrring i{position:absolute;inset:0;border:3px solid #e0322b;border-radius:50%;background:rgba(224,50,43,.12);animation:ifrPulse 1s ease-out infinite}
 .ifrring span{position:absolute;left:50%;top:-20px;transform:translateX(-50%);background:#e0322b;color:#fff;font:700 11px/1 system-ui,sans-serif;padding:3px 6px;border-radius:5px;white-space:nowrap}
 @keyframes ifrPulse{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.35);opacity:.35}}
@@ -922,7 +933,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
       <button id="fplOpen" class="fpl-cta" type="button"><span class="fpl-ic" aria-hidden="true">📄</span><span class="fpl-tx"><b>สร้าง PDF Flight Plan</b><small id="fplSum">ICAO Flight Plan สำหรับยื่นหอบังคับการบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
       <div class="btns">
-        <button id="addMode" class="on">✚ คลิกแผนที่เพื่อเพิ่มจุด: เปิด</button>
+        <span class="hint tap-hint">แตะแผนที่ = เมนูเพิ่มจุด · Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span>
         <button id="addManual">เพิ่มจุดจากพิกัด</button>
         <button id="reverse">กลับเส้นทาง</button>
         <button id="clearAll">ล้างทั้งหมด</button>
@@ -1416,11 +1427,11 @@ AIRPORTS.forEach(a=>{const hp=a[4]==="heliport",nm=String(a[1]).replace(/\s*(Int
   mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
 apLayer.addTo(map);
 {const zc=()=>map.getContainer().classList.toggle("ap-lo",map.getZoom()<8);map.on("zoomend",zc);zc()}layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
-let addMode=true,pePick=null;
+let pePick=null;
 
 /* คลิกพื้นที่บนแผนที่: ถ้าอยู่ในโหมดเพิ่มจุด/เลือกพิกัด ให้ทำงานเหมือนคลิกแผนที่ ไม่งั้นเปิดรายละเอียด */
-function infoClick(e,html){L.DomEvent.stop(e);if(addMode||pePick!=null||(typeof pick!=="undefined"&&pick)){map.fire("click",{latlng:e.latlng,originalEvent:e.originalEvent});return}
-  L.popup().setLatLng(e.latlng).setContent(html()).openOn(map)}
+function infoClick(e,html){L.DomEvent.stop(e);if(pePick!=null||(typeof pick!=="undefined"&&pick)){map.fire("click",{latlng:e.latlng,originalEvent:e.originalEvent});return}
+  if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng,html)}
 /* ป้ายบอกระยะ: จุดบนเส้นทางที่ระยะถึงปลายทางเป็นทวีคูณของ step (ไม่รวมจุด 0) */
 function remMarkers(rows){const step=num(state.remStep,10);if(!step||rows.length===0)return[];
   const total=rows.reduce((s,r)=>s+r.dist,0);const out=[];let done=0;
@@ -1438,7 +1449,7 @@ function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPro
     ghost.setLatLngs([a,ll,b]);dot.setLatLng(ll);if(!map.hasLayer(dot))dot.addTo(map)};
   const up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);
     map.removeLayer(ghost);if(map.hasLayer(dot))map.removeLayer(dot);setTimeout(()=>map.dragging.enable(),0);
-    if(!moved||!ll)return;
+    if(!moved){window._suppressClick=Date.now();if(typeof tapMenu==="function")tapMenu(map.mouseEventToLatLng(ev));return}if(!ll)return;
     W.splice(i+1,0,{name:"WP"+(i+2),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""});
     const base=state.legs[i]?{...state.legs[i],ate:"",fact:""}:blankLeg();state.legs.splice(i+1,0,base);
     window._suppressClick=Date.now();markEdited();render();toast("แทรกจุดใหม่ระหว่าง "+W[i].name+" – "+W[i+2].name)};
@@ -1474,7 +1485,41 @@ function drawMap(rows){
   remMarkers(rows).forEach(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
-map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(!addMode||(typeof pick!=="undefined"&&pick))return;state.wps.push({name:"WP"+(state.wps.length+1),lat:+e.latlng.lat.toFixed(6),lon:+e.latlng.lng.toFixed(6),vor:""});markEdited();render()});
+map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
+  if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng)});
+/* แตะแผนที่ → หมุดจาง + เมนูเล็ก (ไม่มีโหมดเปิด/ปิด) · Shift+คลิก หรือ แตะค้าง/คลิกขวา = เพิ่มทันที */
+let tapGhost=null,tapBox=null;
+function tapClose(){if(tapBox){tapBox.remove();tapBox=null}if(tapGhost){map.removeLayer(tapGhost);tapGhost=null}map.off("move zoom",tapPlace)}
+function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerPoint(tapGhost.getLatLng()),C=map.getSize(),bw=tapBox.offsetWidth,bh=tapBox.offsetHeight;
+  let x=pt.x-bw/2,y=pt.y-bh-30;if(y<8)y=pt.y+16;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));tapBox.style.left=x+"px";tapBox.style.top=y+"px"}
+function tapNearLeg(ll){const W=state.wps;if(W.length<2)return-1;const P=map.latLngToContainerPoint(ll);let bi=-1,bd=Infinity;
+  for(let i=0;i<W.length-1;i++){const a=map.latLngToContainerPoint([W[i].lat,W[i].lon]),b=map.latLngToContainerPoint([W[i+1].lat,W[i+1].lon]),d=L.LineUtil.pointToSegmentDistance(P,a,b);if(d<bd){bd=d;bi=i}}return bi}
+function tapSnap(ll){if(FLMODE==="I"&&typeof ifrNear==="function"){const f=ifrNear(ll);if(f)return{name:f.name,lat:f.lat,lon:f.lon,lab:f.comp===false?"△ On request":f.comp?"▲ Compulsory":"Significant point"}}
+  const P=map.latLngToContainerPoint(ll),R=matchMedia("(pointer:coarse)").matches?42:28;let best=null,bd=R;
+  (typeof dbAll==="function"?dbAll():[]).forEach(x=>{if(x.lat==null)return;const d=P.distanceTo(map.latLngToContainerPoint([x.lat,x.lon]));if(d<bd){bd=d;best=x}});
+  return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:best.lat,lon:best.lon,lab:"Waypoint หน่วย No."+best.no}:null}
+function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render()}
+function tapAddDirect(ll){tapClose();const w={name:"WP"+(state.wps.length+1),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""};state.wps.push(w);markEdited();render();toast("เพิ่ม "+w.name)}
+function tapMenu(ll,info){if(tapBox){tapClose();return}  // แตะที่อื่นตอนเมนูเปิด = ยกเลิก
+  const sn=tapSnap(ll),W=state.wps,leg=tapNearLeg(ll),n=W.length;
+  tapGhost=L.marker(ll,{interactive:false,zIndexOffset:800,icon:L.divIcon({className:"tapghost",html:`<i>${n+1}</i>`,iconSize:[26,26],iconAnchor:[13,13]})}).addTo(map);
+  const b=document.createElement("div");b.className="tapask";
+  b.innerHTML=`${sn?`<button class="ta-snap"><span class="ta-i">◎</span><span><b>ใช้ ${esc(sn.name)}</b><small>${esc(sn.lab)}</small></span></button>`:""}
+   <button class="ta-add"><span class="ta-i">＋</span><span><b>เพิ่มเป็นจุดที่ ${n+1}</b><small>${n?"ต่อท้ายเส้นทาง":"จุดเริ่มต้น"}</small></span></button>
+   ${leg>=0?`<button class="ta-ins"><span class="ta-i">⤵</span><span><b>แทรกระหว่าง ${leg+1} → ${leg+2}</b><small>${esc(W[leg].name||"")} → ${esc(W[leg+1].name||"")}</small></span></button>`:""}
+   ${info?`<button class="ta-info"><span class="ta-i">ℹ</span><span><b>ข้อมูลพื้นที่ตรงนี้</b></span></button>`:""}
+   <div class="ta-foot"><small>${fmtMgrs(toMgrs(ll.lat,ll.lng))}</small><button class="ta-x">ยกเลิก</button></div>`;
+  map.getContainer().appendChild(b);tapBox=b;L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);tapPlace();map.on("move zoom",tapPlace);
+  requestAnimationFrame(()=>b.classList.add("in"));
+  const mk=x=>({name:x?x.name:"WP"+(state.wps.length+1),lat:+(x?x.lat:ll.lat).toFixed(6),lon:+(x?x.lon:ll.lng).toFixed(6),vor:""});
+  const q=c=>b.querySelector(c);
+  q(".ta-add").onclick=()=>{const w=mk(null);tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
+  if(q(".ta-ins"))q(".ta-ins").onclick=()=>{const w=mk(null);w.name="WP"+(leg+2);tapClose();tapInsert(w,leg);toast(`แทรกจุดที่ ${leg+2}`)};
+  if(q(".ta-snap"))q(".ta-snap").onclick=()=>{const w=mk(sn);tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
+  if(q(".ta-info"))q(".ta-info").onclick=()=>{tapClose();L.popup().setLatLng(ll).setContent(info()).openOn(map)};
+  q(".ta-x").onclick=tapClose}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&tapBox)tapClose()});
+map.on("contextmenu",e=>{if(pePick!=null||(typeof pick!=="undefined"&&pick))return;window._suppressClick=Date.now();tapAddDirect(e.latlng);try{navigator.vibrate&&navigator.vibrate(15)}catch(_){}});
 
 /* ---------- compute ---------- */
 function compute(){
@@ -1617,7 +1662,7 @@ $("#wpTable").addEventListener("click",e=>{const b=e.target.closest("button[data
   if(a==="down"&&i<W.length-1)[W[i+1],W[i]]=[W[i],W[i+1]];
   if(a==="zoom"){map.setView([W[i].lat,W[i].lon],13);return}
   markEdited();render()});
-$("#addMode").onclick=()=>{addMode=!addMode;const b=$("#addMode");b.classList.toggle("on",addMode);b.textContent="✚ คลิกแผนที่เพื่อเพิ่มจุด: "+(addMode?"เปิด":"ปิด")};
+
 $("#addManual").onclick=()=>{const c=map.getCenter();state.wps.push({name:"WP"+(state.wps.length+1),lat:+c.lat.toFixed(6),lon:+c.lng.toFixed(6),vor:""});markEdited();render();
   const ins=document.querySelectorAll('#wpTable input[data-k="coord"]');const last=ins[ins.length-1];if(last){last.focus();last.select()}};
 $("#reverse").onclick=()=>{state.wps.reverse();state.legs.reverse();markEdited();render();toast("กลับเส้นทางแล้ว")};
@@ -1904,7 +1949,7 @@ const CtlFull=L.Control.extend({options:{position:"bottomright"},onAdd(){const d
   L.DomEvent.disableClickPropagation(d);d.querySelector("a").onclick=e=>{e.preventDefault();mapFull(!document.body.classList.contains("mapfull"))};return d}});
 new CtlFull().addTo(map);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("mapfull"))mapFull(false)});
-function startPick(){pick={a:null};addMode=false;$("#addMode").classList.remove("on");$("#addMode").textContent="✚ คลิกแผนที่เพื่อเพิ่มจุด: ปิด";
+function startPick(){pick={a:null};if(typeof tapClose==="function")tapClose();
   map.getContainer().classList.add("pick3d");toast("แตะมุมแรกของกรอบ")}
 map.on("click",e=>{if(!pick)return;if(!pick.a){pick.a=e.latlng;toast("แตะมุมตรงข้าม");return}
   const bb=L.latLngBounds(pick.a,e.latlng);pick=null;map.getContainer().classList.remove("pick3d");
