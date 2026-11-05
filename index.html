@@ -308,7 +308,17 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .rp:hover{border-color:var(--accent)}
 .ifrmk{background:none;border:0}.ifrmk svg{display:block;filter:drop-shadow(0 0 1px #fff)}
 .ifr-n{position:absolute;left:50%;top:12px;transform:translateX(-50%);font:700 8.5px/1 system-ui,sans-serif;color:#123b7a;white-space:nowrap;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff;pointer-events:none}
-.ifr-lo .ifr-n{display:none}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
+.ifr-lo .ifr-n{display:none}
+.ifrring{pointer-events:none}.ifrring i{position:absolute;inset:0;border:3px solid #e0322b;border-radius:50%;background:rgba(224,50,43,.12);animation:ifrPulse 1s ease-out infinite}
+.ifrring span{position:absolute;left:50%;top:-20px;transform:translateX(-50%);background:#e0322b;color:#fff;font:700 11px/1 system-ui,sans-serif;padding:3px 6px;border-radius:5px;white-space:nowrap}
+@keyframes ifrPulse{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.35);opacity:.35}}
+.snapask{position:absolute;z-index:1200;width:260px;background:#fff;color:#1b2430;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.28),0 0 0 1px rgba(18,59,122,.12);font-size:13px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .16s,transform .16s}
+.snapask.in{opacity:1;transform:none}.snapask .sa-h{display:flex;gap:9px;align-items:center}.snapask .sa-h svg{width:22px;height:20px}
+.snapask .sa-h b{font-size:16px;letter-spacing:.5px;color:#123b7a}.snapask .sa-h small{display:block;color:#6b7684;font-size:11px}
+.snapask p{margin:9px 0 2px}.snapask .sa-c{color:#6b7684;font-size:11px}.snapask .sa-b{display:flex;gap:8px;margin-top:10px}
+.snapask button{flex:1;border:0;border-radius:9px;padding:9px 6px;font:600 12.5px system-ui,sans-serif;cursor:pointer}
+.snapask .sa-no{background:#eef1f5;color:#3b4654}.snapask .sa-yes{background:#123b7a;color:#fff}.snapask button:hover{filter:brightness(1.08)}
+@media (pointer:coarse){.snapask{width:280px}.snapask button{padding:12px 6px;font-size:14px}}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
 .ifrpop table{border-collapse:collapse;margin:4px 0;font-size:12px}.ifrpop .ifrg{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:4px 0;font-size:12px}.ifrpop .ifrg span{color:#666}.ifrpop .ifrg b{font-weight:600;color:#222}.ifrpop .ifrseg{border-top:1px solid #ddd;margin-top:5px;padding-top:4px}.ifrpop .btn{margin-top:4px}
 .rptri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid #ffd400;filter:drop-shadow(0 0 1px #000)}
 /* ---- QUIZ ---- */
@@ -1447,7 +1457,8 @@ function drawMap(rows){
     const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${w.name||"WP"}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
-    m.on("dragend",e=>{const p=e.target.getLatLng();w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render()});
+    m.on("drag",e=>{if(FLMODE==="I")ifrSnapHint(e.target.getLatLng())});
+    m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);const f=FLMODE==="I"?ifrNear(p):null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f)});
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
     const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
@@ -1843,8 +1854,12 @@ new Ctl3D().addTo(map);
    V: ภูมิประเทศสูงสุดในแนวเส้นทาง ±buf NM (AWS Terrain tiles) + 1000 ft ปัดขึ้นทีละ 100
    I: เตรียมไว้สำหรับ MEA / MOCA / MSA จาก eAIP (ยังไม่ได้ดึง) */
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
+/* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
+function ifrBase(){if(typeof baseSet!=="function")return;let cur="sat";try{cur=localStorage.getItem("vfr_base")||"sat"}catch(e){}
+  if(FLMODE==="I"){if(cur!=="chart"){try{localStorage.setItem("vfr_base_v",cur)}catch(e){}}baseSet("chart")}
+  else{let pv=null;try{pv=localStorage.getItem("vfr_base_v");localStorage.removeItem("vfr_base_v")}catch(e){}if(pv&&cur==="chart")baseSet(pv)}}
 function modeSet(m,quiet){FLMODE=m==="I"?"I":"V";try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
-  document.body.classList.toggle("mode-ifr",FLMODE==="I");if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
+  document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase();if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
 function terrTile(x,y){const k=x+"/"+y;if(terrCache.has(k))return terrCache.get(k);
@@ -2196,13 +2211,35 @@ function ifrTri(c){return c===false?'<svg width="13" height="12" viewBox="0 0 13
   :`<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 1 L12 11 H1 Z" fill="${c?"#123b7a":"#7fa6d8"}" stroke="#fff" stroke-width=".8"/></svg>`}
 function drawIfr(){ifrLayer.clearLayers();if(FLMODE!=="I"||!EAIP){map.removeLayer(ifrLayer);return}
   (EAIP.airways||[]).forEach(r=>{for(let i=0;i<r.pts.length-1;i++){const a=r.pts[i],b=r.pts[i+1];
-    L.polyline([[a.lat,a.lon],[b.lat,b.lon]],{color:"#123b7a",weight:1.4,opacity:.7,className:"ifr-aw"}).bindPopup(()=>`<div class="ifrpop">${segHtml(r,i)}</div>`).addTo(ifrLayer)}});
+    L.polyline([[a.lat,a.lon],[b.lat,b.lon]],{color:"#123b7a",weight:IFR_TOUCH||innerWidth<900?1.6:2.6,opacity:.8,className:"ifr-aw"}).bindPopup(()=>`<div class="ifrpop">${segHtml(r,i)}</div>`).addTo(ifrLayer)}});
   ifrPts().forEach(p=>{const t=p.comp===false?"On request (△)":p.comp?"Compulsory (▲)":"Significant point (ENR 4.4)";
     L.marker([p.lat,p.lon],{icon:L.divIcon({className:"ifrmk",html:`${ifrTri(p.comp)}<span class="ifr-n">${esc(p.name)}</span>`,iconSize:[13,12],iconAnchor:[6,6]})})
      .bindPopup(()=>`<div class="ifrpop"><b>${esc(p.name)}</b> · ${t}<br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}${p.aw.length?`<br>Airway: ${[...new Set(p.aw.map(x=>x.r.id))].map(esc).join(", ")}`:""}
        ${p.aw.filter(x=>x.i<x.r.pts.length-1&&x.r.pts[x.i].seg).map(x=>segHtml(x.r,x.i)).join("")}<button class="btn sm ifr-add">+ เพิ่มเป็นจุดเส้นทาง</button></div>`,{maxWidth:280})
      .on("popupopen",e=>{const bt=e.popup.getElement().querySelector(".ifr-add");if(bt)bt.onclick=()=>{state.wps.push({name:p.name,lat:p.lat,lon:p.lon,vor:""});markEdited();render();map.closePopup();toast("เพิ่ม "+p.name)}}).addTo(ifrLayer)});
   ifrLayer.addTo(map);ifrZoom()}
+/* ลากจุดเส้นทางไปใกล้จุดรายงาน IFR → ถามว่าจะใช้จุดนั้นเป็น waypoint ไหม */
+const IFR_TOUCH=matchMedia("(pointer:coarse)").matches;
+let IFR_CACHE=null;function ifrList(){if(!IFR_CACHE||IFR_CACHE.src!==EAIP)IFR_CACHE={src:EAIP,pts:EAIP?ifrPts():[]};return IFR_CACHE.pts}
+function ifrNear(ll){if(!EAIP)return null;const P=map.latLngToContainerPoint(ll),R=IFR_TOUCH?42:28;let best=null,bd=R;
+  ifrList().forEach(p=>{const d=P.distanceTo(map.latLngToContainerPoint([p.lat,p.lon]));if(d<bd){bd=d;best=p}});return best}
+let ifrRing=null;
+function ifrSnapHint(ll){const f=ll&&ifrNear(ll);if(!f){if(ifrRing){map.removeLayer(ifrRing);ifrRing=null}return}
+  if(!ifrRing)ifrRing=L.marker([f.lat,f.lon],{interactive:false,zIndexOffset:900,icon:L.divIcon({className:"ifrring",html:"<i></i><span></span>",iconSize:[34,34],iconAnchor:[17,17]})}).addTo(map);
+  ifrRing.setLatLng([f.lat,f.lon]);const el=ifrRing.getElement();if(el)el.querySelector("span").textContent=f.name}
+function ifrSnapAsk(w,i,f){document.querySelectorAll(".snapask").forEach(x=>x.remove());const box=document.createElement("div");box.className="snapask";
+  const aw=[...new Set(f.aw.map(x=>x.r.id))];const t=f.comp===false?"On request":f.comp?"Compulsory":"Significant point";
+  box.innerHTML=`<div class="sa-h">${ifrTri(f.comp)}<div><b>${esc(f.name)}</b><small>${t}${aw.length?" · "+aw.map(esc).join(", "):""}</small></div></div>
+   <p>ใช้จุด <b>${esc(f.name)}</b> เป็น waypoint ${i+1} หรือไม่?</p><small class="sa-c">${f.lat.toFixed(5)}, ${f.lon.toFixed(5)} · ${fmtMgrs(toMgrs(f.lat,f.lon))}</small>
+   <div class="sa-b"><button class="sa-no">ไม่ใช้</button><button class="sa-yes">✓ ใช้ ${esc(f.name)}</button></div>`;
+  map.getContainer().appendChild(box);L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);
+  const place=()=>{const pt=map.latLngToContainerPoint([f.lat,f.lon]),C=map.getSize(),bw=box.offsetWidth,bh=box.offsetHeight;
+    let x=pt.x-bw/2,y=pt.y-bh-22;if(y<8)y=pt.y+22;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));box.style.left=x+"px";box.style.top=y+"px"};
+  place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);box.remove();document.removeEventListener("keydown",esc_)};
+  const esc_=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",esc_);
+  box.querySelector(".sa-no").onclick=close;
+  box.querySelector(".sa-yes").onclick=()=>{close();const W=state.wps[i];if(!W)return;Object.assign(W,{name:f.name,lat:f.lat,lon:f.lon});markEdited();render();toast(`WP ${i+1} = ${f.name}`)};
+  requestAnimationFrame(()=>box.classList.add("in"));box.querySelector(".sa-yes").focus({preventScroll:true})}
 function ifrZoom(){map.getContainer().classList.toggle("ifr-lo",map.getZoom()<7)}
 map.on("zoomend",ifrZoom);
 /* ENR 4.4 significant points → พิมพ์ชื่อจุดในช่องต้นทาง/ปลายทาง/พิกัดได้ */
