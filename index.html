@@ -1202,7 +1202,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <aside class="card ep-side">
     <div class="ep-tools"><input id="npSearch" type="search" placeholder="ค้นหา เช่น starting, before taxi" aria-label="ค้นหา normal procedure"></div>
     <div id="npList" class="ep-list"></div>
-    <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 6 EMER)</p></div>
+    <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 9 ข้อมูล)</p></div>
   </aside>
   <article class="card ep-main" id="npMain"></article>
  </div>
@@ -2317,7 +2317,7 @@ function npRenderList(){const D=npData(),L=$("#npList");if(!D){L.innerHTML="";np
     html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();
-  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ 6 EMER</div>`;return}
+  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 ข้อมูล</b> → กล่อง 2 ข้อมูล TM</div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
     const all=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub"));
@@ -2902,7 +2902,7 @@ function epRenderList(){const L=$("#epList");{const dt=$("#dataTm");if(dt)dt.inn
   $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
 function epRenderMain(){const M=$("#epMain");
-  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>กด <b>Import ข้อมูล EMER Proc.</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
+  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
   if(epSel==null){epHome(M);return}
   const p=EP.procedures[epSel];M.onclick=null;
   const blocks=epFull?p.blocks:epChecklist(p);
@@ -2972,7 +2972,7 @@ function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[qs.length%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
-  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>5 · EMERGENCY</b> แล้วกด <b>Import ข้อมูล EMER Proc.</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
+  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>9 ข้อมูล</b> แล้วกด <b>Import emergency_data.json</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
   if(!qz){const bankN=(EP.quiz||[]).length;
     R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EMER Proc. สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
      <div class="qz-modes">${QZ_MODES.map(m=>`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}"><b>${m.name}</b><span>${m.desc}</span></button>`).join("")}</div>
