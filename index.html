@@ -384,6 +384,22 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--nav);color:var(--panel);
   padding:8px 16px;border-radius:8px;font-weight:600;z-index:2000;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
+/* แอนิเมชันปุ่ม (CSS ล้วน) — กดยุบ · ชี้แล้วยก · คลื่นตอนกดปุ่มหลัก · GPS เปิดอยู่มีวงแหวนกระเพื่อม · toast เลื่อนขึ้น */
+@media (prefers-reduced-motion:no-preference){
+  button,.linkbtn,.gps-btn,.leaflet-bar a,.mt-toggle{transition:transform .12s ease,box-shadow .18s ease,background-color .18s,color .18s,border-color .18s}
+  button:active:not(:disabled),.linkbtn:active,.gps-btn:active,.leaflet-bar a:active,.mt-toggle:active{transform:scale(.94)}
+  @media (hover:hover){button.primary:hover:not(:disabled),.linkbtn:hover,.fpl-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(10,108,255,.28)}
+    .rail .tab:hover i{animation:tabHop .35s ease}}
+  @keyframes tabHop{40%{transform:translateY(-3px)}}
+  .gps-btn.on{position:relative}
+  .gps-btn.on::after{content:"";position:absolute;inset:-5px;border-radius:16px;border:2px solid var(--accent);animation:btnRing 1.6s ease-out infinite;pointer-events:none}
+  @keyframes btnRing{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.3)}}
+  .toast{transition:opacity .2s,transform .25s cubic-bezier(.2,.8,.3,1.2);transform:translate(-50%,14px)}.toast.show{transform:translate(-50%,0)}
+  .rip{position:absolute;border-radius:50%;background:currentColor;opacity:.28;transform:scale(0);animation:rip .55s ease-out forwards;pointer-events:none}
+  @keyframes rip{to{transform:scale(1);opacity:0}}
+  .rail .tab.emer[aria-selected="true"] i{animation:mcBlink 1.2s steps(2,jump-none) 3}
+  @keyframes mcBlink{50%{opacity:.35}}
+}
 .example{font-size:11px;font-weight:600;color:var(--warn);border:1px solid var(--warn);border-radius:4px;padding:0 5px;margin-left:6px}
 /* ===================== Theme D · Clean iPad ===================== */
 body{padding:0 0 env(safe-area-inset-bottom,0px) calc(96px + env(safe-area-inset-left,0px));font-variant-numeric:tabular-nums}
@@ -738,6 +754,10 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 #mfWp .card .sechead h2,#mfWp .card>.hint{display:none}
 .gps-btn{min-height:44px;font:700 15px var(--f-body);border-radius:12px;background:var(--panel);border:2px solid var(--line);padding:8px 14px;box-shadow:var(--shadow)}
 .gps-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.gps-heli{position:relative;width:64px;height:64px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}.gh-rot{position:absolute;inset:0;transition:transform .6s ease}.gh-lot{width:100%;height:100%}
+.gh-ring{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2px solid #0a6cff;opacity:0}
+@media (prefers-reduced-motion:no-preference){.gps-heli.moving .gh-ring{animation:ghRing 1.8s ease-out infinite}.gh-spin{transform-origin:50px 44px;animation:ghSpin .25s linear infinite}}
+@keyframes ghRing{from{opacity:.8;transform:scale(.7)}to{opacity:0;transform:scale(1.9)}}@keyframes ghSpin{to{transform:rotate(360deg)}}
 .gps-hud{background:rgba(17,24,39,.92);color:#fff;border-radius:16px;padding:10px 12px;width:min(360px,calc(100vw - 40px));box-shadow:0 8px 24px rgba(0,0,0,.4);font:14px var(--f-body);display:flex;flex-direction:column;gap:6px}
 .gps-hud .hint{color:#aab4c3}.gh-wait{padding:6px 2px}
 .gh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.gh-grid.top{grid-template-columns:repeat(3,1fr)}
@@ -3146,7 +3166,28 @@ $("#stepMode").addEventListener("click",e=>{if(e.target.closest(".sm-body")){con
 /* ---------- GPS (ตำแหน่งจากอุปกรณ์ผ่านเบราว์เซอร์ — ใช้ได้ออฟไลน์ ไม่ส่งตำแหน่งไปไหน) ---------- */
 const GPS={on:false,watch:null,last:null,trk:null,leg:0,follow:true,sim:null,lock:null,mk:null,acc:null,crumb:null,pts:[]};
 const gpsLayer=L.layerGroup().addTo(map);
-function gpsIcon(trk){return L.divIcon({className:"",html:`<svg class="gps-own" width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(${trk??0}deg)"><circle cx="22" cy="22" r="20" fill="rgba(10,108,255,.18)"/><path d="M22 4 L31 34 L22 28 L13 34 Z" fill="#0a6cff" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>`,iconSize:[44,44],iconAnchor:[22,22]})}
+/* คลื่นตอนกดปุ่มหลัก */
+document.addEventListener("pointerdown",e=>{const b=e.target.closest("button.primary,.gps-btn");if(!b||b.disabled||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height)*2.2,sp=document.createElement("span");sp.className="rip";
+  Object.assign(sp.style,{width:d+"px",height:d+"px",left:(e.clientX-r.left-d/2)+"px",top:(e.clientY-r.top-d/2)+"px"});
+  if(getComputedStyle(b).position==="static")b.style.position="relative";b.style.overflow="hidden";b.appendChild(sp);setTimeout(()=>sp.remove(),600)});
+/* ตำแหน่งตัวเองตอนเปิด GPS = เฮลิคอปเตอร์มองจากด้านบน ใบพัดหมุน (Lottie) หันตามทิศทาง */
+const HELI_LOT={v:"5.7.4",fr:30,ip:0,op:30,w:100,h:100,nm:"heli",ddd:0,assets:[],layers:[
+ {ddd:0,ind:1,ty:4,nm:"blades",sr:1,ks:{o:{a:0,k:100},r:{a:1,k:[{i:{x:[1],y:[1]},o:{x:[0],y:[0]},t:0,s:[0]},{t:30,s:[720]}]},p:{a:0,k:[50,44,0]},a:{a:0,k:[0,0,0]},s:{a:0,k:[100,100,100]}},ao:0,
+  shapes:[{ty:"gr",it:[{ty:"rc",d:1,s:{a:0,k:[94,5]},p:{a:0,k:[0,0]},r:{a:0,k:2.5}},{ty:"rc",d:1,s:{a:0,k:[5,94]},p:{a:0,k:[0,0]},r:{a:0,k:2.5}},{ty:"fl",c:{a:0,k:[1,1,1,1]},o:{a:0,k:78}},{ty:"st",c:{a:0,k:[0.07,0.13,0.2,1]},o:{a:0,k:70},w:{a:0,k:1},lc:2,lj:2},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:45},o:{a:0,k:100}}]},
+   {ty:"gr",it:[{ty:"el",d:1,s:{a:0,k:[9,9]},p:{a:0,k:[0,0]}},{ty:"fl",c:{a:0,k:[0.07,0.13,0.2,1]},o:{a:0,k:100}},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0},o:{a:0,k:100}}]}],ip:0,op:30,st:0,bm:0},
+ {ddd:0,ind:2,ty:4,nm:"tailrotor",sr:1,ks:{o:{a:0,k:100},r:{a:1,k:[{i:{x:[1],y:[1]},o:{x:[0],y:[0]},t:0,s:[0]},{t:30,s:[1080]}]},p:{a:0,k:[55,88,0]},a:{a:0,k:[0,0,0]},s:{a:0,k:[100,100,100]}},ao:0,
+  shapes:[{ty:"gr",it:[{ty:"rc",d:1,s:{a:0,k:[3,15]},p:{a:0,k:[0,0]},r:{a:0,k:1.5}},{ty:"fl",c:{a:0,k:[1,1,1,1]},o:{a:0,k:90}},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0},o:{a:0,k:100}}]}],ip:0,op:30,st:0,bm:0},
+ {ddd:0,ind:3,ty:4,nm:"body",sr:1,ks:{o:{a:0,k:100},r:{a:0,k:0},p:{a:0,k:[50,44,0]},a:{a:0,k:[0,0,0]},s:{a:0,k:[100,100,100]}},ao:0,
+  shapes:[{ty:"gr",it:[{ty:"el",d:1,s:{a:0,k:[20,38]},p:{a:0,k:[0,0]}},{ty:"fl",c:{a:0,k:[0.04,0.42,1,1]},o:{a:0,k:100}},{ty:"st",c:{a:0,k:[1,1,1,1]},o:{a:0,k:100},w:{a:0,k:2.5},lc:2,lj:2},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0},o:{a:0,k:100}}]},
+   {ty:"gr",it:[{ty:"rc",d:1,s:{a:0,k:[6,34]},p:{a:0,k:[0,30]},r:{a:0,k:3}},{ty:"rc",d:1,s:{a:0,k:[16,4]},p:{a:0,k:[0,44]},r:{a:0,k:2}},{ty:"fl",c:{a:0,k:[0.04,0.42,1,1]},o:{a:0,k:100}},{ty:"st",c:{a:0,k:[1,1,1,1]},o:{a:0,k:100},w:{a:0,k:2},lc:2,lj:2},{ty:"tr",p:{a:0,k:[0,0]},a:{a:0,k:[0,0]},s:{a:0,k:[100,100]},r:{a:0,k:0},o:{a:0,k:100}}]}],ip:0,op:30,st:0,bm:0}]};
+const HELI_SVG=`<svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true"><rect x="47" y="58" width="6" height="34" rx="3" fill="#0a6cff" stroke="#fff" stroke-width="2"/><ellipse cx="50" cy="44" rx="10" ry="19" fill="#0a6cff" stroke="#fff" stroke-width="2.5"/><g class="gh-spin"><rect x="3" y="41.5" width="94" height="5" rx="2.5" fill="#fff" fill-opacity=".8"/><rect x="47.5" y="-3" width="5" height="94" rx="2.5" fill="#fff" fill-opacity=".8"/></g><circle cx="50" cy="44" r="4.5" fill="#132033"/></svg>`;
+function gpsHeliInit(el){if(!el||el._heli)return;el._heli=true;const box=el.querySelector(".gh-lot");box.innerHTML=HELI_SVG;
+  loadLib("https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js","lottie").then(()=>{if(!box.isConnected)return;box.innerHTML="";
+    GPS.lot=lottie.loadAnimation({container:box,renderer:"svg",loop:true,autoplay:!matchMedia("(prefers-reduced-motion: reduce)").matches,animationData:HELI_LOT});gpsHeliSpeed()}).catch(()=>{})}
+function gpsHeliSpeed(){const gs=GPS.last&&GPS.last.gs,el=GPS.mk&&GPS.mk.getElement();if(el)el.querySelector(".gps-heli").classList.toggle("moving",gs>5);if(GPS.lot)GPS.lot.setSpeed(gs>5?1:0.45)}
+function gpsIcon(trk){return L.divIcon({className:"",html:`<div class="gps-heli"><span class="gh-ring"></span><div class="gh-rot" style="transform:rotate(${trk??0}deg)"><div class="gh-lot"></div></div></div>`,iconSize:[64,64],iconAnchor:[32,32]})}
+function gpsIconOld(trk){return L.divIcon({className:"",html:`<svg class="gps-own" width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(${trk??0}deg)"><circle cx="22" cy="22" r="20" fill="rgba(10,108,255,.18)"/><path d="M22 4 L31 34 L22 28 L13 34 Z" fill="#0a6cff" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>`,iconSize:[44,44],iconAnchor:[22,22]})}
 const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=L.DomUtil.create("div","gps-wrap");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิดตำแหน่ง GPS ของอุปกรณ์">📍 GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
   d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
@@ -3160,7 +3201,7 @@ function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
 function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
-  if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();GPS.mk=GPS.acc=GPS.crumb=null;
+  if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="จุดก่อนหน้า">◀</button><button data-g="next" title="ข้ามไปจุดถัดไป">▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างเส้นทางที่บินมา">🧹</button><button data-g="off">✕</button></div>`}
 document.addEventListener("click",e=>{const b=e.target.closest("#gpsHud [data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
@@ -3178,8 +3219,8 @@ function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
   if((gs==null||trk==null)&&L0){const dd=gcDistNm([L0.lat,L0.lon],pt),dh=(ts-L0.ts)/3600000;if(dd>0.01&&dh>=2/3600){const g2=dd/dh;if(gs==null&&g2<=250)gs=g2;if(trk==null&&g2<=250)trk=trueCourse([L0.lat,L0.lon],pt)}}
   if(trk==null&&L0)trk=L0.trk;GPS.last={lat,lon,gs,trk,alt,acc,ts};
   if(!GPS.mk){GPS.acc=L.circle(pt,{radius:acc||0,color:"#0a6cff",weight:1,fillOpacity:.08,interactive:false}).addTo(gpsLayer);
-    GPS.crumb=L.polyline([],{color:"#0a6cff",weight:3,opacity:.7,dashArray:"2 6",interactive:false}).addTo(gpsLayer);GPS.mk=L.marker(pt,{icon:gpsIcon(trk),interactive:false,zIndexOffset:2000}).addTo(gpsLayer)}
-  GPS.mk.setLatLng(pt);GPS.mk.setIcon(gpsIcon(trk));GPS.acc.setLatLng(pt).setRadius(acc||0);
+    GPS.crumb=L.polyline([],{color:"#0a6cff",weight:3,opacity:.7,dashArray:"2 6",interactive:false}).addTo(gpsLayer);GPS.mk=L.marker(pt,{icon:gpsIcon(trk),interactive:false,zIndexOffset:2000}).addTo(gpsLayer);gpsHeliInit(GPS.mk.getElement())}
+  GPS.mk.setLatLng(pt);{const el=GPS.mk.getElement(),rt=el&&el.querySelector(".gh-rot");if(rt&&trk!=null)rt.style.transform=`rotate(${trk}deg)`}gpsHeliSpeed();GPS.acc.setLatLng(pt).setRadius(acc||0);
   const lp=GPS.pts.at(-1);if(!lp||gcDistNm(lp,pt)>0.02){GPS.pts.push(pt);if(GPS.pts.length>3000)GPS.pts.shift();GPS.crumb.setLatLngs(GPS.pts)}
   gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud()}
 /* เลือก leg อัตโนมัติ: ผ่านจุดหมาย (ใกล้กว่า 0.5 NM หรือเลยแนวตั้งฉาก) → ไปจุดถัดไป */
