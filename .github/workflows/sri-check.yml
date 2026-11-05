@@ -1,0 +1,26 @@
+name: sri-check (ชั่วคราว — ตรวจ hash ไลบรารี CDN)
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  sri:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for u in \
+            https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js \
+            https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css \
+            https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js \
+            https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css \
+            https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js \
+            https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js \
+            https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js \
+            https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js \
+            https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js \
+            https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js \
+            https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css \
+            https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js ; do
+            h=$(curl -sfL "$u" | openssl dgst -sha384 -binary | openssl base64 -A)
+            c=$(curl -sfIL "$u" | grep -i '^access-control-allow-origin' | tr -d '\r')
+            echo "SRI sha384-$h $u [$c]"
+          done
