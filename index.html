@@ -233,7 +233,7 @@ body.printing #printView{position:static;padding:0}
 .map-tools{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .map-tools>.mt-toggle{display:block;background:var(--panel);color:var(--ink);border-radius:10px;padding:6px 10px;font:700 13px var(--f-body);box-shadow:0 1px 5px rgba(0,0,0,.35);text-decoration:none}
 .map-tools .mt-body{display:flex;flex-direction:column;align-items:flex-end;gap:6px}.map-tools .mt-body>.leaflet-control{margin:0!important;float:none;clear:none}
-.map-tools.collapsed .mt-body{display:none}.map-tools.collapsed .mt-toggle span{display:none}
+.map-tools.collapsed .mt-body{display:none}
 .vis-panel{padding:10px 12px;max-height:70vh;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch;width:270px;color:var(--ink);font:13px var(--f-body)}
 .vis-pre{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}.vis-pre .mini{padding:3px 8px;font-size:12px}
 .vis-g{border-top:1px solid var(--line);padding:6px 0}.vis-g b{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
@@ -745,6 +745,11 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .rail .logo{border:0;cursor:pointer;padding:0}.rail .logo.ifr{background:#7c3aed}.rail .logo:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .sa-info{display:block;font:500 13px/1.5 var(--f-body);color:var(--ink);margin-top:-4px;background:color-mix(in srgb,#b45309 8%,transparent);border-radius:8px;padding:6px 8px}.sa-info:empty{display:none}.sa-info select{width:auto;padding:0 4px;font-size:12px;min-height:0}.sa-info .sa-v{color:#b45309}.sa-info button{padding:1px 8px;min-height:0}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
+.rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
+.swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
+.hitag{background:#c62f24;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}body.hide-hi .hitag{display:none}
+.apmk{display:flex;flex-direction:column;align-items:center;overflow:visible}.ap-e{font-size:17px;line-height:22px;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 1px 1px rgba(0,0,0,.6))}
+.ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}
 .wpdbl{background:#123c69;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:4px;white-space:nowrap;border:1px solid #fff}
 .undo-bar a{display:grid!important;place-items:center}
 #mfWp{position:fixed;left:12px;top:12px;z-index:2600;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;background:var(--panel);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
@@ -843,22 +848,22 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="card side">
       <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
       <div class="routebox">
-        <label>ต้นทาง<input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
+        <label><b class="rlab dep">● ต้นทาง</b><input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
         <div id="depRes" class="res"></div>
-        <label>ปลายทาง<input id="dstIn" type="text" list="apList" placeholder="VTBD หรือ 47Q QU 27275 13325 บทบ.ยว.3" autocomplete="off"></label>
+        <label><b class="rlab dst">● ปลายทาง</b><input id="dstIn" type="text" list="apList" placeholder="VTBD หรือ 47Q QU 27275 13325 บทบ.ยว.3" autocomplete="off"></label>
         <div id="dstRes" class="res"></div>
-        <div class="procsel">
+        <div class="procsel" hidden>
           <label>ขาออก — Procedure / จุดรายงานของ <b id="depProcIc">–</b><select id="depProc"></select></label>
           <div id="depProcChk" class="pchk" hidden></div>
           <label>ขาเข้า — Procedure / จุดรายงานของ <b id="arrProcIc">–</b><select id="arrProc"></select></label>
           <div id="arrProcChk" class="pchk" hidden></div>
           <button id="procEditBtn" type="button" class="mini" style="justify-self:start">＋ เพิ่ม / แก้ procedure เอง</button>
         </div>
-        <div class="btns"><button id="buildRoute" class="primary">สร้างเส้นทาง</button><button id="swapRoute">สลับต้นทาง/ปลายทาง</button></div>
-        <p class="hint">ใส่รหัส ICAO, ชื่อจุดที่เคยบันทึก หรือพิกัด MGRS / ทศนิยม ตามด้วยชื่อจุดได้ (ระบบจะจำชื่อไว้ใช้ครั้งต่อไป)</p>
+        <div class="btns"><button id="buildRoute" class="primary">สร้างเส้นทาง</button><button id="swapRoute" class="swapbtn" title="สลับต้นทาง / ปลายทาง" aria-label="สลับต้นทาง / ปลายทาง">⇌</button></div>
+        <p class="hint">ICAO · ชื่อจุด · MGRS · lat, lon</p>
         <datalist id="apList"></datalist>
       </div>
-      <div class="qnhbox"><div class="ttl"><span>QNH</span><span class="hint" style="font-weight:500">กรอกช่องใดก็ได้ อีกช่องแปลงให้</span></div>
+      <div class="qnhbox" hidden><div class="ttl"><span>QNH</span><span class="hint" style="font-weight:500">กรอกช่องใดก็ได้ อีกช่องแปลงให้</span></div>
         <label>inHg<input class="qnh-i" type="number" step="0.01" inputmode="decimal" placeholder="29.92"></label>
         <label>hPa<input class="qnh-h" type="number" step="1" inputmode="decimal" placeholder="1013"></label></div>
       <div class="grid2">
@@ -870,12 +875,12 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <label>Burn rate (lb/นาที)<input id="burn" type="number" step="0.1" inputmode="decimal"></label>
         <label>น้ำมันสำรองขั้นต่ำ (lb)<input id="reserve" type="number" inputmode="decimal"></label>
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900" style="background:var(--hl);font-weight:800"></label>
-        <label>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="FALCON 127.0"><option value="OSCAR 127.0"><option value="BIGSHELL 127.0"></datalist></label>
+        <label hidden>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="FALCON 127.0"><option value="OSCAR 127.0"><option value="BIGSHELL 127.0"></datalist></label>
         <div id="saInfo" class="sa-info" style="grid-column:1/-1"></div>
         <label>ขนาดกล่อง heading<input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1"></label>
-        <label>การหมุนกล่อง heading<select id="boxRotMode"><option value="mh">หันตาม heading (MH)</option><option value="track">หันตามแนวเส้นทาง (TC)</option><option value="0">ตั้งตรง</option></select></label>
-        <div class="btns" style="align-items:end"><button id="boxRotReset" type="button" class="mini">รีเซ็ตการหมุนทุกกล่อง</button></div>
-        <label>ป้ายระยะคงเหลือ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
+        <label hidden>การหมุนกล่อง heading<select id="boxRotMode"><option value="mh">หันตาม heading (MH)</option><option value="track">หันตามแนวเส้นทาง (TC)</option><option value="0">ตั้งตรง</option></select></label>
+        <div class="btns" hidden><button id="boxRotReset" type="button" class="mini">รีเซ็ตการหมุนทุกกล่อง</button></div>
+        <label>ป้ายบอกระยะ<select id="remStep"><option value="0">ปิด</option><option value="5">ทุก 5 NM</option><option value="10" selected>ทุก 10 NM</option><option value="20">ทุก 20 NM</option></select></label>
       </div>
       <div>
         <h2 style="font-size:13px;margin-bottom:6px">ค่าเริ่มต้นทุก leg</h2>
@@ -1365,7 +1370,7 @@ function windTri(tc,tas,wd,wv){const ang=(wd-tc)*D2R,x=wv*Math.sin(ang)/tas;
 
 /* ---------- state ---------- */
 let state=null;
-const procOpen=new Set(); /* จำว่าผู้ใช้กางอันไหนไว้ ค่าเริ่มต้น = ยุบทั้งหมด */
+const procOpen=new Set(),procShut=new Set(); /* จำว่าผู้ใช้กาง/ยุบอันไหน · กล่องสนามในกรอบขั้นตอนเข้า-ออกสนามกางไว้ก่อน */
 const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป บทบ.ยว.3",acft:"",date:"",depTime:"08:00",fuel0:500,burn:2.6,reserve:200,
   depIn:"VTBH",dstIn:"47Q QU 27275 13325 บทบ.ยว.3",
   g:{alt:1000,cas:80,wd:230,wv:15,temp:30,var:0},
@@ -1391,16 +1396,18 @@ function baseCur(){const b=BASES.find(x=>map.hasLayer(x[2]));return b?b[0]:"sat"
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
-AIRPORTS.forEach(a=>{const mk=L.circleMarker([a[2],a[3]],{radius:a[4]==="heliport"?4:6,color:"#123c69",weight:2,fillColor:a[4]==="heliport"?"#fff":"#7fb2e8",fillOpacity:1})
+AIRPORTS.forEach(a=>{const hp=a[4]==="heliport",nm=String(a[1]).replace(/\s*(International\s+)?(Airport|Airfield|Heliport|Air Base|Airstrip)\b/gi,"").trim()||a[0];
+  const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk",html:`<span class="ap-e">${hp?"🚁":"✈️"}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
   .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);
   mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
-apLayer.addTo(map);layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
+apLayer.addTo(map);
+{const zc=()=>map.getContainer().classList.toggle("ap-lo",map.getZoom()<8);map.on("zoomend",zc);zc()}layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
 let addMode=true,pePick=null;
 
 /* คลิกพื้นที่บนแผนที่: ถ้าอยู่ในโหมดเพิ่มจุด/เลือกพิกัด ให้ทำงานเหมือนคลิกแผนที่ ไม่งั้นเปิดรายละเอียด */
 function infoClick(e,html){L.DomEvent.stop(e);if(addMode||pePick!=null||(typeof pick!=="undefined"&&pick)){map.fire("click",{latlng:e.latlng,originalEvent:e.originalEvent});return}
   L.popup().setLatLng(e.latlng).setContent(html()).openOn(map)}
-/* ป้ายระยะคงเหลือ: จุดบนเส้นทางที่ระยะถึงปลายทางเป็นทวีคูณของ step (ไม่รวมจุด 0) */
+/* ป้ายบอกระยะ: จุดบนเส้นทางที่ระยะถึงปลายทางเป็นทวีคูณของ step (ไม่รวมจุด 0) */
 function remMarkers(rows){const step=num(state.remStep,10);if(!step||rows.length===0)return[];
   const total=rows.reduce((s,r)=>s+r.dist,0);const out=[];let done=0;
   rows.forEach((r,i)=>{const a=state.wps[i],b=state.wps[i+1];
@@ -1505,7 +1512,7 @@ function rwyPairs(list){const L=(list||[]).map(String),used=new Set(),out=[];
   return out.join(", ")}
 /* กล่อง heading แบบแผน kneeboard: บน = heading ไป, กลาง = ระยะ/เวลา, ล่าง = heading กลับ */
 /* การหมุน doghouse: ค่าที่หมุนเองต่อ leg > โหมดตามทิศเส้นทาง > 0 */
-function boxRot(i,r){const k=legKey(i),m=(state.boxRot||{})[k];if(m!=null)return m;const md=state.boxRotMode||"mh";if(md==="mh"&&isFinite(r.mh))return Math.round(norm(r.mh));if(md==="track"&&isFinite(r.tc))return Math.round(r.tc);return 0}
+function boxRot(i,r){if(isFinite(r.tc))return Math.round(norm(r.tc));const k=legKey(i),m=(state.boxRot||{})[k];if(m!=null)return m;const md=state.boxRotMode||"mh";if(md==="mh"&&isFinite(r.mh))return Math.round(norm(r.mh));if(md==="track"&&isFinite(r.tc))return Math.round(r.tc);return 0}
 function hboxRotInit(mk,key){const el=mk._icon;if(!el||el._rotInit)return;el._rotInit=true;const h=el.querySelector(".hrot"),wrap=el.querySelector(".hbwrap");if(!h)return;
   L.DomEvent.on(h,"mousedown touchstart pointerdown click",L.DomEvent.stopPropagation);
   L.DomEvent.on(h,"dblclick",e=>{L.DomEvent.stop(e);if(state.boxRot)delete state.boxRot[key];render()});
@@ -1851,16 +1858,18 @@ async function saTerrain(W,buf){let best={ft:-1e9};const legs=[];
 var saLast="",saTimer=null,SA_RES=null;
 function saSched(now){clearTimeout(saTimer);saTimer=setTimeout(saRun,now?10:900)}
 async function saRun(){const info=$("#saInfo"),W=state.wps,buf=num(state.saBuf,5);if(!info)return;
-  if(W.length<2){info.innerHTML="";saChip("");return}
-  if(FLMODE==="I"){info.innerHTML='<b>IFR:</b> Safety altitude จาก eAIP (MEA / MOCA / MSA) — <i>กำลังเตรียมข้อมูล</i>';saChip("I · รอข้อมูล eAIP");return}
+  if(W.length<2){info.innerHTML="";saChip("");saMark(null);return}
+  if(FLMODE==="I"){saMark(null);info.innerHTML='<b>IFR:</b> Safety altitude จาก eAIP (MEA / MOCA / MSA) — <i>กำลังเตรียมข้อมูล</i>';saChip("I · รอข้อมูล eAIP");return}
   const key=W.map(w=>w.lat.toFixed(4)+","+w.lon.toFixed(4)).join(";")+"|"+buf;if(key===saLast&&SA_RES){saShow();return}saLast=key;info.innerHTML="⛰ กำลังคำนวณ Safety Altitude จากความสูงภูมิประเทศ…";
   try{const r=await saTerrain(W,buf);if(key!==saLast)return;SA_RES={...r,buf};saShow()}catch(e){if(key!==saLast)return;SA_RES=null;info.innerHTML='⛰ คำนวณ Safety Altitude ไม่ได้ (ครั้งแรกต้องต่อเน็ต)';saChip("")}}
 function saShow(){const r=SA_RES,info=$("#saInfo");if(!r||!info)return;const f=v=>Math.round(v).toLocaleString("en-US");
   info.innerHTML=`⛰ ภูมิประเทศสูงสุด ±<select id="saBuf" aria-label="ระยะสองข้างเส้นทาง">${[2,5,10].map(v=>`<option ${v===r.buf?"selected":""}>${v}</option>`).join("")}</select> NM: <b>${f(r.max.ft)} ft</b> → <b class="sa-v">SA ${f(r.sa)} ft</b> <button type="button" id="saUse" class="mini">ใช้ค่านี้</button><br><span class="hint">+1,000 ft ปัดขึ้น · ไม่รวมสิ่งกีดขวาง (เสา/อาคาร) — ตรวจกับ chart${r.legs.length>1?` · ราย leg: ${r.legs.map((l,i)=>`${i+1}) ${f(l.sa)}`).join("  ")}`:""}</span>`;
-  saChip(`SA ${f(r.sa)} ft`);
+  saChip(`SA ${f(r.sa)} ft`);saMark(r);
   $("#saUse").onclick=e=>{e.preventDefault();state.sa=String(r.sa);$("#sa").value=state.sa;store.set("vfr_current",state);render();toast("ตั้ง SA = "+f(r.sa)+" ft")};
   $("#saBuf").onchange=e=>{state.saBuf=+e.target.value;store.set("vfr_current",state);saSched(true)}}
-var saCtl=null;
+var saCtl=null,saLayer=null;
+function saMark(r){if(!saLayer)saLayer=L.layerGroup().addTo(map);saLayer.clearLayers();if(!r||!r.max||r.max.la==null)return;
+  L.marker([r.max.la,r.max.lo],{interactive:false,zIndexOffset:900,icon:L.divIcon({className:"",html:`<span class="hitag">▲ ${Math.round(r.max.ft).toLocaleString("en-US")} ft</span>`,iconSize:null,iconAnchor:[-6,9]})}).addTo(saLayer)}
 function saChip(t){if(!saCtl){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","sa-chip");L.DomEvent.disableClickPropagation(d);return d}});saCtl=new C().addTo(map)}
   const el=saCtl.getContainer();el.textContent=t;el.hidden=!t;el.title="Safety Altitude ตามเส้นทาง (ดูรายละเอียดที่ช่อง SA ในแท็บ 1)"}
 /* เต็มจอ: ปุ่มอยู่มุมขวาล่างใกล้ GPS · ในโหมดเต็มจอย้ายกรอบ "จุดเส้นทาง" มาลอยบนแผนที่เพื่อจัดการ waypoint ได้ */
@@ -2145,7 +2154,7 @@ $("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");i
 $("#npSearch").addEventListener("input",npRenderList);
 
 /* ---------- AD 2.22 procedures / AD 2.24 charts / จุดรายงาน ---------- */
-document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.pk){d.open?procOpen.add(d.dataset.pk.replace(/^([^:]+)/,"$1")):procOpen.delete(d.dataset.pk)}},true);
+document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.pk){const k=d.dataset.pk.replace(/^([^:]+)/,"$1");if(d.open){procOpen.add(k);procShut.delete(k)}else{procOpen.delete(d.dataset.pk);procShut.add(d.dataset.pk)}}},true);
 const rpLayer=L.layerGroup().addTo(map);layerCtl.addOverlay(rpLayer,"จุดรายงาน (eAIP)");
 function procAirports(){const W=state.wps;if(!W.length)return[];const ids=[];const add=x=>{const k=String(x||"").toUpperCase();if(AP[k]&&AP[k].eaip&&!AP[k].eaip.custom&&!ids.includes(k))ids.push(k)};
   add(W[0].name);if(W.length>1)add(W[W.length-1].name);W.slice(1,-1).forEach(w=>add(w.name));return ids}
@@ -2157,7 +2166,7 @@ function renderProc(){const box=$("#procList");if(!box)return;rpLayer.clearLayer
     const role=k===0&&ic===state.wps[0].name.toUpperCase()?"ต้นทาง":ic===state.wps[state.wps.length-1].name.toUpperCase()?"ปลายทาง":"ตามเส้นทาง";
     const vis=c=>/VISUAL|VFR|HELI|AERODROME CHART|GROUND MOVEMENT/i.test(c.name);
     const op=k=>procOpen.has(ic+k)?" open":"";
-    return`<details class="ad-blk" data-pk="${esc(ic)}:ad"${op(":ad")}><summary><h3 style="display:inline">${esc(ic)} ${esc(a.name||"")} <span class="hint">(${role}${pts.length?` · จุดรายงาน ${pts.length}`:""}${ch.length?` · charts ${ch.length}`:""})</span></h3></summary>
+    return`<details class="ad-blk" data-pk="${esc(ic)}:ad"${procShut.has(ic+":ad")?"":" open"}><summary><h3 style="display:inline">${esc(ic)} ${esc(a.name||"")} <span class="hint">(${role}${pts.length?` · จุดรายงาน ${pts.length}`:""}${ch.length?` · charts ${ch.length}`:""})</span></h3></summary>
       ${pts.length?`<div><b>จุดรายงาน/จุดในขั้นตอน</b> <span class="hint">แตะเพื่อเพิ่มเป็นจุดเส้นทาง (แทรกก่อนจุดสุดท้าย)</span><div class="rp-list">${pts.map((p,i)=>`<button class="rp" data-ic="${esc(ic)}" data-i="${i}">▲ ${esc(p.name)}</button>`).join("")}</div></div>`:""}
       ${e.proc?`<details data-pk="${esc(ic)}:p"${op(":p")}><summary>AD 2.22 Flight procedures</summary><div class="ad-proc">${esc(e.proc)}</div></details>`:`<p class="hint">ไม่มีข้อความ AD 2.22</p>`}
       ${ch.length?`<details data-pk="${esc(ic)}:c"${op(":c")}><summary>AD 2.24 Charts (${ch.length})</summary><div class="chart-list">${ch.map(c=>`<a href="${esc(c.url)}" target="_blank" rel="noopener" class="${vis(c)?"vis":""}">${esc(c.name)} — ${esc(c.page)} ↗</a>`).join("")}</div></details>`:""}
@@ -3087,7 +3096,8 @@ drawCtr();
 const VIS=[
  {k:"route",t:"เส้นทาง + จุด",g:"เส้นทาง",L:()=>routeLayer},
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
- {k:"rem",t:"ป้ายระยะคงเหลือ",g:"เส้นทาง",css:"hide-rem"},
+ {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
+ {k:"hi",t:"จุดสูงสุดในเส้นทาง (SA)",g:"เส้นทาง",css:"hide-hi"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
  {k:"ctr",t:"Control zone (CTR/ATZ)",g:"สนามบิน",L:()=>ctrLayer},
  {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
@@ -3100,8 +3110,8 @@ const VIS=[
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem ap ctr rp P R D nt",
- "เฉพาะเส้นทาง":"route hbox rem",
+ "ทั้งหมด":"route hbox rem hi ap ctr rp P R D nt",
+ "เฉพาะเส้นทาง":"route hbox rem hi",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
  "เฉพาะ CTR":"route ap ctr",
