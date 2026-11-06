@@ -254,6 +254,18 @@ body.hide-rem .remtag{display:none}
 body.printing .hrot{display:none}
 @media print{.hrot{display:none!important}}
 .hbox svg{display:block}
+.wx-bar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:end;margin-bottom:8px}.wx-tg{display:flex;gap:6px;flex-wrap:wrap}
+.wx-chip{display:inline-flex!important;flex-direction:row!important;align-items:center;cursor:pointer}.wx-chip input{position:absolute;opacity:0;width:1px;height:1px}
+.wx-chip span{padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);font-weight:700;font-size:14px;background:var(--input);color:var(--muted)}
+.wx-chip input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}.wx-chip input:focus-visible+span{outline:2px solid var(--accent)}
+.wx-sel{display:flex!important;flex-direction:column;gap:3px;font-size:12px;color:var(--muted);font-weight:600}.wx-sel select{min-width:150px}
+.wx-time-row{display:flex;align-items:center;gap:10px;margin:0 0 8px;padding:6px 10px;border-radius:12px;background:var(--input)}.wx-time-row[hidden]{display:none}
+.wx-time-row input[type=range]{flex:1}.wx-tl{font-size:13px;color:var(--muted);white-space:nowrap;min-width:190px}.wx-tl b{color:var(--ink)}
+.wx-play{width:38px;height:38px;border-radius:50%;padding:0;font-size:15px;flex:none}
+.wx-links{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.ro-n{position:absolute;left:28px;top:4px;white-space:nowrap;font:700 12px var(--f-body);color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 0 2px #000;pointer-events:none}
+.wxs-qnh .qnhbox{height:100%;box-sizing:border-box}
+@media (max-width:600px){.wx-tl{min-width:0}}
 .wx-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:end;margin-bottom:8px}
 .wx-ctl label{min-width:150px}.wx-ctl .wx-time{flex:1;min-width:220px}
 .wx-ctl .chk{flex-direction:row;align-items:center;gap:6px;min-width:0;font-size:14px;color:var(--ink)}
@@ -837,6 +849,17 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .gl-i{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:baseline;padding:6px 8px;border-radius:8px;background:var(--input);font-size:13.5px}
 .gl-i b{font:800 14px var(--f-mono);color:var(--ink)}.gl-i span{color:var(--muted)}.gl-i.gl-calc b{color:var(--calc-ink,#9cc2ff)}.gl-i.gl-mh{outline:1.5px solid var(--accent)}.gl-i.gl-mh b{color:var(--accent)}
 .gl-key{padding:1px 6px;border-radius:5px}.gl-key.in{background:var(--input)}.gl-key.calc{background:var(--calc,#14213a);color:var(--calc-ink,#9cc2ff)}
+.nt-dash{margin:8px 0 12px}.nd-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.nd-c{border-radius:14px;padding:10px 12px;background:var(--input);border-left:5px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.nd-c span{font-size:12.5px;color:var(--muted);font-weight:600}.nd-c b{font:800 28px var(--f-mono);line-height:1.1}.nd-c small{font-size:11.5px;color:var(--muted)}.nd-c em{color:var(--bad);font-style:normal;font-weight:700}
+.nd-rel{border-left-color:#f97316}.nd-rel b{color:#f97316}.nd-hit{border-left-color:#ef4444}.nd-hit b{color:#ef4444}.nd-ap{border-left-color:#3b82f6}.nd-ap b{color:#3b82f6}.nd-off{border-left-color:#a3a3a3}.nd-un{border-left-color:#525252}.nd-un b,.nd-off b{color:var(--muted)}
+.nd-bars{display:grid;gap:4px;margin-top:10px}.nd-bar{display:grid;grid-template-columns:minmax(150px,240px) 1fr 34px;gap:8px;align-items:center;font-size:13px}
+.nd-bar i{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--cc) var(--w),transparent var(--w));background-color:var(--input)}.nd-bar b{text-align:right;font-family:var(--f-mono)}
+.nt-maph{margin:6px 0 4px;font-weight:700;font-size:13.5px}
+.nt-src{display:block}.nt-src-w{display:block;margin-top:4px;padding:6px 10px;border-radius:10px;background:color-mix(in srgb,#f59e0b 16%,transparent);border:1px solid #f59e0b;color:var(--ink);font-size:13px}
+.nt-paste-h{display:flex!important;flex-direction:column;gap:2px;padding:4px 0;list-style:none}.nt-paste-h::-webkit-details-marker{display:none}
+.nt-paste-h span{font:800 18px var(--f-display)}.nt-paste-h span::before{content:"▸ ";color:var(--muted)}#ntPasteBox[open] .nt-paste-h span::before{content:"▾ "}.nt-paste-h small{color:var(--muted);font-size:13px}
+@media (max-width:600px){.nd-bar{grid-template-columns:1fr 70px 30px}}
 .planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
@@ -1194,32 +1217,28 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-teal">สรุปอากาศตามเส้นทาง</h2>
-      <div class="btns"><button id="wxSumRefresh">ดึงใหม่</button><button id="wxFill2" class="primary">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
+      <div class="btns"><button id="wxSumRefresh">🔄 ดึงข้อมูลใหม่</button><button id="wxFill2" class="primary">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
     <div id="wxSum" class="wx-sum"></div>
   </div>
   <div class="card section">
-    <div class="sechead"><h2 class="hd hd-sky">แผนที่ลม / ฝน</h2>
-      <div class="btns">
-        <a class="linkbtn" href="https://www.windy.com/?14.0,100.6,6" target="_blank" rel="noopener">Windy ↗</a>
-        <a class="linkbtn" href="https://weather.tmd.go.th/" target="_blank" rel="noopener">กรมอุตุฯ เรดาร์ ↗</a>
-        <a class="linkbtn" href="https://aviationweather.gov/" target="_blank" rel="noopener">AviationWeather ↗</a>
-      </div></div>
-    <div class="qnhbox" style="max-width:420px;margin-bottom:10px"><div class="ttl"><span>QNH</span><span class="hint" style="font-weight:500">กรอกช่องใดก็ได้ อีกช่องแปลงให้</span></div>
+    <div class="sechead"><h2 class="hd hd-sky">แผนที่ลม / ฝน</h2></div>
+    <div class="qnhbox" id="wxQnhBox" style="max-width:420px;margin-bottom:10px"><div class="ttl"><span>QNH</span><span class="hint" style="font-weight:500">กรอกช่องใดก็ได้ อีกช่องแปลงให้</span></div>
         <label>inHg<input class="qnh-i" type="number" step="0.01" inputmode="decimal" placeholder="29.92"></label>
         <label>hPa<input class="qnh-h" type="number" step="1" inputmode="decimal" placeholder="1013"></label></div>
-    <div class="wx-ctl">
-      <label>โมเดลพยากรณ์<select id="wxModel"><option value="ecmwf_ifs025">ECMWF IFS (0.25°)</option><option value="gfs_seamless">GFS (NOAA)</option><option value="icon_seamless">ICON (DWD)</option></select></label>
-      <label>ระดับความสูง<select id="wxLevel"><option value="10m">ผิวพื้น (10 m)</option><option value="1000hPa">≈ 400 ft (1000 hPa)</option><option value="925hPa" selected>≈ 2,500 ft (925 hPa)</option><option value="850hPa">≈ 5,000 ft (850 hPa)</option><option value="700hPa">≈ 10,000 ft (700 hPa)</option></select></label>
-      <label class="wx-time">เวลา <b id="wxTimeLbl">–</b><input id="wxTime" type="range" min="0" max="47" value="0"></label>
-      <label class="chk"><input type="checkbox" id="wxWind" checked> ลม (เคลื่อนไหว)</label>
-      <label class="chk"><input type="checkbox" id="wxRadar" checked> เรดาร์ฝน (ล่าสุด)</label>
+    <div class="wx-bar">
+      <div class="wx-tg" role="group" aria-label="ชั้นข้อมูล"><label class="wx-chip"><input type="checkbox" id="wxWind" checked><span>💨 ลม</span></label><label class="wx-chip"><input type="checkbox" id="wxRadar" checked><span>🌧️ เรดาร์ฝน (RainViewer)</span></label></div>
+      <label class="wx-sel">ระดับ<select id="wxLevel"><option value="10m">ผิวพื้น (10 m)</option><option value="1000hPa">≈ 400 ft (1000 hPa)</option><option value="925hPa" selected>≈ 2,500 ft (925 hPa)</option><option value="850hPa">≈ 5,000 ft (850 hPa)</option><option value="700hPa">≈ 10,000 ft (700 hPa)</option></select></label>
+      <label class="wx-sel">โมเดล<select id="wxModel"><option value="ecmwf_ifs025">ECMWF IFS (0.25°)</option><option value="gfs_seamless">GFS (NOAA)</option><option value="icon_seamless">ICON (DWD)</option></select></label>
     </div>
+    <div class="wx-time-row"><button type="button" id="wxPlay" class="wx-play" aria-label="เล่นพยากรณ์ลม">▶</button><span class="wx-tl">ลมพยากรณ์ <b id="wxTimeLbl">–</b></span><input id="wxTime" type="range" min="0" max="47" value="0" aria-label="เวลาพยากรณ์"></div>
+    <div class="wx-time-row" id="wxRadarRow"><button type="button" id="wxRPlay" class="wx-play" aria-label="เล่นเรดาร์ย้อนหลัง">▶</button><span class="wx-tl">เรดาร์ <b id="wxRadarLbl">–</b></span><input id="wxRTime" type="range" min="0" max="0" value="0" aria-label="เวลาเรดาร์"></div>
     <div id="wxMap"></div>
     <p class="hint" id="wxStatus"></p>
+    <div class="wx-links"><span class="hint">ดูเพิ่ม:</span><a class="linkbtn" href="https://www.rainviewer.com/map.html?loc=14.0,100.6,6" target="_blank" rel="noopener">RainViewer ↗</a><a class="linkbtn" href="https://www.windy.com/?14.0,100.6,6" target="_blank" rel="noopener">Windy ↗</a><a class="linkbtn" href="https://weather.tmd.go.th/" target="_blank" rel="noopener">กรมอุตุฯ เรดาร์ ↗</a><a class="linkbtn" href="https://aviationweather.gov/" target="_blank" rel="noopener">AviationWeather ↗</a></div>
   </div>
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-teal">อากาศตามเส้นทาง</h2>
-      <div class="btns"><button id="wxRoute" class="primary">ดึงพยากรณ์ตามเส้นทาง</button><button id="wxFill">ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
+      <div class="btns"><button id="wxRoute">🔄 ดึงพยากรณ์ใหม่</button><button id="wxFill" hidden>ใส่ลม/อุณหภูมิลง NAV LOG</button></div></div>
     <p class="hint">เทียบ 3 โมเดล ณ เวลา ETA ของแต่ละจุดและระดับ ALT ของ leg · ปุ่ม "ใส่ลง NAV LOG" ใช้ค่าเฉลี่ยของโมเดลเป็นค่าตั้งต้นคร่าวๆ — แก้ได้ในแท็บ NAVLOG หลังเช็คอากาศจริง</p>
     <div class="tablewrap"><table id="wxRouteTbl"><tbody><tr><td class="hint" style="padding:14px">กด "ดึงพยากรณ์ตามเส้นทาง"</td></tr></tbody></table></div>
   </div>
@@ -1245,12 +1264,12 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> แสดงบนแผนที่ทั้งหมด</label>
     <button id="ntRedraw">🔄 รีเฟรช</button></div></details>
   </div>
-  <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
+  <div id="ntDash" class="nt-dash"></div>
   <div id="ntList"></div>
-  <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (ดูกล่องหมวดมุมซ้ายล่าง ติ๊กเพื่อซ่อน/แสดง) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
+  <div id="ntMapWrap" hidden><p class="nt-maph">เลือกหมวดที่จะแสดงบนแผนที่ (แตะเพื่อเปิด/ปิด)</p><div id="ntChips" class="nt-chips" role="group" aria-label="เลือกหมวดที่แสดงบนแผนที่"></div><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (เลือกหมวดจากปุ่มด้านบนแผนที่) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
  <details class="card section custbox" id="ntPasteBox">
-  <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
+  <summary class="nt-paste-h"><span>📋 วาง NOTAM เอง</span><small>สำหรับ NOTAM ในประเทศจาก AEROTHAI หรือแอปอื่น — แตะเพื่อเปิด</small></summary>
   <p class="hint">คัดลอกข้อความ NOTAM รูปแบบ ICAO มาวาง แอปจะรวมกับชุดที่ดึงอัตโนมัติ (ตัวที่ซ้ำกันจะนับครั้งเดียว)</p>
   <div class="bm-box"><b>ดึงจากแผนที่ NOTAM ของ AEROTHAI (บนคอม)</b>
    <ol><li>ลากปุ่มนี้ไปวางที่แถบ Bookmarks ของ Chrome: <a class="bm-link" href="javascript:(async()=&gt;{const items=[],seen=new Set(),sleep=ms=&gt;new Promise(r=&gt;setTimeout(r,ms));const add=raw=&gt;{let t=String(raw||&#x27;&#x27;).replace(/\\r\\n|\\n|\\r/g,&#x27;\n&#x27;);if(!/NOTAM[NRC]/.test(t))return; t.split(/(?=\(?\b[A-Z]\d{4}\/\d{2}\s+NOTAM[NRC])/).forEach(p=&gt;{const m=p.match(/^\(?([A-Z]\d{4}\/\d{2})\s+NOTAM[NRC]/);if(!m||seen.has(m[1]))return;  p=p.split(/[&quot;&#x27;&lt;&gt;\u0000]/)[0].trim();if(p.length&lt;20)return;seen.add(m[1]);items.push({t:p})})};const walk=(o,d,vis)=&gt;{if(o==null||d&gt;5)return;if(typeof o===&#x27;string&#x27;){if(o.length&gt;15&amp;&amp;/NOTAM[NRC]/.test(o))add(o);return} if(typeof o!==&#x27;object&#x27;||vis.has(o)||o.nodeType||o===window)return;vis.add(o);let n=0;for(const k in o){if(++n&gt;5000)break;try{walk(o[k],d+1,vis)}catch(e){}}};document.title=&#x27;กำลังดึง NOTAM…&#x27;;document.querySelectorAll(&#x27;script&#x27;).forEach(s=&gt;add(s.textContent));add(document.body.innerText);const vis=new Set();Object.keys(window).forEach(k=&gt;{try{const v=window[k];if(v&amp;&amp;typeof v===&#x27;object&#x27;)walk(v,0,vis)}catch(e){}});const urls=[...new Set(performance.getEntriesByType(&#x27;resource&#x27;).map(e=&gt;e.name).filter(u=&gt;u.startsWith(location.origin)&amp;&amp;!/\.(js|css|png|jpe?g|gif|svg|woff2?|ico)(\?|$)/i.test(u)))];for(const u of urls){try{const tx=await(await fetch(u,{credentials:&#x27;include&#x27;})).text();if(/NOTAM[NRC]/.test(tx)){try{walk(JSON.parse(tx),0,new Set())}catch(e){add(tx)}}}catch(e){}}if(items.length&lt;5){const els=[...document.querySelectorAll(&#x27;.leaflet-marker-icon.leaflet-interactive, path.leaflet-interactive&#x27;)].filter(e=&gt;e.tagName.toLowerCase()!==&#x27;path&#x27;||e.getAttribute(&#x27;fill&#x27;)!==&#x27;none&#x27;); for(let i=0;i&lt;els.length;i++){const e=els[i],r=e.getBoundingClientRect();if(!r.width&amp;&amp;!r.height)continue;document.title=&#x27;NOTAM &#x27;+(i+1)+&#x27;/&#x27;+els.length;  const o={bubbles:true,cancelable:true,view:window,clientX:r.left+r.width/2,clientY:r.top+r.height/2};  e.dispatchEvent(new MouseEvent(&#x27;mousedown&#x27;,o));e.dispatchEvent(new MouseEvent(&#x27;mouseup&#x27;,o));e.dispatchEvent(new MouseEvent(&#x27;click&#x27;,o));await sleep(150);  document.querySelectorAll(&#x27;.leaflet-popup-content&#x27;).forEach(p=&gt;add(p.innerText||p.textContent));const c=document.querySelector(&#x27;.leaflet-popup-close-button&#x27;);if(c)c.click()}}document.title=&#x27;Airspace NOTAM&#x27;;const s=JSON.stringify({src:&#x27;AEROTHAI&#x27;,at:new Date().toISOString(),items});if(!items.length){alert(&#x27;ไม่พบข้อความ NOTAM ในหน้านี้ — ส่งภาพหน้าจอให้ผู้พัฒนาดู&#x27;);return}const done=()=&gt;alert(&#x27;คัดลอก &#x27;+items.length+&#x27; NOTAM แล้ว — ไปวางในกล่อง วาง NOTAM เอง ของ VFR Planner&#x27;);try{await navigator.clipboard.writeText(s);done()}catch(e){prompt(&#x27;คัดลอกข้อความนี้ (Ctrl+C)&#x27;,s)}})()" onclick="event.preventDefault();toast('ลากปุ่มนี้ไปที่แถบ Bookmarks — ไม่ต้องกด')">📌 ดึง NOTAM → VFR Planner (v2)</a></li>
@@ -1980,12 +1999,24 @@ function wxInit(){if(wxMap)return;wxMap=L.map("wxMap",{zoomControl:true}).setVie
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:12,attribution:"Imagery © Esri"}).addTo(wxMap);
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:12}).addTo(wxMap);
   wxMap.on("moveend",()=>{});wxLoadGrid();wxLoadRadar();wxDrawRoute()}
-function wxDrawRoute(){if(!wxMap)return;if(wxRoute)wxMap.removeLayer(wxRoute);const pts=state.wps.map(w=>[w.lat,w.lon]);
-  wxRoute=L.layerGroup([L.polyline(pts,{color:"#ff3db8",weight:3}),...pts.map((p,i)=>L.circleMarker(p,{radius:5,color:"#fff",weight:2,fillColor:"#ff3db8",fillOpacity:1}).bindTooltip(esc(state.wps[i].name)))]).addTo(wxMap)}
-async function wxLoadRadar(){if(wxRadarL){wxMap.removeLayer(wxRadarL);wxRadarL=null}if(!$("#wxRadar").checked)return;
-  try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json();const f=d.radar.past[d.radar.past.length-1];
-    wxRadarL=L.tileLayer(`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`,{opacity:.7,maxNativeZoom:7,maxZoom:12,attribution:"Radar © RainViewer"}).addTo(wxMap);
-    $("#wxStatus").dataset.radar=`เรดาร์ ${new Date(f.time*1000).toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"})} น.`;wxStatus()}catch(e){$("#wxStatus").dataset.radar="โหลดเรดาร์ไม่ได้";wxStatus()}}
+/* เส้นทางแบบแท็บ 1 (เส้นชมพู + หมุดตัวเลข + ชื่อจุด) ไม่มีกล่อง heading — ใช้ในแท็บอากาศ/NOTAM */
+function wpLabel(i){const w=state.wps[i];const cp=typeof cpNoFor==="function"?cpNoFor(w):null;return cp!=null?String(cp):String(i+1)}
+function routeOverlay(){const W=state.wps,pts=W.map(w=>[w.lat,w.lon]),g=L.layerGroup();if(pts.length<1)return g;
+  L.polyline(pts,{color:"#ffffff",weight:6,opacity:.55,interactive:false}).addTo(g);L.polyline(pts,{color:"#d6198f",weight:3.5,interactive:false}).addTo(g);
+  W.forEach((w,i)=>L.marker([w.lat,w.lon],{interactive:true,keyboard:false,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${esc(wpLabel(i))}</div><span class="ro-n">${esc(w.name||"")}</span>`,iconSize:[24,24],iconAnchor:[12,12]})})
+    .bindTooltip(`${esc(wpLabel(i))}. ${esc(w.name||"WP")}`).addTo(g));return g}
+function wxDrawRoute(){if(!wxMap)return;if(wxRoute)wxMap.removeLayer(wxRoute);wxRoute=routeOverlay().addTo(wxMap)}
+/* เรดาร์ฝน RainViewer: ภาพย้อนหลัง ~2 ชม. + พยากรณ์ระยะสั้น (nowcast) เลื่อน/เล่นได้ */
+let wxRF=null,wxRIdx=0,wxRTimer=null;
+function wxRadarShow(i){if(!wxRF||!wxMap)return;wxRIdx=Math.max(0,Math.min(wxRF.frames.length-1,i));const f=wxRF.frames[wxRIdx];
+  if(wxRadarL)wxMap.removeLayer(wxRadarL);wxRadarL=L.tileLayer(`${wxRF.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`,{opacity:.72,maxNativeZoom:7,maxZoom:12,attribution:"Radar © RainViewer"}).addTo(wxMap);
+  const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});$("#wxRTime").value=wxRIdx;
+  $("#wxRadarLbl").textContent=`${t} น.${f.nc?" (พยากรณ์)":wxRIdx===wxRF.past-1?" (ล่าสุด)":""}`;$("#wxStatus").dataset.radar=`เรดาร์ RainViewer ${t} น.`;wxStatus()}
+async function wxLoadRadar(){if(wxRadarL){wxMap.removeLayer(wxRadarL);wxRadarL=null}clearInterval(wxRTimer);wxRTimer=null;$("#wxRPlay").textContent="▶";
+  $("#wxRadarRow").hidden=!$("#wxRadar").checked;if(!$("#wxRadar").checked){$("#wxStatus").dataset.radar="";wxStatus();return}
+  try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json();const past=d.radar.past||[],nc=(d.radar.nowcast||[]).map(f=>({...f,nc:1}));
+    wxRF={host:d.host,frames:[...past,...nc],past:past.length};$("#wxRTime").max=wxRF.frames.length-1;wxRadarShow(past.length-1)}
+  catch(e){$("#wxStatus").dataset.radar="โหลดเรดาร์ไม่ได้ (ต้องต่อเน็ต)";wxStatus()}}
 function wxStatus(){const s=$("#wxStatus");s.textContent=[s.dataset.grid,s.dataset.radar].filter(Boolean).join(" · ")}
 const uv=(dir,spd)=>{const r=dir*D2R;return[-spd*Math.sin(r),-spd*Math.cos(r)]};
 const dirspd=(u,v)=>[norm(Math.atan2(-u,-v)*R2D),Math.hypot(u,v)];
@@ -2050,7 +2081,12 @@ $("#wxFill").onclick=async()=>{if(!wxRouteData)await wxRouteFetch();if(!wxRouteD
   if(!n){toast("ไม่มีข้อมูลลมสำหรับ leg");return}state.windSrc=`พยากรณ์เฉลี่ย ECMWF/GFS/ICON (Open-Meteo) ดึงเมื่อ ${new Date().toLocaleString("th-TH")}`;
   markEdited();render();wxSumRender();toast(`ใส่ลมลง NAV LOG ${n} leg แล้ว — ตรวจ/แก้ได้ในแท็บ NAVLOG`)};
 ["wxModel","wxLevel"].forEach(id=>$("#"+id).addEventListener("change",wxLoadGrid));
-$("#wxTime").addEventListener("input",wxDrawWind);$("#wxWind").addEventListener("change",wxDrawWind);$("#wxRadar").addEventListener("change",wxLoadRadar);
+$("#wxTime").addEventListener("input",wxDrawWind);
+$("#wxRTime").addEventListener("input",e=>{clearInterval(wxRTimer);wxRTimer=null;$("#wxRPlay").textContent="▶";wxRadarShow(+e.target.value)});
+$("#wxRPlay").onclick=()=>{if(wxRTimer){clearInterval(wxRTimer);wxRTimer=null;$("#wxRPlay").textContent="▶";return}if(!wxRF)return;$("#wxRPlay").textContent="⏸";
+  wxRTimer=setInterval(()=>wxRadarShow(wxRIdx>=wxRF.frames.length-1?0:wxRIdx+1),700)};
+let wxWTimer=null;$("#wxPlay").onclick=()=>{if(wxWTimer){clearInterval(wxWTimer);wxWTimer=null;$("#wxPlay").textContent="▶";return}$("#wxPlay").textContent="⏸";
+  wxWTimer=setInterval(()=>{const r=$("#wxTime");r.value=(+r.value>=+r.max)?0:+r.value+1;wxDrawWind()},800)};$("#wxWind").addEventListener("change",wxDrawWind);$("#wxRadar").addEventListener("change",wxLoadRadar);
 /* METAR → ภาษาอ่านง่าย */
 let metarCache=null;
 const WXC={TS:"พายุฟ้าคะนอง",SHRA:"ฝนซู่",RA:"ฝน",DZ:"ฝนละออง",BR:"หมอกน้ำค้าง (Mist)",FG:"หมอก",HZ:"ฟ้าหลัว (Haze)",FU:"ควัน",DU:"ฝุ่น",SQ:"ลมกระโชกแรง",GR:"ลูกเห็บ",VCSH:"ฝนซู่บริเวณใกล้",VCTS:"พายุฟ้าคะนองบริเวณใกล้",TSRA:"พายุฟ้าคะนอง+ฝน"};
@@ -2078,10 +2114,11 @@ function wxSumRender(){const box=$("#wxSum");if(!box)return;const W=state.wps;if
   const risk=wxRouteData?(()=>{const M=Object.keys(WX_MODELS),mx=k=>Math.max(0,...wxRouteData.flatMap(p=>M.map(m=>p.per[m][k]).filter(v=>v!=null)));const out=[];
     if(mx("pr")>=1)out.push(`🌧️ ฝนตามเส้นทาง สูงสุด ${mx("pr").toFixed(1)} mm/h`);if(mx("cape")>=1000)out.push(`⛈️ CAPE ${Math.round(mx("cape"))} — มีโอกาสพายุฟ้าคะนอง`);if(mx("cl")>=70)out.push(`☁️ เมฆต่ำปกคลุม ${Math.round(mx("cl"))}%`);
     const vs=wxRouteData.flatMap(p=>M.map(m=>p.per[m].vis).filter(v=>v!=null));if(vs.length&&Math.min(...vs)<5000)out.push(`👁️ ทัศนวิสัยต่ำสุด ${(Math.min(...vs)/1000).toFixed(1)} km`);return out})():[];
-  box.innerHTML=`<div class="wxs-grid">${ap(W[0].name,"ต้นทาง")}${ap(W.at(-1).name,"ปลายทาง")}<div class="wxs-ap wxs-qnh"><div class="wxs-h"><span class="hint">QNH</span></div><div class="wxs-big">${esc(q)}</div><div class="hint">แก้ได้ที่ช่อง QNH ด้านล่าง หรือกด "ใช้ QNH นี้" ใน METAR</div></div></div>
+  box.innerHTML=`<div class="wxs-grid">${ap(W[0].name,"ต้นทาง")}${ap(W.at(-1).name,"ปลายทาง")}<div class="wxs-ap wxs-qnh" id="wxsQnhSlot"></div></div>
     ${risk.length?`<div class="wxs-risk">${risk.map(r=>`<span>${r}</span>`).join("")}</div>`:wxRouteData?'<div class="wxs-ok">✅ ไม่พบฝน/พายุ/เมฆต่ำมากตามเส้นทางจากพยากรณ์</div>':""}
     ${legs?`<div class="tablewrap"><table class="wxs-tbl"><thead><tr><th>Leg</th><th>ALT</th><th>ลมพยากรณ์ (เฉลี่ย 3 โมเดล)</th><th>Temp</th><th>ค่าใน NAV LOG ตอนนี้</th></tr></thead><tbody>${legs}</tbody></table></div><p class="hint">ลมพยากรณ์เป็นค่าคร่าวๆ — กด "ใส่ลม/อุณหภูมิลง NAV LOG" แล้วยังแก้เองได้ในแท็บ 2</p>`:'<p class="hint">ยังไม่มีพยากรณ์ตามเส้นทาง (ต้องต่อเน็ต)</p>'}`}
-$("#wxSumRefresh").onclick=()=>{wxAuto(true);metarLoad()};
+{const qb=$("#wxQnhBox"),_r=wxSumRender;wxSumRender=function(){if(qb.parentNode&&qb.parentNode.id==="wxsQnhSlot")qb.parentNode.removeChild(qb);_r.apply(this,arguments);const sl=$("#wxsQnhSlot");if(sl){qb.style.margin="0";qb.style.maxWidth="none";sl.appendChild(qb)}}}
+$("#wxSumRefresh").onclick=()=>{wxAuto(true);metarLoad();wxLoadRadar()};
 $("#wxFill2").onclick=()=>$("#wxFill").click();
 /* METAR/TAF จาก metar.json (GitHub ดึงทุก 30 นาที) */
 async function metarLoad(){const box=$("#metarList");
@@ -2316,14 +2353,14 @@ function ntRender(){if(!$("#ntList"))return;setTimeout(()=>{try{renderAreaNt()}c
   {const rel=n=>(n.inBuf||n.ap)&&n.active;
   E.filter(n=>(n.active||hidden)&&!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)).forEach(n=>{const r=rel(n),c=ntCat(n).c;n.polys.forEach(P=>L.polygon(P.p,{color:c,weight:r?(n.hit?4:3):1.5,opacity:r?1:.8,fillColor:c,fillOpacity:r?.22:.08,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
     .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer))})}
-  {const cnt={};E.filter(n=>(hidden||n.active)&&(hidden||n.inBuf||n.ap)).forEach(n=>{const k=ntCat(n).k;cnt[k]=(cnt[k]||0)+1});
+  {const cnt={};E.filter(n=>(hidden||n.active)&&n.polys.length).forEach(n=>{const k=ntCat(n).k;cnt[k]=(cnt[k]||0)+1});
    $("#ntChips").innerHTML=`<button class="ntc${ntHideCat.size?"":" on"}" data-cat="*">ทั้งหมด</button>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<button class="ntc${ntHideCat.has(c.k)?"":" on"}" data-cat="${c.k}" style="--cc:${c.c}">${c.e} ${c.t} <b>${cnt[c.k]}</b></button>`).join("")}
   /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
   const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
   const buf=num($("#ntBuf").value,10),mids=routeAirports(buf).map(a=>a.id).filter(x=>x!==dep&&x!==dst);
   const groups=[];const used=new Set();
   /* แสดงเฉพาะรายการที่เกี่ยวข้อง (มีผลในช่วงเวลาบิน) — ที่เหลือซ่อนไว้ให้กด "ดูเพิ่ม" เอง */
-  const cat=n=>!ntHideCat.has(ntCat(n).k);
+  const cat=n=>true;  // หมวดใช้เลือกแสดงบนแผนที่เท่านั้น — รายการแสดงครบ
   const addG=(title,all,collapsed)=>{const list=collapsed?[]:all.filter(n=>n.active),extra=collapsed?all:all.filter(n=>!n.active);groups.push({title,list,extra});all.forEach(n=>used.add(n))};
   const show=n=>cat(n);
   if(dep)addG(`${dep}${AP[dep]?" · "+AP[dep].name:""} (ต้นทาง)`,E.filter(n=>n.loc===dep&&show(n)));
@@ -2336,12 +2373,22 @@ function ntRender(){if(!$("#ntList"))return;setTimeout(()=>{try{renderAreaNt()}c
     <div class="nti-t">📅 ${ntLocal(n.from)} until ${ntLocal(n.to)}${n.est?" EST":""}</div>
     ${n.hit&&/^Q(R|W|OB)/.test(n.code)?'<span class="tag hit">เส้นทางตัดผ่าน</span>':""}${!n.active?'<span class="tag">ไม่อยู่ในช่วงเวลาบิน</span>':""}${n.manual?`<span class="tag">${n.src==="AEROTHAI"?"AEROTHAI":"วางเอง"}</span>`:""}
     ${open?`<div class="nti-body">${n.sched?`<div class="hint">ช่วงเวลา: ${esc(n.sched)}</div>`:""}<div class="hint">FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")} · ${esc(n.code)}</div><pre>${esc(ntPlainMode?ntPlainText(n):n.raw)}</pre></div>`:""}</div>`};
+  {const A=E.filter(n=>n.active),rel=A.filter(n=>n.hit||n.inBuf||n.ap),hit=A.filter(n=>n.hit),apn=A.filter(n=>n.ap),
+     relOff=E.filter(n=>!n.active&&(n.hit||n.inBuf||n.ap)),un=E.length-rel.length-relOff.length,red=rel.filter(n=>ntSev(n)==="red").length;
+   const bc={};rel.forEach(n=>{const c=ntCat(n);bc[c.k]=(bc[c.k]||0)+1});const mx=Math.max(1,...Object.values(bc));
+   $("#ntDash").innerHTML=W.length<2?"":`<div class="nd-cards">
+     <div class="nd-c nd-rel"><span>เกี่ยวข้องกับเส้นทาง</span><b>${rel.length}</b><small>มีผลในช่วงเวลาบิน${red?` · <em>สำคัญ ${red}</em>`:""}</small></div>
+     <div class="nd-c nd-hit"><span>ตัดผ่านเส้นทาง</span><b>${hit.length}</b><small>พื้นที่ทับแนวบิน</small></div>
+     <div class="nd-c nd-ap"><span>สนามต้นทาง/ปลายทาง/ตามทาง</span><b>${apn.length}</b><small>NOTAM ของสนาม</small></div>
+     <div class="nd-c nd-off"><span>เกี่ยวข้องแต่ไม่อยู่ในเวลาบิน</span><b>${relOff.length}</b><small>ยังไม่มีผล / หมดเวลาแล้ว</small></div>
+     <div class="nd-c nd-un"><span>ไม่เกี่ยวข้อง</span><b>${Math.max(0,un)}</b><small>นอกแนวเส้นทาง</small></div></div>
+     ${rel.length?`<div class="nd-bars">${NT_CATS.filter(c=>bc[c.k]).map(c=>`<div class="nd-bar"><span>${c.e} ${c.t}</span><i style="--w:${bc[c.k]/mx*100}%;--cc:${c.c}"></i><b>${bc[c.k]}</b></div>`).join("")}</div>`:""}`}
   $("#ntList").innerHTML=groups.filter(g=>g.list.length||g.extra.length||!/^อื่นๆ/.test(g.title)).map(g=>{const op=ntMore.has(g.title);
     return`<div class="nt-grp"><h3>${esc(g.title)}</h3>${g.list.length?g.list.map(item).join(""):/^อื่นๆ/.test(g.title)?"":`<p class="hint">${g.extra.length?"ไม่มี NOTAM ที่มีผลในช่วงเวลาบิน":"ไม่มี NOTAM"}</p>`}
     ${g.extra.length?`<button class="nt-more mini" data-more="${esc(g.title)}">${op?"▲ ซ่อน":"▼ ดูเพิ่ม"} ${g.extra.length} รายการ${/^อื่นๆ/.test(g.title)?"":" (ไม่อยู่ในช่วงเวลาบิน)"}</button>${op?g.extra.map(item).join(""):""}`:""}</div>`}).join("");
   const [t0,t1]=ntFlightWindow();const fe=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap)).length;
   $("#ntRoute").innerHTML=W.length>1?`<span class="nt-pin">●</span> <b>${esc(W[0].name)}</b> <span class="hint">→</span> <span class="nt-pin">●</span> <b>${esc(W.at(-1).name)}</b> <span class="hint">· ช่วงบิน ${ntLocal(t0)} – ${ntLocal(t1)} · เกี่ยวข้อง ${fe} รายการ</span>`:'<span class="hint">ยังไม่มีเส้นทาง — สร้างเส้นทางในแท็บ 1 ก่อน</span>';
-  const a=NT_AUTO_META;$("#ntInfo").innerHTML=(a?`ดึงอัตโนมัติจาก ${esc(a.source)} · อัปเดต ${a.age} · ${a.n} NOTAM`:'<span class="warnc">ยังไม่มีชุด NOTAM อัตโนมัติ — ใช้การวางเองด้านล่างได้</span>')+(a&&a.err?` · <span class="bad">ดึงรอบล่าสุดไม่สำเร็จ (${esc(a.err)})</span>`:"")+(NT.length?` · วางเอง ${NT.length}`:"");
+  const a=NT_AUTO_META;$("#ntInfo").innerHTML=(a?`<span class="nt-src">🌐 ดึงอัตโนมัติจาก <b>${esc(a.source)}</b> · อัปเดต ${a.age} · ${a.n} NOTAM</span><span class="nt-src-w">⚠ ชุดนี้มีเฉพาะ NOTAM ระหว่างประเทศ (ICAO) — <b>ถ้าบินในประเทศไทย ต้องดึง NOTAM ในประเทศจาก AEROTHAI เอง</b> แล้วกด 📋 วางจาก AEROTHAI หรือวางในกล่องด้านล่าง</span>`:'<span class="warnc">ยังไม่มีชุด NOTAM อัตโนมัติ — ใช้การวางเองด้านล่างได้</span>')+(a&&a.err?` · <span class="bad">ดึงรอบล่าสุดไม่สำเร็จ (${esc(a.err)})</span>`:"")+(NT.length?` · วางเอง ${NT.length}`:"");
   if(ntView==="map")ntDrawMap(E)}
 let NT_AUTO_META=null;
 async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cache:force?"reload":"no-cache"})).json();
@@ -2352,14 +2399,13 @@ async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cac
 function ntBuffer(){const W=state.wps,buf=num($("#ntBuf").value,10),polys=[];for(let i=0;i<W.length-1;i++){const a=[W[i].lat,W[i].lon],b=[W[i+1].lat,W[i+1].lon],tc=trueCourse(a,b);
   const off=(p,br)=>{const R=3440.065,d=buf/R,la=p[0]*D2R,lo=p[1]*D2R,t=br*D2R;const la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(t));return[la2*R2D,(lo+Math.atan2(Math.sin(t)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2)))*R2D]};
   polys.push([off(a,tc-90),off(b,tc-90),off(b,tc+90),off(a,tc+90)])}W.forEach(w=>polys.push(circlePoly([w.lat,w.lon],buf)));return polys}
-function ntLegend(cnt){if(!ntMap)return;if(!ntMap._lg){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","nt-legend");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
+function ntLegend(cnt){return;if(!ntMap)return;if(!ntMap._lg){const C=L.Control.extend({options:{position:"bottomleft"},onAdd(){const d=L.DomUtil.create("div","nt-legend");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
     d.addEventListener("change",e=>{const k=e.target.dataset.cat;if(!k)return;e.target.checked?ntHideCat.delete(k):ntHideCat.add(k);ntDrawMap(null,true)});return d}});ntMap._lg=new C().addTo(ntMap)}
   ntMap._lg.getContainer().innerHTML=`<b>หมวด NOTAM</b>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<label><input type="checkbox" data-cat="${c.k}" ${ntHideCat.has(c.k)?"":"checked"}><i style="background:${c.c}"></i>${c.e} ${c.t} <span>${cnt[c.k]}</span></label>`).join("")+'<small>เส้นหนา/สีเข้ม = ตามแนวเส้นทาง</small>'}
 function ntDrawMap(E,keepView){if(!ntMap){ntMap=L.map("ntMap",{zoomControl:true});L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:"Basemap © Esri"}).addTo(ntMap);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{maxZoom:16}).addTo(ntMap);ntMapLayer=L.layerGroup().addTo(ntMap)}
   ntMapLayer.clearLayers();const W=state.wps,pts=W.map(w=>[w.lat,w.lon]);
   ntBuffer().forEach(p=>L.polygon(p,{stroke:false,fillColor:"#3d6fb6",fillOpacity:.22,interactive:false}).addTo(ntMapLayer));
-  if(pts.length>1)L.polyline(pts,{color:"#ff3d8b",weight:3}).addTo(ntMapLayer);
-  W.forEach((w,i)=>{if(i===0||i===W.length-1)L.marker([w.lat,w.lon],{icon:L.divIcon({className:"",html:'<div class="ntpin"></div>',iconSize:[22,30],iconAnchor:[11,30]})}).bindTooltip(esc(w.name),{permanent:true,direction:"right",offset:[8,-18]}).addTo(ntMapLayer)});
+  routeOverlay().addTo(ntMapLayer);
   const sh=$("#ntShowHidden").checked,rel=n=>n.inBuf||n.ap;const EE=(E||ntEval()).filter(n=>n.active||sh),cnt={};
   EE.forEach(n=>{if(n.polys.length){const c=ntCat(n).k;cnt[c]=(cnt[c]||0)+1}});ntLegend(cnt);
   EE.filter(n=>!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)||b.polys.length-a.polys.length).forEach(n=>{const col=ntCat(n).c,r=rel(n)&&n.active;n.polys.forEach(P=>L.polygon(P.p,{color:col,weight:r?(n.hit?4:3):1.6,fillColor:col,fillOpacity:r?.28:.12,opacity:r?1:.85,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
@@ -2373,8 +2419,7 @@ $("#ntPlain").onclick=()=>{ntPlainMode=true;ntSeg("#ntPlain","#ntOrig");ntRender
 $("#ntShowHidden").onchange=ntRender;
 $("#ntRedraw").onclick=()=>{ntRender();if(ntView==="map"){ntDrawMap();setTimeout(()=>ntMap&&ntMap.invalidateSize(),80)}const E=ntEval();toast(`แสดง NOTAM ${E.filter(n=>n.active).length} รายการที่มีผลช่วงเวลาบิน (รวม ${E.length})`)};
 $("#ntChips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
-  if(k==="*")ntHideCat.clear();else if(!ntHideCat.size){NT_CATS.forEach(c=>{if(c.k!==k)ntHideCat.add(c.k)})}else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);
-  if(NT_CATS.every(c=>ntHideCat.has(c.k)))ntHideCat.clear();ntRender()});
+  if(k==="*")ntHideCat.clear();else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);ntRender()});
 $("#ntPasteAero").onclick=async()=>{try{const t=await navigator.clipboard.readText();if(!t||!/NOTAM|"items"/.test(t))throw 0;$("#ntText").value=t;$("#ntParse").click()}
   catch(e){$("#ntPasteBox").open=true;$("#ntText").focus();toast("กด Ctrl+V ในกล่อง แล้วกด อ่าน NOTAM")}};$("#ntBuf").addEventListener("input",ntRender);
 $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
