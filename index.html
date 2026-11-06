@@ -812,6 +812,27 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 /* ---- UX audit: การมองเห็น + ขนาดปุ่มบนจอสัมผัส ---- */
 .nt-adv{position:relative}.nt-adv>summary{cursor:pointer;list-style:none;padding:7px 12px;border:1px solid var(--line);border-radius:10px;font-weight:600;font-size:13.5px}.nt-adv>summary::-webkit-details-marker{display:none}
 .nt-adv[open]>summary{background:var(--input)}.nt-adv-b{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}.nt-adv[open]{flex-basis:100%}
+#navTable tr>*:nth-child(16){display:none}  /* MH กลับ: ซ่อน (สลับต้นทาง/ปลายทางเพื่อดูขากลับ) */
+/* ปุ่มสร้างเอกสารในแผงแผนการบิน */
+.docbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.docbar .fpl-cta,.docbar .kb-cta{width:100%;margin:0}
+.kb-cta{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 14px;border-radius:14px;border:2px solid #a78bfa;background:color-mix(in srgb,#a78bfa 14%,var(--panel));color:var(--ink);cursor:pointer}
+.kb-cta{gap:12px;padding:10px 16px;border-radius:16px;box-shadow:0 4px 14px rgba(167,139,250,.22)}.kb-cta .fpl-ic{font-size:28px;line-height:1}.kb-cta .fpl-tx{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.kb-cta b{font-size:18px;color:#7c3aed}.kb-cta small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kb-cta .fpl-go{font-size:30px;font-weight:700;color:#7c3aed}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kb-cta b,:root:not([data-theme="light"]) .kb-cta .fpl-go{color:#c4b5fd}}:root[data-theme="dark"] .kb-cta b,:root[data-theme="dark"] .kb-cta .fpl-go{color:#c4b5fd}
+@media (min-width:1000px){.top>.side .docbar{grid-template-columns:1fr}}
+/* ต้นทาง/ปลายทาง: ธีมขาว */
+.routebox{--panel:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--input:#f2f4f7;color-scheme:light;background:#fff!important;color:#111827;border:1px solid #e5e7eb}
+.routebox input{background:#f2f4f7;color:#111827;border-color:#e5e7eb}.routebox .res{color:#4b5563}.routebox .res b{color:#111827}.routebox .hint{color:#6b7280}
+.routebox .swapbtn{background:#f2f4f7;color:#111827;border-color:#d1d5db}
+/* อุปกรณ์พกพา: ช่องสั้นลง คำอธิบายไว้ด้านขวา */
+@media (max-width:999px){
+  .routebox{display:grid;grid-template-columns:minmax(150px,42%) 1fr;gap:6px 12px;align-items:end}
+  .routebox>label{grid-column:1}.routebox>.res{grid-column:2;align-self:end;padding-bottom:12px;margin:0}
+  .routebox>.btns{grid-column:1;margin:4px 0 0}.routebox>.hint{grid-column:2;align-self:center;margin:4px 0 0}
+  .routebox .res.res1{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  #planMetaSlot>#planMeta{margin:4px 0 12px}
+}
+@media (max-width:520px){.routebox{grid-template-columns:1fr}.routebox>*{grid-column:1!important}.routebox>.res{padding-bottom:0}.docbar{grid-template-columns:1fr}}
 .planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
@@ -970,14 +991,14 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <nav class="jumpbar" id="jumpBar" aria-label="ไปยังหัวข้อ">
     <button type="button" data-jump=".top>.side" class="jb-side">✈️ แผนการบิน</button>
     <button type="button" data-jump="#wpCard">📍 จุดเส้นทาง</button>
-    <button type="button" data-jump="#procCard">🛬 เข้า-ออกสนาม · Charts</button>
-    <button type="button" data-jump="#freqCard">📻 ความถี่</button>
+    <button type="button" data-jump="#freqCard">📡 ความถี่</button>
+    <button type="button" data-jump="#procCard">🛬 Charts เข้า-ออก</button>
     <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
     <button type="button" data-jump="#areaCard">⚠️ P/R/D · NOTAM</button>
   </nav>
     <div class="card side">
       <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
-      <div class="planbar" role="group" aria-label="จัดการแผน"><button id="savePlan" class="primary" type="button">💾 บันทึกแผน</button><select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้"><option value="">📂 เปิดแผนที่บันทึก…</option></select><button id="delPlan" type="button" title="ลบแผนที่เลือกอยู่ออกจากรายการที่บันทึก">🗑</button></div>
+      <div class="planbar" role="group" aria-label="จัดการแผน" hidden><button id="savePlan" class="primary" type="button">💾 บันทึกแผน</button><select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้"><option value="">📂 เปิดแผนที่บันทึก…</option></select><button id="delPlan" type="button" title="ลบแผนที่เลือกอยู่ออกจากรายการที่บันทึก">🗑</button></div>
       <div class="routebox">
         <label><b class="rlab dep">● ต้นทาง</b><input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
         <div id="depRes" class="res"></div>
@@ -994,10 +1015,14 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <p class="hint">ICAO · ชื่อจุด · MGRS · lat, lon</p>
         <datalist id="apList"></datalist>
       </div>
+      <div class="docbar">
+  <button id="fplOpen" class="fpl-cta" type="button"><span class="fpl-ic" aria-hidden="true">📄</span><span class="fpl-tx"><b>สร้าง PDF Flight Plan</b><small id="fplSum">ICAO Flight Plan สำหรับยื่นหอบังคับการบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
+        <button id="kneePdf" class="kb-cta" type="button"><span class="fpl-ic" aria-hidden="true">🗒️</span><span class="fpl-tx"><b>สร้าง Kneeboard PDF</b><small>A5 / A4 · แผนที่ + NAV LOG สำหรับพกขึ้นบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
+      </div>
       <div class="qnhbox" hidden><div class="ttl"><span>QNH</span><span class="hint" style="font-weight:500">กรอกช่องใดก็ได้ อีกช่องแปลงให้</span></div>
         <label>inHg<input class="qnh-i" type="number" step="0.01" inputmode="decimal" placeholder="29.92"></label>
         <label>hPa<input class="qnh-h" type="number" step="1" inputmode="decimal" placeholder="1013"></label></div>
-      <div class="grid2">
+      <div class="grid2" id="planMeta">
         <label style="grid-column:1/-1">ชื่อแผน / ภารกิจ<input id="planName" type="text"></label>
         <label>Aircraft No.<input id="acft" type="text"></label>
         <label>วันที่<input id="date" type="date"></label>
@@ -1036,7 +1061,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="card section" id="wpCard">
     <div class="sechead">
       <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
-      <button id="fplOpen" class="fpl-cta" type="button"><span class="fpl-ic" aria-hidden="true">📄</span><span class="fpl-tx"><b>สร้าง PDF Flight Plan</b><small id="fplSum">ICAO Flight Plan สำหรับยื่นหอบังคับการบิน</small></span><span class="fpl-go" aria-hidden="true">›</span></button>
       <div class="btns">
         <button id="addManual">เพิ่มจุดจากพิกัด</button>
         <button id="reverse">กลับเส้นทาง</button>
@@ -1048,30 +1072,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
       <thead><tr><th>#</th><th>No. หน่วย</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
-  </div>
-
-  <div class="card section" id="procCard">
-    <div class="sechead"><h2 class="hd hd-amber">ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
-    <div id="procList"></div>
-    <details id="peBox" class="custbox" style="border-color:var(--accent)">
-      <summary style="color:var(--accent)">Procedure / จุดรายงานที่กรอกเอง — <span id="peCount">0</span> รายการ</summary>
-      <p class="hint">สำหรับสนามทหารหรือจุดรายงานที่อยู่ใน VFR chart / เอกสารหน่วย · เก็บในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ทุกจุดจะถูกเทียบกับ eAIP (AD 2.22, ENR 4.4) ให้อัตโนมัติ — ✓ ตรง, ✗ ต่าง, • ไม่มีใน eAIP ต้องตรวจกับ chart</p>
-      <div class="grid2 custgrid">
-        <label>สนาม (ICAO / ชื่อย่อ)<input id="peIc" type="text" list="apList" placeholder="VTBH"></label>
-        <label>ใช้เป็น<select id="peType"><option value="ARR">ขาเข้า (ARR)</option><option value="DEP">ขาออก (DEP)</option><option value="BOTH">ทั้งเข้าและออก</option></select></label>
-        <label style="grid-column:1/-1">ชื่อ procedure<input id="peName" type="text" placeholder="ARR ทิศเหนือ ผ่าน สะพานแม่น้ำ"></label>
-      </div>
-      <p class="hint" style="margin:4px 0"><b>จุดรายงาน</b> เรียงตามลำดับที่บินผ่าน · พิกัดใส่ได้ทั้ง MGRS, ทศนิยม หรือชื่อ significant point · ปุ่ม 📍 แล้วแตะแผนที่เพื่อจับพิกัด</p>
-      <div id="peRows"></div>
-      <div class="btns" style="margin:4px 0 8px"><button id="peAddRow" type="button">＋ เพิ่มจุด</button></div>
-      <label>หมายเหตุ (ความสูง / ความถี่ / ข้อจำกัด)<input id="peNote" type="text" placeholder="ผ่าน REP ที่ 1,000 ft · ติดต่อ TWR 122.1"></label>
-      <div class="btns" style="margin-top:8px">
-        <button id="peSave" class="primary">บันทึก procedure</button><button id="peNew">เริ่มใหม่</button>
-        <button id="peExport">Export</button><button type="button" onclick="document.getElementById('peImport').click()">Import</button>
-        <input id="peImport" type="file" accept=".json,application/json" hidden>
-      </div>
-      <div id="peList" class="pe-list" style="margin-top:10px"></div>
-    </details>
   </div>
 
   <div class="card section" id="freqCard">
@@ -1106,18 +1106,42 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </details>
   </div>
 
+  <div class="card section" id="procCard">
+    <div class="sechead"><h2 class="hd hd-amber">ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
+    <div id="procList"></div>
+    <details id="peBox" class="custbox" style="border-color:var(--accent)">
+      <summary style="color:var(--accent)">Procedure / จุดรายงานที่กรอกเอง — <span id="peCount">0</span> รายการ</summary>
+      <p class="hint">สำหรับสนามทหารหรือจุดรายงานที่อยู่ใน VFR chart / เอกสารหน่วย · เก็บในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ทุกจุดจะถูกเทียบกับ eAIP (AD 2.22, ENR 4.4) ให้อัตโนมัติ — ✓ ตรง, ✗ ต่าง, • ไม่มีใน eAIP ต้องตรวจกับ chart</p>
+      <div class="grid2 custgrid">
+        <label>สนาม (ICAO / ชื่อย่อ)<input id="peIc" type="text" list="apList" placeholder="VTBH"></label>
+        <label>ใช้เป็น<select id="peType"><option value="ARR">ขาเข้า (ARR)</option><option value="DEP">ขาออก (DEP)</option><option value="BOTH">ทั้งเข้าและออก</option></select></label>
+        <label style="grid-column:1/-1">ชื่อ procedure<input id="peName" type="text" placeholder="ARR ทิศเหนือ ผ่าน สะพานแม่น้ำ"></label>
+      </div>
+      <p class="hint" style="margin:4px 0"><b>จุดรายงาน</b> เรียงตามลำดับที่บินผ่าน · พิกัดใส่ได้ทั้ง MGRS, ทศนิยม หรือชื่อ significant point · ปุ่ม 📍 แล้วแตะแผนที่เพื่อจับพิกัด</p>
+      <div id="peRows"></div>
+      <div class="btns" style="margin:4px 0 8px"><button id="peAddRow" type="button">＋ เพิ่มจุด</button></div>
+      <label>หมายเหตุ (ความสูง / ความถี่ / ข้อจำกัด)<input id="peNote" type="text" placeholder="ผ่าน REP ที่ 1,000 ft · ติดต่อ TWR 122.1"></label>
+      <div class="btns" style="margin-top:8px">
+        <button id="peSave" class="primary">บันทึก procedure</button><button id="peNew">เริ่มใหม่</button>
+        <button id="peExport">Export</button><button type="button" onclick="document.getElementById('peImport').click()">Import</button>
+        <input id="peImport" type="file" accept=".json,application/json" hidden>
+      </div>
+      <div id="peList" class="pe-list" style="margin-top:10px"></div>
+    </details>
+  </div>
+
   <div class="card section" id="navCard">
     <div class="sechead">
       <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
-        <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
         <button id="exportXlsx">Export Excel (.xlsx)</button>
         <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
       </div>
     </div>
+    <div id="planMetaSlot"></div>
     <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
     <div class="tablewrap"><table id="navMini" class="mini-tbl">
-      <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
+      <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -1776,9 +1800,9 @@ function render(){
   // NAV LOG ย่อ (แท็บ 1)
   $("#navMini tbody").innerHTML=res.rows.map((r,i)=>{const fCls=rv!=null&&r.fuel<rv?"bad":"";
     const rp=state.wps[i+1].rp;return`<tr${rp?' class="rprow"':""}><td style="text-align:left">${rp?'<span title="จุดรายงาน">▲ </span>':""}${dbNoTxt(state.wps[i+1])}<b>${esc(state.wps[i+1].name)}</b></td><td>${esc(state.legs[i].alt??"")}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td>
-      <td class="c mh">${isFinite(r.mh)?hdg(r.mh):"–"}°</td><td class="c">${isFinite(r.mhBack)?hdg(r.mhBack):"–"}°</td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td>
+      <td class="c mh">${isFinite(r.mh)?hdg(r.mh):"–"}°</td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td>
       <td class="c">${mmss(r.ete)}</td><td class="c eta">${hhmm(r.eta)}</td><td class="c ${fCls}">${isFinite(r.fuel)?r.fuel.toFixed(0):"–"}</td></tr>`}).join("")
-    ||`<tr><td colspan="11" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุด</td></tr>`;
+    ||`<tr><td colspan="10" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุด</td></tr>`;
   renderNavlogExtras(res);
   // summary
   $("#sDist").textContent=res.rows.length?res.total.toFixed(1)+" NM":"–";
@@ -3610,6 +3634,9 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
   L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
 new CtlUndo().addTo(map);
 modeSet(FLMODE,true);
+/* อุปกรณ์พกพา: ชื่อแผน/Aircraft/วันที่/เวลา/น้ำมัน/SA ย้ายไปไว้กล่อง NAV LOG ในแท็บ 1 (แผงแผนการบินจะสั้นลง) */
+{const meta=$("#planMeta"),home=meta.parentNode,next=meta.nextElementSibling,slot=$("#planMetaSlot"),mq=matchMedia("(max-width:999px)");
+  const place=()=>{if(mq.matches){if(meta.parentNode!==slot)slot.appendChild(meta)}else if(meta.parentNode!==home)home.insertBefore(meta,next)};place();mq.addEventListener("change",place)}
 /* แถบลัดไปหัวข้อ + ปุ่มกลับขึ้นบน */
 $("#jumpBar").addEventListener("click",e=>{const b=e.target.closest("[data-jump]");if(!b)return;const t=document.querySelector(b.dataset.jump);if(!t)return;
   const y=t.getBoundingClientRect().top+scrollY-10;scrollTo({top:y,behavior:"smooth"});t.classList.remove("jump-hit");void t.offsetWidth;t.classList.add("jump-hit")});
