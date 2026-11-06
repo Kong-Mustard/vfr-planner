@@ -915,6 +915,7 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .gg-alt{--gc:#1e40af}.gg-wind{--gc:#0369a1}.gg-spd{--gc:#0e7490}.gg-hdg{--gc:#4338ca}.gg-mh{--gc:#2563eb}.gg-dist{--gc:#1d4ed8}.gg-time{--gc:#6d28d9}.gg-fuel{--gc:#0f766e}
 .gl-i.gl-mh b{box-shadow:0 0 0 2px #93c5fd}.gl-i span{color:var(--muted)}.gl-i.gl-calc b{color:var(--calc-ink,#9cc2ff)}.gl-i.gl-mh{outline:1.5px solid var(--accent)}.gl-i.gl-mh b{color:var(--accent)}
 .gl-key{padding:1px 6px;border-radius:5px}.gl-key.in{background:var(--input)}.gl-key.calc{background:var(--calc,#14213a);color:var(--calc-ink,#9cc2ff)}
+.nt-fmt{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .nt-dash{margin:8px 0 12px}.nd-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
 .nd-c{border-radius:14px;padding:10px 12px;background:var(--input);border-left:5px solid var(--line);display:flex;flex-direction:column;gap:2px}
 .nd-c span{font-size:12.5px;color:var(--muted);font-weight:600}.nd-c b{font:800 28px var(--f-mono);line-height:1.1}.nd-c small{font-size:11.5px;color:var(--muted)}.nd-c em{color:var(--bad);font-style:normal;font-weight:700}
@@ -1344,7 +1345,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="nt-bar">
    <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">📄 รายการ</button><button id="ntViewMap">🗺 แผนที่</button></div>
    <div class="nt-buf" role="group" aria-label="ระยะแนวเส้นทาง"><span>แนวเส้นทาง ±</span><button type="button" data-nb="-1" aria-label="ลด 1 NM">−</button><input id="ntBuf" type="number" value="1" min="1" max="50" inputmode="numeric" aria-label="ระยะ NM"><button type="button" data-nb="1" aria-label="เพิ่ม 1 NM">＋</button><span>NM</span></div>
-   <div class="seg" role="group" aria-label="รูปแบบข้อความ NOTAM" title="ต้นฉบับ = ข้อความ ICAO ตามที่ออก · อ่านง่าย = ขยายคำย่อเป็นคำเต็ม"><button id="ntOrig" class="on">ต้นฉบับ</button><button id="ntPlain">อ่านง่าย</button></div>
+   <span class="nt-fmt"><span class="hint">ข้อความ NOTAM:</span><div class="seg" role="group" aria-label="รูปแบบข้อความ NOTAM" title="ต้นฉบับ = ข้อความ ICAO ตามที่ออก · อ่านง่าย = ขยายคำย่อเป็นคำเต็ม"><button id="ntOrig" class="on">ต้นฉบับ (Original)</button><button id="ntPlain">อ่านง่าย (Plain)</button></div></span>
    <input type="checkbox" id="ntShowHidden" checked hidden><button id="ntRedraw" hidden></button>
   </div>
   <div id="ntDash" class="nt-dash"></div>
