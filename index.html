@@ -3223,11 +3223,10 @@ epRenderList();epRenderMain();
 /* ---------- ข้อสอบ (ใช้ข้อมูลชุดเดียวกับแท็บ EMERGENCY) ---------- */
 const QZ_MODES=[
  {id:"spec",e:"🚁",c:"#64748b",name:"ข้อมูลทั่วไปของเครื่อง",desc:"น้ำหนัก ความเร็ว พิสัย เชื้อเพลิง อุปกรณ์ (จากเอกสารแนะนำเครื่อง)"},
- {id:"img",e:"🖼️",c:"#ec4899",name:"ข้อสอบรูปภาพ (สถานการณ์)",desc:"ดูจอ EICAS / CAS / ไฟเตือนจำลอง แล้วตอบว่าต้องทำอะไร"},
- {id:"EMER Proc.",e:"🚨",c:"#ef4444",name:"EMER Proc. (แบบข้อสอบ)",desc:"ขั้นตอนฉุกเฉินตาม EP Test · ปกติ = ขั้นที่ n · ซับซ้อน = เรียงลำดับ / ข้อใดไม่ใช่"},
+ {id:"EMER Proc.",e:"🚨",c:"#ef4444",name:"EMER Proc. (แบบข้อสอบ)",desc:"ขั้นตอนฉุกเฉินตาม EP Test + 🖼️ โจทย์รูปจอ CAS · ปกติ = ขั้นที่ n · ซับซ้อน = เรียงลำดับ / ข้อใดไม่ใช่"},
  {id:"ep-next",e:"⏭️",c:"#f97316",name:"EMER: ขั้นตอนถัดไป",desc:"ให้ขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป (สุ่มจาก checklist)"},
  {id:"ep-id",e:"🔎",c:"#eab308",name:"EMER: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุใด"},
- {id:"ข้อจำกัด",e:"📏",c:"#3b82f6",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit บทที่ 5 · ซับซ้อน = อ่านค่าหน้าปัดแล้วตัดสิน"},
+ {id:"ข้อจำกัด",e:"📏",c:"#3b82f6",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit บทที่ 5 + 🖼️ โจทย์รูปหน้าปัด EICAS · ซับซ้อน = อ่านค่าแล้วตัดสิน"},
  {id:"ระบบ",e:"⚙️",c:"#14b8a6",name:"ระบบอากาศยาน",desc:"เครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ"},
  {id:"mix",e:"🎲",c:"#a855f7",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
 let qzMode="mix",qzN=10,qz=null,qzLvl=+(store.get("vfr_qz_lvl")||1);
@@ -3274,7 +3273,7 @@ function qzMakeTape(){const T=QZ_TAPES[Math.floor(Math.random()*QZ_TAPES.length)
   const lo=Math.max(z[0],T.min+(T.max-T.min)*.25),v=Math.round(lo+(z[1]-lo)*(0.2+Math.random()*0.6));const lab=z[3];
   const pool=[...new Set(QZ_TAPES.flatMap(t=>t.z.map(x=>x[3])))].filter(x=>x!==lab);const o=shuf([lab,...shuf(pool).slice(0,3)]);
   const ex=`${T.p} ${v}${T.u} อยู่ช่วง ${z[0]}–${z[1]}${T.u} = ${lab}\n\nช่วงทั้งหมดของ ${T.p}: ${T.z.map(x=>`${x[0]}–${x[1]} ${x[3]}`).join(" · ")}\n\nสีบนจอ: เขียว = ทำงานปกติ · เหลือง = ต้องให้ความสนใจ/จำกัดเวลา · ลายแดง-เหลือง/ตัวเลขแดง = เกินขีดจำกัด`;
-  return{cat:"รูปภาพ · หน้าปัด EICAS",lvl:qzLvl,img:`<div class="qz-scr">${qzTapeSvg(T,v,z[2])}</div>`,q:`จอแสดง ${T.p} ดังรูป — ค่านี้อยู่ในช่วงขีดจำกัดใด`,o,a:o.indexOf(lab),ex,ref:"TM Figure 5-1 Instrument Markings · ภาพจำลองจากแอป",key:"img-t-"+T.p+v}}
+  return{cat:"ข้อจำกัด · 🖼️ หน้าปัด EICAS",lvl:qzLvl,img:`<div class="qz-scr">${qzTapeSvg(T,v,z[2])}</div>`,q:`จอแสดง ${T.p} ดังรูป — ค่านี้อยู่ในช่วงขีดจำกัดใด`,o,a:o.indexOf(lab),ex,ref:"TM Figure 5-1 Instrument Markings · ภาพจำลองจากแอป",key:"img-t-"+T.p+v}}
 function qzCasPool(){return EP?EP.procedures.filter(p=>/caution|advisory/i.test(p.title)&&!/no accompanying|failure with no/i.test(p.title)&&epActionable(p)).map(p=>({p,cl:epChecklist(p)})).filter(x=>x.cl.some(b=>b.k==="step")):[]}
 function qzCasText(t){t=t.replace(/T\/R/g,"T∕R").replace(/M\/R/g,"M∕R").replace(/\s*\(.*?\)/g,"").replace(/\s*LOT I.*$/i,"").replace(/\s+(?:Cautions?|Advisory)\s+Appears?\b.*?(?=\/|$)/gi,"").replace(/\s+With\b.*$/i,"");
   const both=/\band\b/i.test(t)&&!/\bor\b/i.test(t);const parts=t.split(/\s*,\s*|\s+or\s+|\s+and\s+|\s*\/\s*/i).map(x=>x.replace(/∕/g,"/").trim()).filter(x=>/^[A-Z0-9#][A-Z0-9 #/&\-.]+$/.test(x)&&x.length>2);
@@ -3287,9 +3286,9 @@ function qzMakeCas(){const pool=qzCasPool();if(!pool.length)return null;for(let 
   const adv=/BACK UP PUMP ON Advisory Appearing/i.test(p.title)?["BACK UP PUMP ON"]:[];const st=cl.filter(b=>b.k==="step");const full=cl.map(b=>b.k==="step"?`${b.n?b.n+". ":"• "}${b.t}`:b.k==="cond"?`[${b.t}]`:"").filter(Boolean).join("\n");
   if(qzLvl===2){const ap=/AS SOON AS POSSIBLE/i.test(full)?"LAND AS SOON AS POSSIBLE":/AS SOON AS PRACTICABLE/i.test(full)?"LAND AS SOON AS PRACTICABLE":"บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)";
     const o=shuf(["LAND AS SOON AS POSSIBLE","LAND AS SOON AS PRACTICABLE","บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)","AUTOROTATE ทันที"]);
-    return{cat:"รูปภาพ · CAS",lvl:2,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — สุดท้ายแล้วต้องลงจอดแบบใด",o,a:o.indexOf(ap),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}\n\nPOSSIBLE = ลงที่ที่เหมาะสมที่ใกล้ที่สุดโดยไม่รอช้า · PRACTICABLE = ลงที่ที่เหมาะสม ตามความเร่งด่วน`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c2-"+p.id}}
+    return{cat:"EMER Proc. · 🖼️ จอ CAS",lvl:2,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — สุดท้ายแล้วต้องลงจอดแบบใด",o,a:o.indexOf(ap),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}\n\nPOSSIBLE = ลงที่ที่เหมาะสมที่ใกล้ที่สุดโดยไม่รอช้า · PRACTICABLE = ลงที่ที่เหมาะสม ตามความเร่งด่วน`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c2-"+p.id}}
   const right=st[0].t;const others=shuf([...new Set(pool.filter(x=>x.p!==p).map(x=>x.cl.find(b=>b.k==="step").t))].filter(t=>t!==right)).slice(0,3);if(others.length<3)continue;const o=shuf([right,...others]);
-  return{cat:"รูปภาพ · CAS",lvl:1,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — ขั้นแรกที่ต้องทำคือ",o,a:o.indexOf(right),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c1-"+p.id}}return null}
+  return{cat:"EMER Proc. · 🖼️ จอ CAS",lvl:1,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — ขั้นแรกที่ต้องทำคือ",o,a:o.indexOf(right),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c1-"+p.id}}return null}
 /* ข้อมูลทั่วไปของเครื่อง (UH-60M) */
 function qzMakeSpec(){if(!/60M/i.test(acftName()))return null;const A=AC_SPEC,f=v=>Number(v).toLocaleString("en-US");
   const Q=[["น้ำหนักเปล่า (empty weight) ของ UH-60M",f(A.weight)+" lb",["11,500 lb","14,200 lb","16,825 lb"]],["น้ำหนักวิ่งขึ้นสูงสุด (max T/O weight)",f(A.maxWeight)+" lb",["16,825 lb","20,250 lb","24,500 lb"]],
@@ -3303,9 +3302,9 @@ function qzMakeSpec(){if(!/60M/i.test(acftName()))return null;const A=AC_SPEC,f=
     ref:"เอกสารแนะนำเครื่อง UH-60M (infographic) — ค่าทั่วไป ไม่ใช่ค่าจาก TM ใช้ TM/Chapter 7 performance สำหรับวางแผนจริง",key:"spec-"+q}}
 function qzMakeImg(){return Math.random()<.45?qzMakeTape():(qzMakeCas()||qzMakeTape())}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
-  const pick=m=>m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
+  const pick=m=>(m==="ข้อจำกัด"&&Math.random()<.3)?qzMakeTape():(m==="EMER Proc."&&Math.random()<.3)?(qzMakeCas()||null):m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
     const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
-  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","img","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","img","ep-next","ep-id","ข้อจำกัด","ระบบ","spec"]):[qzMode];const seen=new Set();let guard=0;
+  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ","spec"]):[qzMode];const seen=new Set();let guard=0;
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[(qs.length+guard)%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
