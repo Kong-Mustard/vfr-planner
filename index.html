@@ -833,6 +833,10 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
   #planMetaSlot>#planMeta{margin:4px 0 12px}
 }
 @media (max-width:520px){.routebox{grid-template-columns:1fr}.routebox>*{grid-column:1!important}.routebox>.res{padding-bottom:0}.docbar{grid-template-columns:1fr}}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px 14px}
+.gl-i{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:baseline;padding:6px 8px;border-radius:8px;background:var(--input);font-size:13.5px}
+.gl-i b{font:800 14px var(--f-mono);color:var(--ink)}.gl-i span{color:var(--muted)}.gl-i.gl-calc b{color:var(--calc-ink,#9cc2ff)}.gl-i.gl-mh{outline:1.5px solid var(--accent)}.gl-i.gl-mh b{color:var(--accent)}
+.gl-key{padding:1px 6px;border-radius:5px}.gl-key.in{background:var(--input)}.gl-key.calc{background:var(--calc,#14213a);color:var(--calc-ink,#9cc2ff)}
 .planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
@@ -1166,12 +1170,16 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
       <thead><tr>
-        <th>Leg</th><th>From → To</th><th>ALT</th><th>W/D</th><th>W/V</th><th>Temp</th><th>CAS</th><th>TAS</th>
-        <th>TC</th><th>WCA</th><th>TH</th><th>Var</th><th>MH</th><th>Dev</th><th>CH</th><th>MH กลับ</th>
-        <th>Dist</th><th>Rem</th><th>GS</th><th>ETE</th><th>ETA</th><th>ATE</th><th>Fuel leg</th><th>Fuel rem</th><th>Fuel act</th>
+        <th>Leg</th><th>From → To</th><th title="ความสูงที่จะบิน (ft)">ALT</th><th title="ทิศลม — ลมพัดมาจากทิศ (°True)">W/D</th><th title="ความเร็วลม (kt)">W/V</th><th title="อุณหภูมิที่ความสูงนั้น (°C) ใช้คำนวณ TAS">Temp</th><th title="ความเร็วอ่านจากเครื่องวัด (kt) ที่ตั้งใจบิน">CAS</th><th title="ความเร็วจริงในอากาศ (kt) = CAS ปรับตามความสูง/อุณหภูมิ">TAS</th>
+        <th title="ทิศของเส้นทางบนแผนที่ (°True)">TC</th><th title="มุมแก้ลม (°) + = หันขวา − = หันซ้าย">WCA</th><th title="heading จริงที่ต้องถือ = TC + WCA (°True)">TH</th><th title="ค่าแปรปรวนแม่เหล็ก (W+, E−)">Var</th><th title="heading ที่ต้องถือบนเข็มทิศแม่เหล็ก = TH + Var">MH</th><th title="ค่าคลาดเข็มทิศของเครื่อง (จากบัตร deviation)">Dev</th><th title="heading บนเข็มทิศเครื่อง = MH + Dev">CH</th><th>MH กลับ</th>
+        <th title="ระยะของขานี้ (NM)">Dist</th><th title="ระยะที่เหลือถึงปลายทาง (NM)">Rem</th><th title="ความเร็วเทียบพื้น (kt) หลังคิดลม">GS</th><th title="เวลาที่ใช้บินขานี้ (นาที:วินาที)">ETE</th><th title="เวลาที่คาดว่าจะถึงจุดนี้ (เวลาท้องถิ่น)">ETA</th><th title="เวลาที่บินจริง — กรอกระหว่าง/หลังบิน">ATE</th><th title="น้ำมันที่ใช้ในขานี้ (lb)">Fuel leg</th><th title="น้ำมันคงเหลือเมื่อถึงจุดนี้ (lb)">Fuel rem</th><th title="น้ำมันที่เหลือจริง — กรอกระหว่างบิน">Fuel act</th>
       </tr></thead>
       <tbody></tbody>
     </table></div>
+  </div>
+  <div class="card section" id="nlGloss">
+    <div class="sechead"><h2 class="hd hd-indigo">คำอธิบายหัวตาราง NAVLOG</h2><span class="hint"><span class="gl-key in">ช่องเทา</span> = กรอกได้ · <span class="gl-key calc">ช่องฟ้า</span> = คำนวณอัตโนมัติ</span></div>
+    <div class="gl-grid"><div class="gl-i gl-in"><b>ALT</b><span>ความสูงที่จะบิน (ft)</span></div><div class="gl-i gl-in"><b>W/D</b><span>ทิศลม — ลมพัดมาจากทิศ (°True)</span></div><div class="gl-i gl-in"><b>W/V</b><span>ความเร็วลม (kt)</span></div><div class="gl-i gl-in"><b>Temp</b><span>อุณหภูมิที่ความสูงนั้น (°C) ใช้คำนวณ TAS</span></div><div class="gl-i gl-in"><b>CAS</b><span>ความเร็วอ่านจากเครื่องวัด (kt) ที่ตั้งใจบิน</span></div><div class="gl-i gl-calc"><b>TAS</b><span>ความเร็วจริงในอากาศ (kt) = CAS ปรับตามความสูง/อุณหภูมิ</span></div><div class="gl-i gl-calc"><b>TC</b><span>ทิศของเส้นทางบนแผนที่ (°True)</span></div><div class="gl-i gl-calc"><b>WCA</b><span>มุมแก้ลม (°) + = หันขวา − = หันซ้าย</span></div><div class="gl-i gl-calc"><b>TH</b><span>heading จริงที่ต้องถือ = TC + WCA (°True)</span></div><div class="gl-i gl-calc"><b>Var</b><span>ค่าแปรปรวนแม่เหล็ก (W+, E−)</span></div><div class="gl-i gl-mh"><b>MH</b><span>heading ที่ต้องถือบนเข็มทิศแม่เหล็ก = TH + Var</span></div><div class="gl-i gl-in"><b>Dev</b><span>ค่าคลาดเข็มทิศของเครื่อง (จากบัตร deviation)</span></div><div class="gl-i gl-calc"><b>CH</b><span>heading บนเข็มทิศเครื่อง = MH + Dev</span></div><div class="gl-i gl-calc"><b>Dist</b><span>ระยะของขานี้ (NM)</span></div><div class="gl-i gl-calc"><b>Rem</b><span>ระยะที่เหลือถึงปลายทาง (NM)</span></div><div class="gl-i gl-calc"><b>GS</b><span>ความเร็วเทียบพื้น (kt) หลังคิดลม</span></div><div class="gl-i gl-calc"><b>ETE</b><span>เวลาที่ใช้บินขานี้ (นาที:วินาที)</span></div><div class="gl-i gl-eta"><b>ETA</b><span>เวลาที่คาดว่าจะถึงจุดนี้ (เวลาท้องถิ่น)</span></div><div class="gl-i gl-in"><b>ATE</b><span>เวลาที่บินจริง — กรอกระหว่าง/หลังบิน</span></div><div class="gl-i gl-calc"><b>Fuel leg</b><span>น้ำมันที่ใช้ในขานี้ (lb)</span></div><div class="gl-i gl-calc"><b>Fuel rem</b><span>น้ำมันคงเหลือเมื่อถึงจุดนี้ (lb)</span></div><div class="gl-i gl-in"><b>Fuel act</b><span>น้ำมันที่เหลือจริง — กรอกระหว่างบิน</span></div></div>
   </div>
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-teal">WEATHER LOG &amp; NOTES</h2></div>
