@@ -418,7 +418,8 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .ep-wrap{display:grid;grid-template-columns:330px minmax(0,1fr);gap:12px;align-items:start}
 @media (max-width:860px){.ep-wrap{grid-template-columns:1fr}}
 .ep-side{padding:10px;display:flex;flex-direction:column;gap:8px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);max-height:calc(100vh - 90px)}
-@media (max-width:860px){.ep-side{position:static;max-height:none}}
+@media (max-width:860px){.ep-side{position:static;max-height:none}.ep-wrap>.ep-side{display:none}}
+.ep-back{display:inline-flex;align-items:center;gap:6px;margin:0 0 8px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;background:var(--accent-soft);color:var(--accent);border:1.5px solid var(--accent);position:sticky;top:8px;z-index:5}
 .ep-tools{display:flex;flex-direction:column;gap:6px}
 #epSearch{font:500 16px var(--f-body);padding:9px 10px}
 .ep-filter{display:flex;gap:4px}.ep-filter button{flex:1}
@@ -826,6 +827,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .cv-u{display:flex;flex-direction:column;align-items:flex-start;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--input);cursor:pointer;color:var(--ink)}
 .cv-u b{font:800 20px var(--f-mono)}.cv-u i{font-style:normal;color:var(--muted);font-size:13px}.cv-u.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .cv-pre button{border-radius:999px;padding:8px 14px}
+.cv-row1 input,.cv-row1 select,.cv-dens input{background:#fff!important;color:#111827!important;border:1.5px solid #d1d5db!important;color-scheme:light}.cv-row1 input:focus,.cv-row1 select:focus{border-color:var(--accent)!important}
 .cv1 h3{margin:4px 0 0;font:700 16px var(--f-display)}.cv-pre{display:flex;flex-wrap:wrap;gap:8px}.cv-dens{max-width:280px}
 @media (max-width:620px){.cv-row1{grid-template-columns:1fr auto 1fr}.cv-row1 input{grid-column:1/-1}}
 /* ข้อสอบ: สถิติ */
@@ -1417,7 +1419,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
    <div class="sechead"><h2 class="hd hd-indigo">3. CP — Waypoint / Preset วิทยุ (Excel)</h2>
-    <div class="btns"><a class="linkbtn" href="cp_template.xlsx" download="CP_ตัวอย่าง.xlsx">⬇️ โหลดไฟล์ตัวอย่าง</a><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
+    <div class="btns"><button type="button" id="cpTplDl">⬇️ โหลดไฟล์ตัวอย่าง</button><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
    <ol class="dhelp"><li>กด <b>⬇️ โหลดไฟล์ตัวอย่าง</b> แล้วเปิดใน Excel — มี 6 ชีต: <b>Waypoint, FM, VHF, UHF, VOR, ADF PRESET</b></li>
     <li>ลบแถวตัวอย่าง แล้วใส่ข้อมูลของหน่วย <b>เริ่มที่แถว 4</b> ห้ามแก้หัวตาราง (แถว 3) และชื่อชีต</li>
     <li>ชีต Waypoint: <b>NO.</b> = เลข CP ที่จะแสดงบนแผนที่ · ใส่ <b>MGRS</b> หรือ <b>LAT/LON</b> (ทศนิยม) อย่างใดอย่างหนึ่ง</li>
@@ -2565,7 +2567,7 @@ function npRenderList(){if(typeof acftHdr==="function")acftHdr();const D=npData(
     const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(npDone[i]||{}).length;
     html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
-function npRenderMain(){const M=$("#npMain"),D=npData();
+function npRenderMain(){const M=$("#npMain"),D=npData();M.closest(".ep-wrap").classList.toggle("in-proc",npSel!=null&&!!D);if(npSel!=null&&npRenderMain._l!==npSel)scrollTo({top:0});npRenderMain._l=npSel;
   if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM</div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
@@ -2586,11 +2588,12 @@ function npRenderMain(){const M=$("#npMain"),D=npData();
     if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:(b.k==="text"&&npSel!=null&&!p.blocks.some(x=>x.k==="step"||x.k==="sub"))?`<div class="b-text">${esc(b.t)}</div>`:"";
     return`<div class="b-${b.k}">${esc(b.t)}</div>`}).join("");
   const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(done).length;
-  M.innerHTML=`<h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
+  M.innerHTML=`<button type="button" class="ep-back" id="npBack">← หมวดทั้งหมด</button><h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
     <button id="npStepBtn" class="mini primary">▶ โหมดทีละขั้น</button><button id="npStarBtn" class="mini${favHas("np",p.id)?" on":""}">${favHas("np",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button><button id="npFullBtn" class="mini">${npFull?"ซ่อนคำอธิบาย":"แสดงคำอธิบายเต็ม"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
     <div id="npBody">${body}</div>
     <div class="ep-legend">* = ทำทุก thru-flight · ★ = ต้องทำ operational check · O = ถ้าติดตั้ง · N = กลางคืน · I = บินด้วยเครื่องวัด · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
   {const nx=[...M.querySelectorAll(".np-step")].find(x=>!x.classList.contains("done"));if(nx)nx.classList.add("next")}
+  $("#npBack").onclick=()=>{npSel=null;npRenderList();npRenderMain();scrollTo({top:0})};
   $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};
   $("#npStarBtn").onclick=()=>{favToggle("np",p.id);npRenderMain()};
   $("#npStepBtn").onclick=()=>stepOpen(p.title,p.blocks.filter(b=>["step","sub","cond","warning","caution"].includes(b.k)).map((b,k)=>({k:b.k==="cond"||b.k==="warning"||b.k==="caution"?b.k:"step",t:b.t,n:b.n,bi:p.blocks.indexOf(b)})),"np");$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
@@ -3173,7 +3176,7 @@ function epRenderList(){acftHdr();const L=$("#epList");{const dt=$("#dataTm");if
     html+=`<button class="ep-item${i===epSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${p.memory?'<span class="memdot">MEM</span>':""}</button>`});
   $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
-function epRenderMain(){const M=$("#epMain");
+function epRenderMain(){const M=$("#epMain");M.closest(".ep-wrap").classList.toggle("in-proc",epSel!=null&&!!EP);if(epSel!=null&&epRenderMain._l!==epSel)scrollTo({top:0});epRenderMain._l=epSel;
   if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
   if(epSel==null){epHome(M);return}
   const p=EP.procedures[epSel];M.onclick=null;
@@ -3183,17 +3186,17 @@ function epRenderMain(){const M=$("#epMain");
     if(b.k==="step")return`<div class="b-step${b.u?" mem":""}"><span class="n${b.c?" circ":""}">${b.n??"•"}</span><span class="tx">${t}</span></div>`;
     if(CWN_T[b.k])return cwnHtml(b);
     return`<div class="b-${b.k}${b.hdr?" hdr":""}">${t}</div>`}).join("");
-  M.innerHTML=`<h2>${esc(p.title)}</h2>
+  M.innerHTML=`<button type="button" class="ep-back" id="epBack">← หมวดทั้งหมด</button><h2>${esc(p.title)}</h2>
    <div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span>
     ${!epFull&&(warnN||cauN)?`<span class="warnchip">${warnN?`WARNING ${warnN}`:""}${warnN&&cauN?" · ":""}${cauN?`CAUTION ${cauN}`:""}</span>`:""}
-    <button id="epHomeBtn" class="mini">← หน้าแรก</button><button id="epStepBtn" class="mini primary">▶ โหมดทีละขั้น</button>
+    <button id="epHomeBtn" class="mini" hidden>← หน้าแรก</button><button id="epStepBtn" class="mini primary">▶ โหมดทีละขั้น</button>
     <button id="epStarBtn" class="mini${favHas("ep",p.id)?" on":""}">${favHas("ep",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button>
     <button id="epFullBtn" class="mini">${epFull?"กลับเป็น checklist":"รายละเอียดเต็ม"}</button>
     ${p.memory?`<button id="epQuizBtn" class="mini${epQuiz?" on":""}">${epQuiz?"เลิกโหมดท่องจำ":"โหมดท่องจำ"}</button>`:""}</div>
    <div class="${epQuiz?"quiz":""} ${epFull?"":"cl"}" id="epBody">${body}</div>
    <div class="ep-legend"><u>ขีดเส้นใต้</u> = ทำจากความจำ · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
   $("#epFullBtn").onclick=()=>{epFull=!epFull;epRenderMain()};
-  $("#epHomeBtn").onclick=()=>{epSel=null;epRenderList();epRenderMain()};
+  $("#epHomeBtn").onclick=$("#epBack").onclick=()=>{epSel=null;epRenderList();epRenderMain();scrollTo({top:0})};
   $("#epStarBtn").onclick=()=>{favToggle("ep",p.id);epRenderMain()};
   $("#epStepBtn").onclick=()=>stepOpen(p.title,epChecklist(p).map(b=>({k:b.k==="step"?"step":b.k==="warning"||b.k==="caution"?b.k:"cond",t:b.t,n:b.n,mem:!!b.u})),"emer");
   const qb=$("#epQuizBtn");if(qb)qb.onclick=()=>{epQuiz=!epQuiz;epRenderMain()};
@@ -3854,6 +3857,12 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
   L.DomEvent.disableClickPropagation(d);d.querySelector("#btnUndo").onclick=e=>{e.preventDefault();undo()};d.querySelector("#btnRedo").onclick=e=>{e.preventDefault();redo()};return d}});
 new CtlUndo().addTo(map);
 modeSet(FLMODE,true);
+/* โหลดไฟล์ตัวอย่าง: บน iPad/iPhone ใช้ Share sheet (บันทึกลงไฟล์ได้ และไม่ออกจากแอป) · เครื่องอื่นดาวน์โหลดตรง */
+$("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx")).blob(),name="CP_template.xlsx";
+  const f=new File([b],name,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+  if(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)){if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}
+  const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+  catch(e){if(e&&e.name==="AbortError")return;toast("โหลดไฟล์ตัวอย่างไม่ได้ (ต้องต่อเน็ตครั้งแรก)")}};
 /* อุปกรณ์พกพา: ชื่อแผน/Aircraft/วันที่/เวลา/น้ำมัน/SA ย้ายไปไว้กล่อง NAV LOG ในแท็บ 1 (แผงแผนการบินจะสั้นลง) */
 {const meta=$("#planMeta"),leg=$("#legDef"),home=meta.parentNode,next=meta.nextElementSibling,lhome=leg.parentNode,lnext=leg.nextElementSibling,slot=$("#planMetaSlot"),box=$("#planMetaBox"),mq=matchMedia("(max-width:999px)");
   const place=()=>{if(mq.matches){if(meta.parentNode!==slot){slot.appendChild(meta);slot.appendChild(leg)}box.hidden=false}else{if(meta.parentNode!==home)home.insertBefore(meta,next);if(leg.parentNode!==lhome)lhome.insertBefore(leg,lnext);box.hidden=true}};
