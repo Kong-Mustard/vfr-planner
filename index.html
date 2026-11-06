@@ -668,6 +668,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .backup-bar>div:first-child{flex:1 1 420px;min-width:0}.bk-info{display:block;font-weight:600;margin-top:2px}
 /* NOTAM briefing */
 .nt-chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 4px}
+#ntMapWrap .nt-chips{flex-wrap:nowrap;overflow-x:auto;gap:5px;padding-bottom:4px;scrollbar-width:thin}#ntMapWrap .ntc{flex:none;white-space:nowrap;padding:4px 9px!important;font-size:12.5px;min-height:32px!important}#ntMapWrap .ntc b{margin-left:2px}
 .ntc{border-radius:999px!important;border:2px solid var(--cc,var(--line))!important;background:var(--panel)!important;color:var(--muted)!important;font-weight:600;padding:6px 12px!important;min-height:38px!important}
 .ntc.on{background:color-mix(in srgb,var(--cc,var(--accent)) 22%,var(--panel))!important;color:var(--ink)!important}
 .ntc b{margin-left:4px}.nti-e{font-size:18px;margin-right:2px}
@@ -1310,7 +1311,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   </div>
   <div id="ntDash" class="nt-dash"></div>
   <div id="ntList"></div>
-  <div id="ntMapWrap" hidden><p class="nt-maph">เลือกหมวดที่จะแสดงบนแผนที่ (แตะเพื่อเปิด/ปิด)</p><div id="ntChips" class="nt-chips" role="group" aria-label="เลือกหมวดที่แสดงบนแผนที่"></div><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (เลือกหมวดจากปุ่มด้านบนแผนที่) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
+  <div id="ntMapWrap" hidden><p class="nt-maph">เลือกหมวดที่จะแสดงบนแผนที่ (แตะเพื่อเปิด/ปิด · ปัดซ้าย-ขวาดูเพิ่ม)</p><div id="ntChips" class="nt-chips" role="group" aria-label="เลือกหมวดที่แสดงบนแผนที่"></div><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (เลือกหมวดจากปุ่มด้านบนแผนที่) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
  <details class="card section custbox" id="ntPasteBox">
   <summary class="nt-paste-h"><span>📋 วาง NOTAM เอง</span><small>สำหรับ NOTAM ในประเทศจาก AEROTHAI หรือแอปอื่น — แตะเพื่อเปิด</small></summary>
@@ -2367,6 +2368,7 @@ function ntPlainText(n){if(n.plain&&n.plain.trim())return n.plain.trim();let t="
 function ntTitle(n){const c=n.code||"",sub=QSUBJ[c.slice(1,3)],cond=QCOND[c.slice(3,5)];
   if(sub)return`${sub}${cond?" "+cond:""}`;const k=n.keyword?String(n.keyword):"";return k?k.charAt(0).toUpperCase()+k.slice(1).toLowerCase():(n.text||"").split(/[.\n]/)[0].slice(0,50)}
 /* หมวดสีของ NOTAM (ใช้ทั้งรายการและแผนที่) */
+const NT_SHORT={"rst": "Restricted", "dng": "Danger", "pje": "PJE", "uav": "UAV", "fly": "การบินฝึก", "pho": "ถ่ายภาพ", "obs": "สิ่งกีดขวาง", "ad": "สนามบิน", "nav": "NAVAID/ATS"};
 const NT_CATS=[
  {k:"rst",e:"🚫",t:"Restricted / Prohibited",c:"#ef4444",re:/^Q(RR|RP|RT|RA|RO)/},
  {k:"dng",e:"💥",t:"Danger / ยิงอาวุธ / ฝึกทหาร",c:"#f97316",re:/^Q(RD|RM|WM|WE|WD|WH|WF|WR)/},
@@ -2423,7 +2425,7 @@ function ntRender(){if(!$("#ntList"))return;setTimeout(()=>{try{renderAreaNt()}c
   E.filter(n=>(n.active||hidden)&&!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)).forEach(n=>{const r=rel(n),c=ntCat(n).c;n.polys.forEach(P=>L.polygon(P.p,{color:c,weight:r?(n.hit?4:3):1.5,opacity:r?1:.8,fillColor:c,fillOpacity:r?.22:.08,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
     .on("click",e=>infoClick(e,()=>pop(n))).addTo(ntLayer))})}
   {const cnt={};E.filter(n=>(hidden||n.active)&&n.polys.length).forEach(n=>{const k=ntCat(n).k;cnt[k]=(cnt[k]||0)+1});
-   $("#ntChips").innerHTML=`<button class="ntc${ntHideCat.size?"":" on"}" data-cat="*">ทั้งหมด</button>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<button class="ntc${ntHideCat.has(c.k)?"":" on"}" data-cat="${c.k}" style="--cc:${c.c}">${c.e} ${c.t} <b>${cnt[c.k]}</b></button>`).join("")}
+   $("#ntChips").innerHTML=`<button class="ntc${ntHideCat.size?"":" on"}" data-cat="*" title="แตะเพื่อแสดง/ซ่อนทุกหมวด">${ntHideCat.size?"แสดงทั้งหมด":"ซ่อนทั้งหมด"}</button>`+NT_CATS.filter(c=>cnt[c.k]).map(c=>`<button class="ntc${ntHideCat.has(c.k)?"":" on"}" data-cat="${c.k}" style="--cc:${c.c}" title="${c.t}">${c.e} ${NT_SHORT[c.k]||c.t} <b>${cnt[c.k]}</b></button>`).join("")}
   /* จัดกลุ่มแบบ briefing: ต้นทาง → สนามตามเส้นทาง → ปลายทาง → พื้นที่/FIR */
   const dep=W[0]&&String(W[0].name).toUpperCase(),dst=W.length>1&&String(W.at(-1).name).toUpperCase();
   const buf=num($("#ntBuf").value,10),mids=routeAirports(buf).map(a=>a.id).filter(x=>x!==dep&&x!==dst);
@@ -2488,7 +2490,7 @@ $("#ntPlain").onclick=()=>{ntPlainMode=true;ntSeg("#ntPlain","#ntOrig");ntRender
 $("#ntShowHidden").onchange=ntRender;
 $("#ntRedraw").onclick=()=>{ntRender();if(ntView==="map"){ntDrawMap();setTimeout(()=>ntMap&&ntMap.invalidateSize(),80)}const E=ntEval();toast(`แสดง NOTAM ${E.filter(n=>n.active).length} รายการที่มีผลช่วงเวลาบิน (รวม ${E.length})`)};
 $("#ntChips").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
-  if(k==="*")ntHideCat.clear();else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);ntRender()});
+  if(k==="*"){if(ntHideCat.size)ntHideCat.clear();else NT_CATS.forEach(c=>ntHideCat.add(c.k))}else ntHideCat.has(k)?ntHideCat.delete(k):ntHideCat.add(k);ntRender()});
 $("#ntPasteAero").onclick=async()=>{try{const t=await navigator.clipboard.readText();if(!t||!/NOTAM|"items"/.test(t))throw 0;$("#ntText").value=t;$("#ntParse").click()}
   catch(e){$("#ntPasteBox").open=true;$("#ntText").focus();toast("กด Ctrl+V ในกล่อง แล้วกด อ่าน NOTAM")}};$("#ntBuf").addEventListener("input",ntRender);
 $("#ntRefresh").onclick=()=>{ntLoadAuto(true).then(()=>toast(NT_AUTO_META?`NOTAM ${NT_AUTO_META.n} รายการ (อัปเดต ${NT_AUTO_META.age})`:"ยังโหลด NOTAM อัตโนมัติไม่ได้"))};
