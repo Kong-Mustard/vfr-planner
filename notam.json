@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-06T13:32Z",
+"fetched": "2026-11-06T15:09Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1390,8 +1390,17 @@
 },
 {
 "loc": "VTSP",
-"id": "A4417/26",
-"icao": "A4417/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/0807N09819E005\r\nA) VTSP B) 2611071830 C) 2611072200\r\nE) RWY 09/27 CLSD DUE TO WIP",
+"id": "A4421/26",
+"icao": "A4421/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/0807N09819E005\r\nA) VTSP B) 2611071830 C) 2611072200\r\nE) TWY P BTN TWY E AND TWY F CLSD DUE TO WIP",
+"plain": " ",
+"start": "11/07/2026 1830",
+"end": "11/07/2026 2200",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSP",
+"id": "A4422/26",
+"icao": "A4422/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/0807N09819E005\r\nA) VTSP B) 2611071830 C) 2611072200\r\nE) TXL T2 BEHIND ACFT STAND NR 7-10 CLSD DUE TO WIP",
 "plain": " ",
 "start": "11/07/2026 1830",
 "end": "11/07/2026 2200",
