@@ -807,6 +807,20 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 /* กล่อง heading: แตะเพื่อปรับขนาด */
 .snapask.hbpop{width:300px}.hbpop .hb-row{display:flex;align-items:center;gap:8px;margin-top:8px}.hbpop input[type=range]{flex:1}.hbpop .hb-v{font:700 13px var(--f-mono);min-width:40px;text-align:right}
 .hbpop .hb-row button{width:36px;height:34px;padding:0;border-radius:9px;background:#eef1f5;color:#1b2430;border:0;font:700 18px var(--f-body)}
+/* ---- UX audit: การมองเห็น + ขนาดปุ่มบนจอสัมผัส ---- */
+.wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
+.wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.primary{background:#2563eb;border-color:#2563eb}}
+:root[data-theme="dark"] button.primary{background:#2563eb;border-color:#2563eb}
+.rail .tab{color:color-mix(in srgb,var(--ink) 72%,transparent)}
+@media (pointer:coarse){
+  .mini{min-height:36px;min-width:36px;padding:6px 10px;font-size:13px}
+  #wpTable input{min-height:38px}#wpTable .btns{gap:6px}
+  .sechead .collapse,.side>.sechead button{min-height:36px}
+  .apmk .ap-n{font-size:10px}
+  .ep-chip{min-height:38px}
+}
+@media (max-width:999px){#wpTable .w-m input{width:92px!important}#wpTable td.name input{width:96px;min-width:0}#wpTable td,#wpTable th{padding-left:4px;padding-right:4px}#wpTable .btns{gap:4px}}
 .wp-hint{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 8px}.wp-hint span{white-space:nowrap}.wp-hint code{font-size:11px}
 .rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
 .swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
@@ -1023,7 +1037,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <button id="clearAll">ล้างทั้งหมด</button>
       </div>
     </div>
-    <p class="hint wp-hint"><span>👆 แตะแผนที่ = เมนูเพิ่มจุด</span><span>⚡ Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span><span>↔ ลากกลางเส้นชมพู = แทรกจุด</span><span>✋ ลากหมุด = ย้าย · แตะหมุด = ลบ</span><span>พิกัด: <code>14.8812, 100.6431</code> หรือ <code>47PQS 1234 5678</code></span></p>
+    <details class="wp-help"><summary>💡 วิธีใช้แผนที่ (เพิ่ม / แทรก / ย้าย / ลบจุด)</summary><p class="hint wp-hint">    <span>👆 แตะแผนที่ = เมนูเพิ่มจุด</span><span>⚡ Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span><span>↔ ลากกลางเส้นชมพู = แทรกจุด</span><span>✋ ลากหมุด = ย้าย · แตะหมุด = ลบ</span><span>พิกัด: <code>14.8812, 100.6431</code> หรือ <code>47PQS 1234 5678</code></span></p></details>
     <div class="tablewrap"><table id="wpTable">
       <thead><tr><th>#</th><th>No. หน่วย</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
