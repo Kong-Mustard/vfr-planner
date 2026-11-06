@@ -837,13 +837,6 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .gh-nr{display:grid;grid-template-columns:48px 58px 62px 1fr;gap:6px;align-items:baseline;font:13px var(--f-mono)}.gh-nr b{font-family:var(--f-display)}.gh-rad{font-weight:700;color:#7dd3fc;text-align:right}
 .gh-row{display:flex;flex-direction:column;gap:6px}.gh-navc{display:flex;flex-direction:column;gap:6px;min-width:0}
 .gh-near>summary{cursor:pointer;list-style:none}.gh-near>summary::-webkit-details-marker{display:none}
-.rail-handle{display:none}
-body.gps-touch{padding-left:calc(14px + env(safe-area-inset-left,0px))}
-body.gps-touch nav.rail{transform:translateX(-100%);transition:transform .25s ease;box-shadow:none}
-body.gps-touch.rail-peek nav.rail{transform:none;box-shadow:6px 0 24px rgba(0,0,0,.35)}
-body.gps-touch .rail-handle{display:grid;place-items:center;position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:1501;width:24px;height:76px;padding:0;border-radius:0 12px 12px 0;
-  background:var(--panel);color:var(--ink);border:1px solid var(--line);border-left:0;font:800 18px var(--f-body);box-shadow:2px 0 10px rgba(0,0,0,.25);transition:left .25s ease}
-body.gps-touch.rail-peek .rail-handle{left:96px}
 body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
 .gps-hud.gps-strip{position:absolute;left:8px;right:8px;bottom:8px;width:auto;z-index:1000;max-height:52%;overflow:auto;padding:8px 10px;border-radius:14px;gap:6px;background:#111827;box-shadow:0 -4px 18px rgba(0,0,0,.35)}
 .gps-strip .gh-row{flex-direction:row;align-items:stretch;gap:8px}
@@ -853,10 +846,6 @@ body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s
 .gps-strip .gh-xte{font-size:13px}.gps-strip .gh-area{padding:4px 8px;font-size:13px}.gps-strip .gh-acc{display:none}
 .gps-strip .gh-near{padding:5px 8px}.gps-strip .gh-btns{flex-wrap:nowrap;overflow-x:auto}.gps-strip .gh-btns button{min-height:36px;flex:0 0 auto}
 @media (max-width:760px){
-  body.gps-touch{padding-left:0;padding-bottom:env(safe-area-inset-bottom,0px)}
-  body.gps-touch nav.rail{transform:translateY(100%)}body.gps-touch.rail-peek nav.rail{transform:none}
-  body.gps-touch .rail-handle{left:50%;top:auto;bottom:0;transform:translateX(-50%);width:76px;height:24px;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:0;transition:bottom .25s}
-  body.gps-touch.rail-peek .rail-handle{left:50%;bottom:calc(66px + env(safe-area-inset-bottom,0px))}
   body.gps-touch:not(.mapfull) #map{height:calc(100dvh - 40px)!important;min-height:520px}
   .gps-hud.gps-strip{left:6px;right:6px;bottom:6px;padding:6px 8px;max-height:58%}
   .gps-strip .gh-grid b{font-size:17px}.gps-strip .gh-grid span{font-size:9.5px}.gps-strip .gh-grid i{font-size:10px}
@@ -3517,17 +3506,14 @@ function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHu
     ${nearH}
     <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`;
   const dn=h.querySelector(".gh-near");if(dn)dn.ontoggle=()=>{if(strip){GPS.nearOpen=dn.open;gpsStripH()}};gpsStripH()}
-/* อุปกรณ์สัมผัส (iPad/มือถือ): เปิด GPS → แผงข้อมูลย้ายไปแถบล่างของแผนที่ + ยุบเมนูซ้าย (แตะแถบเล็กเพื่อเปิด) */
+/* อุปกรณ์สัมผัส (iPad/มือถือ): เปิด GPS → แผงข้อมูลย้ายไปแถบล่างของแผนที่ */
 const GPS_TOUCH=()=>matchMedia("(pointer:coarse)").matches;
 function gpsStripH(){const h=$("#gpsHud");map.getContainer().style.setProperty("--gpsH",document.body.classList.contains("gps-touch")&&h&&!h.hidden?(h.offsetHeight+14)+"px":"0px")}
-function gpsTouchMode(on){const h=$("#gpsHud"),B=document.body;if(on&&!GPS_TOUCH())return;B.classList.toggle("gps-touch",!!on);B.classList.remove("rail-peek");
+function gpsTouchMode(on){const h=$("#gpsHud"),B=document.body;if(on&&!GPS_TOUCH())return;B.classList.toggle("gps-touch",!!on);
   if(on){h.classList.add("gps-strip");map.getContainer().appendChild(h);L.DomEvent.disableClickPropagation(h);L.DomEvent.disableScrollPropagation(h)}
   else{h.classList.remove("gps-strip");const w=document.querySelector(".gps-wrap");if(w)w.appendChild(h)}
   setTimeout(()=>{map.invalidateSize();gpsStripH()},280)}
-{const hb=document.createElement("button");hb.type="button";hb.id="railHandle";hb.className="rail-handle";hb.setAttribute("aria-label","เปิดเมนูแท็บ");hb.textContent="›";document.body.appendChild(hb);
-  const gl=()=>{const pk=document.body.classList.contains("rail-peek");hb.textContent=innerWidth<=760?(pk?"﹀":"︿"):(pk?"‹":"›")};gl();addEventListener("resize",gl);
-  hb.onclick=()=>{document.body.classList.toggle("rail-peek");gl()};
-  document.querySelector("nav.rail").addEventListener("click",e=>{if(e.target.closest(".tab")&&document.body.classList.contains("gps-touch")){document.body.classList.remove("rail-peek");gl()}})}
+
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
 const HIST={u:[],r:[],cur:null,t:null,lock:false,MAX:60};
