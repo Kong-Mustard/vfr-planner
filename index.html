@@ -881,6 +881,13 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .cp-h b,.cp-h .cpn{font:700 13px var(--f-mono);padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--cc) 20%,transparent);color:var(--ink)}
 .cp-sub{margin:10px 0 4px;font-size:14px;color:var(--muted)}.cp-tbl{width:100%}.cp-tbl input.cp-no{width:64px;text-align:center;font-weight:800}
 .wpicon.seq{background:#fff!important;color:#d6198f!important;border-color:#d6198f!important}
+.xl-demo{margin:10px 0;border:1px solid #c8c8c8;border-radius:8px;overflow:hidden;background:#fff;color:#222;font:13px Calibri,Arial,sans-serif;max-width:720px}
+.xl-bar{background:#217346;color:#fff;padding:6px 10px;font-weight:700;display:flex;gap:8px;align-items:center}.xl-ic{background:#fff;color:#217346;border-radius:3px;padding:0 5px;font-weight:900}
+.xl-demo table{border-collapse:collapse;width:100%}.xl-demo th,.xl-demo td{border:1px solid #d4d4d4;padding:3px 6px;white-space:nowrap;text-align:left;color:#222;background:#fff}
+.xl-demo th{background:#f3f3f3!important;color:#666!important;font-weight:400;text-align:center;width:28px}.xl-cols th{text-align:center}
+.xl-h td{background:#1f4e78!important;color:#fff!important;font-weight:700;text-align:center}.xl-note{color:#888!important;font-style:italic}
+.xl-tabs{display:flex;gap:2px;background:#f3f3f3;border-top:1px solid #d4d4d4;padding:3px 6px;overflow-x:auto}.xl-tabs span{padding:3px 10px;font-size:12px;color:#555;white-space:nowrap}.xl-tabs .on{background:#fff;color:#217346;font-weight:700;border-bottom:2px solid #217346}
+.ug-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.ug{background:var(--input);border-radius:12px;padding:10px 12px}.ug b{font:800 15px var(--f-display)}.ug p{margin:4px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
 .planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
@@ -1023,7 +1030,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
   <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>CP</button>
-  <button class="tab" role="tab" data-tab="data" aria-selected="false"><i>💾</i><small>9</small>ข้อมูล</button>
+  <button class="tab" role="tab" data-tab="data" aria-selected="false"><i>📘</i><small>9</small>คู่มือ/ข้อมูล</button>
   <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>10</small>ข้อสอบ</button>
   <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
 </nav>
@@ -1309,7 +1316,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <aside class="card ep-side">
     <div class="ep-tools"><input id="npSearch" type="search" placeholder="ค้นหา เช่น starting, before taxi" aria-label="ค้นหา normal procedure"></div>
     <div id="npList" class="ep-list"></div>
-    <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 9 ข้อมูล)</p></div>
+    <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 9 คู่มือ/ข้อมูล)</p></div>
   </aside>
   <article class="card ep-main" id="npMain"></article>
  </div>
@@ -1364,13 +1371,24 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <li><b>ทำครั้งเดียวต่อเครื่อง</b> — Import ใหม่เมื่อ TM ออกฉบับแก้ไข แล้วตรวจวันที่ฉบับด้านบน</li>
     <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
-   <div class="sechead"><h2 class="hd hd-indigo">3. SOP / DTD จาก FalconView</h2>
-    <div class="btns"><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel จาก FalconView</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
-   <ol class="dhelp"><li>วางแผนเส้นทางในแท็บ 1 แล้วไปแท็บ 8 ดู <b>"รายการเตรียมคีย์"</b> — จุดและความถี่ที่ยังไม่มีในการ์ด พร้อมเลขช่องที่เสนอ</li>
-    <li>คีย์รายการนั้นใน FalconView แล้ว <b>write การ์ด</b> และ <b>export Excel</b> (SOP_COMCoordinate)</li>
-    <li>กดปุ่ม <b>Import Excel จาก FalconView</b> ด้านขวา — แอปเก็บ waypoint และ preset วิทยุไว้ในเครื่อง</li>
-    <li>ถ้าไฟล์ใหม่ต่างจากข้อมูลเดิม จะขึ้นรายการที่เปลี่ยนให้ตรวจ พร้อมปุ่มย้อนกลับ</li>
-    <li>กลับไปแท็บ 8 ดู <b>"ตรวจความพร้อมก่อนเสียบการ์ด"</b> ต้องเป็น ✓ ทุกรายการ</li></ol>
+   <div class="sechead"><h2 class="hd hd-indigo">3. CP — Waypoint / Preset วิทยุ (Excel)</h2>
+    <div class="btns"><a class="linkbtn" href="cp_template.xlsx" download="CP_ตัวอย่าง.xlsx">⬇️ โหลดไฟล์ตัวอย่าง</a><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
+   <ol class="dhelp"><li>กด <b>⬇️ โหลดไฟล์ตัวอย่าง</b> แล้วเปิดใน Excel — มี 6 ชีต: <b>Waypoint, FM, VHF, UHF, VOR, ADF PRESET</b></li>
+    <li>ลบแถวตัวอย่าง แล้วใส่ข้อมูลของหน่วย <b>เริ่มที่แถว 4</b> ห้ามแก้หัวตาราง (แถว 3) และชื่อชีต</li>
+    <li>ชีต Waypoint: <b>NO.</b> = เลข CP ที่จะแสดงบนแผนที่ · ใส่ <b>MGRS</b> หรือ <b>LAT/LON</b> (ทศนิยม) อย่างใดอย่างหนึ่ง</li>
+    <li>ชีต PRESET: <b>NO.</b> = ช่อง · <b>FREQ</b> ตัวเลขอย่างเดียว (ADF เป็น kHz)</li>
+    <li>บันทึกไฟล์ แล้วกด <b>📥 Import Excel</b> — ไฟล์ Excel ที่ export จาก FalconView (SOP_COMCoordinate) ก็ใช้ได้เหมือนกัน · ผลดูที่แท็บ 8 CP</li></ol>
+   <div class="xl-demo" aria-label="ตัวอย่างหน้าตาไฟล์ Excel">
+    <div class="xl-bar"><span class="xl-ic">X</span>CP_ตัวอย่าง.xlsx</div>
+    <table><tr class="xl-cols"><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+     <tr><th>1</th><td colspan="6"><b>WAYPOINT</b></td></tr>
+     <tr><th>2</th><td colspan="6" class="xl-note">NO. = เลข CP · ใส่ MGRS หรือ LAT/LON</td></tr>
+     <tr class="xl-h"><th>3</th><td>NO.</td><td>DTD ID</td><td>DESCRIPTION</td><td>MGRS</td><td>LAT</td><td>LON</td></tr>
+     <tr><th>4</th><td>1</td><td>VTBH</td><td>สนามต้นทาง</td><td>47P PS 76697 53383</td><td></td><td></td></tr>
+     <tr><th>5</th><td>2</td><td>VTBD</td><td>ดอนเมือง</td><td></td><td>13.9126</td><td>100.6068</td></tr>
+     <tr><th>6</th><td>13</td><td>CP13</td><td>จุดที่หน่วยกำหนด</td><td>47P QS 12345 67890</td><td></td><td></td></tr></table>
+    <div class="xl-tabs"><span class="on">Waypoint</span><span>FM PRESET</span><span>VHF PRESET</span><span>UHF PRESET</span><span>VOR PRESET</span><span>ADF PRESET</span></div>
+   </div>
    <div id="sopInfo" class="sop-info"></div>
    <div id="sopDiff"></div>
   </div>
@@ -1379,7 +1397,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="btns"><button id="exportJson">Export แผนปัจจุบัน</button><button type="button" onclick="document.getElementById('importJson').click()">Import ไฟล์แผน</button><input id="importJson" type="file" accept=".json,application/json" hidden></div></div>
    <ul class="dhelp"><li><b>Export:</b> บันทึกแผนที่เปิดอยู่เป็นไฟล์ .json หนึ่งไฟล์ (เส้นทาง ลม น้ำมัน Flight Plan ครบ)</li>
     <li><b>Import:</b> เปิดไฟล์แผนจากเพื่อนหรือจากอีกเครื่อง — แผนที่เปิดอยู่จะถูกแทนที่</li>
-    <li><b>ต่างจาก "บันทึกแผน" ในแท็บ 1:</b> ปุ่มนั้นเก็บไว้ในเครื่องนี้เท่านั้น ส่วนไฟล์นี้เอาไปใช้เครื่องอื่นได้</li></ul></div>
+    <li>ไฟล์นี้เอาไปเปิดในเครื่องอื่นได้</li></ul></div>
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-indigo">5. สำรอง / กู้คืนข้อมูลทั้งหมด</h2></div>
    <ul class="dhelp"><li><b>สำรอง:</b> รวมแผนทั้งหมด waypoint/preset หน่วย ข้อมูล TM สนามที่กรอกเอง เป็นไฟล์เดียว — ควรทำทุกครั้งหลัง Import ข้อมูลใหม่</li>
     <li><b>กู้คืน:</b> ใช้ย้ายไปเครื่องใหม่ หรือเมื่อข้อมูลหาย (ล้างเบราว์เซอร์ / Safari ลบข้อมูลเว็บที่ไม่ได้เปิด 7 วัน)</li>
@@ -1389,6 +1407,19 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <span id="bkInfo" class="bk-info"></span></div>
   <div class="btns"><button id="bkSave" class="primary">สำรองข้อมูลทั้งหมด</button><button type="button" onclick="document.getElementById('bkLoad').click()">กู้คืนจากไฟล์สำรอง</button><input id="bkLoad" type="file" accept=".json,application/json" hidden></div>
 </div></div>
+  <div class="card section dbox dwide" id="userGuide"><div class="sechead"><h2 class="hd hd-teal">6. คู่มือการใช้งานฉบับย่อ</h2></div>
+   <div class="ug-grid">
+    <div class="ug"><b>1 วางแผน</b><p>พิมพ์ต้นทาง/ปลายทาง (ICAO · ชื่อจุด · MGRS · lat,lon) → <b>สร้างเส้นทาง</b> · แตะแผนที่เพื่อเพิ่ม/แทรกจุด · ลากหมุดเพื่อย้าย · แตะหมุดเพื่อลบ · ปุ่ม V/I สลับ VFR/IFR · สร้าง Flight Plan PDF และ Kneeboard ได้จากแผงแผนการบิน</p></div>
+    <div class="ug"><b>2 NAVLOG</b><p>กรอกช่องเทา (ALT, ลม, CAS, Temp) ช่องฟ้าคำนวณเอง · <b>MH</b> = heading ที่ต้องถือ · คำอธิบายทุกคอลัมน์อยู่ใต้ตาราง</p></div>
+    <div class="ug"><b>3 อากาศ</b><p>สรุป METAR/QNH ต้นทาง-ปลายทาง · แผนที่ลมพยากรณ์ + เรดาร์ฝน RainViewer (กด ▶ ดูย้อนหลัง) · ใส่ลมลง NAVLOG ได้ในปุ่มเดียว</p></div>
+    <div class="ug"><b>4 NOTAM</b><p>ดึงอัตโนมัติจาก FAA (ระหว่างประเทศ) · <b>บินในประเทศต้องวางจาก AEROTHAI เอง</b> · แดชบอร์ดบอกจำนวนที่เกี่ยวข้อง · แผนที่เลือกหมวดได้</p></div>
+    <div class="ug"><b>5–6 NORMAL / EMER</b><p>ข้อมูลจาก TM ที่ Import (ข้อ 2) · ติ๊กทีละข้อ ข้อถัดไปจะเด่นขึ้น · WARNING/CAUTION/NOTE แตะเพื่อยุบ · ▶ โหมดทีละขั้น · ใช้ CL จริงเสมอ</p></div>
+    <div class="ug"><b>7 แปลงหน่วย</b><p>เลือกหมวด → ใส่ค่า → ดูทุกหน่วยพร้อมกัน · ปุ่มลัด QNH / น้ำมัน</p></div>
+    <div class="ug"><b>8 CP</b><p>Preset FM/VHF/UHF/VOR/ADF และ Waypoint ของหน่วย · เลข CP แสดงบนแผนที่แทนเลขลำดับ · นำเข้าจาก Excel (ข้อ 3)</p></div>
+    <div class="ug"><b>10 ข้อสอบ</b><p>เลือกระดับ ปกติ/ซับซ้อน · เฉลยละเอียดพร้อมอ้างอิง TM · ทบทวนข้อที่เคยผิดได้</p></div>
+    <div class="ug"><b>💡 GPS / เต็มจอ</b><p>ปุ่ม 📍 GPS บนแผนที่: ตามตำแหน่ง เทียบ TC กับทิศบินจริง บอก XTE/ETE/ETA (L+Z) · แตะ 2 นิ้วพร้อมกัน = วัดระยะ · Ctrl+Z ย้อนกลับ</p></div>
+    <div class="ug"><b>🔒 ความปลอดภัย</b><p>ข้อมูลอยู่ในเครื่องนี้เท่านั้น · สำรองทุกครั้งหลัง Import (ข้อ 5) · บน iPad เพิ่มไปหน้าจอโฮมเพื่อไม่ให้ Safari ลบข้อมูล</p></div>
+   </div></div>
  </div>
 </section>
 <section id="tab-quiz" class="tabpanel" hidden>
@@ -2477,7 +2508,7 @@ function npRenderList(){if(typeof acftHdr==="function")acftHdr();const D=npData(
     html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();
-  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 ข้อมูล</b> → กล่อง 2 ข้อมูล TM</div>`;return}
+  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM</div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
     const all=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub"));
@@ -3071,7 +3102,7 @@ function epRenderList(){acftHdr();const L=$("#epList");{const dt=$("#dataTm");if
   $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
 function epRenderMain(){const M=$("#epMain");
-  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
+  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
   if(epSel==null){epHome(M);return}
   const p=EP.procedures[epSel];M.onclick=null;
   const blocks=epFull?p.blocks:epChecklist(p);
@@ -3142,7 +3173,7 @@ function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[qs.length%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
-  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>9 ข้อมูล</b> แล้วกด <b>Import emergency_data.json</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
+  if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> แล้วกด <b>Import emergency_data.json</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
   if(!qz){const bankN=(EP.quiz||[]).length;
     R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EMER Proc. สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
      <div class="qz-modes">${QZ_MODES.map(m=>`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}"><b>${m.name}</b><span>${m.desc}</span></button>`).join("")}</div>

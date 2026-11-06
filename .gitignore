@@ -18,3 +18,6 @@ TM_*
 
 # แบบฟอร์ม ICAO Flight Plan เปล่า (ไม่มีข้อมูลบุคคล)
 !fpl_template.pdf
+
+# ไฟล์ตัวอย่าง CP (ข้อมูลสมมติ)
+!cp_template.xlsx
