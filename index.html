@@ -836,6 +836,14 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .gh-nt{font:700 11px var(--f-body);color:#9fb3c8;letter-spacing:.04em}
 .gh-nr{display:grid;grid-template-columns:48px 58px 62px 1fr;gap:6px;align-items:baseline;font:13px var(--f-mono)}.gh-nr b{font-family:var(--f-display)}.gh-rad{font-weight:700;color:#7dd3fc;text-align:right}
 .gh-row{display:flex;flex-direction:column;gap:6px}.gh-navc{display:flex;flex-direction:column;gap:6px;min-width:0}
+/* โหมด GPS บนอุปกรณ์สัมผัส: แถบเมนูแคบลง (เหลือไอคอน) ให้แผนที่กว้างขึ้น */
+body.gps-touch{padding-left:calc(56px + env(safe-area-inset-left,0px))}
+body.gps-touch nav.rail{width:56px;transition:width .2s}
+body.gps-touch .rail .logo{width:38px;height:38px;font-size:17px}
+body.gps-touch .rail .tab{width:46px;padding:7px 0;font-size:0;gap:0}
+body.gps-touch .rail .tab i{font-size:20px}body.gps-touch .rail .tab small{font-size:9px}
+body.gps-touch nav.rail .netchip{font-size:0;width:12px;height:12px;padding:0;border-radius:50%;min-width:0}
+@media (max-width:760px){body.gps-touch{padding-left:0}body.gps-touch nav.rail{width:auto;height:calc(48px + env(safe-area-inset-bottom,0px))}body.gps-touch .rail .tab{width:auto;flex:1;padding:4px 0}}
 .gh-near>summary{cursor:pointer;list-style:none}.gh-near>summary::-webkit-details-marker{display:none}
 body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
 .gps-hud.gps-strip{position:absolute;left:8px;right:8px;bottom:8px;width:auto;z-index:1000;max-height:52%;overflow:auto;padding:8px 10px;border-radius:14px;gap:6px;background:#111827;box-shadow:0 -4px 18px rgba(0,0,0,.35)}
