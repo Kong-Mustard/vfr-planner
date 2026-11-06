@@ -876,6 +876,11 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .nt-paste-h{display:flex!important;flex-direction:column;gap:2px;padding:4px 0;list-style:none}.nt-paste-h::-webkit-details-marker{display:none}
 .nt-paste-h span{font:800 18px var(--f-display)}.nt-paste-h span::before{content:"▸ ";color:var(--muted)}#ntPasteBox[open] .nt-paste-h span::before{content:"▾ "}.nt-paste-h small{color:var(--muted);font-size:13px}
 @media (max-width:600px){.nd-bar{grid-template-columns:1fr 70px 30px}}
+.cp-wrap{display:flex;flex-direction:column;gap:12px}.cp-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.cp-nav a{padding:6px 12px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-weight:700;font-size:13.5px;background:var(--input)}
+.cp-sec{border-top:4px solid var(--cc)}.cp-h{display:flex;align-items:center;gap:10px;margin:0;font:800 20px var(--f-display)}.cp-h>span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--cc);color:#fff;font-size:15px}
+.cp-h b,.cp-h .cpn{font:700 13px var(--f-mono);padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--cc) 20%,transparent);color:var(--ink)}
+.cp-sub{margin:10px 0 4px;font-size:14px;color:var(--muted)}.cp-tbl{width:100%}.cp-tbl input.cp-no{width:64px;text-align:center;font-weight:800}
+.wpicon.seq{background:#fff!important;color:#d6198f!important;border-color:#d6198f!important}
 .planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
@@ -1017,7 +1022,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <button class="tab emer" role="tab" data-tab="emer" aria-selected="false"><i><svg width="26" height="24" viewBox="0 0 26 24" aria-hidden="true"><path d="M13 2 L24.5 22 H1.5 Z" fill="#ef4444" stroke="#111" stroke-width="2" stroke-linejoin="round"/><rect x="11.6" y="8" width="2.8" height="8" rx="1.2" fill="#fff"/><circle cx="13" cy="19" r="1.6" fill="#fff"/></svg></i><small>6</small>EMER</button>
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
-  <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>WAYPOINT</button>
+  <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>CP</button>
   <button class="tab" role="tab" data-tab="data" aria-selected="false"><i>💾</i><small>9</small>ข้อมูล</button>
   <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>10</small>ข้อสอบ</button>
   <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
@@ -1112,7 +1117,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </div>
     <details class="wp-help"><summary>💡 วิธีใช้แผนที่ (เพิ่ม / แทรก / ย้าย / ลบจุด)</summary><p class="hint wp-hint">    <span>👆 แตะแผนที่ = เมนูเพิ่มจุด</span><span>⚡ Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span><span>↔ ลากกลางเส้นชมพู = แทรกจุด</span><span>✋ ลากหมุด = ย้าย · แตะหมุด = ลบ</span><span>พิกัด: <code>14.8812, 100.6431</code> หรือ <code>47PQS 1234 5678</code></span></p></details>
     <div class="tablewrap"><table id="wpTable">
-      <thead><tr><th>#</th><th>No. หน่วย</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
+      <thead><tr><th>#</th><th>CP</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -1316,22 +1321,18 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  </div>
 </section>
 <section id="tab-wpdb" class="tabpanel" hidden>
- <div style="display:flex;flex-direction:column;gap:12px">
-  <div class="card section">
-   <div class="sechead"><h2 class="hd hd-green">ตรวจความพร้อมก่อนเสียบการ์ด</h2><div class="btns"><button id="chkCopy">คัดลอกผลตรวจ</button></div></div>
-   <div id="chkBox"></div>
-  </div>
-  <div class="card section">
-   <div class="sechead"><h2 class="hd hd-pink">รายการเตรียมคีย์ใน FalconView</h2><div class="btns"><button id="dbCopyRoute">คัดลอกเป็นข้อความ</button></div></div>
-   <div id="keyBox"></div>
-  </div>
-  <div class="card section">
-   <div class="sechead"><h2 class="hd hd-orange">Preset วิทยุ (แก้ไขได้ทุกช่อง)</h2><div class="btns"><button id="psAdd">＋ เพิ่มช่อง</button></div></div>
-   <div class="seg ps-bands" id="psBands" role="group" aria-label="ย่านความถี่"></div>
-   <div class="tablewrap"><table id="psTable"><thead><tr><th>ช่อง</th><th>Call sign / ID</th><th>ความถี่</th><th>รายละเอียด</th><th></th></tr></thead><tbody></tbody></table></div>
-  </div>
-  <div class="card section">
-   <div class="sechead"><h2 class="hd hd-indigo">Waypoint (แก้ไขได้ทุกจุด)</h2>
+ <div class="cp-wrap">
+  <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-pink">CP — Checkpoint / Preset ของหน่วย</h2>
+   <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
+   <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>CP</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = CP 1, ปลายทาง CAVPAD = CP 13 · จุดที่ไม่มี CP แสดงเลขลำดับแบบขอบชมพู</p>
+   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a></nav></div>
+  <div class="card section cp-sec" id="cpFm" style="--cc:#22c55e"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
+  <div class="card section cp-sec" id="cpVhf" style="--cc:#3b82f6"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
+  <div class="card section cp-sec" id="cpUhf" style="--cc:#a855f7"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
+  <div class="card section cp-sec" id="cpNav" style="--cc:#f59e0b"><div class="sechead"><h2 class="cp-h"><span>4</span>🧭 VOR / ADF</h2><div class="btns"><button data-cpadd="vor">＋ VOR</button><button data-cpadd="adf">＋ ADF</button></div></div>
+   <h3 class="cp-sub">VOR / ILS</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="vor"></table></div><h3 class="cp-sub">ADF / NDB</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="adf"></table></div></div>
+  <div class="card section cp-sec" id="cpWp" style="--cc:#f472b6">
+   <div class="sechead"><h2 class="cp-h"><span>5</span>📍 Waypoint <b id="cpWpN"></b></h2>
     <div class="btns"><button id="dbAdd" class="primary">＋ เพิ่มแถว</button><button id="dbExport">Export</button>
      <button id="dbClear">ลบทั้งหมด</button></div></div>
    <p class="hint">ตารางเลข waypoint ที่หน่วยใช้เป็นมาตรฐาน · เก็บในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export/Import เพื่อย้ายไปเครื่องอื่น · ในช่องต้นทาง/ปลายทาง/พิกัด พิมพ์ <code>No.12</code> หรือ <code>#12</code> เพื่อเรียกจุดนั้นได้เลย</p>
@@ -1340,8 +1341,9 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <textarea id="dbPaste" rows="6" class="nt-text" placeholder="1	VTBH	47P PS 76283 53429&#10;2	VTBD	47P ..."></textarea>
     <div class="btns" style="margin-top:6px"><button id="dbPasteAdd" class="primary">เพิ่ม / อัปเดตตามเลข</button><button id="dbPasteReplace">แทนที่ทั้งตาราง</button></div>
     <p id="dbPasteInfo" class="hint"></p></details>
-   <div class="tablewrap"><table id="dbTable"><thead><tr><th>No.</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
+   <div class="tablewrap"><table id="dbTable"><thead><tr><th>CP</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
   </div>
+ <div hidden><div id="chkBox"></div><div id="keyBox"></div><button id="chkCopy"></button><button id="dbCopyRoute"></button><div id="psBands"></div><table id="psTable"><tbody></tbody></table><button id="psAdd"></button></div>
  </div>
 </section>
 <section id="tab-data" class="tabpanel" hidden>
@@ -1645,8 +1647,8 @@ function drawMap(rows){
     if(hit._path)hit._path.addEventListener("pointerdown",ev=>legDragStart(ev,i))}
   state.wps.forEach((w,i)=>{
     const dm=typeof dbMatch==="function"?dbMatch(w):null;if(dm&&/^WP\d*$/i.test(String(w.name||"").trim())&&dm.name)w.name=dm.name;
-    if(dm)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="wpdbl">No.${esc(dm.no)}${dm.name&&String(dm.name).toUpperCase()!==String(w.name).toUpperCase()?" "+esc(dm.name):""}</span>`,iconSize:null,iconAnchor:[-14,-4]})}).addTo(routeLayer);
-    const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${i+1}</div>`,iconSize:[24,24],iconAnchor:[12,12]})})
+    if(dm&&dm.name&&String(dm.name).toUpperCase()!==String(w.name).toUpperCase())L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="wpdbl">${esc(dm.name)}</span>`,iconSize:null,iconAnchor:[-14,-4]})}).addTo(routeLayer);
+    const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:(()=>{const cp=cpNoFor(w);return`<div class="wpicon${w.rp?" rpt":""}${cp?" cp":" seq"}" title="${cp?"CP "+esc(cp):"ลำดับที่ "+(i+1)}">${cp?esc(cp):i+1}</div>`})(),iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${esc(w.name||"WP")}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
     m.on("drag",e=>ifrSnapHint(e.target.getLatLng()));
@@ -2023,7 +2025,7 @@ function wxInit(){if(wxMap)return;wxMap=L.map("wxMap",{zoomControl:true}).setVie
 function wpLabel(i){const w=state.wps[i];const cp=typeof cpNoFor==="function"?cpNoFor(w):null;return cp!=null?String(cp):String(i+1)}
 function routeOverlay(){const W=state.wps,pts=W.map(w=>[w.lat,w.lon]),g=L.layerGroup();if(pts.length<1)return g;
   L.polyline(pts,{color:"#ffffff",weight:6,opacity:.55,interactive:false}).addTo(g);L.polyline(pts,{color:"#d6198f",weight:3.5,interactive:false}).addTo(g);
-  W.forEach((w,i)=>L.marker([w.lat,w.lon],{interactive:true,keyboard:false,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}">${esc(wpLabel(i))}</div><span class="ro-n">${esc(w.name||"")}</span>`,iconSize:[24,24],iconAnchor:[12,12]})})
+  W.forEach((w,i)=>L.marker([w.lat,w.lon],{interactive:true,keyboard:false,icon:L.divIcon({className:"",html:`<div class="wpicon${w.rp?" rpt":""}${cpNoFor(w)?" cp":" seq"}">${esc(wpLabel(i))}</div><span class="ro-n">${esc(w.name||"")}</span>`,iconSize:[24,24],iconAnchor:[12,12]})})
     .bindTooltip(`${esc(wpLabel(i))}. ${esc(w.name||"WP")}`).addTo(g));return g}
 function wxDrawRoute(){if(!wxMap)return;if(wxRoute)wxMap.removeLayer(wxRoute);wxRoute=routeOverlay().addTo(wxMap)}
 /* เรดาร์ฝน RainViewer: ภาพย้อนหลัง ~2 ชม. + พยากรณ์ระยะสั้น (nowcast) เลื่อน/เล่นได้ */
@@ -3327,6 +3329,8 @@ function dbAll(){return store.get("vfr_wpdb")||[]}
 function dbSave(L){L.sort((a,b)=>(+a.no||1e9)-(+b.no||1e9));return store.set("vfr_wpdb",L)}
 function dbMatch(w){if(!w)return null;const L=dbAll(),n=String(w.name||"").toUpperCase().trim();
   return L.find(x=>x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<0.05)||L.find(x=>String(x.name).toUpperCase()===n&&x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<1)||null}
+/* เลข CP ของจุด (ตรงกับ Waypoint ในแท็บ 8) */
+function cpNoFor(w){const m=typeof dbMatch==="function"&&dbMatch(w);return m&&m.no!=null&&String(m.no).trim()!==""?String(m.no):null}
 function dbBadge(w){const m=dbMatch(w);return m?`<span class="dbno">No.${esc(m.no)}</span>`:`<span class="hint">—</span>`}
 function dbNoTxt(w,plain){const m=dbMatch(w);return m?(plain?`No.${esc(m.no)} `:`<span class="dbno">No.${esc(m.no)}</span> `):""}
 const DB_COORD=/(\d{1,2}\s*[C-X]\s*[A-Z]{2}\s*\d{2,5}\s*\d{0,5}|-?\d{1,2}\.\d+\s*,\s*-?\d{2,3}\.\d+)/i;
@@ -3341,7 +3345,7 @@ function dbMerge(items,replace){const L=replace?[]:dbAll();items.forEach(it=>{co
 function dbWarn(x){if(x.lat==null)return"ไม่มีพิกัด";if(x.lat<4||x.lat>21||x.lon<96||x.lon>106.5)return"พิกัดอยู่นอกประเทศไทย";
   const ic=String(x.name||"").toUpperCase().slice(0,4),a=/^VT[A-Z]{2}$/.test(ic)&&AP[ic];if(a&&a.lat!=null){const d=gcDistNm([x.lat,x.lon],[a.lat,a.lon]);if(d>3)return`ห่างจาก ${ic} (${a.eaip?"eAIP":"OurAirports"}) ${d.toFixed(1)} NM`}
   const dup=dbAll().filter(y=>String(y.no)!==String(x.no)&&y.lat!=null&&String(y.name).toUpperCase()===String(x.name).toUpperCase());if(dup.length&&dup.some(y=>gcDistNm([x.lat,x.lon],[y.lat,y.lon])>0.1))return`ชื่อซ้ำกับ No.${dup.map(y=>y.no).join(", ")} แต่พิกัดต่างกัน`;return""}
-function dbRender(){const L=dbAll(),dup=new Set(),seen=new Set();L.forEach(x=>{if(seen.has(String(x.no)))dup.add(String(x.no));seen.add(String(x.no))});
+function dbRender(){if(typeof cpRender==="function")setTimeout(cpRender,0);const L=dbAll(),dup=new Set(),seen=new Set();L.forEach(x=>{if(seen.has(String(x.no)))dup.add(String(x.no));seen.add(String(x.no))});
   $("#dbTable tbody").innerHTML=L.map((x,i)=>`<tr><td class="w-s"><input data-db="${i}" data-k="no" value="${esc(x.no)}" class="${dup.has(String(x.no))?"bad":""}" style="width:64px"></td>
     <td class="name"><input data-db="${i}" data-k="name" value="${esc(x.name)}"></td>
     <td class="coord"><input data-db="${i}" data-k="coord" value="${esc(x.mgrs||"")}" placeholder="47P PS 76283 53429"></td>
@@ -3363,7 +3367,24 @@ function psFind(f,ap){const d=psAll(),out=[];PS_BANDS.forEach(b=>{if(f<b.lo||f>=
   if(ap){const mine=out.filter(o=>String(o.x.call||"").toUpperCase().includes(String(ap).toUpperCase()));if(mine.length)return mine}return out}
 function psTags(t,ap){const fs=freqNums(t);return fs.map(f=>psFind(f,ap).map(({b,x})=>`<span class="pstag" title="${esc(b.t)} ช่อง ${esc(x.ch)} · ${esc(x.call||"")}">${b.tag}${esc(x.ch)}</span>`).join("")).join("")}
 function psTagTxt(t,ap){return freqNums(t).flatMap(f=>psFind(f,ap).map(({b,x})=>b.tag+x.ch)).join(",")}
-function psRender(){const d=psAll(),L=d[psBand],b=PS_BANDS.find(x=>x.k===psBand);
+/* แท็บ 8 CP: ตาราง preset แยกตามย่าน (แนวตั้ง) */
+function cpRender(){const d=psAll();document.querySelectorAll(".cp-tbl[data-cpband]").forEach(T=>{const k=T.dataset.cpband,b=PS_BANDS.find(x=>x.k===k),L=d[k]||[];
+  T.innerHTML=`<thead><tr><th>CP</th><th>Call sign / ID</th><th>ความถี่</th><th>รายละเอียด</th><th></th></tr></thead><tbody>${L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);
+    return`<tr><td class="w-s"><input data-cp="${i}" data-k="ch" value="${esc(x.ch)}" class="cp-no" inputmode="numeric"></td><td class="name"><input data-cp="${i}" data-k="call" value="${esc(x.call||"")}"></td>
+    <td class="w-m"><input data-cp="${i}" data-k="freq" value="${esc(x.freq??"")}" class="${bad?"bad":""}" inputmode="decimal">${bad?`<br><span class="area-alert" style="font-size:11px">นอกย่าน ${b.lo}–${b.hi}</span>`:""}</td>
+    <td class="name"><input data-cp="${i}" data-k="desc" value="${esc([x.desc,x.fix].filter(Boolean).join(" · "))}"></td><td><button class="mini" data-cpdel="${i}" aria-label="ลบ">✕</button></td></tr>`}).join("")
+    ||`<tr><td colspan="5" class="hint" style="padding:12px">ยังไม่มี ${b.t} — กด ＋ เพิ่ม หรือนำเข้าจากแท็บ 9</td></tr>`}</tbody>`;
+  const sec=T.closest(".cp-sec");if(sec){const h=sec.querySelector(".cp-h");let n=h.querySelector("b.cpn");if(!n){n=document.createElement("b");n.className="cpn";h.appendChild(n)}
+    const tot=[...sec.querySelectorAll(".cp-tbl")].reduce((m,t)=>m+(d[t.dataset.cpband]||[]).length,0);n.textContent=tot}});
+  const wn=$("#cpWpN");if(wn)wn.textContent=dbAll().length}
+{const W=$("#tab-wpdb");
+  W.addEventListener("change",e=>{const t=e.target;if(t.dataset.cp==null)return;const k=t.closest("[data-cpband]").dataset.cpband,d=psAll(),x=d[k][+t.dataset.cp];if(!x)return;x[t.dataset.k]=t.value.trim();if(t.dataset.k==="desc")x.fix="";psSave(d);cpRender();render()});
+  W.addEventListener("click",e=>{const del=e.target.closest("[data-cpdel]"),add=e.target.closest("[data-cpadd]");
+    if(del){const k=del.closest("[data-cpband]").dataset.cpband,d=psAll();d[k].splice(+del.dataset.cpdel,1);psSave(d);cpRender();render()}
+    if(add){const k=add.dataset.cpadd,d=psAll(),L=d[k];const n=L.reduce((m,x)=>Math.max(m,+x.ch||0),0)+1;L.push({ch:String(n),call:"",freq:"",desc:""});psSave(d);cpRender();
+      const T=document.querySelector(`.cp-tbl[data-cpband="${k}"]`);const ins=T&&T.querySelectorAll('input[data-k="call"]');if(ins&&ins.length)ins[ins.length-1].focus()}});
+  W.querySelectorAll(".cp-nav a").forEach(a=>a.onclick=e=>{e.preventDefault();const t=document.querySelector(a.getAttribute("href"));if(t)scrollTo({top:t.getBoundingClientRect().top+scrollY-10,behavior:"smooth"})})}
+function psRender(){cpRender();const d=psAll(),L=d[psBand],b=PS_BANDS.find(x=>x.k===psBand);
   $("#psBands").innerHTML=PS_BANDS.map(x=>`<button data-band="${x.k}" class="${x.k===psBand?"on":""}">${x.t} <b>${d[x.k].length}</b></button>`).join("");
   $("#psTable tbody").innerHTML=L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);return`<tr><td class="w-s"><input data-ps="${i}" data-k="ch" value="${esc(x.ch)}" style="width:60px"></td>
     <td class="name"><input data-ps="${i}" data-k="call" value="${esc(x.call||"")}"></td><td class="w-m"><input data-ps="${i}" data-k="freq" value="${esc(x.freq??"")}" class="${bad?"bad":""}" style="width:110px">${bad?`<br><span class="area-alert" style="font-size:11px">นอกย่าน ${b.t} (${b.lo}–${b.hi})</span>`:""}</td>
