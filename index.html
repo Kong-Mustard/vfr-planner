@@ -820,6 +820,10 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 #mfWp.collapsed .mf-tg{border-radius:16px}#mfWp.collapsed .mf-body{display:none}#mfWp.collapsed .mf-tg span{transform:rotate(-90deg)}
 #mfWp .mf-body{overflow:auto;padding:0 4px 6px}#mfWp .mf-body>.card{margin:0;box-shadow:none;border:0}
 #mfWp .card .sechead h2,#mfWp .card>.hint{display:none}
+#mfWp{width:min(440px,calc(100vw - 28px))}
+#mfWp #wpTable th:nth-child(2),#mfWp #wpTable td:nth-child(2),#mfWp #wpTable th:nth-child(5),#mfWp #wpTable td:nth-child(5),#mfWp #wpTable .mgrs,#mfWp [data-act="up"],#mfWp [data-act="down"],#mfWp [data-act="zoom"]{display:none}
+#mfWp #wpTable{min-width:0;width:100%}#mfWp #wpTable td,#mfWp #wpTable th{padding:4px 3px}#mfWp #wpTable .name input{width:100%;min-width:70px}#mfWp #wpTable .coord input{width:100%;min-width:150px;font-size:12.5px}
+#mfWp .tablewrap{overflow-x:hidden}#mfWp .sechead .btns button{padding:6px 10px;font-size:12.5px}
 .gps-btn{min-height:44px;font:700 15px var(--f-body);border-radius:12px;background:var(--panel);border:2px solid var(--line);padding:8px 14px;box-shadow:var(--shadow)}
 .gps-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .gps-heli{position:relative;width:64px;height:64px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}.gh-rot{position:absolute;inset:0;transition:transform .6s ease}.gh-lot{width:100%;height:100%}
@@ -850,8 +854,16 @@ body.gps-touch nav.rail .netchip{font-size:0;width:12px;height:12px;padding:0;bo
 .gh-eta b small{font-size:.5em;opacity:.7;margin-left:2px}.gh-grid .gh-eta i{font-style:normal;font-weight:700;font-size:13px;color:#cfe0f5;font-family:var(--f-mono)}
 .measmk{background:none;border:0}.meas{transform:translate(-50%,-130%);display:flex;align-items:center;gap:8px;background:#111827;color:#fff;border:2px solid #ffd60a;border-radius:12px;padding:6px 8px 6px 12px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 .meas b{font:800 16px var(--f-mono)}.meas span{font:600 12px var(--f-mono);color:#ffd60a}.meas button{border:0;background:#2a3446;color:#fff;border-radius:8px;width:26px;height:26px;padding:0;cursor:pointer}
+.res.res1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.res1 .mono{font-family:var(--f-mono);font-size:.95em}
+.res1 .src-ok{color:var(--good,#16a34a);font-weight:700;font-size:11px}.res1 .src-warn{color:#d97706;font-weight:700;font-size:11px}
+.area-nt{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.area-nt .ant-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.area-nt .ant-row .mini{margin-left:auto}.ant-red{color:var(--bad);font-weight:700}
+.ant-it{padding:3px 8px;border-left:3px solid var(--line);border-radius:4px;background:var(--input)}.ant-it.red{border-left-color:var(--bad)}.ant-it.yellow{border-left-color:#f59e0b}.ant-it.blue{border-left-color:#3b82f6}
+.gh-steer{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:13px;color:#cfe0f5;padding:5px 8px;border-radius:9px;background:rgba(255,255,255,.06)}
+.gh-steer b{font:800 15px var(--f-mono);color:#fff}.gh-steer .st{margin-left:auto;font-weight:800;font-size:14px;padding:2px 10px;border-radius:999px}
+.gh-steer.ok .st{background:#16a34a;color:#fff}.gh-steer.mid .st{background:#f59e0b;color:#111}.gh-steer.bad .st{background:#dc2626;color:#fff}
 .gh-near>summary{cursor:pointer;list-style:none;color:#fff!important;display:flex;align-items:center;gap:6px}.gh-near>summary::after{content:"▸";margin-left:auto;font-size:13px;opacity:.9;transition:transform .15s}.gh-near[open]>summary::after{transform:rotate(90deg)}.gh-near>summary b{color:#fff}.gh-near>summary::-webkit-details-marker{display:none}
-body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
+body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px)}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
 .gps-hud.gps-strip{position:absolute;left:8px;right:8px;bottom:8px;width:auto;z-index:1000;max-height:52%;overflow:auto;padding:8px 10px;border-radius:14px;gap:6px;background:#111827;box-shadow:0 -4px 18px rgba(0,0,0,.35)}
 .gps-strip .gh-row{flex-direction:row;align-items:stretch;gap:8px}
 .gps-strip .gh-grid.top{flex:0 0 auto;grid-template-columns:repeat(3,minmax(66px,1fr))}
@@ -939,10 +951,10 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <nav class="jumpbar" id="jumpBar" aria-label="ไปยังหัวข้อ">
     <button type="button" data-jump=".top>.side" class="jb-side">✈️ แผนการบิน</button>
     <button type="button" data-jump="#wpCard">📍 จุดเส้นทาง</button>
-    <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
     <button type="button" data-jump="#procCard">🛬 เข้า-ออกสนาม · Charts</button>
     <button type="button" data-jump="#freqCard">📻 ความถี่</button>
-    <button type="button" data-jump="#areaCard">⚠️ พื้นที่ P/R/D</button>
+    <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
+    <button type="button" data-jump="#areaCard">⚠️ P/R/D · NOTAM</button>
   </nav>
     <div class="card side">
       <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
@@ -1018,25 +1030,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </table></div>
   </div>
 
-  <div class="card section" id="navCard">
-    <div class="sechead">
-      <h2 class="hd hd-indigo">NAV LOG</h2>
-      <div class="btns">
-        <button id="savePlan" class="primary">บันทึกแผน</button>
-        <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
-        <button id="delPlan">ลบแผนนี้</button>
-        <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
-        <button id="exportXlsx">Export Excel (.xlsx)</button>
-        <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
-      </div>
-    </div>
-    <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
-    <div class="tablewrap"><table id="navMini" class="mini-tbl">
-      <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
-      <tbody></tbody>
-    </table></div>
-  </div>
-
   <div class="card section" id="procCard">
     <div class="sechead"><h2 class="hd hd-amber">ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
     <div id="procList"></div>
@@ -1093,12 +1086,32 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </details>
   </div>
 
+  <div class="card section" id="navCard">
+    <div class="sechead">
+      <h2 class="hd hd-indigo">NAV LOG</h2>
+      <div class="btns">
+        <button id="savePlan" class="primary">บันทึกแผน</button>
+        <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
+        <button id="delPlan">ลบแผนนี้</button>
+        <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
+        <button id="exportXlsx">Export Excel (.xlsx)</button>
+        <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
+      </div>
+    </div>
+    <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
+    <div class="tablewrap"><table id="navMini" class="mini-tbl">
+      <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>MH กลับ</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </div>
+
   <div class="card section" id="areaCard">
     <div class="sechead">
-      <h2 class="hd hd-red">พื้นที่ Prohibited / Restricted / Danger ตามเส้นทาง</h2>
+      <h2 class="hd hd-red">พื้นที่ P / R / D · NOTAM ตามเส้นทาง</h2>
       <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="areaShowD" checked style="width:auto"> แสดง Danger area บนแผนที่</label>
     </div>
     <div id="areaList"></div>
+    <div id="areaNt" class="area-nt"></div>
   </div>
  </div>
  <aside id="printView" aria-hidden="true"></aside>
@@ -1397,7 +1410,8 @@ function splitCoordName(t){
 /* ข้อความ → จุด {name,lat,lon,info} ลำดับ: ICAO → จุดที่บันทึก → พิกัด */
 function resolvePoint(text,remember=true){
   const t=String(text||"").trim();if(!t)return null;const U=t.toUpperCase();
-  if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
+  if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${String(a.name).replace(/\s*(International\s+)?(Airport|Airfield|Air Base)\b/gi,"").trim()}${a.elev?` · ${Math.round(a.elev)} ft`:""}`,
+    src:a.eaip?"eAIP":"⚠ ไม่ใช่ eAIP",full:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
   const dn=U.match(/^(?:NO\.?\s*|#)(\d+)$/);const dbp=dn?dbAll().find(x=>String(x.no)===String(+dn[1])):dbAll().find(x=>String(x.name).toUpperCase()===U);
   if(dbp&&dbp.lat!=null)return{name:dbp.name||("No."+dbp.no),lat:dbp.lat,lon:dbp.lon,info:`Waypoint หน่วย No.${dbp.no}${dbp.note?" · "+dbp.note:""}`};
   const c=customPts()[U];if(c)return{name:c.name,lat:c.lat,lon:c.lon,info:"จุดที่บันทึกไว้"};
@@ -1451,7 +1465,8 @@ function renderFreq(){
 }
 function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";return}
   if(!p){el.textContent="ไม่พบรหัส/ชื่อนี้ และอ่านเป็นพิกัดไม่ได้";el.className="res err";return}
-  el.className="res";el.innerHTML=`<b>${esc(p.name||"(ไม่มีชื่อ)")}</b> · ${esc(p.info)}<br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)} · ${fmtMgrs(toMgrs(p.lat,p.lon))}`}
+  el.className="res res1";el.title=`${p.name||""} · ${p.full||p.info} · ${p.lat.toFixed(5)}, ${p.lon.toFixed(5)} · ${fmtMgrs(toMgrs(p.lat,p.lon))}`;
+  el.innerHTML=`<b>${esc(p.name||"(ไม่มีชื่อ)")}</b> · ${esc(p.info)} · <span class="mono">${fmtMgrs(toMgrs(p.lat,p.lon))}</span>${p.src?` <span class="${p.src==="eAIP"?"src-ok":"src-warn"}">${esc(p.src)}</span>`:""}`}
 
 /* ---------- คำนวณการเดินอากาศ ---------- */
 function gcDistNm(a,b){const R=3440.065,f1=a[0]*D2R,f2=b[0]*D2R,df=f2-f1,dl=(b[1]-a[1])*D2R;
@@ -1879,7 +1894,12 @@ function routeAreas(){const A=(EAIP&&EAIP.areas)||[],W=state.wps,hits=[];if(W.le
       for(let k=0;k<=n;k++){const t=k/n;if(inPoly([p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t],a.poly)){legs.add(i);break}}}
     if(legs.size)hits.push({a,legs:[...legs]})});
   return hits.sort((x,y)=>"PRD".indexOf(x.a.type)-"PRD".indexOf(y.a.type)||Math.min(...x.legs)-Math.min(...y.legs))}
-function renderAreas(){const box=$("#areaList");
+function renderAreaNt(){const box=$("#areaNt");if(!box)return;let E=[];try{E=typeof ntEval==="function"&&$("#ntBuf")?ntEval():[]}catch(e){}
+  const R=E.filter(n=>n.active&&(n.hit||n.inBuf||n.ap));const red=R.filter(n=>ntSev(n)==="red").length;
+  box.innerHTML=state.wps.length<2?"":`<div class="ant-row"><b>NOTAM ตามเส้นทาง:</b> ${R.length?`${R.length} รายการ${red?` · <span class="ant-red">สำคัญ ${red}</span>`:""}`:"ไม่พบ (หรือยังไม่ได้ดึง NOTAM)"}
+    <button type="button" class="mini" id="antGo">ดูในแท็บ 4 NOTAM →</button></div>${R.slice(0,4).map(n=>`<div class="ant-it ${ntSev(n)}"><b>${esc(n.loc)} ${esc(n.id)}</b> ${esc(ntTitle(n))}</div>`).join("")}`;
+  const g=$("#antGo");if(g)g.onclick=()=>{const t=document.querySelector('.rail .tab[data-tab="notam"]');if(t)t.click()}}
+function renderAreas(){const box=$("#areaList");renderAreaNt();
   if(!EAIP||!EAIP.areas){box.innerHTML=`<p class="hint">ยังไม่มีข้อมูลพื้นที่ — จะโหลดอัตโนมัติจาก eaip_data.json (ENR 5.1)</p>`;return}
   const hits=routeAreas();
   if(!hits.length){box.innerHTML=`<p class="hint">เส้นทางนี้ไม่ตัดผ่าน Prohibited/Restricted/Danger area (ข้อมูล eAIP ${esc(EAIP.edition)}, ${EAIP.areas.length} พื้นที่) — ตรวจ NOTAM/AUP สำหรับพื้นที่ชั่วคราวเสมอ</p>`;return}
@@ -2238,7 +2258,7 @@ function ntEval(){const [t0,t1]=ntFlightWindow(),W=state.wps,buf=num($("#ntBuf")
     const levelOK=!(n.lower>maxFL+5)||!alts.length;const ap=names.has(n.loc)||near.has(n.loc);
     return{...n,active,hit:hit&&levelOK,inBuf:(inBuf||hit)&&levelOK,ap}})}
 function ntLocal(d){return d?d.toLocaleString("en-GB",{timeZone:"Asia/Bangkok",day:"numeric",month:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"}).replace(",",""):"PERM"}
-function ntRender(){if(!$("#ntList"))return;const E=ntEval(),hidden=$("#ntShowHidden").checked,W=state.wps;ntLayer.clearLayers();
+function ntRender(){if(!$("#ntList"))return;setTimeout(()=>{try{renderAreaNt()}catch(e){}},0);const E=ntEval(),hidden=$("#ntShowHidden").checked,W=state.wps;ntLayer.clearLayers();
   const pop=n=>`<b>${esc(n.loc)}: ${esc(ntTitle(n))}</b> <small>${esc(n.id)}</small><br>${ntLocal(n.from)} → ${ntLocal(n.to)}<br>FL${String(n.lower).padStart(3,"0")}–${String(n.upper).padStart(3,"0")}<br>${esc((ntPlainMode?ntPlainText(n):n.text).slice(0,400))}`;
   {const rel=n=>(n.inBuf||n.ap)&&n.active;
   E.filter(n=>(n.active||hidden)&&!ntHideCat.has(ntCat(n).k)).sort((a,b)=>rel(a)-rel(b)).forEach(n=>{const r=rel(n),c=ntCat(n).c;n.polys.forEach(P=>L.polygon(P.p,{color:c,weight:r?(n.hit?4:3):1.5,opacity:r?1:.8,fillColor:c,fillOpacity:r?.22:.08,dashArray:!n.active?"3 5":P.src==="Q"?"7 4":null})
@@ -3485,11 +3505,11 @@ function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg
 function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
-function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="จุดก่อนหน้า">◀</button><button data-g="next" title="ข้ามไปจุดถัดไป">▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างเส้นทางที่บินมา">🧹</button><button data-g="off">✕</button></div>`}
-document.addEventListener("click",e=>{const b=e.target.closest("#gpsHud [data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
+$("#gpsHud").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
-  if(g==="clear"){GPS.pts=[];if(GPS.crumb)GPS.crumb.setLatLngs([])}
+  if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
   if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
   if(GPS.last)gpsHud();else $("#gpsHud").querySelector(".gh-btns").outerHTML=gpsBtns()});
 map.on("dragstart",()=>{if(GPS.on&&GPS.follow){GPS.follow=false;const b=document.querySelector('#gpsHud [data-g="follow"]');if(b)b.classList.remove("on")}});
@@ -3521,22 +3541,27 @@ function gpsNear(P){const vr=num(state.g.var,0),navs=((EAIP&&EAIP.navaids)||[]).
     const S=st?[st.lat,st.lon]:[a.lat,a.lon],rad=norm(trueCourse(S,P)+vr),dme=gcDistNm(S,P);
     return{id:a.id,name:a.name,d,brg:norm(trueCourse(P,[a.lat,a.lon])+vr),rad,dme,st:st?st.id:approx?"≈"+approx.id:null,stt:st?(/VOR/.test(st.type)?"VOR":"TACAN"):approx?approx.t:null}})}
 function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(!P)return;
-  const mag=t=>t==null?"–":hdg(t+vr)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
+  const mag=t=>t==null?"–":hdg(t+vr)+"°",tru=t=>t==null?"–":hdg(t)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
   let nav="";if(W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],A=W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
     xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
+    const tc=row&&isFinite(row.tc)?row.tc:trueCourse([A.lat,A.lon],[T.lat,T.lon]);let steer="";
+    if(P.trk!=null&&gs>5){const df=((P.trk-tc+540)%360)-180,ad=Math.round(Math.abs(df));
+      steer=`<div class="gh-steer ${ad<=3?"ok":ad<=10?"mid":"bad"}"><span>เส้นทาง TC <b>${hdg(tc)}°</b></span><span>บินจริง <b>${hdg(P.trk)}°</b></span><span class="st">${ad<=3?"✓ ตรงเส้นทาง":(df>0?"↶ แก้ซ้าย ":"↷ แก้ขวา ")+ad+"°"}</span></div>`}
+    else steer=`<div class="gh-steer"><span>เส้นทาง TC <b>${hdg(tc)}°</b></span><span class="hint">บินจริง: รอความเร็ว &gt; 5 kt</span></div>`;
     const now=new Date(),et=ete!=null?new Date(now.getTime()+ete*60000):null,eta=et?et.toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–",etaZ=et?et.toISOString().slice(11,16).replace(":","")+"Z":"";
     nav=`<div class="gh-to">→ ${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">leg ${i+1}/${W.length-1}</span></div>
-     <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div class="gh-eta"><span>ETA</span><b>${eta}<small>L</small></b>${etaZ?`<i>${etaZ}</i>`:""}</div></div>
-     <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""} · MH ตามแผน <b>${row&&isFinite(row.mh)?hdg(row.mh)+"°":"–"}</b></div>`}
+     <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div title="ทิศจากตำแหน่งปัจจุบันตรงไปจุดหมาย (True)"><span>ไปจุดหมาย BRG</span><b>${tru(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div class="gh-eta"><span>ETA</span><b>${eta}<small>L</small></b>${etaZ?`<i>${etaZ}</i>`:""}</div></div>
+     <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""}</div>${steer}`}
   const near=gpsNear([P.lat,P.lon]);
   const strip=document.body.classList.contains("gps-touch"),n0=near[0];
-  const nearH=`<details class="gh-near"${!strip||GPS.nearOpen?" open":""}><summary class="gh-nt">📍 สนามใกล้สุด${strip&&n0?` · <b>${esc(n0.id)}</b> ${n0.d.toFixed(1)} NM · R-${hdg(n0.rad)}`:" · สำหรับรายงานตำแหน่ง (R = radial จาก VOR/TACAN ของสนาม · ≈ = ใช้ตำแหน่งสนามแทน)"}</summary>${near.map(n=>`<div class="gh-nr"><b>${esc(n.id)}</b><span>${n.d.toFixed(1)} NM</span><span class="hint">BRG ${hdg(n.brg)}°</span><span class="gh-rad">R-${hdg(n.rad)} / ${n.dme.toFixed(1)} ${n.st?`NM ${esc(n.st)} ${n.stt}`:"NM จากสนาม"}</span></div>`).join("")}</details>`;
+  if(GPS.nearOpen==null)GPS.nearOpen=!strip;
+  const nearH=`<details class="gh-near"${GPS.nearOpen?" open":""}><summary class="gh-nt">📍 สนามใกล้สุด${n0?` · <b>${esc(n0.id)}</b> ${n0.d.toFixed(1)} NM · R-${hdg(n0.rad)}`:" · สำหรับรายงานตำแหน่ง (R = radial จาก VOR/TACAN ของสนาม · ≈ = ใช้ตำแหน่งสนามแทน)"}</summary>${near.map(n=>`<div class="gh-nr"><b>${esc(n.id)}</b><span>${n.d.toFixed(1)} NM</span><span class="hint">BRG ${hdg(n.brg)}°</span><span class="gh-rad">R-${hdg(n.rad)} / ${n.dme.toFixed(1)} ${n.st?`NM ${esc(n.st)} ${n.stt}`:"NM จากสนาม"}</span></div>`).join("")}</details>`;
   const ar=gpsArea([P.lat,P.lon],P.alt!=null?P.alt:num(state.legs[Math.min(GPS.leg,state.legs.length-1)]&&state.legs[Math.min(GPS.leg,state.legs.length-1)].alt,null));
-  h.innerHTML=`<div class="gh-row"><div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div><span>TRK (M)</span><b>${mag(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div><div class="gh-navc">${nav}</div></div>
+  h.innerHTML=`<div class="gh-row"><div class="gh-grid top"><div><span>GS</span><b>${gs??"–"}</b>${gs!=null?"<i>kt</i>":""}</div><div title="ทิศที่เครื่องเคลื่อนที่จริงเทียบพื้น (จาก GPS) · True"><span>บินจริง TRK</span><b>${tru(P.trk)}</b></div><div><span>ALT GPS</span><b>${P.alt!=null?Math.round(P.alt).toLocaleString("en-US"):"–"}</b>${P.alt!=null?"<i>ft</i>":""}</div></div><div class="gh-navc">${nav}</div></div>
     ${ar?`<div class="gh-area">⚠ ${ar.d===0?"อยู่ใน":"ใกล้"} ${esc(ar.a.id)} ${esc(ar.a.name)} (${AREA_NAME[ar.a.type]}) ${ar.d?ar.d.toFixed(1)+" NM":""} · ${esc(ar.a.upper)}/${esc(ar.a.lower)}</div>`:""}
     ${nearH}
     <div class="gh-acc hint">ความแม่นยำ ±${P.acc!=null?Math.round(P.acc):"?"} m${GPS.sim?" · โหมดจำลอง":""} · ${fmtMgrs(toMgrs(P.lat,P.lon))}</div>${gpsBtns()}`;
-  const dn=h.querySelector(".gh-near");if(dn)dn.ontoggle=()=>{if(strip){GPS.nearOpen=dn.open;gpsStripH()}};gpsStripH()}
+  const dn=h.querySelector(".gh-near");if(dn)dn.ontoggle=()=>{GPS.nearOpen=dn.open;requestAnimationFrame(gpsStripH)};gpsStripH()}
 /* อุปกรณ์สัมผัส (iPad/มือถือ): เปิด GPS → แผงข้อมูลย้ายไปแถบล่างของแผนที่ */
 const GPS_TOUCH=()=>matchMedia("(pointer:coarse)").matches;
 function gpsStripH(){const h=$("#gpsHud");map.getContainer().style.setProperty("--gpsH",document.body.classList.contains("gps-touch")&&h&&!h.hidden?(h.offsetHeight+14)+"px":"0px")}
