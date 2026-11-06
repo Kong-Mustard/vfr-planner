@@ -385,6 +385,7 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .qz-me{font-size:24px;width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--mc) 22%,transparent)}.qz-mn{font-style:normal;font-size:12px;font-weight:700;color:var(--mc)}
 .qz-mode[aria-pressed="true"]{border-color:var(--mc)!important;background:color-mix(in srgb,var(--mc) 12%,var(--panel))!important;box-shadow:0 4px 16px color-mix(in srgb,var(--mc) 25%,transparent)}
 .qz-nseg{display:flex;gap:6px}.qz-nseg button{min-width:52px;border-radius:12px;font-weight:800}.qz-nseg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}.qz-go{padding:12px 22px;font-size:16px;border-radius:12px}
+.qz-img{display:flex;justify-content:center;margin:6px 0 8px}.qz-scr{padding:10px;border-radius:16px;background:#111827;box-shadow:inset 0 0 0 2px #374151,0 6px 20px rgba(0,0,0,.35)}.qz-scr svg{display:block;max-width:100%;height:auto}
 .qz-pill{font:700 13px var(--f-mono);padding:4px 10px;border-radius:999px;background:var(--input)}
 .qz-opt{display:flex!important;align-items:flex-start;gap:12px}.qz-L{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font:800 14px var(--f-mono);background:var(--input);color:var(--muted)}
 .qz-opt.ok .qz-L{background:#1f8a4c;color:#fff}.qz-opt.no .qz-L{background:var(--bad);color:#fff}
@@ -843,6 +844,13 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
 .sa-float{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:800;pointer-events:auto}
 /* ค่าเริ่มต้น leg แบบย่อ */
+.pm-box input,.pm-box select{background:var(--panel)!important}
+.pm-sw{display:flex;justify-content:flex-end;padding:0 10px}.pm-box:not([open]) .pm-sw{display:none}
+body.pm-grid .pm-box>summary{display:none}body.pm-grid .pm-box{padding:8px 8px 4px}
+body.pm-grid #planMetaSlot .grid2{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 6px}body.pm-grid #planMetaSlot .grid2>label{font-size:10.5px;gap:1px}
+body.pm-grid #planMetaSlot .grid2>label[style*="grid-column"]{grid-column:span 2!important}body.pm-grid #planMetaSlot input{padding:5px 7px;font-size:14px;min-height:32px}
+body.pm-grid #planMetaSlot .sa-info{font-size:11.5px;padding:4px 8px}body.pm-grid #legDef .legdef-h h2{font-size:12px}body.pm-grid #legDef label{font-size:10.5px}body.pm-grid #legDef .hint{display:none}
+@media (max-width:520px){body.pm-grid #planMetaSlot .grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .pm-box{margin:4px 0 12px;border:1px solid var(--line);border-radius:14px;background:var(--input)}.pm-box[hidden]{display:none}
 .pm-box>summary{cursor:pointer;list-style:none;padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.pm-box>summary::-webkit-details-marker{display:none}
 .pm-t{font-weight:800;font-size:14px}.pm-t::before{content:"▸ ";color:var(--muted)}.pm-box[open] .pm-t::before{content:"▾ "}
@@ -1239,7 +1247,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
       </div>
     </div>
-    <details id="planMetaBox" class="pm-box"><summary><span class="pm-t">⚙️ ข้อมูลแผน & ค่าเริ่มต้น leg</span><span id="pmSum" class="pm-sum"></span></summary><div id="planMetaSlot"></div></details>
+    <details id="planMetaBox" class="pm-box"><summary><span class="pm-t">⚙️ ข้อมูลแผน & ค่าเริ่มต้น leg</span><span id="pmSum" class="pm-sum"></span></summary><div class="pm-sw"><button type="button" id="pmStyle" class="mini">⇄ สลับเป็นแบบตารางกระชับ</button></div><div id="planMetaSlot"></div></details>
     <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
     <div class="tablewrap"><table id="navMini" class="mini-tbl">
       <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
@@ -3214,6 +3222,8 @@ epRenderList();epRenderMain();
 
 /* ---------- ข้อสอบ (ใช้ข้อมูลชุดเดียวกับแท็บ EMERGENCY) ---------- */
 const QZ_MODES=[
+ {id:"spec",e:"🚁",c:"#64748b",name:"ข้อมูลทั่วไปของเครื่อง",desc:"น้ำหนัก ความเร็ว พิสัย เชื้อเพลิง อุปกรณ์ (จากเอกสารแนะนำเครื่อง)"},
+ {id:"img",e:"🖼️",c:"#ec4899",name:"ข้อสอบรูปภาพ (สถานการณ์)",desc:"ดูจอ EICAS / CAS / ไฟเตือนจำลอง แล้วตอบว่าต้องทำอะไร"},
  {id:"EMER Proc.",e:"🚨",c:"#ef4444",name:"EMER Proc. (แบบข้อสอบ)",desc:"ขั้นตอนฉุกเฉินตาม EP Test · ปกติ = ขั้นที่ n · ซับซ้อน = เรียงลำดับ / ข้อใดไม่ใช่"},
  {id:"ep-next",e:"⏭️",c:"#f97316",name:"EMER: ขั้นตอนถัดไป",desc:"ให้ขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป (สุ่มจาก checklist)"},
  {id:"ep-id",e:"🔎",c:"#eab308",name:"EMER: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุใด"},
@@ -3225,7 +3235,7 @@ let qzMode="mix",qzN=10,qz=null,qzLvl=+(store.get("vfr_qz_lvl")||1);
 function qzWrong(){return store.get("vfr_qz_wrong")||[]}
 function qzKey(q){return q.key||q.q+"|"+q.o[q.a]}
 function qzRecord(q,ok){const st=store.get("vfr_qz_stats")||{},c=st[q.cat]=st[q.cat]||{n:0,ok:0};c.n++;if(ok)c.ok++;store.set("vfr_qz_stats",st);
-  let W=qzWrong().filter(x=>qzKey(x)!==qzKey(q));if(!ok)W.unshift({cat:q.cat,q:q.q,o:q.o,a:q.a,ex:q.ex,ref:q.ref,ctx:q.ctx,key:q.key});store.set("vfr_qz_wrong",W.slice(0,150))}
+  let W=qzWrong().filter(x=>qzKey(x)!==qzKey(q));if(!ok)W.unshift({cat:q.cat,q:q.q,o:q.o,a:q.a,ex:q.ex,ref:q.ref,ctx:q.ctx,img:q.img,key:q.key});store.set("vfr_qz_wrong",W.slice(0,150))}
 function qzStatsHtml(){const st=store.get("vfr_qz_stats")||{},ks=Object.keys(st);if(!ks.length)return"";
   return`<h3 class="qz-sh">สถิติของคุณ</h3><div class="qz-stats">${ks.map(k=>{const c=st[k],p=Math.round(c.ok/c.n*100);return`<div class="qz-st"><span>${esc(k)}</span><div class="qz-sbar"><i style="width:${p}%;background:${p>=80?"var(--good)":p>=60?"var(--warn)":"var(--bad)"}"></i></div><b>${p}%</b><span class="hint">${c.ok}/${c.n} ข้อ</span></div>`}).join("")}</div>
    <button id="qzResetStats" class="mini">ล้างสถิติ</button>`}
@@ -3242,10 +3252,60 @@ function qzMakeEpId(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step
   const others=shuf(qzEpPool().filter(x=>x.p!==p&&x.cl.map(b=>b.t).join()!==cl.map(b=>b.t).join()).map(x=>x.p.title)).filter((t,i,a)=>a.indexOf(t)===i&&t!==p.title).slice(0,3);
   const o=shuf([p.title,...others]);
   return{cat:"EMER Proc. · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
+/* ---------- ข้อสอบรูปภาพ: แอปวาดหน้าจอจำลองเอง (SVG) ---------- */
+const QZ_TAPES=[ // ช่วงตาม TM Figure 5-1 · lab = คำตอบ · c = สีบนจอ (g/y/r = เขียว/เหลือง/ลายแดงเหลือง)
+ {p:"TGT",u:"°C",max:960,min:600,z:[[0,793,"g","NORMAL (ไม่จำกัดเวลา)"],[793,846,"y","30 MINUTE LIMIT"],[846,879,"y","10 MINUTE LIMIT"],[879,903,"y","2.5 MINUTE TRANSIENT (CONTINGENCY)"],[903,949,"r","12 SECOND TRANSIENT"]]},
+ {p:"NG",u:"%",max:110,min:60,z:[[0,105,"g","CONTINUOUS"],[105,106,"y","12 SECOND TRANSIENT"]]},
+ {p:"NR",u:"%",max:120,min:80,z:[[91,95,"y","TRANSIENT"],[95,101,"g","CONTINUOUS"],[101,107,"y","TRANSIENT"]]},
+ {p:"ENG OIL P",u:"psi",max:130,min:0,z:[[22,26,"y","IDLE"],[26,100,"g","NORMAL"],[100,120,"y","5 MINUTE LIMIT"]]},
+ {p:"ENG OIL T",u:"°C",max:160,min:0,z:[[-20,135,"g","CONTINUOUS"],[135,150,"y","30 MINUTE LIMIT"]]},
+ {p:"XMSN OIL T",u:"°C",max:150,min:0,z:[[-20,105,"g","CONTINUOUS"],[105,140,"y","PRECAUTIONARY"]]},
+ {p:"XMSN OIL P",u:"psi",max:140,min:0,z:[[20,30,"y","IDLE AND TRANSIENT"],[30,65,"g","CONTINUOUS"],[65,130,"y","PRECAUTIONARY"]]}];
+const QZ_COL={g:"#22c55e",y:"#facc15",r:"#ef4444"};
+function qzTapeSvg(T,v,zc){const H=170,y=x=>16+H-(Math.max(T.min,Math.min(T.max,x))-T.min)/(T.max-T.min)*H;
+  const segs=T.z.map(([a,b,c])=>`<rect x="34" y="${y(b).toFixed(1)}" width="22" height="${Math.max(1,y(a)-y(b)).toFixed(1)}" fill="${QZ_COL[c]}" opacity=".9"/>`).join("");
+  const rc=zc==="r"?"#ef4444":zc==="y"?"#facc15":"#e5e7eb";
+  return`<svg viewBox="0 0 120 230" width="150" role="img" aria-label="${esc(T.p)} ${v}${esc(T.u)}"><rect x="0" y="0" width="120" height="230" rx="10" fill="#05070b"/>
+   <text x="45" y="12" fill="#cbd5e1" font-size="10" text-anchor="middle" font-family="monospace">${esc(T.p)}</text>
+   <rect x="34" y="16" width="22" height="${H}" fill="#1f2937"/>${segs}
+   <polygon points="58,${y(v).toFixed(1)} 70,${(y(v)-6).toFixed(1)} 70,${(y(v)+6).toFixed(1)}" fill="#fff"/><line x1="30" x2="60" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="#fff" stroke-width="2"/>
+   <rect x="16" y="198" width="88" height="24" rx="4" fill="${zc==="r"?"#7f1d1d":"#000"}" stroke="${rc}"/><text x="60" y="215" fill="${rc}" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">${v}${esc(T.u)}</text></svg>`}
+function qzMakeTape(){const T=QZ_TAPES[Math.floor(Math.random()*QZ_TAPES.length)],z=T.z[Math.floor(Math.random()*T.z.length)];
+  const lo=Math.max(z[0],T.min+(T.max-T.min)*.25),v=Math.round(lo+(z[1]-lo)*(0.2+Math.random()*0.6));const lab=z[3];
+  const pool=[...new Set(QZ_TAPES.flatMap(t=>t.z.map(x=>x[3])))].filter(x=>x!==lab);const o=shuf([lab,...shuf(pool).slice(0,3)]);
+  const ex=`${T.p} ${v}${T.u} อยู่ช่วง ${z[0]}–${z[1]}${T.u} = ${lab}\n\nช่วงทั้งหมดของ ${T.p}: ${T.z.map(x=>`${x[0]}–${x[1]} ${x[3]}`).join(" · ")}\n\nสีบนจอ: เขียว = ทำงานปกติ · เหลือง = ต้องให้ความสนใจ/จำกัดเวลา · ลายแดง-เหลือง/ตัวเลขแดง = เกินขีดจำกัด`;
+  return{cat:"รูปภาพ · หน้าปัด EICAS",lvl:qzLvl,img:`<div class="qz-scr">${qzTapeSvg(T,v,z[2])}</div>`,q:`จอแสดง ${T.p} ดังรูป — ค่านี้อยู่ในช่วงขีดจำกัดใด`,o,a:o.indexOf(lab),ex,ref:"TM Figure 5-1 Instrument Markings · ภาพจำลองจากแอป",key:"img-t-"+T.p+v}}
+function qzCasPool(){return EP?EP.procedures.filter(p=>/caution|advisory/i.test(p.title)&&!/no accompanying|failure with no/i.test(p.title)&&epActionable(p)).map(p=>({p,cl:epChecklist(p)})).filter(x=>x.cl.some(b=>b.k==="step")):[]}
+function qzCasText(t){t=t.replace(/T\/R/g,"T∕R").replace(/M\/R/g,"M∕R").replace(/\s*\(.*?\)/g,"").replace(/\s*LOT I.*$/i,"").replace(/\s+(?:Cautions?|Advisory)\s+Appears?\b.*?(?=\/|$)/gi,"").replace(/\s+With\b.*$/i,"");
+  const both=/\band\b/i.test(t)&&!/\bor\b/i.test(t);const parts=t.split(/\s*,\s*|\s+or\s+|\s+and\s+|\s*\/\s*/i).map(x=>x.replace(/∕/g,"/").trim()).filter(x=>/^[A-Z0-9#][A-Z0-9 #/&\-.]+$/.test(x)&&x.length>2);
+  if(!parts.length)return[];return both?parts.slice(0,3):[parts[Math.floor(Math.random()*parts.length)]]}
+function qzCasSvg(lines,adv){const L=lines.map((t,i)=>`<text x="12" y="${30+i*22}" fill="#fbbf24" font-size="15" font-weight="700" font-family="monospace">${esc(t)}</text>`).join("");
+  const A=(adv||[]).map((t,i)=>`<text x="12" y="${30+(lines.length+i)*22}" fill="#22c55e" font-size="14" font-family="monospace">${esc(t)}</text>`).join("");
+  const h=40+(lines.length+(adv||[]).length)*22;
+  return`<svg viewBox="0 0 300 ${h}" width="320" role="img" aria-label="CAS ${esc(lines.join(", "))}"><rect width="300" height="${h}" rx="10" fill="#05070b" stroke="#374151"/><text x="288" y="16" fill="#64748b" font-size="9" text-anchor="end" font-family="monospace">MFD · CAS</text>${L}${A}</svg>`}
+function qzMakeCas(){const pool=qzCasPool();if(!pool.length)return null;for(let g=0;g<20;g++){const {p,cl}=pool[Math.floor(Math.random()*pool.length)];const cas=qzCasText(p.title);if(!cas.length)continue;
+  const adv=/BACK UP PUMP ON Advisory Appearing/i.test(p.title)?["BACK UP PUMP ON"]:[];const st=cl.filter(b=>b.k==="step");const full=cl.map(b=>b.k==="step"?`${b.n?b.n+". ":"• "}${b.t}`:b.k==="cond"?`[${b.t}]`:"").filter(Boolean).join("\n");
+  if(qzLvl===2){const ap=/AS SOON AS POSSIBLE/i.test(full)?"LAND AS SOON AS POSSIBLE":/AS SOON AS PRACTICABLE/i.test(full)?"LAND AS SOON AS PRACTICABLE":"บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)";
+    const o=shuf(["LAND AS SOON AS POSSIBLE","LAND AS SOON AS PRACTICABLE","บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)","AUTOROTATE ทันที"]);
+    return{cat:"รูปภาพ · CAS",lvl:2,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — สุดท้ายแล้วต้องลงจอดแบบใด",o,a:o.indexOf(ap),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}\n\nPOSSIBLE = ลงที่ที่เหมาะสมที่ใกล้ที่สุดโดยไม่รอช้า · PRACTICABLE = ลงที่ที่เหมาะสม ตามความเร่งด่วน`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c2-"+p.id}}
+  const right=st[0].t;const others=shuf([...new Set(pool.filter(x=>x.p!==p).map(x=>x.cl.find(b=>b.k==="step").t))].filter(t=>t!==right)).slice(0,3);if(others.length<3)continue;const o=shuf([right,...others]);
+  return{cat:"รูปภาพ · CAS",lvl:1,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — ขั้นแรกที่ต้องทำคือ",o,a:o.indexOf(right),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c1-"+p.id}}return null}
+/* ข้อมูลทั่วไปของเครื่อง (UH-60M) */
+function qzMakeSpec(){if(!/60M/i.test(acftName()))return null;const A=AC_SPEC,f=v=>Number(v).toLocaleString("en-US");
+  const Q=[["น้ำหนักเปล่า (empty weight) ของ UH-60M",f(A.weight)+" lb",["11,500 lb","14,200 lb","16,825 lb"]],["น้ำหนักวิ่งขึ้นสูงสุด (max T/O weight)",f(A.maxWeight)+" lb",["16,825 lb","20,250 lb","24,500 lb"]],
+   ["ความจุถังเชื้อเพลิงภายใน",f(A.fuelL)+" ลิตร (≈ "+f(A.fuelLb)+" lb JP-8)",["1,100 ลิตร","1,600 ลิตร","2,600 ลิตร"]],["อัตราสิ้นเปลืองเชื้อเพลิงโดยประมาณ",A.burnLph+" ลิตร/ชม.",["500 ลิตร/ชม.","650 ลิตร/ชม.","1,000 ลิตร/ชม."]],
+   ["เพดานบิน (ceiling)",f(A.ceiling)+" ft",["14,000 ft","17,000 ft","21,000 ft"]],["พิสัยบิน (range)",A.rangeNm+" NM",["250 NM","400 NM","480 NM"]],["ที่นั่งผู้โดยสาร",A.seats+" ที่นั่ง",["8 ที่นั่ง","13 ที่นั่ง","15 ที่นั่ง"]],
+   ["เครื่องยนต์ของ UH-60M","2 × T700-GE-701D",["2 × T700-GE-701C","2 × T700-GE-401C","2 × CT7-8A"]],["ใบพัดหลัก (main rotor)","4 ใบ · 30° sweep · 20° anhedral droop",["4 ใบ · ปลายตรง","5 ใบ · 20° sweep","4 ใบ · 20° sweep · 30° droop"]],
+   ["ถุงตักน้ำ Water Hog WH2600 จุน้ำได้สูงสุด","2,600 ลิตร",["1,600 ลิตร","2,000 ลิตร","3,200 ลิตร"]],["ถังดับเพลิง Bambi Bucket 3542 จุน้ำได้สูงสุด","1,600 ลิตร",["1,000 ลิตร","2,600 ลิตร","2,000 ลิตร"]],
+   ["เชื้อเพลิงที่ใช้","JP-8",["JP-4","JP-5","Jet A-1 เท่านั้น"]],["ความเร็วเดินทาง (cruise) ตามเอกสารแนะนำเครื่อง",A.cruiseKt+" kt (≈ "+A.cruiseKmh+" km/h)",["110 kt","145 kt","160 kt"]]];
+  const [q,ans,ds]=Q[Math.floor(Math.random()*Q.length)];const o=shuf([ans,...ds]);
+  return{cat:"ข้อมูลทั่วไปของเครื่อง",lvl:1,q:q+" คือ",o,a:o.indexOf(ans),ex:`${A.name}: น้ำหนักเปล่า ${f(A.weight)} lb · MTOW ${f(A.maxWeight)} lb · cruise ${A.cruiseKt} kt · range ${A.rangeNm} NM · ceiling ${f(A.ceiling)} ft · endurance ${A.endurance} · ถังเชื้อเพลิง ${f(A.fuelL)} L · สิ้นเปลือง ${A.burnLph} L/ชม. · ${A.engine} · ใบพัด ${A.rotor}`,
+    ref:"เอกสารแนะนำเครื่อง UH-60M (infographic) — ค่าทั่วไป ไม่ใช่ค่าจาก TM ใช้ TM/Chapter 7 performance สำหรับวางแผนจริง",key:"spec-"+q}}
+function qzMakeImg(){return Math.random()<.45?qzMakeTape():(qzMakeCas()||qzMakeTape())}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
-  const pick=m=>m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
+  const pick=m=>m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
     const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
-  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ"]):[qzMode];const seen=new Set();let guard=0;
+  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","img","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","img","ep-next","ep-id","ข้อจำกัด","ระบบ","spec"]):[qzMode];const seen=new Set();let guard=0;
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[(qs.length+guard)%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
@@ -3275,7 +3335,7 @@ function qzRender(){const R=$("#qz");
   const ctx=q.ctx&&q.ctx.length?`<div class="qz-ctx">${q.ctx.map(b=>b.k==="cond"?`<div class="c">${esc(b.t)}</div>`:`<div>${b.n?b.n+". ":"• "}${esc(b.t)}</div>`).join("")}</div>`:"";
   R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)} · ${qzLvl===2?"🔥 ซับซ้อน":"😊 ปกติ"}</span><span class="qz-pill">ข้อ ${qz.i+1}/${qz.qs.length} · ✓ ${qz.score}</span></div>
    <div class="qz-bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div>
-   <div class="qz-q">${esc(q.q)}</div>${ctx}
+   ${q.img?`<div class="qz-img">${q.img}</div>`:""}<div class="qz-q">${esc(q.q)}</div>${ctx}
    <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}"><span class="qz-L">${"ABCD"[i]}</span><span>${esc(t)}</span></button>`).join("")}</div><div id="qzEx"></div>`;
   R.querySelectorAll(".qz-opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)qz.score++;qz.ans.push({q,ok});qzRecord(q,ok);
     R.querySelectorAll(".qz-opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.a)x.classList.add("ok")});if(!ok)b.classList.add("no");
@@ -3866,7 +3926,11 @@ $("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx"
 /* อุปกรณ์พกพา: ชื่อแผน/Aircraft/วันที่/เวลา/น้ำมัน/SA ย้ายไปไว้กล่อง NAV LOG ในแท็บ 1 (แผงแผนการบินจะสั้นลง) */
 {const meta=$("#planMeta"),leg=$("#legDef"),home=meta.parentNode,next=meta.nextElementSibling,lhome=leg.parentNode,lnext=leg.nextElementSibling,slot=$("#planMetaSlot"),box=$("#planMetaBox"),mq=matchMedia("(max-width:999px)");
   const place=()=>{if(mq.matches){if(meta.parentNode!==slot){slot.appendChild(meta);slot.appendChild(leg)}box.hidden=false}else{if(meta.parentNode!==home)home.insertBefore(meta,next);if(leg.parentNode!==lhome)lhome.insertBefore(leg,lnext);box.hidden=true}};
-  place();mq.addEventListener("change",place)}
+  place();mq.addEventListener("change",place);
+  /* 2 แบบ: A = แถบสรุปแตะเพื่อกาง (ค่าเริ่มต้น) · B = ตารางกระชับแสดงตลอด */
+  const setSt=st=>{document.body.classList.toggle("pm-grid",st==="b");if(st==="b")box.open=true;$("#pmStyle").textContent=st==="b"?"⇄ สลับเป็นแถบสรุป (แตะเพื่อกาง)":"⇄ สลับเป็นแบบตารางกระชับ";try{localStorage.setItem("vfr_pm_style",st)}catch(e){}};
+  let st0="a";try{st0=localStorage.getItem("vfr_pm_style")||"a"}catch(e){}setSt(st0);
+  $("#pmStyle").onclick=e=>{e.preventDefault();setSt(document.body.classList.contains("pm-grid")?"a":"b")}}
 function pmSumRender(){const el=$("#pmSum");if(!el||!state)return;const g=state.g||{};
   el.innerHTML=[state.depTime&&`🕗 ${esc(state.depTime)}`,state.fuel0!=null&&state.fuel0!==""&&`⛽ ${esc(state.fuel0)} lb`,g.alt!=null&&`ALT ${esc(g.alt)}`,g.cas!=null&&`CAS ${esc(g.cas)}`,(g.wd!=null&&g.wv!=null)&&`💨 ${esc(g.wd)}°/${esc(g.wv)}`,state.sa&&`SA ${esc(state.sa)}`].filter(Boolean).map(x=>`<i>${x}</i>`).join("")}
 /* แถบลัดไปหัวข้อ + ปุ่มกลับขึ้นบน */
