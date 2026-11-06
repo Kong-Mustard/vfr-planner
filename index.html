@@ -1597,7 +1597,10 @@ function drawMap(rows){
   remMk=remMarkers(rows).map(m=>L.marker([m.lat,m.lon],{interactive:false,icon:L.divIcon({className:"remmk",html:`<span class="remtag">${m.rem} NM</span>`,iconSize:null,iconAnchor:[-8,9]})}).addTo(routeLayer));remThin();
 }
 map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
-map.on("click",e=>{if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
+/* กันคลิกทะลุ: ปุ่มบนแผงที่ซ้อนแผนที่ (GPS, เมนู, ป๊อปอัป, ปุ่มควบคุม) หรือปุ่มที่ถูกวาดใหม่ระหว่างกด จะไม่ถูกนับเป็นการแตะแผนที่ */
+function overlayClick(e){const t=e&&e.originalEvent&&e.originalEvent.target;if(!t)return false;if(t.isConnected===false)return true;
+  return!!(t.closest&&t.closest(".gps-hud,.leaflet-control,.snapask,.tapask,.meas,#mfWp,.sa-chip,.jumpbar"))}
+map.on("click",e=>{if(overlayClick(e))return;if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
   if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng)});
 /* แตะแผนที่ → หมุดจาง + เมนูเล็ก (ไม่มีโหมดเปิด/ปิด) · Shift+คลิก หรือ แตะค้าง/คลิกขวา = เพิ่มทันที */
 let tapGhost=null,tapBox=null;
@@ -1673,7 +1676,7 @@ function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){
   if(q(".ta-info"))q(".ta-info").onclick=()=>{tapClose();L.popup().setLatLng(ll).setContent(info()).openOn(map)};
   q(".ta-x").onclick=tapClose}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&tapBox)tapClose()});
-map.on("contextmenu",e=>{if(pePick!=null||(typeof pick!=="undefined"&&pick))return;window._suppressClick=Date.now();tapAddDirect(e.latlng);try{navigator.vibrate&&navigator.vibrate(15)}catch(_){}});
+map.on("contextmenu",e=>{if(overlayClick(e))return;if(pePick!=null||(typeof pick!=="undefined"&&pick))return;window._suppressClick=Date.now();tapAddDirect(e.latlng);try{navigator.vibrate&&navigator.vibrate(15)}catch(_){}});
 
 /* ---------- compute ---------- */
 function compute(){
@@ -3524,7 +3527,7 @@ function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWa
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
-$("#gpsHud").addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
+$("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
   if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
