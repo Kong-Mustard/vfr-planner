@@ -299,6 +299,7 @@ body.printing .hrot{display:none}
 .np-prog{font:600 13px var(--f-mono);color:var(--muted)}
 @media (min-width:1000px){#map{height:calc(100vh - 150px);min-height:620px}.top{grid-template-columns:minmax(0,1fr) 330px}.side{max-height:calc(100vh - 150px);overflow:auto}}
 body.mapfull{overflow:hidden}
+body.mapfull #map .leaflet-top{top:calc(max(env(safe-area-inset-top,0px),10px) + 8px)}body.mapfull #map .leaflet-right{right:env(safe-area-inset-right,0px)}
 body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:100vw!important;height:100%!important;min-height:0;border-radius:0;border:0}
 .ad-blk{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
 .ad-blk>summary{cursor:pointer}.ad-blk[open]>summary{margin-bottom:6px}.ad-blk h3{margin:0;font:700 17px var(--f-display);color:var(--nav)}
@@ -814,7 +815,7 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}.ap-lo .ap-e{font-size:12px;line-height:16px}.ap-vlo .apmk.ap-minor{display:none}
 .wpdbl{background:#123c69;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:4px;white-space:nowrap;border:1px solid #fff}
 .undo-bar a{display:grid!important;place-items:center}
-#mfWp{position:fixed;left:12px;top:12px;z-index:2600;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;background:var(--panel);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+#mfWp{position:fixed;left:calc(14px + env(safe-area-inset-left,0px));top:calc(max(env(safe-area-inset-top,0px),10px) + 16px);z-index:2600;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 40px - env(safe-area-inset-top,0px));display:flex;flex-direction:column;background:var(--panel);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
 #mfWp[hidden]{display:none}#mfWp .mf-tg{border:0;background:var(--accent);color:#fff;font:700 15px var(--f-display);padding:10px 14px;border-radius:16px 16px 0 0;text-align:left;display:flex;justify-content:space-between}
 #mfWp.collapsed .mf-tg{border-radius:16px}#mfWp.collapsed .mf-body{display:none}#mfWp.collapsed .mf-tg span{transform:rotate(-90deg)}
 #mfWp .mf-body{overflow:auto;padding:0 4px 6px}#mfWp .mf-body>.card{margin:0;box-shadow:none;border:0}
@@ -846,7 +847,10 @@ body.gps-touch .rail .tab{width:46px;padding:7px 0;font-size:0;gap:0}
 body.gps-touch .rail .tab i{font-size:20px}body.gps-touch .rail .tab small{font-size:9px}
 body.gps-touch nav.rail .netchip{font-size:0;width:12px;height:12px;padding:0;border-radius:50%;min-width:0}
 @media (max-width:760px){body.gps-touch{padding-left:0}body.gps-touch nav.rail{width:auto;height:calc(48px + env(safe-area-inset-bottom,0px))}body.gps-touch .rail .tab{width:auto;flex:1;padding:4px 0}}
-.gh-near>summary{cursor:pointer;list-style:none}.gh-near>summary::-webkit-details-marker{display:none}
+.gh-eta b small{font-size:.5em;opacity:.7;margin-left:2px}.gh-grid .gh-eta i{font-style:normal;font-weight:700;font-size:13px;color:#cfe0f5;font-family:var(--f-mono)}
+.measmk{background:none;border:0}.meas{transform:translate(-50%,-130%);display:flex;align-items:center;gap:8px;background:#111827;color:#fff;border:2px solid #ffd60a;border-radius:12px;padding:6px 8px 6px 12px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.meas b{font:800 16px var(--f-mono)}.meas span{font:600 12px var(--f-mono);color:#ffd60a}.meas button{border:0;background:#2a3446;color:#fff;border-radius:8px;width:26px;height:26px;padding:0;cursor:pointer}
+.gh-near>summary{cursor:pointer;list-style:none;color:#fff!important;display:flex;align-items:center;gap:6px}.gh-near>summary::after{content:"▸";margin-left:auto;font-size:13px;opacity:.9;transition:transform .15s}.gh-near[open]>summary::after{transform:rotate(90deg)}.gh-near>summary b{color:#fff}.gh-near>summary::-webkit-details-marker{display:none}
 body.gps-touch #map .leaflet-bottom{bottom:var(--gpsH,0px);transition:bottom .2s}body.gps-touch .sa-float{bottom:calc(var(--gpsH,0px) + 12px)}
 .gps-hud.gps-strip{position:absolute;left:8px;right:8px;bottom:8px;width:auto;z-index:1000;max-height:52%;overflow:auto;padding:8px 10px;border-radius:14px;gap:6px;background:#111827;box-shadow:0 -4px 18px rgba(0,0,0,.35)}
 .gps-strip .gh-row{flex-direction:row;align-items:stretch;gap:8px}
@@ -1592,6 +1596,23 @@ function hbAsk(ll){tapClose();document.querySelectorAll(".snapask").forEach(x=>x
   place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k);histSched&&histSched()};
   const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
   b.querySelector(".sa-no").onclick=()=>set(1);b.querySelector(".sa-yes").onclick=close;requestAnimationFrame(()=>b.classList.add("in"))}
+/* แตะแผนที่ด้วย 2 นิ้วพร้อมกัน (ไม่ลาก) → วัดระยะ/ทิศระหว่าง 2 จุดที่นิ้วแตะ */
+let measLayer=null,measT=null;
+function measClear(){if(measLayer){map.removeLayer(measLayer);measLayer=null}clearTimeout(measT)}
+function measShow(a,b){measClear();const d=gcDistNm([a.lat,a.lng],[b.lat,b.lng]),tc=trueCourse([a.lat,a.lng],[b.lat,b.lng]),vr=num(state.g&&state.g.var,0);
+  const m=t=>String(Math.round(((t+vr)%360+360)%360)||360).padStart(3,"0")+"°";
+  measLayer=L.layerGroup().addTo(map);
+  L.polyline([a,b],{color:"#ffd60a",weight:3,dashArray:"8 6",interactive:false}).addTo(measLayer);
+  [a,b].forEach(p=>L.circleMarker(p,{radius:6,color:"#111",weight:2,fillColor:"#ffd60a",fillOpacity:1,interactive:false}).addTo(measLayer));
+  const mid=L.latLng((a.lat+b.lat)/2,(a.lng+b.lng)/2);
+  const mk=L.marker(mid,{zIndexOffset:1000,icon:L.divIcon({className:"measmk",html:`<div class="meas"><b>${d.toFixed(1)} NM</b><span>${m(tc)} / ${m(tc+180)} M</span><button type="button" aria-label="ปิด">✕</button></div>`,iconSize:null,iconAnchor:[0,0]})}).addTo(measLayer);
+  const el=mk.getElement();if(el){L.DomEvent.disableClickPropagation(el);el.querySelector("button").onclick=measClear}
+  measT=setTimeout(measClear,15000)}
+{const C=map.getContainer();let t0=0,p0=null,bad=false;
+  C.addEventListener("touchstart",e=>{if(e.touches.length===2){t0=Date.now();bad=false;p0=[...e.touches].map(t=>({x:t.clientX,y:t.clientY}))}else if(e.touches.length>2)p0=null},{passive:true});
+  C.addEventListener("touchmove",e=>{if(!p0)return;[...e.touches].forEach((t,i)=>{if(p0[i]&&Math.hypot(t.clientX-p0[i].x,t.clientY-p0[i].y)>14)bad=true})},{passive:true});
+  C.addEventListener("touchend",e=>{if(!p0||e.touches.length)return;const ok=!bad&&Date.now()-t0<450,pp=p0;p0=null;if(!ok)return;
+    const r=C.getBoundingClientRect(),ll=pp.map(p=>map.containerPointToLatLng([p.x-r.left,p.y-r.top]));window._suppressClick=Date.now();measShow(ll[0],ll[1])},{passive:true})}
 function tapClose(){if(tapBox){tapBox.remove();tapBox=null}if(tapGhost){map.removeLayer(tapGhost);tapGhost=null}map.off("move zoom",tapPlace)}
 function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerPoint(tapGhost.getLatLng()),C=map.getSize(),bw=tapBox.offsetWidth,bh=tapBox.offsetHeight;
   let x=pt.x-bw/2,y=pt.y-bh-30;if(y<8)y=pt.y+16;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));tapBox.style.left=x+"px";tapBox.style.top=y+"px"}
@@ -2007,9 +2028,9 @@ let ml=null,pick=null,pickLayer=null,fly=null;
 function loadML(){return new Promise((ok,no)=>{if(window.maplibregl)return ok();const l=document.createElement("link");l.rel="stylesheet";l.href=ML_CSS;sriSet(l,ML_CSS);document.head.appendChild(l);
   const s=document.createElement("script");s.src=ML_JS;sriSet(s,ML_JS);s.onload=ok;s.onerror=()=>no(new Error("โหลด 3D ไม่ได้ (ต้องต่อเน็ต)"));document.head.appendChild(s)})}
 const Ctl3D=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar");
-  d.innerHTML=`<a href="#" class="btn3d" title="แตะ 2 มุมบนแผนที่เพื่อตีกรอบพื้นที่ แล้วเปิดภาพ 3 มิติ">ตีกรอบ 3D</a><a href="#" class="btn3d" title="เปิดภาพ 3 มิติตามเส้นทางทั้งหมด">3D เส้นทาง</a>`;
-  L.DomEvent.disableClickPropagation(d);const [a,b]=d.querySelectorAll("a");
-  a.onclick=e=>{e.preventDefault();startPick()};b.onclick=e=>{e.preventDefault();if(state.wps.length<2){toast("ยังไม่มีเส้นทาง");return}
+  d.innerHTML=`<a href="#" class="btn3d" title="เปิดภาพ 3 มิติตามเส้นทางทั้งหมด">3D เส้นทาง</a>`;
+  L.DomEvent.disableClickPropagation(d);const [b]=d.querySelectorAll("a");
+  b.onclick=e=>{e.preventDefault();if(state.wps.length<2){toast("ยังไม่มีเส้นทาง");return}
     const bb=L.latLngBounds(state.wps.map(w=>[w.lat,w.lon])).pad(0.15);open3D(bb)};return d}});
 new Ctl3D().addTo(map);
 /* ---------- โหมด V (VFR) / I (IFR) + Safety Altitude ----------
@@ -3503,9 +3524,9 @@ function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHu
   const mag=t=>t==null?"–":hdg(t+vr)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
   let nav="";if(W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],A=W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
     xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
-    const now=new Date(),eta=ete!=null?new Date(now.getTime()+ete*60000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–";
+    const now=new Date(),et=ete!=null?new Date(now.getTime()+ete*60000):null,eta=et?et.toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–",etaZ=et?et.toISOString().slice(11,16).replace(":","")+"Z":"";
     nav=`<div class="gh-to">→ ${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">leg ${i+1}/${W.length-1}</span></div>
-     <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div><span>ETA</span><b>${eta}</b></div></div>
+     <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div><span>BRG</span><b>${mag(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div class="gh-eta"><span>ETA</span><b>${eta}<small>L</small></b>${etaZ?`<i>${etaZ}</i>`:""}</div></div>
      <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""} · MH ตามแผน <b>${row&&isFinite(row.mh)?hdg(row.mh)+"°":"–"}</b></div>`}
   const near=gpsNear([P.lat,P.lon]);
   const strip=document.body.classList.contains("gps-touch"),n0=near[0];
