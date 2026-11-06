@@ -792,8 +792,10 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .jumpbar{display:flex;gap:8px;flex-wrap:wrap;background:#fff;border-radius:14px;padding:8px;box-shadow:0 1px 2px rgba(17,24,39,.06),0 4px 14px rgba(17,24,39,.08)}
 .jumpbar button{background:#fff;color:#1b2430;border:1px solid #dfe4ea;border-radius:999px;padding:7px 13px;font:600 13.5px var(--f-body);cursor:pointer;white-space:nowrap}
 .jumpbar button:hover{background:#f1f4f8;border-color:#c9d1db}.jumpbar button:active{transform:scale(.97)}
-@media (min-width:1000px){.jumpbar .jb-side{display:none}}
-@media (max-width:760px){.jumpbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.jumpbar::-webkit-scrollbar{display:none}}
+.top>.jumpbar{grid-column:1/-1}
+@media (min-width:901px) and (max-width:999px){.top>.jumpbar{order:2}}
+@media (min-width:1000px){.jumpbar .jb-side{display:none}.top>.jumpbar{margin-top:12px}}
+@media (max-width:999px){.jumpbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.jumpbar::-webkit-scrollbar{display:none}}
 .card.jump-hit{animation:jumpHit 1.2s ease-out}@keyframes jumpHit{0%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
 .totop{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:1400;width:48px;height:48px;border-radius:50%;padding:0;background:#fff;color:#1b2430;border:1px solid #dfe4ea;
   font:800 22px/1 var(--f-body);box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s}
@@ -930,6 +932,14 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="top">
     <div id="map"></div>
+    <nav class="jumpbar" id="jumpBar" aria-label="ไปยังหัวข้อ">
+    <button type="button" data-jump=".top>.side" class="jb-side">✈️ แผนการบิน</button>
+    <button type="button" data-jump="#wpCard">📍 จุดเส้นทาง</button>
+    <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
+    <button type="button" data-jump="#procCard">🛬 เข้า-ออกสนาม · Charts</button>
+    <button type="button" data-jump="#freqCard">📻 ความถี่</button>
+    <button type="button" data-jump="#areaCard">⚠️ พื้นที่ P/R/D</button>
+  </nav>
     <div class="card side">
       <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
       <div class="routebox">
@@ -987,14 +997,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     </div>
   </div>
 
-  <nav class="jumpbar" id="jumpBar" aria-label="ไปยังหัวข้อ">
-    <button type="button" data-jump=".top>.side" class="jb-side">✈️ แผนการบิน</button>
-    <button type="button" data-jump="#wpCard">📍 จุดเส้นทาง</button>
-    <button type="button" data-jump="#navCard">🧭 NAV LOG</button>
-    <button type="button" data-jump="#procCard">🛬 เข้า-ออกสนาม · Charts</button>
-    <button type="button" data-jump="#freqCard">📻 ความถี่</button>
-    <button type="button" data-jump="#areaCard">⚠️ พื้นที่ P/R/D</button>
-  </nav>
   <div class="card section" id="wpCard">
     <div class="sechead">
       <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2>
