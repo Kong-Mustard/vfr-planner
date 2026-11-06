@@ -361,13 +361,29 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
 .qz h2{font:700 22px var(--f-display);text-transform:none;letter-spacing:0;color:var(--ink);margin:0 0 6px}
-.qz-modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:14px 0}
+.qz-modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:6px 0 4px}
+.qz-hero{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:18px;background:linear-gradient(120deg,#6d28d9,#2563eb 55%,#0ea5e9);color:#fff;margin-bottom:6px}
+.qz-hero h2{margin:0;font:800 24px var(--f-display);color:#fff}.qz-hero p{margin:4px 0 0;opacity:.9;font-size:14px}.qz-hero-ic{margin-left:auto;font-size:44px}
+.qz-lvl{display:grid;grid-template-columns:1fr 1fr;gap:10px}.qz-lvl button{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;background:var(--panel)}
+.qz-lvl b{font:800 17px var(--f-display)}.qz-lvl span{font-size:12.5px;color:var(--muted)}.qz-lvl button.on{border-color:#f97316;background:color-mix(in srgb,#f97316 14%,var(--panel))}.qz-lvl button[data-lvl="1"].on{border-color:#22c55e;background:color-mix(in srgb,#22c55e 14%,var(--panel))}
+.qz-me{font-size:24px;width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--mc) 22%,transparent)}.qz-mn{font-style:normal;font-size:12px;font-weight:700;color:var(--mc)}
+.qz-mode[aria-pressed="true"]{border-color:var(--mc)!important;background:color-mix(in srgb,var(--mc) 12%,var(--panel))!important;box-shadow:0 4px 16px color-mix(in srgb,var(--mc) 25%,transparent)}
+.qz-nseg{display:flex;gap:6px}.qz-nseg button{min-width:52px;border-radius:12px;font-weight:800}.qz-nseg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}.qz-go{padding:12px 22px;font-size:16px;border-radius:12px}
+.qz-pill{font:700 13px var(--f-mono);padding:4px 10px;border-radius:999px;background:var(--input)}
+.qz-opt{display:flex!important;align-items:flex-start;gap:12px}.qz-L{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font:800 14px var(--f-mono);background:var(--input);color:var(--muted)}
+.qz-opt.ok .qz-L{background:#1f8a4c;color:#fff}.qz-opt.no .qz-L{background:var(--bad);color:#fff}
+.qz-ex.ok{border-left:5px solid #1f8a4c}.qz-ex.no{border-left:5px solid var(--bad)}.qz-exh{font:800 18px var(--f-display);margin-bottom:8px}
+.qz-exr{display:grid;grid-template-columns:110px 1fr;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:15px}.qz-exr span{color:var(--muted);font-size:13px}.qz-exr.good b{color:#22c55e}
+.qz-exb{margin-top:10px}.qz-exb>span{font-weight:800;font-size:13px;color:var(--muted)}.qz-exb>div{white-space:pre-line;line-height:1.55;font-size:14.5px;margin-top:4px}
+.qz-exn{margin-top:10px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,#f59e0b 15%,transparent);border:1px solid #f59e0b;font-size:14px;line-height:1.5}
+.qz-exf{margin-top:10px;font-size:12.5px;color:var(--muted)}
+@media (max-width:620px){.qz-lvl{grid-template-columns:1fr}.qz-hero-ic{display:none}}
 .qz-mode{all:unset;cursor:pointer;border:2px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:4px;background:var(--panel)}
 .qz-mode b{font:700 17px var(--f-display);color:var(--ink)}.qz-mode span{font-size:13px;color:var(--muted)}
 .qz-mode[aria-pressed="true"]{border-color:var(--nav);background:var(--accent-soft)}
 .qz-mode:focus-visible{outline:2px solid var(--nav)}
 .qz-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.qz-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:6px 0 14px}.qz-bar i{display:block;height:100%;background:var(--nav)}
+.qz-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:6px 0 14px}.qz-bar i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#3b82f6,#a855f7);transition:width .3s}
 .qz-cat{font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .qz-q{font:600 20px/1.4 var(--f-body);margin:6px 0 10px;color:var(--ink)}
 .qz-ctx{border-left:3px solid var(--line);padding:4px 12px;margin:8px 0 12px;font-size:15px;color:var(--muted)}
@@ -3139,12 +3155,13 @@ epRenderList();epRenderMain();
 
 /* ---------- ข้อสอบ (ใช้ข้อมูลชุดเดียวกับแท็บ EMERGENCY) ---------- */
 const QZ_MODES=[
- {id:"ep-next",name:"EMER Proc.: ขั้นตอนถัดไป",desc:"ให้หัวข้อฉุกเฉินและขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป"},
- {id:"ep-id",name:"EMER Proc.: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุฉุกเฉินใด"},
- {id:"ข้อจำกัด",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit จากบทที่ 5"},
- {id:"ระบบ",name:"ระบบอากาศยาน",desc:"ระบบเครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ บทที่ 2"},
- {id:"mix",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
-let qzMode="mix",qzN=10,qz=null;
+ {id:"EMER Proc.",e:"🚨",c:"#ef4444",name:"EMER Proc. (แบบข้อสอบ)",desc:"ขั้นตอนฉุกเฉินตาม EP Test · ปกติ = ขั้นที่ n · ซับซ้อน = เรียงลำดับ / ข้อใดไม่ใช่"},
+ {id:"ep-next",e:"⏭️",c:"#f97316",name:"EMER: ขั้นตอนถัดไป",desc:"ให้ขั้นตอนก่อนหน้า เลือกขั้นตอนถัดไป (สุ่มจาก checklist)"},
+ {id:"ep-id",e:"🔎",c:"#eab308",name:"EMER: ระบุเหตุฉุกเฉิน",desc:"ให้ขั้นตอนที่ต้องจำ เลือกว่าเป็นเหตุใด"},
+ {id:"ข้อจำกัด",e:"📏",c:"#3b82f6",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit บทที่ 5 · ซับซ้อน = อ่านค่าหน้าปัดแล้วตัดสิน"},
+ {id:"ระบบ",e:"⚙️",c:"#14b8a6",name:"ระบบอากาศยาน",desc:"เครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ"},
+ {id:"mix",e:"🎲",c:"#a855f7",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
+let qzMode="mix",qzN=10,qz=null,qzLvl=+(store.get("vfr_qz_lvl")||1);
 /* สถิติ + ข้อที่เคยผิด (เก็บในเครื่อง) */
 function qzWrong(){return store.get("vfr_qz_wrong")||[]}
 function qzKey(q){return q.key||q.q+"|"+q.o[q.a]}
@@ -3167,37 +3184,47 @@ function qzMakeEpId(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step
   const o=shuf([p.title,...others]);
   return{cat:"EMER Proc. · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
-  const pick=m=>m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const b=bank.filter(x=>x.cat===m);if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
-    const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:`${EP.source} ${x.ref}`,key:x.id}})();
-  const modes=qzMode==="mix"?["ep-next","ep-id","ข้อจำกัด","ระบบ"]:[qzMode];const seen=new Set();let guard=0;
-  while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[qs.length%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
+  const pick=m=>m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
+    const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
+  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ"]):[qzMode];const seen=new Set();let guard=0;
+  while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[(qs.length+guard)%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
   if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> แล้วกด <b>Import emergency_data.json</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
   if(!qz){const bankN=(EP.quiz||[]).length;
-    R.innerHTML=`<h2>ข้อสอบฝึกซ้อม UH-60M</h2><p class="hint">ข้อสอบ EMER Proc. สร้างจาก checklist อัตโนมัติ · ข้อสอบระบบ/ข้อจำกัด ${bankN} ข้อ จาก ${esc(EP.source)}</p>
-     <div class="qz-modes">${QZ_MODES.map(m=>`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}"><b>${m.name}</b><span>${m.desc}</span></button>`).join("")}</div>
-     <div class="qz-row"><label style="flex-direction:row;align-items:center;gap:8px;font-size:15px">จำนวนข้อ <select id="qzN" style="width:auto">${[10,20,30].map(n=>`<option${n===qzN?" selected":""}>${n}</option>`).join("")}</select></label>
-     <button id="qzStart" class="primary">เริ่มทำข้อสอบ</button>${qzWrong().length?`<button id="qzReview">ทบทวนข้อที่เคยผิด (${qzWrong().length})</button>`:""}</div>${qzStatsHtml()}`;
+    const cnt=c=>(EP.quiz||[]).filter(x=>x.cat===c&&(x.lvl||1)===qzLvl).length;
+    R.innerHTML=`<div class="qz-hero"><div><h2>ข้อสอบฝึกซ้อม ${esc(acftName())}</h2><p>คลังข้อสอบ ${bankN} ข้อ + ข้อสอบ EMER สุ่มจาก checklist · เฉลยละเอียดพร้อมอ้างอิง TM</p></div><span class="qz-hero-ic">✈️</span></div>
+     <h3 class="qz-sh">1 · ระดับความยาก</h3>
+     <div class="qz-lvl" role="group" aria-label="ระดับความยาก"><button data-lvl="1" class="${qzLvl===1?"on":""}"><b>😊 ปกติ</b><span>ถามทีละค่า / ทีละขั้น</span></button><button data-lvl="2" class="${qzLvl===2?"on":""}"><b>🔥 ซับซ้อน</b><span>เรียงลำดับ · ข้อใดไม่ใช่ · อ่านหน้าปัด · หลายค่าในข้อเดียว</span></button></div>
+     <h3 class="qz-sh">2 · หมวด</h3>
+     <div class="qz-modes">${QZ_MODES.map(m=>{const n=/^ep-|mix/.test(m.id)?"":cnt(m.id);return`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}" style="--mc:${m.c}"><span class="qz-me">${m.e}</span><b>${m.name}</b><span>${m.desc}</span>${n!==""?`<i class="qz-mn">${n} ข้อ</i>`:""}</button>`}).join("")}</div>
+     <h3 class="qz-sh">3 · จำนวนข้อ</h3>
+     <div class="qz-row"><div class="qz-nseg" role="group" aria-label="จำนวนข้อ">${[10,20,30,50].map(n=>`<button data-n="${n}" class="${n===qzN?"on":""}">${n}</button>`).join("")}</div>
+     <button id="qzStart" class="primary qz-go">▶ เริ่มทำข้อสอบ</button>${qzWrong().length?`<button id="qzReview">ทบทวนข้อที่เคยผิด (${qzWrong().length})</button>`:""}</div>${qzStatsHtml()}`;
     R.querySelectorAll(".qz-mode").forEach(b=>b.onclick=()=>{qzMode=b.dataset.m;qzRender()});
-    $("#qzN").onchange=e=>{qzN=+e.target.value};
+    R.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{qzN=+b.dataset.n;qzRender()});
+    R.querySelectorAll("[data-lvl]").forEach(b=>b.onclick=()=>{qzLvl=+b.dataset.lvl;store.set("vfr_qz_lvl",qzLvl);qzRender()});
     const rv=$("#qzReview");if(rv)rv.onclick=()=>{const qs=shuf(qzWrong()).slice(0,qzN).map(x=>({...x,review:true}));qz={qs,i:0,score:0,ans:[]};qzRender()};
     const rs=$("#qzResetStats");if(rs)rs.onclick=()=>{store.set("vfr_qz_stats",{});qzRender()};
     $("#qzStart").onclick=()=>{const qs=qzBuild();if(!qs.length){toast("ไม่มีข้อสอบในหมวดนี้");return}qz={qs,i:0,score:0,ans:[]};qzRender()};return}
   if(qz.i>=qz.qs.length){const wrong=qz.ans.filter(x=>!x.ok);const pct=Math.round(qz.score/qz.qs.length*100);
     R.innerHTML=`<h2>ผลสอบ</h2><div class="qz-score">${qz.score}/${qz.qs.length}</div><p>${pct>=80?"ผ่าน ✓":"ทบทวนเพิ่ม"} (${pct}%)</p>
-     ${wrong.length?`<h3 style="font:600 16px var(--f-display);margin-top:16px">ข้อที่ตอบผิด</h3><ol class="qz-review">${wrong.map(x=>`<li><b>${esc(x.q.q)}</b><br>คำตอบที่ถูก: ${esc(x.q.o[x.q.a])}<br><span class="hint">${esc(x.q.ref)}</span></li>`).join("")}</ol>`:""}
+     ${wrong.length?`<h3 style="font:600 16px var(--f-display);margin-top:16px">ข้อที่ตอบผิด</h3><ol class="qz-review">${wrong.map(x=>`<li><b>${esc(x.q.q)}</b><br>✅ ${esc(x.q.o[x.q.a])}<details><summary>คำอธิบาย</summary><div style="white-space:pre-line">${esc(x.q.ex)}</div></details><span class="hint">${esc(x.q.ref)}</span></li>`).join("")}</ol>`:""}
      <div class="btns" style="margin-top:14px"><button id="qzAgain" class="primary">ทำชุดใหม่</button><button id="qzMenu">เลือกหมวดอื่น</button></div>`;
     $("#qzAgain").onclick=()=>{qz={qs:qzBuild(),i:0,score:0,ans:[]};qzRender()};$("#qzMenu").onclick=()=>{qz=null;qzRender()};return}
   const q=qz.qs[qz.i];
   const ctx=q.ctx&&q.ctx.length?`<div class="qz-ctx">${q.ctx.map(b=>b.k==="cond"?`<div class="c">${esc(b.t)}</div>`:`<div>${b.n?b.n+". ":"• "}${esc(b.t)}</div>`).join("")}</div>`:"";
-  R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)}</span><span class="hint">ข้อ ${qz.i+1}/${qz.qs.length} · ถูก ${qz.score}</span></div>
+  R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)} · ${qzLvl===2?"🔥 ซับซ้อน":"😊 ปกติ"}</span><span class="qz-pill">ข้อ ${qz.i+1}/${qz.qs.length} · ✓ ${qz.score}</span></div>
    <div class="qz-bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div>
    <div class="qz-q">${esc(q.q)}</div>${ctx}
-   <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}">${esc(t)}</button>`).join("")}</div><div id="qzEx"></div>`;
+   <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}"><span class="qz-L">${"ABCD"[i]}</span><span>${esc(t)}</span></button>`).join("")}</div><div id="qzEx"></div>`;
   R.querySelectorAll(".qz-opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i===q.a;if(ok)qz.score++;qz.ans.push({q,ok});qzRecord(q,ok);
     R.querySelectorAll(".qz-opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.a)x.classList.add("ok")});if(!ok)b.classList.add("no");
-    $("#qzEx").innerHTML=`<div class="qz-ex"><b>${ok?"ถูกต้อง":"ยังไม่ถูก"}</b>${esc(q.ex)}<div class="hint">${esc(q.ref)}</div></div>
+    const exs=String(q.ex||"").split(/\n\n⚠ ข้อสังเกต: /);
+    $("#qzEx").innerHTML=`<div class="qz-ex ${ok?"ok":"no"}"><div class="qz-exh">${ok?"✅ ถูกต้อง":"❌ ยังไม่ถูก"}</div>
+      ${ok?"":`<div class="qz-exr"><span>คุณตอบ</span><b>${"ABCD"[i]}. ${esc(q.o[i])}</b></div>`}<div class="qz-exr good"><span>คำตอบที่ถูก</span><b>${"ABCD"[q.a]}. ${esc(q.o[q.a])}</b></div>
+      <div class="qz-exb"><span>📖 คำอธิบาย</span><div>${esc(exs[0])}</div></div>${exs[1]?`<div class="qz-exn">⚠ <b>ข้อสังเกต:</b> ${esc(exs[1])}</div>`:""}
+      <div class="qz-exf">📚 ${esc(q.ref)}${q.src?` · ${esc(q.src)}`:""}</div></div>
       <div class="btns" style="margin-top:12px"><button id="qzNext" class="primary">${qz.i+1<qz.qs.length?"ข้อถัดไป":"ดูผล"}</button><button id="qzQuit">เลิก</button></div>`;
     $("#qzNext").onclick=()=>{qz.i++;qzRender();$("#qz").scrollIntoView({block:"start"})};$("#qzQuit").onclick=()=>{qz=null;qzRender()};$("#qzNext").focus()})}
 qzRender();
