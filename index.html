@@ -448,7 +448,9 @@ nav.rail{position:fixed;left:0;top:0;bottom:0;width:96px;z-index:1500;background
 .rail .tab:focus-visible{outline:2px solid var(--accent)}
 .rail .netchip{margin-top:auto;font-size:10px;padding:3px 6px;text-align:center;max-width:86px;line-height:1.2}
 main{padding:12px 16px 24px;gap:14px}
-.disclaimer{font-size:16px;font-weight:600;line-height:1.5;padding:10px 16px;border-radius:14px;color:var(--hl-ink);background:var(--hl);border:1.5px solid #e9c46a;margin:0}
+.disclaimer>summary{cursor:pointer;list-style:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.disclaimer>summary::-webkit-details-marker{display:none}
+.disclaimer>summary::after{content:" ▸";opacity:.7}.disclaimer[open]>summary::after{content:" ▾"}.disclaimer>p{margin:6px 0 2px;font-weight:500;font-size:14px}
+.disclaimer{font-size:15px;font-weight:600;line-height:1.4;padding:7px 14px;border-radius:12px;color:var(--hl-ink);background:var(--hl);border:1.5px solid #e9c46a;margin:0}
 .card{border-radius:var(--r);border:0;box-shadow:0 1px 2px rgba(17,24,39,.05),0 6px 18px rgba(17,24,39,.06)}
 h2{text-transform:none;letter-spacing:0;font:700 18px var(--f-display);color:var(--ink)}
 button{border-radius:12px;padding:9px 14px;border:1px solid var(--line);font:600 14px var(--f-body)}
@@ -808,6 +810,9 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .snapask.hbpop{width:300px}.hbpop .hb-row{display:flex;align-items:center;gap:8px;margin-top:8px}.hbpop input[type=range]{flex:1}.hbpop .hb-v{font:700 13px var(--f-mono);min-width:40px;text-align:right}
 .hbpop .hb-row button{width:36px;height:34px;padding:0;border-radius:9px;background:#eef1f5;color:#1b2430;border:0;font:700 18px var(--f-body)}
 /* ---- UX audit: การมองเห็น + ขนาดปุ่มบนจอสัมผัส ---- */
+.nt-adv{position:relative}.nt-adv>summary{cursor:pointer;list-style:none;padding:7px 12px;border:1px solid var(--line);border-radius:10px;font-weight:600;font-size:13.5px}.nt-adv>summary::-webkit-details-marker{display:none}
+.nt-adv[open]>summary{background:var(--input)}.nt-adv-b{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}.nt-adv[open]{flex-basis:100%}
+.planbar{display:flex;gap:6px;margin:0 0 10px;align-items:stretch}.planbar select{flex:1;min-width:0;width:auto}.planbar button{white-space:nowrap}
 .wp-help{margin:6px 0 8px}.wp-help>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none;display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px solid var(--line);border-radius:999px}
 .wp-help>summary::-webkit-details-marker{display:none}.wp-help[open]>summary{color:var(--ink)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button.primary{background:#2563eb;border-color:#2563eb}}
@@ -955,7 +960,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 </nav>
 
 <main>
-<p class="disclaimer" role="note">⚠ แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง</p>
+<details class="disclaimer" role="note"><summary>⚠ ข้อมูลบางส่วนอาจไม่อัปเดต — ตรวจสอบกับแหล่งทางการก่อนบินทุกครั้ง</summary><p>แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง (eAIP / NOTAM / TM ฉบับปัจจุบัน)</p></details>
 <!-- ============ TAB 1 ============ -->
 <button type="button" id="toTop" class="totop" aria-label="กลับขึ้นด้านบน" title="กลับขึ้นด้านบน" hidden>↑</button>
 <section id="tab-plan" class="tabpanel">
@@ -972,6 +977,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   </nav>
     <div class="card side">
       <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
+      <div class="planbar" role="group" aria-label="จัดการแผน"><button id="savePlan" class="primary" type="button">💾 บันทึกแผน</button><select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้"><option value="">📂 เปิดแผนที่บันทึก…</option></select><button id="delPlan" type="button" title="ลบแผนที่เลือกอยู่ออกจากรายการที่บันทึก">🗑</button></div>
       <div class="routebox">
         <label><b class="rlab dep">● ต้นทาง</b><input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
         <div id="depRes" class="res"></div>
@@ -1104,9 +1110,6 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="sechead">
       <h2 class="hd hd-indigo">NAV LOG</h2>
       <div class="btns">
-        <button id="savePlan" class="primary">บันทึกแผน</button>
-        <select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้" style="width:auto"><option value="">เปิดแผนที่บันทึก…</option></select>
-        <button id="delPlan">ลบแผนนี้</button>
         <button id="kneePdf" class="primary">Kneeboard PDF (A5 / A4)</button>
         <button id="exportXlsx">Export Excel (.xlsx)</button>
         <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
@@ -1203,17 +1206,18 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
   <div class="nt-route" id="ntRoute"></div>
   <p class="hint" id="ntInfo"></p>
   <div class="nt-bar">
-   <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">List</button><button id="ntViewMap">Map</button></div>
-   <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
-   <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="1" min="1" max="50" style="width:64px"> NM</label>
-   <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> แสดงบนแผนที่ทั้งหมด</label>
-   <button id="ntRedraw">🔄 รีเฟรช</button>
+   <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">📄 รายการ</button><button id="ntViewMap">🗺 แผนที่</button></div>
+   <details class="nt-adv"><summary>⚙️ ตัวเลือกเพิ่มเติม</summary><div class="nt-adv-b">
+    <div class="seg" role="group" aria-label="รูปแบบข้อความ"><button id="ntOrig" class="on">Original</button><button id="ntPlain">Plain</button></div>
+    <label class="nt-chk">แนวเส้นทาง ±<input id="ntBuf" type="number" value="1" min="1" max="50" style="width:64px"> NM</label>
+    <label class="nt-chk"><input type="checkbox" id="ntShowHidden" style="width:auto" checked> แสดงบนแผนที่ทั้งหมด</label>
+    <button id="ntRedraw">🔄 รีเฟรช</button></div></details>
   </div>
   <div id="ntChips" class="nt-chips" role="group" aria-label="กรองตามหมวด"></div>
   <div id="ntList"></div>
   <div id="ntMapWrap" hidden><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (ดูกล่องหมวดมุมซ้ายล่าง ติ๊กเพื่อซ่อน/แสดง) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
- <details class="card section custbox" id="ntPasteBox" open>
+ <details class="card section custbox" id="ntPasteBox">
   <summary>วาง NOTAM เอง (เช่นจาก AEROTHAI หรือแอปอื่น)</summary>
   <p class="hint">คัดลอกข้อความ NOTAM รูปแบบ ICAO มาวาง แอปจะรวมกับชุดที่ดึงอัตโนมัติ (ตัวที่ซ้ำกันจะนับครั้งเดียว)</p>
   <div class="bm-box"><b>ดึงจากแผนที่ NOTAM ของ AEROTHAI (บนคอม)</b>
