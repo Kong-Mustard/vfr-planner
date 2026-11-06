@@ -300,13 +300,21 @@ body.printing .hrot{display:none}
 .nt .tag.hit{background:var(--bad)}.nt .tag.ap{background:var(--warn)}.nt .tag.act{background:#1f8a4c}
 .netchip{font:700 11px var(--f-body);border-radius:999px;padding:3px 9px;border:1px solid var(--line)}
 .netchip.on{color:#1f8a4c;border-color:#1f8a4c}.netchip.off{color:#fff;background:var(--bad);border-color:var(--bad)}
-.np-step{display:grid;grid-template-columns:30px 40px 1fr;gap:6px;align-items:start;padding:8px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.np-step{display:grid;grid-template-columns:28px 32px 1fr;gap:6px;align-items:start;padding:7px 4px;border-bottom:1px solid var(--line);cursor:pointer}
 .np-step.sub{grid-template-columns:30px 40px 1fr;padding-left:34px;font-size:16px}
 .np-step input{width:22px;height:22px;margin-top:3px;accent-color:#1f8a4c}
 .np-step .n{font:700 15px var(--f-mono);display:inline-grid;place-items:center;min-width:28px;height:28px}
 .np-step .n.circ{border:2px solid var(--ink);border-radius:50%}
-.np-step .tx{font-size:18px;line-height:1.4}
-.np-step.done .tx{color:var(--muted);text-decoration:line-through}
+.np-step .tx{font-size:16px;line-height:1.4}
+.np-step.done .tx{color:var(--muted);text-decoration:line-through;font-size:13px;opacity:.7}.np-step.done{padding:4px 4px}.np-step.done .n{font-size:12px;height:22px;opacity:.6}
+.np-step.next{background:var(--accent-soft);border-radius:10px;box-shadow:inset 4px 0 0 var(--accent)}.np-step.next .tx{font-weight:700;font-size:17px}
+.cwn.b-warning::before,.cwn.b-caution::before,.cwn.b-note::before{content:none;display:none}.cwn{border-radius:10px;padding:0!important;margin:8px 0;overflow:hidden}.cwn>summary{cursor:pointer;list-style:none;padding:6px 12px;font:800 12.5px var(--f-body);letter-spacing:.06em;display:flex;align-items:center}
+.cwn>summary::-webkit-details-marker{display:none}.cwn>summary::after{content:"▾";margin-left:auto;font-size:14px}.cwn:not([open])>summary::after{content:"▸"}
+.cwn>div{padding:0 12px 9px;font-size:14.5px;line-height:1.45}.cwn.b-warning>summary{color:var(--bad)}.cwn.b-caution>summary{color:var(--warn)}.cwn.b-note>summary{color:var(--muted)}
+.cwn.b-note>div{font-weight:400}
+.b-text{font-size:14.5px;line-height:1.5}
+.acft-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px;padding:10px 16px;border-radius:14px;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 22%,var(--panel)),var(--panel));border:1px solid var(--line)}
+.acft-hd[hidden]{display:none}.acft-hd .ah-ic{font-size:22px}.acft-hd b{font:800 20px var(--f-display);letter-spacing:.02em}.acft-hd .ah-src{color:var(--muted);font-size:13px;margin-left:auto}
 .np-f{font:800 15px var(--f-mono);color:var(--accent);margin-right:6px}
 .np-prog{font:600 13px var(--f-mono);color:var(--muted)}
 @media (min-width:1000px){#map{height:calc(100vh - 150px);min-height:620px}.top{grid-template-columns:minmax(0,1fr) 330px}.side{max-height:calc(100vh - 150px);overflow:auto}}
@@ -1283,6 +1291,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  </div>
 </section>
 <section id="tab-normal" class="tabpanel" hidden>
+ <div class="acft-hd" data-acft hidden></div>
  <div class="ep-wrap">
   <aside class="card ep-side">
     <div class="ep-tools"><input id="npSearch" type="search" placeholder="ค้นหา เช่น starting, before taxi" aria-label="ค้นหา normal procedure"></div>
@@ -1340,7 +1349,8 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
     <div class="btns"><button class="primary" type="button" onclick="document.getElementById('epImport').click()">Import emergency_data.json</button><button id="epClear">ลบข้อมูล TM</button><input id="epImport" type="file" accept=".json,application/json" hidden></div></div>
    <p id="dataTm" class="hint"></p>
    <ul class="dhelp"><li><b>ใช้กับ:</b> แท็บ 5 NORMAL, แท็บ 6 EMER และแท็บ 10 ข้อสอบ</li>
-    <li><b>ไฟล์:</b> emergency_data.json (แปลงจาก TM 1-70-RTA-H60M-10) — อยู่ในโฟลเดอร์ Project วางแผนการบิน</li>
+    <li><b>ไฟล์:</b> emergency_data.json ของ<b>อากาศยานแบบที่ตัวเองบิน</b> (เช่น UH-60M, AW149) — 1 เครื่องเก็บได้ 1 แบบ ชื่อแบบจะแสดงบนหัวแท็บ 5, 6 และ 10</li>
+    <li><b>แบบอื่น:</b> ใช้โครงไฟล์เดียวกัน ใส่ <code>"aircraft": "AW149"</code> และ <code>"source"</code> ชื่อ TM ของแบบนั้น แล้ว Import ทับ</li>
     <li><b>ทำครั้งเดียวต่อเครื่อง</b> — Import ใหม่เมื่อ TM ออกฉบับแก้ไข แล้วตรวจวันที่ฉบับด้านบน</li>
     <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
@@ -1372,9 +1382,11 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
  </div>
 </section>
 <section id="tab-quiz" class="tabpanel" hidden>
+ <div class="acft-hd" data-acft hidden></div>
  <div class="card qz" id="qz"></div>
 </section>
 <section id="tab-emer" class="tabpanel" hidden>
+ <div class="acft-hd" data-acft hidden></div>
  <div class="ep-wrap">
   <aside class="card ep-side">
     <div class="ep-tools">
@@ -2446,7 +2458,7 @@ const NP_GROUPS=[
  {t:"Shutdown / ดับเครื่อง",e:"🅿️",c:"#64748b",re:/SHUTDOWN|LEAVING|PARKING/i},
  {t:"Special Conditions / สภาวะพิเศษ",e:"🌩️",c:"#b45309",re:/./}];
 function npGroup(p){return NP_GROUPS.find(g=>g.re.test(p.title))}
-function npRenderList(){const D=npData(),L=$("#npList");if(!D){L.innerHTML="";npRenderMain();return}
+function npRenderList(){if(typeof acftHdr==="function")acftHdr();const D=npData(),L=$("#npList");if(!D){L.innerHTML="";npRenderMain();return}
   const q=$("#npSearch").value.trim().toLowerCase();let html="",grp="";
   const items=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub")&&(!q||(p.id+" "+p.title).toLowerCase().includes(q)));
   NP_GROUPS.forEach(g=>items.filter(({p})=>npGroup(p)===g).forEach(({p,i})=>{
@@ -2471,17 +2483,19 @@ function npRenderMain(){const M=$("#npMain"),D=npData();
   const warnN=p.blocks.filter(b=>b.k==="warning"||b.k==="caution").length;
   const body=p.blocks.map((b,k)=>{if(b.k==="step"||b.k==="sub"){const fl=(b.f||"").split("").filter(c=>NP_FLAG[c]).map(c=>`<span class="np-f" title="${NP_FLAG[c]}">${c==="."?"★":c}</span>`).join("");
       return`<label class="np-step ${b.k==="sub"?"sub":""} ${done[k]?"done":""}" data-k="${k}"><input type="checkbox" ${done[k]?"checked":""}><span class="n${b.c?" circ":""}">${esc(b.n??"•")}${b.k==="step"?".":")"}</span><span class="tx">${fl}${esc(b.t)}</span></label>`}
-    if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:(b.k==="warning"||b.k==="caution")?`<div class="b-${b.k}">${esc(b.t)}</div>`:"";
+    if(CWN_T[b.k])return cwnHtml(b);
+    if(!npFull)return b.k==="cond"?`<div class="b-cond">${esc(b.t)}</div>`:(b.k==="text"&&npSel!=null&&!p.blocks.some(x=>x.k==="step"||x.k==="sub"))?`<div class="b-text">${esc(b.t)}</div>`:"";
     return`<div class="b-${b.k}">${esc(b.t)}</div>`}).join("");
   const n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length,d=Object.keys(done).length;
   M.innerHTML=`<h2>${esc(p.title)}</h2><div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span><span class="np-prog">ทำแล้ว ${d}/${n}</span>
-    ${!npFull&&warnN?`<span class="warnchip">WARNING/CAUTION ${warnN}</span>`:""}<button id="npStepBtn" class="mini primary">▶ โหมดทีละขั้น</button><button id="npStarBtn" class="mini${favHas("np",p.id)?" on":""}">${favHas("np",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button><button id="npFullBtn" class="mini">${npFull?"ซ่อน WARNING/NOTE":"แสดง WARNING/NOTE"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
+    <button id="npStepBtn" class="mini primary">▶ โหมดทีละขั้น</button><button id="npStarBtn" class="mini${favHas("np",p.id)?" on":""}">${favHas("np",p.id)?"★ ติดดาวแล้ว":"☆ ติดดาว"}</button><button id="npFullBtn" class="mini">${npFull?"ซ่อนคำอธิบาย":"แสดงคำอธิบายเต็ม"}</button><button id="npReset" class="mini">ล้างการติ๊ก</button></div>
     <div id="npBody">${body}</div>
     <div class="ep-legend">* = ทำทุก thru-flight · ★ = ต้องทำ operational check · O = ถ้าติดตั้ง · N = กลางคืน · I = บินด้วยเครื่องวัด · เลขในวงกลม = นักบินที่ไม่ได้อยู่บนคันบังคับทำ · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</div>`;
+  {const nx=[...M.querySelectorAll(".np-step")].find(x=>!x.classList.contains("done"));if(nx)nx.classList.add("next")}
   $("#npFullBtn").onclick=()=>{npFull=!npFull;npRenderMain()};
   $("#npStarBtn").onclick=()=>{favToggle("np",p.id);npRenderMain()};
   $("#npStepBtn").onclick=()=>stepOpen(p.title,p.blocks.filter(b=>["step","sub","cond","warning","caution"].includes(b.k)).map((b,k)=>({k:b.k==="cond"||b.k==="warning"||b.k==="caution"?b.k:"step",t:b.t,n:b.n,bi:p.blocks.indexOf(b)})),"np");$("#npReset").onclick=()=>{npDone[npSel]={};npRenderMain();npRenderList()};
-  $("#npBody").onchange=e=>{const s=e.target.closest(".np-step");if(!s)return;const k=s.dataset.k;if(e.target.checked)done[k]=1;else delete done[k];s.classList.toggle("done",e.target.checked);
+  $("#npBody").onchange=e=>{const s=e.target.closest(".np-step");if(!s)return;const k=s.dataset.k;if(e.target.checked)done[k]=1;else delete done[k];s.classList.toggle("done",e.target.checked);{const all=[...M.querySelectorAll(".np-step")];all.forEach(x=>x.classList.remove("next"));const nx=all.find(x=>!x.classList.contains("done"));if(nx){nx.classList.add("next");if(e.target.checked){const r=nx.getBoundingClientRect();if(r.bottom>innerHeight-80)nx.scrollIntoView({block:"center",behavior:"smooth"})}}}
     M.querySelector(".ep-meta .np-prog").textContent=`ทำแล้ว ${Object.keys(done).length}/${n}`;npRenderList()}}
 $("#npList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");if(!b)return;npSel=+b.dataset.i;recentAdd("np",npData().procedures[npSel].id);npRenderList();npRenderMain();if(window.innerWidth<=860)$("#npMain").scrollIntoView({behavior:"smooth"})});
 $("#npSearch").addEventListener("input",npRenderList);
@@ -2980,9 +2994,16 @@ $("#exportXlsx").onclick=async()=>{
 let EP=store.get("vfr_ep"),epSel=null,epMemOnly=false,epQuiz=false,epFull=false;
 /* แปลงเป็น checklist สั้น: เฉพาะเงื่อนไข + ขั้นตอน */
 const ACTION=/(—|^LAND AS SOON|^AUTOROTATE|^EMER ENG|^EMER APU|^ESTABLISH)/;
+/* WARNING / CAUTION / NOTE: แสดงค้างไว้ แตะหัวข้อเพื่อยุบ */
+const CWN_T={warning:"⚠ WARNING",caution:"⚠ CAUTION",note:"ℹ NOTE"};
+function cwnHtml(b){return`<details class="cwn b-${b.k}" open><summary>${CWN_T[b.k]}</summary><div>${esc(b.t)}</div></details>`}
+const ACFT_MAP=[[/H-?60M/i,"UH-60M Black Hawk"],[/H-?60L/i,"UH-60L Black Hawk"],[/H-?60A/i,"UH-60A Black Hawk"],[/AW-?149/i,"AW149"],[/AW-?139/i,"AW139"],[/UH-?72/i,"UH-72 Lakota"],[/H-?145/i,"H145"],[/UH-?1H/i,"UH-1H"],[/BELL\s*212/i,"Bell 212"],[/BELL\s*412/i,"Bell 412"],[/CH-?47/i,"CH-47 Chinook"],[/MI-?17/i,"Mi-17"]];
+function acftName(){if(!EP)return"";if(EP.aircraft)return String(EP.aircraft);const src=String(EP.source||"");const m=ACFT_MAP.find(([r])=>r.test(src));return m?m[1]:src}
+function acftHdr(){document.querySelectorAll("[data-acft]").forEach(el=>{if(!EP){el.hidden=true;return}el.hidden=false;
+  el.innerHTML=`<span class="ah-ic">🚁</span><b>${esc(acftName())}</b><span class="ah-src">${esc(EP.source||"")}${EP.date?" · "+esc(EP.date):""}</span>`})}
 function epChecklist(p){const out=[];let prevCond=false;const hasStep=p.blocks.some(b=>b.k==="step");
   p.blocks.forEach(b=>{
-    if(b.k==="warning"||b.k==="caution"){out.push(b);return} /* แสดง WARNING/CAUTION เสมอ กันลืม */
+    if(b.k==="warning"||b.k==="caution"||b.k==="note"){out.push(b);return} /* แสดง WARNING/CAUTION/NOTE เสมอ (ยุบได้) */
     const tm=b.k==="sub"&&b.t.match(/^The term (.+?) is de/);
     if(tm){out.push({k:"cond",t:tm[1].replace(/- /g,"").replace(/AIR-SPEED/,"AIRSPEED"),hdr:true});
       const def=(b.t.split(/defined as /)[1]||"").split(/\. /)[0];
@@ -3028,7 +3049,7 @@ function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=ne
     <p class="hint">หัวข้ออื่นทั้งหมดอยู่ในรายการด้านซ้าย · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
   const qi=$("#epHomeQ");qi.oninput=()=>{$("#epSearch").value=qi.value;epRenderList();if(qi.value.trim()){const v=qi.value.toLowerCase();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(v))}else M.querySelectorAll(".ep-big").forEach(b=>b.hidden=false)};
   M.onclick=e=>{const b=e.target.closest(".ep-big,.ep-chip");if(!b)return;epSel=+b.dataset.i;recentAdd("ep",EP.procedures[epSel].id);epRenderList();epRenderMain();$("#epMain").scrollIntoView({block:"start"})}}
-function epRenderList(){const L=$("#epList");{const dt=$("#dataTm");if(dt)dt.innerHTML=EP?`มีข้อมูลแล้ว: <b>${esc(EP.source||"")}</b> (${esc(EP.date||"")}) · EMER ${EP.procedures.length} หัวข้อ`+(EP.normal?` · NORMAL ${EP.normal.procedures.length} หัวข้อ`:""):'<b style="color:var(--bad)">ยังไม่มีข้อมูล</b> — กด Import แล้วเลือกไฟล์ emergency_data.json'}
+function epRenderList(){acftHdr();const L=$("#epList");{const dt=$("#dataTm");if(dt)dt.innerHTML=EP?`มีข้อมูลแล้ว: <b>${esc(EP.source||"")}</b> (${esc(EP.date||"")}) · EMER ${EP.procedures.length} หัวข้อ`+(EP.normal?` · NORMAL ${EP.normal.procedures.length} หัวข้อ`:""):'<b style="color:var(--bad)">ยังไม่มีข้อมูล</b> — กด Import แล้วเลือกไฟล์ emergency_data.json'}
   if(!EP){L.innerHTML="";$("#epSrc").textContent="";epRenderMain();return}
   const q=$("#epSearch").value.trim().toLowerCase();let html="",grp="",n=0;
   const inTitle=p=>(p.id+" "+p.title).toLowerCase().includes(q);
@@ -3047,6 +3068,7 @@ function epRenderMain(){const M=$("#epMain");
   const warnN=p.blocks.filter(b=>b.k==="warning").length,cauN=p.blocks.filter(b=>b.k==="caution").length;
   const body=blocks.map(b=>{const t=esc(b.t);
     if(b.k==="step")return`<div class="b-step${b.u?" mem":""}"><span class="n${b.c?" circ":""}">${b.n??"•"}</span><span class="tx">${t}</span></div>`;
+    if(CWN_T[b.k])return cwnHtml(b);
     return`<div class="b-${b.k}${b.hdr?" hdr":""}">${t}</div>`}).join("");
   M.innerHTML=`<h2>${esc(p.title)}</h2>
    <div class="ep-meta"><span>${esc(p.id)} · หน้า ${esc(p.page)}</span>
