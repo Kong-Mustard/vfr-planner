@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-05T23:59Z",
+"fetched": "2026-11-06T01:38Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -801,24 +801,6 @@
 "plain": " ",
 "start": "11/06/2026 0115",
 "end": "11/06/2026 0210",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4393/26",
-"icao": "A4393/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611051330 C) 2611060100\r\nE) TXL B BTN TWY D AND TWY E CLSD DUE TO TEMPO ACFT PRKG",
-"plain": " ",
-"start": "11/05/2026 1330",
-"end": "11/06/2026 0100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4397/26",
-"icao": "A4397/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611052244 C) 2611060100\r\nE) TWY C BTN TWY C SOUTH AND TWY S CLSD DUE TO ACFT ENG RUN-UP",
-"plain": " ",
-"start": "11/05/2026 2244",
-"end": "11/06/2026 0100",
 "keyword": "INTERNATIONAL"
 },
 {
