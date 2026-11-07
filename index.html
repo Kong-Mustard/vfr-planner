@@ -1784,7 +1784,7 @@ function drawMap(rows){
     if(!pos){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,off=85*s;
       const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
     const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
-    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${hboxSvg(r,s)}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
+    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${hboxSvg(r,s,boxRot(i,r))}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
@@ -1935,15 +1935,17 @@ function hboxRotInit(mk,key){const el=mk._icon;if(!el||el._rotInit)return;el._ro
     const up=()=>{h.removeEventListener("pointermove",mv);h.removeEventListener("pointerup",up);h.removeEventListener("pointercancel",up);
       mk.dragging.enable();map.dragging.enable();state.boxRot=state.boxRot||{};state.boxRot[key]=deg%360;store.set("vfr_current",state);histSched()};
     h.addEventListener("pointermove",mv);h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
-function hboxSvg(r,s){const w=Math.round(92*s),hgt=Math.round(150*s);
+function hboxSvg(r,s,rot){const w=Math.round(92*s),hgt=Math.round(150*s);
+  /* กล่องหันไปทางใต้ (90°–270°) → กลับตัวหนังสือ 180° ให้อ่านได้ โดยเลข MH ยังอยู่ปลายด้านทิศที่บิน */
+  const flip=isFinite(rot)&&norm(rot)>90&&norm(rot)<270;
+  const T=(y,sz,wt,fill,txt)=>`<text x="46" y="${y}" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="${wt}" font-size="${sz}" fill="${fill}">${txt}</text>`;
+  const mh=`${isFinite(r.mh)?hdg(r.mh):"---"}°`,bk=`${isFinite(r.mhBack)?hdg(r.mhBack):"---"}°`,d=`${r.dist.toFixed(1)} NM`,t=`${mmss(r.ete)} m.`;
+  const txt=flip?`<g transform="rotate(180 46 75)">${T(34,18,700,"#444",bk)}${T(66,16,700,"#111",d)}${T(97,16,700,"#111",t)}${T(134,21,800,"#0a6cff",mh)}</g>`
+    :`${T(36,21,800,"#0a6cff",mh)}${T(66,16,700,"#111",d)}${T(97,16,700,"#111",t)}${T(131,18,700,"#444",bk)}`;
   return`<svg width="${w}" height="${hgt}" viewBox="0 0 92 150" aria-hidden="true">
    <path d="M46 2 L89 30 L89 120 L46 148 L3 120 L3 30 Z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
    <line x1="3" y1="42" x2="89" y2="42" stroke="#111" stroke-width="2"/><line x1="3" y1="108" x2="89" y2="108" stroke="#111" stroke-width="2"/>
-   <line x1="14" y1="75" x2="78" y2="75" stroke="#111" stroke-width="1.5"/>
-   <text x="46" y="36" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="21" fill="#0a6cff">${isFinite(r.mh)?hdg(r.mh):"---"}°</text>
-   <text x="46" y="66" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="16" fill="#111">${r.dist.toFixed(1)} NM</text>
-   <text x="46" y="97" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="16" fill="#111">${mmss(r.ete)} m.</text>
-   <text x="46" y="131" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="18" fill="#444">${isFinite(r.mhBack)?hdg(r.mhBack):"---"}°</text></svg>`}
+   <line x1="14" y1="75" x2="78" y2="75" stroke="#111" stroke-width="1.5"/>${txt}</svg>`}
 function legKey(i){const a=state.wps[i],b=state.wps[i+1];return[a.lat,a.lon,b.lat,b.lon].map(v=>v.toFixed(4)).join(",")}
 
 function render(){
