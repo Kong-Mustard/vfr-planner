@@ -1104,6 +1104,8 @@ body.mapfull #btnFull{background:#dc2626!important;border-color:#dc2626!importan
 .nt-buf>span{display:inline-flex;align-items:center;white-space:nowrap;line-height:1}
 .nt-buf button{width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;padding:0!important;display:grid!important;place-items:center;font-size:16px!important;line-height:1!important;border-radius:8px!important;flex:none}
 .nt-buf input{width:44px!important;height:30px!important;min-height:0!important;padding:0 2px!important;text-align:center;line-height:30px;font-size:15px!important;box-sizing:border-box}
+.qz-pic img{display:block;max-width:100%;max-height:340px;margin:0 auto;border-radius:8px}
+@media (min-width:761px){body.gps-touch:not(.mapfull) #map{height:calc(100dvh - 20px)!important;min-height:560px}}
 </style>
 </head>
 <body>
@@ -3287,14 +3289,8 @@ function qzMakeEpId(){const pool=qzEpPool().filter(x=>x.cl.filter(b=>b.k==="step
   const o=shuf([p.title,...others]);
   return{cat:"EMER Proc. · ระบุเหตุฉุกเฉิน",q:"ขั้นตอนที่ต้องจำต่อไปนี้เป็นของเหตุฉุกเฉินใด",ctx:cl.filter(b=>b.k==="step"&&b.u),o,a:o.indexOf(p.title),ex:`${p.id} ${p.title}`,ref:`${EP.source} หน้า ${p.page}`}}
 /* ---------- ข้อสอบรูปภาพ: แอปวาดหน้าจอจำลองเอง (SVG) ---------- */
-const QZ_TAPES=[ // ช่วงตาม TM Figure 5-1 · lab = คำตอบ · c = สีบนจอ (g/y/r = เขียว/เหลือง/ลายแดงเหลือง)
- {p:"TGT",u:"°C",max:960,min:600,z:[[0,793,"g","NORMAL (ไม่จำกัดเวลา)"],[793,846,"y","30 MINUTE LIMIT"],[846,879,"y","10 MINUTE LIMIT"],[879,903,"y","2.5 MINUTE TRANSIENT (CONTINGENCY)"],[903,949,"r","12 SECOND TRANSIENT"]]},
- {p:"NG",u:"%",max:110,min:60,z:[[0,105,"g","CONTINUOUS"],[105,106,"y","12 SECOND TRANSIENT"]]},
- {p:"NR",u:"%",max:120,min:80,z:[[91,95,"y","TRANSIENT"],[95,101,"g","CONTINUOUS"],[101,107,"y","TRANSIENT"]]},
- {p:"ENG OIL P",u:"psi",max:130,min:0,z:[[22,26,"y","IDLE"],[26,100,"g","NORMAL"],[100,120,"y","5 MINUTE LIMIT"]]},
- {p:"ENG OIL T",u:"°C",max:160,min:0,z:[[-20,135,"g","CONTINUOUS"],[135,150,"y","30 MINUTE LIMIT"]]},
- {p:"XMSN OIL T",u:"°C",max:150,min:0,z:[[-20,105,"g","CONTINUOUS"],[105,140,"y","PRECAUTIONARY"]]},
- {p:"XMSN OIL P",u:"psi",max:140,min:0,z:[[20,30,"y","IDLE AND TRANSIENT"],[30,65,"g","CONTINUOUS"],[65,130,"y","PRECAUTIONARY"]]}];
+/* ข้อมูลหน้าปัด EICAS สำหรับข้อสอบรูป อยู่ในไฟล์ emergency_data.json (ฟิลด์ tapes) — ไม่เก็บในโค้ด */
+function qzTapes(){return(EP&&Array.isArray(EP.tapes))?EP.tapes.filter(t=>t&&Array.isArray(t.z)&&t.z.length):[]}
 const QZ_COL={g:"#22c55e",y:"#facc15",r:"#ef4444"};
 function qzTapeSvg(T,v,zc){const H=170,y=x=>16+H-(Math.max(T.min,Math.min(T.max,x))-T.min)/(T.max-T.min)*H;
   const segs=T.z.map(([a,b,c])=>`<rect x="34" y="${y(b).toFixed(1)}" width="22" height="${Math.max(1,y(a)-y(b)).toFixed(1)}" fill="${QZ_COL[c]}" opacity=".9"/>`).join("");
@@ -3304,9 +3300,9 @@ function qzTapeSvg(T,v,zc){const H=170,y=x=>16+H-(Math.max(T.min,Math.min(T.max,
    <rect x="34" y="16" width="22" height="${H}" fill="#1f2937"/>${segs}
    <polygon points="58,${y(v).toFixed(1)} 70,${(y(v)-6).toFixed(1)} 70,${(y(v)+6).toFixed(1)}" fill="#fff"/><line x1="30" x2="60" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}" stroke="#fff" stroke-width="2"/>
    <rect x="16" y="198" width="88" height="24" rx="4" fill="${zc==="r"?"#7f1d1d":"#000"}" stroke="${rc}"/><text x="60" y="215" fill="${rc}" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">${v}${esc(T.u)}</text></svg>`}
-function qzMakeTape(){const T=QZ_TAPES[Math.floor(Math.random()*QZ_TAPES.length)],z=T.z[Math.floor(Math.random()*T.z.length)];
+function qzMakeTape(){const TP=qzTapes();if(!TP.length)return null;const T=TP[Math.floor(Math.random()*TP.length)],z=T.z[Math.floor(Math.random()*T.z.length)];
   const lo=Math.max(z[0],T.min+(T.max-T.min)*.25),v=Math.round(lo+(z[1]-lo)*(0.2+Math.random()*0.6));const lab=z[3];
-  const pool=[...new Set(QZ_TAPES.flatMap(t=>t.z.map(x=>x[3])))].filter(x=>x!==lab);const o=shuf([lab,...shuf(pool).slice(0,3)]);
+  const pool=[...new Set(TP.flatMap(t=>t.z.map(x=>x[3])))].filter(x=>x!==lab);const o=shuf([lab,...shuf(pool).slice(0,3)]);
   const ex=`${T.p} ${v}${T.u} อยู่ช่วง ${z[0]}–${z[1]}${T.u} = ${lab}\n\nช่วงทั้งหมดของ ${T.p}: ${T.z.map(x=>`${x[0]}–${x[1]} ${x[3]}`).join(" · ")}\n\nสีบนจอ: เขียว = ทำงานปกติ · เหลือง = ต้องให้ความสนใจ/จำกัดเวลา · ลายแดง-เหลือง/ตัวเลขแดง = เกินขีดจำกัด`;
   return{cat:"ข้อจำกัด · 🖼️ หน้าปัด EICAS",lvl:qzLvl,img:`<div class="qz-scr">${qzTapeSvg(T,v,z[2])}</div>`,q:`จอแสดง ${T.p} ดังรูป — ค่านี้อยู่ในช่วงขีดจำกัดใด`,o,a:o.indexOf(lab),ex,ref:"TM Figure 5-1 Instrument Markings · ภาพจำลองจากแอป",key:"img-t-"+T.p+v}}
 function qzCasPool(){return EP?EP.procedures.filter(p=>/caution|advisory/i.test(p.title)&&!/no accompanying|failure with no/i.test(p.title)&&epActionable(p)).map(p=>({p,cl:epChecklist(p)})).filter(x=>x.cl.some(b=>b.k==="step")):[]}
@@ -3336,9 +3332,14 @@ function qzMakeSpec(){if(!/60M/i.test(acftName()))return null;const A=AC_SPEC,f=
   return{cat:"ข้อมูลทั่วไปของเครื่อง",lvl:1,q:q+" คือ",o,a:o.indexOf(ans),ex:`${A.name}: น้ำหนักเปล่า ${f(A.weight)} lb · MTOW ${f(A.maxWeight)} lb · cruise ${A.cruiseKt} kt · range ${A.rangeNm} NM · ceiling ${f(A.ceiling)} ft · endurance ${A.endurance} · ถังเชื้อเพลิง ${f(A.fuelL)} L · สิ้นเปลือง ${A.burnLph} L/ชม. · ${A.engine} · ใบพัด ${A.rotor}`,
     ref:"เอกสารแนะนำเครื่อง UH-60M (infographic) — ค่าทั่วไป ไม่ใช่ค่าจาก TM ใช้ TM/Chapter 7 performance สำหรับวางแผนจริง",key:"spec-"+q}}
 function qzMakeImg(){return Math.random()<.45?qzMakeTape():(qzMakeCas()||qzMakeTape())}
+/* รูปในข้อสอบจากไฟล์ JSON: data:image/png|jpeg|webp|gif;base64,... หรือโค้ด <svg> — แสดงผ่าน <img> เท่านั้น (สคริปต์ในรูปจะไม่ทำงาน) */
+function qzImgHtml(v){if(typeof v!=="string"||!v)return"";v=v.trim();let src="";
+  if(/^data:image\/(png|jpe?g|webp|gif|svg\+xml);base64,[A-Za-z0-9+/=\s]+$/i.test(v))src=v;
+  else if(/^<svg[\s>]/i.test(v))src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(v);
+  return src?`<div class="qz-scr qz-pic"><img src="${src.replace(/"/g,"%22")}" alt="รูปประกอบข้อสอบ"></div>`:""}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
   const pick=m=>(m==="ข้อจำกัด"&&Math.random()<.3)?qzMakeTape():(m==="EMER Proc."&&Math.random()<.3)?(qzMakeCas()||null):m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
-    const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
+    const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,img:qzImgHtml(x.img),q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
   const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ","spec"]):[qzMode];const seen=new Set();let guard=0;
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[(qs.length+guard)%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
@@ -3935,7 +3936,7 @@ function gpsStripH(){const h=$("#gpsHud");map.getContainer().style.setProperty("
 function gpsTouchMode(on){const h=$("#gpsHud"),B=document.body;if(on&&!GPS_TOUCH())return;B.classList.toggle("gps-touch",!!on);
   if(on){h.classList.add("gps-strip");map.getContainer().appendChild(h);L.DomEvent.disableClickPropagation(h);L.DomEvent.disableScrollPropagation(h)}
   else{h.classList.remove("gps-strip");const w=document.querySelector(".gps-wrap");if(w)w.appendChild(h)}
-  setTimeout(()=>{map.invalidateSize();gpsStripH()},280)}
+  setTimeout(()=>{map.invalidateSize();gpsStripH();if(on&&!document.body.classList.contains("mapfull")){const r=map.getContainer().getBoundingClientRect();scrollBy({top:r.top-10,behavior:"smooth"})}},280)}
 
 
 /* ---------- Undo / Redo (Ctrl+Z / Ctrl+Y) — เก็บสำเนาแผนในหน่วยความจำ ไม่เกิน 60 ขั้น ---------- */
