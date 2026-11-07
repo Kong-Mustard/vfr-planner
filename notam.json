@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-07T07:28Z",
+"fetched": "2026-11-07T09:12Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -841,11 +841,11 @@
 },
 {
 "loc": "VTBD",
-"id": "A4418/26",
-"icao": "A4418/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611070200 C) 2611080600\r\nD) DAILY 0200-0600\r\nE) TXL T BTN TWY V AND TWY U CLSD DUE TO WIP",
+"id": "A4430/26",
+"icao": "A4430/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611080200 C) 2611080700\r\nE) TXL T BTN TWY V AND TWY U CLSD DUE TO WIP",
 "plain": " ",
-"start": "11/07/2026 0200",
-"end": "11/08/2026 0600",
+"start": "11/08/2026 0200",
+"end": "11/08/2026 0700",
 "keyword": "INTERNATIONAL"
 },
 {
