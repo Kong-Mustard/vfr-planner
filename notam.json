@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-07T22:57Z",
+"fetched": "2026-11-07T23:55Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -918,51 +918,6 @@
 "plain": " ",
 "start": "11/07/2026 2345",
 "end": "11/08/2026 0015",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4399/26",
-"icao": "A4399/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611071900 C) 2611072330\r\nE) RWY 02L/20R CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/07/2026 1900",
-"end": "11/07/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4404/26",
-"icao": "A4404/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611071900 C) 2611072330\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY J BTN TWY C AND TWY J1\r\n   -TWY J2",
-"plain": " ",
-"start": "11/07/2026 1900",
-"end": "11/07/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4406/26",
-"icao": "A4406/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611061900 C) 2611072330\r\nD) 06 1900-2315, 07 1900-2330\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY F\r\n   -TWY F1 TO TWY F12\r\n   -TWY F15\r\n   -TWY W\r\n   -TWY Y\r\n   -TWY Z",
-"plain": " ",
-"start": "11/06/2026 1900",
-"end": "11/07/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4432/26",
-"icao": "A4432/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611071330 C) 2611072330\r\nE) TXL B BTN TWY D AND TWY E CLSD DUE TO TEMPO ACFT PRKG",
-"plain": " ",
-"start": "11/07/2026 1330",
-"end": "11/07/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4409/26",
-"icao": "A4409/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611071900 C) 2611072300\r\nE) TXL CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TXL T13 BEHIND ACFT STAND NR E2 E4 E6 E8 E10 401 402 403 \r\n   -TXL T14 BEHIND ACFT STAND NR F1 F3 F5",
-"plain": " ",
-"start": "11/07/2026 1900",
-"end": "11/07/2026 2300",
 "keyword": "INTERNATIONAL"
 },
 {
