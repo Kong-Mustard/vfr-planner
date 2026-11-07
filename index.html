@@ -1133,6 +1133,17 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 .cr-out div.big{border:2px solid var(--cc);box-shadow:0 0 10px var(--cc)}
 .cr-out small{display:block;font-size:12px;color:var(--muted)}.cr-out b{font:800 24px var(--f-mono)}.cr-out i{font-style:normal;font-size:13px;color:var(--muted);margin-left:4px}
 .cr-tip{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.calc{border-radius:20px;padding:16px 18px;border:2px solid var(--cc);box-shadow:0 0 12px color-mix(in srgb,var(--cc) 70%,transparent);max-width:520px}
+.calc h3{margin:0 0 10px;font:800 18px var(--f-display)}
+#calcEx{width:100%;box-sizing:border-box;background:#fff!important;color:#111827!important;border:2px solid var(--cc)!important;font:800 26px var(--f-mono)!important;min-height:58px;border-radius:12px;padding:6px 12px;text-align:right;color-scheme:light}
+.calc-res{font:800 30px var(--f-mono);text-align:right;padding:6px 4px;min-height:42px;color:var(--ink)}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.calc-keys button{min-height:56px;font:800 24px var(--f-mono)!important;border-radius:14px}
+.calc-keys .op{background:color-mix(in srgb,#3b82f6 22%,var(--input));color:var(--ink)}
+.calc-keys .eq{background:#2563eb;color:#fff;border-color:#2563eb}
+.calc-keys .fn{background:color-mix(in srgb,#ef4444 18%,var(--input))}
+.calc-hist{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.calc-hist button{text-align:right;font:600 14px var(--f-mono);border-radius:10px;padding:6px 10px;background:var(--input)}
 </style>
 </head>
 <body>
@@ -3586,21 +3597,23 @@ const CONV=[
  {t:"อุณหภูมิ",temp:true,u:[["°C"],["°F"],["K"]]},
  {t:"น้ำหนัก",u:[["lb",0.45359237],["kg",1]]},
  {t:"ปริมาตร",u:[["US gal",3.785412],["L",1],["Imp gal",4.54609]]},
- {t:"น้ำมัน (น้ำหนัก ↔ ปริมาตร)",fuel:true,u:[["lb",0.45359237],["kg",1],["US gal",null],["L",null]]}];
+ {t:"น้ำมัน (น้ำหนัก ↔ ปริมาตร)",fuel:true,u:[["lb",0.45359237],["kg",1],["US gal",null],["L",null]]},
+ {t:"อัตราใช้น้ำมัน (ต่อชั่วโมง)",fuel:true,u:[["lb/hr",0.45359237],["kg/hr",1],["US gal/hr",null],["L/hr",null],["lb/min",0.45359237*60]]}];
 /* ตัวแปลงเดียว: เลือกหมวด → ใส่ค่า → จากหน่วย ⇄ เป็นหน่วย */
 let CV={c:3,from:0,to:1,v:"29.92"};
-const CV_IC=[["📏","#3b82f6"],["💨","#06b6d4"],["⛰️","#22c55e"],["🌀","#a855f7"],["🌡️","#f97316"],["⚖️","#eab308"],["🧪","#14b8a6"],["⛽","#ef4444"]];
-const CV_PRE=[["น้ำมัน ลิตร → lb",7,3,0],["น้ำมัน lb → ลิตร",7,0,3],["QNH inHg → hPa",3,0,1],["QNH hPa → inHg",3,1,0],["น้ำมัน lb → US gal",7,0,2],["น้ำมัน US gal → lb",7,2,0],["kt → km/h",1,0,1],["ft → m",2,0,1],["NM → km",0,0,1],["°C → °F",4,0,1]];
-function cvFactors(c){const f=c.u.map(u=>u[1]);if(c.fuel){const kg=num(state&&state.fuelDens,6.7)*0.45359237;f[2]=kg;f[3]=kg/3.785412}return f}
+const CV_IC=[["📏","#3b82f6"],["💨","#06b6d4"],["⛰️","#22c55e"],["🌀","#a855f7"],["🌡️","#f97316"],["⚖️","#eab308"],["🧪","#14b8a6"],["⛽","#ef4444"],["⏱️","#f43f5e"]];
+const CV_PRE=[["น้ำมัน ลิตร → lb",7,3,0],["น้ำมัน lb → ลิตร",7,0,3],["QNH inHg → hPa",3,0,1],["QNH hPa → inHg",3,1,0],["น้ำมัน lb → US gal",7,0,2],["น้ำมัน US gal → lb",7,2,0],["kt → km/h",1,0,1],["ft → m",2,0,1],["NM → km",0,0,1],["°C → °F",4,0,1],["น้ำมัน lb/min → lb/hr",8,4,0],["น้ำมัน lb/hr → L/hr",8,0,3]];
+function cvFactors(c){const f=c.u.map(u=>u[1]);if(c.fuel){const kg=num(state&&state.fuelDens,6.7)*0.45359237;c.u.forEach((u,i)=>{if(u[1]==null)f[i]=/^US gal/.test(u[0])?kg:kg/3.785412})}return f}
 function cvConv(ci,v,a,b){const c=CONV[ci];if(c.temp){const C=a===0?v:a===1?(v-32)*5/9:v-273.15;return[C,C*9/5+32,C+273.15][b]}const f=cvFactors(c);return v*f[a]/f[b]}
 const cvFmt=x=>!isFinite(x)?"–":Math.abs(x)>=100?(+x.toFixed(1)).toLocaleString("en-US"):String(+x.toFixed(Math.abs(x)>=10?2:4));
 function cvOutHtml(){const c=CONV[CV.c],v=num(String(CV.v).replace(",","."));
   return `<div class="cv-res"><span class="cv-ri">${CV_IC[CV.c][0]}</span><div><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><div><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b> <em>${c.u[CV.to][0]}</em></div></div></div>
    ${v==null?"":`<h3>เท่ากับหน่วยอื่น</h3><div class="cv-all">${c.u.map((u,i)=>i===CV.from?"":`<button class="cv-u${i===CV.to?" on":""}" data-to="${i}"><b>${cvFmt(cvConv(CV.c,v,CV.from,i))}</b><i>${u[0]}</i></button>`).join("")}</div>`}`}
 function cvOut(){const o=$("#cvOut");if(o)o.innerHTML=cvOutHtml()}
-const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"];
-function cvCatsHtml(){return`<div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}<button class="cv-cat${CV.c==="cr"?" on":""}" data-cvc="cr" style="--cc:${CR_TILE[1]}"><span>${CR_TILE[0]}</span>${CR_TILE[2]}</button></div>`}
-function cvRender(){if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CR_TILE[1]}">${cvCatsHtml()}<div id="crWrap" class="cr"></div></div>`;crRender();return}
+const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"],CALC_TILE=["🧮","#64748b","เครื่องคิดเลข"];
+function cvCatsHtml(){return`<div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}<button class="cv-cat${CV.c==="cr"?" on":""}" data-cvc="cr" style="--cc:${CR_TILE[1]}"><span>${CR_TILE[0]}</span>${CR_TILE[2]}</button><button class="cv-cat${CV.c==="calc"?" on":""}" data-cvc="calc" style="--cc:${CALC_TILE[1]}"><span>${CALC_TILE[0]}</span>${CALC_TILE[2]}</button></div>`}
+function cvRender(){if(CV.c==="calc"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CALC_TILE[1]}">${cvCatsHtml()}<div id="calcWrap" class="calc"></div></div>`;calcRender();return}
+  if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CR_TILE[1]}">${cvCatsHtml()}<div id="crWrap" class="cr"></div></div>`;crRender();return}
   if(!CONV[CV.c])CV.c=3;const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
   $("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CV_IC[CV.c][1]}">
    ${cvCatsHtml()}
@@ -3611,7 +3624,7 @@ function cvRender(){if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" sty
    <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
 $("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
-  if(t.dataset.cvc==="cr"){CV.c="cr";cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>u[0]==="US gal");CV.to=U.findIndex(u=>u[0]==="L")}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
+  if(t.dataset.cvc==="cr"||t.dataset.cvc==="calc"){CV.c=t.dataset.cvc;cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>/^US gal/.test(u[0]));CV.to=U.findIndex(u=>/^L(\/|$)/.test(u[0]))}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
   if(t.id==="cvSwap"){[CV.from,CV.to]=[CV.to,CV.from];cvRender()}
   if(t.dataset.to!=null){CV.to=+t.dataset.to;cvRender()}
   if(t.dataset.pre!=null){const x=CV_PRE[+t.dataset.pre];CV.c=x[1];CV.from=x[2];CV.to=x[3];cvRender();$("#cvV").focus();$("#cvV").select()}});
@@ -3638,6 +3651,30 @@ function crRender(){const box=$("#crWrap");if(!box)return;const I=(k,l,u)=>`<lab
    <div class="cr-out" id="crOut"></div><p class="cr-tip" id="crTip"></p>`;crCalc()}
 $("#cvWrap").addEventListener("input",e=>{const k=e.target.dataset.cr;if(!k)return;CR[k]=e.target.value;crCalc()});
 $("#cvWrap").addEventListener("click",e=>{const b=e.target.closest("[data-crm]");if(!b)return;CR.mode=b.dataset.crm;crRender()});
+
+/* ---------- เครื่องคิดเลข (ไม่ใช้ eval — แยกตัวเลข/เครื่องหมายแล้วคำนวณเอง) ---------- */
+let CALC={ex:"",hist:[]};try{CALC={ex:"",hist:[],...JSON.parse(localStorage.getItem("vfr_calc")||"{}")}}catch(e){}
+function calcEval(src){const s=String(src).replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/,/g,"").replace(/\s+/g,"");if(!s)return null;
+  const T=[];let i=0;while(i<s.length){const c=s[i];if(/[0-9.]/.test(c)){let j=i;while(j<s.length&&/[0-9.]/.test(s[j]))j++;const n=s.slice(i,j);if((n.match(/\./g)||[]).length>1)throw 0;T.push(+n);i=j}
+    else if("+-*/()%".includes(c)){T.push(c);i++}else throw 0}
+  let p=0;const peek=()=>T[p],take=()=>T[p++];
+  const prim=()=>{let t=take();if(t==="-")return-prim();if(t==="+")return prim();let v;if(t==="("){v=expr();if(take()!==")")throw 0}else if(typeof t==="number")v=t;else throw 0;
+    while(peek()==="%"){take();v=v/100}return v};
+  const term=()=>{let v=prim();while(peek()==="*"||peek()==="/"||(typeof peek()==="number"||peek()==="(")){const o=peek()==="*"||peek()==="/"?take():"*";const r=prim();v=o==="*"?v*r:v/r}return v};
+  const expr=()=>{let v=term();while(peek()==="+"||peek()==="-"){const o=take(),r=term();v=o==="+"?v+r:v-r}return v};
+  const v=expr();if(p!==T.length||!isFinite(v))throw 0;return v}
+function calcShow(){const d=$("#calcEx"),r=$("#calcRes");if(!d)return;d.value=CALC.ex;let v=null;try{v=calcEval(CALC.ex)}catch(e){}r.textContent=v==null?" ":"= "+(+v.toPrecision(12)).toLocaleString("en-US",{maximumFractionDigits:10});
+  $("#calcHist").innerHTML=CALC.hist.map((h,i)=>`<button type="button" data-ch="${i}">${esc(h[0])} <b>= ${esc(h[1])}</b></button>`).join("");try{localStorage.setItem("vfr_calc",JSON.stringify(CALC))}catch(e){}}
+function calcKey(k){if(k==="C"){CALC.ex="";}else if(k==="⌫"){CALC.ex=CALC.ex.slice(0,-1)}else if(k==="="){let v=null;try{v=calcEval(CALC.ex)}catch(e){}if(v==null){toast("สูตรไม่ถูกต้อง");return}
+    const r=String(+v.toPrecision(12));CALC.hist.unshift([CALC.ex,r]);CALC.hist=CALC.hist.slice(0,8);CALC.ex=r}
+  else if(k==="±"){CALC.ex=/^-\(.*\)$/.test(CALC.ex)?CALC.ex.slice(2,-1):CALC.ex?`-(${CALC.ex})`:"-"}else CALC.ex+=k;calcShow()}
+function calcRender(){const box=$("#calcWrap");if(!box)return;const K=["C","(",")","÷","7","8","9","×","4","5","6","−","1","2","3","+","±","0",".","=","%","⌫"];
+  box.innerHTML=`<h3>🧮 เครื่องคิดเลข</h3><input id="calcEx" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-label="สูตรคำนวณ" placeholder="0"><div id="calcRes" class="calc-res"> </div>
+   <div class="calc-keys">${K.map(k=>`<button type="button" data-ck="${k}" class="${"÷×−+".includes(k)?"op":k==="="?"eq":k==="C"||k==="⌫"?"fn":""}">${k}</button>`).join("")}</div>
+   <div class="calc-hist" id="calcHist"></div><p class="hint">พิมพ์จากแป้นพิมพ์ได้ · Enter = คำนวณ · แตะประวัติเพื่อใช้ค่าเดิม</p>`;calcShow()}
+$("#cvWrap").addEventListener("click",e=>{const b=e.target.closest("[data-ck]");if(b){calcKey(b.dataset.ck);return}const h=e.target.closest("[data-ch]");if(h){const x=CALC.hist[+h.dataset.ch];if(x){CALC.ex+=x[1];calcShow()}}});
+$("#cvWrap").addEventListener("input",e=>{if(e.target.id!=="calcEx")return;CALC.ex=e.target.value;let v=null;try{v=calcEval(CALC.ex)}catch(er){}$("#calcRes").textContent=v==null?" ":"= "+(+v.toPrecision(12)).toLocaleString("en-US",{maximumFractionDigits:10});try{localStorage.setItem("vfr_calc",JSON.stringify(CALC))}catch(er){}});
+$("#cvWrap").addEventListener("keydown",e=>{if(e.target.id!=="calcEx")return;if(e.key==="Enter"){e.preventDefault();calcKey("=")}else if(e.key==="Escape"){calcKey("C")}});
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
