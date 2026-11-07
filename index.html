@@ -1080,6 +1080,30 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 .cv-u.on{border:2px solid var(--cc)!important;box-shadow:0 0 12px var(--cc)!important}
 .cv-pre button{border:1.5px solid color-mix(in srgb,var(--cc) 70%,transparent);box-shadow:0 0 6px color-mix(in srgb,var(--cc) 35%,transparent)}
 .cv1 #cvSwap{font-size:32px!important;font-weight:900!important;min-width:76px!important;min-height:56px!important;padding:0 18px!important;line-height:1!important}
+
+/* iPad polish: weather timeline */
+.wx-tlh{display:flex;align-items:center;gap:10px}
+.wx-tlh>div{flex:1;min-width:0}
+.wx-tlh>div b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wx-tlh .wx-now,.wx-tlh .wx-play,.wx-now+.wx-play{margin:0!important;flex:none}
+.wx-tlc .wx-play{width:46px!important;height:46px!important;min-width:46px;min-height:46px!important;border-radius:50%!important;padding:0!important;display:grid;place-items:center;font-size:17px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.wx-now{height:38px;min-height:38px!important;padding:0 16px!important;display:inline-flex!important;align-items:center;justify-content:center;white-space:nowrap;line-height:1}
+.wx-tlc input[type=range]{display:block;height:8px!important;min-height:0!important;padding:0!important;margin:12px 0 6px!important;border:0!important;box-sizing:border-box;width:100%}
+.wx-tlc{padding:12px 16px 26px}.wx-tlc.radar{padding-bottom:14px}
+.wx-ticks{left:16px;right:16px}
+/* map control buttons bigger */
+.leaflet-bar a.btn3d,a.btn3d{height:44px!important;line-height:44px!important;width:auto!important;padding:0 16px!important;font:800 16px/44px var(--f-body)!important;white-space:nowrap}
+.undo-bar a{width:46px!important;height:46px!important;font-size:26px!important;line-height:46px!important}
+.undo-bar a svg{width:26px!important;height:26px!important}
+.vis-pre [data-pre="ทั้งหมด"].on{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* GPS / fullscreen */
+.gps-btn{min-height:54px!important;font:800 18px var(--f-body)!important;padding:10px 20px!important;border-radius:14px!important}
+body.mapfull #btnFull{background:#dc2626!important;border-color:#dc2626!important;color:#fff!important}
+/* NOTAM buffer stepper */
+.nt-buf{display:inline-flex!important;align-items:center;gap:6px;height:44px;padding:0 10px!important;line-height:1}
+.nt-buf>span{display:inline-flex;align-items:center;white-space:nowrap;line-height:1}
+.nt-buf button{width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;padding:0!important;display:grid!important;place-items:center;font-size:16px!important;line-height:1!important;border-radius:8px!important;flex:none}
+.nt-buf input{width:44px!important;height:30px!important;min-height:0!important;padding:0 2px!important;text-align:center;line-height:30px;font-size:15px!important;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -3755,13 +3779,14 @@ function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
-function visSync(){document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis))}
-function visPreset(name){const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
+function visSync(){document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
+function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>VIS.find(v=>v.k===k)&&visOn(k))}
+function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
 const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
   const groups=[...new Set(VIS.map(v=>v.g))];
   d.innerHTML=`<a href="#" class="btn3d" id="visBtn" title="เลือกชั้นข้อมูลที่จะแสดง">◧ ชั้นข้อมูล</a><div id="visPanel" class="vis-panel" hidden>
     <div class="vis-g"><b>แผนที่ฐาน</b><div class="vis-base">${BASES.map(b=>`<button type="button" data-base="${b[0]}" class="${baseCur()===b[0]?"on":""}">${b[1]}</button>`).join("")}</div></div>
-    <div class="vis-pre">${Object.keys(VIS_PRESET).map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
+    <div class="vis-pre">${Object.keys(VIS_PRESET).filter(n=>n!=="ซ่อนทั้งหมด").map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
     ${groups.map(g=>`<div class="vis-g"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
