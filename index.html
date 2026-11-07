@@ -1122,15 +1122,15 @@ body.pvprev .pv-free .pv-blk[data-g]{outline:1px dashed #a855f7;outline-offset:1
 body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 #pvMulti.on{background:#2563eb;color:#fff;border-color:#2563eb}
 @media print{.pv-blk{outline:none!important}}body.pv-snap .pv-blk{outline:none!important}
-.cr{margin-top:22px;max-width:820px;border-radius:20px;padding:16px 18px;border:2px solid #a855f7;box-shadow:0 0 12px rgba(168,85,247,.55),0 0 28px rgba(168,85,247,.25);background:linear-gradient(135deg,color-mix(in srgb,#a855f7 14%,var(--panel)),var(--panel))}
+.cr{border-radius:20px;padding:16px 18px;border:2px solid var(--cc,#ec4899);box-shadow:0 0 12px var(--cc,#ec4899),0 0 28px color-mix(in srgb,var(--cc,#ec4899) 30%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--cc,#ec4899) 14%,var(--panel)),var(--panel))}
 .cr h3{margin:0 0 10px;font:800 18px var(--f-display)}
-.cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:#a855f7;color:#fff;border-color:#a855f7}
+.cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:var(--cc);color:#fff;border-color:var(--cc)}
 .cr-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .cr-in label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
-.cr-in input{background:#fff!important;color:#111827!important;border:2px solid #a855f7!important;font:800 20px var(--f-mono)!important;min-height:48px;border-radius:12px;padding:6px 10px;color-scheme:light}
+.cr-in input{background:#fff!important;color:#111827!important;border:2px solid var(--cc)!important;box-shadow:0 0 8px color-mix(in srgb,var(--cc) 55%,transparent);font:800 20px var(--f-mono)!important;min-height:48px;border-radius:12px;padding:6px 10px;color-scheme:light}
 .cr-out{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px}
-.cr-out div{border-radius:14px;padding:10px 12px;background:var(--input);border:1.5px solid color-mix(in srgb,#a855f7 60%,transparent)}
-.cr-out div.big{border:2px solid #a855f7;box-shadow:0 0 10px rgba(168,85,247,.45)}
+.cr-out div{border-radius:14px;padding:10px 12px;background:var(--input);border:1.5px solid color-mix(in srgb,var(--cc) 60%,transparent)}
+.cr-out div.big{border:2px solid var(--cc);box-shadow:0 0 10px var(--cc)}
 .cr-out small{display:block;font-size:12px;color:var(--muted)}.cr-out b{font:800 24px var(--f-mono)}.cr-out i{font-style:normal;font-size:13px;color:var(--muted);margin-left:4px}
 .cr-tip{margin:10px 0 0;font-size:13px;color:var(--muted)}
 </style>
@@ -1444,7 +1444,6 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
  <div class="card section">
   <div class="sechead"><h2 class="hd hd-violet">แปลงหน่วย</h2></div>
   <div id="cvWrap"></div>
-  <div id="crWrap" class="cr"></div>
  </div>
 </section>
 <section id="tab-wpdb" class="tabpanel" hidden>
@@ -3599,9 +3598,12 @@ function cvOutHtml(){const c=CONV[CV.c],v=num(String(CV.v).replace(",","."));
   return `<div class="cv-res"><span class="cv-ri">${CV_IC[CV.c][0]}</span><div><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><div><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b> <em>${c.u[CV.to][0]}</em></div></div></div>
    ${v==null?"":`<h3>เท่ากับหน่วยอื่น</h3><div class="cv-all">${c.u.map((u,i)=>i===CV.from?"":`<button class="cv-u${i===CV.to?" on":""}" data-to="${i}"><b>${cvFmt(cvConv(CV.c,v,CV.from,i))}</b><i>${u[0]}</i></button>`).join("")}</div>`}`}
 function cvOut(){const o=$("#cvOut");if(o)o.innerHTML=cvOutHtml()}
-function cvRender(){const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
+const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"];
+function cvCatsHtml(){return`<div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}<button class="cv-cat${CV.c==="cr"?" on":""}" data-cvc="cr" style="--cc:${CR_TILE[1]}"><span>${CR_TILE[0]}</span>${CR_TILE[2]}</button></div>`}
+function cvRender(){if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CR_TILE[1]}">${cvCatsHtml()}<div id="crWrap" class="cr"></div></div>`;crRender();return}
+  if(!CONV[CV.c])CV.c=3;const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
   $("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CV_IC[CV.c][1]}">
-   <div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}</div>
+   ${cvCatsHtml()}
    <div class="cv-row1"><input id="cvV" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(CV.v)}" aria-label="ค่า"><select id="cvFrom" aria-label="จากหน่วย">${opts(CV.from)}</select>
      <button id="cvSwap" aria-label="สลับหน่วย" title="สลับหน่วย">⇄</button><select id="cvTo" aria-label="เป็นหน่วย">${opts(CV.to)}</select></div>
    ${c.fuel?`<label class="cv-dens">ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="text" inputmode="decimal" autocomplete="off" value="${num(state&&state.fuelDens,6.7)}"></label><p class="hint">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L)</p>`:""}
@@ -3609,7 +3611,7 @@ function cvRender(){const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option v
    <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
 $("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
-  if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>u[0]==="US gal");CV.to=U.findIndex(u=>u[0]==="L")}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
+  if(t.dataset.cvc==="cr"){CV.c="cr";cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>u[0]==="US gal");CV.to=U.findIndex(u=>u[0]==="L")}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
   if(t.id==="cvSwap"){[CV.from,CV.to]=[CV.to,CV.from];cvRender()}
   if(t.dataset.to!=null){CV.to=+t.dataset.to;cvRender()}
   if(t.dataset.pre!=null){const x=CV_PRE[+t.dataset.pre];CV.c=x[1];CV.from=x[2];CV.to=x[3];cvRender();$("#cvV").focus();$("#cvV").select()}});
@@ -3634,9 +3636,8 @@ function crRender(){const box=$("#crWrap");if(!box)return;const I=(k,l,u)=>`<lab
   box.innerHTML=`<h3>📐 อัตราไต่ / ร่อน (Climb / Descent)</h3><div class="cr-mode"><button type="button" data-crm="dist" class="${CR.mode==="dist"?"on":""}">รู้ระยะทาง → หาอัตรา (ft/min)</button><button type="button" data-crm="rate" class="${CR.mode==="rate"?"on":""}">รู้อัตรา → หาระยะทาง (TOD/TOC)</button></div>
    <div class="cr-in">${I("a0","ระยะสูงตอนนี้","ft")}${I("a1","ระยะสูงเป้าหมาย","ft")}${I("gs","Ground speed","kt")}${CR.mode==="dist"?I("d","ระยะทาง","NM"):I("r","อัตราไต่/ร่อน","ft/min")}</div>
    <div class="cr-out" id="crOut"></div><p class="cr-tip" id="crTip"></p>`;crCalc()}
-crRender();
-$("#crWrap").addEventListener("input",e=>{const k=e.target.dataset.cr;if(!k)return;CR[k]=e.target.value;crCalc()});
-$("#crWrap").addEventListener("click",e=>{const b=e.target.closest("[data-crm]");if(!b)return;CR.mode=b.dataset.crm;crRender()});
+$("#cvWrap").addEventListener("input",e=>{const k=e.target.dataset.cr;if(!k)return;CR[k]=e.target.value;crCalc()});
+$("#cvWrap").addEventListener("click",e=>{const b=e.target.closest("[data-crm]");if(!b)return;CR.mode=b.dataset.crm;crRender()});
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
