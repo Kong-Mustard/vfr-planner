@@ -1258,7 +1258,7 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
         <a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener" style="margin-left:auto">เปิดใน SkyVector ↗</a>
       </div>
     </div>
-    <details id="planMetaBox" class="pm-box"><summary><span class="pm-t">⚙️ ข้อมูลแผน & ค่าเริ่มต้น leg</span><span id="pmSum" class="pm-sum"></span></summary><div class="pm-sw"><button type="button" id="pmStyle" class="mini">⇄ สลับเป็นแบบตารางกระชับ</button></div><div id="planMetaSlot"></div></details>
+    <details id="planMetaBox" class="pm-box"><summary><span class="pm-t">⚙️ ข้อมูลแผน & ค่าเริ่มต้น leg</span><span id="pmSum" class="pm-sum"></span></summary><div id="planMetaSlot"></div></details>
     <p class="hint">ตารางย่อ — ลม ความเร็ว ALT และค่าอื่นแก้ได้ในแท็บ 2 NAVLOG (ข้อมูลเชื่อมกัน)</p>
     <div class="tablewrap"><table id="navMini" class="mini-tbl">
       <thead><tr><th>Go To</th><th>ALT</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel rem</th></tr></thead>
@@ -3941,10 +3941,8 @@ $("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx"
 {const meta=$("#planMeta"),leg=$("#legDef"),home=meta.parentNode,next=meta.nextElementSibling,lhome=leg.parentNode,lnext=leg.nextElementSibling,slot=$("#planMetaSlot"),box=$("#planMetaBox"),mq=matchMedia("(max-width:999px)");
   const place=()=>{if(mq.matches){if(meta.parentNode!==slot){slot.appendChild(meta);slot.appendChild(leg)}box.hidden=false}else{if(meta.parentNode!==home)home.insertBefore(meta,next);if(leg.parentNode!==lhome)lhome.insertBefore(leg,lnext);box.hidden=true}};
   place();mq.addEventListener("change",place);
-  /* 2 แบบ: A = แถบสรุปแตะเพื่อกาง (ค่าเริ่มต้น) · B = ตารางกระชับแสดงตลอด */
-  const setSt=st=>{document.body.classList.toggle("pm-grid",st==="b");if(st==="b")box.open=true;$("#pmStyle").textContent=st==="b"?"⇄ สลับเป็นแถบสรุป (แตะเพื่อกาง)":"⇄ สลับเป็นแบบตารางกระชับ";try{localStorage.setItem("vfr_pm_style",st)}catch(e){}};
-  let st0="a";try{st0=localStorage.getItem("vfr_pm_style")||"a"}catch(e){}setSt(st0);
-  $("#pmStyle").onclick=e=>{e.preventDefault();setSt(document.body.classList.contains("pm-grid")?"a":"b")}}
+  /* ใช้แบบ B (ตารางกระชับแสดงตลอด) ถาวร */
+  document.body.classList.add("pm-grid");box.open=true;try{localStorage.removeItem("vfr_pm_style")}catch(e){}}
 function pmSumRender(){const el=$("#pmSum");if(!el||!state)return;const g=state.g||{};
   el.innerHTML=[state.depTime&&`🕗 ${esc(state.depTime)}`,state.fuel0!=null&&state.fuel0!==""&&`⛽ ${esc(state.fuel0)} lb`,g.alt!=null&&`ALT ${esc(g.alt)}`,g.cas!=null&&`CAS ${esc(g.cas)}`,(g.wd!=null&&g.wv!=null)&&`💨 ${esc(g.wd)}°/${esc(g.wv)}`,state.sa&&`SA ${esc(state.sa)}`].filter(Boolean).map(x=>`<i>${x}</i>`).join("")}
 /* แถบลัดไปหัวข้อ + ปุ่มกลับขึ้นบน */
