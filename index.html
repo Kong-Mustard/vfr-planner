@@ -121,7 +121,7 @@ tr.tot td{font-weight:700;background:var(--input)}
 .kb-map{padding:10px 18px;border-bottom:1px solid var(--line);display:grid;gap:8px}.kb-seg{flex-wrap:wrap}
 .kb-opts{display:flex;flex-wrap:wrap;gap:6px 16px}.kb-opts label{flex-direction:row;align-items:center;gap:6px;font-size:14px;color:var(--ink)}.kb-opts input{width:auto}.kb-opts label.dis{opacity:.45}
 body.pvprev #printView{width:auto!important;background:#525659;padding:var(--pvtop,72px) 16px 24px!important}
-body.pvprev .pv-page{width:var(--pvpw,138mm);min-height:var(--pvph,200mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:5mm;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
+body.pvprev .pv-page{width:var(--pvpw,140mm);min-height:var(--pvph,202mm);box-sizing:border-box;margin:0 auto;background:#fff;padding:0;box-shadow:0 6px 24px rgba(0,0,0,.45);position:relative}
 body.pvprev .pv-page::after{content:"ขอบล่างหน้า A5";position:absolute;left:0;right:0;top:var(--pvph,200mm);border-top:2px dashed #ef4444;color:#ef4444;font:11px var(--f-body);text-align:right}
 .pv-bar{position:fixed;top:0;left:0;right:0;z-index:3001;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#fff;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.3);font:15px var(--f-body)}
 .pv-bar{flex-wrap:wrap}.data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:1500px;width:100%;margin:0 auto}.data-grid .dwide{grid-column:1/-1}
@@ -191,7 +191,7 @@ body.pvprev .pv-ed{outline:1px dashed transparent;cursor:text}body.pvprev .pv-ed
 #printView{width:138mm;font:9pt var(--f-body);color:#000;background:#fff}
 body.printing #printView{display:block;position:fixed;inset:0;z-index:3000;overflow:auto;padding:10px}
 @media print{
-  @page{size:A5 portrait;margin:5mm}
+  @page{size:A5 portrait;margin:4mm}
   body{background:#fff!important;color:#000;padding:0!important}
   nav.rail,main>*:not(#tab-plan),#tab-plan>div>*{display:none!important}
   #tab-plan,#tab-plan>div{display:block!important}
@@ -1106,6 +1106,11 @@ body.mapfull #btnFull{background:#dc2626!important;border-color:#dc2626!importan
 .nt-buf input{width:44px!important;height:30px!important;min-height:0!important;padding:0 2px!important;text-align:center;line-height:30px;font-size:15px!important;box-sizing:border-box}
 .qz-pic img{display:block;max-width:100%;max-height:340px;margin:0 auto;border-radius:8px}
 @media (min-width:761px){body.gps-touch:not(.mapfull) #map{height:calc(100dvh - 20px)!important;min-height:560px}}
+.snapask.hb-dock{position:fixed!important;left:16px!important;bottom:16px!important;top:auto!important;right:auto!important;z-index:4000;width:min(340px,calc(100vw - 32px))}
+@media (max-width:999px){.snapask.hb-dock{left:50%!important;transform:translateX(-50%);bottom:12px!important}}
+/* จับลาก/ย่อขยายอยู่ในกล่องเสมอ — กล่องชิดขอบกระดาษก็ยังจับได้ */
+body.pvprev .pv-free .pv-blk>.blk-h{top:0!important;left:0!important;border-radius:0 0 6px 0!important;opacity:.92}
+body.pvprev .pv-free .pv-blk>.blk-r{right:0!important;bottom:0!important}
 </style>
 </head>
 <body>
@@ -1176,7 +1181,7 @@ body.mapfull #btnFull{background:#dc2626!important;border-color:#dc2626!importan
         <label>Burn rate (lb/นาที)<input id="burn" type="number" step="0.1" inputmode="decimal"></label>
         <label>น้ำมันสำรองขั้นต่ำ (lb)<input id="reserve" type="number" inputmode="decimal"></label>
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900" style="background:var(--hl);font-weight:800"></label>
-        <label hidden>ความถี่หน่วย<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="FALCON 127.0"><option value="OSCAR 127.0"><option value="BIGSHELL 127.0"></datalist></label>
+        <label hidden>ความถี่พื้นที่ (FIC)<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="auto"><option value="FOCAL 127.0 / 331.3"><option value="OSCAR 127.0 / 331.3"><option value="BIG SHELL 127.0 / 331.3"><option value="none"></datalist></label>
         <div id="saInfo" class="sa-info" style="grid-column:1/-1"></div>
         <input id="boxScale" type="range" min="0.6" max="2" step="0.1" value="1" hidden>
         <label hidden>การหมุนกล่อง heading<select id="boxRotMode"><option value="mh">หันตาม heading (MH)</option><option value="track">หันตามแนวเส้นทาง (TC)</option><option value="0">ตั้งตรง</option></select></label>
@@ -1820,10 +1825,10 @@ function hbAsk(ll){tapClose();document.querySelectorAll(".snapask").forEach(x=>x
   b.innerHTML=`<div class="sa-h"><span class="sa-ico">⬡</span><div><b>ขนาดกล่อง heading</b><small>ปรับทุกกล่องพร้อมกัน · ลากกล่องเพื่อย้าย · ดับเบิลคลิก = ตำแหน่งเดิม</small></div></div>
    <div class="hb-row"><button type="button" data-hb="-1" aria-label="เล็กลง">−</button><input type="range" min="0.6" max="2" step="0.1" value="${+state.boxScale||1}" aria-label="ขนาดกล่อง"><button type="button" data-hb="1" aria-label="ใหญ่ขึ้น">＋</button><span class="hb-v">${v()}</span></div>
    <div class="sa-b"><button class="sa-no">ค่าเดิม 100%</button><button class="sa-yes">✓ เสร็จ</button></div>`;
-  map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
-  const place=()=>{const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;let x=pt.x+60,y=pt.y-bh/2;if(x+bw>C.x-8)x=pt.x-bw-60;
+  const pvMode=document.body.classList.contains("pvprev");if(pvMode){b.classList.add("hb-dock");document.body.appendChild(b)}else map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
+  const place=()=>{if(pvMode)return;const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;let x=pt.x+60,y=pt.y-bh/2;if(x+bw>C.x-8)x=pt.x-bw-60;
     x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));b.style.left=x+"px";b.style.top=y+"px"};
-  const rg=b.querySelector("input"),set=x=>{state.boxScale=Math.max(.6,Math.min(2,Math.round(x*10)/10));rg.value=state.boxScale;b.querySelector(".hb-v").textContent=v();$("#boxScale").value=state.boxScale;render();store.set("vfr_current",state)};
+  const rg=b.querySelector("input"),set=x=>{state.boxScale=Math.max(.6,Math.min(2,Math.round(x*10)/10));rg.value=state.boxScale;b.querySelector(".hb-v").textContent=v();$("#boxScale").value=state.boxScale;if(window._pvDog)window._pvDog(state.boxScale);render();store.set("vfr_current",state)};
   rg.oninput=()=>set(+rg.value);b.querySelectorAll("[data-hb]").forEach(x=>x.onclick=()=>set((+state.boxScale||1)+0.1*+x.dataset.hb));
   place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k);histSched&&histSched()};
   const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
@@ -2744,7 +2749,7 @@ function kbItems(a){const e=a.eaip,out=[];if(!e)return out;
   e.navaids.forEach((n,i)=>{const tg=typeof psTagTxt==="function"?psTagTxt(n.freq,a.id):"";out.push({k:a.id+"|n|"+n.type+n.id,svc:n.type,txt:`${n.id} ${n.freq}`+(tg?` [${tg}]`:"")})});return out}
 function kbOn(a,it){state.kbSel=state.kbSel||{};const v=state.kbSel[it.k];return v==null?kbDefault(a):v}
 function kbCountTxt(){let n=0,cards=0;kbAirports().forEach(a=>{const c=kbItems(a).filter(it=>kbOn(a,it)).length;if(c){n+=c;cards++}});
-  const lines=n+cards*1.6+(state.unitFreq?2:0)+2;return{n,cards,over:lines>34}}
+  const lines=n+cards*1.6+(ficText()?2:0)+2;return{n,cards,over:lines>34}}
 function kbRender(){const A=kbAirports();
   $("#kbBody").innerHTML=A.map(a=>{const its=kbItems(a);if(!its.length)return"";const all=its.every(it=>kbOn(a,it));
     return`<div class="kb-ap"><h4><input type="checkbox" data-kbap="${esc(a.id)}" ${all?"checked":""} aria-label="เลือกทั้งสนาม ${esc(a.id)}"> ${esc(a.id)} <span class="hint">${a.off.toFixed(0)} NM จากเส้นทาง</span></h4>
@@ -2956,11 +2961,23 @@ $("#fplPrev").addEventListener("close",()=>{$("#fplFrame").src="about:blank";if(
 $("#fplPrevDl").onclick=()=>$("#fplPdf").click();
 function kbCards(){return kbAirports().map(a=>{const its=kbItems(a).filter(it=>kbOn(a,it));if(!its.length)return"";
   return`<div class="fcard"><h3>${esc(a.id)}</h3>${its.map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
-const UNIT_FREQS=["FALCON 127.0","OSCAR 127.0","BIGSHELL 127.0"];
-const KB_LAY0={paper:"A5",dog:1,rem:"10",mapw:86,maph:124,fs:7.5,tbl:true,remsz:1,wpsz:1,hd:1,tfs:8,line:1};
-const KB_PAPER={A5:{w:138,h:200,mapw:86,maph:124},A4:{w:200,h:287,mapw:128,maph:186}};
+/* ความถี่พื้นที่ (FIC) สำหรับ VFR นอกห้วงอากาศควบคุม — AIP Thailand ENR 1.2 ข้อ 12: 127.0 / 331.3 MHz
+   FOCAL = เหนือเส้น 14°57'N 098°15'E → 16°00'N 101°30'E → 16°30'N 104°45'E · BIG SHELL = ใต้ 11°00'N · OSCAR = ระหว่างนั้น (ขอบเขตตามแนวชายแดนประมาณเอา) */
+const FIC_F="127.0 / 331.3",FIC_NAMES=["FOCAL","OSCAR","BIG SHELL"];
+const UNIT_FREQS=FIC_NAMES.map(n=>n+" "+FIC_F);
+function ficArea(lat,lon){if(lat<11)return"BIG SHELL";const P=[[98.25,14.95],[101.5,16],[104.75,16.5]];let bl;
+  if(lon<=P[0][0])bl=P[0][1];else if(lon>=P[2][0])bl=P[2][1];else{const i=lon<P[1][0]?0:1,a=P[i],b=P[i+1];bl=a[1]+(b[1]-a[1])*(lon-a[0])/(b[0]-a[0])}
+  return lat>bl?"FOCAL":"OSCAR"}
+function ficAreas(){const W=(state&&state.wps)||[],out=[];const add=n=>{if(out.at(-1)!==n)out.push(n)};
+  for(let i=0;i<W.length;i++){add(ficArea(W[i].lat,W[i].lon));if(i<W.length-1)for(let k=1;k<10;k++){const f=k/10;add(ficArea(W[i].lat+(W[i+1].lat-W[i].lat)*f,W[i].lon+(W[i+1].lon-W[i].lon)*f))}}
+  return out.filter((n,i)=>out.indexOf(n)===i)}
+function ficMode(){const v=state&&state.unitFreq;return!v||v==="auto"?"auto":v}
+function ficText(){const m=ficMode();if(m==="none")return"";if(m==="auto"){const a=ficAreas();return a.length?`FIC ${a.join(" → ")} ${FIC_F}`:""}return m}
+function ficHtml(){const t=ficText();if(!t)return"";const m=t.match(/^(?:FIC )?(.*?)\s+(127\.0.*)$/);return m?`FIC ${esc(m[1])}<br><small>${esc(m[2])} MHz</small>`:esc(t)}
+const KB_LAY0={paper:"A5",dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:1,hd:1,tfs:8,line:1};
+const KB_PAPER={A5:{w:140,h:202,mapw:90,maph:140},A4:{w:202,h:289,mapw:132,maph:200}}; /* พื้นที่พิมพ์ = กระดาษ − ขอบ 4 มม. */
 function setPageSize(paper){let st=document.getElementById("pvPageSize");if(!st){st=document.createElement("style");st.id="pvPageSize";document.head.appendChild(st)}
-  st.textContent=`@media print{@page{size:${paper==="A4"?"A4":"A5"} portrait;margin:5mm}#printView{width:${(KB_PAPER[paper]||KB_PAPER.A5).w}mm!important}}`}
+  st.textContent=`@media print{@page{size:${paper==="A4"?"A4":"A5"} portrait;margin:4mm}#printView{width:${(KB_PAPER[paper]||KB_PAPER.A5).w}mm!important}}`}
 function kbLay(){let o={};try{o=JSON.parse(localStorage.getItem("vfr_kb_lay")||"{}")}catch(e){}return{...KB_LAY0,...o}}
 function kbLaySave(o){try{localStorage.setItem("vfr_kb_lay",JSON.stringify(o))}catch(e){}}
 function isIOSApp(){return(navigator.standalone===true||matchMedia("(display-mode: standalone)").matches)&&(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1))}
@@ -2976,7 +2993,7 @@ async function kbSavePdf(pv,KL){const btn=$("#pvPdf"),old=btn.textContent;btn.di
     let png=await htmlToImage.toPng(pg,opt);png=await htmlToImage.toPng(pg,opt); /* Safari: รอบแรกมักยังไม่มีภาพแผนที่ */
     document.body.classList.remove("pv-snap");pg.style.zoom=z;map.invalidateSize();
     const img=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=png});
-    const {jsPDF}=window.jspdf,doc=new jsPDF({unit:"mm",format:KL.paper==="A4"?"a4":"a5",orientation:"portrait"}),m=5,maxW=P.w,maxH=P.h;
+    const {jsPDF}=window.jspdf,doc=new jsPDF({unit:"mm",format:KL.paper==="A4"?"a4":"a5",orientation:"portrait"}),m=4,maxW=P.w,maxH=P.h;
     let w=maxW,h=img.height*w/img.width;if(h>maxH){h=maxH;w=img.width*h/img.height}
     doc.addImage(png,"PNG",m+(maxW-w)/2,m,w,h,undefined,"FAST");
     const W=state.wps,name=`Kneeboard_${(W[0]&&W[0].name||"").replace(/[^\w-]/g,"")}-${(W.at(-1)&&W.at(-1).name||"").replace(/[^\w-]/g,"")}_${KL.paper}.pdf`,blob=doc.output("blob"),file=new File([blob],name,{type:"application/pdf"});
@@ -3000,16 +3017,31 @@ function pvFreeOn(pv,KL){const pg=pv.querySelector(".pv-page");if(!pg||pv.classL
   parts.forEach(({el,id,bx})=>mk(id,el,bx,{map:id==="map"}));
   Object.keys(L.blocks).filter(k=>/^(txt|box)-/.test(k)).forEach(k=>{const sv=L.blocks[k];mk(k,null,{x:sv.x,y:sv.y,w:sv.w,h:sv.h},k.startsWith("box")?{fixedH:true,cls:"is-box"}:{edit:true,cls:"is-txt"})});
   const body=pg.querySelector(".pv-body");if(body)body.remove();
+  /* กันลากกล่องหลุดขอบกระดาษ (เดิมลากออกไปแล้วกู้คืนไม่ได้) */
+  const PP=KB_PAPER[KL.paper]||KB_PAPER.A5,PW=PP.w*96/25.4,PH=PP.h*96/25.4;
+  const clamp=b=>{const w=Math.min(parseFloat(b.style.width)||b.offsetWidth,PW);if(parseFloat(b.style.width)>PW)b.style.width=Math.round(PW)+"px";
+    b.style.left=Math.round(Math.max(0,Math.min(PW-w,parseFloat(b.style.left)||0)))+"px";b.style.top=Math.round(Math.max(0,Math.min(PH-24,parseFloat(b.style.top)||0)))+"px"};
+  pg.querySelectorAll(".pv-blk").forEach(clamp);
   pv.classList.add("pv-free");pg.style.zoom=z0;pv.querySelector(".pv-free-tools").hidden=false;$("#pvFreeBtn").textContent="✕ ปิดจัดหน้าอิสระ";
   const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px");setTimeout(()=>map.invalidateSize(),50);
   const save=()=>{const o=pvFreeLoad(KL.paper);o.on=true;o.blocks={};pg.querySelectorAll(".pv-blk").forEach(b=>{const id=b.dataset.blk,inn=b.querySelector(".blk-in");
       o.blocks[id]={x:parseFloat(b.style.left),y:parseFloat(b.style.top),w:parseFloat(b.style.width),h:b.style.height?parseFloat(b.style.height):null,z:+b.style.zIndex||0,hidden:b.hidden,fz:inn.style.zoom?+inn.style.zoom:0};
       if(/^(txt|box)-/.test(id))o.blocks[id].html=/^txt-/.test(id)?inn.innerHTML:""});pvFreeStore(KL.paper,o)};
+  setTimeout(save,0);
+  /* ย้อนกลับ (↶ / Ctrl+Z) */
+  const hist=[];const snap=()=>{hist.push(JSON.stringify(pvFreeLoad(KL.paper)));if(hist.length>60)hist.shift()};
+  const restoreSnap=o=>{const have=new Set();pg.querySelectorAll(".pv-blk").forEach(b=>{const id=b.dataset.blk,sv=o.blocks[id];
+      if(!sv){if(/^(txt|box)-/.test(id))b.remove();return}have.add(id);const inn=b.querySelector(".blk-in");
+      b.style.left=sv.x+"px";b.style.top=sv.y+"px";b.style.width=sv.w+"px";if(sv.h!=null)b.style.height=sv.h+"px";b.style.zIndex=sv.z||"";b.hidden=!!sv.hidden;inn.style.zoom=sv.fz||"";if(/^txt-/.test(id)&&sv.html!=null)inn.innerHTML=sv.html});
+    Object.keys(o.blocks).filter(k=>!have.has(k)&&/^(txt|box)-/.test(k)).forEach(k=>{const sv=o.blocks[k];L.blocks[k]=sv;mk(k,null,{x:sv.x,y:sv.y,w:sv.w,h:sv.h},k.startsWith("box")?{fixedH:true,cls:"is-box"}:{edit:true,cls:"is-txt"})});
+    pvFreeStore(KL.paper,o);map.invalidateSize()};
+  window._pvUndo=()=>{if(!hist.length){toast("ไม่มีขั้นให้ย้อน");return}restoreSnap(JSON.parse(hist.pop()));toast("ย้อนกลับแล้ว")};
+  window._pvFreeMap=(wmm,hmm)=>{const b=pg.querySelector(".pv-blk.is-map");if(!b)return;snap();b.style.width=Math.round(wmm*96/25.4)+"px";b.style.height=Math.round(hmm*96/25.4)+"px";clamp(b);map.invalidateSize();save()};
   let sel=null;const select=b=>{pg.querySelectorAll(".pv-blk.sel").forEach(x=>x.classList.remove("sel"));sel=b;if(b){b.classList.add("sel");b.style.zIndex=++zTop}};
   pg.addEventListener("pointerdown",e=>{const b=e.target.closest(".pv-blk");if(!b){select(null);return}select(b);
     const h=e.target.closest(".blk-h"),r=e.target.closest(".blk-r");if(!h&&!r)return;e.preventDefault();e.stopPropagation();
-    const zz=parseFloat(pg.style.zoom)||1,sx=e.clientX,sy=e.clientY,ox=parseFloat(b.style.left),oy=parseFloat(b.style.top),ow=b.offsetWidth,oh=b.offsetHeight,fixH=!!b.style.height;
-    const mv=ev=>{const dx=(ev.clientX-sx)/zz,dy=(ev.clientY-sy)/zz;if(h){b.style.left=Math.round(ox+dx)+"px";b.style.top=Math.round(oy+dy)+"px"}
+    snap();const zz=parseFloat(pg.style.zoom)||1,sx=e.clientX,sy=e.clientY,ox=parseFloat(b.style.left),oy=parseFloat(b.style.top),ow=b.offsetWidth,oh=b.offsetHeight,fixH=!!b.style.height;
+    const mv=ev=>{const dx=(ev.clientX-sx)/zz,dy=(ev.clientY-sy)/zz;if(h){b.style.left=Math.round(ox+dx)+"px";b.style.top=Math.round(oy+dy)+"px";clamp(b)}
       else{b.style.width=Math.max(40,Math.round(ow+dx))+"px";if(fixH)b.style.height=Math.max(24,Math.round(oh+dy))+"px";if(b.classList.contains("is-map"))map.invalidateSize()}};
     const up=()=>{removeEventListener("pointermove",mv);removeEventListener("pointerup",up);if(b.classList.contains("is-map"))map.invalidateSize();save()};
     addEventListener("pointermove",mv);addEventListener("pointerup",up)},true);
@@ -3017,12 +3049,15 @@ function pvFreeOn(pv,KL){const pg=pv.querySelector(".pv-page");if(!pg||pv.classL
   const tools=pv.querySelector(".pv-free-tools");
   tools.onmousedown=e=>{if(e.target.closest("button"))e.preventDefault()}; /* ไม่ให้เสียตำแหน่งข้อความที่เลือก */
   tools.onclick=e=>{const f=e.target.closest("[data-fx]"),z=e.target.closest("[data-fz]");
-    if(f){document.execCommand(f.dataset.fx,false,null);save()}
-    if(z&&sel){const inn=sel.querySelector(".blk-in");if(sel.classList.contains("is-map")){toast("ย่อ/ขยายแผนที่ด้วยการลากมุมกล่อง");return}const v=Math.min(2.5,Math.max(.5,(parseFloat(inn.style.zoom)||1)+(+z.dataset.fz)*.1));inn.style.zoom=v.toFixed(2);save()}};
+    if(f){snap();document.execCommand(f.dataset.fx,false,null);save()}
+    if(z&&sel){snap();const inn=sel.querySelector(".blk-in");if(sel.classList.contains("is-map")){toast("ย่อ/ขยายแผนที่ด้วยการลากมุมกล่อง");return}const v=Math.min(2.5,Math.max(.5,(parseFloat(inn.style.zoom)||1)+(+z.dataset.fz)*.1));inn.style.zoom=v.toFixed(2);save()}};
   $("#pvColor").oninput=e=>{document.execCommand("foreColor",false,e.target.value);save()};
-  $("#pvAddTxt").onclick=()=>{const id="txt-"+Date.now();const b=mk(id,null,{x:30,y:Math.round(pg.offsetHeight*0.45),w:220},{edit:true,cls:"is-txt",html:"พิมพ์ข้อความ"});select(b);save();b.querySelector(".blk-in").focus()};
-  $("#pvAddBox").onclick=()=>{const id="box-"+Date.now();const b=mk(id,null,{x:40,y:40,w:160,h:90},{fixedH:true,cls:"is-box"});select(b);save()};
-  $("#pvDelBlk").onclick=()=>{if(!sel){toast("แตะเลือกกล่องก่อน");return}if(/^(txt|box)-/.test(sel.dataset.blk))sel.remove();else sel.hidden=true;sel=null;save();toast("ลบแล้ว (กด ↺ จัดหน้าใหม่ เพื่อคืนค่า)")}}
+  $("#pvAddTxt").onclick=()=>{snap();const id="txt-"+Date.now();const b=mk(id,null,{x:30,y:Math.round(pg.offsetHeight*0.45),w:220},{edit:true,cls:"is-txt",html:"พิมพ์ข้อความ"});select(b);save();b.querySelector(".blk-in").focus()};
+  $("#pvAddBox").onclick=()=>{snap();const id="box-"+Date.now();const b=mk(id,null,{x:40,y:40,w:160,h:90},{fixedH:true,cls:"is-box"});select(b);save()};
+  $("#pvDelBlk").onclick=()=>{if(!sel){toast("แตะเลือกกล่องก่อน");return}snap();if(/^(txt|box)-/.test(sel.dataset.blk))sel.remove();else sel.hidden=true;sel=null;save();toast("ลบแล้ว (กด ↶ ย้อน เพื่อคืน)")};
+  $("#pvUndo").onclick=()=>window._pvUndo&&window._pvUndo()}
+document.addEventListener("keydown",e=>{if(!(e.ctrlKey||e.metaKey)||e.key.toLowerCase()!=="z"||e.shiftKey)return;if(!document.body.classList.contains("pvprev")||!window._pvUndo)return;
+  const a=document.activeElement;if(a&&(a.isContentEditable||/INPUT|TEXTAREA|SELECT/.test(a.tagName)))return;e.preventDefault();e.stopImmediatePropagation();window._pvUndo()},true);
 /* ย้ายส่วนเลือกความถี่ + ชนิดแผนที่ จากหน้าต่าง Kneeboard มาไว้ข้างหน้าตัวอย่าง แล้วย้ายกลับเมื่อปิด */
 let kbPanelSaved=null;
 function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map"),dlg.querySelector(".kb-head .btns"),$("#kbCount"),$("#kbBody")];
@@ -3031,13 +3066,26 @@ function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map
   panel.querySelector(".pp-map").appendChild(nodes[0]);panel.querySelector(".pp-btns").appendChild(nodes[1]);panel.querySelector(".pp-count").appendChild(nodes[2]);panel.querySelector(".pp-body").appendChild(nodes[3]);
   pv.appendChild(panel);kbRender()}
 function kbPanelHome(){if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
+function pvTblHtml(res,W){return `<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
+    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
+function pvUnitSync(pv){const side=pv.querySelector(".pv-side");if(!side)return;let u=side.querySelector(".pv-unit");const h=ficHtml();
+  if(!h){if(u)u.remove()}else{if(!u){u=document.createElement("div");u.className="pv-unit";u.contentEditable="true";u.classList.add("pv-ed");side.prepend(u)}u.innerHTML=h}}
+/* แก้เส้นทางระหว่างดูตัวอย่าง Kneeboard (เช่น ลากเพิ่มจุด/สนามสำรอง) → อัปเดตหัวกระดาษ ตาราง ความถี่ และรายการความถี่ด้านซ้าย */
+let pvRouteSig="";
+function pvRouteRefresh(){const pv=$("#printView");if(!document.body.classList.contains("pvprev")||!pv)return;const W=state.wps;if(W.length<2)return;
+  const sig=W.map(w=>[w.lat.toFixed(5),w.lon.toFixed(5),w.name].join()).join("|");if(sig===pvRouteSig)return;const first=!pvRouteSig;pvRouteSig=sig;if(first)return;
+  setTimeout(()=>{const res=compute();if(!res.rows.length)return;const h1=pv.querySelector(".pv-head h1");if(h1)h1.textContent=`${W[0].name} – ${W.at(-1).name}`;
+    const q=qnhText(),tot=pv.querySelector(".pv-head .tot");if(tot)tot.innerHTML=`${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}`;
+    const t=pv.querySelector(".pv-tbl");if(t){const d=document.createElement("div");d.innerHTML=pvTblHtml(res,W);t.replaceWith(d.firstElementChild);pv.querySelectorAll(".pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}
+    pvUnitSync(pv);const sel=$("#pvUnit");if(sel&&sel.options[0])sel.options[0].textContent="อัตโนมัติตามเส้นทาง"+(ficAreas().length?" ("+ficAreas().join(" → ")+")":"");
+    try{kbRender()}catch(e){}if(window._pvCards)window._pvCards()},30)}
+{const r0=render;render=function(...a){const out=r0.apply(this,a);try{pvRouteRefresh()}catch(e){}return out}}
 function kneePrint(preview){
-  const KL=kbLay(),res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}
+  const KL=kbLay(),res=compute();if(!res.rows.length){toast("ต้องมีอย่างน้อย 2 จุด");return}pvRouteSig="";
   const W=state.wps,pv=$("#printView");
   const prevTab=document.querySelector('.rail .tab[aria-selected="true"]');if(prevTab&&prevTab.dataset.tab!=="plan")document.querySelector('.rail .tab[data-tab="plan"]').click();
   const cards=kbCards();
-  const tbl=`<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
-    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`;
+  const tbl=pvTblHtml(res,W);
   const q=qnhText();
   pv.innerHTML=`${preview?`<div class="pv-bar"><b>ตัวอย่าง Kneeboard</b><span class="hint">ลากแผนที่/ซูม · ลากกล่อง doghouse · <b>คลิกที่ตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้</b> (มีผลกับใบนี้เท่านั้น) · <span id="pvFit"></span></span><button id="pvFreeBtn" title="ลาก/ย่อขยายแต่ละส่วน เพิ่มกล่องข้อความ จัดรูปแบบตัวอักษร">✏️ จัดหน้าอิสระ</button><button id="pvPdf" class="primary" title="สร้างไฟล์ PDF ในเครื่อง (ใช้บน iPad / มือถือได้)">📄 บันทึก PDF</button><button id="pvPrint">🖨️ พิมพ์</button><button id="pvClose">✕ ปิด</button>
     <div class="pv-free-tools" hidden><b>จัดหน้า:</b>
@@ -3045,9 +3093,9 @@ function kneePrint(preview){
       <label title="สีตัวอักษร">🎨<input type="color" id="pvColor" value="#c62f24"></label>
       <button data-fx="justifyLeft" title="ชิดซ้าย">⯇≡</button><button data-fx="justifyCenter" title="กึ่งกลาง">≡</button><button data-fx="justifyRight" title="ชิดขวา">≡⯈</button>
       <button data-fz="-1" title="ย่อกล่องที่เลือก">A−</button><button data-fz="1" title="ขยายกล่องที่เลือก">A+</button>
-      <button id="pvAddTxt">➕ กล่องข้อความ</button><button id="pvAddBox">▭ กรอบ</button><button id="pvDelBlk">🗑 ลบที่เลือก</button><button id="pvFreeReset">↺ จัดหน้าใหม่</button>
+      <button id="pvAddTxt">➕ กล่องข้อความ</button><button id="pvAddBox">▭ กรอบ</button><button id="pvDelBlk">🗑 ลบที่เลือก</button><button id="pvUndo" title="ย้อนกลับ (Ctrl+Z)">↶ ย้อน</button><button id="pvFreeReset">↺ จัดหน้าใหม่</button>
       <span class="hint">ลาก ⠿ เพื่อย้าย · ลากมุมขวาล่างเพื่อย่อขยาย · แตะกล่องเพื่อเลือก · เลือกข้อความแล้วกด B / I / U / สี</span></div>
-    <details class="pv-ctlw" ${innerWidth<900?"":"open"}><summary>⚙️ ปรับขนาด / รูปแบบ</summary><div class="pv-ctl"><label>ความถี่หน่วย <select id="pvUnit">${[...new Set(["",...UNIT_FREQS,state.unitFreq||""])].map(v=>`<option value="${esc(v)}" ${v===(state.unitFreq||"")?"selected":""}>${v?esc(v):"— ไม่แสดง —"}</option>`).join("")}</select></label>
+    <details class="pv-ctlw" ${innerWidth<900?"":"open"}><summary>⚙️ ปรับขนาด / รูปแบบ</summary><div class="pv-ctl"><label>ความถี่พื้นที่ (FIC) <select id="pvUnit">${[["auto","อัตโนมัติตามเส้นทาง"+(ficAreas().length?" ("+ficAreas().join(" → ")+")":"")],...UNIT_FREQS.map(v=>[v,v]),["none","— ไม่แสดง —"]].concat(ficMode()!=="auto"&&ficMode()!=="none"&&!UNIT_FREQS.includes(ficMode())?[[ficMode(),ficMode()]]:[]).map(([v,t])=>`<option value="${esc(v)}" ${v===ficMode()?"selected":""}>${esc(t)}</option>`).join("")}</select></label>
       <label>กระดาษ <select data-kl="paper">${["A5","A4"].map(v=>`<option ${v===KL.paper?"selected":""}>${v}</option>`).join("")}</select></label>
       <label>Doghouse <input type="range" data-kl="dog" min="0.5" max="1.8" step="0.1" value="${KL.dog}"></label>
       <label>ป้ายระยะ <select data-kl="rem">${[["0","ปิด"],["5","5 NM"],["10","10 NM"],["20","20 NM"],["25","25 NM"],["50","50 NM"]].map(([v,t])=>`<option value="${v}" ${v===String(KL.rem)?"selected":""}>${t}</option>`).join("")}</select></label>
@@ -3059,9 +3107,9 @@ function kneePrint(preview){
       <label>หัวกระดาษ <input type="range" data-kl="hd" min="0.7" max="1.6" step="0.1" value="${KL.hd}"></label>
       <label>ตัวอักษรความถี่ <input type="range" data-kl="fs" min="6" max="12" step="0.5" value="${KL.fs}"></label>
       <label>ตัวอักษรตาราง <input type="range" data-kl="tfs" min="6" max="12" step="0.5" value="${KL.tfs}"></label>
-      <label><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}> ตารางนำทาง</label><button id="pvReset" class="mini">ค่าเริ่มต้น</button></div></details></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
+      <label><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}> ตารางนำทาง</label><label title="ยืดความสูงแผนที่ให้เต็มหน้ากระดาษอัตโนมัติ"><input type="checkbox" data-kl="fill" ${KL.fill?"checked":""}> แผนที่เต็มหน้า</label><button id="pvReset" class="mini">ค่าเริ่มต้น</button></div></details></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
-    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${state.unitFreq?`<div class="pv-unit">${esc(state.unitFreq)}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div><div class="pv-cards">${cards}</div></div></div>${tbl}</div>`;
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side">${ficText()?`<div class="pv-unit">${ficHtml()}</div>`:""}<div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div><div class="pv-cards">${cards}</div></div></div>${tbl}</div>`;
   if(preview)pv.querySelectorAll(".pv-head h1,.pv-head .tot,.pv-head .sa,.pv-unit,.emerchip,.pv-side .fcard h3,.pv-side .fcard .r b,.pv-side .fcard .r span,.pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
   let restore=kbMapApply();const orig={boxScale:state.boxScale,remStep:state.remStep};
@@ -3069,9 +3117,12 @@ function kneePrint(preview){
     pv.style.setProperty("--pvrem",KL.remsz);pv.style.setProperty("--pvwp",KL.wpsz);pv.style.setProperty("--pvhd",KL.hd);pv.style.setProperty("--pvtfs",KL.tfs+"pt");pv.style.setProperty("--pvline",KL.line);
     pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
     state.boxScale=KL.dog;state.remStep=String(KL.rem);render();map.invalidateSize();
-    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));f.innerHTML=bot-top>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
+    if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
+      const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
+      const mh=Math.max(60,Math.min(P.h-20,Math.floor(Math.max(mhNow,bh*25.4/96)+(lim-used)*25.4/96-1.5)));if(Math.abs(mh-mhNow)>=1){KL.maph=mh;pv.style.setProperty("--pvmh",mh+"mm");map.invalidateSize();const el=pv.querySelector('[data-kl="maph"]');if(el)el.value=mh}}}
+    const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";window._pvFreeMap=window._pvDog=window._pvUndo=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
   if(preview){kbPanelOpen(pv);
@@ -3079,11 +3130,13 @@ function kneePrint(preview){
     window._pvCards=()=>{const c=pv.querySelector(".pv-cards");if(c){c.innerHTML=kbCards();c.querySelectorAll(".fcard h3,.fcard .r b,.fcard .r span").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}applyKL()};
     pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:e.target.tagName==="SELECT"?e.target.value:+e.target.value;
       if(k==="paper"){const P=KB_PAPER[KL.paper];KL.mapw=P.mapw;KL.maph=P.maph;["mapw","maph"].forEach(q=>{const el=pv.querySelector(`[data-kl="${q}"]`);el.max=q==="mapw"?P.w-10:P.h-20;el.value=KL[q]})}
+      if(k==="maph"&&KL.fill){KL.fill=false;const c=pv.querySelector('[data-kl="fill"]');if(c)c.checked=false}
+      if(pv.classList.contains("pv-free")&&(k==="mapw"||k==="maph")&&window._pvFreeMap)window._pvFreeMap(KL.mapw,KL.maph);
       kbLaySave(KL);applyKL();if(k==="paper")setTimeout(()=>{map.invalidateSize();fit()},60)});
-    $("#pvUnit").onchange=e=>{state.unitFreq=e.target.value;$("#unitFreq").value=state.unitFreq;store.set("vfr_current",state);const side=pv.querySelector(".pv-side");let u=side.querySelector(".pv-unit");
-      if(!state.unitFreq){if(u)u.remove()}else{if(!u){u=document.createElement("div");u.className="pv-unit";side.prepend(u)}u.textContent=state.unitFreq}applyKL()};
+    $("#pvUnit").onchange=e=>{state.unitFreq=e.target.value;$("#unitFreq").value=state.unitFreq;store.set("vfr_current",state);pvUnitSync(pv);applyKL()};
     $("#pvReset").onclick=()=>{Object.assign(KL,KB_LAY0);kbLaySave(KL);pv.querySelectorAll("[data-kl]").forEach(el=>{const v=KL[el.dataset.kl];if(el.type==="checkbox")el.checked=!!v;else el.value=v});applyKL()};$("#pvClose").onclick=back;$("#pvPrint").onclick=()=>{if(isIOSApp()){toast("แอปบนหน้าจอโฮมของ iPad สั่งพิมพ์ไม่ได้ — ใช้ 📄 บันทึก PDF แล้วพิมพ์จากไฟล์");return}window.addEventListener("afterprint",back,{once:true});window.print()};
     $("#pvPdf").onclick=()=>kbSavePdf(pv,KL);
+    window._pvDog=v=>{KL.dog=v;kbLaySave(KL);const el=pv.querySelector('[data-kl="dog"]');if(el)el.value=v};
     const reopen=()=>{back();setTimeout(()=>kneePrint(true),60)};
     $("#pvFreeBtn").onclick=()=>{const L=pvFreeLoad(KL.paper);if(pv.classList.contains("pv-free")){L.on=false;pvFreeStore(KL.paper,L);reopen()}else{L.on=true;pvFreeStore(KL.paper,L);pvFreeOn(pv,KL)}};
     $("#pvFreeReset").onclick=()=>{pvFreeStore(KL.paper,{on:true,blocks:{}});reopen()};
@@ -3107,7 +3160,7 @@ $("#exportXlsx").onclick=async()=>{
   const ws=wb.addWorksheet("Nav Log",{pageSetup:{paperSize:9,orientation:"landscape",fitToPage:true,fitToWidth:1}});
   const W=state.wps;
   ws.mergeCells("A1:P1");const t=ws.getCell("A1");t.value=`VFR NAVIGATION LOG — ${W[0].name} → ${W.at(-1).name}`;t.font={...F,size:16,bold:true,color:{argb:"FF123C69"}};t.alignment={horizontal:"center"};
-  const info=[["ภารกิจ",state.planName||""],["Aircraft",state.acft||""],["วันที่",state.date||""],["เวลาเริ่มบิน",state.depTime||""],["SA (ft)",state.sa||""],["ความถี่หน่วย",state.unitFreq||""],
+  const info=[["ภารกิจ",state.planName||""],["Aircraft",state.acft||""],["วันที่",state.date||""],["เวลาเริ่มบิน",state.depTime||""],["SA (ft)",state.sa||""],["ความถี่พื้นที่ (FIC)",ficText()],
     ["น้ำมันเริ่มต้น (lb)",num(state.fuel0,"")],["Burn (lb/นาที)",num(state.burn,"")],["สำรองขั้นต่ำ (lb)",num(state.reserve,"")],["Var",num(state.g.var,0)],["ระยะรวม (NM)",+res.total.toFixed(1)],["เวลารวม",mmss(res.cumMin)],["QNH",qnhText()==="–"?"":qnhText()]];
   info.forEach((p,i)=>{const r=3+Math.floor(i/3),c=1+(i%3)*4;ws.mergeCells(r,c,r,c+1);ws.mergeCells(r,c+2,r,c+3);const a=ws.getCell(r,c),b=ws.getCell(r,c+2);
     a.value=p[0];b.value=p[1];a.font={...F,bold:true};b.font=F;a.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE9EEF5"}};[a,b].forEach(x=>{x.border=B;x.alignment={horizontal:"center"}})});
@@ -3129,7 +3182,7 @@ $("#exportXlsx").onclick=async()=>{
   /* Sheet 3: Frequencies */
   const w3=wb.addWorksheet("Frequencies");const h3=w3.getRow(1);h3.values=["สนาม","ชื่อ","ห่างเส้นทาง (NM)","Service","Frequency","Call sign"];head(h3);
   let rr=2;const add=v=>{const r=w3.getRow(rr++);r.values=v;body(r)};
-  add(["EMER","Guard","","EMER","121.5 / 243.0",""]);if(state.unitFreq)add(["หน่วย","","","",state.unitFreq,""]);
+  add(["EMER","Guard","","EMER","121.5 / 243.0",""]);if(ficText())add(["FIC","","","",ficText(),""]);
   routeAirports(num($("#corridor").value,25)).forEach(a=>{const e=a.eaip;
     if(e&&e.comm.length)e.comm.forEach(c=>add([a.id,a.name,+a.off.toFixed(1),c.svc,c.freq,c.callsign]));
     else add([a.id,a.name,+a.off.toFixed(1),"","(ยังไม่มีข้อมูล eAIP)",""]);
@@ -3616,7 +3669,7 @@ $("#psAdd").onclick=()=>{const d=psAll(),L=d[psBand];const n=L.reduce((m,x)=>Mat
 function dtdId(name,used){let t=String(name||"").toUpperCase().replace(/[^A-Z0-9 .]/g,"").replace(/\s+/g," ").trim();if(t.length<2)t="";
   t=t.slice(0,7).trim();let id=t||"WP",k=1;while(used.has(id)){const sfx=String(k++);id=(t||"WP").slice(0,7-sfx.length)+sfx}used.add(id);return id}
 function sopPlanFreqs(){const out=[];kbAirports().forEach(a=>kbItems(a).filter(it=>kbOn(a,it)&&it.svc!=="RW"&&!/^(GP|DME|TACAN|MKR|OM|MM|IM)\b|GLIDE|MARKER/i.test(it.svc)).forEach(it=>out.push({ap:a.id,svc:it.svc,txt:it.txt.replace(/ \[[^\]]*\]$/,"")})));
-  if(state.unitFreq)out.unshift({ap:"หน่วย",svc:"",txt:state.unitFreq});return out}
+  if(ficText())out.unshift({ap:"FIC",svc:"",txt:ficText()});return out}
 function sopCheck(){const W=state?state.wps:[],L=dbAll(),res={wp:[],fq:[],ps:[]};
   W.forEach((w,i)=>{const m=dbMatch(w);if(m){res.wp.push({i,w,ok:true,m});return}
     const nm=L.find(x=>x.lat!=null&&String(x.name).toUpperCase()===String(w.name).toUpperCase());
