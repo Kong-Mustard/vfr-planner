@@ -1144,6 +1144,11 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 .calc-keys .fn{background:color-mix(in srgb,#ef4444 18%,var(--input))}
 .calc-hist{display:flex;flex-direction:column;gap:4px;margin-top:10px}
 .calc-hist button{text-align:right;font:600 14px var(--f-mono);border-radius:10px;padding:6px 10px;background:var(--input)}
+.sh-l{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.rem-q{flex-direction:row!important;margin:0!important}
+.dhQ{min-height:30px!important;padding:2px 10px!important;font-size:12.5px!important;border-radius:8px;display:inline-flex;align-items:center;gap:4px;opacity:.6;text-decoration:line-through}
+.dhQ.on{opacity:1;text-decoration:none;background:color-mix(in srgb,#0a6cff 22%,var(--input));border-color:#0a6cff}
+@media (max-width:999px){.dhQ.rem-desk{display:none}.dhQ.rem-mob{display:inline-flex}}@media (min-width:1000px){.dhQ.rem-mob{display:none}}
 </style>
 </head>
 <body>
@@ -1180,7 +1185,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
     <button type="button" data-jump="#areaCard">⚠️ P/R/D · NOTAM</button>
   </nav>
     <div class="card side">
-      <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><label class="rem-q rem-mob" title="ป้ายบอกระยะบนแผนที่">📏<select class="remQ" aria-label="ป้ายบอกระยะ"><option value="0">ปิดป้ายระยะ</option><option value="5">ทุก 5 NM</option><option value="10">ทุก 10 NM</option><option value="20">ทุก 20 NM</option><option value="25">ทุก 25 NM</option><option value="50">ทุก 50 NM</option></select></label><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
+      <div class="sechead"><h2 class="hd hd-blue">แผนการบิน</h2><span id="exampleTag" class="example" hidden>ข้อมูลตัวอย่าง</span><label class="rem-q rem-mob" title="ป้ายบอกระยะบนแผนที่">📏<select class="remQ" aria-label="ป้ายบอกระยะ"><option value="0">ปิดป้ายระยะ</option><option value="5">ทุก 5 NM</option><option value="10">ทุก 10 NM</option><option value="20">ทุก 20 NM</option><option value="25">ทุก 25 NM</option><option value="50">ทุก 50 NM</option></select></label><button type="button" class="dhQ rem-mob" aria-pressed="true" title="แสดง/ซ่อนกล่อง heading (doghouse) บนแผนที่">⬡ <span>Doghouse</span></button><button id="sideToggle" type="button" class="mini" aria-expanded="true" title="ยุบ/ขยายแผง">ยุบ ▴</button></div>
       <div class="planbar" role="group" aria-label="จัดการแผน" hidden><button id="savePlan" class="primary" type="button">💾 บันทึกแผน</button><select id="loadSel" aria-label="เปิดแผนที่บันทึกไว้"><option value="">📂 เปิดแผนที่บันทึก…</option></select><button id="delPlan" type="button" title="ลบแผนที่เลือกอยู่ออกจากรายการที่บันทึก">🗑</button></div>
       <div class="routebox">
         <label><b class="rlab dep">● ต้นทาง</b><input id="depIn" type="text" list="apList" placeholder="VTBH หรือ 47P PS 76283 53429" autocomplete="off"></label>
@@ -1244,7 +1249,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 
   <div class="card section" id="wpCard">
     <div class="sechead">
-      <h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2><label class="rem-q rem-desk" title="ป้ายบอกระยะบนแผนที่">📏<select class="remQ" aria-label="ป้ายบอกระยะ"><option value="0">ปิดป้ายระยะ</option><option value="5">ทุก 5 NM</option><option value="10">ทุก 10 NM</option><option value="20">ทุก 20 NM</option><option value="25">ทุก 25 NM</option><option value="50">ทุก 50 NM</option></select></label>
+      <div class="sh-l"><h2 class="hd hd-pink">จุดเส้นทาง (Check points)</h2><label class="rem-q rem-desk" title="ป้ายบอกระยะบนแผนที่">📏<select class="remQ" aria-label="ป้ายบอกระยะ"><option value="0">ปิดป้ายระยะ</option><option value="5">ทุก 5 NM</option><option value="10">ทุก 10 NM</option><option value="20">ทุก 20 NM</option><option value="25">ทุก 25 NM</option><option value="50">ทุก 50 NM</option></select></label><button type="button" class="dhQ rem-desk" aria-pressed="true" title="แสดง/ซ่อนกล่อง heading (doghouse) บนแผนที่">⬡ <span>Doghouse</span></button></div>
       <div class="btns">
         <button id="addManual">เพิ่มจุดจากพิกัด</button>
         <button id="reverse">กลับเส้นทาง</button>
@@ -2064,6 +2069,7 @@ const gfields={gAlt:"alt",gCas:"cas",gWd:"wd",gWv:"wv",gTemp:"temp",gVar:"var"};
 function fillForm(){if($("#boxScale"))$("#boxScale").value=state.boxScale||1;$("#boxRotMode").value=state.boxRotMode||"mh";["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
   for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??"";remQSync()}
 for(const[id,k]of Object.entries(fields))$("#"+id).addEventListener("input",e=>{state[k]=e.target.value;markEdited();render();if(id==="remStep")remQSync()});
+document.addEventListener("click",e=>{const b=e.target.closest(".dhQ");if(!b)return;visSet("hbox",!visOn("hbox"));visSave();dhQSync()});setTimeout(()=>{try{dhQSync()}catch(e){}},0);
 function remQSync(){document.querySelectorAll(".remQ").forEach(x=>x.value=String(state.remStep??"10"))}
 document.querySelectorAll(".remQ").forEach(x=>x.addEventListener("change",()=>{const r=$("#remStep");r.value=x.value;r.dispatchEvent(new Event("input"))}));
 for(const[id,k]of Object.entries(gfields))$("#"+id).addEventListener("input",e=>{state.g[k]=e.target.value;markEdited();if(k==="var")render()});
@@ -3931,7 +3937,8 @@ function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
-function visSync(){document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
+function dhQSync(){const on=visOn("hbox");document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
+function visSync(){dhQSync();document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
 function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>VIS.find(v=>v.k===k)&&visOn(k))}
 function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
 const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
