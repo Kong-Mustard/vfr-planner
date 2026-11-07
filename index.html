@@ -816,7 +816,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .cv-chips{display:flex;flex-wrap:wrap;gap:6px}
 .cv-row1{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
 .cv-row1 input{font:800 24px var(--f-mono)!important;min-height:56px!important}.cv-row1 select{min-height:56px!important;font-size:17px!important}
-#cvSwap{min-height:56px;font-size:22px;padding:0 16px}
+#cvSwap{min-height:56px;min-width:64px;font:900 28px/1 var(--f-body);padding:0 18px;border-radius:16px;background:var(--cc,var(--accent));color:#fff;border:2px solid #fff;box-shadow:0 0 0 2px var(--cc),0 0 14px var(--cc),0 0 28px color-mix(in srgb,var(--cc) 55%,transparent);text-shadow:0 1px 2px rgba(0,0,0,.45)}#cvSwap:active{transform:scale(.94) rotate(180deg);transition:transform .2s}
 .cv1{display:flex;flex-direction:column;gap:14px}
 .cv-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .cv-cat{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px 14px;border-radius:16px;border:1.5px solid var(--line);background:var(--input);color:var(--ink);font:700 14px var(--f-body);text-align:left;cursor:pointer;transition:transform .12s,border-color .12s}
@@ -1070,6 +1070,16 @@ h2.hd{--c:var(--accent);display:inline-flex;align-items:center;gap:8px;color:var
 :root[data-theme="dark"] h2.hd{color:color-mix(in srgb,var(--c) 65%,white)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2.hd{color:color-mix(in srgb,var(--c) 65%,white)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.cv-cat{border:2px solid var(--cc)!important;box-shadow:0 0 6px color-mix(in srgb,var(--cc) 60%,transparent),inset 0 0 6px color-mix(in srgb,var(--cc) 25%,transparent)}
+.cv-cat.on{box-shadow:0 0 0 1px var(--cc),0 0 12px var(--cc),0 0 26px color-mix(in srgb,var(--cc) 55%,transparent)!important}
+.cv-row1 input,.cv-row1 select,.cv-dens input{border:2px solid var(--cc)!important;box-shadow:0 0 8px color-mix(in srgb,var(--cc) 55%,transparent)}
+.cv-row1 input:focus,.cv-row1 select:focus,.cv-dens input:focus{border-color:var(--cc)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--cc) 40%,transparent),0 0 16px var(--cc)!important;outline:none}
+.cv-res{border:2px solid var(--cc)!important;box-shadow:0 0 12px var(--cc),0 0 30px color-mix(in srgb,var(--cc) 40%,transparent),inset 0 0 14px color-mix(in srgb,var(--cc) 20%,transparent)}
+.cv-u{border:1.5px solid color-mix(in srgb,var(--cc) 70%,transparent)!important;box-shadow:0 0 6px color-mix(in srgb,var(--cc) 40%,transparent)}
+.cv-u.on{border:2px solid var(--cc)!important;box-shadow:0 0 12px var(--cc)!important}
+.cv-pre button{border:1.5px solid color-mix(in srgb,var(--cc) 70%,transparent);box-shadow:0 0 6px color-mix(in srgb,var(--cc) 35%,transparent)}
+.cv1 #cvSwap{font-size:32px!important;font-weight:900!important;min-width:76px!important;min-height:56px!important;padding:0 18px!important;line-height:1!important}
 </style>
 </head>
 <body>
@@ -3467,23 +3477,27 @@ const CV_PRE=[["น้ำมัน ลิตร → lb",7,3,0],["น้ำมั
 function cvFactors(c){const f=c.u.map(u=>u[1]);if(c.fuel){const kg=num(state&&state.fuelDens,6.7)*0.45359237;f[2]=kg;f[3]=kg/3.785412}return f}
 function cvConv(ci,v,a,b){const c=CONV[ci];if(c.temp){const C=a===0?v:a===1?(v-32)*5/9:v-273.15;return[C,C*9/5+32,C+273.15][b]}const f=cvFactors(c);return v*f[a]/f[b]}
 const cvFmt=x=>!isFinite(x)?"–":Math.abs(x)>=100?(+x.toFixed(1)).toLocaleString("en-US"):String(+x.toFixed(Math.abs(x)>=10?2:4));
-function cvRender(){const c=CONV[CV.c],v=num(CV.v);const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
-  $("#cvWrap").innerHTML=`<div class="cv1">
+function cvOutHtml(){const c=CONV[CV.c],v=num(String(CV.v).replace(",","."));
+  return `<div class="cv-res"><span class="cv-ri">${CV_IC[CV.c][0]}</span><div><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><div><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b> <em>${c.u[CV.to][0]}</em></div></div></div>
+   ${v==null?"":`<h3>เท่ากับหน่วยอื่น</h3><div class="cv-all">${c.u.map((u,i)=>i===CV.from?"":`<button class="cv-u${i===CV.to?" on":""}" data-to="${i}"><b>${cvFmt(cvConv(CV.c,v,CV.from,i))}</b><i>${u[0]}</i></button>`).join("")}</div>`}`}
+function cvOut(){const o=$("#cvOut");if(o)o.innerHTML=cvOutHtml()}
+function cvRender(){const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
+  $("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CV_IC[CV.c][1]}">
    <div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}</div>
-   <div class="cv-row1"><input id="cvV" type="number" inputmode="decimal" step="any" value="${esc(CV.v)}" aria-label="ค่า"><select id="cvFrom" aria-label="จากหน่วย">${opts(CV.from)}</select>
-     <button id="cvSwap" aria-label="สลับหน่วย">⇄</button><select id="cvTo" aria-label="เป็นหน่วย">${opts(CV.to)}</select></div>
-   <div class="cv-res" style="--cc:${CV_IC[CV.c][1]}"><span class="cv-ri">${CV_IC[CV.c][0]}</span><div><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><div><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b> <em>${c.u[CV.to][0]}</em></div></div></div>
-   ${c.fuel?`<label class="cv-dens">ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="number" step="0.01" value="${num(state&&state.fuelDens,6.7)}"></label><p class="hint">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L)</p>`:""}
-   ${v==null?"":`<h3>เท่ากับหน่วยอื่น</h3><div class="cv-all">${c.u.map((u,i)=>i===CV.from?"":`<button class="cv-u${i===CV.to?" on":""}" data-to="${i}"><b>${cvFmt(cvConv(CV.c,v,CV.from,i))}</b><i>${u[0]}</i></button>`).join("")}</div>`}
+   <div class="cv-row1"><input id="cvV" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(CV.v)}" aria-label="ค่า"><select id="cvFrom" aria-label="จากหน่วย">${opts(CV.from)}</select>
+     <button id="cvSwap" aria-label="สลับหน่วย" title="สลับหน่วย">⇄</button><select id="cvTo" aria-label="เป็นหน่วย">${opts(CV.to)}</select></div>
+   ${c.fuel?`<label class="cv-dens">ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="text" inputmode="decimal" autocomplete="off" value="${num(state&&state.fuelDens,6.7)}"></label><p class="hint">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L)</p>`:""}
+   <div id="cvOut">${cvOutHtml()}</div>
    <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
 $("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
-  if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;CV.from=0;CV.to=Math.min(1,CONV[CV.c].u.length-1);cvRender()}
+  if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>u[0]==="US gal");CV.to=U.findIndex(u=>u[0]==="L")}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
   if(t.id==="cvSwap"){[CV.from,CV.to]=[CV.to,CV.from];cvRender()}
   if(t.dataset.to!=null){CV.to=+t.dataset.to;cvRender()}
   if(t.dataset.pre!=null){const x=CV_PRE[+t.dataset.pre];CV.c=x[1];CV.from=x[2];CV.to=x[3];cvRender();$("#cvV").focus();$("#cvV").select()}});
-$("#cvWrap").addEventListener("input",e=>{const t=e.target;if(t.id==="cvV"){CV.v=t.value;const pos=t.selectionStart;cvRender();const n=$("#cvV");n.focus();try{n.setSelectionRange(pos,pos)}catch(err){}}
-  if(t.id==="cvDens"){state.fuelDens=num(t.value,6.7);store.set("vfr_current",state);const k=t.selectionStart;cvRender();const n=$("#cvDens");n.focus()}});
+$("#cvWrap").addEventListener("input",e=>{const t=e.target;
+  if(t.id==="cvV"){if(/[^0-9.,\-]/.test(t.value)){const p=t.selectionStart;const nv=t.value.replace(/[^0-9.,\-]/g,"");t.value=nv;try{t.setSelectionRange(p-1,p-1)}catch(err){}}CV.v=t.value;cvOut()}
+  if(t.id==="cvDens"){const d=num(t.value.replace(",","."));if(d!=null&&d>0){state.fuelDens=d;store.set("vfr_current",state)}cvOut()}});
 $("#cvWrap").addEventListener("change",e=>{const t=e.target;if(t.id==="cvFrom")CV.from=+t.value;if(t.id==="cvTo")CV.to=+t.value;if(t.id==="cvFrom"||t.id==="cvTo")cvRender()});
 
 /* ---------- tabs ---------- */
