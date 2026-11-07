@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-07T11:03Z",
+"fetched": "2026-11-07T11:58Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1142,6 +1142,15 @@
 "icao": "A4383/26 NOTAMN\r\nQ) VTBB/QFTAS/I/BO/A/000/999/0806N09859E005\r\nA) VTSG B) 2611041122 C) 2612041100\r\nE) RVR RWY 32 U/S",
 "plain": " ",
 "start": "11/04/2026 1122",
+"end": "12/04/2026 1100",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSG",
+"id": "A4431/26",
+"icao": "A4431/26 NOTAMN\r\nQ) VTBB/QFMAU/IV/BO/A/000/999/0806N09859E005\r\nA) VTSG B) 2611071131 C) 2612041100\r\nE) AWOS RWY 32 NOT AVBL",
+"plain": " ",
+"start": "11/07/2026 1131",
 "end": "12/04/2026 1100",
 "keyword": "INTERNATIONAL"
 },
