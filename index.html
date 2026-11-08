@@ -1478,7 +1478,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
   <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-pink">CP — Checkpoint / Preset ของหน่วย</h2>
    <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
    <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>CP</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = CP 1, ปลายทาง CAVPAD = CP 13 · จุดที่ไม่มี CP แสดงเลขลำดับแบบขอบชมพู</p>
-   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a></nav></div>
+   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a></nav></div>
   <div class="card section cp-sec" id="cpFm" style="--cc:#22c55e"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
   <div class="card section cp-sec" id="cpVhf" style="--cc:#3b82f6"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
   <div class="card section cp-sec" id="cpUhf" style="--cc:#a855f7"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
@@ -1496,7 +1496,11 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
     <p id="dbPasteInfo" class="hint"></p></details>
    <div class="tablewrap"><table id="dbTable"><thead><tr><th>CP</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
   </div>
- <div hidden><div id="chkBox"></div><div id="keyBox"></div><button id="chkCopy"></button><button id="dbCopyRoute"></button><div id="psBands"></div><table id="psTable"><tbody></tbody></table><button id="psAdd"></button></div>
+ <div class="card section cp-sec" id="cpChk" style="--cc:#10b981">
+   <div class="sechead"><h2 class="cp-h"><span>6</span>✅ ตรวจความพร้อมก่อนเสียบการ์ด DTD</h2><div class="btns"><button id="chkCopy" title="คัดลอกผลตรวจเป็นข้อความ">📋 คัดลอกผลตรวจ</button><button id="dbCopyRoute" class="primary" title="คัดลอกรายการที่ต้องคีย์ใน FalconView">📋 คัดลอกรายการที่ต้องคีย์</button></div></div>
+   <p class="hint">เทียบเส้นทางในแท็บ 1 และความถี่ที่เลือกพิมพ์ลง Kneeboard กับข้อมูลในหมวด 1–5 ด้านบน · อัปเดตเองทุกครั้งที่แก้แผน</p>
+   <div id="chkBox"></div><div id="keyBox" class="keybox"></div></div>
+ <div hidden><div id="psBands"></div><table id="psTable"><tbody></tbody></table><button id="psAdd"></button></div>
  </div>
 </section>
 <section id="tab-data" class="tabpanel" hidden>
