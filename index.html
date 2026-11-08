@@ -1160,6 +1160,15 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 #gpsHud .gh-btns button[data-g="dto"]{background:#b45309;border-color:#f59e0b}
 #gpsHud .gh-btns button[data-g="dto"].on{background:#f59e0b;color:#111}
 .gh-to .dtotag{background:#f59e0b;color:#111;border-radius:6px;padding:1px 6px;font:800 12px var(--f-mono);margin-right:4px}
+#gpsAlert{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:1150;display:flex;flex-direction:column;gap:8px;width:min(520px,calc(100% - 24px));pointer-events:none}
+#gpsAlert .ga{pointer-events:auto;border-radius:14px;padding:10px 14px;color:#fff;font:600 15px/1.45 var(--f-body);box-shadow:0 8px 24px rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.35);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;animation:gaIn .25s ease-out}
+#gpsAlert .ga>b:first-child{font-size:16px}
+#gpsAlert .ga.blue{background:#1d4ed8}#gpsAlert .ga.red{background:#b91c1c}#gpsAlert .ga.amber{background:#b45309}#gpsAlert .ga.green{background:#15803d}
+#gpsAlert .ga-x{margin-left:auto;min-height:34px;padding:2px 12px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.5);font:700 13px var(--f-body)}
+#gpsAlert .ga-f{display:flex;gap:6px;width:100%}#gpsAlert .ga-f input{flex:1;min-width:0;min-height:40px!important;border-radius:10px;background:#fff!important;color:#111!important;font:700 17px var(--f-mono)!important;padding:4px 10px!important;color-scheme:light}
+#gpsAlert .ga-f button{min-height:40px;padding:0 14px;border-radius:10px;background:#fff;color:#111;border:0;font:800 14px var(--f-body)}#gpsAlert .ga-f .ga-skip{background:rgba(255,255,255,.2);color:#fff}
+@keyframes gaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.ifr-sa td,.ifr-sa th{padding:5px 6px!important;font-size:12.5px}.ifr-sa td:last-child{white-space:nowrap;text-align:right}
 </style>
 </head>
 <body>
@@ -2395,10 +2404,36 @@ async function saTerrain(W,buf){let best={ft:-1e9};const legs=[];
     const els=await Promise.all(jobs.map(([la,lo])=>terrElevM(la,lo).then(m=>({ft:m*3.28084,la,lo}))));els.forEach(e=>{if(e.ft>lb.ft)lb=e});legs.push(lb);if(lb.ft>best.ft)best=lb}
   const sa=v=>Math.ceil((Math.max(0,v)+1000)/100)*100;return{max:best,sa:sa(best.ft),legs:legs.map(l=>({max:l.ft,sa:sa(l.ft)}))}}
 var saLast="",saTimer=null,SA_RES=null;
+/* ---------- IFR: ความสูงปลอดภัยรายขา ----------
+   ขาที่อยู่บน airway (จุดต้น-ปลายเป็นจุดบน airway เดียวกัน) → ใช้ Minimum flight altitude (MFA/MEA) ของช่วงนั้นจาก eAIP ENR 3 (เอาค่าสูงสุดถ้าผ่านหลายช่วง)
+   ขานอก airway → ภูมิประเทศสูงสุด ±5 NM (≈ 8 km ตาม ICAO Annex 2) + ระยะเผื่อ 1,000 ft (ที่ราบ) หรือ 2,000 ft (เขตภูเขา) ปัดขึ้นทีละ 100 ft
+   หมายเหตุ: ข้อมูลภูมิประเทศเป็นความสูงพื้นดิน ไม่รวมสิ่งกีดขวาง (เสา/อาคาร) */
+function ifrAwIdx(r,w){let bi=-1,bd=0.5;r.pts.forEach((p,i)=>{const d=p.name&&w.name&&p.name.toUpperCase()===String(w.name).toUpperCase()?0:gcDistNm([p.lat,p.lon],[w.lat,w.lon]);if(d<bd){bd=d;bi=i}});return bi}
+function ifrLegAw(A,B){let best=null;((EAIP&&EAIP.airways)||[]).forEach(r=>{const ia=ifrAwIdx(r,A);if(ia<0)return;const ib=ifrAwIdx(r,B);if(ib<0||ib===ia)return;
+  const lo=Math.min(ia,ib),hi=Math.max(ia,ib);let mfa=null;for(let k=lo;k<hi;k++){const g=r.pts[k].seg;if(g&&g.mfa!=null)mfa=Math.max(mfa??0,+g.mfa)}
+  if(!best||(mfa!=null&&(best.mfa==null||mfa>best.mfa)))best={id:r.id,mfa,from:r.pts[ia].name,to:r.pts[ib].name}});return best}
+let saIfrLast="";
+async function saRunIfr(info,W){const mg=num(state.ifrMargin,1000),f=v=>v==null?"–":Math.round(v).toLocaleString("en-US"),up=v=>Math.ceil(v/100)*100;
+  const key="I|"+W.map(w=>w.lat.toFixed(4)+","+w.lon.toFixed(4)+w.name).join(";")+"|"+mg;
+  const legs=W.slice(0,-1).map((a,i)=>({i,a,b:W[i+1],aw:ifrLegAw(a,W[i+1])}));
+  const draw=ter=>{let worst=0;const rows=legs.map(L=>{let v=null,src="";if(L.aw&&L.aw.mfa!=null){v=L.aw.mfa;src=`MFA ${esc(L.aw.id)}`}
+      else if(ter&&ter.legs[L.i]){v=up(Math.max(0,ter.legs[L.i].max)+mg);src=`ภูมิประเทศ ${f(ter.legs[L.i].max)} ft + ${f(mg)}`}else src=ter===undefined?"กำลังคำนวณ…":"คำนวณไม่ได้ (ต้องต่อเน็ตครั้งแรก)";
+      if(v!=null)worst=Math.max(worst,v);return`<tr><td>${esc(L.a.name)} → ${esc(L.b.name)}</td><td>${L.aw&&L.aw.mfa!=null?`<b>${src}</b>`:`<span class="hint">นอก airway · </span>${src}`}</td><td><b>${f(v)}</b></td></tr>`}).join("");
+    info.innerHTML=`<b>IFR · ความสูงปลอดภัยรายขา</b> <label class="hint">ขานอก airway เผื่อ <select id="ifrMg">${[1000,2000].map(v=>`<option value="${v}" ${v===mg?"selected":""}>${f(v)} ft${v===2000?" (เขตภูเขา)":""}</option>`).join("")}</select></label>
+      <div class="tablewrap"><table class="chk-tbl ifr-sa"><thead><tr><th>ขา</th><th>ที่มา</th><th>ft</th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${worst?`สูงสุดทั้งเส้นทาง <b class="sa-v">${f(worst)} ft</b> <a href="#" id="saUse">ใช้ค่านี้</a>`:""}<p class="hint">บน airway ใช้ Minimum flight altitude จาก eAIP ENR 3 · นอก airway = ภูมิประเทศสูงสุด ±5 NM + ระยะเผื่อ (ไม่รวมสิ่งกีดขวาง) · ตรวจกับชาร์ต/MSA ของสนามก่อนบินเสมอ</p>`;
+    saChip(worst?`I · SA ${f(worst)} ft`:"I · กำลังคำนวณ");
+    $("#ifrMg").onchange=e=>{state.ifrMargin=+e.target.value;store.set("vfr_current",state);saIfrLast="";saSched(true)};
+    const u=$("#saUse");if(u)u.onclick=e=>{e.preventDefault();state.sa=String(worst);$("#sa").value=state.sa;store.set("vfr_current",state);render();toast("ตั้ง SA = "+f(worst)+" ft")}};
+  if(!EAIP){info.innerHTML='<b>IFR:</b> ยังไม่มีข้อมูล eAIP — กด "อัปเดตข้อมูล eAIP" ในแท็บ 9';saChip("I · ไม่มี eAIP");return}
+  if(key===saIfrLast&&SA_RES&&SA_RES.ifr){draw(SA_RES.ifr);return}saIfrLast=key;
+  const need=legs.some(L=>!(L.aw&&L.aw.mfa!=null));if(!need){draw(null);return}draw(undefined);
+  try{const ter=await saTerrain(W,5);if(key!==saIfrLast)return;SA_RES={ifr:ter};draw(ter)}catch(e){if(key!==saIfrLast)return;draw(null)}}
+
 function saSched(now){clearTimeout(saTimer);saTimer=setTimeout(saRun,now?10:900)}
 async function saRun(){const info=$("#saInfo"),W=state.wps,buf=num(state.saBuf,5);if(!info)return;
   if(W.length<2){info.innerHTML="";saChip("");saMark(null);return}
-  if(FLMODE==="I"){saMark(null);info.innerHTML='<b>IFR:</b> Safety altitude จาก eAIP (MEA / MOCA / MSA) — <i>กำลังเตรียมข้อมูล</i>';saChip("I · รอข้อมูล eAIP");return}
+  if(FLMODE==="I"){saMark(null);return saRunIfr(info,W)}
   const key=W.map(w=>w.lat.toFixed(4)+","+w.lon.toFixed(4)).join(";")+"|"+buf;if(key===saLast&&SA_RES){saShow();return}saLast=key;info.innerHTML="⛰ กำลังคำนวณ Safety Altitude จากความสูงภูมิประเทศ…";
   try{const r=await saTerrain(W,buf);if(key!==saLast)return;SA_RES={...r,buf};saShow()}catch(e){if(key!==saLast)return;SA_RES=null;info.innerHTML='⛰ คำนวณ Safety Altitude ไม่ได้ (ครั้งแรกต้องต่อเน็ต)';saChip("")}}
 function saShow(){const r=SA_RES,info=$("#saInfo");if(!r||!info)return;const f=v=>Math.round(v).toLocaleString("en-US");
@@ -4039,7 +4074,7 @@ const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=
   d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิดตำแหน่ง GPS ของอุปกรณ์">📍 GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
   d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
 new GpsCtl().addTo(map);
-function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
+function gpsStart(sim){GPS.on=true;GPS.al=null;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
   $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();gpsTouchMode(true);
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(l=>GPS.lock=l).catch(()=>{});
   if(sim){gpsSimStart();return}
@@ -4047,14 +4082,15 @@ function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg
   GPS.watch=navigator.geolocation.watchPosition(p=>{const c=p.coords;gpsFix(c.latitude,c.longitude,c.speed!=null&&c.speed>=0?c.speed*1.94384:null,c.heading!=null&&!isNaN(c.heading)&&c.speed>1?c.heading:null,c.altitude!=null?c.altitude*3.28084:null,c.accuracy,p.timestamp)},
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
-function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
+function gpsStop(){GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
-function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
 $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
   if(g==="dto"){gpsDtoMenu();return}
+  if(g==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(e){}gpsHud();toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
   if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
   if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
   if(GPS.last)gpsHud();else $("#gpsHud").querySelector(".gh-btns").outerHTML=gpsBtns()});
@@ -4081,6 +4117,35 @@ function gpsDtoMenu(){const old=document.querySelector(".gh-dto");if(old){old.re
   map.getContainer().appendChild(d);L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);d.addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("button");if(!b)return;
     if(b.dataset.dto){gpsDtoSet(JSON.parse(b.dataset.dto));return}if(b.dataset.dtox){gpsDtoSet(null);return}
     if(b.dataset.dtoclr){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}d.remove()})}
+/* ---------- แจ้งเตือนระหว่างบิน (โหมด GPS) ---------- */
+try{GPS.mute=localStorage.getItem("vfr_gps_mute")==="1"}catch(e){}
+let gaCtx=null;function gaBeep(n){if(GPS.mute)return;try{gaCtx=gaCtx||new(window.AudioContext||window.webkitAudioContext)();for(let k=0;k<(n||2);k++){const o=gaCtx.createOscillator(),g=gaCtx.createGain(),t=gaCtx.currentTime+k*.22;
+  o.frequency.value=880;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.18);o.connect(g).connect(gaCtx.destination);o.start(t);o.stop(t+.2)}}catch(e){}
+  try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
+function gaBox(){let b=$("#gpsAlert");if(!b){b=document.createElement("div");b.id="gpsAlert";map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b)}return b}
+function gaShow(id,cls,html,opt){opt=opt||{};const b=gaBox();let el=b.querySelector(`[data-ga="${id}"]`);if(!el){el=document.createElement("div");el.dataset.ga=id;b.prepend(el);if(opt.beep!==false)gaBeep(cls==="red"?3:2)}
+  el.className="ga "+cls;el.innerHTML=html+(opt.form?"":'<button type="button" class="ga-x" aria-label="รับทราบ">รับทราบ</button>');el.querySelector(".ga-x")&&(el.querySelector(".ga-x").onclick=()=>el.remove());
+  clearTimeout(el._t);if(opt.ttl)el._t=setTimeout(()=>el.remove(),opt.ttl);return el}
+function gaClear(){const b=$("#gpsAlert");if(b)b.remove()}
+function gpsRemainMin(P,gs){const W=state.wps;if(W.length<2||!(gs>5))return null;const i=Math.min(GPS.leg,W.length-2);let d=gcDistNm([P.lat,P.lon],[W[i+1].lat,W[i+1].lon]);for(let k=i+1;k<W.length-1;k++)d+=gcDistNm([W[k].lat,W[k].lon],[W[k+1].lat,W[k+1].lon]);return d/gs*60}
+function gpsAlerts(){const P=GPS.last,W=state.wps;if(!P||!GPS.on)return;const A=GPS.al||(GPS.al={turn:"",area:{},fuelAt:Date.now()+30*60000});const gs=P.gs,vr=num(state.g.var,0);
+  /* 1) ใกล้ถึงจุดเลี้ยว: เหลือ ≤ 1 นาที หรือ ≤ 1.5 NM */
+  if(!GPS.dto&&W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),key=i+"|"+T.name;
+    if(A.turn!==key&&(d<=1.5||(gs>5&&d/gs*60<=1))){A.turn=key;const rows=compute().rows,nx=rows[i+1];
+      gaShow("turn","blue",nx?`<b>⤴ ใกล้ถึง ${esc(T.name)}</b> · อีก ${d.toFixed(1)} NM<br>ถัดไป → <b>${esc(W[i+2].name)}</b> · HDG <b>${isFinite(nx.mh)?hdg(nx.mh):hdg(nx.tc+vr)}°M</b> · ${nx.dist.toFixed(1)} NM`:`<b>🛬 ใกล้ถึงปลายทาง ${esc(T.name)}</b> · อีก ${d.toFixed(1)} NM`,{ttl:25000})}}
+  /* 2) กำลังจะเข้าเขต P/R/D ข้างหน้า (คาดจากทิศที่บินจริง 3 นาที หรืออย่างน้อย 3 NM) */
+  if(gs>20&&P.trk!=null&&EAIP&&EAIP.areas){const look=Math.max(3,gs*3/60),tr=P.trk*Math.PI/180,alt=P.alt!=null?P.alt:null;
+    EAIP.areas.forEach(a=>{if(!a.poly||a.poly.length<3||!/^[PRD]$/.test(a.type))return;if(alt!=null){const lo=altFt(a.lower),hi=altFt(a.upper);if((isFinite(lo)&&alt<lo-500)||(isFinite(hi)&&alt>hi+500))return}
+      if(inPoly([P.lat,P.lon],a.poly))return;let hit=null;for(let x=0.5;x<=look+1e-9;x+=0.5){const la=P.lat+x*Math.cos(tr)/60,lo=P.lon+x*Math.sin(tr)/(60*Math.cos(P.lat*Math.PI/180));if(inPoly([la,lo],a.poly)){hit=x;break}}
+      if(hit==null)return;const last=A.area[a.id]||0;if(Date.now()-last<10*60000)return;A.area[a.id]=Date.now();
+      gaShow("area-"+a.id,a.type==="D"?"amber":"red",`<b>⚠ อีก ~${hit.toFixed(1)} NM${gs>5?` (${mmss(hit/gs*60)} นาที)`:""} จะเข้า ${esc(a.id)} ${esc(a.name||"")}</b><br>${AREA_NAME[a.type]} · ${esc(a.upper)} / ${esc(a.lower)}`)})}
+  /* 3) ตรวจน้ำมันทุก 30 นาที + คาดน้ำมันถึงปลายทาง */
+  if(Date.now()>=A.fuelAt){A.fuelAt=Date.now()+30*60000;const el=gaShow("fuel","amber",`<b>⛽ ตรวจน้ำมัน</b> (ทุก 30 นาที)<form class="ga-f"><input type="text" inputmode="decimal" placeholder="น้ำมันตอนนี้ (lb)" aria-label="น้ำมันตอนนี้ lb"><button type="submit">บันทึก</button><button type="button" class="ga-skip">ข้าม</button></form>`,{form:true});
+    el.querySelector(".ga-skip").onclick=()=>el.remove();
+    el.querySelector("form").onsubmit=e=>{e.preventDefault();const f=num(el.querySelector("input").value.replace(",","."),null);if(f==null){toast("ใส่ปริมาณน้ำมัน (lb)");return}el.remove();gpsFuelCheck(f)}}}
+function gpsFuelCheck(f){const P=GPS.last,burn=num(state.burn,0),res=num(state.reserve,0),m=P?gpsRemainMin(P,P.gs):null;
+  if(!(burn>0)||m==null){gaShow("fuel2","blue",`⛽ บันทึกน้ำมัน ${Math.round(f)} lb${!(burn>0)?" · ใส่ Burn rate ในแผนการบินเพื่อคาดน้ำมันถึงปลายทาง":" · รอความเร็ว GPS เพื่อคาดการณ์"}`,{ttl:12000,beep:false});return}
+  const at=f-burn*m,low=at<res;gaShow("fuel2",low?"red":"green",`<b>${low?"⛽ น้ำมันถึงปลายทางต่ำกว่าสำรอง!":"⛽ น้ำมันพอ"}</b><br>ตอนนี้ ${Math.round(f)} lb · อีก ${mmss(m)} นาที · ใช้ ~${Math.round(burn*m)} lb<br>คาดเหลือที่ปลายทาง <b>${Math.round(at)} lb</b> (สำรอง ${Math.round(res)} lb)`,low?{}:{ttl:15000,beep:false})}
 function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
   if((gs==null||trk==null)&&L0){const dd=gcDistNm([L0.lat,L0.lon],pt),dh=(ts-L0.ts)/3600000;if(dd>0.01&&dh>=2/3600){const g2=dd/dh;if(gs==null&&g2<=250)gs=g2;if(trk==null&&g2<=250)trk=trueCourse([L0.lat,L0.lon],pt)}}
   if(trk==null&&L0)trk=L0.trk;GPS.last={lat,lon,gs,trk,alt,acc,ts};
@@ -4088,7 +4153,7 @@ function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
     GPS.crumb=L.polyline([],{color:"#0a6cff",weight:3,opacity:.7,dashArray:"2 6",interactive:false}).addTo(gpsLayer);GPS.mk=L.marker(pt,{icon:gpsIcon(trk),interactive:false,zIndexOffset:2000}).addTo(gpsLayer);gpsHeliInit(GPS.mk.getElement())}
   GPS.mk.setLatLng(pt);{const el=GPS.mk.getElement(),rt=el&&el.querySelector(".gh-rot");if(rt&&trk!=null)rt.style.transform=`rotate(${trk}deg)`}gpsHeliSpeed();GPS.acc.setLatLng(pt).setRadius(acc||0);
   const lp=GPS.pts.at(-1);if(!lp||gcDistNm(lp,pt)>0.02){GPS.pts.push(pt);if(GPS.pts.length>3000)GPS.pts.shift();GPS.crumb.setLatLngs(GPS.pts)}
-  gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud()}
+  gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud();try{gpsAlerts()}catch(e){}}
 /* เลือก leg อัตโนมัติ: ผ่านจุดหมาย (ใกล้กว่า 0.5 NM หรือเลยแนวตั้งฉาก) → ไปจุดถัดไป */
 function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(GPS.dto){if(P&&!GPS.dto.arr&&gcDistNm([P.lat,P.lon],[GPS.dto.lat,GPS.dto.lon])<0.5){GPS.dto.arr=true;toast("ถึง "+GPS.dto.name+" แล้ว")}return}if(W.length<2)return;if(GPS.leg>W.length-2)GPS.leg=W.length-2;
   if(!GPS.started){let best=0,bd=1e9;for(let i=0;i<W.length-1;i++){const r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);if(r.d<bd){bd=r.d;best=i}}GPS.leg=best;GPS.started=true}
