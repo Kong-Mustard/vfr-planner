@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-08T13:17Z",
+"fetched": "2026-11-08T14:06Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -864,15 +864,6 @@
 "plain": " ",
 "start": "11/08/2026 0800",
 "end": "11/08/2026 1659",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4442/26",
-"icao": "A4442/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611081100 C) 2611081400\r\nE) TWY C BTN TWY C SOUTH AND TWY S CLSD DUE TO ACFT ENG RUN-UP",
-"plain": " ",
-"start": "11/08/2026 1100",
-"end": "11/08/2026 1400",
 "keyword": "INTERNATIONAL"
 },
 {
