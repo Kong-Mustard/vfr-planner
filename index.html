@@ -1149,6 +1149,17 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 .dhQ{min-height:30px!important;padding:2px 10px!important;font-size:12.5px!important;border-radius:8px;display:inline-flex;align-items:center;gap:4px;opacity:.6;text-decoration:line-through}
 .dhQ.on{opacity:1;text-decoration:none;background:color-mix(in srgb,#0a6cff 22%,var(--input));border-color:#0a6cff}
 @media (max-width:999px){.dhQ.rem-desk{display:none}.dhQ.rem-mob{display:inline-flex}}@media (min-width:1000px){.dhQ.rem-mob{display:none}}
+.meas .ms-sa{color:#fdba74}
+.gh-dto{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 24px));z-index:1200;background:#0f172a;border:2px solid #f59e0b;border-radius:16px;padding:10px;box-shadow:0 10px 30px rgba(0,0,0,.5);max-height:60vh;overflow:auto}
+.gh-dto h4{margin:4px 4px 6px;font:800 14px var(--f-body);color:#fbbf24}
+.gh-dto .dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;margin-bottom:8px}
+.gh-dto .dl button{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;min-height:46px;padding:6px 12px;border-radius:12px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);font:700 15px var(--f-body)}
+.gh-dto .dl button small{font:600 12.5px var(--f-mono);color:#cbd5e1}
+.gh-dto .dx{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.gh-dto .dx button{min-height:38px;padding:4px 12px;border-radius:10px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);font:600 13px var(--f-body)}
+#gpsHud .gh-btns button[data-g="dto"]{background:#b45309;border-color:#f59e0b}
+#gpsHud .gh-btns button[data-g="dto"].on{background:#f59e0b;color:#111}
+.gh-to .dtotag{background:#f59e0b;color:#111;border-radius:6px;padding:1px 6px;font:800 12px var(--f-mono);margin-right:4px}
 </style>
 </head>
 <body>
@@ -1819,7 +1830,7 @@ function drawMap(rows){
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
     m.on("drag",e=>ifrSnapHint(e.target.getLatLng()));
     m.on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();wpAsk(i)});
-    m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);let f=snapNear(p);if(f&&f.name===w.name)f=null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f)});
+    m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);let f=snapNear(p);if(f&&f.name===w.name)f=null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f);else cpSnapCheck(w)});
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
     const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
@@ -1880,9 +1891,10 @@ function measShow(a,b){measClear();const d=gcDistNm([a.lat,a.lng],[b.lat,b.lng])
   L.polyline([a,b],{color:"#ffd60a",weight:3,dashArray:"8 6",interactive:false}).addTo(measLayer);
   [a,b].forEach(p=>L.circleMarker(p,{radius:6,color:"#111",weight:2,fillColor:"#ffd60a",fillOpacity:1,interactive:false}).addTo(measLayer));
   const mid=L.latLng((a.lat+b.lat)/2,(a.lng+b.lng)/2);
-  const mk=L.marker(mid,{zIndexOffset:1000,icon:L.divIcon({className:"measmk",html:`<div class="meas"><b>${d.toFixed(1)} NM</b><span>${m(tc)} / ${m(tc+180)} M</span><button type="button" aria-label="ปิด">✕</button></div>`,iconSize:null,iconAnchor:[0,0]})}).addTo(measLayer);
+  const mk=L.marker(mid,{zIndexOffset:1000,icon:L.divIcon({className:"measmk",html:`<div class="meas"><b>${d.toFixed(1)} NM</b><span>HDG ${m(tc)}M</span><span class="ms-sa">SA …</span><button type="button" aria-label="ปิด">✕</button></div>`,iconSize:null,iconAnchor:[0,0]})}).addTo(measLayer);
   const el=mk.getElement();if(el){L.DomEvent.disableClickPropagation(el);el.querySelector("button").onclick=measClear}
-  measT=setTimeout(measClear,15000)}
+  measT=setTimeout(measClear,15000);const lay=measLayer;
+  saTerrain([{lat:a.lat,lon:a.lng},{lat:b.lat,lon:b.lng}],num(state.saBuf,5)).then(r=>{if(measLayer!==lay)return;const s2=el&&el.querySelector(".ms-sa");if(s2)s2.textContent="SA "+Math.round(r.sa).toLocaleString("en-US")+" ft"}).catch(()=>{const s2=el&&el.querySelector(".ms-sa");if(s2)s2.textContent="SA –"})}
 {const C=map.getContainer();let t0=0,p0=null,bad=false;
   C.addEventListener("touchstart",e=>{if(e.touches.length===2){t0=Date.now();bad=false;p0=[...e.touches].map(t=>({x:t.clientX,y:t.clientY}))}else if(e.touches.length>2)p0=null},{passive:true});
   C.addEventListener("touchmove",e=>{if(!p0)return;[...e.touches].forEach((t,i)=>{if(p0[i]&&Math.hypot(t.clientX-p0[i].x,t.clientY-p0[i].y)>14)bad=true})},{passive:true});
@@ -1894,7 +1906,11 @@ function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerP
 function tapNearLeg(ll){const W=state.wps;if(W.length<2)return-1;const P=map.latLngToContainerPoint(ll);let bi=-1,bd=Infinity;
   for(let i=0;i<W.length-1;i++){const a=map.latLngToContainerPoint([W[i].lat,W[i].lon]),b=map.latLngToContainerPoint([W[i+1].lat,W[i+1].lon]),d=L.LineUtil.pointToSegmentDistance(P,a,b);if(d<bd){bd=d;bi=i}}return bi}
 function tapSnap(ll){return typeof snapNear==="function"?snapNear(ll):null}
-function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render()}
+/* CP ของหน่วยที่อยู่ใกล้จุด (ไม่เกิน 0.5 NM แต่ไม่ใช่จุดเดียวกัน) → ถามว่าจะใช้ CP นั้นเป็น waypoint ไหม */
+function cpNear(lat,lon,max){let best=null,bd=max||0.5;(typeof dbAll==="function"?dbAll():[]).forEach(x=>{if(x.lat==null)return;const d=gcDistNm([lat,lon],[x.lat,x.lon]);if(d>0.05&&d<bd){bd=d;best=x}});
+  return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:+best.lat,lon:+best.lon,lab:`CP No.${best.no} · ห่าง ${bd.toFixed(2)} NM`,ico:`<span class="dbno">No.${esc(best.no)}</span>`}:null}
+function cpSnapCheck(w){if(FLMODE==="I"||!w)return;const i=state.wps.indexOf(w);if(i<0)return;const f=cpNear(w.lat,w.lon);if(f)setTimeout(()=>ifrSnapAsk(w,i,f),60)}
+function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render();cpSnapCheck(w)}
 function tapAddDirect(ll){tapClose();const w={name:"WP"+(state.wps.length+1),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""};state.wps.push(w);markEdited();render();toast("เพิ่ม "+w.name)}
 function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){tapClose();return}  // แตะที่อื่นตอนเมนูเปิด = ยกเลิก
   const sn=tapSnap(ll),W=state.wps,leg=tapNearLeg(ll),n=W.length;
@@ -2817,7 +2833,8 @@ $("#kbPrev").onclick=()=>{$("#kbDlg").close();kneePrint(true)};
 let kbMapMode="cur";
 $("#kbMapSeg").onclick=e=>{const b=e.target.closest("[data-km]");if(!b)return;kbMapMode=b.dataset.km;$("#kbMapSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
   const ro=kbMapMode==="route";["#kbLayers","#kbNames"].forEach(id=>{$(id).disabled=ro;$(id).closest("label").classList.toggle("dis",ro)});if(window._pvRemap)window._pvRemap()};
-["#kbLayers","#kbDog","#kbNames"].forEach(id=>$(id).addEventListener("change",()=>{if(window._pvRemap)window._pvRemap()}));
+["#kbLayers","#kbNames"].forEach(id=>$(id).addEventListener("change",()=>{if(window._pvRemap)window._pvRemap()}));
+$("#kbDog").addEventListener("change",e=>{visSet("hbox",e.target.checked);visSave();if(window._pvRemap)window._pvRemap()});
 /* ปรับแผนที่ชั่วคราวสำหรับ kneeboard แล้วคืนค่าเดิมหลังพิมพ์/ปิดตัวอย่าง */
 function kbMapApply(){const all=layerCtl._layers.map(o=>({l:o.layer,ov:o.overlay,name:o.name})).concat([{l:ctrLayer,ov:true},{l:gpsLayer,ov:true}]),
     was=all.filter(o=>map.hasLayer(o.l)).map(o=>o.l),cls=[...document.body.classList];
@@ -3937,7 +3954,7 @@ function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
-function dhQSync(){const on=visOn("hbox");document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
+function dhQSync(){const on=visOn("hbox");const kd=$("#kbDog");if(kd&&kd.checked!==on){kd.checked=on;if(window._pvRemap)window._pvRemap()}document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
 function visSync(){dhQSync();document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
 function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>VIS.find(v=>v.k===k)&&visOn(k))}
 function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
@@ -4029,12 +4046,13 @@ function gpsStart(sim){GPS.on=true;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
 function gpsStop(){GPS.on=false;if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
-  if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=null;
+  if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
-function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
 $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
+  if(g==="dto"){gpsDtoMenu();return}
   if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
   if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
   if(GPS.last)gpsHud();else $("#gpsHud").querySelector(".gh-btns").outerHTML=gpsBtns()});
@@ -4043,6 +4061,24 @@ map.on("dragstart",()=>{if(GPS.on&&GPS.follow){GPS.follow=false;const b=document
 function gpsSimStart(){if(state.wps.length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}const P=routePath();let d=0,t=Date.now();
   GPS.sim=setInterval(()=>{const now=Date.now(),dt=(now-t)/3600000*10;t=now;const a=posAt(P,d),gs=a.s.gs;d+=gs*dt;if(d>=P.total){clearInterval(GPS.sim);GPS.sim=null;toast("จำลองถึงปลายทางแล้ว");return}
     const b=posAt(P,d);gpsFix(b.ll[1],b.ll[0],gs,trueCourse([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]),a.s.alt,10,now)},500);toast("จำลองการบินตามเส้นทาง (เร็ว ×10)")}
+/* ---------- Direct to: จากตำแหน่งปัจจุบันตรงไปสนามบิน / CP ใกล้สุด (ไม่แก้แผนการบิน) ---------- */
+function gpsDtoSet(t){const P=GPS.last;if(!P){toast("รอสัญญาณ GPS ก่อน");return}document.querySelectorAll(".gh-dto").forEach(x=>x.remove());
+  if(GPS.dtoLine){gpsLayer.removeLayer(GPS.dtoLine);GPS.dtoLine=null}
+  if(!t){GPS.dto=null;toast("ยกเลิก Direct to — กลับไปตามเส้นทาง");gpsHud();return}
+  GPS.dto={name:t.name,lat:+t.lat,lon:+t.lon,from:[P.lat,P.lon]};GPS.dtoLine=L.polyline([GPS.dto.from,[GPS.dto.lat,GPS.dto.lon]],{color:"#f59e0b",weight:4,dashArray:"10 7",interactive:false}).addTo(gpsLayer);
+  toast("Direct to "+t.name);gpsHud()}
+function gpsDtoMenu(){const old=document.querySelector(".gh-dto");if(old){old.remove();return}const P=GPS.last;
+  if(!P){toast("รอสัญญาณ GPS ก่อน");return}const vr=num(state.g.var,0),here=[P.lat,P.lon];
+  const row=(t,d,brg,tag)=>`<button type="button" data-dto='${esc(JSON.stringify({name:t.name,lat:t.lat,lon:t.lon}))}'><span>${tag||""}<b>${esc(t.name)}</b></span><small>${d.toFixed(1)} NM · ${hdg(brg+vr)}°M</small></button>`;
+  const aps=gpsNear(here).map(n=>{const a=AP[n.id];return a&&a.lat!=null?{name:n.id,lat:a.lat,lon:a.lon,d:n.d}:null}).filter(Boolean);
+  const cps=(typeof dbAll==="function"?dbAll():[]).filter(x=>x.lat!=null).map(x=>({name:String(x.name||("No."+x.no)),no:x.no,lat:+x.lat,lon:+x.lon,d:gcDistNm(here,[+x.lat,+x.lon])})).sort((a,b)=>a.d-b.d).slice(0,4);
+  const d=document.createElement("div");d.className="gh-dto";
+  d.innerHTML=`<h4>✈ Direct to สนามบินใกล้สุด</h4><div class="dl">${aps.map(a=>row(a,a.d,trueCourse(here,[a.lat,a.lon]))).join("")||'<span class="hint">ไม่พบสนามบิน</span>'}</div>
+   <h4>◎ Direct to CP ใกล้สุด</h4><div class="dl">${cps.map(c=>row(c,c.d,trueCourse(here,[c.lat,c.lon]),`<span class="dbno">No.${esc(c.no)}</span> `)).join("")||'<span class="hint">ยังไม่มี CP ในแท็บ 8</span>'}</div>
+   <div class="dx">${GPS.dto?'<button type="button" data-dtox="1">✕ ยกเลิก Direct to</button>':""}<button type="button" data-dtoclr="1">⌫ ล้างรอยบิน</button><button type="button" data-dtoc="1">ปิด</button></div>`;
+  map.getContainer().appendChild(d);L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);d.addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("button");if(!b)return;
+    if(b.dataset.dto){gpsDtoSet(JSON.parse(b.dataset.dto));return}if(b.dataset.dtox){gpsDtoSet(null);return}
+    if(b.dataset.dtoclr){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}d.remove()})}
 function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
   if((gs==null||trk==null)&&L0){const dd=gcDistNm([L0.lat,L0.lon],pt),dh=(ts-L0.ts)/3600000;if(dd>0.01&&dh>=2/3600){const g2=dd/dh;if(gs==null&&g2<=250)gs=g2;if(trk==null&&g2<=250)trk=trueCourse([L0.lat,L0.lon],pt)}}
   if(trk==null&&L0)trk=L0.trk;GPS.last={lat,lon,gs,trk,alt,acc,ts};
@@ -4052,7 +4088,7 @@ function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
   const lp=GPS.pts.at(-1);if(!lp||gcDistNm(lp,pt)>0.02){GPS.pts.push(pt);if(GPS.pts.length>3000)GPS.pts.shift();GPS.crumb.setLatLngs(GPS.pts)}
   gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud()}
 /* เลือก leg อัตโนมัติ: ผ่านจุดหมาย (ใกล้กว่า 0.5 NM หรือเลยแนวตั้งฉาก) → ไปจุดถัดไป */
-function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(W.length<2)return;if(GPS.leg>W.length-2)GPS.leg=W.length-2;
+function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(GPS.dto){if(P&&!GPS.dto.arr&&gcDistNm([P.lat,P.lon],[GPS.dto.lat,GPS.dto.lon])<0.5){GPS.dto.arr=true;toast("ถึง "+GPS.dto.name+" แล้ว")}return}if(W.length<2)return;if(GPS.leg>W.length-2)GPS.leg=W.length-2;
   if(!GPS.started){let best=0,bd=1e9;for(let i=0;i<W.length-1;i++){const r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);if(r.d<bd){bd=r.d;best=i}}GPS.leg=best;GPS.started=true}
   const i=GPS.leg,r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);
   if(i<W.length-2&&(gcDistNm([P.lat,P.lon],[W[i+1].lat,W[i+1].lon])<0.5||r.t>=0.999)){GPS.leg++;toast("ผ่าน "+W[i+1].name+" → ไป "+W[i+2].name)}}
@@ -4068,14 +4104,14 @@ function gpsNear(P){const vr=num(state.g.var,0),navs=((EAIP&&EAIP.navaids)||[]).
     return{id:a.id,name:a.name,d,brg:norm(trueCourse(P,[a.lat,a.lon])+vr),rad,dme,st:st?st.id:approx?"≈"+approx.id:null,stt:st?(/VOR/.test(st.type)?"VOR":"TACAN"):approx?approx.t:null}})}
 function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(!P)return;
   const mag=t=>t==null?"–":hdg(t+vr)+"°",tru=t=>t==null?"–":hdg(t)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
-  let nav="";if(W.length>=2){const i=Math.min(GPS.leg,W.length-2),T=W[i+1],A=W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
-    xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
+  let nav="";if(W.length>=2||GPS.dto){const DT=GPS.dto,i=DT?0:Math.min(GPS.leg,W.length-2),T=DT?DT:W[i+1],A=DT?{lat:DT.from[0],lon:DT.from[1]}:W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
+    xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=DT?null:compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
     const tc=row&&isFinite(row.tc)?row.tc:trueCourse([A.lat,A.lon],[T.lat,T.lon]);let steer="";
     if(P.trk!=null&&gs>5){const df=((P.trk-tc+540)%360)-180,ad=Math.round(Math.abs(df));
       steer=`<div class="gh-steer ${ad<=3?"ok":ad<=10?"mid":"bad"}"><span>เส้นทาง TC <b>${hdg(tc)}°</b></span><span>บินจริง <b>${hdg(P.trk)}°</b></span><span class="st">${ad<=3?"✓ ตรงเส้นทาง":(df>0?"↶ แก้ซ้าย ":"↷ แก้ขวา ")+ad+"°"}</span></div>`}
     else steer=`<div class="gh-steer"><span>เส้นทาง TC <b>${hdg(tc)}°</b></span><span class="hint">บินจริง: รอความเร็ว &gt; 5 kt</span></div>`;
     const now=new Date(),et=ete!=null?new Date(now.getTime()+ete*60000):null,eta=et?et.toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–",etaZ=et?et.toISOString().slice(11,16).replace(":","")+"Z":"";
-    nav=`<div class="gh-to">→ ${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">leg ${i+1}/${W.length-1}</span></div>
+    nav=`<div class="gh-to">→ ${DT?'<span class="dtotag">D→</span>':""}${dbm?`<span class="dbno">No.${esc(dbm.no)}</span> `:""}<b>${esc(T.name)}</b> <span class="hint">${DT?"Direct to · กด ➜ เพื่อยกเลิก":`leg ${i+1}/${W.length-1}`}</span></div>
      <div class="gh-grid"><div><span>DIST</span><b>${d.toFixed(1)}</b><i>NM</i></div><div title="ทิศจากตำแหน่งปัจจุบันตรงไปจุดหมาย (True)"><span>ไปจุดหมาย BRG</span><b>${tru(brg)}</b></div><div><span>ETE</span><b>${ete!=null?mmss(ete):"–"}</b></div><div class="gh-eta"><span>ETA</span><b>${eta}<small>L</small></b>${etaZ?`<i>${etaZ}</i>`:""}</div></div>
      <div class="gh-xte ${Math.abs(xte)>1?"warn":""}">XTE <b>${Math.abs(xte).toFixed(1)} NM ${Math.abs(xte)<0.05?"":xte<0?"R":"L"}</b>${Math.abs(xte)>=0.05?` <span class="hint">(ห่างเส้นทางไปทาง${xte<0?"ขวา":"ซ้าย"})</span>`:""}</div>${steer}`}
   const near=gpsNear([P.lat,P.lon]);
