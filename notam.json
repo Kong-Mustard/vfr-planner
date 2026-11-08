@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-08T03:12Z",
+"fetched": "2026-11-08T04:17Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -729,6 +729,15 @@
 "plain": " ",
 "start": "11/07/2026 0800",
 "end": "11/10/2026 1100",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "J7332/26",
+"icao": "J7332/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/007/1747N10309E002\r\nA) VTBB B) 2611080320 C) 2611101000\r\nD) 08 0320-1000, 09 10 0130-1000\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 2NM CENTRE\r\n   174723.52N1030926.70E (UDON THANI AND NONG KHAI PROVINCE)\r\nF) GND G) 700FT AGL",
+"plain": " ",
+"start": "11/08/2026 0320",
+"end": "11/10/2026 1000",
 "keyword": "INTERNATIONAL"
 },
 {
