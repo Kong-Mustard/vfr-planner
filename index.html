@@ -2378,7 +2378,7 @@ new Ctl3D().addTo(map);
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 /* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
 function ifrBase(quiet){if(typeof baseSet!=="function")return;if(FLMODE==="I")baseSet("chart");else if(!quiet)baseSet("sat")}  // I = พื้นขาวชาร์ต · กลับ V = ดาวเทียม
-function modeSet(m,quiet){FLMODE=m==="I"?"I":"V";try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
+function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
   document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase(quiet);if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
@@ -2757,9 +2757,8 @@ function segHtml(r,i){const a=r.pts[i],b=r.pts[i+1],g=a.seg||{};const row=(k,v)=
    ${row("Upper / Lower",g.up?`${g.up} / ${g.lo}`:"")}${row("Min flight alt",g.mfa?g.mfa.toLocaleString("en-US")+" ft":"")}${row("Lateral limits",g.ll!=null?g.ll+" NM":"")}${row("FL series",g.fl)}${row("Class",g.cls)}</div><span class="hint">eAIP ENR ${esc(r.page)} · ${esc(EAIP.edition||"")}</span></div>`}
 function ifrTri(c){return c===false?'<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 1 L12 11 H1 Z" fill="#fff" stroke="#123b7a" stroke-width="1.6"/></svg>'
   :`<svg width="13" height="12" viewBox="0 0 13 12"><path d="M6.5 1 L12 11 H1 Z" fill="${c?"#123b7a":"#7fa6d8"}" stroke="#fff" stroke-width=".8"/></svg>`}
-function drawIfr(){ifrLayer.clearLayers();if(FLMODE!=="I"||!EAIP){map.removeLayer(ifrLayer);return}
-  (EAIP.airways||[]).forEach(r=>{for(let i=0;i<r.pts.length-1;i++){const a=r.pts[i],b=r.pts[i+1];
-    L.polyline([[a.lat,a.lon],[b.lat,b.lon]],{color:"#123b7a",weight:IFR_TOUCH||innerWidth<900?1.6:2.6,opacity:.8,className:"ifr-aw"}).bindPopup(()=>`<div class="ifrpop">${segHtml(r,i)}</div>`).addTo(ifrLayer)}});
+/* ชั้น "จุดรายงาน IFR / Significant points" — ใช้ได้ทุกโหมด (เส้น airway อยู่ในชั้น Airway + VOR/NDB) */
+function drawIfr(){ifrLayer.clearLayers();if(!EAIP||document.body.classList.contains("hide-ifr")){map.removeLayer(ifrLayer);return}
   ifrPts().forEach(p=>{const t=p.comp===false?"On request (△)":p.comp?"Compulsory (▲)":"Significant point (ENR 4.4)";
     L.marker([p.lat,p.lon],{icon:L.divIcon({className:"ifrmk",html:`${ifrTri(p.comp)}<span class="ifr-n">${esc(p.name)}</span>`,iconSize:[13,12],iconAnchor:[6,6]})})
      .bindPopup(()=>`<div class="ifrpop"><b>${esc(p.name)}</b> · ${t}<br>${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}${p.aw.length?`<br>Airway: ${[...new Set(p.aw.map(x=>x.r.id))].map(esc).join(", ")}`:""}
@@ -3904,7 +3903,7 @@ function roseSvg(){let t="";for(let a=0;a<360;a+=10){const r1=a%30?38:33,x1=40+3
 const ROSE=roseSvg();
 function drawEnr(){enrLayer.clearLayers();if(!map.hasLayer(enrLayer)||!EAIP)return;const z=map.getZoom();if(z<6)return;const bb=map.getBounds().pad(0.3);
   (EAIP.airways||[]).forEach(r=>{const P=r.pts.map(p=>[p.lat,p.lon]);if(!P.some(p=>bb.contains(p)))return;
-    L.polyline(P,{color:"#1f3b8f",weight:1.6,opacity:.85,interactive:false}).addTo(enrLayer);
+    for(let i=0;i<P.length-1;i++){const k=i;L.polyline([P[i],P[i+1]],{color:"#1f3b8f",weight:IFR_TOUCH||innerWidth<900?2:2.4,opacity:.85,className:"enr-aw"}).bindPopup(()=>`<div class="ifrpop">${segHtml(r,k)}</div>`).addTo(enrLayer)}
     if(z>=7)for(let i=0;i<P.length-1;i++){const m=[(P[i][0]+P[i+1][0])/2,(P[i][1]+P[i+1][1])/2];if(!bb.contains(m))continue;
       L.marker(m,{interactive:false,icon:L.divIcon({className:"",html:`<span class="awlbl">${esc(r.id)}</span>`,iconSize:null,iconAnchor:[14,9]})}).addTo(enrLayer)}});
   (EAIP.navaids||[]).forEach(n=>{if(n.lat==null||!bb.contains([n.lat,n.lon]))return;const vor=/VOR/.test(n.type);
@@ -3939,22 +3938,21 @@ const VIS=[
  {k:"R",t:"Restricted",g:"พื้นที่",L:()=>areaLayers.R,c:"#e07a00"},
  {k:"D",t:"Danger",g:"พื้นที่",L:()=>areaLayers.D,c:"#2f6fd6"},
  {k:"nt",t:"NOTAM",g:"พื้นที่",L:()=>ntLayer},
- {k:"enr",t:"Airway / VOR (enroute)",g:"เดินอากาศ",L:()=>enrLayer},
- {k:"sp",t:"Significant points",g:"เดินอากาศ",L:()=>spLayer},
- {k:"ifr",t:"จุดรายงาน IFR + airway (โหมด I)",g:"เดินอากาศ",css:"hide-ifr"},
+ {k:"enr",t:"Airway + VOR/NDB",g:"เดินอากาศ",L:()=>enrLayer},
+ {k:"ifr",t:"จุดรายงาน IFR / Significant points",g:"เดินอากาศ",css:"hide-ifr"},
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
  "ทั้งหมด":"route hbox rem ap ctr rp P R D nt ifr",
- "เฉพาะเส้นทาง":"route hbox rem ifr",
+ "เฉพาะเส้นทาง":"route hbox rem",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
  "เฉพาะ CTR":"route ap ctr",
- "Enroute":"route ap enr sp ifr",
+ "Enroute":"route ap enr ifr",
  "ซ่อนทั้งหมด":""};
 let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
 function visOn(k){const v=VIS.find(x=>x.k===k);if(v.css)return!document.body.classList.contains(v.css);return map.hasLayer(v.L())}
-function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
+function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;if(k==="ifr"&&typeof drawIfr==="function")setTimeout(drawIfr,0);
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
@@ -3972,7 +3970,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
     if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
   document.addEventListener("pointerdown",e=>{const p=d.querySelector("#visPanel");if(!p.hidden&&!e.target.closest(".vis-ctl"))p.hidden=true},true);
-  d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&(c.dataset.vis==="enr"||c.dataset.vis==="sp")){drawEnr();drawSig()}}});
+  d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&c.dataset.vis==="enr")drawEnr();if(c.dataset.vis==="ifr")drawIfr()}});
   d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
 map.on("overlayadd overlayremove",()=>{visSave()});
