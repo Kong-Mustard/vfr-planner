@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-08T17:54Z",
+"fetched": "2026-11-08T19:11Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -854,6 +854,24 @@
 "icao": "A4400/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611072030 C) 2611082200\r\nD) 07 2030-2145, 08 1900-2200 \r\nE) RWY 01/19 CLSD DUE TO WIP",
 "plain": " ",
 "start": "11/07/2026 2030",
+"end": "11/08/2026 2200",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBD",
+"id": "A4447/26",
+"icao": "A4447/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611081804 C) 2611082200\r\nE) ILS RWY 21L U/S",
+"plain": " ",
+"start": "11/08/2026 1804",
+"end": "11/08/2026 2200",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBS",
+"id": "A4448/26",
+"icao": "A4448/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611081855 C) 2611082200\r\nE) ILS RWY 01/19 U/S",
+"plain": " ",
+"start": "11/08/2026 1855",
 "end": "11/08/2026 2200",
 "keyword": "INTERNATIONAL"
 },
