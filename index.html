@@ -1206,6 +1206,19 @@ body.cl-on{overflow:hidden}
 .pw-key{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.pw-key i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:3px;vertical-align:middle}
 .v3d-ly{display:inline-flex;gap:4px;flex-wrap:wrap}.v3d-ly button{min-height:34px;padding:2px 10px;border-radius:999px;font-size:13px;opacity:.7}
 .v3d-ly button.on{opacity:1;background:#2563eb;color:#fff;border-color:#2563eb}
+.snapask.wpcard{width:310px;padding:0;overflow:hidden;border-radius:16px}
+.wpcard .wc-top{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,#123b7a,#1d4ed8);color:#fff}
+.wpcard .wc-no{flex:none;min-width:40px;height:40px;padding:0 8px;border-radius:20px;background:#fff;color:#c2185b;display:grid;place-items:center;font:900 18px var(--f-mono);box-shadow:0 0 0 3px #ff3db8}
+.wpcard .wc-nm{min-width:0;display:flex;flex-direction:column;gap:3px}.wpcard .wc-nm b{font:800 20px/1.1 var(--f-body);color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wpcard .wc-role{align-self:flex-start;font:700 11.5px var(--f-body);padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.2)}
+.wpcard .wc-role.dep{background:#16a34a}.wpcard .wc-role.dst{background:#c2185b}
+.wpcard .wc-pos{display:grid;gap:6px;padding:12px 16px 4px}.wpcard .wc-pos small{display:block;font-size:11px;color:#6b7684;font-weight:600}.wpcard .wc-pos b{font:700 14.5px var(--f-mono);color:#1b2430}
+.wpcard .wc-legs{display:flex;gap:6px;padding:8px 16px 0}.wpcard .wc-leg{flex:1;background:#eef3fb;border-radius:10px;padding:6px 9px;display:flex;flex-direction:column}
+.wpcard .wc-leg span{font-size:11px;color:#6b7684;font-weight:700}.wpcard .wc-leg b{font:800 17px var(--f-mono);color:#0a6cff}.wpcard .wc-leg i{font-style:normal;font-size:12px;color:#3b4654}
+.wpcard .wc-tip{margin:10px 16px 0;font-size:12px;color:#6b7684}
+.wpcard .sa-b{padding:10px 16px 14px;margin:0}.wpcard .sa-del{background:#dc2626!important}
+.v3w{display:flex;flex-direction:column;align-items:center;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.v3w b{margin-top:-6px;background:#0c4a6e;color:#fff;font:800 14px var(--f-mono);padding:2px 8px;border-radius:8px;border:2px solid #38bdf8}
 </style>
 </head>
 <body>
@@ -1690,7 +1703,7 @@ body.cl-on{overflow:hidden}
     <button id="v3dFly" class="primary">▶ บินตามเส้นทาง</button>
     <label>ความเร็ว<select id="v3dSpd"><option value="5">×5</option><option value="10" selected>×10</option><option value="30">×30</option><option value="60">×60</option></select></label>
     <button id="v3dTop">มุมมองภาพรวม</button>
-    <span class="v3d-ly" id="v3dLy"><button type="button" data-l3="prd" class="on">P/R/D</button><button type="button" data-l3="nt" class="on">NOTAM</button><button type="button" data-l3="pwr">🗼⚡ สายไฟ</button><button type="button" data-l3="rad">🌧 เรดาร์ฝน</button></span>
+    <span class="v3d-ly" id="v3dLy"><button type="button" data-l3="prd" class="on">P/R/D</button><button type="button" data-l3="nt" class="on">NOTAM</button><button type="button" data-l3="pwr">🗼⚡ สายไฟ</button><button type="button" data-l3="rad">🌧 เรดาร์ฝน</button><button type="button" data-l3="wind">💨 ลม</button></span>
     <button id="v3dClose">ปิด ✕</button>
   </div>
   <div id="v3dMap"></div>
@@ -1919,10 +1932,14 @@ map.on("click",e=>{if(overlayClick(e))return;if(window._suppressClick&&Date.now(
 let tapGhost=null,tapBox=null;
 /* แตะจุดเส้นทางบนแผนที่ → ถามลบ (ไม่ต้องเลื่อนลงไปหาในตาราง) */
 function wpAsk(i){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.remove());const w=state.wps[i];if(!w)return;
-  const b=document.createElement("div");b.className="snapask wpask";const n=state.wps.length;
-  b.innerHTML=`<div class="sa-h"><span class="wpicon">${i+1}</span><div><b>${esc(w.name||"WP")}</b><small>${i===0?"ต้นทาง":i===n-1?"ปลายทาง":"จุดที่ "+(i+1)} · ${fmtMgrs(toMgrs(w.lat,w.lon))}</small></div></div>
-   <p>ลบจุดนี้ออกจากเส้นทางหรือไม่?</p><small class="sa-c">ลากหมุดเพื่อย้ายตำแหน่งได้ · กด Ctrl+Z เพื่อย้อนกลับ</small>
-   <div class="sa-b"><button class="sa-no">ปิด</button><button class="sa-yes sa-del">🗑 ลบจุด ${i+1}</button></div>`;
+  const b=document.createElement("div");b.className="snapask wpask wpcard";const n=state.wps.length;
+  const role=i===0?["ต้นทาง","dep"]:i===n-1?["ปลายทาง","dst"]:["จุดที่ "+(i+1),"mid"],cp=typeof dbMatch==="function"&&dbMatch(w),R=compute().rows,rin=R[i-1],rout=R[i];
+  const leg=(r,lab)=>r?`<div class="wc-leg"><span>${lab}</span><b>${isFinite(r.mh)?hdg(r.mh):"---"}°M</b><i>${r.dist.toFixed(1)} NM</i></div>`:"";
+  b.innerHTML=`<div class="wc-top"><span class="wc-no">${cp?"No."+esc(cp.no):i+1}</span><div class="wc-nm"><b>${esc(w.name||"WP")}</b><span class="wc-role ${role[1]}">${role[0]}</span></div></div>
+   <div class="wc-pos"><div><small>MGRS</small><b>${fmtMgrs(toMgrs(w.lat,w.lon))}</b></div><div><small>Lat, Lon</small><b>${w.lat.toFixed(5)}, ${w.lon.toFixed(5)}</b></div></div>
+   ${rin||rout?`<div class="wc-legs">${leg(rin,"เข้า ←")}${leg(rout,"ออก →")}</div>`:""}
+   <div class="wc-tip">✋ ลากหมุดเพื่อย้ายจุด · ↶ Ctrl+Z ย้อนกลับ</div>
+   <div class="sa-b"><button class="sa-no">ปิด</button><button class="sa-yes sa-del">🗑 ลบจุดนี้</button></div>`;
   map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
   const ll=L.latLng(w.lat,w.lon),place=()=>{const pt=map.latLngToContainerPoint(ll),C=map.getSize(),bw=b.offsetWidth,bh=b.offsetHeight;
     let x=pt.x-bw/2,y=pt.y-bh-22;if(y<8)y=pt.y+22;x=Math.max(8,Math.min(C.x-bw-8,x));y=Math.max(8,Math.min(C.y-bh-8,y));b.style.left=x+"px";b.style.top=y+"px"};
@@ -2547,11 +2564,16 @@ async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
         {id:"wpl",type:"symbol",source:"route",filter:["==","$type","Point"],layout:{"text-field":["get","n"],"text-font":["Open Sans Semibold"],"text-size":14,"text-offset":[0,1.4]},paint:{"text-color":"#fff","text-halo-color":"#000","text-halo-width":1.5}}],
       sky:{"sky-color":"#7fb2e8","horizon-color":"#dbe8f5","fog-color":"#c9d6e3","sky-horizon-blend":0.6,"horizon-fog-blend":0.5,"fog-ground-blend":0.4}},
     bounds:b,fitBoundsOptions:{padding:30}});
-  ml.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
+  ml.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");try{ml.touchPitch.enable();ml.touchZoomRotate.enable()}catch(e){}
+  /* คลิกปุ่มลูกกลิ้งค้างแล้วลาก (แบบ Google Earth): ขึ้น-ลง = เอียง · ซ้าย-ขวา = หมุน */
+  {const cv=ml.getCanvasContainer();let mm=null;cv.addEventListener("mousedown",e=>{if(e.button!==1)return;e.preventDefault();mm={x:e.clientX,y:e.clientY,p:ml.getPitch(),b:ml.getBearing()}});
+   cv.addEventListener("auxclick",e=>{if(e.button===1)e.preventDefault()});
+   addEventListener("mousemove",e=>{if(!mm||!ml)return;ml.jumpTo({pitch:Math.max(0,Math.min(85,mm.p-(e.clientY-mm.y)*.3)),bearing:mm.b+(e.clientX-mm.x)*.3})});
+   addEventListener("mouseup",e=>{if(e.button===1)mm=null})}
   {const m0=ml,tryL=()=>{if(ml===m0&&m0.isStyleLoaded()&&!m0.getSource("prd"))v3dLayers().catch(()=>{})};m0.once("idle",tryL);let k=0;const iv=setInterval(()=>{tryL();if(++k>40||ml!==m0||m0.getSource("prd"))clearInterval(iv)},500)}ml.on("load",()=>{v3dLayers().catch(()=>{});try{ml.setTerrain({source:"dem",exaggeration:V3D_EX})}catch(e){}ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
   ml._box=b}
 /* ---------- ชั้นข้อมูลในภาพ 3D: P/R/D · NOTAM · สายไฟแรงสูง · เรดาร์ฝน ---------- */
-const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
+const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,wind:false,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
 function l3Geo(group,props){const F=[];const add=(l,pr)=>{if(l instanceof L.LayerGroup&&!(l instanceof L.FeatureGroup&&l.getLayers===undefined)){l.eachLayer(x=>add(x,pr));return}
     if(l instanceof L.Circle){const c=l.getLatLng(),r=l.getRadius(),ring=[];for(let k=0;k<=64;k++){const a=k/64*2*Math.PI,dy=r*Math.cos(a)/111320,dx=r*Math.sin(a)/(111320*Math.cos(c.lat*D2R));ring.push([c.lng+dx,c.lat+dy])}
       F.push({type:"Feature",properties:{...pr(l)},geometry:{type:"Polygon",coordinates:[ring]}});return}
@@ -2573,11 +2595,23 @@ async function v3dLayers(){if(!ml)return;const col=l=>(l.options&&l.options.colo
     if(f&&ml){ml.addSource("rad",{type:"raster",tiles:[`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`],tileSize:256,maxzoom:7,attribution:"Radar © RainViewer"});ml.addLayer({id:"rad",type:"raster",source:"rad",paint:{"raster-opacity":.6}},"rl");
       const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});toast("เรดาร์ฝน RainViewer เวลา "+t+" น.")}}catch(e){toast("โหลดเรดาร์ฝนไม่ได้ (ต้องต่อเน็ต)")}}
   const vis=(ids,on)=>ids.forEach(i=>{if(ml.getLayer(i))ml.setLayoutProperty(i,"visibility",on?"visible":"none")});
-  vis(["prd-f","prd-l"],V3L.prd);vis(["nt-f","nt-l"],V3L.nt);vis(["pwr-l","pwr-t"],V3L.pwr);vis(["rad"],V3L.rad);
+  v3dWind();vis(["prd-f","prd-l"],V3L.prd);vis(["nt-f","nt-l"],V3L.nt);vis(["pwr-l","pwr-t"],V3L.pwr);vis(["rad"],V3L.rad);
   document.querySelectorAll("#v3dLy [data-l3]").forEach(b=>b.classList.toggle("on",!!V3L[b.dataset.l3]))}
 $("#v3dLy").addEventListener("click",e=>{const b=e.target.closest("[data-l3]");if(!b)return;const k=b.dataset.l3;V3L[k]=!V3L[k];try{localStorage.setItem("vfr_v3l",JSON.stringify(V3L))}catch(er){}
   if(k==="pwr"&&V3L.pwr)pwrWarn();if(ml&&ml.getSource("prd"))v3dLayers();else document.querySelectorAll("#v3dLy [data-l3]").forEach(x=>x.classList.toggle("on",!!V3L[x.dataset.l3]))});
-function close3D(){stopFly();$("#v3d").hidden=true;document.body.style.overflow="";if(ml){ml.remove();ml=null}if(pickLayer){map.removeLayer(pickLayer);pickLayer=null}}
+/* ลมใน 3D: ลูกศรใหญ่ 3 อัน (ต้น/กลาง/ปลายเส้นทาง) ชี้ทิศที่ลมพัดไป · Open-Meteo ชั่วโมงปัจจุบัน ระดับใกล้ระยะสูงแผน */
+let v3dWindMk=[];async function v3dWind(){v3dWindMk.forEach(m=>m.remove());v3dWindMk=[];if(!ml||!V3L.wind)return;const W=state.wps;
+  let pts;if(W.length>=2){const P=W.map(w=>[w.lat,w.lon]);let tot=0;const seg=[];for(let i=0;i<P.length-1;i++){const d=gcDistNm(P[i],P[i+1]);seg.push(d);tot+=d}
+    const at=f=>{let x=tot*f;for(let i=0;i<seg.length;i++){if(x<=seg[i]||i===seg.length-1){const t=seg[i]?Math.min(1,x/seg[i]):0;return[P[i][0]+(P[i+1][0]-P[i][0])*t,P[i][1]+(P[i+1][1]-P[i][1])*t]}x-=seg[i]}};pts=[at(0.05),at(0.5),at(0.95)]}
+  else{const c=ml.getCenter();pts=[[c.lat,c.lng]]}
+  const alt=num(state.alt,num(state.g&&state.g.alt,2500)),lv=alt<1500?"10m":alt<4000?"925hPa":alt<8000?"850hPa":"700hPa",lvT={"10m":"ผิวพื้น","925hPa":"~2,500 ft","850hPa":"~5,000 ft","700hPa":"~10,000 ft"}[lv];
+  try{const v=`wind_speed_${lv},wind_direction_${lv}`;const r=await(await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pts.map(p=>p[0].toFixed(3)).join(",")}&longitude=${pts.map(p=>p[1].toFixed(3)).join(",")}&current=${v}&wind_speed_unit=kn&timezone=Asia%2FBangkok`)).json();
+    const arr=Array.isArray(r)?r:[r];if(!ml||!V3L.wind)return;
+    arr.forEach((d,k)=>{const c=d.current||{},sp=c[`wind_speed_${lv}`],dir=c[`wind_direction_${lv}`];if(sp==null||dir==null)return;
+      const el=document.createElement("div");el.className="v3w";el.innerHTML=`<svg viewBox="0 0 60 120" width="60" height="120" style="transform:rotate(${(dir+180)%360}deg)"><path d="M30 4 L52 44 L37 40 L37 116 L23 116 L23 40 L8 44 Z" fill="#38bdf8" stroke="#0c4a6e" stroke-width="3" stroke-linejoin="round"/></svg><b>${String(Math.round(dir)).padStart(3,"0")}°/${Math.round(sp)} kt</b>`;
+      v3dWindMk.push(new maplibregl.Marker({element:el,anchor:"center"}).setLngLat([pts[k][1],pts[k][0]]).addTo(ml))});
+    toast(`ลม ${lvT} (Open-Meteo ตอนนี้) — ลูกศรชี้ทิศที่ลมพัดไป`)}catch(e){toast("โหลดข้อมูลลมไม่ได้ (ต้องต่อเน็ต)")}}
+function close3D(){try{v3dWindMk.forEach(m=>m.remove());v3dWindMk=[]}catch(e){}stopFly();$("#v3d").hidden=true;document.body.style.overflow="";if(ml){ml.remove();ml=null}if(pickLayer){map.removeLayer(pickLayer);pickLayer=null}}
 $("#v3dClose").onclick=close3D;
 
 $("#v3dTop").onclick=()=>{stopFly();if(ml)ml.fitBounds(ml._box,{padding:30,pitch:60,duration:1000})};
