@@ -1199,6 +1199,13 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 @media (max-width:899px){.cl-side{position:absolute;top:56px;bottom:0;left:0;z-index:2;width:min(320px,86vw);box-shadow:8px 0 24px rgba(0,0,0,.5)}.cl-scroll{padding:8px}}
 body.cl-on{overflow:hidden}
 @media (min-width:861px){.cl-narrow{display:none!important}}
+.pwr-tw{background:none;border:0}.pwr-tw span{font-size:16px;line-height:1;filter:drop-shadow(0 0 1px #fff)}.pwr-tw b{position:absolute;left:11px;top:-2px;font-size:11px}
+.pwr-warn{position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px}
+.pw-box{max-width:460px;background:var(--panel);color:var(--ink);border:2px solid #f59e0b;border-radius:18px;padding:18px 20px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.pw-box h3{margin:0 0 8px;font:800 18px var(--f-display);color:#fbbf24}.pw-box ul{margin:0 0 10px;padding-left:20px;line-height:1.55}.pw-box button{width:100%;min-height:46px}
+.pw-key{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.pw-key i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:3px;vertical-align:middle}
+.v3d-ly{display:inline-flex;gap:4px;flex-wrap:wrap}.v3d-ly button{min-height:34px;padding:2px 10px;border-radius:999px;font-size:13px;opacity:.7}
+.v3d-ly button.on{opacity:1;background:#2563eb;color:#fff;border-color:#2563eb}
 </style>
 </head>
 <body>
@@ -1508,6 +1515,7 @@ body.cl-on{overflow:hidden}
  <div class="ep-wrap">
   <aside class="card ep-side">
     <div class="ep-tools"><input id="npSearch" type="search" placeholder="ค้นหา เช่น starting, before taxi" aria-label="ค้นหา normal procedure"></div>
+    <button type="button" class="cl-open" data-cl="N-3">📕 <span><b>Checklist (CL)</b><small>Normal · เริ่มที่หน้า N-3</small></span><i>›</i></button>
     <div id="npList" class="ep-list"></div>
     <div class="ep-foot"><p id="npSrc" class="hint"></p><p class="hint">ข้อมูลมากับไฟล์ emergency_data.json (Import ที่แท็บ 9 คู่มือ/ข้อมูล)</p></div>
   </aside>
@@ -1678,10 +1686,11 @@ body.cl-on{overflow:hidden}
 <div id="v3d" class="v3d" hidden>
   <div class="v3d-bar">
     <b>ภาพ 3 มิติ</b>
-    <label>ความสูงภูมิประเทศ ×<span id="exVal">1.0</span><input id="v3dEx" type="range" min="1" max="3" step="0.1" value="1"></label>
+    <span class="hint">ภูมิประเทศขยายความสูง ×3</span>
     <button id="v3dFly" class="primary">▶ บินตามเส้นทาง</button>
     <label>ความเร็ว<select id="v3dSpd"><option value="5">×5</option><option value="10" selected>×10</option><option value="30">×30</option><option value="60">×60</option></select></label>
     <button id="v3dTop">มุมมองภาพรวม</button>
+    <span class="v3d-ly" id="v3dLy"><button type="button" data-l3="prd" class="on">P/R/D</button><button type="button" data-l3="nt" class="on">NOTAM</button><button type="button" data-l3="pwr">🗼⚡ สายไฟ</button><button type="button" data-l3="rad">🌧 เรดาร์ฝน</button></span>
     <button id="v3dClose">ปิด ✕</button>
   </div>
   <div id="v3dMap"></div>
@@ -2413,7 +2422,7 @@ async function metarLoad(){const box=$("#metarList");
 
 /* ---------- ภาพ 3 มิติ (MapLibre + terrain) ---------- */
 const ML_JS="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js",ML_CSS="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css";
-let ml=null,pick=null,pickLayer=null,fly=null;
+let ml=null,pick=null,pickLayer=null,fly=null;const V3D_EX=3; /* 3D เส้นทาง: ขยายความสูงภูมิประเทศ ×3 คงที่ */
 function loadML(){return new Promise((ok,no)=>{if(window.maplibregl)return ok();const l=document.createElement("link");l.rel="stylesheet";l.href=ML_CSS;sriSet(l,ML_CSS);document.head.appendChild(l);
   const s=document.createElement("script");s.src=ML_JS;sriSet(s,ML_JS);s.onload=ok;s.onerror=()=>no(new Error("โหลด 3D ไม่ได้ (ต้องต่อเน็ต)"));document.head.appendChild(s)})}
 const Ctl3D=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar");
@@ -2539,11 +2548,38 @@ async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
       sky:{"sky-color":"#7fb2e8","horizon-color":"#dbe8f5","fog-color":"#c9d6e3","sky-horizon-blend":0.6,"horizon-fog-blend":0.5,"fog-ground-blend":0.4}},
     bounds:b,fitBoundsOptions:{padding:30}});
   ml.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
-  ml.on("load",()=>{ml.setTerrain({source:"dem",exaggeration:+$("#v3dEx").value});ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
+  {const m0=ml,tryL=()=>{if(ml===m0&&m0.isStyleLoaded()&&!m0.getSource("prd"))v3dLayers().catch(()=>{})};m0.once("idle",tryL);let k=0;const iv=setInterval(()=>{tryL();if(++k>40||ml!==m0||m0.getSource("prd"))clearInterval(iv)},500)}ml.on("load",()=>{v3dLayers().catch(()=>{});try{ml.setTerrain({source:"dem",exaggeration:V3D_EX})}catch(e){}ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
   ml._box=b}
+/* ---------- ชั้นข้อมูลในภาพ 3D: P/R/D · NOTAM · สายไฟแรงสูง · เรดาร์ฝน ---------- */
+const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
+function l3Geo(group,props){const F=[];const add=(l,pr)=>{if(l instanceof L.LayerGroup&&!(l instanceof L.FeatureGroup&&l.getLayers===undefined)){l.eachLayer(x=>add(x,pr));return}
+    if(l instanceof L.Circle){const c=l.getLatLng(),r=l.getRadius(),ring=[];for(let k=0;k<=64;k++){const a=k/64*2*Math.PI,dy=r*Math.cos(a)/111320,dx=r*Math.sin(a)/(111320*Math.cos(c.lat*D2R));ring.push([c.lng+dx,c.lat+dy])}
+      F.push({type:"Feature",properties:{...pr(l)},geometry:{type:"Polygon",coordinates:[ring]}});return}
+    if(l instanceof L.Polyline){try{const g=l.toGeoJSON();g.properties={...pr(l)};F.push(g)}catch(e){}}};
+  if(group)group.eachLayer(l=>add(l,props));return{type:"FeatureCollection",features:F}}
+async function v3dLayers(){if(!ml)return;const col=l=>(l.options&&l.options.color)||"#f59e0b";
+  const set=(id,data,layers)=>{if(ml.getSource(id))ml.getSource(id).setData(data);else{ml.addSource(id,{type:"geojson",data});layers.forEach(x=>ml.addLayer(x,"rl"))}};
+  set("prd",{type:"FeatureCollection",features:["P","R","D"].flatMap(k=>l3Geo(areaLayers[k],l=>({c:col(l)})).features)},[
+    {id:"prd-f",type:"fill",source:"prd",filter:["==","$type","Polygon"],paint:{"fill-color":["get","c"],"fill-opacity":.18}},
+    {id:"prd-l",type:"line",source:"prd",paint:{"line-color":["get","c"],"line-width":2.5}}]);
+  set("nt",l3Geo(ntLayer,l=>({c:col(l)})),[
+    {id:"nt-f",type:"fill",source:"nt",filter:["==","$type","Polygon"],paint:{"fill-color":["get","c"],"fill-opacity":.15}},
+    {id:"nt-l",type:"line",source:"nt",paint:{"line-color":["get","c"],"line-width":2.5,"line-dasharray":[3,2]}}]);
+  if(V3L.pwr){const d=await pwrLoad();if(d&&ml){const B=ml._box,bb=L.latLngBounds([B[0][1],B[0][0]],[B[1][1],B[1][0]]).pad(.2);
+    set("pwr",{type:"FeatureCollection",features:d.lines.filter(l=>bb.intersects(l.bb)).map(l=>({type:"Feature",properties:{c:pwrCol(l.v)},geometry:{type:"LineString",coordinates:l.c.map(p=>[p[1],p[0]])}}))},[
+      {id:"pwr-l",type:"line",source:"pwr",paint:{"line-color":["get","c"],"line-width":3}},
+      {id:"pwr-t",type:"symbol",source:"pwr",minzoom:12,layout:{"symbol-placement":"line","symbol-spacing":120,"text-field":"🗼⚡","text-size":16,"text-allow-overlap":false},paint:{}}])}}
+  if(V3L.rad&&!ml.getSource("rad")){try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json(),f=(d.radar.past||[]).at(-1);
+    if(f&&ml){ml.addSource("rad",{type:"raster",tiles:[`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`],tileSize:256,maxzoom:7,attribution:"Radar © RainViewer"});ml.addLayer({id:"rad",type:"raster",source:"rad",paint:{"raster-opacity":.6}},"rl");
+      const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});toast("เรดาร์ฝน RainViewer เวลา "+t+" น.")}}catch(e){toast("โหลดเรดาร์ฝนไม่ได้ (ต้องต่อเน็ต)")}}
+  const vis=(ids,on)=>ids.forEach(i=>{if(ml.getLayer(i))ml.setLayoutProperty(i,"visibility",on?"visible":"none")});
+  vis(["prd-f","prd-l"],V3L.prd);vis(["nt-f","nt-l"],V3L.nt);vis(["pwr-l","pwr-t"],V3L.pwr);vis(["rad"],V3L.rad);
+  document.querySelectorAll("#v3dLy [data-l3]").forEach(b=>b.classList.toggle("on",!!V3L[b.dataset.l3]))}
+$("#v3dLy").addEventListener("click",e=>{const b=e.target.closest("[data-l3]");if(!b)return;const k=b.dataset.l3;V3L[k]=!V3L[k];try{localStorage.setItem("vfr_v3l",JSON.stringify(V3L))}catch(er){}
+  if(k==="pwr"&&V3L.pwr)pwrWarn();if(ml&&ml.getSource("prd"))v3dLayers();else document.querySelectorAll("#v3dLy [data-l3]").forEach(x=>x.classList.toggle("on",!!V3L[x.dataset.l3]))});
 function close3D(){stopFly();$("#v3d").hidden=true;document.body.style.overflow="";if(ml){ml.remove();ml=null}if(pickLayer){map.removeLayer(pickLayer);pickLayer=null}}
 $("#v3dClose").onclick=close3D;
-$("#v3dEx").oninput=e=>{$("#exVal").textContent=(+e.target.value).toFixed(1);if(ml&&ml.getTerrain())ml.setTerrain({source:"dem",exaggeration:+e.target.value})};
+
 $("#v3dTop").onclick=()=>{stopFly();if(ml)ml.fitBounds(ml._box,{padding:30,pitch:60,duration:1000})};
 /* บินตามเส้นทาง: กล้องอยู่ที่ ALT ของ leg มองไปข้างหน้า ~1.5 NM */
 function routePath(){const res=compute(),W=state.wps,segs=[];let acc=0;
@@ -2556,7 +2592,7 @@ $("#v3dFly").onclick=()=>{if(!ml)return;if(fly){stopFly();return}const P=routePa
   ml.setMaxBounds(null);fly={P,d:0,t:performance.now()};$("#v3dFly").textContent="⏸ หยุด";$("#v3dHud").hidden=false;
   const step=now=>{if(!fly||!ml)return;const dt=(now-fly.t)/1000;fly.t=now;const {s,ll}=posAt(P,fly.d);
     fly.d+=s.gs*(+$("#v3dSpd").value)*dt/3600;if(fly.d>=P.total){stopFly();toast("ถึงปลายทาง");return}
-    const ahead=posAt(P,fly.d+1.5).ll;const ex=+$("#v3dEx").value;
+    const ahead=posAt(P,fly.d+1.5).ll;const ex=V3D_EX;
     const elev=q=>{try{return ml.terrain?ml.terrain.getElevationForLngLatZoom(maplibregl.LngLat.convert(q),ml.transform.tileZoom):0}catch(e){return 0}};
     const terr=elev(ll); // ค่านี้คูณ exaggeration แล้ว
     const altM=s.alt*0.3048,camAlt=Math.max(terr+(altM-terr/ex),terr+30);
@@ -2762,14 +2798,14 @@ function npRenderList(){if(typeof acftHdr==="function")acftHdr();const D=npData(
     html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();M.closest(".ep-wrap").classList.toggle("in-proc",npSel!=null&&!!D);if(npSel!=null&&npRenderMain._l!==npSel)scrollTo({top:0});npRenderMain._l=npSel;
-  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM<button type="button" class="cl-open" data-cl="N-1" style="max-width:420px;margin:18px auto 0">📕 <span><b>Checklist (CL)</b><small>Normal · หน้า N-1 ถึง N-18</small></span><i>›</i></button></div>`;return}
+  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM<button type="button" class="cl-open" data-cl="N-3" style="max-width:420px;margin:18px auto 0">📕 <span><b>Checklist (CL)</b><small>Normal · เริ่มที่หน้า N-3</small></span><i>›</i></button></div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
     const all=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub"));
     const big=({p,i})=>{const g=npGroup(p),n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length;return`<button class="ep-big np" data-i="${i}" style="--gc:${g.c}"><span class="em">${g.e}</span><span class="id">${esc(p.id)} · ${n} ข้อ</span><span class="tt">${esc(p.title)}</span></button>`};
     M.innerHTML=`<div class="ep-home"><input id="npHomeQ" type="search" placeholder="🔍 ค้นหา NORMAL Proc. เช่น before taxi, runup, shutdown" aria-label="ค้นหา NORMAL Proc.">
       ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
-      <button type="button" class="cl-open" data-cl="N-1">📕 <span><b>Checklist (CL)</b><small>Normal · หน้า N-1 ถึง N-18 · แตะ ★ เพื่อไปขั้นตอนละเอียด</small></span><i>›</i></button>
+      <button type="button" class="cl-open cl-narrow" data-cl="N-3">📕 <span><b>Checklist (CL)</b><small>Normal · เริ่มที่หน้า N-3 · แตะ ★ เพื่อไปขั้นตอนละเอียด</small></span><i>›</i></button>
       ${NP_GROUPS.map(g=>{const L=all.filter(x=>npGroup(x.p)===g);return L.length?`<div class="ep-gh" style="--gc:${g.c}"><span>${g.e}</span>${g.t}<i>${L.length}</i></div><div class="ep-grid">${L.map(big).join("")}</div>`:""}).join("")}
       <p class="hint">ติ๊กทีละข้อ หรือใช้ ▶ โหมดทีละขั้น · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
     const qi=$("#npHomeQ");qi.oninput=()=>{const v=qi.value.toLowerCase().trim();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!!v&&!b.textContent.toLowerCase().includes(v));M.querySelectorAll(".ep-gh").forEach(h=>{const gr=h.nextElementSibling;h.hidden=gr.hidden=![...gr.children].some(b=>!b.hidden)})};
@@ -3825,6 +3861,30 @@ document.addEventListener("keydown",e=>{if($("#clView").hidden)return;const a=do
 {let sx=null,sy=null;const sc=$("#clScroll");sc.addEventListener("touchstart",e=>{if(e.touches.length!==1){sx=null;return}sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
  sc.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)*2&&sc.scrollWidth<=sc.clientWidth+4)clShow(clCur+(dx<0?1:-1))},{passive:true})}
 
+/* ---------- สายไฟแรงสูง (OpenStreetMap power=line → power_data.json อัปเดตเดือนละครั้งโดยบอท) ---------- */
+const pwrLayer=L.layerGroup(),pwrCanvas=L.canvas({padding:.3});let PWR=null,pwrLoading=null;
+const pwrCol=v=>v>=500?"#dc2626":v>=230?"#ea580c":v>=115?"#a21caf":v>=69?"#2563eb":"#6b7280";
+async function pwrLoad(){if(PWR)return PWR;if(pwrLoading)return pwrLoading;pwrLoading=fetch("power_data.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{PWR=d;
+    d.lines.forEach(l=>{let a=90,b=-90,c=180,e=-180;l.c.forEach(p=>{a=Math.min(a,p[0]);b=Math.max(b,p[0]);c=Math.min(c,p[1]);e=Math.max(e,p[1])});l.bb=L.latLngBounds([a,c],[b,e])});return d})
+  .catch(()=>{pwrLoading=null;toast("ยังโหลดข้อมูลสายไฟแรงสูงไม่ได้ (ต้องต่อเน็ตครั้งแรก)");return null});return pwrLoading}
+function pwrIcon(){return L.divIcon({className:"pwr-tw",html:'<span>🗼</span><b>⚡</b>',iconSize:[22,22],iconAnchor:[11,18]})}
+async function pwrDraw(){pwrLayer.clearLayers();if(!map.hasLayer(pwrLayer))return;const d=await pwrLoad();if(!d||!map.hasLayer(pwrLayer))return;pwrLayer.clearLayers();
+  const z=map.getZoom(),bb=map.getBounds().pad(.2),ic=pwrIcon();let nT=0;
+  d.lines.forEach(l=>{if(!bb.intersects(l.bb))return;if(z<9&&!(l.v>=115))return;
+    L.polyline(l.c,{renderer:pwrCanvas,color:pwrCol(l.v),weight:z>=12?3:2,opacity:.9,dashArray:l.v?null:"6 4"})
+      .bindPopup(`<b>🗼⚡ สายไฟแรงสูง${l.v?` ${l.v} kV`:""}</b>${l.n?`<br>${esc(l.n)}`:""}${l.o?`<br><span class="hint">${esc(l.o)}</span>`:""}<br><span class="hint">ข้อมูล OSM · ไม่มีความสูงเสา · ไม่ครบทุกพื้นที่</span>`).addTo(pwrLayer);
+    if(z>=13)l.c.forEach(p=>{if(nT<600&&bb.contains(p)){nT++;L.marker(p,{icon:ic,interactive:false,keyboard:false}).addTo(pwrLayer)}})})}
+function pwrWarn(){if(document.querySelector(".pwr-warn"))return;const d=document.createElement("div");d.className="pwr-warn";d.setAttribute("role","alertdialog");
+  d.innerHTML=`<div class="pw-box"><h3>🗼⚡ ข้อมูลสายไฟแรงสูง — โปรดทราบ</h3><ul>
+   <li>ข้อมูลจาก <b>OpenStreetMap</b> (อาสาสมัครทำ) <b>ไม่ครบทุกพื้นที่</b> โดยเฉพาะ <b>ป่า ภูเขา และพื้นที่ห่างไกล</b></li>
+   <li>มีเฉพาะสายส่ง (ส่วนใหญ่ 115 / 230 / 500 kV) — <b>สายจำหน่าย 22–33 kV ของ กฟภ. แทบไม่มี</b></li>
+   <li><b>ไม่มีความสูงเสา</b> · แนวสายอาจคลาดจากของจริง</li>
+   <li>ใช้ประกอบการวางแผนเท่านั้น <b>ไม่แทนการตรวจด้วยสายตา</b></li></ul>
+   <p class="pw-key"><i style="background:#dc2626"></i>500 kV <i style="background:#ea580c"></i>230 kV <i style="background:#a21caf"></i>115 kV <i style="background:#2563eb"></i>69 kV <i style="background:#6b7280"></i>ไม่ระบุ · 🗼⚡ = เสา (ซูมใกล้)</p>
+   <button type="button" class="primary">รับทราบ</button></div>`;
+  document.body.appendChild(d);d.querySelector("button").onclick=()=>d.remove();d.addEventListener("click",e=>{if(e.target===d)d.remove()})}
+map.on("moveend zoomend",()=>{if(map.hasLayer(pwrLayer))pwrDraw()});
+
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
   document.querySelectorAll(".tabpanel").forEach(p=>p.hidden=p.id!=="tab-"+t.dataset.tab);if(t.dataset.tab==="plan")setTimeout(()=>map.invalidateSize(),50);
@@ -4064,6 +4124,7 @@ const VIS=[
  {k:"enr",t:"Airway + VOR/NDB",g:"เดินอากาศ",L:()=>enrLayer},
  {k:"ifr",t:"จุดรายงาน IFR / Significant points",g:"เดินอากาศ",css:"hide-ifr"},
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
+ {k:"pwr",t:"🗼⚡ สายไฟแรงสูง (OSM)",g:"สิ่งกีดขวาง",L:()=>pwrLayer,off:true},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
  "ทั้งหมด":"route hbox rem ap ctr rp P R D nt ifr",
@@ -4093,7 +4154,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
     if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
   document.addEventListener("pointerdown",e=>{const p=d.querySelector("#visPanel");if(!p.hidden&&!e.target.closest(".vis-ctl"))p.hidden=true},true);
-  d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&c.dataset.vis==="enr")drawEnr();if(c.dataset.vis==="ifr")drawIfr()}});
+  d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&c.dataset.vis==="enr")drawEnr();if(c.dataset.vis==="ifr")drawIfr();if(c.dataset.vis==="pwr"&&c.checked){pwrWarn();pwrDraw()}}});
   d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
 map.on("overlayadd overlayremove",()=>{visSave()});

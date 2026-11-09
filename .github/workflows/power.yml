@@ -16,22 +16,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Fetch OSM power lines
+        timeout-minutes: 90
         run: |
           python3 - <<'PY'
           import json, urllib.request, urllib.parse, datetime, re, time
-          Q = """[out:json][timeout:600];
-          area["ISO3166-1"="TH"][admin_level=2]->.th;
-          way["power"="line"](area.th);
-          out tags geom qt;"""
-          data = None
-          for url in ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]:
-              try:
-                  req = urllib.request.Request(url, data=urllib.parse.urlencode({"data": Q}).encode(), headers={"User-Agent": "vfr-planner (github actions)"})
-                  with urllib.request.urlopen(req, timeout=900) as r:
-                      data = json.load(r); print("ok", url); break
-              except Exception as e:
-                  print("fail", url, e); time.sleep(20)
-          if not data: raise SystemExit("overpass failed")
+          # แบ่งเป็นช่อง 1.5°×1.5° (ทั้งประเทศครั้งเดียว Overpass หมดเวลา) แล้วรวม/ตัดซ้ำตาม id
+          EP = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]
+          def q(bb):
+              Q = f'[out:json][timeout:180];way["power"="line"]({bb[0]},{bb[1]},{bb[2]},{bb[3]});out tags geom;'
+              for tries in range(6):
+                  url = EP[tries % len(EP)]
+                  try:
+                      req = urllib.request.Request(url, data=urllib.parse.urlencode({"data": Q}).encode(), headers={"User-Agent": "vfr-planner (github actions)"})
+                      with urllib.request.urlopen(req, timeout=240) as r:
+                          return json.load(r)["elements"]
+                  except Exception as e:
+                      print("retry", bb, url, e); time.sleep(15 + 10 * tries)
+              raise SystemExit(f"overpass failed {bb}")
+          ways = {}
+          lat = 5.5
+          while lat < 20.6:
+              lon = 97.3
+              while lon < 105.7:
+                  els = q((round(lat, 2), round(lon, 2), round(min(lat + 1.5, 20.6), 2), round(min(lon + 1.5, 105.7), 2)))
+                  for w in els: ways[w["id"]] = w
+                  print(f"{lat:.1f},{lon:.1f}: {len(els)} (total {len(ways)})"); time.sleep(3)
+                  lon += 1.5
+              lat += 1.5
+          data = {"elements": list(ways.values())}
           def kv(t):
               v = str(t.get("voltage", "")); n = [int(x) for x in re.findall(r"\d{4,7}", v)]
               return round(max(n) / 1000) if n else None
