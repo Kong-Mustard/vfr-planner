@@ -1169,6 +1169,36 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 #gpsAlert .ga-f button{min-height:40px;padding:0 14px;border-radius:10px;background:#fff;color:#111;border:0;font:800 14px var(--f-body)}#gpsAlert .ga-f .ga-skip{background:rgba(255,255,255,.2);color:#fff}
 @keyframes gaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .ifr-sa td,.ifr-sa th{padding:5px 6px!important;font-size:12.5px}.ifr-sa td:last-child{white-space:nowrap;text-align:right}
+
+.cl-open{display:flex;align-items:center;gap:10px;width:100%;margin:8px 0 10px;padding:10px 14px;border-radius:14px;text-align:left;font-size:22px;background:linear-gradient(135deg,color-mix(in srgb,#b45309 22%,var(--panel)),var(--panel));border:2px solid #d97706;box-shadow:0 0 10px rgba(217,119,6,.35)}
+.cl-open span{flex:1;display:flex;flex-direction:column;line-height:1.25}.cl-open b{font-size:15.5px}.cl-open small{font-size:12px;color:var(--muted)}.cl-open i{font-style:normal;font-size:22px;color:#d97706}
+#clView{position:fixed;inset:0;z-index:5000;background:#1f2937;display:flex;flex-direction:column}
+#clView[hidden]{display:none}
+.cl-bar{display:flex;align-items:center;gap:6px;padding:8px 10px;padding-top:max(8px,env(safe-area-inset-top));background:#0f172a;border-bottom:1px solid #334155;flex-wrap:wrap}
+.cl-bar button{min-height:40px;min-width:40px;padding:0 12px;border-radius:10px;background:#1e293b;color:#fff;border:1px solid #475569;font:700 15px var(--f-body)}
+.cl-bar #clBack{background:#d97706;border-color:#f59e0b;color:#111}.cl-bar #clDark.on,.cl-bar #clToc.on{background:#2563eb;border-color:#2563eb}
+.cl-bar select{min-height:40px!important;border-radius:10px;background:#1e293b!important;color:#fff!important;border:1px solid #475569!important;font:700 15px var(--f-body)!important;max-width:46vw}
+.cl-sp{flex:1}
+.cl-body{flex:1;display:flex;min-height:0}
+.cl-side{width:300px;flex:none;background:#111827;border-right:1px solid #334155;display:flex;flex-direction:column;min-height:0}
+.cl-side[hidden]{display:none}
+.cl-side input{margin:8px;min-height:40px!important;border-radius:10px}
+#clList{overflow:auto;flex:1;padding:0 6px 20px}
+#clList h4{margin:12px 6px 4px;color:#fbbf24;font:800 13px var(--f-body)}
+#clList button{display:flex;gap:8px;width:100%;text-align:left;padding:6px 8px;border-radius:8px;background:none;border:0;color:#e5e7eb;font:600 13px/1.35 var(--f-body)}
+#clList button:hover,#clList button.on{background:#1e3a8a}#clList button span{color:#94a3b8;font:700 12px var(--f-mono);flex:none;width:38px}
+#clList .cl-hit small{display:block;color:#94a3b8;font-weight:500}
+.cl-scroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:14px}
+.cl-pg{position:relative;margin:0 auto;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.5);width:min(100%,var(--clw,720px))}
+.cl-pg img{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none}
+#clView.dark .cl-pg img{filter:invert(1) hue-rotate(180deg) brightness(.92)}#clView.dark .cl-pg{background:#000}
+.cl-lk{position:absolute;display:block;border-radius:4px;background:rgba(245,158,11,.10);outline:1.5px solid rgba(217,119,6,.7)}
+.cl-lk::after{content:"↗ " attr(data-to);position:absolute;right:3px;top:50%;transform:translateY(-50%);background:#d97706;color:#111;font:800 11px var(--f-mono);padding:1px 5px;border-radius:5px;white-space:nowrap}
+.cl-flash{position:absolute;left:0;right:0;height:7%;background:rgba(250,204,21,.45);pointer-events:none;animation:clF 2.2s ease-out forwards}
+@keyframes clF{0%,60%{opacity:1}100%{opacity:0}}
+@media (max-width:899px){.cl-side{position:absolute;top:56px;bottom:0;left:0;z-index:2;width:min(320px,86vw);box-shadow:8px 0 24px rgba(0,0,0,.5)}.cl-scroll{padding:8px}}
+body.cl-on{overflow:hidden}
+@media (min-width:861px){.cl-narrow{display:none!important}}
 </style>
 </head>
 <body>
@@ -1465,6 +1495,14 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
  </details>
  </div>
 </section>
+<div id="clView" hidden role="dialog" aria-label="Checklist">
+ <div class="cl-bar"><button type="button" id="clClose" aria-label="ปิด">✕</button><button type="button" id="clBack" hidden>◀ กลับ</button>
+  <button type="button" id="clToc" title="สารบัญ">☰ สารบัญ</button>
+  <button type="button" id="clPrev" aria-label="หน้าก่อน">‹</button><select id="clPage" aria-label="เลือกหน้า"></select><button type="button" id="clNext" aria-label="หน้าถัดไป">›</button>
+  <span class="cl-sp"></span><button type="button" id="clZo" aria-label="ย่อ">−</button><button type="button" id="clZi" aria-label="ขยาย">+</button><button type="button" id="clDark" title="กลางคืน">🌙</button></div>
+ <div class="cl-body"><aside class="cl-side" id="clSide"><input id="clQ" type="search" placeholder="ค้นหาหัวข้อ / คำในหน้า" aria-label="ค้นหาใน checklist"><div id="clList"></div></aside>
+  <div class="cl-scroll" id="clScroll"><div class="cl-pg" id="clPg"></div></div></div>
+</div>
 <section id="tab-normal" class="tabpanel" hidden>
  <div class="acft-hd" data-acft hidden></div>
  <div class="ep-wrap">
@@ -1524,6 +1562,8 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-red">2. ข้อมูล TM (EMER / NORMAL)</h2>
     <div class="btns"><button class="primary" type="button" onclick="document.getElementById('epImport').click()">Import emergency_data.json</button><button id="epClear">ลบข้อมูล TM</button><input id="epImport" type="file" accept=".json,application/json" hidden></div></div>
    <p id="dataTm" class="hint"></p>
+   <div class="btns" style="margin:6px 0"><button class="primary" type="button" onclick="document.getElementById('clImport').click()">Import checklist_data.json</button><button id="clClear" type="button">ลบ Checklist</button><input id="clImport" type="file" accept=".json,application/json" hidden></div>
+   <p id="dataCl" class="hint"></p>
    <ul class="dhelp"><li><b>ใช้กับ:</b> แท็บ 5 NORMAL, แท็บ 6 EMER และแท็บ 10 ข้อสอบ</li>
     <li><b>ไฟล์:</b> emergency_data.json ของ<b>อากาศยานแบบที่ตัวเองบิน</b> (เช่น UH-60M, AW149) — 1 เครื่องเก็บได้ 1 แบบ ชื่อแบบจะแสดงบนหัวแท็บ 5, 6 และ 10</li>
     <li><b>แบบอื่น:</b> ใช้โครงไฟล์เดียวกัน ใส่ <code>"aircraft": "AW149"</code> และ <code>"source"</code> ชื่อ TM ของแบบนั้น แล้ว Import ทับ</li>
@@ -1595,6 +1635,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
         <button id="epAll" class="on">ทั้งหมด</button><button id="epMem">เฉพาะท่องจำ</button>
       </div>
     </div>
+    <button type="button" class="cl-open" data-cl="E-1">📕 <span><b>Checklist (CL)</b><small>Emergency · หน้า E-1 ถึง E-40</small></span><i>›</i></button>
     <div id="epList" class="ep-list"></div>
     <div class="ep-foot">
       <p id="epSrc" class="hint"></p>
@@ -2721,13 +2762,14 @@ function npRenderList(){if(typeof acftHdr==="function")acftHdr();const D=npData(
     html+=`<button class="ep-item${i===npSel?" sel":""}" data-i="${i}"><span class="id">${esc(p.id)}</span><span>${esc(p.title)}</span>${d?`<span class="np-prog">${d}/${n}</span>`:""}</button>`}));
   $("#npSrc").textContent=`ที่มา: ${D.source} (${D.date}) บทที่ ${D.chapter}`;L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อ</p>`}
 function npRenderMain(){const M=$("#npMain"),D=npData();M.closest(".ep-wrap").classList.toggle("in-proc",npSel!=null&&!!D);if(npSel!=null&&npRenderMain._l!==npSel)scrollTo({top:0});npRenderMain._l=npSel;
-  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM</div>`;return}
+  if(!D){M.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">NORMAL PROCEDURES</h3>ยังไม่มีข้อมูล — Import ไฟล์ <code>emergency_data.json</code> (ฉบับใหม่) ที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กล่อง 2 ข้อมูล TM<button type="button" class="cl-open" data-cl="N-1" style="max-width:420px;margin:18px auto 0">📕 <span><b>Checklist (CL)</b><small>Normal · หน้า N-1 ถึง N-18</small></span><i>›</i></button></div>`;return}
   if(npSel==null){const idx=new Map(D.procedures.map((p,i)=>[p.id,i]));const mk=L=>L.map(id=>idx.get(id)).filter(i=>i!=null).map(i=>`<button class="ep-chip np" data-i="${i}">${esc(D.procedures[i].id)} ${esc(D.procedures[i].title.slice(0,40))}</button>`).join("");
     const fav=mk(favList("np")),rec=mk(recentList("np"));
     const all=D.procedures.map((p,i)=>({p,i})).filter(({p})=>p.blocks.some(b=>b.k==="step"||b.k==="sub"));
     const big=({p,i})=>{const g=npGroup(p),n=p.blocks.filter(b=>b.k==="step"||b.k==="sub").length;return`<button class="ep-big np" data-i="${i}" style="--gc:${g.c}"><span class="em">${g.e}</span><span class="id">${esc(p.id)} · ${n} ข้อ</span><span class="tt">${esc(p.title)}</span></button>`};
     M.innerHTML=`<div class="ep-home"><input id="npHomeQ" type="search" placeholder="🔍 ค้นหา NORMAL Proc. เช่น before taxi, runup, shutdown" aria-label="ค้นหา NORMAL Proc.">
       ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
+      <button type="button" class="cl-open" data-cl="N-1">📕 <span><b>Checklist (CL)</b><small>Normal · หน้า N-1 ถึง N-18 · แตะ ★ เพื่อไปขั้นตอนละเอียด</small></span><i>›</i></button>
       ${NP_GROUPS.map(g=>{const L=all.filter(x=>npGroup(x.p)===g);return L.length?`<div class="ep-gh" style="--gc:${g.c}"><span>${g.e}</span>${g.t}<i>${L.length}</i></div><div class="ep-grid">${L.map(big).join("")}</div>`:""}).join("")}
       <p class="hint">ติ๊กทีละข้อ หรือใช้ ▶ โหมดทีละขั้น · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
     const qi=$("#npHomeQ");qi.oninput=()=>{const v=qi.value.toLowerCase().trim();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!!v&&!b.textContent.toLowerCase().includes(v));M.querySelectorAll(".ep-gh").forEach(h=>{const gr=h.nextElementSibling;h.hidden=gr.hidden=![...gr.children].some(b=>!b.hidden)})};
@@ -3370,6 +3412,7 @@ function epHome(M){const q=($("#epHomeQ")&&$("#epHomeQ").value)||"";const idx=ne
   const fav=mini("fav"),rec=mini("rec");
   M.innerHTML=`<div class="ep-home"><input id="epHomeQ" type="search" placeholder="🔍 ค้นหา EMER Proc. เช่น fire, hyd, stab, gen" value="${esc(q)}" aria-label="ค้นหา EMER Proc.">
     ${fav?`<h3>★ ติดดาว</h3><div class="ep-chips">${fav}</div>`:""}${rec?`<h3>🕘 ใช้ล่าสุด</h3><div class="ep-chips">${rec}</div>`:""}
+    <button type="button" class="cl-open cl-narrow" data-cl="E-1">📕 <span><b>Checklist (CL)</b><small>Emergency · หน้า E-1 ถึง E-40 · มีขีดเส้นใต้ = ขั้นท่องจำ</small></span><i>›</i></button>
     <h3>EMER Proc. ที่มีขั้นท่องจำ <span class="hint">(${memP.length})</span></h3>${EP_GROUPS.map(g=>{const L=memP.filter(x=>epGroup(x.p)===g);return L.length?`<div class="ep-gh" style="--gc:${g.c}"><span>${g.e}</span>${g.t}<i>${L.length}</i></div><div class="ep-grid">${L.map(btn).join("")}</div>`:""}).join("")}
     <p class="hint">หัวข้ออื่นทั้งหมดอยู่ในรายการด้านซ้าย · อ้างอิง/ฝึกเท่านั้น ใช้ CL จริงเสมอ</p></div>`;
   const qi=$("#epHomeQ");qi.oninput=()=>{$("#epSearch").value=qi.value;epRenderList();if(qi.value.trim()){const v=qi.value.toLowerCase();M.querySelectorAll(".ep-big").forEach(b=>b.hidden=!b.textContent.toLowerCase().includes(v))}else M.querySelectorAll(".ep-big").forEach(b=>b.hidden=false)};
@@ -3386,7 +3429,7 @@ function epRenderList(){acftHdr();const L=$("#epList");{const dt=$("#dataTm");if
   $("#epSrc").textContent=`ที่มา: ${EP.source} (${EP.date}) · checklist ${n} หัวข้อ`;
   L.innerHTML=html||`<p class="hint" style="padding:8px">ไม่พบหัวข้อที่ค้นหา</p>`}
 function epRenderMain(){const M=$("#epMain");M.closest(".ep-wrap").classList.toggle("in-proc",epSel!=null&&!!EP);if(epSel!=null&&epRenderMain._l!==epSel)scrollTo({top:0});epRenderMain._l=epSel;
-  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span></div>`;return}
+  if(!EP){M.innerHTML=`<div class="ep-empty"><h3>EMERGENCY</h3>ยังไม่มีข้อมูล Emergency Procedures<br>ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> → กด <b>Import emergency_data.json</b> แล้วเลือกไฟล์ <code>emergency_data.json</code> จากโฟลเดอร์ Project วางแผนการบิน<br><br><span class="hint">ข้อมูลเก็บในเครื่องนี้เท่านั้น</span><button type="button" class="cl-open" data-cl="E-1" style="max-width:420px;margin:18px auto 0">📕 <span><b>Checklist (CL)</b><small>Emergency · หน้า E-1 ถึง E-40</small></span><i>›</i></button></div>`;return}
   if(epSel==null){epHome(M);return}
   const p=EP.procedures[epSel];M.onclick=null;
   const blocks=epFull?p.blocks:epChecklist(p);
@@ -3415,7 +3458,7 @@ $("#epList").addEventListener("click",e=>{const b=e.target.closest(".ep-item");i
 $("#epSearch").addEventListener("input",epRenderList);
 $("#epAll").onclick=()=>{epMemOnly=false;$("#epAll").classList.add("on");$("#epMem").classList.remove("on");epRenderList()};
 $("#epMem").onclick=()=>{epMemOnly=true;$("#epMem").classList.add("on");$("#epAll").classList.remove("on");epRenderList()};
-$("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!Array.isArray(d.procedures))throw 0;
+$("#epImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(d&&d.kind==="vfr-checklist"){clSave(d);e.target.value="";return}if(!Array.isArray(d.procedures))throw 0;
   EP=d;epSel=null;toast(store.set("vfr_ep",d)?`นำเข้า ${d.procedures.length} หัวข้อแล้ว`:"เก็บในเครื่องไม่ได้ ต้อง import ใหม่ทุกครั้ง");epRenderList();epRenderMain();if(typeof qzRender==="function"){qz=null;qzRender()}if(typeof npRenderList==="function"){npSel=null;npRenderList();npRenderMain()}}catch(err){toast("ไฟล์นี้ไม่ใช่ข้อมูล EMER Proc.")}});e.target.value=""};
 let epClearArm=false;$("#epClear").onclick=e=>{if(!epClearArm){epClearArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยัน";setTimeout(()=>{epClearArm=false;e.target.textContent="ลบข้อมูล EMER Proc."},3000);return}
   try{localStorage.removeItem("vfr_ep")}catch(err){}EP=null;epSel=null;epClearArm=false;e.target.textContent="ลบข้อมูล EMER Proc.";epRenderList()};
@@ -3430,7 +3473,7 @@ const QZ_MODES=[
  {id:"ข้อจำกัด",e:"📏",c:"#3b82f6",name:"ข้อจำกัด (Limitations)",desc:"ตัวเลข limit บทที่ 5 + 🖼️ โจทย์รูปหน้าปัด EICAS · ซับซ้อน = อ่านค่าแล้วตัดสิน"},
  {id:"ระบบ",e:"⚙️",c:"#14b8a6",name:"ระบบอากาศยาน",desc:"เครื่องยนต์ เชื้อเพลิง ไฮดรอลิก ไฟฟ้า ฯลฯ"},
  {id:"mix",e:"🎲",c:"#a855f7",name:"รวมทุกหมวด",desc:"สุ่มจากทุกหมวด"}];
-let qzMode="mix",qzN=10,qz=null,qzLvl=+(store.get("vfr_qz_lvl")||1);
+let qzMode="mix",qzN=10,qz=null,qzLvl=0; /* 0 = รวมทุกระดับ (ไม่ให้เลือกความยากแล้ว) */
 /* สถิติ + ข้อที่เคยผิด (เก็บในเครื่อง) */
 function qzWrong(){return store.get("vfr_qz_wrong")||[]}
 function qzKey(q){return q.key||q.q+"|"+q.o[q.a]}
@@ -3479,7 +3522,7 @@ function qzCasSvg(lines,adv){const L=lines.map((t,i)=>`<text x="12" y="${30+i*22
   return`<svg viewBox="0 0 300 ${h}" width="320" role="img" aria-label="CAS ${esc(lines.join(", "))}"><rect width="300" height="${h}" rx="10" fill="#05070b" stroke="#374151"/><text x="288" y="16" fill="#64748b" font-size="9" text-anchor="end" font-family="monospace">MFD · CAS</text>${L}${A}</svg>`}
 function qzMakeCas(){const pool=qzCasPool();if(!pool.length)return null;for(let g=0;g<20;g++){const {p,cl}=pool[Math.floor(Math.random()*pool.length)];const cas=qzCasText(p.title);if(!cas.length)continue;
   const adv=/BACK UP PUMP ON Advisory Appearing/i.test(p.title)?["BACK UP PUMP ON"]:[];const st=cl.filter(b=>b.k==="step");const full=cl.map(b=>b.k==="step"?`${b.n?b.n+". ":"• "}${b.t}`:b.k==="cond"?`[${b.t}]`:"").filter(Boolean).join("\n");
-  if(qzLvl===2){const ap=/AS SOON AS POSSIBLE/i.test(full)?"LAND AS SOON AS POSSIBLE":/AS SOON AS PRACTICABLE/i.test(full)?"LAND AS SOON AS PRACTICABLE":"บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)";
+  if(qzLvl===2||(qzLvl===0&&Math.random()<.4)){const ap=/AS SOON AS POSSIBLE/i.test(full)?"LAND AS SOON AS POSSIBLE":/AS SOON AS PRACTICABLE/i.test(full)?"LAND AS SOON AS PRACTICABLE":"บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)";
     const o=shuf(["LAND AS SOON AS POSSIBLE","LAND AS SOON AS PRACTICABLE","บินต่อได้ (ไม่มีคำสั่งลงจอดใน checklist)","AUTOROTATE ทันที"]);
     return{cat:"EMER Proc. · 🖼️ จอ CAS",lvl:2,img:`<div class="qz-scr">${qzCasSvg(cas,adv)}</div>`,q:"ระหว่างบินเดินทาง ข้อความนี้ขึ้นบนจอ CAS — สุดท้ายแล้วต้องลงจอดแบบใด",o,a:o.indexOf(ap),ex:`${p.id} ${p.title}\n\nขั้นตอนตาม TM:\n${full}\n\nPOSSIBLE = ลงที่ที่เหมาะสมที่ใกล้ที่สุดโดยไม่รอช้า · PRACTICABLE = ลงที่ที่เหมาะสม ตามความเร่งด่วน`,ref:`${EP.source} ${p.id} (หน้า ${p.page}) · ภาพจำลองจากแอป`,key:"img-c2-"+p.id}}
   const right=st[0].t;const others=shuf([...new Set(pool.filter(x=>x.p!==p).map(x=>x.cl.find(b=>b.k==="step").t))].filter(t=>t!==right)).slice(0,3);if(others.length<3)continue;const o=shuf([right,...others]);
@@ -3502,26 +3545,23 @@ function qzImgHtml(v){if(typeof v!=="string"||!v)return"";v=v.trim();let src="";
   else if(/^<svg[\s>]/i.test(v))src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(v);
   return src?`<div class="qz-scr qz-pic"><img src="${src.replace(/"/g,"%22")}" alt="รูปประกอบข้อสอบ"></div>`:""}
 function qzBuild(){const bank=(EP&&EP.quiz)||[];const qs=[];
-  const pick=m=>(m==="ข้อจำกัด"&&Math.random()<.3)?qzMakeTape():(m==="EMER Proc."&&Math.random()<.3)?(qzMakeCas()||null):m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=all.filter(x=>(x.lvl||1)===qzLvl);if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
+  const pick=m=>(m==="ข้อจำกัด"&&Math.random()<.3)?qzMakeTape():(m==="EMER Proc."&&Math.random()<.3)?(qzMakeCas()||null):m==="img"?qzMakeImg():m==="spec"?qzMakeSpec():m==="ep-next"?qzMakeEpNext():m==="ep-id"?qzMakeEpId():(()=>{const all=bank.filter(x=>x.cat===m);let b=qzLvl?all.filter(x=>(x.lvl||1)===qzLvl):all;if(!b.length)b=all;if(!b.length)return null;const x=b[Math.floor(Math.random()*b.length)];
     const order=shuf(x.o.map((_,i)=>i));return{cat:x.cat,lvl:x.lvl||1,img:qzImgHtml(x.img),q:x.q,o:order.map(i=>x.o[i]),a:order.indexOf(x.a),ex:x.ex,ref:/^TM |ข้อ \d/.test(x.ref)?x.ref:`${EP.source} ${x.ref}`,src:x.src,key:x.id}})();
-  const modes=qzMode==="mix"?(qzLvl===2?["EMER Proc.","ข้อจำกัด","EMER Proc.","ข้อจำกัด","ระบบ","ep-next"]:["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ","spec"]):[qzMode];const seen=new Set();let guard=0;
+  const modes=qzMode==="mix"?["EMER Proc.","ep-next","ep-id","ข้อจำกัด","ระบบ","spec","EMER Proc.","ข้อจำกัด"]:[qzMode];const seen=new Set();let guard=0;
   while(qs.length<qzN&&guard++<qzN*30){const q=pick(modes[(qs.length+guard)%modes.length]);if(!q)continue;const k=q.key||q.q+q.o.join();if(seen.has(k))continue;seen.add(k);qs.push(q)}
   return shuf(qs)}
 function qzRender(){const R=$("#qz");
   if(!EP){R.innerHTML=`<div class="ep-empty"><h3 style="color:var(--nav)">ข้อสอบ UH-60M</h3>ต้อง Import ข้อมูลก่อน — ไปที่แท็บ <b>9 คู่มือ/ข้อมูล</b> แล้วกด <b>Import emergency_data.json</b> (ไฟล์ <code>emergency_data.json</code>)</div>`;return}
   if(!qz){const bankN=(EP.quiz||[]).length;
-    const cnt=c=>(EP.quiz||[]).filter(x=>x.cat===c&&(x.lvl||1)===qzLvl).length;
+    const cnt=c=>(EP.quiz||[]).filter(x=>x.cat===c).length;
     R.innerHTML=`<div class="qz-hero"><div><h2>ข้อสอบฝึกซ้อม ${esc(acftName())}</h2><p>คลังข้อสอบ ${bankN} ข้อ + ข้อสอบ EMER สุ่มจาก checklist · เฉลยละเอียดพร้อมอ้างอิง TM</p></div><span class="qz-hero-ic">✈️</span></div>
-     <h3 class="qz-sh">1 · ระดับความยาก</h3>
-     <div class="qz-lvl" role="group" aria-label="ระดับความยาก"><button data-lvl="1" class="${qzLvl===1?"on":""}"><b>😊 ปกติ</b><span>ถามทีละค่า / ทีละขั้น</span></button><button data-lvl="2" class="${qzLvl===2?"on":""}"><b>🔥 ซับซ้อน</b><span>เรียงลำดับ · ข้อใดไม่ใช่ · อ่านหน้าปัด · หลายค่าในข้อเดียว</span></button></div>
-     <h3 class="qz-sh">2 · หมวด</h3>
+     <h3 class="qz-sh">1 · หมวด</h3>
      <div class="qz-modes">${QZ_MODES.map(m=>{const n=/^ep-|mix/.test(m.id)?"":cnt(m.id);return`<button class="qz-mode" data-m="${m.id}" aria-pressed="${m.id===qzMode}" style="--mc:${m.c}"><span class="qz-me">${m.e}</span><b>${m.name}</b><span>${m.desc}</span>${n!==""?`<i class="qz-mn">${n} ข้อ</i>`:""}</button>`}).join("")}</div>
-     <h3 class="qz-sh">3 · จำนวนข้อ</h3>
+     <h3 class="qz-sh">2 · จำนวนข้อ</h3>
      <div class="qz-row"><div class="qz-nseg" role="group" aria-label="จำนวนข้อ">${[10,20,30,50].map(n=>`<button data-n="${n}" class="${n===qzN?"on":""}">${n}</button>`).join("")}</div>
      <button id="qzStart" class="primary qz-go">▶ เริ่มทำข้อสอบ</button>${qzWrong().length?`<button id="qzReview">ทบทวนข้อที่เคยผิด (${qzWrong().length})</button>`:""}</div>${qzStatsHtml()}`;
     R.querySelectorAll(".qz-mode").forEach(b=>b.onclick=()=>{qzMode=b.dataset.m;qzRender()});
     R.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{qzN=+b.dataset.n;qzRender()});
-    R.querySelectorAll("[data-lvl]").forEach(b=>b.onclick=()=>{qzLvl=+b.dataset.lvl;store.set("vfr_qz_lvl",qzLvl);qzRender()});
     const rv=$("#qzReview");if(rv)rv.onclick=()=>{const qs=shuf(qzWrong()).slice(0,qzN).map(x=>({...x,review:true}));qz={qs,i:0,score:0,ans:[]};qzRender()};
     const rs=$("#qzResetStats");if(rs)rs.onclick=()=>{store.set("vfr_qz_stats",{});qzRender()};
     $("#qzStart").onclick=()=>{const qs=qzBuild();if(!qs.length){toast("ไม่มีข้อสอบในหมวดนี้");return}qz={qs,i:0,score:0,ans:[]};qzRender()};return}
@@ -3532,7 +3572,7 @@ function qzRender(){const R=$("#qz");
     $("#qzAgain").onclick=()=>{qz={qs:qzBuild(),i:0,score:0,ans:[]};qzRender()};$("#qzMenu").onclick=()=>{qz=null;qzRender()};return}
   const q=qz.qs[qz.i];
   const ctx=q.ctx&&q.ctx.length?`<div class="qz-ctx">${q.ctx.map(b=>b.k==="cond"?`<div class="c">${esc(b.t)}</div>`:`<div>${b.n?b.n+". ":"• "}${esc(b.t)}</div>`).join("")}</div>`:"";
-  R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)} · ${qzLvl===2?"🔥 ซับซ้อน":"😊 ปกติ"}</span><span class="qz-pill">ข้อ ${qz.i+1}/${qz.qs.length} · ✓ ${qz.score}</span></div>
+  R.innerHTML=`<div class="qz-row" style="justify-content:space-between"><span class="qz-cat">${esc(q.cat)}</span><span class="qz-pill">ข้อ ${qz.i+1}/${qz.qs.length} · ✓ ${qz.score}</span></div>
    <div class="qz-bar"><i style="width:${qz.i/qz.qs.length*100}%"></i></div>
    ${q.img?`<div class="qz-img">${q.img}</div>`:""}<div class="qz-q">${esc(q.q)}</div>${ctx}
    <div class="qz-opts">${q.o.map((t,i)=>`<button class="qz-opt" data-i="${i}"><span class="qz-L">${"ABCD"[i]}</span><span>${esc(t)}</span></button>`).join("")}</div><div id="qzEx"></div>`;
@@ -3736,6 +3776,54 @@ function calcRender(){const box=$("#calcWrap");if(!box)return;const K=["C","(","
 $("#cvWrap").addEventListener("click",e=>{const b=e.target.closest("[data-ck]");if(b){calcKey(b.dataset.ck);return}const h=e.target.closest("[data-ch]");if(h){const x=CALC.hist[+h.dataset.ch];if(x){CALC.ex+=x[1];calcShow()}}});
 $("#cvWrap").addEventListener("input",e=>{if(e.target.id!=="calcEx")return;CALC.ex=e.target.value;let v=null;try{v=calcEval(CALC.ex)}catch(er){}$("#calcRes").textContent=v==null?" ":"= "+(+v.toPrecision(12)).toLocaleString("en-US",{maximumFractionDigits:10});try{localStorage.setItem("vfr_calc",JSON.stringify(CALC))}catch(er){}});
 $("#cvWrap").addEventListener("keydown",e=>{if(e.target.id!=="calcEx")return;if(e.key==="Enter"){e.preventDefault();calcKey("=")}else if(e.key==="Escape"){calcKey("C")}});
+
+/* ---------- Checklist (CL) — ภาพหน้าจากไฟล์ checklist_data.json (เก็บใน IndexedDB ของเครื่อง) ---------- */
+const CLDB={db:null,open(){return this.db||(this.db=new Promise((ok,no)=>{const r=indexedDB.open("vfr_store",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}))},
+  async get(k){const db=await this.open();return new Promise((ok,no)=>{const q=db.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})},
+  async set(k,v){const db=await this.open();return new Promise((ok,no)=>{const t=db.transaction("kv","readwrite");v==null?t.objectStore("kv").delete(k):t.objectStore("kv").put(v,k);t.oncomplete=()=>ok(true);t.onerror=()=>no(t.error)})}};
+let CL=null,clCur=0,clHist=[],clZoom=+(store.get("vfr_cl_zoom")||720),clLoaded=false;
+async function clLoad(){if(clLoaded)return CL;try{CL=await CLDB.get("checklist")||null}catch(e){CL=null}clLoaded=true;clStatus();return CL}
+function clStatus(){const el=$("#dataCl");if(el)el.innerHTML=CL?`Checklist: <b>${esc(CL.title)}</b> (${esc(CL.date||"")}) · ${CL.pages.length} หน้า`:'Checklist: <b style="color:var(--bad)">ยังไม่มี</b> — กด Import แล้วเลือกไฟล์ checklist_data.json'}
+async function clSave(d){if(!d||d.kind!=="vfr-checklist"||!Array.isArray(d.pages)){toast("ไฟล์นี้ไม่ใช่ checklist_data.json");return}
+  try{await CLDB.set("checklist",d);CL=d;clLoaded=true;clStatus();toast(`นำเข้า Checklist ${d.pages.length} หน้าแล้ว`)}catch(e){toast("เก็บ Checklist ในเครื่องไม่ได้ (พื้นที่ไม่พอ?)")}}
+$("#clImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{let d=null;try{d=JSON.parse(t)}catch(er){}clSave(d)});e.target.value=""};
+$("#clClear").onclick=async()=>{if(!CL){toast("ยังไม่มี Checklist");return}await CLDB.set("checklist",null);CL=null;clStatus();toast("ลบ Checklist แล้ว")};
+setTimeout(()=>clLoad(),300);
+function clIdx(id){return CL.pages.findIndex(p=>p.id===id)}
+function clShow(i,ty,flash){const P=CL.pages[i];if(!P)return;clCur=i;try{localStorage.setItem("vfr_cl_last",P.id)}catch(e){}
+  const pg=$("#clPg");pg.style.setProperty("--clw",clZoom+"px");
+  pg.innerHTML=`<img src="${P.img}" alt="Checklist หน้า ${esc(P.id)}" width="${P.w}" height="${P.h}">`+P.links.map(l=>`<a href="#" class="cl-lk" data-to="${esc(l.to)}" data-ty="${l.ty}" title="ดูขั้นตอนละเอียด ${esc(l.to)}" style="left:${l.x*100}%;top:${l.y*100}%;width:${Math.max(0.05,0.985-l.x)*100}%;height:${l.h*100}%"></a>`).join("");
+  $("#clPage").value=P.id;$("#clPrev").disabled=i<=0;$("#clNext").disabled=i>=CL.pages.length-1;
+  const sc=$("#clScroll");requestAnimationFrame(()=>{const img=pg.querySelector("img"),go=()=>{if(ty!=null){const y=img.offsetHeight*ty;sc.scrollTop=Math.max(0,pg.offsetTop+y-60);if(flash){const f=document.createElement("div");f.className="cl-flash";f.style.top=(ty*100-1)+"%";pg.appendChild(f)}}else sc.scrollTop=0};img.complete?go():img.onload=go});
+  document.querySelectorAll("#clList [data-p]").forEach(b=>b.classList.toggle("on",b.dataset.p===P.id));clBackBtn()}
+function clBackBtn(){const b=$("#clBack"),h=clHist.at(-1);b.hidden=!h;if(h)b.textContent="◀ กลับ "+CL.pages[h.i].id}
+function clGo(id,ty,flash){const i=clIdx(id);if(i<0)return;clHist.push({i:clCur,top:$("#clScroll").scrollTop});if(clHist.length>40)clHist.shift();clShow(i,ty,flash)}
+function clList(){const q=$("#clQ").value.trim().toLowerCase(),L=$("#clList");const S=CL.sections||{N:"Normal",E:"Emergency",P:"Detailed / Performance"};let h="",sec="";
+  if(!q){CL.toc.forEach(t=>{const s0=t.p[0];if(s0!==sec){sec=s0;h+=`<h4>${esc(S[s0]||s0)}</h4>`}h+=`<button type="button" data-p="${esc(t.p)}" data-ty="${t.y}"><span>${esc(t.p)}</span>${esc(t.t)}</button>`});}
+  else{const hits=CL.toc.filter(t=>t.t.toLowerCase().includes(q));h+=`<h4>หัวข้อ (${hits.length})</h4>`+hits.map(t=>`<button type="button" data-p="${esc(t.p)}" data-ty="${t.y}"><span>${esc(t.p)}</span>${esc(t.t)}</button>`).join("");
+    const pg=CL.pages.filter(p=>p.text.toLowerCase().includes(q)).slice(0,40);h+=`<h4>พบในหน้า (${pg.length})</h4>`+pg.map(p=>{const k=p.text.toLowerCase().indexOf(q),sn=p.text.slice(Math.max(0,k-30),k+50).replace(/\s+/g," ");return`<button type="button" class="cl-hit" data-p="${esc(p.id)}"><span>${esc(p.id)}</span><div>${esc(p.heads[0]?p.heads[0].t:"")}<small>…${esc(sn)}…</small></div></button>`}).join("")}
+  L.innerHTML=h}
+async function clOpen(id){await clLoad();if(!CL){toast("ยังไม่มี Checklist — Import ไฟล์ checklist_data.json ในแท็บ 9 ก่อน");return}
+  const v=$("#clView");v.hidden=false;document.body.classList.add("cl-on");v.classList.toggle("dark",store.get("vfr_cl_dark")===true);$("#clDark").classList.toggle("on",v.classList.contains("dark"));
+  $("#clPage").innerHTML=["N","E","P"].map(s0=>`<optgroup label="${esc((CL.sections||{})[s0]||s0)}">${CL.pages.filter(p=>p.sec===s0).map(p=>`<option value="${esc(p.id)}">${esc(p.id)}${p.heads[0]?" · "+esc(p.heads[0].t.slice(0,34)):""}</option>`).join("")}</optgroup>`).join("");
+  const side=$("#clSide");side.hidden=innerWidth<900;$("#clToc").classList.toggle("on",!side.hidden);clHist=[];clList();clShow(Math.max(0,clIdx(id)))}
+function clClose(){$("#clView").hidden=true;document.body.classList.remove("cl-on")}
+document.addEventListener("click",e=>{const b=e.target.closest(".cl-open");if(b){e.preventDefault();clOpen(b.dataset.cl)}});
+$("#clClose").onclick=clClose;
+$("#clBack").onclick=()=>{const h=clHist.pop();if(h){clShow(h.i);requestAnimationFrame(()=>requestAnimationFrame(()=>$("#clScroll").scrollTop=h.top))}};
+$("#clPrev").onclick=()=>clShow(clCur-1);$("#clNext").onclick=()=>clShow(clCur+1);
+$("#clPage").onchange=e=>clGo(e.target.value);
+$("#clToc").onclick=()=>{const s0=$("#clSide");s0.hidden=!s0.hidden;$("#clToc").classList.toggle("on",!s0.hidden)};
+$("#clZi").onclick=()=>{clZoom=Math.min(2000,clZoom+120);store.set("vfr_cl_zoom",clZoom);$("#clPg").style.setProperty("--clw",clZoom+"px")};
+$("#clZo").onclick=()=>{clZoom=Math.max(360,clZoom-120);store.set("vfr_cl_zoom",clZoom);$("#clPg").style.setProperty("--clw",clZoom+"px")};
+$("#clDark").onclick=()=>{const v=$("#clView");v.classList.toggle("dark");store.set("vfr_cl_dark",v.classList.contains("dark"));$("#clDark").classList.toggle("on",v.classList.contains("dark"))};
+$("#clQ").addEventListener("input",()=>clList());
+$("#clList").addEventListener("click",e=>{const b=e.target.closest("[data-p]");if(!b)return;clGo(b.dataset.p,b.dataset.ty!=null?+b.dataset.ty:null,b.dataset.ty!=null);if(innerWidth<900){$("#clSide").hidden=true;$("#clToc").classList.remove("on")}});
+$("#clPg").addEventListener("click",e=>{const a=e.target.closest(".cl-lk");if(!a)return;e.preventDefault();clGo(a.dataset.to,+a.dataset.ty,true)});
+document.addEventListener("keydown",e=>{if($("#clView").hidden)return;const a=document.activeElement;if(a&&/INPUT|SELECT/.test(a.tagName))return;
+  if(e.key==="Escape")clClose();else if(e.key==="ArrowRight")clShow(clCur+1);else if(e.key==="ArrowLeft")clShow(clCur-1);else if(e.key==="Backspace"&&clHist.length){e.preventDefault();$("#clBack").click()}});
+{let sx=null,sy=null;const sc=$("#clScroll");sc.addEventListener("touchstart",e=>{if(e.touches.length!==1){sx=null;return}sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+ sc.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)*2&&sc.scrollWidth<=sc.clientWidth+4)clShow(clCur+(dx<0?1:-1))},{passive:true})}
 
 /* ---------- tabs ---------- */
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));
