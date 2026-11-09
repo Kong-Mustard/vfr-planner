@@ -1,0 +1,55 @@
+# ดึงแนวสายส่งไฟฟ้าแรงสูง (power=line) ในไทยจาก OpenStreetMap ผ่าน Overpass เดือนละครั้ง → power_data.json
+# ข้อมูล © OpenStreetMap contributors (ODbL) — ไม่ครบทุกพื้นที่ โดยเฉพาะป่า/ภูเขา และสาย 22–33 kV ส่วนใหญ่ไม่มี
+name: Update power lines (OSM)
+on:
+  schedule:
+    - cron: "23 2 3 * *"
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/power.yml]
+permissions:
+  contents: write
+concurrency: { group: data-commit, cancel-in-progress: false }
+jobs:
+  power:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch OSM power lines
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request, urllib.parse, datetime, re, time
+          Q = """[out:json][timeout:600];
+          area["ISO3166-1"="TH"][admin_level=2]->.th;
+          way["power"="line"](area.th);
+          out tags geom qt;"""
+          data = None
+          for url in ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]:
+              try:
+                  req = urllib.request.Request(url, data=urllib.parse.urlencode({"data": Q}).encode(), headers={"User-Agent": "vfr-planner (github actions)"})
+                  with urllib.request.urlopen(req, timeout=900) as r:
+                      data = json.load(r); print("ok", url); break
+              except Exception as e:
+                  print("fail", url, e); time.sleep(20)
+          if not data: raise SystemExit("overpass failed")
+          def kv(t):
+              v = str(t.get("voltage", "")); n = [int(x) for x in re.findall(r"\d{4,7}", v)]
+              return round(max(n) / 1000) if n else None
+          lines = []
+          for w in data["elements"]:
+              g = w.get("geometry") or []
+              if len(g) < 2: continue
+              t = w.get("tags", {})
+              lines.append({"v": kv(t), "n": (t.get("name") or t.get("ref") or "")[:40], "o": (t.get("operator") or "")[:20],
+                            "c": [[round(p["lat"], 5), round(p["lon"], 5)] for p in g]})
+          out = {"fetched": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"), "source": "OpenStreetMap contributors (ODbL) via Overpass",
+                 "note": "power=line เท่านั้น · ไม่ครบทุกพื้นที่ · ไม่มีความสูงเสา", "lines": lines}
+          json.dump(out, open("power_data.json", "w"), separators=(",", ":"))
+          print(len(lines), "lines,", sum(len(l["c"]) for l in lines), "vertices")
+          PY
+      - name: Commit
+        run: |
+          git config user.name "eaip-bot"; git config user.email "eaip-bot@users.noreply.github.com"
+          git add power_data.json
+          git diff --cached --quiet || git commit -m "อัปเดตแนวสายส่งไฟฟ้า (OSM)"
+          git pull --rebase -X theirs; git push

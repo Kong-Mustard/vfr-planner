@@ -9,6 +9,7 @@ plans/
 !eaip_data.json
 !metar.json
 !notam.json
+!power_data.json
 __pycache__/
 
 # ข้อมูล Emergency จากคู่มือ (export controlled) — ห้ามขึ้น GitHub
