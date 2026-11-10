@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-10T21:08Z",
+"fetched": "2026-11-10T22:02Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -954,15 +954,6 @@
 "plain": " ",
 "start": "11/10/2026 1900",
 "end": "11/10/2026 2300",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4480/26",
-"icao": "A4480/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611102000 C) 2611102200\r\nE) TWY E BTN TWY D6 AND TWY D7 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/10/2026 2000",
-"end": "11/10/2026 2200",
 "keyword": "INTERNATIONAL"
 },
 {
