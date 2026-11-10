@@ -180,6 +180,22 @@ def parse_ad2(icao, html, url=""):
                 m = re.search(r"(-?\d+(?:\.\d+)?)\s*FT", line, re.I)
                 if m:
                     ap["elev_ft"] = float(m.group(1))
+    # AD 2.3 ข้อ 12 Remarks → เบอร์โทร ARO / Briefing (ใช้โทรเปิดแผนการบิน)
+    for tb in sec.get("2.3", []):
+        for r in rows(tb):
+            if len(r) >= 2 and any(c.strip().lower().startswith("remark") for c in r[:2]):
+                txt = r[-1].strip()
+                if not txt or txt.upper() in ("NIL", "-"):
+                    continue
+                ph = []
+                for m in re.finditer(r"(Tel(?:ephone)?|Mobile|Mob|Phone|Fax|Hotline)\.?\s*(?:No\.?)?\s*:?\s*((?:\+?\d[\d\s\-()]{6,}\d)(?:\s*(?:,|/|or)\s*\+?\d[\d\s\-()]{6,}\d)*)", txt, re.I):
+                    kind = m.group(1).capitalize().replace("Mob", "Mobile").replace("Mobileile", "Mobile")
+                    for n in re.split(r"\s*(?:,|/|\bor\b)\s*", m.group(2)):
+                        n = re.sub(r"\s+", " ", n).strip()
+                        if len(re.sub(r"\D", "", n)) >= 8:
+                            ph.append({"t": kind, "n": n})
+                ap["rmk23"] = {"text": txt[:600], "phones": ph}
+                break
     # AD 2.12 runway
     for tb in sec.get("2.12", []):
         for r in rows(tb):

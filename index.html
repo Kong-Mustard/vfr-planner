@@ -1228,6 +1228,9 @@ body.cl-on{overflow:hidden}
  body.mapfull #map .leaflet-top{top:calc(env(safe-area-inset-top,0px) + 22px)}
  #mfWp{top:calc(env(safe-area-inset-top,0px) + 26px)}
 }
+.fcard .r.aro b{color:#16a34a}.fcard .r.aro a{color:var(--accent);font-weight:800;text-decoration:none;font-family:var(--f-mono)}.fcard .r.aro i{font-style:normal;font-size:12px;color:var(--muted)}
+/* Checklist: ปุ่มใหญ่ขึ้นบนจอสัมผัส + เว้นจากแถบสถานะ */
+@media (pointer:coarse){.cl-bar{gap:8px;padding:calc(env(safe-area-inset-top,0px) + 26px) 14px 12px!important}.cl-bar button{min-height:50px;min-width:50px;font-size:18px;border-radius:12px}.cl-bar select{min-height:50px!important;font-size:17px!important}.cl-scroll{padding-top:20px}}
 </style>
 </head>
 <body>
@@ -1810,10 +1813,12 @@ function renderFreq(){
   $("#freqList").innerHTML=list.map(a=>{const e=a.eaip;
     const comm=e?e.comm.map(c=>`<div class="r"><b>${esc(c.svc)}</b><span>${esc(c.freq)}${typeof psTags==="function"?psTags(c.freq,a.id):""}${c.callsign?`<br><small>${esc(c.callsign)}</small>`:""}</span></div>`).join(""):"";
     const nav=e?e.navaids.map(n=>`<div class="r"><b>${esc(n.type)}</b><span>${esc(n.id)} ${esc(n.freq)}${typeof psTags==="function"?psTags(n.freq,a.id):""}</span></div>`).join(""):"";
+    const R3=e&&e.rmk23,ph=R3&&R3.phones&&R3.phones.length?R3.phones:null,lab=R3?(/\bARO\b|Reporting Office/i.test(R3.text)?"ARO":/Briefing|AIS/i.test(R3.text)?"Briefing":"โทร"):"";
+    const tel=ph?`<div class="r aro"><b>📞 ${lab}</b><span>${ph.map(p=>/fax/i.test(p.t)?`<i>Fax ${esc(p.n)}</i>`:`<a href="tel:${esc(p.n.replace(/[^\d+]/g,""))}">${esc(p.n)}</a>${/mobile/i.test(p.t)?" <i>(มือถือ)</i>":""}`).join("<br>")}</span></div>`:"";
     const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.custom?e.rwy.join(", "):rwyPairs(e.rwy))}</span></div>`:"";
     const tag=e&&e.custom?`<span class="ctag">กรอกเอง</span>`:"";
     const add=!e||e.custom?`<button class="mini" data-cedit="${esc(a.id)}">${e?"แก้ไข":"กรอกข้อมูล"}</button>`:"";
-    return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}<span class="dx">${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</span></small></h3>${rw}${comm}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
+    return`<div class="fcard${e&&e.custom?" custom":""}"><h3>${esc(a.id)} ${tag}<small>${esc(a.name)}<span class="dx">${a.elev!==""&&a.elev!=null?` · ${Math.round(a.elev)} ft`:""} · ห่างเส้นทาง ${a.off.toFixed(1)} NM</span></small></h3>${rw}${comm}${tel}${nav}${!e?`<div class="r"><span class="hint">ไม่มีใน eAIP (อาจเป็นสนามทหาร)</span></div>`:""}${add?`<div class="r" style="justify-content:flex-end">${add}</div>`:""}</div>`}).join("");
   $("#custCount").textContent=Object.keys(custAll()).length;
 }
 function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";return}
