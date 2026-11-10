@@ -573,6 +573,22 @@ tr.rprow td:first-child{box-shadow:inset 4px 0 0 #ffd400}
 .ct-lock{border-left:4px solid #0ea5e9;padding-left:8px}
 .ct-pv{border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin-bottom:8px}.ct-pv h4{margin:2px 0 6px;font:800 15px var(--f-display)}
 .ct-r{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:4px 0;border-top:1px dashed var(--line)}.ct-r:first-of-type{border-top:0}.ct-r .ct-tel a{font-weight:700}.ct-r small{flex-basis:100%}
+.ppc{--pd:#e0f2fe;--pdb:#0284c7;--ps:#ffedd5;--psb:#ea580c;--pw:#dcfce7;--pwb:#16a34a;--pg:#f3e8ff;--pgb:#9333ea;--pf:#fef9c3;--pfb:#ca8a04;--pz:rgba(100,116,139,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .ppc{--pd:#0c2a3f;--pdb:#38bdf8;--ps:#3a1f0d;--psb:#fb923c;--pw:#0d2e1a;--pwb:#4ade80;--pg:#2a1640;--pgb:#c084fc;--pf:#332b07;--pfb:#facc15;--pz:rgba(255,255,255,.04)}}
+:root[data-theme=dark] .ppc{--pd:#0c2a3f;--pdb:#38bdf8;--ps:#3a1f0d;--psb:#fb923c;--pw:#0d2e1a;--pwb:#4ade80;--pg:#2a1640;--pgb:#c084fc;--pf:#332b07;--pfb:#facc15;--pz:rgba(255,255,255,.04)}
+.ppc tbody tr:nth-child(even){background:var(--pz)}
+.ppc td.d input.ppc-in{background:var(--pd);border:1.5px solid var(--pdb)}.ppc td.s input.ppc-in{background:var(--ps);border:1.5px solid var(--psb)}
+.ppc td.w input.ppc-in{background:var(--pw);border:1.5px solid var(--pwb)}.ppc td.g input.ppc-in{background:var(--pg);border:1.5px solid var(--pgb)}
+.ppc-fpm input.ppc-in,.ppc-meta input.ppc-in,.ppc-rmk textarea{background:var(--pf)!important;border:1.5px solid var(--pfb)!important}
+.ppc thead th.hd-d{color:var(--pdb)}.ppc thead th.hd-s{color:var(--psb)}
+.ppc input.ppc-in:focus{outline:3px solid var(--accent);outline-offset:1px}
+.ppc-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin:8px 18px 4px}.ppc-legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:4px;border:1.5px solid}
+dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
+.off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
+.off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
+.off-est{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:6px}.off-big{font:700 18px var(--f-display);margin-bottom:4px}.off-est .warn{color:var(--warn);margin:6px 0 0}.off-est .bad{margin:6px 0 0}
+.off-prog{margin-top:10px}.off-track{height:12px;border-radius:6px;background:var(--line);overflow:hidden}#offBar{height:100%;width:0;background:var(--accent);transition:width .3s}
+.off-ctl a{width:auto!important;padding:0 8px;font-weight:800;display:flex!important;align-items:center;gap:4px}.off-ctl small{font-size:11px}
 dialog.ppc{border:0;border-radius:18px;padding:0;width:min(1240px,97vw);max-height:94vh;box-shadow:var(--shadow);background:var(--panel);color:var(--ink);display:none;flex-direction:column}dialog.ppc[open]{display:flex}
 dialog.ppc::backdrop{background:rgba(0,0,0,.45)}
 .ppc-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 18px 8px;border-bottom:1px solid var(--line)}.ppc-head h2{margin:0;font:800 19px var(--f-display)}.ppc-head .btns{margin-left:auto;display:flex;gap:8px}
@@ -1253,7 +1269,7 @@ body.cl-on{overflow:hidden}
  body.mapfull #map .leaflet-top{top:calc(env(safe-area-inset-top,0px) + 22px)}
  #mfWp{top:calc(env(safe-area-inset-top,0px) + 26px)}
 }
-.fcard .r.aro b{color:#16a34a}.fcard .r.aro a{color:var(--accent);font-weight:800;text-decoration:none;font-family:var(--f-mono)}.fcard .r.aro i{font-style:normal;font-size:12px;color:var(--muted)}
+.fcard .r.aro b{color:#16a34a}.fcard .r.aro a{color:var(--accent);font-weight:800;text-decoration:none;font-family:var(--f-mono)}.fcard .r.aro i{font-style:normal;font-size:12px;color:var(--muted)}.fcard .r.aro .aro-t{font-size:13px;line-height:1.45;text-align:left;white-space:normal;overflow-wrap:anywhere}.fcard .r.aro .aro-t u{text-decoration:none;font-weight:700;color:var(--muted)}
 /* Checklist: ปุ่มใหญ่ขึ้นบนจอสัมผัส + เว้นจากแถบสถานะ */
 @media (pointer:coarse){.cl-bar{gap:8px;padding:calc(env(safe-area-inset-top,0px) + 26px) 14px 12px!important}.cl-bar button{min-height:50px;min-width:50px;font-size:18px;border-radius:12px}.cl-bar select{min-height:50px!important;font-size:17px!important}.cl-scroll{padding-top:20px}}
 </style>
@@ -1716,10 +1732,26 @@ body.cl-on{overflow:hidden}
 </section>
 
 </main>
+<dialog id="offDlg" class="kb off" aria-labelledby="offTitle">
+  <div class="kb-head"><h2 id="offTitle">⬇ แผนที่ออฟไลน์ตามเส้นทาง</h2></div>
+  <div class="kb-body">
+    <p class="hint">โหลดภาพแผนที่ตามแนวเส้นทางในแท็บ 1 เก็บไว้ในเครื่อง ใช้ได้ตอนบินไม่มีเน็ต · ระดับซูมยิ่งสูงภาพยิ่งชัด แต่ไฟล์ใหญ่ขึ้นเกือบ 4 เท่าต่อระดับ</p>
+    <div id="offOpts" class="off-opts">
+      <fieldset><legend>ชนิดแผนที่</legend><label><input type="checkbox" data-offsrc="sat" checked> ดาวเทียม (Esri)</label><label><input type="checkbox" data-offsrc="topo"> ภูมิประเทศ (OpenTopoMap)</label></fieldset>
+      <label>ความกว้างแนว (ข้างละ)<select id="offNm"><option value="2">2 NM</option><option value="5" selected>5 NM</option><option value="10">10 NM</option><option value="20">20 NM</option></select></label>
+      <label>ซูมสูงสุด<select id="offZ"><option value="11">11 · ภาพรวม (~75 ม./จุด)</option><option value="12">12 (~38 ม./จุด)</option><option value="13">13 (~19 ม./จุด)</option><option value="14" selected>14 · แนะนำ (~10 ม./จุด)</option><option value="15">15 (~5 ม./จุด)</option><option value="16">16 · ละเอียด (~2.4 ม./จุด)</option></select></label>
+    </div>
+    <div id="offEst" class="off-est"></div>
+    <div id="offProg" class="off-prog" hidden><div class="off-track"><div id="offBar"></div></div><span id="offTxt" class="hint"></span></div>
+  </div>
+  <div class="kb-foot"><button id="offDel" class="mini">🗑 ลบที่เก็บไว้</button>
+    <div class="btns"><button id="offClose">ปิด</button><button id="offStop" hidden>⏹ หยุด</button><button id="offGo" class="primary">⬇ เริ่มโหลด</button></div></div>
+</dialog>
 <dialog id="ppcDlg" class="ppc" aria-labelledby="ppcTitle">
   <div class="ppc-head"><h2 id="ppcTitle">H-60 Performance Planning Card</h2><span class="hint">กรอกตามผล IPAC · เก็บในเครื่องนี้เท่านั้น</span>
     <div class="btns"><button id="ppcClear" class="mini" type="button">ล้าง</button><button id="ppcPdfBtn" class="primary" type="button">📄 PDF (A4)</button><button id="ppcClose" type="button" aria-label="ปิด">✕</button></div></div>
   <div id="ppcTabs" class="seg ppc-tabs" role="group" aria-label="ช่วงการบิน"></div>
+  <div class="ppc-legend"><span><i style="background:var(--pw);border-color:var(--pwb)"></i>น้ำหนัก</span><span><i style="background:var(--pg);border-color:var(--pgb)"></i>Drag / Download</span><span><i style="background:var(--pf);border-color:var(--pfb)"></i>FPM / ตั้งค่า</span><span><i style="background:var(--pd);border-color:var(--pdb)"></i>Dual-Engine</span><span><i style="background:var(--ps);border-color:var(--psb)"></i>Single-Engine</span></div>
   <div id="ppcBody" class="ppc-body"></div>
 </dialog>
 <dialog id="kbDlg" class="kb" aria-labelledby="kbTitle">
@@ -1857,7 +1889,9 @@ function renderFreq(){
     const comm=e?e.comm.map(c=>`<div class="r"><b>${esc(c.svc)}</b><span>${esc(c.freq)}${typeof psTags==="function"?psTags(c.freq,a.id):""}${c.callsign?`<br><small>${esc(c.callsign)}</small>`:""}</span></div>`).join(""):"";
     const nav=e?e.navaids.map(n=>`<div class="r"><b>${esc(n.type)}</b><span>${esc(n.id)} ${esc(n.freq)}${typeof psTags==="function"?psTags(n.freq,a.id):""}</span></div>`).join(""):"";
     const R3=e&&e.rmk23,ph=R3&&R3.phones&&R3.phones.length?R3.phones:null,lab=R3?(/\bARO\b|Reporting Office/i.test(R3.text)?"ARO":/Briefing|AIS/i.test(R3.text)?"Briefing":"โทร"):"";
-    const tel=ph?`<div class="r aro"><b>📞 ${lab}</b><span>${ph.map(p=>/fax/i.test(p.t)?`<i>Fax ${esc(p.n)}</i>`:`<a href="tel:${esc(p.n.replace(/[^\d+]/g,""))}">${esc(p.n)}</a>${/mobile/i.test(p.t)?" <i>(มือถือ)</i>":""}`).join("<br>")}</span></div>`:"";
+    let rt=R3&&R3.text?esc(R3.text).replace(/\[email\s*protected\]/gi,"(ดูใน eAIP)").replace(/(^|\s)((?:Tel(?:ephone)?|Mobile|Mob|Phone|Fax|Hotline|AFTN|E-?mail)\b\.?\s*:?)/gi,"<br><u>$2</u> ").replace(/^<br>/,""):"";
+    if(ph)ph.filter(p=>!/fax/i.test(p.t)).forEach(p=>{const n=esc(p.n);rt=rt.split(n).join(`<a href="tel:${esc(p.n.replace(/[^\d+]/g,""))}">${n}</a>`)});
+    const tel=rt?`<div class="r aro"><b>📞 ${lab}</b><span class="aro-t">${rt}</span></div>`:"";
     const rw=e&&e.rwy.length?`<div class="r"><b>RW</b><span>${esc(e.custom?e.rwy.join(", "):rwyPairs(e.rwy))}</span></div>`:"";
     const tag=e&&e.custom?`<span class="ctag">กรอกเอง</span>`:"";
     const add=!e||e.custom?`<button class="mini" data-cedit="${esc(a.id)}">${e?"แก้ไข":"กรอกข้อมูล"}</button>`:"";
@@ -1895,7 +1929,7 @@ function syncLegs(){const need=Math.max(0,state.wps.length-1);while(state.legs.l
 /* ---------- map ---------- */
 const map=L.map("map",{zoomControl:false}).setView([14.95,100.63],10);
 L.control.zoom({position:"topright"}).addTo(map);
-const sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagery © Esri"});
+const sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18,attribution:"Imagery © Esri"});
 const topo=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{maxZoom:17,attribution:"© OpenTopoMap © OSM"});
 const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"});
 const labels=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19});
@@ -4552,13 +4586,13 @@ function ppcRender(){const o=ppcLoad(),b=$("#ppcBody");if(!b)return;
       <label>IPAC Version<input class="ppc-in" data-s="meta" data-k="ver" type="text" value="${esc(o.meta.ver||"")}" placeholder="2.4.0.15"></label></div></div>
       <div class="ppc-sec"><h3>Aircraft Configuration</h3><div class="ppc-fpm">${PPC_CFG.map(([k,l,list,d])=>`<label>${l}<input class="ppc-in" data-s="cfg" data-k="${k}" type="text" list="ppcl-c${k}" value="${esc(o.cfg[k]??d)}">${ppcOpts("c"+k,list)}</label>`).join("")}</div></div>`;return}
   const ph=ppcTab,isA=ph.startsWith("arr"),c=ppcCalc(o,ph),out=PPC_OUT[isA?"arr":ph],O=o.ph[ph].out;
-  const wt=PPC_WT.map(([k,l,dr])=>`<tr><th>${l}</th><td>${ppcField(ph,"in","w_"+k,ppcIn(o,ph,"w_"+k),"n")}</td>${dr?`<td>${ppcField(ph,"in","d_"+k,ppcIn(o,ph,"d_"+k),"n")}</td><td>${ppcField(ph,"in","dl_"+k,ppcIn(o,ph,"dl_"+k),"n")}</td>`:"<td></td><td></td>"}</tr>`).join("");
+  const wt=PPC_WT.map(([k,l,dr])=>`<tr><th>${l}</th><td class="w">${ppcField(ph,"in","w_"+k,ppcIn(o,ph,"w_"+k),"n")}</td>${dr?`<td class="g">${ppcField(ph,"in","d_"+k,ppcIn(o,ph,"d_"+k),"n")}</td><td class="g">${ppcField(ph,"in","dl_"+k,ppcIn(o,ph,"dl_"+k),"n")}</td>`:"<td></td><td></td>"}</tr>`).join("");
   const fpm=PPC_FPM.map(([k,l,list])=>`<label>${l}<input class="ppc-in" data-ph="${ph}" data-s="in" data-k="${k}" type="text" list="ppcl-${k}" value="${esc(ppcIn(o,ph,k))}">${ppcOpts(k,list)}</label>`).join("")
     +(ph!=="crs"?`<label>Hover Height (IGE) ft${ppcField(ph,"in","hige",ppcIn(o,ph,"hige"))}</label>`:`<label>Temperature Lapse Rate<input class="ppc-in" data-ph="${ph}" data-s="in" data-k="lapse" type="text" list="ppcl-lapse" value="${esc(ppcIn(o,ph,"lapse"))}">${ppcOpts("lapse","lapse")}</label>
       <label>Fuel Flow Factor / Increase (pph)<span class="ppc-2">${ppcField(ph,"in","fff",ppcIn(o,ph,"fff"))}${ppcField(ph,"in","ffi",ppcIn(o,ph,"ffi"))}</span></label>`)
     +`<label>Torque Required Factor / Increase (%Q)<span class="ppc-2">${ppcField(ph,"in","tqrf",ppcIn(o,ph,"tqrf"))}${ppcField(ph,"in","tqri",ppcIn(o,ph,"tqri"))}</span></label>
       <label>Torque Available Factor / Decrease (%Q)<span class="ppc-2">${ppcField(ph,"in","tqaf",ppcIn(o,ph,"tqaf"))}${ppcField(ph,"in","tqad",ppcIn(o,ph,"tqad"))}</span></label>`;
-  const rows=out.map(([l,d,s,u])=>`<tr><th>${l}</th><td><span class="ppc-c${d.length}">${d.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td><span class="ppc-c${s.length}">${s.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td class="u">${u}</td></tr>`).join("");
+  const rows=out.map(([l,d,s,u])=>`<tr><th>${l}</th><td class="d"><span class="ppc-c${d.length}">${d.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td class="s"><span class="ppc-c${s.length}">${s.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td class="u">${u}</td></tr>`).join("");
   b.innerHTML=`<div class="ppc-grid"><div>
     <div class="ppc-sec"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} Inputs ${ph!=="dep"?`<button class="mini" data-ppccopy="${ph}" type="button">คัดลอกจาก DEP</button>`:""}</h3>
       <div class="tablewrap"><table class="ppc-wt"><thead><tr><th></th><th>Weight (lb)</th><th>Drag (sq ft)</th><th>Download (T/W)</th></tr></thead><tbody>
@@ -4567,7 +4601,7 @@ function ppcRender(){const o=ppcLoad(),b=$("#ppcBody");if(!b)return;
     <div class="ppc-sec"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} FPM Inputs</h3><div class="ppc-fpm">${fpm}</div></div></div>
     <div class="ppc-sec ppc-out"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} PPC Data <span class="hint">กรอกตามผลจาก IPAC</span>
       <button class="mini" data-ppcauto="${ph}" type="button" title="ประมาณ PA จาก elevation+QNH และ FAT จาก METAR ของแผน — ใช้ค่าจาก IPAC เป็นหลัก">⤵ PA/FAT จากแผน</button></h3>
-      <div class="tablewrap"><table class="ppc-o"><thead><tr><th></th><th>Dual-Engine</th><th>Single-Engine #1 / #2</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="tablewrap"><table class="ppc-o"><thead><tr><th></th><th class="hd-d">Dual-Engine</th><th class="hd-s">Single-Engine #1 / #2</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
       ${ph==="dep"?`<label class="ppc-rmk">Remarks<textarea class="ppc-in" data-ph="dep" data-s="out" data-k="rmk" rows="2">${esc(O.rmk||"")}</textarea></label>`:""}</div></div>`}
 function ppcOpen(){const d=$("#ppcDlg");if(!d)return;const o=ppcLoad();
   /* ค่าเริ่มต้นจากแผน (เฉพาะช่องที่ยังว่าง): น้ำมันเริ่มต้น */
@@ -4720,6 +4754,52 @@ function ctExport(){const A=ctLoad();if(!A.length){toast("ยังไม่ม�
   $("#ctClear").onclick=()=>{if(!ctLoad().length)return;if(!confirm("ลบผู้ติดต่อทั้งหมดในเครื่องนี้?"))return;try{localStorage.removeItem("vfr_contacts")}catch(e){}ctRender()};
   $("#ctTpl").onclick=async()=>{try{const b=await(await fetch("contacts_template.xlsx")).blob(),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="contacts_template.xlsx";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){toast("ดาวน์โหลดไม่ได้ (ต้องต่อเน็ต)")}};
   ctRender()})();
+/* ---------- แผนที่ออฟไลน์ตามแนวเส้นทาง — โหลดภาพแผนที่เก็บใน cache "vfr-offline" (ไม่ถูกลบอัตโนมัติ) ---------- */
+const OFF_SRC={sat:{n:"ดาวเทียม (Esri)",u:"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",max:18,kb:22},
+  topo:{n:"ภูมิประเทศ (OpenTopoMap)",u:"https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",max:17,kb:26,sub:"abc"}};
+let OFF_RUN=null;
+function offUrl(k,z,x,y){const S=OFF_SRC[k];return S.u.replace("{s}",S.sub?S.sub[Math.abs(x+y)%S.sub.length]:"").replace("{z}",z).replace("{x}",x).replace("{y}",y)}
+/* รายการภาพตามแนวเส้นทาง: สุ่มจุดทุก ~1 NM แล้วเก็บภาพที่อยู่ในรัศมี nm */
+function offTiles(nm,zMax){const W=(state.wps||[]).filter(w=>w.lat!=null),pts=[];
+  for(let i=0;i<W.length;i++){const a=W[i],b=W[i+1]||a,d=b===a?0:Math.max(1,Math.ceil(Math.hypot(b.lat-a.lat,(b.lon-a.lon)*Math.cos(a.lat*Math.PI/180))*60));
+    for(let k=0;k<=d;k++){const t=d?k/d:0;pts.push([a.lat+(b.lat-a.lat)*t,a.lon+(b.lon-a.lon)*t])}}
+  const out=[];for(let z=6;z<=zMax;z++){const n=2**z,set=new Set();
+    pts.forEach(([la,lo])=>{const x=(lo+180)/360*n,s=Math.sin(la*Math.PI/180),y=(.5-Math.log((1+s)/(1-s))/(4*Math.PI))*n,
+      r=nm*1852/(40075016*Math.cos(la*Math.PI/180)/n),R=Math.ceil(r)+1;
+      for(let dx=-R;dx<=R;dx++)for(let dy=-R;dy<=R;dy++){const tx=Math.floor(x)+dx,ty=Math.floor(y)+dy;
+        const cx=Math.max(tx,Math.min(x,tx+1)),cy=Math.max(ty,Math.min(y,ty+1));if(Math.hypot(cx-x,cy-y)<=r&&tx>=0&&ty>=0&&tx<n&&ty<n)set.add(tx+","+ty)}});
+    set.forEach(s=>{const[x,y]=s.split(",").map(Number);out.push([z,x,y])})}return out}
+const offMB=b=>b>=1024?(b/1024).toFixed(1)+" GB":Math.round(b)+" MB";
+async function offStat(){let n=0;try{n=(await(await caches.open("vfr-offline")).keys()).length}catch(e){}let est=null;try{est=navigator.storage&&await navigator.storage.estimate()}catch(e){}return{n,est}}
+async function offCalc(){const nm=+$("#offNm").value,z=+$("#offZ").value,ks=[...document.querySelectorAll("[data-offsrc]:checked")].map(c=>c.dataset.offsrc);
+  if(!(state.wps||[]).length){$("#offEst").innerHTML='<b class="bad">ยังไม่มีเส้นทางในแท็บ 1</b>';$("#offGo").disabled=true;return null}
+  const T=offTiles(nm,z);let cnt=0,mb=0;const by=ks.map(k=>{const t=T.filter(([zz])=>zz<=OFF_SRC[k].max);cnt+=t.length;const m=t.length*OFF_SRC[k].kb/1024;mb+=m;return`${OFF_SRC[k].n}: ${t.length.toLocaleString()} ภาพ ≈ ${offMB(m)}`});
+  const {n,est}=await offStat(),free=est&&est.quota?(est.quota-est.usage)/1048576:null,big=mb>300,over=free!=null&&mb>free*.8;
+  $("#offEst").innerHTML=`<div class="off-big">≈ <b>${offMB(mb)}</b> · ${cnt.toLocaleString()} ภาพ</div><div class="hint">${by.join("<br>")||"เลือกชนิดแผนที่อย่างน้อย 1 ชนิด"}</div>
+    <div class="hint">พื้นที่ว่างในเครื่องสำหรับแอป: ${free!=null?offMB(free):"ไม่ทราบ"} · เก็บไว้แล้ว ${n.toLocaleString()} ภาพ</div>
+    ${over?'<p class="bad"><b>⚠ พื้นที่ไม่พอ</b> — ลดระดับซูมหรือความกว้างแนว</p>':big?'<p class="warn">⚠ ไฟล์ใหญ่ ใช้เวลานาน ควรใช้ Wi-Fi และเสียบสายชาร์จ</p>':'<p class="hint">💡 แนะนำโหลดผ่าน Wi-Fi ก่อนออกบิน</p>'}`;
+  $("#offGo").disabled=!cnt||over||cnt>40000;if(cnt>40000)$("#offEst").insertAdjacentHTML("beforeend",'<p class="bad">เกิน 40,000 ภาพ — ลดระดับซูมลง</p>');
+  return{T,ks,cnt,mb}}
+async function offStart(){const r=await offCalc();if(!r||!r.cnt)return;
+  if(!confirm(`จะโหลดแผนที่ประมาณ ${offMB(r.mb)} (${r.cnt.toLocaleString()} ภาพ)\nใช้อินเทอร์เน็ตตามขนาดนี้ — ควรใช้ Wi-Fi\n\nเริ่มโหลด?`))return;
+  try{navigator.storage&&navigator.storage.persist&&await navigator.storage.persist()}catch(e){}
+  const c=await caches.open("vfr-offline"),jobs=[];r.ks.forEach(k=>r.T.forEach(([z,x,y])=>{if(z<=OFF_SRC[k].max)jobs.push(offUrl(k,z,x,y))}));
+  const run=OFF_RUN={stop:false,done:0,fail:0,skip:0,n:jobs.length};$("#offGo").hidden=true;$("#offStop").hidden=false;$("#offProg").hidden=false;
+  const tick=()=>{const p=(run.done+run.fail+run.skip)/run.n;$("#offBar").style.width=(p*100).toFixed(1)+"%";$("#offTxt").textContent=`${(run.done+run.skip).toLocaleString()} / ${run.n.toLocaleString()} ภาพ${run.fail?` · ล้มเหลว ${run.fail}`:""}`};
+  let i=0;const worker=async()=>{while(!run.stop&&i<jobs.length){const u=jobs[i++];
+    try{if(await c.match(u)){run.skip++;continue}const res=await fetch(u+(u.includes("?")?"&":"?")+"vfroff=1",{mode:"cors",credentials:"omit"});
+      if(res.ok){await c.put(u,res);run.done++}else run.fail++}catch(e){run.fail++;if(e&&e.name==="QuotaExceededError"){run.stop=true;toast("พื้นที่เก็บเต็ม — หยุดโหลด")}}
+    if((run.done+run.fail+run.skip)%20===0)tick()}};
+  await Promise.all(Array.from({length:6},worker));tick();OFF_RUN=null;$("#offGo").hidden=false;$("#offStop").hidden=true;
+  toast(run.stop?"หยุดโหลดแล้ว":`โหลดแผนที่ออฟไลน์เสร็จ ${(run.done+run.skip).toLocaleString()} ภาพ`+(run.fail?` (ล้มเหลว ${run.fail})`:""));offCalc()}
+function offOpen(){const d=$("#offDlg");d.showModal();if(!OFF_RUN){$("#offProg").hidden=true;$("#offGo").hidden=false;$("#offStop").hidden=true}offCalc()}
+(function offInit(){const d=$("#offDlg");if(!d)return;
+  d.addEventListener("change",e=>{if(e.target.closest("#offOpts"))offCalc()});
+  $("#offGo").onclick=offStart;$("#offStop").onclick=()=>{if(OFF_RUN)OFF_RUN.stop=true};$("#offClose").onclick=()=>d.close();
+  $("#offDel").onclick=async()=>{if(!confirm("ลบแผนที่ออฟไลน์ที่เก็บไว้ทั้งหมด?"))return;try{await caches.delete("vfr-offline")}catch(e){}toast("ลบแผนที่ออฟไลน์แล้ว");offCalc()};
+  const bar=L.DomUtil.create("div","leaflet-bar leaflet-control off-ctl");bar.innerHTML='<a href="#" title="โหลดแผนที่ตามเส้นทางไว้ใช้ตอนไม่มีเน็ต" role="button">⬇<small>ออฟไลน์</small></a>';
+  L.DomEvent.disableClickPropagation(bar);bar.querySelector("a").onclick=e=>{e.preventDefault();offOpen()};
+  const body=map.getContainer().querySelector(".map-tools .mt-body");(body||map.getContainer().querySelector(".leaflet-top.leaflet-right")).appendChild(bar)})();
 </script>
 </body>
 </html>

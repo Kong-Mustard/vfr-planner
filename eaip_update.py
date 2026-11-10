@@ -165,8 +165,19 @@ def find_points(text, src):
     return pts
 
 
+def cf_decode(soup):
+    """Cloudflare ซ่อนอีเมลเป็น [email protected] — ถอดกลับเป็นอีเมลจริง"""
+    for el in soup.select("[data-cfemail]"):
+        try:
+            h = el["data-cfemail"]; k = int(h[:2], 16)
+            el.replace_with("".join(chr(int(h[i:i + 2], 16) ^ k) for i in range(2, len(h), 2)))
+        except Exception:
+            pass
+    return soup
+
+
 def parse_ad2(icao, html, url=""):
-    soup = strip_markup(BeautifulSoup(html, "html.parser"))
+    soup = strip_markup(cf_decode(BeautifulSoup(html, "html.parser")))
     sec = tables_by_section(soup, r"AD\s*2")
     sec = {"2." + k: v for k, v in sec.items()}
     ap = {"icao": icao, "lat": None, "lon": None, "elev_ft": None, "rwy": [], "comm": [], "navaids": []}
@@ -194,7 +205,7 @@ def parse_ad2(icao, html, url=""):
                         n = re.sub(r"\s+", " ", n).strip()
                         if len(re.sub(r"\D", "", n)) >= 8:
                             ph.append({"t": kind, "n": n})
-                ap["rmk23"] = {"text": txt[:600], "phones": ph}
+                ap["rmk23"] = {"text": re.sub(r"\s+", " ", txt)[:1500], "phones": ph}
                 break
     # AD 2.12 runway
     for tb in sec.get("2.12", []):

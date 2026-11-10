@@ -2,7 +2,7 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v93";
+const V = "vfr-v94";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json", "notam.json", "cp_template.xlsx", "contacts_template.xlsx", "provinces.json",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
@@ -20,7 +20,7 @@ self.addEventListener("install", e => {
   self.skipWaiting();
 });
 self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== "vfr-tiles").map(k => caches.delete(k)))));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== "vfr-tiles" && k !== "vfr-offline").map(k => caches.delete(k)))));
   self.clients.claim();
 });
 
@@ -34,7 +34,11 @@ self.addEventListener("fetch", e => {
   const url = new URL(req.url);
   // ภาพแผนที่: cache-first
   if (TILE_HOSTS.some(h => url.hostname.includes(h))) {
+    // โหลดแผนที่ออฟไลน์ (หน้าแอปเก็บเองใน vfr-offline) → ส่งผ่าน ไม่เก็บซ้ำใน vfr-tiles
+    if (url.searchParams.has("vfroff")) { url.searchParams.delete("vfroff"); e.respondWith(fetch(url.href, { mode: "cors", credentials: "omit" })); return; }
     e.respondWith(caches.open("vfr-tiles").then(async c => {
+      const off = await caches.open("vfr-offline").then(o => o.match(req.url)).catch(() => null);
+      if (off) return off;
       const hit = await c.match(req);
       // คำขอแบบ CORS (เช่น ตอนสร้าง PDF จากภาพ) ใช้ภาพที่เก็บแบบ opaque ไม่ได้ → ดึงใหม่
       if (hit && !(req.mode === "cors" && hit.type === "opaque")) return hit;
