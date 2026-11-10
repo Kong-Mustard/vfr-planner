@@ -28,3 +28,4 @@ TM_*
 !contacts_template.xlsx
 # ไฟล์ผู้ติดต่อจริง — ห้ามขึ้น GitHub
 contacts*.json
+!ppc_tpl.json
