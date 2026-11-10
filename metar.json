@@ -1,94 +1,94 @@
 {
-"fetched": "2026-11-10T18:53Z",
+"fetched": "2026-11-10T19:55Z",
 "source": "aviationweather.gov",
 "metar": {
-"VTBU": {
-"raw": "METAR VTBU 101830Z 36009KT CAVOK 25/22 Q1013 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
+"VTSS": {
+"raw": "METAR VTSS 101930Z VRB01KT 9999 FEW020 BKN100 25/24 Q1010 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
 "cat": "VFR",
-"wdir": 360,
+"wdir": "VRB",
+"wspd": 1,
+"visib": "6+",
+"temp": 25
+},
+"VTCC": {
+"raw": "METAR VTCC 101930Z 01011KT 9999 BKN035 22/16 Q1018 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
+"cat": "VFR",
+"wdir": 10,
+"wspd": 11,
+"visib": "6+",
+"temp": 22
+},
+"VTBU": {
+"raw": "METAR VTBU 101930Z 01009KT CAVOK 25/22 Q1012 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
+"cat": "VFR",
+"wdir": 10,
 "wspd": 9,
 "visib": "6+",
 "temp": 25
 },
 "VTBD": {
-"raw": "METAR VTBD 101830Z 05006KT 9999 FEW030 25/18 Q1015 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
+"raw": "METAR VTBD 101930Z 06004KT 9999 FEW030 BKN070 25/18 Q1014 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
 "cat": "VFR",
-"wdir": 50,
-"wspd": 6,
-"visib": "6+",
-"temp": 25
-},
-"VTBS": {
-"raw": "METAR VTBS 101830Z 07010KT 040V100 9999 FEW020 SCT090 26/18 Q1014 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
-"cat": "VFR",
-"wdir": 70,
-"wspd": 10,
-"visib": "6+",
-"temp": 26
-},
-"VTCC": {
-"raw": "METAR VTCC 101830Z 01012KT 9999 BKN035 23/16 Q1018 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
-"cat": "VFR",
-"wdir": 10,
-"wspd": 12,
-"visib": "6+",
-"temp": 23
-},
-"VTSP": {
-"raw": "METAR VTSP 101830Z 07006KT 9999 FEW020 27/24 Q1010 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
-"cat": "VFR",
-"wdir": 70,
-"wspd": 6,
-"visib": "6+",
-"temp": 27
-},
-"VTSS": {
-"raw": "METAR VTSS 101830Z 32004KT 9999 FEW020 BKN100 25/24 Q1010 NOSIG",
-"time": "2026-11-10T18:30:00.000Z",
-"cat": "VFR",
-"wdir": 320,
+"wdir": 60,
 "wspd": 4,
 "visib": "6+",
 "temp": 25
 },
-"VTUU": {
-"raw": "METAR VTUU 101800Z 02009KT CAVOK 20/16 Q1017 NOSIG",
-"time": "2026-11-10T18:00:00.000Z",
+"VTBS": {
+"raw": "METAR VTBS 101930Z 06010KT 9999 FEW020 BKN090 26/18 Q1014 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
 "cat": "VFR",
-"wdir": 20,
-"wspd": 9,
+"wdir": 60,
+"wspd": 10,
+"visib": "6+",
+"temp": 26
+},
+"VTSP": {
+"raw": "METAR VTSP 101930Z 11004KT 9999 FEW020 26/24 Q1010 NOSIG",
+"time": "2026-11-10T19:30:00.000Z",
+"cat": "VFR",
+"wdir": 110,
+"wspd": 4,
+"visib": "6+",
+"temp": 26
+},
+"VTUK": {
+"raw": "METAR VTUK 101900Z 01004KT 9999 FEW030 20/16 Q1019 NOSIG",
+"time": "2026-11-10T19:00:00.000Z",
+"cat": "VFR",
+"wdir": 10,
+"wspd": 4,
 "visib": "6+",
 "temp": 20
 },
-"VTUK": {
-"raw": "METAR VTUK 101800Z 02006KT 9999 FEW030 20/15 Q1019 NOSIG",
-"time": "2026-11-10T18:00:00.000Z",
+"VTUU": {
+"raw": "METAR VTUU 101900Z 03012KT CAVOK 20/16 Q1017 NOSIG",
+"time": "2026-11-10T19:00:00.000Z",
 "cat": "VFR",
-"wdir": 20,
-"wspd": 6,
+"wdir": 30,
+"wspd": 12,
 "visib": "6+",
 "temp": 20
 },
 "VTSG": {
-"raw": "METAR VTSG 101800Z 03003KT 350V050 5000 BR FEW020 24/24 Q1012 NOSIG",
-"time": "2026-11-10T18:00:00.000Z",
+"raw": "METAR VTSG 101900Z VRB01KT 5000 BR FEW020 24/24 Q1011 NOSIG",
+"time": "2026-11-10T19:00:00.000Z",
 "cat": "MVFR",
-"wdir": 30,
-"wspd": 3,
+"wdir": "VRB",
+"wspd": 1,
 "visib": 3.11,
 "temp": 24
 },
 "VTCT": {
-"raw": "METAR VTCT 101800Z 02008KT 9999 BKN040 19/14 Q1022 NOSIG",
-"time": "2026-11-10T18:00:00.000Z",
+"raw": "METAR VTCT 101900Z 01009KT 9999 BKN040 19/14 Q1021 NOSIG",
+"time": "2026-11-10T19:00:00.000Z",
 "cat": "VFR",
-"wdir": 20,
-"wspd": 8,
+"wdir": 10,
+"wspd": 9,
 "visib": "6+",
 "temp": 19
 }
@@ -186,6 +186,10 @@
 "raw": "TAF VTSR 101700Z 1018/1118 10005KT 9999 SCT020 TEMPO 1106/1112 -TSRA FEW018CB SCT020 BKN100",
 "issue": "2026-11-10T17:00:00.000Z"
 },
+"VTSS": {
+"raw": "TAF VTSS 101700Z 1018/1118 30003KT 9999 FEW020 BKN100 TEMPO 1018/1103 VRB15G25KT -TSRA FEW016CB SCT018 BKN100 BECMG 1103/1105 06008KT TEMPO 1105/1112 06015G25KT 4000 RA",
+"issue": "2026-11-10T17:00:00.000Z"
+},
 "VTST": {
 "raw": "TAF VTST 101700Z 1018/1118 06005KT 9999 SCT020 BECMG 1021/1023 3000 BR BECMG 1100/1102 9999 NSW TEMPO 1106/1112 -TSRA FEW018CB SCT020 BKN100",
 "issue": "2026-11-10T17:00:00.000Z"
@@ -228,10 +232,6 @@
 },
 "VTUW": {
 "raw": "TAF VTUW 101700Z 1018/1118 05005KT 9000 FEW030",
-"issue": "2026-11-10T17:00:00.000Z"
-},
-"VTSS": {
-"raw": "TAF VTSS 101700Z 1018/1118 30003KT 9999 FEW020 BKN100 TEMPO 1018/1103 VRB15G25KT -TSRA FEW016CB SCT018 BKN100 BECMG 1103/1105 06008KT TEMPO 1105/1112 06015G25KT 4000 RA",
 "issue": "2026-11-10T17:00:00.000Z"
 }
 }
