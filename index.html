@@ -1219,6 +1219,15 @@ body.cl-on{overflow:hidden}
 .wpcard .sa-b{padding:10px 16px 14px;margin:0}.wpcard .sa-del{background:#dc2626!important}
 .v3w{display:flex;flex-direction:column;align-items:center;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
 .v3w b{margin-top:-6px;background:#0c4a6e;color:#fff;font:800 14px var(--f-mono);padding:2px 8px;border-radius:8px;border:2px solid #38bdf8}
+/* iPad/มือถือ: เว้นขอบบนจากแถบสถานะให้มากขึ้น */
+@media (pointer:coarse) and (min-width:761px){nav.rail{padding-top:calc(env(safe-area-inset-top,0px) + 24px)!important}}
+@media (pointer:coarse){
+ main{padding-top:calc(env(safe-area-inset-top,0px) + 22px)}
+ .cl-bar{padding-top:calc(env(safe-area-inset-top,0px) + 16px)!important}
+ .v3d,.step-mode{padding-top:calc(env(safe-area-inset-top,0px) + 14px)!important}
+ body.mapfull #map .leaflet-top{top:calc(env(safe-area-inset-top,0px) + 22px)}
+ #mfWp{top:calc(env(safe-area-inset-top,0px) + 26px)}
+}
 </style>
 </head>
 <body>
