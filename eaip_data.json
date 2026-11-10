@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-10T09:00",
+ "fetched": "2026-11-10T09:45",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -148,7 +148,7 @@
     }
    ],
    "rmk23": {
-    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2515 3263 Fax: +66 2535 1879 AFTN: VTBDZPZX E-mail: [email protected]",
+    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2515 3263 Fax: +66 2535 1879 AFTN: VTBDZPZX E-mail: vtbdzpzx@aerothai.co.th",
     "phones": [
      {
       "t": "Tel",
@@ -2094,7 +2094,7 @@
     }
    ],
    "rmk23": {
-    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2131 3901-3 Fax: +66 2131 3904 AFTN: VTBSZPZX E-mail: [email protected]",
+    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2131 3901-3 Fax: +66 2131 3904 AFTN: VTBSZPZX E-mail: vtbszpzx@aerothai.co.th",
     "phones": [
      {
       "t": "Tel",
@@ -14449,7 +14449,7 @@
     }
    ],
    "rmk23": {
-    "text": "ATS Reporting Office (ARO): Located at Base Operation Office. (1st floor of Flight support unit building) Tel: +664 435 8110 Ext 40515-6 E-mail: [email protected]",
+    "text": "ATS Reporting Office (ARO): Located at Base Operation Office. (1st floor of Flight support unit building) Tel: +664 435 8110 Ext 40515-6 E-mail: korat_tower2011@hotmail.com",
     "phones": [
      {
       "t": "Tel",
@@ -14743,7 +14743,7 @@
     }
    ],
    "rmk23": {
-    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of Building) Tel: +664 425 8855 Ext. 7272, +668 9845 1649 Fax: +664425 8952 Ext. 7273 E-mail: [email protected] Hours of services: 2300-1100 after this period contact Tel: +664 525 6407, +668 9488 2157 Fax: +664 524 0798 Ext. 7874",
+    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of Building) Tel: +664 425 8855 Ext. 7272, +668 9845 1649 Fax: +664425 8952 Ext. 7273 E-mail: vtuqzpzx@aerothai.co.th Hours of services: 2300-1100 after this period contact Tel: +664 525 6407, +668 9488 2157 Fax: +664 524 0798 Ext. 7874",
     "phones": [
      {
       "t": "Tel",
@@ -15088,7 +15088,7 @@
     }
    ],
    "rmk23": {
-    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of building) Tel: +664 425 8855 Ext 7272, +668 9845 1649 Fax: +664 425 8952 Ext. 7273 Email: [email protected]",
+    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of building) Tel: +664 425 8855 Ext 7272, +668 9845 1649 Fax: +664 425 8952 Ext. 7273 Email: vtuqzpzx@aerothai.co.th",
     "phones": [
      {
       "t": "Tel",
