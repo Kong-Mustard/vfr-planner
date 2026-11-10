@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-10T13:30Z",
+"fetched": "2026-11-10T15:12Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -903,6 +903,15 @@
 "keyword": "INTERNATIONAL"
 },
 {
+"loc": "VTBD",
+"id": "A4485/26",
+"icao": "A4485/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611101430 C) 2611102359\r\nE) TXL B IN FRONT OF ACFT STAND NR 91-97 CLSD DUE TO TEMPO ACFT PRKG",
+"plain": " ",
+"start": "11/10/2026 1430",
+"end": "11/10/2026 2359",
+"keyword": "INTERNATIONAL"
+},
+{
 "loc": "VTBS",
 "id": "A4473/26",
 "icao": "A4473/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611101900 C) 2611102330\r\nE) RWY 02R/20L AND RWY 02L/20R CLSD DUE TO WIP",
@@ -1107,15 +1116,6 @@
 "plain": " ",
 "start": "10/29/2026 0000",
 "end": "11/11/2026 2359",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCT",
-"id": "A4464/26",
-"icao": "A4464/26 NOTAMN\r\nQ) VTBB/QSTAH/IV/BO/A/000/999/1957N09953E005\r\nA) VTCT B) 2611092130 C) 2611101430\r\nE) ATS HR SER CHANGED TO 2130-1430",
-"plain": " ",
-"start": "11/09/2026 2130",
-"end": "11/10/2026 1430",
 "keyword": "INTERNATIONAL"
 },
 {
