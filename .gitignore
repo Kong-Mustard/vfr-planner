@@ -22,3 +22,9 @@ TM_*
 
 # ไฟล์ตัวอย่าง CP (ข้อมูลสมมติ)
 !cp_template.xlsx
+
+# ขอบเขตจังหวัด (geoBoundaries CC BY 4.0) และไฟล์ตัวอย่างผู้ติดต่อ (ข้อมูลสมมติ)
+!provinces.json
+!contacts_template.xlsx
+# ไฟล์ผู้ติดต่อจริง — ห้ามขึ้น GitHub
+contacts*.json

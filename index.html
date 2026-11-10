@@ -568,6 +568,31 @@ tr.rprow td:first-child{box-shadow:inset 4px 0 0 #ffd400}
 .pe-item{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
 .pe-item b{font-family:var(--f-display)}.pe-item .src{font-size:11px;color:var(--muted)}
 /* ---- kneeboard freq dialog / converter ---- */
+.ct-filter{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.ct-filter input{flex:1 1 240px}.ct-filter select{flex:0 1 200px}
+.ct-tbl input.ct-in[data-k=name],.ct-tbl input.ct-in[data-k=role],.ct-tbl input.ct-in[data-k=note]{min-width:170px}.ct-tbl input.ct-in,.ct-tbl select.ct-in{min-width:110px;width:100%;box-sizing:border-box}.ct-tbl td{vertical-align:top}.ct-call{font-size:13px;margin-top:2px}
+.ct-lock{border-left:4px solid #0ea5e9;padding-left:8px}
+.ct-pv{border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin-bottom:8px}.ct-pv h4{margin:2px 0 6px;font:800 15px var(--f-display)}
+.ct-r{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:4px 0;border-top:1px dashed var(--line)}.ct-r:first-of-type{border-top:0}.ct-r .ct-tel a{font-weight:700}.ct-r small{flex-basis:100%}
+dialog.ppc{border:0;border-radius:18px;padding:0;width:min(1240px,97vw);max-height:94vh;box-shadow:var(--shadow);background:var(--panel);color:var(--ink);display:none;flex-direction:column}dialog.ppc[open]{display:flex}
+dialog.ppc::backdrop{background:rgba(0,0,0,.45)}
+.ppc-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 18px 8px;border-bottom:1px solid var(--line)}.ppc-head h2{margin:0;font:800 19px var(--f-display)}.ppc-head .btns{margin-left:auto;display:flex;gap:8px}
+.ppc-head .btns button{min-height:42px}
+.ppc-tabs{margin:10px 18px 0;flex:0 0 auto;flex-wrap:wrap;height:auto!important;overflow:visible}.ppc-tabs button{font-weight:700;min-height:40px;padding:6px 14px}
+.ppc-body{overflow:auto;padding:10px 18px 18px;-webkit-overflow-scrolling:touch}
+.ppc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px}@media (max-width:900px){.ppc-grid{grid-template-columns:1fr}}
+.ppc-sec{border:1px solid var(--line);border-radius:12px;padding:8px 12px 12px;margin-bottom:12px}
+.ppc-sec h3{margin:2px 0 8px;font:800 15px var(--f-display);display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ppc-sec h3 .mini{margin-left:auto}.ppc-sec h3 .hint{font-weight:500}
+.ppc table{width:100%;border-collapse:collapse;font-size:14px}.ppc th{text-align:right;font-weight:600;padding:3px 8px 3px 0;white-space:nowrap;color:var(--muted)}.ppc thead th{text-align:center;color:var(--ink);font-weight:800}
+.ppc td{padding:2px 3px}.ppc td.u{font-size:12px;color:var(--muted);white-space:nowrap}
+.ppc input.ppc-in{width:100%;min-width:0;box-sizing:border-box;text-align:center;font:700 15px var(--f-mono);padding:6px 4px;min-height:36px}
+.ppc .ppc-wt input.ppc-in{max-width:120px}.ppc tr.calc output{display:inline-block;min-width:90px;text-align:center;font:800 15px var(--f-mono);background:var(--accent-soft,#e8f0ff);border-radius:8px;padding:6px 8px}
+.ppc-o th{max-width:220px;white-space:normal;line-height:1.2}
+.ppc [class^=ppc-c]{display:flex;gap:4px}.ppc .ppc-c0{min-height:1px}
+.ppc-fpm{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 12px}.ppc-fpm label,.ppc-meta label{display:flex;flex-direction:column;font-size:13px;color:var(--muted);gap:2px}
+.ppc-fpm input.ppc-in{text-align:left;font:600 14px var(--f-body)}.ppc-2{display:flex;gap:6px}
+.ppc-meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px 12px}.ppc-meta input.ppc-in{text-align:left;font:600 15px var(--f-body)}
+.ppc-rmk{display:flex;flex-direction:column;font-size:13px;color:var(--muted);margin-top:8px}.ppc-rmk textarea{font:14px var(--f-body)}
+.nl-btns{display:flex;gap:8px;flex-wrap:wrap}.ppc-btn{background:#7c3aed!important;border-color:#7c3aed!important}
 dialog.kb{border:0;border-radius:22px;padding:0;width:min(720px,94vw);max-height:88vh;box-shadow:var(--shadow);background:var(--panel);color:var(--ink)}
 .fpl-cta{flex:1 1 280px;max-width:520px;display:flex;align-items:center;gap:12px;text-align:left;padding:10px 16px;border-radius:16px;border:2px solid #0ea5e9;
   background:linear-gradient(135deg,color-mix(in srgb,#0ea5e9 16%,var(--panel)),color-mix(in srgb,#6366f1 12%,var(--panel)));color:var(--ink);cursor:pointer;box-shadow:0 4px 14px rgba(14,165,233,.22);transition:transform .12s,box-shadow .12s}
@@ -1377,6 +1402,11 @@ body.cl-on{overflow:hidden}
     </details>
   </div>
 
+  <div class="card section" id="ctRouteCard" hidden>
+    <div class="sechead"><h2 class="hd hd-blue">👥 ผู้ติดต่อตามเส้นทาง</h2><span class="hint">🔒 ข้อมูลในเครื่องนี้ · แก้ไขที่แท็บ 8 หมวด 7</span></div>
+    <div id="ctRouteList"></div><p class="hint" style="font-size:11px;margin:4px 0 0">ขอบเขตจังหวัด: geoBoundaries (CC BY 4.0) แบบย่อ — ใกล้แนวเขตอาจคลาดเล็กน้อย</p>
+  </div>
+
   <div class="card section" id="procCard">
     <div class="sechead"><h2 class="hd hd-amber">ขั้นตอนเข้า-ออกสนาม · Charts · จุดรายงาน</h2><span class="hint">จาก eAIP AD 2.22 / AD 2.24 ของสนามต้นทาง ปลายทาง และสนามที่ผ่าน</span></div>
     <div id="procList"></div>
@@ -1432,7 +1462,7 @@ body.cl-on{overflow:hidden}
 <section id="tab-log" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><button id="kneePdf2" class="primary">Kneeboard PDF (A5 / A4)</button></div>
+    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="nl-btns"><button id="kneePdf2" class="primary">Kneeboard PDF (A5 / A4)</button><button id="ppcBtn" class="primary ppc-btn" type="button" title="H-60 Performance Planning Card — กรอกผลจาก IPAC">📊 PPC</button></span></div>
     <div class="nl-head" id="nlHead"></div>
     <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
@@ -1558,7 +1588,7 @@ body.cl-on{overflow:hidden}
   <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-pink">CP — Checkpoint / Preset ของหน่วย</h2>
    <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
    <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>CP</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = CP 1, ปลายทาง CAVPAD = CP 13 · จุดที่ไม่มี CP แสดงเลขลำดับแบบขอบชมพู</p>
-   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a></nav></div>
+   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a><a href="#cpCt">7 ผู้ติดต่อ</a></nav></div>
   <div class="card section cp-sec" id="cpFm" style="--cc:#22c55e"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
   <div class="card section cp-sec" id="cpVhf" style="--cc:#3b82f6"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
   <div class="card section cp-sec" id="cpUhf" style="--cc:#a855f7"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
@@ -1580,6 +1610,13 @@ body.cl-on{overflow:hidden}
    <div class="sechead"><h2 class="cp-h"><span>6</span>✅ ตรวจความพร้อมก่อนเสียบการ์ด DTD</h2><div class="btns"><button id="chkCopy" title="คัดลอกผลตรวจเป็นข้อความ">📋 คัดลอกผลตรวจ</button><button id="dbCopyRoute" class="primary" title="คัดลอกรายการที่ต้องคีย์ใน FalconView">📋 คัดลอกรายการที่ต้องคีย์</button></div></div>
    <p class="hint">เทียบเส้นทางในแท็บ 1 และความถี่ที่เลือกพิมพ์ลง Kneeboard กับข้อมูลในหมวด 1–5 ด้านบน · อัปเดตเองทุกครั้งที่แก้แผน</p>
    <div id="chkBox"></div><div id="keyBox" class="keybox"></div></div>
+  <div class="card section cp-sec" id="cpCt" style="--cc:#0ea5e9">
+   <div class="sechead"><h2 class="cp-h"><span>7</span>👥 ผู้ติดต่อ <b id="ctN"></b></h2>
+    <div class="btns"><button id="ctAdd" class="primary">＋ เพิ่ม</button><button id="ctImpAdd">📥 นำเข้า Excel / JSON</button><button id="ctImpRep">แทนที่ทั้งหมด</button><button id="ctExport">📤 ส่งออก JSON</button><button id="ctTpl">⬇ ไฟล์ตัวอย่าง Excel</button><button id="ctClear">ลบทั้งหมด</button></div></div>
+   <p class="hint ct-lock">🔒 <b>ข้อมูลส่วนบุคคล — เก็บในเครื่องนี้เท่านั้น</b> ไม่ขึ้น GitHub / อินเทอร์เน็ต ผู้อื่นที่เปิดแอปไม่เห็น · ย้ายไปเครื่องอื่นใช้ “ส่งออก JSON” แล้วนำเข้าที่เครื่องนั้น · ไฟล์ Excel ต้องมีหัวคอลัมน์ เช่น ชื่อ จนท. · ตำแหน่ง/หน้าที่ · หน่วย · จังหวัด · พื้นที่/อำเภอ · เบอร์โทร · วิทยุ/ความถี่ · พิกัด · หมายเหตุ (ไฟล์ตัวอย่างมี dropdown จังหวัดให้)</p>
+   <div class="ct-filter"><input id="ctQ" type="search" placeholder="ค้นหา ชื่อ / หน่วย / เบอร์ / หน้าที่ เช่น รถเติมน้ำมัน" autocomplete="off"><select id="ctProvF" aria-label="กรองจังหวัด"></select></div>
+   <div class="tablewrap"><table id="ctTable" class="ct-tbl"></table></div>
+   <input id="ctFile" type="file" accept=".xlsx,.json,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></div>
  <div hidden><div id="psBands"></div><table id="psTable"><tbody></tbody></table><button id="psAdd"></button></div>
  </div>
 </section>
@@ -1679,6 +1716,12 @@ body.cl-on{overflow:hidden}
 </section>
 
 </main>
+<dialog id="ppcDlg" class="ppc" aria-labelledby="ppcTitle">
+  <div class="ppc-head"><h2 id="ppcTitle">H-60 Performance Planning Card</h2><span class="hint">กรอกตามผล IPAC · เก็บในเครื่องนี้เท่านั้น</span>
+    <div class="btns"><button id="ppcClear" class="mini" type="button">ล้าง</button><button id="ppcPdfBtn" class="primary" type="button">📄 PDF (A4)</button><button id="ppcClose" type="button" aria-label="ปิด">✕</button></div></div>
+  <div id="ppcTabs" class="seg ppc-tabs" role="group" aria-label="ช่วงการบิน"></div>
+  <div id="ppcBody" class="ppc-body"></div>
+</dialog>
 <dialog id="kbDlg" class="kb" aria-labelledby="kbTitle">
   <div class="kb-head"><h2 id="kbTitle">เลือกความถี่ที่จะพิมพ์ลง Kneeboard</h2>
     <div class="btns"><button id="kbDA" class="mini">เฉพาะต้นทาง/ปลายทาง</button><button id="kbAll" class="mini">เลือกทั้งหมด</button><button id="kbNone" class="mini">ล้าง</button></div></div>
@@ -2150,7 +2193,7 @@ function render(){
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
   $("#exampleTag").hidden=!state.example;
   qnhFill();if(typeof fillProcSelects==="function")fillProcSelects();
-  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();if(typeof dbRouteRender==="function"&&document.getElementById("chkBox"))dbRouteRender();if(typeof saSched==="function")saSched();if(typeof fplSumRender==="function"){fplSumRender();const fd=document.getElementById("fplDlg");if(fd&&fd.open&&!fd.contains(document.activeElement))fplRender()}
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();if(typeof dbRouteRender==="function"&&document.getElementById("chkBox"))dbRouteRender();if(typeof ctRoute==="function")ctRoute();if(typeof saSched==="function")saSched();if(typeof fplSumRender==="function"){fplSumRender();const fd=document.getElementById("fplDlg");if(fd&&fd.open&&!fd.contains(document.activeElement))fplRender()}
   store.set("vfr_current",state);histSched();
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -4456,6 +4499,227 @@ fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
   EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+/* ---------- PPC (H-60 Performance Planning Card) — ฟอร์มกรอกเองตาม IPAC · เก็บในเครื่องเท่านั้น (vfr_ppc) ---------- */
+const PPC_PH=[["dep","Departure [DEP]"],["crs","Cruise [CRS]"],["arr1","Arrival [ARR1]"],["arr2","Arrival 2 [ARR2]"],["cfg","Config"]];
+const PPC_OPT={
+  lim_dual:["MAX (10-Minute)","Intermediate (30-Minute)","Max Continuous"],
+  lim_single:["Emergency (2.5-Minute)","MAX (10-Minute)","Intermediate (30-Minute)","Max Continuous"],
+  onoff:["Off","On"],inst:["Not Installed","Installed"],trans:["Limit Torque"],struct:["22000"],
+  doors:["Doors w/Windows","Doors Open","Doors Removed"],win:["Closed","Open"],
+  lapse:["Lapse Temperature (-2 deg C per 1000 ft)","Constant Temperature"],
+  uninst:["Uninstalled","Installed"],config:["Clean","ESSS","ERFS"],engine:["701D","701C"],irs:["UES","Installed","Uninstalled"]};
+/* อินพุตน้ำหนัก: [key, label, มี drag/download ไหม] */
+const PPC_WT=[["jett","Jettisonable Load",1],["int","Internal/Fixed/Addl Load",1],["sling","Sling Load",1],["fuel","Internal/Aux/Main Fuel",0],["xfuel","External Fuel (Jettisonable)",0],["taxi","Taxi Fuel",0],["opw","Operating",0],["jops","Jett Operating Items",0]];
+const PPC_FPM=[["lim_dual","Operating Limit (Dual)","lim_dual"],["lim_single","Operating Limit (Single)","lim_single"],["anti","Anti-Ice","onoff"],["heater","Heater","onoff"],["opt2","Option II Cabin Heater","inst"],
+  ["trans","Transmission Limit","trans"],["struct","Structural Weight Limit","struct"],["obogs","OBOGS State","inst"],["ecs","ECS State","inst"],["eibf","EIBF Bypass Doors","inst"],
+  ["cabin","Cabin Doors","doors"],["cockpit","Cockpit Doors","doors"],["crch","Cr Ch / Gunner Wndws","win"],["volc","Volcano Canisters","inst"]];
+const PPC_FPM_DEF={lim_dual:"MAX (10-Minute)",lim_single:"Emergency (2.5-Minute)",anti:"Off",heater:"Off",opt2:"Not Installed",trans:"Limit Torque",struct:"22000",obogs:"Not Installed",ecs:"Not Installed",eibf:"Not Installed",
+  cabin:"Doors w/Windows",cockpit:"Doors w/Windows",crch:"Closed",volc:"Not Installed",hige:"10",tqrf:"1.00",tqri:"0",tqaf:"1.00",tqad:"0",lapse:"Lapse Temperature (-2 deg C per 1000 ft)",fff:"1.00",ffi:"0"};
+/* ผล PPC: [label, ช่อง dual[], ช่อง single[], หน่วย] — กรอกตามหน้าจอ IPAC */
+const PPC_OUT={
+  dep:[["PA (Max / Dep)",["pa_max","pa_dep"],[],"ft"],["FAT (Max / Dep)",["fat_max","fat_dep"],[],"°C"],["ATF / ETF",["atf"],["etf1","etf2"],""],["Torque Ratio",["tr"],["tr1","tr2"],""],
+    ["Max Torque Available",["mtq"],["mtq1","mtq2"],"%Q"],["Max Allow GWT OGE / IGE",["gwt_oge","gwt_ige"],[],"lb"],["Go/No-Go Torque OGE / IGE",["gng_oge","gng_ige"],[],"%Q"],
+    ["Max Hover Height IGE",["hh"],[],"ft"],["Predicted Hover Torque",["pht"],["pht1","pht2"],"%Q"],["Min SE Airspeed IAS (w/o / w Stores)",[],["mse_wo","mse_w"],"kt"],
+    ["Go/No-Go TQ OGE 30 / 40 / 50 ft",["g30","g40","g50"],[],"%Q"],["EMER SE IAS",["emer1","emer2"],[],"kt"]],
+  crs:[["PA / FAT",["pa","fat"],[],"ft / °C"],["Max Angle / Vne-IAS",["angle","vne"],[],"° / kt"],["ATF / ETF",["atf"],["etf1","etf2"],""],["Max Torque Available",["mtq"],["mtq1","mtq2"],"%Q"],
+    ["Min / Max IAS",["min","max"],["min_s","max_s"],"kt"],["Cruise Speed IAS / TAS",["cias","ctas"],["cias_s","ctas_s"],"kt"],["Cruise TQ / Cont TQ Avail",["ctq","cont"],["ctq_s","cont_s"],"%Q"],
+    ["Cruise Fuel Flow",["ff"],["ff_s"],"pph"],["Max Range IAS / Torque",["mr_ias","mr_tq"],[],"kt / %Q"],["Max End IAS / Torque",["me_ias","me_tq"],[],"kt / %Q"],["Critical Torque",["crit"],[],"%Q"],
+    ["Max Allowable GWT",["mgwt"],["mgwt_s"],"lb"],["Opt IAS @ Max Allow GWT",["opt"],["opt_s"],"kt"],["Max R/C IAS / Torque",["rc_ias","rc_tq"],[],"kt / %Q"],
+    ["Max Altitude MSL (SE w/o / w)",["malt"],["malt_wo","malt_w"],"ft"],["Max End IAS @ Max Alt (SE w/o / w)",["mealt"],["mealt_wo","mealt_w"],"kt"]],
+  arr:[["PA / FAT",["pa","fat"],[],"ft / °C"],["ATF / ETF",["atf"],["etf1","etf2"],""],["Torque Ratio",["tr"],["tr1","tr2"],""],["Max Torque Available",["mtq"],["mtq1","mtq2"],"%Q"],
+    ["Predicted Hover Torque",["pht"],["pht1","pht2"],"%Q"],["Max Allow GWT OGE / IGE",["gwt_oge","gwt_ige"],[],"lb"],["Max Hover Height IGE",["hh"],[],"ft"],["Min SE Airspeed IAS (w/o / w Stores)",[],["mse_wo","mse_w"],"kt"]]};
+const PPC_CFG=[["bek","Blade Erosion Kit","uninst","Uninstalled"],["config","Configuration","config","Clean"],["eibf","EIBF","uninst","Uninstalled"],["engine","Engine Type","engine","701D"],["ecs","ECS","uninst","Uninstalled"],
+  ["irs","IR Suppressor","irs","UES"],["obogs","OBOGS","uninst","Uninstalled"],["skis","Skis","uninst","Uninstalled"],["volc","Volcanos","uninst","Uninstalled"],["opt2","Option II Cabin Heater Cfg","uninst","Uninstalled"]];
+let ppcTab="dep";
+function ppcLoad(){let o=null;try{o=JSON.parse(localStorage.getItem("vfr_ppc"))}catch(e){}o=o&&typeof o==="object"?o:{};o.meta=o.meta||{};o.cfg=o.cfg||{};o.ph=o.ph||{};
+  ["dep","crs","arr1","arr2"].forEach(k=>{o.ph[k]=o.ph[k]||{};o.ph[k].in=o.ph[k].in||{};o.ph[k].out=o.ph[k].out||{}});return o}
+function ppcSave(o){try{localStorage.setItem("vfr_ppc",JSON.stringify(o))}catch(e){toast("บันทึก PPC ไม่ได้ (หน่วยความจำเต็ม?)")}}
+const ppcN=v=>{const n=parseFloat(String(v??"").replace(/,/g,""));return isFinite(n)?n:0};
+function ppcIn(o,ph,k){const v=o.ph[ph].in[k];if(v!=null&&v!=="")return v;const d=o.ph.dep.in[k];if(ph!=="dep"&&d!=null&&d!=="")return d;return PPC_FPM_DEF[k]??""}
+/* น้ำหนักรวม = Operating + โหลด + น้ำมัน − taxi (ตรงกับตัวอย่าง IPAC 12500+700+2412 = 15612) */
+function ppcCalc(o,ph){const g=k=>ppcN(ppcIn(o,ph,"w_"+k));const fuel=g("fuel")+g("xfuel");const stores=g("jett")+g("int")+g("sling");
+  const gross=g("opw")+stores+fuel-g("taxi");return{gross,fuel,stores,zfw:gross-fuel,fixed:g("opw")-g("jops")}}
+const ppcOpts=(id,list)=>`<datalist id="ppcl-${id}">${(PPC_OPT[list]||[]).map(v=>`<option value="${esc(v)}">`).join("")}</datalist>`;
+function ppcField(ph,sect,k,val,cls=""){return`<input class="ppc-in ${cls}" data-ph="${ph}" data-s="${sect}" data-k="${k}" type="text" inputmode="decimal" autocomplete="off" value="${esc(val??"")}">`}
+function ppcRender(){const o=ppcLoad(),b=$("#ppcBody");if(!b)return;
+  $("#ppcTabs").innerHTML=PPC_PH.map(([k,t])=>`<button data-pt="${k}" class="${k===ppcTab?"on":""}">${t}</button>`).join("");
+  if(ppcTab==="cfg"){
+    b.innerHTML=`<div class="ppc-sec"><h3>ข้อมูลเครื่อง / ไฟล์</h3><div class="ppc-meta">
+      <label>Aircraft<input class="ppc-in" data-s="meta" data-k="acft" type="text" value="${esc(o.meta.acft||"H-60M")}"></label>
+      <label>Tail / S/N<input class="ppc-in" data-s="meta" data-k="tail" type="text" value="${esc(o.meta.tail||"")}"></label>
+      <label>Date<input class="ppc-in" data-s="meta" data-k="date" type="text" value="${esc(o.meta.date||"")}" placeholder="DD MMM YY"></label>
+      <label>Route File<input class="ppc-in" data-s="meta" data-k="route" type="text" value="${esc(o.meta.route||"")}" placeholder="เช่น VTBH-VTPP.ipac"></label>
+      <label>IPAC Version<input class="ppc-in" data-s="meta" data-k="ver" type="text" value="${esc(o.meta.ver||"")}" placeholder="2.4.0.15"></label></div></div>
+      <div class="ppc-sec"><h3>Aircraft Configuration</h3><div class="ppc-fpm">${PPC_CFG.map(([k,l,list,d])=>`<label>${l}<input class="ppc-in" data-s="cfg" data-k="${k}" type="text" list="ppcl-c${k}" value="${esc(o.cfg[k]??d)}">${ppcOpts("c"+k,list)}</label>`).join("")}</div></div>`;return}
+  const ph=ppcTab,isA=ph.startsWith("arr"),c=ppcCalc(o,ph),out=PPC_OUT[isA?"arr":ph],O=o.ph[ph].out;
+  const wt=PPC_WT.map(([k,l,dr])=>`<tr><th>${l}</th><td>${ppcField(ph,"in","w_"+k,ppcIn(o,ph,"w_"+k),"n")}</td>${dr?`<td>${ppcField(ph,"in","d_"+k,ppcIn(o,ph,"d_"+k),"n")}</td><td>${ppcField(ph,"in","dl_"+k,ppcIn(o,ph,"dl_"+k),"n")}</td>`:"<td></td><td></td>"}</tr>`).join("");
+  const fpm=PPC_FPM.map(([k,l,list])=>`<label>${l}<input class="ppc-in" data-ph="${ph}" data-s="in" data-k="${k}" type="text" list="ppcl-${k}" value="${esc(ppcIn(o,ph,k))}">${ppcOpts(k,list)}</label>`).join("")
+    +(ph!=="crs"?`<label>Hover Height (IGE) ft${ppcField(ph,"in","hige",ppcIn(o,ph,"hige"))}</label>`:`<label>Temperature Lapse Rate<input class="ppc-in" data-ph="${ph}" data-s="in" data-k="lapse" type="text" list="ppcl-lapse" value="${esc(ppcIn(o,ph,"lapse"))}">${ppcOpts("lapse","lapse")}</label>
+      <label>Fuel Flow Factor / Increase (pph)<span class="ppc-2">${ppcField(ph,"in","fff",ppcIn(o,ph,"fff"))}${ppcField(ph,"in","ffi",ppcIn(o,ph,"ffi"))}</span></label>`)
+    +`<label>Torque Required Factor / Increase (%Q)<span class="ppc-2">${ppcField(ph,"in","tqrf",ppcIn(o,ph,"tqrf"))}${ppcField(ph,"in","tqri",ppcIn(o,ph,"tqri"))}</span></label>
+      <label>Torque Available Factor / Decrease (%Q)<span class="ppc-2">${ppcField(ph,"in","tqaf",ppcIn(o,ph,"tqaf"))}${ppcField(ph,"in","tqad",ppcIn(o,ph,"tqad"))}</span></label>`;
+  const rows=out.map(([l,d,s,u])=>`<tr><th>${l}</th><td><span class="ppc-c${d.length}">${d.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td><span class="ppc-c${s.length}">${s.map(k=>ppcField(ph,"out",k,O[k])).join("")}</span></td><td class="u">${u}</td></tr>`).join("");
+  b.innerHTML=`<div class="ppc-grid"><div>
+    <div class="ppc-sec"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} Inputs ${ph!=="dep"?`<button class="mini" data-ppccopy="${ph}" type="button">คัดลอกจาก DEP</button>`:""}</h3>
+      <div class="tablewrap"><table class="ppc-wt"><thead><tr><th></th><th>Weight (lb)</th><th>Drag (sq ft)</th><th>Download (T/W)</th></tr></thead><tbody>
+      <tr class="calc"><th>Gross${isA?" (Landing GWT)":""}</th><td><output id="ppcGross">${c.gross}</output></td><td colspan="2" class="hint">คำนวณจาก Operating + โหลด + น้ำมัน − Taxi</td></tr>${wt}
+      <tr class="calc"><th>Fixed Operating</th><td><output id="ppcFixed">${c.fixed}</output></td><td colspan="2" class="hint">ZFW <output id="ppcZfw">${c.zfw}</output> lb</td></tr></tbody></table></div></div>
+    <div class="ppc-sec"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} FPM Inputs</h3><div class="ppc-fpm">${fpm}</div></div></div>
+    <div class="ppc-sec ppc-out"><h3>${isA?"Arrival":ph==="crs"?"Cruise":"Departure"} PPC Data <span class="hint">กรอกตามผลจาก IPAC</span>
+      <button class="mini" data-ppcauto="${ph}" type="button" title="ประมาณ PA จาก elevation+QNH และ FAT จาก METAR ของแผน — ใช้ค่าจาก IPAC เป็นหลัก">⤵ PA/FAT จากแผน</button></h3>
+      <div class="tablewrap"><table class="ppc-o"><thead><tr><th></th><th>Dual-Engine</th><th>Single-Engine #1 / #2</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+      ${ph==="dep"?`<label class="ppc-rmk">Remarks<textarea class="ppc-in" data-ph="dep" data-s="out" data-k="rmk" rows="2">${esc(O.rmk||"")}</textarea></label>`:""}</div></div>`}
+function ppcOpen(){const d=$("#ppcDlg");if(!d)return;const o=ppcLoad();
+  /* ค่าเริ่มต้นจากแผน (เฉพาะช่องที่ยังว่าง): น้ำมันเริ่มต้น */
+  if((o.ph.dep.in.w_fuel==null||o.ph.dep.in.w_fuel==="")&&num(state.fuel0,0)>0){o.ph.dep.in.w_fuel=String(num(state.fuel0,0));ppcSave(o)}
+  if(!o.meta.date&&state.date)o.meta.date=state.date;if(!o.meta.acft&&state.acft)o.meta.acft=state.acft;
+  ppcRender();d.showModal()}
+function ppcUpd(t){const o=ppcLoad(),s=t.dataset.s,k=t.dataset.k,ph=t.dataset.ph;
+  if(s==="meta")o.meta[k]=t.value;else if(s==="cfg")o.cfg[k]=t.value;else o.ph[ph][s][k]=t.value;ppcSave(o);
+  if(s==="in"&&k.startsWith("w_")){const c=ppcCalc(o,ph);$("#ppcGross").textContent=c.gross;$("#ppcFixed").textContent=c.fixed;$("#ppcZfw").textContent=c.zfw}}
+/* ประมาณ PA/FAT จาก METAR + elevation (ค่าอ้างอิงเท่านั้น) */
+function ppcAuto(ph){const o=ppcLoad(),W=state.wps;if(!W||!W.length){toast("ยังไม่มีเส้นทางในแผน");return}
+  const at=ic=>{const a=AP[String(ic||"").toUpperCase()],m=metarCache&&metarCache.metar&&metarCache.metar[String(ic||"").toUpperCase()],raw=m?m.raw:"";
+    const t=/\s(M?\d{2})\/(M?\d{2})?\s/.exec(" "+raw+" "),q=/\sQ(\d{4})\s/.exec(" "+raw+" "),A=/\sA(\d{4})\s/.exec(" "+raw+" ");
+    const T=t?(t[1][0]==="M"?-1:1)*+t[1].replace("M",""):null,Q=q?+q[1]:A?+A[1]/100*33.8639:num(state.qnh,null);
+    const el=a&&a.elev!==""&&a.elev!=null?+a.elev:null;return{el,T,Q,pa:el!=null?Math.round(el+(Q?(1013.25-Q)*30:0)):null}};
+  const O=o.ph[ph].out;let msg="";
+  if(ph==="dep"){const r=at(W[0].name);if(r.pa!=null)O.pa_dep=String(r.pa);if(r.T!=null)O.fat_dep=String(r.T);msg=`${W[0].name}: PA ${r.pa??"–"} ft · FAT ${r.T??"–"}°C`}
+  else if(ph==="crs"){const r=at(W[0].name),alt=num(state.alt,num(state.g&&state.g.alt,null));if(alt!=null){O.pa=String(Math.round(alt+(r.Q?(1013.25-r.Q)*30:0)));if(r.T!=null)O.fat=String(Math.round(r.T-2*((alt-(r.el||0))/1000)))}
+    msg=`ALT ${alt??"–"} ft → PA ${O.pa||"–"} · FAT ${O.fat||"–"}°C (lapse −2°C/1000 ft)`}
+  else{const r=at(W.at(-1).name);if(r.pa!=null)O.pa=String(r.pa);if(r.T!=null)O.fat=String(r.T);msg=`${W.at(-1).name}: PA ${r.pa??"–"} ft · FAT ${r.T??"–"}°C`}
+  ppcSave(o);ppcRender();toast("ประมาณจากแผน — "+msg+" · ตรวจกับ IPAC")}
+/* ---------- PDF (A4 แนวนอน · วาดเป็นเวกเตอร์ ตัวอักษรคม) ---------- */
+async function ppcPdf(){const btn=$("#ppcPdfBtn"),old=btn.textContent;btn.disabled=true;btn.textContent="⏳ กำลังสร้าง PDF…";
+  try{if(!window.jspdf)await new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";sriSet(s,s.src);s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+    const o=ppcLoad(),{jsPDF}=window.jspdf,doc=new jsPDF({unit:"mm",format:"a4",orientation:"landscape"});ppcDraw(doc,o);
+    const nm=`PPC_${(o.meta.tail||o.meta.acft||"H-60").replace(/[^\w-]/g,"")}_${(o.meta.date||"").replace(/[^\w-]/g,"")||new Date().toISOString().slice(0,10)}.pdf`,blob=doc.output("blob"),file=new File([blob],nm,{type:"application/pdf"});
+    if(navigator.canShare&&navigator.canShare({files:[file]})&&/iPad|iPhone|iPod|Android/.test(navigator.userAgent+(navigator.maxTouchPoints>1?"iPad":""))){try{await navigator.share({files:[file],title:nm});toast("ส่งออก PDF แล้ว");return}catch(e){if(e.name==="AbortError")return}}
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nm;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast("บันทึก "+nm)}
+  catch(e){toast("สร้าง PDF ไม่ได้: "+(e.message||e)+" (ครั้งแรกต้องต่อเน็ต)")}finally{btn.disabled=false;btn.textContent=old}}
+function ppcDraw(doc,o){const H=4.6,GR=[200,200,200],LG=[235,235,235];
+  const v=x=>{const s=String(x??"").trim();return s===""?"":s};
+  const box=(x,y,w,h,fill)=>{if(fill){doc.setFillColor(...fill);doc.rect(x,y,w,h,"FD")}else doc.rect(x,y,w,h)};
+  const txt=(s,x,y,o2={})=>{doc.setFont("helvetica",o2.b?"bold":"normal");doc.setFontSize(o2.fs||7.5);doc.text(String(s),x,y,{align:o2.al||"left",baseline:"middle"})};
+  const bar=(t,x,y,w)=>{box(x,y,w,H,GR);txt(t,x+w/2,y+H/2,{b:1,fs:9,al:"center"});return y+H};
+  /* ช่องค่า: กล่องเทาอ่อน + ค่า + หน่วย */
+  const cell=(x,y,w,val,u)=>{box(x+.4,y+.6,w-.8-(u?5.5:0),H-1.2,LG);txt(v(val),x+(w-(u?5.5:0))/2,y+H/2,{al:"center",b:1});if(u)txt(u,x+w-5.2,y+H/2,{fs:6.5})};
+  /* แถวผลแบบ IPAC: label | dual | single #1 #2 */
+  const W0=138,LW=58,DW=40,SW=40;
+  const row=(x,y,l,d,s,u,D)=>{doc.setDrawColor(150);box(x,y,W0,H);txt(l.toUpperCase(),x+1,y+H/2,{fs:6.6});
+    const uu=u&&!u.includes("/")?u.replace("%Q","%"):"";
+    if(d.length){const w=DW/d.length;d.forEach((k,i)=>cell(x+LW+i*w,y,w,D[k],d.length<3?uu:""))}
+    if(s.length){const w=SW/s.length;s.forEach((k,i)=>cell(x+LW+DW+i*w,y,w,D[k],uu))}
+    if(u&&u.includes("/"))txt(u,x+W0-1,y+H/2,{fs:5.5,al:"right"});return y+H};
+  const head=(x,y)=>{box(x,y,W0,H);txt("DUAL ENGINE",x+LW+DW/2,y+H/2,{b:1,al:"center"});txt("SINGLE ENG #1",x+LW+DW+SW/4,y+H/2,{b:1,al:"center",fs:6.5});txt("#2",x+LW+DW+SW*3/4,y+H/2,{b:1,al:"center",fs:6.5});return y+H};
+  const kv=(x,y,parts)=>{box(x,y,W0,H);let cx=x+1;parts.forEach(([l,val,u,w])=>{txt(l,cx,y+H/2,{fs:6.8});const lw=doc.getTextWidth(l)+1;cell(cx+lw,y,w,val,u);cx+=lw+w+3});return y+H};
+  doc.setLineWidth(.2);doc.setDrawColor(150);
+  /* ===== ซ้าย: DEPARTURE + CRUISE ===== */
+  let x=8,y=8;const dep=o.ph.dep,dc=ppcCalc(o,"dep"),D=dep.out;
+  txt("H-60 PERFORMANCE PLANNING CARD",x+W0/2,y+2,{b:1,fs:12,al:"center"});txt("For use of this form, see TC 1-237: the proponent agency is TRADOC.",x+W0/2,y+6.5,{fs:6.5,al:"center"});y+=9;
+  y=bar("DEPARTURE",x,y,W0);
+  y=kv(x,y,[["AIRCRAFT GWT:",dc.gross,"lb",20],["PA:",[D.pa_dep,D.pa_max].filter(v).join(" / "),"ft",22],["FAT:",[D.fat_dep,D.fat_max].filter(v).join(" / "),"°C",20]]);
+  y=kv(x,y,[["STORES WEIGHT:",dc.stores,"lb",20]]);y=kv(x,y,[["FUEL WEIGHT:",dc.fuel,"lb",20]]);y=kv(x,y,[["ZERO FUEL WEIGHT:",dc.zfw,"lb",20]]);
+  y=head(x,y);
+  PPC_OUT.dep.filter(r=>!/^PA|^FAT|30 \/ 40|EMER/.test(r[0])).forEach(r=>y=row(x,y,r[0],r[1],r[2],r[3],D));
+  /* remarks */
+  const rh=H*2.2;box(x,y,W0,rh);txt("REMARKS:",x+1,y+2.4,{b:1,fs:7});
+  txt("EMER SE IAS",x+30,y+2.4,{fs:6.5});cell(x+22,y+H*1.1,14,D.emer1,"kt");cell(x+37,y+H*1.1,14,D.emer2,"kt");
+  txt("GO/NO-GO TQ OGE  30 / 40 / 50 FT",x+92,y+2.4,{fs:6.5,al:"center"});[D.g30,D.g40,D.g50].forEach((g,i)=>cell(x+70+i*14,y+H*1.1,14,g,"%"));
+  if(v(D.rmk))txt(String(D.rmk).slice(0,60),x+W0-1,y+2.4,{fs:6,al:"right"});y+=rh;
+  /* config */
+  const cfg=PPC_CFG.map(([k,l,,d])=>[l,o.cfg[k]??d]);doc.setFontSize(6);
+  for(let i=0;i<5;i++){const a=cfg[i],b=cfg[i+5];box(x,y,W0,3.6);txt(a[0],x+1,y+1.8,{fs:5.8});txt(a[1],x+48,y+1.8,{fs:5.8,al:"center"});txt(b[0],x+70,y+1.8,{fs:5.8});txt(b[1],x+120,y+1.8,{fs:5.8,al:"center"});y+=3.6}
+  y+=2;const C=o.ph.crs.out;y=bar("CRUISE",x,y,W0);
+  y=kv(x,y,[["PA:",C.pa,"ft",14],["FAT:",C.fat,"°C",12],["MAX ANGLE:",C.angle,"°",12],["Vne-IAS:",C.vne,"kt",14]]);y=head(x,y);
+  PPC_OUT.crs.filter(r=>!/^PA|^Max Angle|^ATF/.test(r[0])).forEach(r=>y=row(x,y,r[0],r[1],r[2],r[3],C));
+  /* ===== ขวา: ARRIVAL / ARRIVAL 2 / ตารางอินพุต ===== */
+  x=151;y=8;
+  ["arr1","arr2"].forEach((ph,i)=>{const A=o.ph[ph].out,ac=ppcCalc(o,ph);y=bar(i?"ARRIVAL 2":"ARRIVAL",x,y,W0);
+    y=kv(x,y,[["LANDING GWT:",ac.gross,"lb",20],["PA:",A.pa,"ft",16],["FAT:",A.fat,"°C",14]]);y=head(x,y);
+    PPC_OUT.arr.filter(r=>!/^PA|^ATF/.test(r[0])).forEach(r=>y=row(x,y,r[0],r[1],r[2],r[3],A));y+=1});
+  txt("REMARKS: * indicates calculations that exceed AWR limits or aircraft capabilities",x,y+1.5,{fs:6});y+=3.5;
+  const PH=["dep","crs","arr1","arr2"],cw=[46,23,23,23,23],th=2.85;
+  const trow=(cells,b,fill)=>{let cx=x;cells.forEach((c,i)=>{box(cx,y,cw[i],th,fill);txt(c,i?cx+cw[i]/2:cx+.8,y+th/2,{fs:5.2,b,al:i?"center":"left"});cx+=cw[i]});y+=th};
+  trow(["Input Name","Departure","Cruise","Arrival","Arrival 2"],1,GR);
+  const g=(ph,k)=>v(ppcIn(o,ph,k));
+  [["Jettisonable Stores Weight","w_jett"],["Internal/Fixed/Addl Load Weight","w_int"],["Sling Weight","w_sling"],["Internal/Auxiliary/Main Fuel Weight","w_fuel"],["External Fuel Weight (Jettisonable)","w_xfuel"],
+   ["Operating Weight","w_opw"],["Jettisonable Operating Items","w_jops"]].forEach(([l,k])=>trow([l,...PH.map(p=>g(p,k)||"0")]));
+  trow(["Fixed Operating Weight",...PH.map(p=>String(ppcCalc(o,p).fixed))]);
+  [["Jettisonable Stores Drag","d_jett"],["Internal/Fixed/Addl Load Drag","d_int"],["Sling Drag","d_sling"]].forEach(([l,k])=>trow([l,...PH.map(p=>g(p,k)||"0.00")]));
+  trow(["Jettisonable Stores / Sling Download",...PH.map(p=>`${g(p,"dl_jett")||"0.000"} / ${g(p,"dl_sling")||"0.000"}`)]);trow(["Internal/Fixed/Addl Load Download",...PH.map(p=>g(p,"dl_int")||"0.000")]);
+  PPC_FPM.forEach(([k,l])=>trow([l.replace("Wndws","Windows"),...PH.map(p=>g(p,k))]));
+  trow(["IGE Hover Height",g("dep","hige"),"",g("arr1","hige"),g("arr2","hige")]);
+  trow(["Temperature Lapse Rate","",g("crs","lapse").replace(/Lapse Temperature \((-?\d+) deg C per 1000 ft\)/,"Lapse $1°C/1000 ft"),"",""]);trow(["Fuel Flow Factor / Increase","",`${g("crs","fff")} / ${g("crs","ffi")}`,"",""]);
+  [["Torque Required Factor","tqrf"],["Torque Required Increase","tqri"],["Torque Available Factor","tqaf"],["Torque Available Decrease","tqad"]].forEach(([l,k])=>trow([l,...PH.map(p=>g(p,k))]));
+  /* footer */
+  txt(`Route File: ${o.meta.route||"-"}${o.meta.date?"   Date: "+o.meta.date:""}`,8,204,{fs:7});
+  txt(`Aircraft: ${o.meta.acft||"H-60M"}${o.meta.tail?"  "+o.meta.tail:""}`,151,204,{fs:7});txt(`Release ID: IPAC-H60${o.meta.ver?" Version "+o.meta.ver:""}  ·  hand-entered in VFR Planner`,289,204,{fs:6.5,al:"right"})}
+(function ppcInit(){const d=$("#ppcDlg");if(!d)return;
+  $("#ppcBtn").onclick=ppcOpen;$("#ppcClose").onclick=()=>d.close();$("#ppcPdfBtn").onclick=ppcPdf;
+  $("#ppcTabs").addEventListener("click",e=>{const b=e.target.closest("[data-pt]");if(!b)return;ppcTab=b.dataset.pt;ppcRender()});
+  d.addEventListener("input",e=>{const t=e.target;if(t.classList&&t.classList.contains("ppc-in"))ppcUpd(t)});
+  d.addEventListener("click",e=>{const c=e.target.closest("[data-ppccopy]"),a=e.target.closest("[data-ppcauto]");
+    if(c){const o=ppcLoad(),ph=c.dataset.ppccopy;o.ph[ph].in={...o.ph.dep.in};ppcSave(o);ppcRender();toast("คัดลอกอินพุตจาก DEP แล้ว")}
+    if(a)ppcAuto(a.dataset.ppcauto)});
+  $("#ppcClear").onclick=()=>{if(!confirm("ล้างข้อมูล PPC ทั้งหมด?"))return;try{localStorage.removeItem("vfr_ppc")}catch(e){}ppcRender();toast("ล้าง PPC แล้ว")}})();
+/* ---------- ผู้ติดต่อ (ฐานข้อมูลส่วนตัว) — นำเข้าจาก Excel/JSON · เก็บในเครื่องนี้เท่านั้น ไม่ส่งออกไปไหน ---------- */
+const CT_COLS=[["name","ชื่อ จนท.",/ชื่อ|name/i],["role","ตำแหน่ง/หน้าที่",/ตำแหน่ง|หน้าที่|role|position/i],["unit","หน่วย",/หน่วย|unit/i],["prov","จังหวัด",/จังหวัด|province/i],
+  ["area","พื้นที่/อำเภอ",/พื้นที่|อำเภอ|area|district/i],["tel","เบอร์โทร",/เบอร์|โทร|tel|phone|mobile/i],["radio","วิทยุ/ความถี่",/วิทยุ|ความถี่|radio|freq/i],["pos","พิกัด",/พิกัด|mgrs|coord|lat/i],["note","หมายเหตุ",/หมายเหตุ|note|remark/i]];
+let PROV=null,ctQ="",ctProvF="";
+function ctLoad(){try{const a=JSON.parse(localStorage.getItem("vfr_contacts"));return Array.isArray(a)?a:[]}catch(e){return[]}}
+function ctSave(a){try{localStorage.setItem("vfr_contacts",JSON.stringify(a))}catch(e){toast("บันทึกผู้ติดต่อไม่ได้ (หน่วยความจำเต็ม?)")}}
+async function provLoad(){if(PROV)return PROV;try{const d=await(await fetch("provinces.json")).json();PROV=d.prov.map(p=>{let b=[180,90,-180,-90];p.p.forEach(r=>r.forEach(([x,y])=>{b=[Math.min(b[0],x),Math.min(b[1],y),Math.max(b[2],x),Math.max(b[3],y)]}));return{...p,b}})}catch(e){PROV=[]}return PROV}
+const provNames=()=>(PROV||[]).map(p=>p.th);
+function provAt(lat,lon){if(!PROV)return null;for(const p of PROV){if(lon<p.b[0]||lon>p.b[2]||lat<p.b[1]||lat>p.b[3])continue;
+  for(const r of p.p){let ins=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const[xi,yi]=r[i],[xj,yj]=r[j];if((yi>lat)!==(yj>lat)&&lon<(xj-xi)*(lat-yi)/(yj-yi)+xi)ins=!ins}if(ins)return p.th}}return null}
+/* จังหวัดที่เส้นทางผ่าน: สุ่มจุดทุก ~1 NM ตามขาบิน */
+function routeProvs(){const W=(state.wps||[]).filter(w=>w.lat!=null&&w.lon!=null),out=[];
+  for(let i=0;i<W.length;i++){const a=W[i],b=W[i+1]||a,d=Math.max(1,Math.ceil(Math.hypot(b.lat-a.lat,(b.lon-a.lon)*Math.cos(a.lat*Math.PI/180))*60));
+    for(let k=0;k<=(b===a?0:d);k++){const t=b===a?0:k/d,p=provAt(a.lat+(b.lat-a.lat)*t,a.lon+(b.lon-a.lon)*t);if(p&&!out.includes(p))out.push(p)}}return out}
+const ctTel=t=>String(t||"").split(/[,;/]|\s{2,}/).map(s=>s.trim()).filter(Boolean).map(s=>`<a href="tel:${esc(s.replace(/[^\d+]/g,""))}">${esc(s)}</a>`).join(" · ");
+function ctRow(c,i){const opts=provNames();
+  return`<tr data-ct="${i}">${CT_COLS.map(([k,l])=>k==="prov"?`<td><select class="ct-in" data-k="prov" aria-label="${l}"><option value="">— เลือก —</option>${opts.map(p=>`<option${p===c.prov?" selected":""}>${esc(p)}</option>`).join("")}${c.prov&&!opts.includes(c.prov)?`<option selected>${esc(c.prov)}</option>`:""}</select></td>`
+    :`<td><input class="ct-in" data-k="${k}" type="text" ${k==="tel"?'inputmode="tel"':""} autocomplete="off" value="${esc(c[k]||"")}" aria-label="${l}">${k==="tel"&&c.tel?`<div class="ct-call">${ctTel(c.tel)}</div>`:""}</td>`).join("")}<td><button class="mini bad" data-ctdel="${i}" aria-label="ลบ">✕</button></td></tr>`}
+async function ctRender(){const box=$("#ctTable");if(!box)return;await provLoad();const A=ctLoad();
+  const sel=$("#ctProvF"),cur=ctProvF;sel.innerHTML=`<option value="">ทุกจังหวัด (${A.length})</option>`+[...new Set(A.map(c=>c.prov).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"th")).map(p=>`<option${p===cur?" selected":""}>${esc(p)}</option>`).join("");
+  const q=ctQ.trim().toLowerCase(),rows=A.map((c,i)=>[c,i]).filter(([c])=>(!ctProvF||c.prov===ctProvF)&&(!q||CT_COLS.some(([k])=>String(c[k]||"").toLowerCase().includes(q))));
+  $("#ctN").textContent=A.length?`(${A.length})`:"";
+  box.innerHTML=`<thead><tr>${CT_COLS.map(([,l])=>`<th>${l}</th>`).join("")}<th></th></tr></thead><tbody>${rows.map(([c,i])=>ctRow(c,i)).join("")||`<tr><td colspan="${CT_COLS.length+1}" class="hint">${A.length?"ไม่พบตามตัวกรอง":"ยังไม่มีข้อมูล — นำเข้า Excel หรือกด ＋ เพิ่ม"}</td></tr>`}</tbody>`;
+  ctRoute()}
+async function ctRoute(){const card=$("#ctRouteCard");if(!card)return;const A=ctLoad();if(!A.length){card.hidden=true;return}await provLoad();card.hidden=false;
+  const P=routeProvs(),body=$("#ctRouteList");
+  if(!P.length){body.innerHTML=`<p class="hint">ยังไม่มีเส้นทาง</p>`;return}
+  body.innerHTML=`<p class="hint">จังหวัดที่เส้นทางผ่าน: ${P.map(esc).join(" → ")}</p>`+P.map(p=>{const L=A.filter(c=>c.prov===p);if(!L.length)return"";
+    return`<div class="ct-pv"><h4>${esc(p)} <span class="hint">${L.length} คน</span></h4>${L.map(c=>`<div class="ct-r"><b>${esc(c.name||"-")}</b><span>${esc([c.role,c.unit,c.area].filter(Boolean).join(" · "))}</span><span class="ct-tel">${ctTel(c.tel)}${c.radio?` · 📻 ${esc(c.radio)}`:""}</span>${c.note?`<small class="hint">${esc(c.note)}</small>`:""}</div>`).join("")}</div>`}).join("")
+    +(P.some(p=>A.some(c=>c.prov===p))?"":`<p class="hint">ไม่มีผู้ติดต่อในจังหวัดตามเส้นทาง</p>`)}
+/* นำเข้า: .xlsx (หัวคอลัมน์ภาษาไทย/อังกฤษ) หรือ .json ที่ส่งออกจากแอป */
+async function ctImport(f,mode){let rows=[];
+  if(/\.json$/i.test(f.name)){const d=JSON.parse(await f.text());rows=(Array.isArray(d)?d:d.contacts||[]).map(c=>Object.fromEntries(CT_COLS.map(([k])=>[k,String(c[k]??"").trim()])))}
+  else{await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
+    const ws=wb.worksheets.find(w=>w.state!=="hidden"&&w.state!=="veryHidden")||wb.worksheets[0];let col=null;
+    const cv=c=>{const v=c&&c.value;if(v==null)return"";if(typeof v==="object"){if(v.richText)return v.richText.map(t=>t.text).join("");if(v.text)return String(v.text);if(v.result!=null)return String(v.result)}return String(v)};
+    ws.eachRow((r,ri)=>{const cells=[];r.eachCell({includeEmpty:true},(c,ci)=>cells[ci]=cv(c).trim());
+      if(!col){const m={};cells.forEach((t,ci)=>{if(!t)return;const hit=CT_COLS.find(([k,,re])=>m[k]==null&&re.test(t));if(hit)m[hit[0]]=ci});if(m.name!=null&&Object.keys(m).length>=2)col=m;return}
+      const o=Object.fromEntries(CT_COLS.map(([k])=>[k,col[k]!=null?cells[col[k]]||"":""]));if(o.name||o.tel)rows.push(o)});
+    if(!col)throw new Error("ไม่พบแถวหัวตาราง (ต้องมีคอลัมน์ ชื่อ จนท. และอย่างน้อยอีก 1 คอลัมน์)")}
+  await provLoad();const names=provNames();rows.forEach(r=>{const p=String(r.prov||"").replace(/^จ(\.|ังหวัด)\s*/,"").trim();r.prov=names.find(n=>n===p)||names.find(n=>p&&n.includes(p))||p});
+  const A=mode==="replace"?rows:[...ctLoad(),...rows];ctSave(A);ctRender();toast(`นำเข้าผู้ติดต่อ ${rows.length} รายการ`)}
+function ctExport(){const A=ctLoad();if(!A.length){toast("ยังไม่มีข้อมูล");return}
+  const blob=new Blob([JSON.stringify({type:"vfr-contacts",v:1,contacts:A},null,1)],{type:"application/json"}),a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=`contacts_${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+(function ctInit(){const t=$("#ctTable");if(!t)return;
+  t.addEventListener("change",e=>{const el=e.target.closest(".ct-in");if(!el)return;const i=+el.closest("tr").dataset.ct,A=ctLoad();if(!A[i])return;A[i][el.dataset.k]=el.value.trim();ctSave(A);
+    if(el.dataset.k==="prov"||el.dataset.k==="tel")ctRender();else ctRoute()});
+  t.addEventListener("click",e=>{const d=e.target.closest("[data-ctdel]");if(!d)return;const A=ctLoad(),i=+d.dataset.ctdel;if(!confirm(`ลบ ${A[i]&&A[i].name||"แถวนี้"}?`))return;A.splice(i,1);ctSave(A);ctRender()});
+  $("#ctAdd").onclick=()=>{const A=ctLoad();A.push({prov:ctProvF||""});ctSave(A);ctQ="";$("#ctQ").value="";ctRender().then(()=>{const r=$("#ctTable tbody tr:last-child input");if(r)r.focus()})};
+  $("#ctQ").addEventListener("input",e=>{ctQ=e.target.value;ctRender()});$("#ctProvF").addEventListener("change",e=>{ctProvF=e.target.value;ctRender()});
+  let mode="add";$("#ctImpAdd").onclick=()=>{mode="add";$("#ctFile").click()};$("#ctImpRep").onclick=()=>{mode="replace";$("#ctFile").click()};
+  $("#ctFile").addEventListener("change",async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{await ctImport(f,mode)}catch(err){toast("นำเข้าไม่ได้: "+(err.message||err))}});
+  $("#ctExport").onclick=ctExport;
+  $("#ctClear").onclick=()=>{if(!ctLoad().length)return;if(!confirm("ลบผู้ติดต่อทั้งหมดในเครื่องนี้?"))return;try{localStorage.removeItem("vfr_contacts")}catch(e){}ctRender()};
+  $("#ctTpl").onclick=async()=>{try{const b=await(await fetch("contacts_template.xlsx")).blob(),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="contacts_template.xlsx";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}catch(e){toast("ดาวน์โหลดไม่ได้ (ต้องต่อเน็ต)")}};
+  ctRender()})();
 </script>
 </body>
 </html>
