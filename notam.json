@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-10T16:15Z",
+"fetched": "2026-11-10T17:14Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -972,15 +972,6 @@
 "plain": " ",
 "start": "11/10/2026 1630",
 "end": "11/10/2026 1741",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "H1589/26",
-"icao": "H1589/26 NOTAMN\r\nQ) VTBB/QFALT/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611101630 C) 2611101700\r\nE) AD DEP/ARR ACFT WILL BE DLA DUE TO VIP MOV",
-"plain": " ",
-"start": "11/10/2026 1630",
-"end": "11/10/2026 1700",
 "keyword": "INTERNATIONAL"
 },
 {
