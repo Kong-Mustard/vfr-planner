@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-06T03:06",
+ "fetched": "2026-11-10T09:00",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -147,6 +147,19 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2515 3263 Fax: +66 2535 1879 AFTN: VTBDZPZX E-mail: [email protected]",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+66 2515 3263"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 2535 1879"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -1052,6 +1065,10 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "Except public holiday",
+    "phones": []
+   },
    "charts": [],
    "proc": "VTBK AD 2.22 FLIGHT PROCEDURES NIL",
    "points": [
@@ -1739,6 +1756,10 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "Outside these HR services are available O/R. Request to be submitted to TWR not later than 0900 UTC.",
+    "phones": []
+   },
    "charts": [],
    "proc": "VTBP AD 2.22 FLIGHT PROCEDURES NIL",
    "points": [],
@@ -2072,6 +2093,19 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "AIS Briefing Office and ATS Reporting Office (ARO): Located at 2nd floor, the central block building, Don Mueang International Airport Tel: +66 2131 3901-3 Fax: +66 2131 3904 AFTN: VTBSZPZX E-mail: [email protected]",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+66 2131 3901-3"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 2131 3904"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -3548,6 +3582,10 @@
      "rmk": "NIL"
     }
    ],
+   "rmk23": {
+    "text": "Outside these HR services are available O/R. Request to be submitted to TWR not later than 0800 UTC",
+    "phones": []
+   },
    "charts": [],
    "proc": "VTBW AD 2.22 FLIGHT PROCEDURES NIL",
    "points": [],
@@ -3776,6 +3814,19 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Chiang Mai Air Traffic Control Center (1st floor of tower building) Tel: +669 1818 5798 Fax:+66 5327 7897",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 1818 5798"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 5327 7897"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome chart - ICAO",
@@ -4317,6 +4368,19 @@
      "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance Radial 040° distance between 10.5-12.5 DME altitude 5 500 FT Radial 085° distance between 5.5-7.5 DME altitude 7 000 FT Radial 100° distance between 9.0-10.0 DME altitude 7 000 FT Radial 120° distance between 9.5 - 10.5 DME altitude 7 500 FT Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 060°-080° altitude should not below 8 500 FT Radial 081°-140° altitude should not below 13 000 FT Radial 141°-190° altitude should not below 9 000 FT Radial 191°-059° unable to perform due to border limited"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Chiang Mai Air Traffic Control Centre (1st floor of tower building) Tel: +669 1818 5798 Fax: +665 327 7897",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 1818 5798"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 327 7897"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -4524,6 +4588,10 @@
    ],
    "comm": [],
    "navaids": [],
+   "rmk23": {
+    "text": "The aircrafts that plan to operate at Pai airport must inform the airport in advanced by telephone number +665 369 9209 or +668 9956 2709 before taking off from the airport of departure.",
+    "phones": []
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -4603,6 +4671,19 @@
      "rmk": "DME: Paired with LOC Freq. GP: Not installation"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Chiang Mai Air Traffic Control Centre (1st floor of tower building) Tel: +669 1818 5798 Fax: +665 327 7897",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 1818 5798"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 327 7897"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -4979,6 +5060,23 @@
      "rmk": "DVOR/DME restriction, due to Mountainous terrain surround DVOR/DME station coverage check does not provide adequate signal to 40 NM. At the required altitude in various areas as follow: -RDL 021-110 DEG at 20 NM should not below 8000 ft. -RDL 111-160 DEG at 20 NM should not below 6000 ft. -RDL 161-230 DEG at 40 NM should not below 7000 ft. -RDL 231-250 DEG at 40 NM should not below 9000 ft. -RDL 251-290 DEG at 40 NM should not below 11000 ft. -RDL 291-350 DEG at 40 NM should not below 9000 ft. -RDL 351-020 DEG at 40 NM should not below 8000 ft."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phitsanulok Airport (1st floor of airport building) Tel: +665 530 1078 Tel: +669 2262 3140 Fax: +665 530 1077",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+665 530 1078"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3140"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 530 1077"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -5255,6 +5353,23 @@
      "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance on radial 146° distance between 7.0-8.0 DME altitude 7 000 ft Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: Radial 055º-080º altitude should not below 9 000 ft Radial 081º-160º altitude should not below 11 000 ft Radial 161º-180º altitude should not below 8 000 ft Radial 181º-350º altitude should not below 6 000 ft Radial 351º-054º altitude should not below 6 500 ft"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phitsanulok Airport (1st floor of airport building) Tel: +665 530 1078 Tel: +669 2262 3140 Fax: +665 530 1077",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+665 530 1078"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3140"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 530 1077"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -5565,6 +5680,19 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Chiang Mai Air Traffic Control Center (1st floor of tower building)Tel: +669 1818 5798Fax:+66 5327 7897",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 1818 5798"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 5327 7897"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome chart - ICAO",
@@ -5908,6 +6036,23 @@
      "rmk": "GP 3 DEG, RDH 50 ft"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phitsanulok Airport (1st floor of airport building) Tel: +665 530 1078 Tel: +669 2262 3140 Fax: +665 530 1077",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+665 530 1078"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3140"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 530 1077"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -6181,6 +6326,19 @@
      "rmk": "DVOR/DME restriction , due to terrain surround DVOR/DME station coverage check does not provide adequate signal 40 nm at required altitude in various areas as follows: 40 nm clockwise orbit Radial 001°-170° altitude should not below 3 000 ft Radial 171°-210° altitude should not below 7 000 ft Radial 301°-340° altitude should not below 10 000 ft Radial 340°-360° altitude should not below 3 000 ft 30 nm clockwise orbit (Due to border limited) Radial 211°- 300° altitude should not below 10 000 ft Radial 341° distance 10.3 DME at altitude 4 000 ft found roughness out of tolerance"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Hua Hin Air Traffic Control Centre (1st floor of tower building) Tel: +663 252 2512 Fax: +663 252 0831 Ext. 5230",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+663 252 2512"
+     },
+     {
+      "t": "Fax",
+      "n": "+663 252 0831"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -6803,6 +6961,23 @@
      "rmk": "DVOR/DME restrictions, Unusable due to roughness out of tolerance Radial 104° distance between 6.0-13.0 DME altitude 5 500 ft Radial 012° distance between 22.0-24.0 DME altitude 5 000 ft Radial 124° distance between 32.0-34.0 DME altitude 6 600 ft Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit 40 NM at the required altitude in various areas as follows: Radial 000°-030° altitude should not below 7 000 ft Radial 031°-060° altitude should not below 9 000 ft Radial 061°-070° altitude should not below 10 000 ft Radial 071°-120° altitude should not below 9 000 ft Radial 121°-360° unable to perform due to border limited"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phitsanulok Airport (1st floor of airport building) Tel: +665 530 1078 Tel: +669 2262 3140 Fax: +665 530 1077",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+665 530 1078"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3140"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 530 1077"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -7073,6 +7248,10 @@
     }
    ],
    "navaids": [],
+   "rmk23": {
+    "text": "Other this period and holiday 48 HRS PN to airport",
+    "phones": []
+   },
    "charts": [],
    "proc": "VTPN AD 2.22 FLIGHT PROCEDURES NIL",
    "points": [],
@@ -7614,6 +7793,27 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phitsanulok Air Traffic Control Centre (2nd floor of Administration building) Tel: +665 530 1078 Tel: +669 2262 3140 Fax: +665 530 1077 Fuelling: Overtime fuelling service available on request Tel: +666 2596 8000",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+665 530 1078"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3140"
+     },
+     {
+      "t": "Fax",
+      "n": "+665 530 1077"
+     },
+     {
+      "t": "Tel",
+      "n": "+666 2596 8000"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -7951,6 +8151,10 @@
    ],
    "comm": [],
    "navaids": [],
+   "rmk23": {
+    "text": "Other this period and holiday 48 HRS PN to airport",
+    "phones": []
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -8200,6 +8404,23 @@
      "rmk": "- DME co-located with GlideSlope power output 100 wattsUni-directional"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Surat Thani Air Traffic Control Centre (1st floor of tower building) Tel: +667 744 1008 Tel: +669 1010 1837 Fax: +667 744 1009",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+667 744 1008"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 1010 1837"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 744 1009"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -8552,6 +8773,19 @@
      "rmk": "Narathiwat GP RWY 02 unusable beyond 6 degrees left of LOC course."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Hat Yai Air Traffic Control Centre (1st floor of tower building) Tel: +669 2262 2436 Fax: +667 425 1050",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 2262 2436"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 425 1050"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -8887,6 +9121,23 @@
      "rmk": "DME: Paired with LOC FREQ."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Surat Thani Air Traffic Control Centre (1st floor of tower building) Tel: +667 744 1008 Tel: +669 1010 1837 Fax: +667 744 1009",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+667 744 1008"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 1010 1837"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 744 1009"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -9256,6 +9507,23 @@
      "rmk": "DME - Paired with Glide Path. - Power output 100 watts. - Omni-directional antenna."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Surat Thani Air Traffic Control Centre (1st floor of tower building) Tel: +667 744 1008 Tel: +669 1010 1837 Fax: +667 744 1009",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+667 744 1008"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 1010 1837"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 744 1009"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -9610,6 +9878,23 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phuket International Airport (3rd floor of domestic terminal building) Tel: +667 632 7205 Tel: +669 2262 2141 Fax: +667 656 3048",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+667 632 7205"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 2141"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 656 3048"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -10199,6 +10484,19 @@
      "rmk": "NIL"
     }
    ],
+   "rmk23": {
+    "text": "AIS Briefing Office Located at Pattani Tower (5th floor of building) Tel: +662 534 6000 Ext. 62605 Tel: +667 334 0131",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+662 534 6000"
+     },
+     {
+      "t": "Tel",
+      "n": "+667 334 0131"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -10886,6 +11184,23 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phuket International Airport (3rd floor of domestic terminal building) Tel: +66 7656 3045 Mobile: +669 2262 2141 Fax: +66 7632 7205",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+66 7656 3045"
+     },
+     {
+      "t": "Mobile",
+      "n": "+669 2262 2141"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 7632 7205"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -11339,6 +11654,23 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Phuket International Airport (3rd floor of domestic terminal building) Tel: +667 632 7205 Tel: +669 2262 2141 Fax: +667 656 3048",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+667 632 7205"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 2141"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 656 3048"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -11671,6 +12003,19 @@
      "rmk": "HR service 30 Min PN to ATC"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Hat Yai Air Traffic Control Center (1st floor of tower building) Mobile: +669 2262 2436 Fax: +66 7425 1050",
+    "phones": [
+     {
+      "t": "Mobile",
+      "n": "+669 2262 2436"
+     },
+     {
+      "t": "Fax",
+      "n": "+66 7425 1050"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -12058,6 +12403,19 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Hat Yai Air Traffic Control Centre (1st floor of tower building) Tel: +669 2262 2436 Fax: +667 425 1050",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+669 2262 2436"
+     },
+     {
+      "t": "Fax",
+      "n": "+667 425 1050"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -12630,6 +12988,23 @@
      "rmk": "Military Facilities PN 30 min to ATC"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Udon Thani Air Traffic Control Centre (1st floor of tower building) Tel: +664 224 6803 EXT 7127 Tel: +669 2262 3477 Fax: +664 224 2797",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 224 6803"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3477"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 224 2797"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -13010,6 +13385,23 @@
      "rmk": "3 DEG REF Datum height 50 ft."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Udon Thani Air Traffic Control Centre (1st floor of tower building) Tel: +664 223 0124 Tel: +669 2262 3477 Fax: +664 224 2797",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 223 0124"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3477"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 224 2797"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -13303,6 +13695,23 @@
      "rmk": "DVOR/DME restriction due to terrain surround DVOR/DME station, coverage check does not provide adequate signal 40 NM nm . at required altitude in various areas as follows: Radial 001°-080° altitude should not below 2 500 ft. Radial 081°-220° altitude should not below 2 000 ft. Radial 221°-360° altitude should not below 3 500 ft."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Udon Thani Air Traffic Control Centre (1st floor of tower building) Tel: +664 223 0124 Tel: +669 2262 3477 Fax: +664 224 2797",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 223 0124"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3477"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 224 2797"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -13689,6 +14098,23 @@
      "rmk": "DVOR/DME restriction, Unusable due to roughness out of tolerance Radial 020° between 10-11 DME altitude 3 000 ft. Radial 243° between 7-8 DME altitude 6 000 ft and between 32-33 DME altitude 7 500 ft. Due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal to 40 NM at the required altitude in various areas as follows: 40 NM orbit Radial 030°-050° altitude should not below 10 000 ft. Radial 051°-100° altitude should not below 7 000 ft. Radial 101°-130° altitude should not below 10 000 ft. Radial 131°-200° altitude should not below 5 000 ft. Radial 201°-250° altitude should not below 12 000 ft. Radial 251°-270° altitude should not below 13 000 ft. 20 NM orbit (Due to border limited) Radial 271°-029° altitude should not below 4 500 ft."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Udon Thani Air Traffic Control Centre (1st floor of tower building) Tel: +664 223 0124 Tel: +669 2262 3477 Fax: +664 224 2797",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 223 0124"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3477"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 224 2797"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -14022,6 +14448,15 @@
      "rmk": ""
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Base Operation Office. (1st floor of Flight support unit building) Tel: +664 435 8110 Ext 40515-6 E-mail: [email protected]",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 435 8110"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Instrument Approach Chart - ICAO - ILS or LOC RWY 24",
@@ -14307,6 +14742,31 @@
      "rmk": "DVOR/DME restriction due to mountainous terrain surround DVOR/DME station, coverage check does not provide adequate signal clockwise orbit 40 NM at required altitude in various areas as follows: Radial 091°-140° altitude should not below 3 500 ft Radial 141°-240° altitude should not below 5 000 ft Radial 241°-280° altitude should not below 4 000 ft Radial 281°-090° altitude should not below 2 500 ft"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of Building) Tel: +664 425 8855 Ext. 7272, +668 9845 1649 Fax: +664425 8952 Ext. 7273 E-mail: [email protected] Hours of services: 2300-1100 after this period contact Tel: +664 525 6407, +668 9488 2157 Fax: +664 524 0798 Ext. 7874",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 425 8855"
+     },
+     {
+      "t": "Fax",
+      "n": "+664425 8952"
+     },
+     {
+      "t": "Tel",
+      "n": "+664 525 6407"
+     },
+     {
+      "t": "Tel",
+      "n": "+668 9488 2157"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 524 0798"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -14627,6 +15087,19 @@
      "rmk": "DME: Paired with LOC Freq."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Nakhon Ratchasima Air Traffic Control Centre (1st floor of building) Tel: +664 425 8855 Ext 7272, +668 9845 1649 Fax: +664 425 8952 Ext. 7273 Email: [email protected]",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 425 8855"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 425 8952"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -15019,6 +15492,23 @@
      "rmk": "Other this period 2 HR PN TO ATC"
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Ubon Ratchathani Air Traffic Control Centre (1st floor of tower building) Tel: +664 525 6407, +668 9488 2157 Fax: +664 524 0798 Ext. 7874",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 525 6407"
+     },
+     {
+      "t": "Tel",
+      "n": "+668 9488 2157"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 524 0798"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -15414,6 +15904,23 @@
      "rmk": "DME: Paired with LOC FREQ."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Ubon Ratchathani Air Traffic Control Centre (1st floor of tower building) Tel: +664 525 6407, +668 9488 2157 Fax: +664 524 0798 Ext. 7874",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 525 6407"
+     },
+     {
+      "t": "Tel",
+      "n": "+668 9488 2157"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 524 0798"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -15801,6 +16308,23 @@
      "rmk": "Paired with LOC FREQ."
     }
    ],
+   "rmk23": {
+    "text": "ATS Reporting Office (ARO): Located at Udon Thani Air Traffic Control Centre (1st floor of tower building) Tel: +664 223 0124 Tel: +669 2262 3477 Fax: +664 224 2797",
+    "phones": [
+     {
+      "t": "Tel",
+      "n": "+664 223 0124"
+     },
+     {
+      "t": "Tel",
+      "n": "+669 2262 3477"
+     },
+     {
+      "t": "Fax",
+      "n": "+664 224 2797"
+     }
+    ]
+   },
    "charts": [
     {
      "name": "Aerodrome Chart - ICAO",
@@ -16038,6 +16562,10 @@
    ],
    "comm": [],
    "navaids": [],
+   "rmk23": {
+    "text": "Operational hours will active by NOTAM Arriving aircraft is required to obtain prior permission from RTAF before entering/landing.",
+    "phones": []
+   },
    "charts": [],
    "proc": "VTUZ AD 2.22 FLIGHT PROCEDURES NIL",
    "points": [],
