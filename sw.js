@@ -2,7 +2,7 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v95";
+const V = "vfr-v96";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json", "notam.json", "cp_template.xlsx", "contacts_template.xlsx", "provinces.json", "ppc_tpl.json",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
@@ -33,7 +33,7 @@ self.addEventListener("fetch", e => {
   const req = e.request; if (req.method !== "GET") return;
   const url = new URL(req.url);
   // ภาพแผนที่: cache-first
-  if (TILE_HOSTS.some(h => url.hostname.includes(h))) {
+  if (TILE_HOSTS.some(h => url.hostname.includes(h) || url.pathname.includes(h))) {
     // โหลดแผนที่ออฟไลน์ (หน้าแอปเก็บเองใน vfr-offline) → ส่งผ่าน ไม่เก็บซ้ำใน vfr-tiles
     if (url.searchParams.has("vfroff")) { url.searchParams.delete("vfroff"); e.respondWith(fetch(url.href, { mode: "cors", credentials: "omit" })); return; }
     e.respondWith(caches.open("vfr-tiles").then(async c => {
