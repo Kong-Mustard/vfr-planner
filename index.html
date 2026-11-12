@@ -650,6 +650,11 @@ body.pvprev .pv-panel .pv-ctl .kc-g{margin:0!important;width:auto!important}body
 .pv-panel .kb-ap{padding:6px 10px!important}.pv-panel .kb-ap h4{font-size:14px!important;margin:0 0 2px!important}
 .pv-panel .kb-ap label{padding:1px 0!important;font-size:13px!important;gap:6px!important;line-height:1.3}.pv-panel .kb-ap input{width:18px!important;height:18px}
 @media (pointer:coarse){body.pvprev .pv-bar{padding-top:calc(env(safe-area-inset-top,0px) + 22px)!important}}
+.stale-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fef3c7;color:#78350f;border:1.5px solid #f59e0b;border-radius:12px;padding:8px 12px;margin:0 0 10px;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.stale-bar[hidden]{display:none}.stale-bar b{color:#92400e}.stale-bar span{flex:1;min-width:200px}.stale-bar button{min-height:36px;border-radius:10px;background:#fff;color:#78350f;border:1px solid #f59e0b;font-weight:700}
+.terr-body{display:block!important;font-size:15px;line-height:1.55}.terr-body h4{margin:12px 0 4px;font:800 15px var(--f-display)}.terr-body ul{margin:0;padding-left:20px}.terr-body li{margin:3px 0}
+.terr-ck{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;margin-top:12px;font-weight:700}.terr-ck input{width:22px;height:22px}
+dialog.terr-dlg{width:min(680px,94vw)}
 dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
 .off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
 .off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
@@ -1361,6 +1366,7 @@ body.cl-on{overflow:hidden}
 </nav>
 
 <main>
+<div id="staleBar" class="stale-bar" role="status" hidden></div>
 <details class="disclaimer" role="note"><summary>⚠ ข้อมูลบางส่วนอาจไม่อัปเดต — ตรวจสอบกับแหล่งทางการก่อนบินทุกครั้ง</summary><p>แพลตฟอร์มนี้เป็นแพลตฟอร์มที่ช่วยผ่อนแรงในการวางแผน ซึ่งข้อมูลบางอย่างอาจเป็นข้อมูลที่ยังไม่ได้อัพเดตหรือตรวจสอบ กรุณาตรวจสอบข้อมูลที่ถูกต้องอีกครั้ง (eAIP / NOTAM / TM ฉบับปัจจุบัน)</p></details>
 <!-- ============ TAB 1 ============ -->
 <button type="button" id="toTop" class="totop" aria-label="กลับขึ้นด้านบน" title="กลับขึ้นด้านบน" hidden>↑</button>
@@ -1801,6 +1807,24 @@ body.cl-on{overflow:hidden}
 </section>
 
 </main>
+<dialog id="terrDlg" class="kb terr-dlg" aria-labelledby="terrTitle">
+  <div class="kb-head"><h2 id="terrTitle">⛰ ข้อจำกัดของการแจ้งเตือนในโหมด GPS</h2></div>
+  <div class="kb-body terr-body">
+    <p><b>ระบบแจ้งเตือนในโหมด GPS ใช้ช่วยระวังเท่านั้น ไม่ใช่ระบบ TAWS/GPWS และไม่ใช่เครื่องวัดที่ได้รับการรับรอง</b> — ใช้ประกอบการมองนอกเครื่อง เครื่องวัดในเครื่องบิน และการวางแผน</p>
+    <h4>⛰ เตือนภูมิประเทศข้างหน้า อ้างอิงจาก</h4>
+    <ul><li><b>ความสูงของเรา</b> = ความสูงจาก GPS ของ iPad (ไม่ใช่ altimeter) อาจคลาด ±50–100 ft หรือมากกว่าเมื่อสัญญาณ GPS ไม่ดี และไม่ปรับตาม QNH</li>
+      <li><b>ความสูงภูมิประเทศ</b> = แบบจำลองความสูง (DEM) ความละเอียดประมาณ 150 ม. ยอดเขาแหลมอาจต่ำกว่าจริง <b>ไม่รวม</b> เสาสัญญาณ สายไฟ อาคาร และต้นไม้</li>
+      <li>มองไปข้างหน้า <b>5 NM</b> ตามทิศที่บินจริง กว้างข้างละ 0.5 NM — ไม่เห็นภูเขาที่อยู่ด้านข้างหรือตอนเลี้ยว</li>
+      <li>เตือน <b>สีเหลือง</b> เมื่อสูงกว่ายอดไม่ถึง 500 ft · <b>สีแดง PULL UP</b> เมื่อต่ำกว่ายอด · ทำงานเมื่อความเร็วเกิน 15 kt</li>
+      <li>ข้อมูลภูมิประเทศต้องโหลดไว้ก่อน (ต่อเน็ต หรือกด “⬇ ออฟไลน์” ตามเส้นทาง) — ถ้าไม่มีข้อมูล ระบบจะ<b>ไม่เตือน</b></li></ul>
+    <h4>📍 การแจ้งเตือนอื่น</h4>
+    <ul><li>เลี้ยวเข้าขาถัดไป · ใกล้พื้นที่ P/R/D · ใกล้ปลายทาง — อ้างอิงเส้นทางที่วางแผนและขอบเขตพื้นที่จาก eAIP (อาจไม่รวม NOTAM ที่ประกาศใหม่)</li>
+      <li>ตรวจน้ำมันทุก 30 นาที — คำนวณจาก Burn rate ในแผนและความเร็ว GPS เป็นการคาดการณ์เท่านั้น</li>
+      <li>ตำแหน่ง GPS ของ iPad อาจคลาดหรือขาดหายในห้องนักบิน ให้ตรวจกับระบบนำทางของเครื่องเสมอ</li></ul>
+    <label class="terr-ck"><input type="checkbox" id="terrNoShow"> เข้าใจแล้ว ไม่ต้องแสดงอีก</label>
+  </div>
+  <div class="kb-foot"><span class="hint">ดูข้อความนี้อีกครั้งได้ที่ปุ่ม ⓘ ข้าง GPS</span><div class="btns"><button id="terrOk" class="primary">รับทราบ เริ่ม GPS</button></div></div>
+</dialog>
 <dialog id="offDlg" class="kb off" aria-labelledby="offTitle">
   <div class="kb-head"><h2 id="offTitle">⬇ แผนที่ออฟไลน์ตามเส้นทาง</h2></div>
   <div class="kb-body">
@@ -2592,7 +2616,7 @@ async function metarLoad(){const box=$("#metarList");
     const near=routeAirports(num($("#corridor").value,25)).map(a=>a.id);const ids=[...new Set([...W,...near])].filter(i=>d.metar[i]||d.taf[i]);
     const age=Math.round((Date.now()-new Date(d.fetched.replace("Z",":00Z")))/60000);
     $("#metarSrc").textContent=`aviationweather.gov · อัปเดต ${age} นาทีที่แล้ว · สนามตามเส้นทาง`;
-    metarCache=d;wxSumRender();
+    metarCache=d;wxSumRender();setTimeout(()=>typeof staleCheck==="function"&&staleCheck(),0);
     box.innerHTML=ids.length?ids.map(i=>{const m=d.metar[i],t=d.taf[i];const qh=m?metarQnh(m.raw):null;return`<div class="metar"><div class="metar-h"><b>${i}</b>${m&&m.cat?`<span class="fc ${m.cat}">${m.cat}</span>`:""}${qh?`<span class="qnhchip">QNH ${(qh/HPA_PER_INHG).toFixed(2)} / ${Math.round(qh)}</span><button class="mini qnhuse" data-qnh="${qh}">ใช้ QNH นี้</button>`:""}</div>
       ${m?metarDecode(m.raw):'<p class="hint">ไม่มี METAR</p>'}<details><summary>ข้อความดิบ METAR${t?" / TAF":""}</summary><code>${m?esc(m.raw):""}</code>${t?`<br><code style="color:var(--muted)">${esc(t.raw)}</code>`:""}</details></div>`}).join("")
       :`<p class="hint">ไม่มี METAR/TAF ของสนามตามเส้นทาง (สนามทหารบางแห่งไม่มีในระบบสากล)</p>`}
@@ -2936,7 +2960,7 @@ function ntRender(){if(!$("#ntList"))return;setTimeout(()=>{try{renderAreaNt()}c
   const a=NT_AUTO_META;$("#ntInfo").innerHTML=(a?`<span class="nt-src">🌐 ดึงอัตโนมัติจาก <b>${esc(a.source)}</b> · อัปเดต ${a.age} · ${a.n} NOTAM</span><span class="nt-src-w">⚠ ชุดนี้มีเฉพาะ NOTAM ระหว่างประเทศ (ICAO) — <b>ถ้าบินในประเทศไทย ต้องดึง NOTAM ในประเทศจาก AEROTHAI เอง</b> แล้วกด 📋 วางจาก AEROTHAI หรือวางในกล่องด้านล่าง</span>`:'<span class="warnc">ยังไม่มีชุด NOTAM อัตโนมัติ — ใช้การวางเองด้านล่างได้</span>')+(a&&a.err?` · <span class="bad">ดึงรอบล่าสุดไม่สำเร็จ (${esc(a.err)})</span>`:"")+(NT.length?` · วางเอง ${NT.length}`:"");
   if(ntView==="map")ntDrawMap(E)}
 let NT_AUTO_META=null;
-async function ntLoadAuto(force){try{const d=await(await fetch("notam.json",{cache:force?"reload":"no-cache"})).json();
+async function ntLoadAuto(force){window._ntTried=1;try{const d=await(await fetch("notam.json",{cache:force?"reload":"no-cache"})).json();window._ntFetched=d.fetched;setTimeout(()=>typeof staleCheck==="function"&&staleCheck(),0);
   NT_AUTO=[];(d.notams||[]).forEach(x=>{const p=ntParse(x.icao,{plain:x.plain||"",keyword:x.keyword||"",auto:true});if(p.length){if(!p[0].loc)p[0].loc=x.loc;NT_AUTO.push(p[0])}});
   const age=Math.round((Date.now()-new Date(String(d.fetched).replace("Z",":00Z")))/60000);
   NT_AUTO_META={source:d.source||"",n:NT_AUTO.length,age:isFinite(age)?(age<90?age+" นาทีที่แล้ว":Math.round(age/60)+" ชม.ที่แล้ว"):"–",err:d.last_error?(d.last_error.errors||[])[0]:""}}
@@ -4451,7 +4475,10 @@ const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=
   d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิดตำแหน่ง GPS ของอุปกรณ์">📍 GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
   d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
 new GpsCtl().addTo(map);
-function gpsStart(sim){GPS.on=true;GPS.al=null;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
+function terrInfo(then){const d=$("#terrDlg");if(!d){if(then)then();return}$("#terrNoShow").checked=false;$("#terrOk").textContent=then?"รับทราบ เริ่ม GPS":"ปิด";
+  $("#terrOk").onclick=()=>{if($("#terrNoShow").checked){try{localStorage.setItem("vfr_terr_ack","1")}catch(e){}}d.close();if(then)then()};d.showModal()}
+function gpsStart(sim){if(!sim&&!window._terrAsked){let ack=null;try{ack=localStorage.getItem("vfr_terr_ack")}catch(e){}if(!ack){window._terrAsked=1;terrInfo(()=>gpsStart(sim));return}}
+  GPS.on=true;GPS.al=null;GPS.pts=[];GPS.last=null;GPS.trk=null;GPS.leg=0;GPS.started=false;GPS.follow=true;$("#gpsBtn").classList.add("on");$("#gpsBtn").textContent="📍 GPS เปิด";$("#gpsHud").hidden=false;
   $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();gpsTouchMode(true);
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(l=>GPS.lock=l).catch(()=>{});
   if(sim){gpsSimStart();return}
@@ -4462,11 +4489,12 @@ function gpsStart(sim){GPS.on=true;GPS.al=null;GPS.pts=[];GPS.last=null;GPS.trk=
 function gpsStop(){GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
-function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
 $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
   if(g==="dto"){gpsDtoMenu();return}
+  if(g==="info"){terrInfo();return}
   if(g==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(e){}gpsHud();toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
   if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
   if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
@@ -5010,6 +5038,16 @@ function pvLegPop(KL,pv,k,i,W,ev){document.querySelectorAll(".lsty-pop").forEach
   draw();document.body.appendChild(b);const x=ev?ev.clientX:innerWidth/2,y=ev?ev.clientY:innerHeight/2,bw=b.offsetWidth,bh=b.offsetHeight;
   b.style.left=Math.max(8,Math.min(innerWidth-bw-8,x-bw/2))+"px";b.style.top=(y+16+bh<innerHeight-8?y+16:Math.max(8,y-bh-16))+"px";
   setTimeout(()=>{const off=e=>{if(!b.contains(e.target)){b.remove();document.removeEventListener("pointerdown",off,true)}};document.addEventListener("pointerdown",off,true)},0)}
+/* ---------- แถบเตือนข้อมูลเก่า (METAR / NOTAM ไม่อัปเดตเกิน 2 ชม. เช่น ออฟไลน์) ---------- */
+let staleDismiss="";
+function staleCheck(){const bar=$("#staleBar");if(!bar)return;const age=f=>{const t=new Date(String(f||"").replace(/Z$/,":00Z").replace(/:00:00Z$/,":00Z"));const m=(Date.now()-t)/60000;return isFinite(m)?m:null};
+  const fmt=m=>m<120?Math.round(m)+" นาที":m<2880?(m/60).toFixed(1).replace(/\.0$/,"")+" ชม.":Math.round(m/1440)+" วัน";const L=[];
+  const ma=metarCache?age(metarCache.fetched):null;if(ma==null)L.push("<b>METAR</b> ยังโหลดไม่ได้");else if(ma>120)L.push(`<b>METAR</b> อายุ ${fmt(ma)}`);
+  const na=window._ntFetched?age(window._ntFetched):null;if(na==null&&window._ntTried)L.push("<b>NOTAM</b> ยังโหลดไม่ได้");else if(na!=null&&na>120)L.push(`<b>NOTAM</b> อายุ ${fmt(na)}`);
+  const key=L.join("|");if(!L.length||key===staleDismiss){bar.hidden=true;return}
+  bar.innerHTML=`<span>⚠ ข้อมูลไม่อัปเดต: ${L.join(" · ")}${navigator.onLine?"":" — <b>ตอนนี้ออฟไลน์</b>"} · ใช้ประกอบการตัดสินใจด้วยความระวัง</span><button type="button" data-st="r">↻ ดึงใหม่</button><button type="button" data-st="x" aria-label="ซ่อน">✕</button>`;bar.hidden=false;
+  bar.onclick=async e=>{const b=e.target.closest("[data-st]");if(!b)return;if(b.dataset.st==="x"){staleDismiss=key;bar.hidden=true;return}b.textContent="⏳";try{await metarLoad()}catch(x){}try{await ntLoadAuto(true)}catch(x){}staleCheck();toast(bar.hidden?"อัปเดตข้อมูลแล้ว":"ยังดึงข้อมูลใหม่ไม่ได้ — ตรวจการเชื่อมต่อ")}}
+setInterval(staleCheck,5*60000);addEventListener("online",()=>{metarLoad&&metarLoad().catch(()=>{});staleCheck()});addEventListener("offline",staleCheck);setTimeout(staleCheck,6000);
 </script>
 </body>
 </html>
