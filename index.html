@@ -179,7 +179,7 @@ body.printing #pvMap .wpicon{transform:scale(var(--pvwp,1))}
 body.printing #pvMap .wpicon:not(.rpt):not(.seq){background:var(--pvwpc,#d6198f)!important}body.printing #pvMap .wpicon.seq{color:var(--pvwpc,#d6198f)!important;border-color:var(--pvwpc,#d6198f)!important}
 body.printing #pvMap .wpicon.rpt{background:var(--pvrpc,#ffd400)!important;color:var(--pvrptx,#111)!important}
 body.printing #pvMap .rplabel{background:var(--pvrpc,#ffd400);color:var(--pvrptx,#111);font-size:calc(12px*var(--pvrpfs,1))}
-body.printing #pvMap .leaflet-overlay-pane path[stroke="#d6198f"]:not(.leghit),body.printing #pvMap .leaflet-overlay-pane path[stroke="#ff3d8b"]:not(.leghit){stroke-width:calc(4px*var(--pvline,1));stroke:var(--pvlcol,#d6198f);stroke-dasharray:var(--pvldash,none);stroke-opacity:var(--pvlop,1)}
+body.printing #pvMap .leaflet-overlay-pane path[stroke="#d6198f"]:not(.leghit):not(.pvleg),body.printing #pvMap .leaflet-overlay-pane path[stroke="#ff3d8b"]:not(.leghit):not(.pvleg){stroke-width:calc(4px*var(--pvline,1));stroke:var(--pvlcol,#d6198f);stroke-dasharray:var(--pvldash,none);stroke-opacity:var(--pvlop,1)}
 #printView .pv-head h1{font-size:calc(15pt*var(--pvhd,1))}#printView .pv-head .tot{font-size:calc(10pt*var(--pvhd,1))}#printView .pv-head .sa{font-size:calc(12pt*var(--pvhd,1))}
 #printView .pv-tbl{font-size:var(--pvtfs,8pt)}#printView .pv-tbl th{font-size:var(--pvtfs,8pt)}
 #printView .pv-unit{font-size:calc(var(--pvfs,7.5pt)*1.45)}
@@ -627,6 +627,29 @@ body.pvprev .pv-panel .pv-ctl{display:flex;flex-direction:column;gap:10px;flex-w
 .kb-vis{display:flex;flex-direction:column;gap:6px;margin-top:6px}.kv-g{border:1px solid #e2e8f0;border-radius:10px;padding:5px 8px;background:#f8fafc}.kv-g>b{display:block;font:800 12.5px var(--f-display);color:#334155;margin-bottom:2px}
 .kv-g>div{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px}.kv-g label{display:flex;align-items:center;gap:6px;font-size:13px;padding:3px 0;color:#111}.kv-g input{width:20px!important;height:20px;flex:0 0 auto}.kv-g i{width:10px;height:10px;border-radius:2px;display:inline-block;flex:0 0 auto}
 body.pv-route #pvMap .leaflet-control-scale,body.pv-route #pvMap .leaflet-control-attribution{display:none!important}
+body.printing.pvlegs #pvMap .leaflet-overlay-pane path[stroke="#d6198f"]:not(.leghit):not(.pvleg),body.printing.pvlegs #pvMap .leaflet-overlay-pane path[stroke="#ff3d8b"]:not(.leghit):not(.pvleg){stroke-opacity:0!important}
+body.printing #pvMap path.pvleghit{cursor:pointer}
+.lsty-pop{position:fixed;z-index:5000;background:#fff;color:#111;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:10px 12px;width:min(320px,92vw);font:14px var(--f-body)}
+.ls-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}.ls-h span{flex:1;color:#475569;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ls-h .ls-x{min-width:34px;min-height:34px;border-radius:10px}
+.ls-r{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}
+.lsty-pop button:not(.ls-c){background:#f1f5f9!important;color:#0f172a!important;border:1px solid #cbd5e1!important;box-shadow:none!important}.lsty-pop .ls-d button.on{background:#0f172a!important;color:#fff!important;border-color:#0f172a!important}
+.ls-c{width:32px;height:32px;min-height:0!important;border-radius:50%!important;background:var(--c)!important;border:2px solid #fff!important;box-shadow:0 0 0 1px #94a3b8;padding:0!important}.ls-c.on{box-shadow:0 0 0 3px #0f172a}
+.ls-d button{flex:1;display:flex;flex-direction:column;align-items:center;padding:4px 2px!important;min-height:44px;border-radius:10px!important;font-size:15px;letter-spacing:-1px}.ls-d button small{font-size:10.5px;letter-spacing:0}
+.ls-d button.on,.ls-w button:active{background:#0f172a!important;color:#fff!important}
+.ls-w span{flex:1;color:#475569}.ls-w button{min-width:42px;min-height:38px;font-size:18px;border-radius:10px!important}.ls-w b{min-width:48px;text-align:center}
+.ls-b button{flex:1;min-height:38px;border-radius:10px!important}
+/* แผงข้าง Kneeboard: กระชับ */
+.kb-vis{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px!important}
+.pv-panel .kv-g>div{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:0 10px!important}
+.pv-panel .kv-g label{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;gap:7px!important;padding:3px 0!important;font-size:13.5px!important;line-height:1.25}
+.pv-panel .kv-g label input{margin:0!important}
+body.pvprev .pv-panel .pv-ctl{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));align-items:start;gap:8px!important}
+body.pvprev .pv-panel .pv-ctl .kc-g{margin:0!important;width:auto!important}body.pvprev .pv-panel .pv-ctl #pvReset{grid-column:1/-1;justify-self:start}
+.pv-panel .kc-r{padding:1px 0!important}
+.pv-panel .kb-body{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important;gap:8px!important}
+.pv-panel .kb-ap{padding:6px 10px!important}.pv-panel .kb-ap h4{font-size:14px!important;margin:0 0 2px!important}
+.pv-panel .kb-ap label{padding:1px 0!important;font-size:13px!important;gap:6px!important;line-height:1.3}.pv-panel .kb-ap input{width:18px!important;height:18px}
+@media (pointer:coarse){body.pvprev .pv-bar{padding-top:calc(env(safe-area-inset-top,0px) + 22px)!important}}
 dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
 .off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
 .off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
@@ -3470,7 +3493,7 @@ function kneePrint(preview){
       <div class="ink-g"><button data-fx="justifyLeft" title="ชิดซ้าย">⯇≡</button><button data-fx="justifyCenter" title="กึ่งกลาง">≡</button><button data-fx="justifyRight" title="ชิดขวา">≡⯈</button><button data-fz="-1" title="ย่อกล่องที่เลือก">A−</button><button data-fz="1" title="ขยายกล่องที่เลือก">A+</button></div>
       <div class="ink-g"><button id="pvAddTxt" title="เพิ่มกล่องข้อความ">➕<small>ข้อความ</small></button><button id="pvAddBox" title="เพิ่มกรอบ">▭<small>กรอบ</small></button><button id="pvDelBlk" title="ลบกล่องที่เลือก">🗑<small>ลบ</small></button></div>
       <div class="ink-g"><button id="pvMulti" title="แตะเพื่อเลือกหลายกล่อง (บนคอมใช้ Shift-คลิกก็ได้)">☑<small>เลือกหลาย</small></button><button id="pvGroup" title="รวมกล่องที่เลือกเป็นกลุ่ม — ย้าย/ย่อขยายพร้อมกัน">🔗<small>รวม</small></button><button id="pvUngroup" title="แยกกลุ่ม">✂<small>แยก</small></button><span id="pvSelN" class="hint"></span></div>
-      <div class="ink-g"><button id="pvUndo" title="ย้อนกลับ (Ctrl+Z)">↶<small>ย้อน</small></button><button id="pvFreeReset" title="จัดหน้าใหม่ทั้งหมด">↺<small>จัดใหม่</small></button></div>
+      <div class="ink-g"><button id="pvUndo" title="ย้อนกลับ (Ctrl+Z)">↩︎<small>ย้อน</small></button><button id="pvFreeReset" title="จัดหน้าใหม่ทั้งหมด">↺<small>จัดใหม่</small></button></div>
       <span class="hint pvf-hint">ลาก ⠿ เพื่อย้าย · ลากมุมขวาล่างเพื่อย่อขยาย · แตะกล่องเพื่อเลือก</span></div>
     <details class="pv-ctlw pp-sec" ${innerWidth<900?"":"open"}><summary>⚙️ ปรับขนาด / รูปแบบ</summary><div class="pv-ctl">
       <div class="kc-g"><h4>📄 หน้ากระดาษ</h4>
@@ -3506,15 +3529,15 @@ function kneePrint(preview){
     if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
       const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
       const mh=Math.max(60,Math.min(P.h-20,Math.floor(Math.max(mhNow,bh*25.4/96)+(lim-used)*25.4/96-1.5)));if(Math.abs(mh-mhNow)>=1){KL.maph=mh;pv.style.setProperty("--pvmh",mh+"mm");map.invalidateSize();const el=pv.querySelector('[data-kl="maph"]');if(el)el.value=mh;kcOut(pv,"maph",mh)}}}
-    if(typeof kbInkPaint==="function")kbInkPaint(pv);
+    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
   if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw){const first=pp.querySelector(".pp-sec");first.after(cw);pp.insertAdjacentHTML("afterbegin",'<p class="pp-tip">💡 แตะตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้ (เฉพาะใบนี้) · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>')}}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
-    window._pvVis=(k,on)=>{restore();visSet(k,on);visSave();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};setTimeout(kbVisRender,80);
+    window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};setTimeout(kbVisRender,80);
     window._pvCards=()=>{const c=pv.querySelector(".pv-cards");if(c){c.innerHTML=kbCards();c.querySelectorAll(".fcard h3,.fcard .r b,.fcard .r span").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}applyKL()};
     pv.querySelector(".pv-ctl").addEventListener("click",e=>{const b=e.target.closest("[data-lc],[data-sw]");if(!b)return;const k=b.dataset.sw||"lcol",c=pv.querySelector(`[data-kl="${k}"]`);c.value=b.dataset.lc||b.dataset.v;c.dispatchEvent(new Event("input",{bubbles:true}))});
     pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:(e.target.tagName==="SELECT"||e.target.type==="color")?e.target.value:+e.target.value;
@@ -4344,7 +4367,7 @@ function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;if(k==="if
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
-function dhQSync(){const on=visOn("hbox");const kd=$("#kbDog");if(kd&&kd.checked!==on){kd.checked=on;if(window._pvRemap)window._pvRemap()}document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
+function dhQSync(){const on=visOn("hbox");const kd=$("#kbDog");if(kd&&kd.checked!==on){kd.checked=on;if(window._pvRemap&&!window._pvBusy)window._pvRemap()}document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
 function visSync(){dhQSync();document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
 function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>VIS.find(v=>v.k===k)&&visOn(k))}
 function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
@@ -4885,20 +4908,20 @@ function inkBarHtml(extra){return`<div class="ink-bar" role="toolbar" aria-label
   <div class="ink-g"><button type="button" data-it="pen" title="ปากกา">✏️<small>ปากกา</small></button><button type="button" data-it="hl" title="ไฮไลต์">🖍️<small>ไฮไลต์</small></button><button type="button" data-it="erase" title="ยางลบ — แตะหรือลากผ่านเส้นที่จะลบ">🧽<small>ยางลบ</small></button><button type="button" data-it="text" title="ข้อความ — แตะตำแหน่งที่จะวาง">𝐓<small>ข้อความ</small></button><button type="button" data-it="sym" title="สัญลักษณ์ — แตะตำแหน่งที่จะวาง">★<small>สัญลักษณ์</small></button><select class="ink-sym" aria-label="เลือกสัญลักษณ์">${INK_SYMS.map(s=>`<option${s===INK_DEF.sym?" selected":""}>${s}</option>`).join("")}</select></div>
   <div class="ink-g ink-cols">${INK_COLORS.map(c=>`<button type="button" data-ic="${c}" style="--c:${c}" aria-label="สี ${c}"></button>`).join("")}</div>
   <div class="ink-g ink-ws">${[[2,"S"],[3.5,"M"],[6,"L"]].map(([w,t])=>`<button type="button" data-iw="${w}" title="ขนาด ${t}"><i style="--w:${w*1.6}px"></i></button>`).join("")}</div>
-  <div class="ink-g"><button type="button" data-ia="undo" title="ย้อน">↶</button><button type="button" data-ia="redo" title="ทำซ้ำ">↷</button><button type="button" data-ia="clear" title="ลบทั้งหมด">🗑</button><button type="button" data-ia="pencil" title="วาดด้วย Apple Pencil เท่านั้น — นิ้วใช้เลื่อน/ซูมได้">✍️<small>Pencil</small></button></div>
+  <div class="ink-g"><button type="button" data-ia="undo" title="ย้อน">↩︎<small>ย้อน</small></button><button type="button" data-ia="redo" title="ทำซ้ำ">↪︎<small>ทำซ้ำ</small></button><button type="button" data-ia="clear" title="ลบทั้งหมด">🗑</button><button type="button" data-ia="pencil" title="วาดด้วย Apple Pencil เท่านั้น — นิ้วใช้เลื่อน/ซูมได้">✍️<small>Pencil</small></button></div>
   <div class="ink-g">${extra||""}<button type="button" data-ia="done" class="ink-done">✓ เสร็จ</button></div></div>`}
 /* ตัวควบคุมกลาง: S = {cap, toPt(e), toClient(p), load(), save(items), draw(items,live), onDone, scale()} */
 function inkCtl(bar,S){let items=S.load(),live=null,undo=[],redo=[],erasing=false;
   const sync=()=>{bar.querySelectorAll("[data-it]").forEach(b=>b.classList.toggle("on",b.dataset.it===INK_DEF.tool));bar.querySelectorAll("[data-ic]").forEach(b=>b.classList.toggle("on",b.dataset.ic===INK_DEF.c));
     bar.querySelectorAll("[data-iw]").forEach(b=>b.classList.toggle("on",+b.dataset.iw===+INK_DEF.w));const p=bar.querySelector('[data-ia="pencil"]');p.classList.toggle("on",!!INK_DEF.pencil);
-    S.cap.style.touchAction=INK_DEF.pencil?"pan-x pan-y pinch-zoom":"none";bar.querySelector('[data-ia="undo"]').disabled=!undo.length;bar.querySelector('[data-ia="redo"]').disabled=!redo.length;S.cap.dataset.tool=INK_DEF.tool};
+    S.cap.style.touchAction=INK_DEF.pencil?"pan-x pan-y pinch-zoom":"none";S.cap.style.pointerEvents=INK_DEF.tool?"":"none";if(S.onTool)S.onTool(INK_DEF.tool);bar.querySelector('[data-ia="undo"]').disabled=!undo.length;bar.querySelector('[data-ia="redo"]').disabled=!redo.length;S.cap.dataset.tool=INK_DEF.tool};
   const commit=next=>{undo.push(JSON.stringify(items));if(undo.length>60)undo.shift();redo=[];items=next;S.save(items);S.draw(items,null);sync()};
   const hit=(e)=>{const R=14;let k=-1;items.forEach((it,i)=>{if(k>=0)return;const pts=it.t==="s"?it.p:[[it.x,it.y]];for(let j=0;j<pts.length;j++){const c=S.toClient(pts[j]);
     if(Math.hypot(c[0]-e.clientX,c[1]-e.clientY)<=R+(it.t==="x"?it.s*S.scale()*.5:it.w*S.scale()*.5)){k=i;return}
     if(it.t==="s"&&j>0){const a=S.toClient(pts[j-1]),dx=c[0]-a[0],dy=c[1]-a[1],L2=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((e.clientX-a[0])*dx+(e.clientY-a[1])*dy)/L2));if(Math.hypot(a[0]+t*dx-e.clientX,a[1]+t*dy-e.clientY)<=R){k=i;return}}}});return k};
   const skip=e=>INK_DEF.pencil&&e.pointerType==="touch";
   S.cap.addEventListener("pointerdown",e=>{if(skip(e)||e.button>0)return;e.preventDefault();const p=S.toPt(e),T=INK_DEF.tool;
-    if(T==="pen"||T==="hl"){try{S.cap.setPointerCapture(e.pointerId)}catch(x){}live={t:"s",c:INK_DEF.c,w:T==="hl"?INK_DEF.w*3.2:INK_DEF.w,o:T==="hl"?.35:1,p:[p]};S.draw(items,live)}
+    if(!T)return;if(T==="pen"||T==="hl"){try{S.cap.setPointerCapture(e.pointerId)}catch(x){}live={t:"s",c:INK_DEF.c,w:T==="hl"?INK_DEF.w*3.2:INK_DEF.w,o:T==="hl"?.35:1,p:[p]};S.draw(items,live)}
     else if(T==="erase"){erasing=true;try{S.cap.setPointerCapture(e.pointerId)}catch(x){}const k=hit(e);if(k>=0){const n=items.slice();n.splice(k,1);commit(n)}}
     else if(T==="text"){setTimeout(()=>{const v=prompt("ข้อความ");if(v&&v.trim())commit([...items,{t:"x",c:INK_DEF.c,s:8+INK_DEF.w*3,v:v.trim(),x:p[0],y:p[1],b:1}])},10)}
     else if(T==="sym")commit([...items,{t:"x",c:INK_DEF.c,s:14+INK_DEF.w*4,v:INK_DEF.sym,x:p[0],y:p[1],b:1}])});
@@ -4907,8 +4930,8 @@ function inkCtl(bar,S){let items=S.load(),live=null,undo=[],redo=[],erasing=fals
   const end=()=>{erasing=false;if(!live)return;const s=live;live=null;if(s.p.length===1)s.p.push([s.p[0][0]+1e-6,s.p[0][1]]);commit([...items,s])};
   S.cap.addEventListener("pointerup",end);S.cap.addEventListener("pointercancel",end);
   bar.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
-    if(b.dataset.it){INK_DEF.tool=b.dataset.it;inkPrefSave();sync();return}if(b.dataset.ic){INK_DEF.c=b.dataset.ic;if(INK_DEF.tool==="erase")INK_DEF.tool="pen";inkPrefSave();sync();return}
-    if(b.dataset.iw){INK_DEF.w=+b.dataset.iw;inkPrefSave();sync();return}const a=b.dataset.ia;
+    if(b.dataset.it){INK_DEF.tool=INK_DEF.tool===b.dataset.it?"":b.dataset.it;inkPrefSave();sync();if(!INK_DEF.tool)toast("ปิดเครื่องมือวาด · แตะเครื่องมืออีกครั้งเพื่อใช้");return}if(b.dataset.ic){INK_DEF.c=b.dataset.ic;if(INK_DEF.tool==="erase"||!INK_DEF.tool)INK_DEF.tool="pen";inkPrefSave();sync();return}
+    if(b.dataset.iw){INK_DEF.w=+b.dataset.iw;if(!INK_DEF.tool)INK_DEF.tool="pen";inkPrefSave();sync();return}const a=b.dataset.ia;
     if(a==="undo"&&undo.length){redo.push(JSON.stringify(items));items=JSON.parse(undo.pop());S.save(items);S.draw(items,null);sync()}
     else if(a==="redo"&&redo.length){undo.push(JSON.stringify(items));items=JSON.parse(redo.pop());S.save(items);S.draw(items,null);sync()}
     else if(a==="clear"&&items.length){if(confirm("ลบเส้น/ข้อความที่วาดทั้งหมด?"))commit([])}
@@ -4950,7 +4973,8 @@ function mapInkToggle(){const box=map.getContainer();let cap=box.querySelector("
     const pt=e=>map.mouseEventToContainerPoint(e);
     mapInkCtl=inkCtl(wrap.querySelector(".ink-bar"),{cap,toPt:e=>{const ll=map.containerPointToLatLng(pt(e));return[+ll.lat.toFixed(6),+ll.lng.toFixed(6)]},
       toClient:p=>{const c=map.latLngToContainerPoint(p),r=box.getBoundingClientRect();return[r.left+c.x,r.top+c.y]},scale:()=>1.4,
-      load:mapInkLoad,save:it=>{try{localStorage.setItem("vfr_map_ink",JSON.stringify(it))}catch(e){}},draw:mapInkDraw,onDone:mapInkToggle});
+      load:mapInkLoad,save:it=>{try{localStorage.setItem("vfr_map_ink",JSON.stringify(it))}catch(e){}},draw:mapInkDraw,onDone:mapInkToggle,
+      onTool:t=>{if(cap.hidden)return;if(t&&!cap.classList.contains("paused")){map.dragging.disable();map.touchZoom.disable()}else{map.dragging.enable();map.touchZoom.enable()}}});
     wrap.querySelector('[data-ia="pan"]').onclick=e=>{const b=e.currentTarget,p=cap.classList.toggle("paused");b.classList.toggle("on",p);if(p){map.dragging.enable();map.touchZoom.enable()}else{map.dragging.disable();map.touchZoom.disable()}}}
   cap.hidden=false;wrap.hidden=false;cap.classList.remove("paused");const pb=wrap.querySelector('[data-ia="pan"]');if(pb)pb.classList.remove("on");map.dragging.disable();map.touchZoom.disable();map.doubleClickZoom.disable();if(btn)btn.classList.add("on");
   if(mapInkCtl)mapInkCtl.reload();if(!mapInkCtl.count())toast("วาดบนแผนที่ได้เลย · ✋ เพื่อเลื่อนแผนที่ · ✓ เสร็จ")}
@@ -4958,6 +4982,33 @@ function mapInkToggle(){const box=map.getContainer();let cap=box.querySelector("
   const bar=L.DomUtil.create("div","leaflet-bar leaflet-control ink-ctl");bar.innerHTML='<a href="#" title="ปากกา — วาด/เขียน/ใส่สัญลักษณ์บนแผนที่" role="button">✏️<small>วาด</small></a>';
   L.DomEvent.disableClickPropagation(bar);bar.querySelector("a").onclick=e=>{e.preventDefault();mapInkToggle()};
   const body=map.getContainer().querySelector(".map-tools .mt-body");(body||map.getContainer().querySelector(".leaflet-top.leaflet-right")).appendChild(bar)})();
+/* ---------- Kneeboard: เส้นทางวาดแยกทีละขา — แตะขาเพื่อปรับสี/ลักษณะ/ความหนาเฉพาะขานั้น (จำตามชื่อจุดหัว-ท้ายขา) ---------- */
+let pvLegLayer=null;
+const pvLDash=(d,w)=>({dash:`${3*w} ${2*w}`,dot:`0.1 ${1.8*w}`,dashdot:`${3*w} ${1.5*w} 0.1 ${1.5*w}`})[d]||null;
+const pvLegKey=(a,b)=>`${a.name||""}@${(+a.lat).toFixed(3)},${(+a.lon).toFixed(3)}>${b.name||""}@${(+b.lat).toFixed(3)},${(+b.lon).toFixed(3)}`;
+function pvLegStyle(KL,k){const o=(KL.legs||{})[k]||{};return{c:o.c||KL.lcol||"#d6198f",d:o.d||KL.ldash||"solid",w:o.w||KL.line||1,own:!!(KL.legs||{})[k]}}
+function pvLegsDraw(KL,pv){if(!pvLegLayer)pvLegLayer=L.layerGroup();if(!map.hasLayer(pvLegLayer))pvLegLayer.addTo(map);pvLegLayer.clearLayers();
+  const on=visOn("route");document.body.classList.toggle("pvlegs",on);if(!on)return;const W=(state.wps||[]).filter(w=>w.lat!=null&&w.lon!=null);
+  for(let i=0;i<W.length-1;i++){const k=pvLegKey(W[i],W[i+1]),s=pvLegStyle(KL,k),wt=4*s.w,ll=[[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]];
+    L.polyline(ll,{color:s.c,weight:wt,opacity:KL.lop??1,dashArray:pvLDash(s.d,wt),lineCap:s.d==="dot"?"round":"butt",className:"pvleg",interactive:false}).addTo(pvLegLayer);
+    L.polyline(ll,{color:"#000",weight:26,opacity:0,className:"pvleg pvleghit"}).on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();pvLegPop(KL,pv,k,i,W,e.originalEvent)}).addTo(pvLegLayer)}}
+function pvLegsClear(){if(pvLegLayer&&map.hasLayer(pvLegLayer))map.removeLayer(pvLegLayer);document.body.classList.remove("pvlegs");document.querySelectorAll(".lsty-pop").forEach(x=>x.remove())}
+function pvLegPop(KL,pv,k,i,W,ev){document.querySelectorAll(".lsty-pop").forEach(x=>x.remove());const b=document.createElement("div");b.className="lsty-pop";
+  const draw=()=>{const s=pvLegStyle(KL,k);b.innerHTML=`<div class="ls-h"><b>ขา ${i+1}</b><span>${esc(W[i].name||"WP")} → ${esc(W[i+1].name||"WP")}</span><button type="button" class="ls-x" aria-label="ปิด">✕</button></div>
+    <div class="ls-r">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b","#ffffff"].map(c=>`<button type="button" class="ls-c${c===s.c?" on":""}" data-c="${c}" style="--c:${c}" aria-label="สี ${c}"></button>`).join("")}</div>
+    <div class="ls-r ls-d">${[["solid","━━━","ทึบ"],["dash","╍╍╍","ประ"],["dot","•••","จุด"],["dashdot","─·─","ประ-จุด"]].map(([v,t,n])=>`<button type="button" data-d="${v}" class="${v===s.d?"on":""}">${t}<small>${n}</small></button>`).join("")}</div>
+    <div class="ls-r ls-w"><span>ความหนา</span><button type="button" data-w="-0.25">−</button><b>${(+s.w).toFixed(2).replace(/0$/,"")}×</b><button type="button" data-w="0.25">+</button></div>
+    <div class="ls-r ls-b"><button type="button" data-a="all">ใช้กับทุกขา</button>${s.own?'<button type="button" data-a="reset">↺ ตามค่าหลัก</button>':""}</div>`};
+  const set=o=>{KL.legs=KL.legs||{};KL.legs[k]={...pvLegStyle(KL,k),...o};delete KL.legs[k].own;kbLaySave(KL);pvLegsDraw(KL,pv);draw()};
+  b.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;e.stopPropagation();
+    if(t.classList.contains("ls-x")){b.remove();return}if(t.dataset.c)set({c:t.dataset.c});else if(t.dataset.d)set({d:t.dataset.d});
+    else if(t.dataset.w){const w=Math.max(.5,Math.min(3,pvLegStyle(KL,k).w+ +t.dataset.w));set({w})}
+    else if(t.dataset.a==="reset"){delete KL.legs[k];kbLaySave(KL);pvLegsDraw(KL,pv);draw()}
+    else if(t.dataset.a==="all"){const s=pvLegStyle(KL,k);KL.lcol=s.c;KL.ldash=s.d;KL.line=s.w;KL.legs={};kbLaySave(KL);
+      [["lcol",s.c],["ldash",s.d],["line",s.w]].forEach(([q,v])=>{const el=pv.querySelector(`[data-kl="${q}"]`);if(el){el.value=v;el.dispatchEvent(new Event("input",{bubbles:true}))}});pvLegsDraw(KL,pv);draw();toast("ใช้รูปแบบนี้กับทุกขาแล้ว")}});
+  draw();document.body.appendChild(b);const x=ev?ev.clientX:innerWidth/2,y=ev?ev.clientY:innerHeight/2,bw=b.offsetWidth,bh=b.offsetHeight;
+  b.style.left=Math.max(8,Math.min(innerWidth-bw-8,x-bw/2))+"px";b.style.top=(y+16+bh<innerHeight-8?y+16:Math.max(8,y-bh-16))+"px";
+  setTimeout(()=>{const off=e=>{if(!b.contains(e.target)){b.remove();document.removeEventListener("pointerdown",off,true)}};document.addEventListener("pointerdown",off,true)},0)}
 </script>
 </body>
 </html>
