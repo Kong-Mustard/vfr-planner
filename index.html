@@ -1900,7 +1900,7 @@ const AP={};AIRPORTS.forEach(a=>AP[a[0]]={id:a[0],name:a[1],lat:a[2],lon:a[3],ty
 function customPts(){return store.get("vfr_points")||{}}
 function saveCustom(name,lat,lon){const c=customPts();c[name.toUpperCase()]={name,lat,lon};store.set("vfr_points",c);fillDatalist()}
 function fillDatalist(){const c=customPts();
-  $("#apList").innerHTML=Object.values(AP).filter(a=>/^VT/.test(a.id)).sort((x,y)=>x.id<y.id?-1:1).map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join("")+
+  $("#apList").innerHTML=Object.values(AP).filter(a=>/^VT/.test(a.id)).sort((x,y)=>x.id<y.id?-1:1).map(a=>`<option value="${esc(a.id)}">${esc(a.name)}</option>`).join("")+
     Object.values(c).map(p=>`<option value="${esc(p.name)}">จุดที่บันทึก</option>`).join("")}
 /* แยก "พิกัด + ชื่อ" เช่น 47Q QU 27275 13325 (บทบ.ยว.3) */
 function splitCoordName(t){
@@ -4055,7 +4055,8 @@ setTimeout(()=>clLoad(),300);
 function clIdx(id){return CL.pages.findIndex(p=>p.id===id)}
 function clShow(i,ty,flash){const P=CL.pages[i];if(!P)return;clCur=i;try{localStorage.setItem("vfr_cl_last",P.id)}catch(e){}
   const pg=$("#clPg");pg.style.setProperty("--clw",clZoom+"px");
-  pg.innerHTML=`<img src="${P.img}" alt="Checklist หน้า ${esc(P.id)}" width="${P.w}" height="${P.h}">`+P.links.map(l=>`<a href="#" class="cl-lk" data-to="${esc(l.to)}" data-ty="${l.ty}" title="ดูขั้นตอนละเอียด ${esc(l.to)}" style="left:${l.x*100}%;top:${l.y*100}%;width:${Math.max(0.05,0.985-l.x)*100}%;height:${l.h*100}%"></a>`).join("");
+  /* ไฟล์ checklist นำเข้าจากผู้ใช้ — กันข้อมูลแปลกปลอม: รูปต้องเป็น data:image และตัวเลขต้องเป็นตัวเลข */const img=/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(String(P.img||""))?P.img:"",N=v=>{const n=+v;return isFinite(n)?n:0};
+  pg.innerHTML=`<img src="${img}" alt="Checklist หน้า ${esc(P.id)}" width="${N(P.w)}" height="${N(P.h)}">`+(P.links||[]).map(l=>`<a href="#" class="cl-lk" data-to="${esc(l.to)}" data-ty="${N(l.ty)}" title="ดูขั้นตอนละเอียด ${esc(l.to)}" style="left:${N(l.x)*100}%;top:${N(l.y)*100}%;width:${Math.max(0.05,0.985-N(l.x))*100}%;height:${N(l.h)*100}%"></a>`).join("");
   $("#clPage").value=P.id;$("#clPrev").disabled=i<=0;$("#clNext").disabled=i>=CL.pages.length-1;
   const sc=$("#clScroll");requestAnimationFrame(()=>{const img=pg.querySelector("img"),go=()=>{if(ty!=null){const y=img.offsetHeight*ty;sc.scrollTop=Math.max(0,pg.offsetTop+y-60);if(flash){const f=document.createElement("div");f.className="cl-flash";f.style.top=(ty*100-1)+"%";pg.appendChild(f)}}else sc.scrollTop=0};img.complete?go():img.onload=go});
   document.querySelectorAll("#clList [data-p]").forEach(b=>b.classList.toggle("on",b.dataset.p===P.id));clBackBtn()}
@@ -4099,7 +4100,7 @@ async function pwrDraw(){pwrLayer.clearLayers();if(!map.hasLayer(pwrLayer))retur
   const z=map.getZoom(),bb=map.getBounds().pad(.2),ic=pwrIcon();let nT=0;
   d.lines.forEach(l=>{if(!bb.intersects(l.bb))return;if(z<9&&!(l.v>=115))return;
     L.polyline(l.c,{renderer:pwrCanvas,color:pwrCol(l.v),weight:z>=12?3:2,opacity:.9,dashArray:l.v?null:"6 4"})
-      .bindPopup(`<b>🗼⚡ สายไฟแรงสูง${l.v?` ${l.v} kV`:""}</b>${l.n?`<br>${esc(l.n)}`:""}${l.o?`<br><span class="hint">${esc(l.o)}</span>`:""}<br><span class="hint">ข้อมูล OSM · ไม่มีความสูงเสา · ไม่ครบทุกพื้นที่</span>`).addTo(pwrLayer);
+      .bindPopup(`<b>🗼⚡ สายไฟแรงสูง${l.v?` ${esc(l.v)} kV`:""}</b>${l.n?`<br>${esc(l.n)}`:""}${l.o?`<br><span class="hint">${esc(l.o)}</span>`:""}<br><span class="hint">ข้อมูล OSM · ไม่มีความสูงเสา · ไม่ครบทุกพื้นที่</span>`).addTo(pwrLayer);
     if(z>=13)l.c.forEach(p=>{if(nT<600&&bb.contains(p)){nT++;L.marker(p,{icon:ic,interactive:false,keyboard:false}).addTo(pwrLayer)}})})}
 function pwrWarn(){if(document.querySelector(".pwr-warn"))return;const d=document.createElement("div");d.className="pwr-warn";d.setAttribute("role","alertdialog");
   d.innerHTML=`<div class="pw-box"><h3>🗼⚡ ข้อมูลสายไฟแรงสูง — โปรดทราบ</h3><ul>
