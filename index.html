@@ -656,7 +656,7 @@ body.pvprev .pv-panel .pv-ctl .kc-g{margin:0!important;width:auto!important}body
 .terr-ck{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;margin-top:12px;font-weight:700}.terr-ck input{width:22px;height:22px}
 dialog.terr-dlg{width:min(680px,94vw)}
 /* ---- ✈ โหมดบิน ---- */
-.fm-btn{background:#0f172a!important;color:#fff!important;border-color:#0f172a!important;margin-top:6px}
+.fm-side .fm-sim{min-height:54px;font-size:20px}
 body.flymode #mfWp,body.flymode #gpsHud,body.flymode .gps-wrap,body.flymode .map-tools,body.flymode .sa-float,body.flymode .leaflet-control-zoom,body.flymode #btnFull,body.flymode .leaflet-control-layers{display:none!important}
 .fm-top{position:absolute;left:0;right:0;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;padding:calc(env(safe-area-inset-top,0px) + 8px) 98px 8px 10px;background:rgba(15,23,42,.88);color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 @media (pointer:coarse){.fm-top{padding-top:calc(env(safe-area-inset-top,0px) + 22px)}}
@@ -1053,7 +1053,7 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .gg-alt{--gc:#1e40af}.gg-wind{--gc:#0369a1}.gg-spd{--gc:#0e7490}.gg-hdg{--gc:#4338ca}.gg-mh{--gc:#2563eb}.gg-dist{--gc:#1d4ed8}.gg-time{--gc:#6d28d9}.gg-fuel{--gc:#0f766e}
 .gl-i.gl-mh b{box-shadow:0 0 0 2px #93c5fd}.gl-i span{color:var(--muted)}.gl-i.gl-calc b{color:var(--calc-ink,#9cc2ff)}.gl-i.gl-mh{outline:1.5px solid var(--accent)}.gl-i.gl-mh b{color:var(--accent)}
 .gl-key{padding:1px 6px;border-radius:5px}.gl-key.in{background:var(--input)}.gl-key.calc{background:var(--calc,#14213a);color:var(--calc-ink,#9cc2ff)}
-.nt-fmt{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nt-fmt{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}.nt-fmt-b{display:flex;margin:10px 0 6px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--panel2,rgba(148,163,184,.08))}.nt-fmt-l{font-weight:700;font-size:14px}
 .nt-dash{margin:8px 0 12px}.nd-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
 .nd-c{border-radius:14px;padding:10px 12px;background:var(--input);border-left:5px solid var(--line);display:flex;flex-direction:column;gap:2px}
 .nd-c span{font-size:12.5px;color:var(--muted);font-weight:600}.nd-c b{font:800 28px var(--f-mono);line-height:1.1}.nd-c small{font-size:11.5px;color:var(--muted)}.nd-c em{color:var(--bad);font-style:normal;font-weight:700}
@@ -1651,10 +1651,10 @@ body.cl-on{overflow:hidden}
   <div class="nt-bar">
    <div class="seg" role="group" aria-label="มุมมอง"><button id="ntViewList" class="on">📄 รายการ</button><button id="ntViewMap">🗺 แผนที่</button></div>
    <div class="nt-buf" role="group" aria-label="ระยะแนวเส้นทาง"><span>แนวเส้นทาง ±</span><button type="button" data-nb="-1" aria-label="ลด 1 NM">−</button><input id="ntBuf" type="number" value="1" min="1" max="50" inputmode="numeric" aria-label="ระยะ NM"><button type="button" data-nb="1" aria-label="เพิ่ม 1 NM">＋</button><span>NM</span></div>
-   <span class="nt-fmt"><span class="hint">ข้อความ NOTAM:</span><div class="seg" role="group" aria-label="รูปแบบข้อความ NOTAM" title="ต้นฉบับ = ข้อความ ICAO ตามที่ออก · อ่านง่าย = ขยายคำย่อเป็นคำเต็ม"><button id="ntOrig" class="on">ต้นฉบับ (Original)</button><button id="ntPlain">อ่านง่าย (Plain)</button></div></span>
    <input type="checkbox" id="ntShowHidden" checked hidden><button id="ntRedraw" hidden></button>
   </div>
   <div id="ntDash" class="nt-dash"></div>
+<div class="nt-fmt nt-fmt-b"><span class="nt-fmt-l">📝 แสดงข้อความ NOTAM ในรายการด้านล่างเป็น:</span><div class="seg" role="group" aria-label="รูปแบบข้อความ NOTAM" title="ต้นฉบับ = ข้อความ ICAO ตามที่ออก · อ่านง่าย = ขยายคำย่อเป็นคำเต็ม"><button id="ntOrig" class="on">ต้นฉบับ (Original)</button><button id="ntPlain">อ่านง่าย (Plain)</button></div></div>
   <div id="ntList"></div>
   <div id="ntMapWrap" hidden><p class="nt-maph">เลือกหมวดที่จะแสดงบนแผนที่ (แตะเพื่อเปิด/ปิด · ปัดซ้าย-ขวาดูเพิ่ม)</p><div id="ntChips" class="nt-chips" role="group" aria-label="เลือกหมวดที่แสดงบนแผนที่"></div><div id="ntMap"></div><p class="hint">แถบสีน้ำเงิน = แนวเส้นทาง ± ระยะที่ตั้ง · สีของพื้นที่ = หมวด NOTAM (เลือกหมวดจากปุ่มด้านบนแผนที่) · เส้นหนา สีเข้ม = อยู่ตามแนวเส้นทาง · เส้นประถี่ = ไม่อยู่ในช่วงเวลาบิน (เปิด show hidden) · แตะเพื่อดูรายละเอียด</p></div>
  </div>
@@ -4496,8 +4496,8 @@ function gpsHeliSpeed(){const gs=GPS.last&&GPS.last.gs,el=GPS.mk&&GPS.mk.getElem
 function gpsIcon(trk){return L.divIcon({className:"",html:`<div class="gps-heli"><span class="gh-ring"></span><div class="gh-rot" style="transform:rotate(${trk??0}deg)"><div class="gh-lot"></div></div></div>`,iconSize:[64,64],iconAnchor:[32,32]})}
 function gpsIconOld(trk){return L.divIcon({className:"",html:`<svg class="gps-own" width="44" height="44" viewBox="0 0 44 44" style="transform:rotate(${trk??0}deg)"><circle cx="22" cy="22" r="20" fill="rgba(10,108,255,.18)"/><path d="M22 4 L31 34 L22 28 L13 34 Z" fill="#0a6cff" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg>`,iconSize:[44,44],iconAnchor:[22,22]})}
 const GpsCtl=L.Control.extend({options:{position:"bottomright"},onAdd(){const d=L.DomUtil.create("div","gps-wrap");L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
-  d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิดตำแหน่ง GPS ของอุปกรณ์">📍 GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
-  d.querySelector("#gpsBtn").onclick=()=>GPS.on?gpsStop():gpsStart();return d}});
+  d.innerHTML=`<button id="gpsBtn" class="gps-btn" title="เปิด GPS + โหมดบิน (แผนที่เต็มจอ ตัวเลขใหญ่ ปุ่มใหญ่ การแจ้งเตือนครบ)">✈ GPS</button><div id="gpsHud" class="gps-hud" hidden></div>`;
+  d.querySelector("#gpsBtn").onclick=()=>{if(GPS.on||FM){fmExit()}else fmEnter()};return d}});
 new GpsCtl().addTo(map);
 function terrInfo(then){const d=$("#terrDlg");if(!d){if(then)then();return}$("#terrNoShow").checked=false;$("#terrOk").textContent=then?"รับทราบ เริ่ม GPS":"ปิด";
   $("#terrOk").onclick=()=>{if($("#terrNoShow").checked){try{localStorage.setItem("vfr_terr_ack","1")}catch(e){}}d.close();if(then)then()};d.showModal()}
@@ -4510,9 +4510,9 @@ function gpsStart(sim){if(!sim&&!window._terrAsked){let ack=null;try{ack=localSt
   GPS.watch=navigator.geolocation.watchPosition(p=>{const c=p.coords;gpsFix(c.latitude,c.longitude,c.speed!=null&&c.speed>=0?c.speed*1.94384:null,c.heading!=null&&!isNaN(c.heading)&&c.speed>1?c.heading:null,c.altitude!=null?c.altitude*3.28084:null,c.accuracy,p.timestamp)},
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
-function gpsStop(){GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
+function gpsStop(){if(FM)fmExit(true);GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
-  $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="📍 GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
+  $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="✈ GPS";$("#gpsHud").hidden=true;gpsTouchMode(false)}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
 $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
@@ -5083,6 +5083,7 @@ function fmEnter(){if(FM)return;const box=map.getContainer();mapFull(true);docum
     <button type="button" data-fm="ink">✏️<small>วาด</small></button><button type="button" data-fm="follow" class="on">🎯<small>ตาม</small></button>
     <div class="fm-row"><button type="button" data-fm="prev" aria-label="ขาก่อน">◀</button><button type="button" data-fm="next" aria-label="ขาถัดไป">▶</button></div>
     <div class="fm-row"><button type="button" data-fm="mute" aria-label="เสียง">${GPS.mute?"🔕":"🔔"}</button><button type="button" data-fm="info" aria-label="ข้อจำกัด">ⓘ</button></div>
+    <button type="button" data-fm="sim" class="fm-sim">🧪<small>จำลองบิน</small></button>
     <button type="button" data-fm="exit" class="fm-exit">✕<small>กดค้างเพื่อออก</small><i></i></button>`;
   [top,side].forEach(el=>{box.appendChild(el);L.DomEvent.disableClickPropagation(el);L.DomEvent.disableScrollPropagation(el)});
   FM={top,side,lock:null};
@@ -5093,8 +5094,10 @@ function fmEnter(){if(FM)return;const box=map.getContainer();mapFull(true);docum
   ex.addEventListener("pointerdown",go);["pointerup","pointerleave","pointercancel"].forEach(v=>ex.addEventListener(v,stop));
   if(!GPS.on)gpsStart();else{GPS.follow=true;if(GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
   setTimeout(()=>map.invalidateSize(),60);fmUpdate()}
-function fmExit(){if(!FM)return;document.querySelectorAll(".fm-pop").forEach(x=>x.remove());FM.top.remove();FM.side.remove();try{FM.lock&&FM.lock.release()}catch(e){}FM=null;
-  document.body.classList.remove("flymode");mapFull(false);setTimeout(()=>map.invalidateSize(),60);if(GPS.on)gpsHud();toast("ออกจากโหมดบิน · GPS ยังเปิดอยู่")}
+/* โหมดบิน = โหมด GPS (ปุ่มเดียว): เข้า = เปิด GPS · ออก = ปิด GPS */
+function fmExit(fromStop){if(FM){document.querySelectorAll(".fm-pop,.gh-dto").forEach(x=>x.remove());FM.top.remove();FM.side.remove();try{FM.lock&&FM.lock.release()}catch(e){}FM=null;
+  document.body.classList.remove("flymode");mapFull(false);setTimeout(()=>map.invalidateSize(),60)}
+  if(!fromStop&&GPS.on){gpsStop();toast("ปิด GPS · ออกจากโหมดบิน")}}
 function fmClick(e){const b=e.target.closest("[data-fm]");if(!b)return;const k=b.dataset.fm,W=state.wps;
   if(k==="freq")return fmFreq();if(k==="cl"){let id;try{id=localStorage.getItem("vfr_cl_last")}catch(x){}return clOpen(id||"N-3")}
   if(k==="fuel"){if(!GPS.on)return toast("เปิด GPS ก่อน");GPS.al=GPS.al||{};GPS.al.fuelAt=0;gpsAlerts();return}
@@ -5102,7 +5105,8 @@ function fmClick(e){const b=e.target.closest("[data-fm]");if(!b)return;const k=b
   if(k==="follow"){GPS.follow=!GPS.follow;b.classList.toggle("on",GPS.follow);if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon]);return}
   if(k==="prev"||k==="next"){if(W.length<2)return;GPS.dto=null;GPS.leg=Math.max(0,Math.min(W.length-2,GPS.leg+(k==="next"?1:-1)));gpsHud();toast(`ขา ${GPS.leg+1}/${W.length-1} → ${W[GPS.leg+1].name}`);return}
   if(k==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(x){}b.textContent=GPS.mute?"🔕":"🔔";toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
-  if(k==="info")return terrInfo()}
+  if(k==="info")return terrInfo();
+  if(k==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;b.classList.remove("on");toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart();b.classList.add("on")}return}}
 /* แถบตัวเลขด้านบน (อัปเดตทุกครั้งที่ได้ตำแหน่ง GPS) */
 function fmUpdate(){if(!FM)return;const P=GPS.last,W=state.wps,vr=num(state.g.var,0),top=FM.top;
   if(!P){top.innerHTML=`<div class="fm-wait">⏳ รอสัญญาณ GPS…${GPS.on?"":" (GPS ปิดอยู่)"}</div>`;return}
@@ -5130,8 +5134,7 @@ function fmFreq(){const old=document.querySelector(".fm-pop");if(old){old.remove
     <div class="fp-fic"><div class="fp-r"><span>FIC ${ficArea(here[0],here[1])}</span><b>${FIC_F}</b></div><div class="fp-r em"><span>EMER</span><b>121.5 / 243.0</b></div></div>
     ${dst&&!near.some(n=>n.a===dst)?`<div class="fp-sec">ปลายทาง</div>`+apCard(dst,gcDistNm(here,[dst.lat,dst.lon])):""}<div class="fp-sec">สนามใกล้สุด</div>${near.map(n=>apCard(n.a,n.d)).join("")}`;
   map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);b.querySelector(".fp-x").onclick=()=>b.remove()}
-(function fmInit(){const g=$("#gpsBtn");if(!g)return;const f=document.createElement("button");f.id="fmBtn";f.className="gps-btn fm-btn";f.type="button";f.title="โหมดบิน — แผนที่เต็มจอ ตัวเลขใหญ่ ปุ่มใหญ่ สำหรับใช้ขณะบิน";f.textContent="✈ โหมดบิน";
-  g.after(f);f.addEventListener("click",e=>{e.stopPropagation();fmEnter()});L.DomEvent.disableClickPropagation(f)})();
+
 </script>
 </body>
 </html>
