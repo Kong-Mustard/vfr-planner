@@ -655,6 +655,30 @@ body.pvprev .pv-panel .pv-ctl .kc-g{margin:0!important;width:auto!important}body
 .terr-body{display:block!important;font-size:15px;line-height:1.55}.terr-body h4{margin:12px 0 4px;font:800 15px var(--f-display)}.terr-body ul{margin:0;padding-left:20px}.terr-body li{margin:3px 0}
 .terr-ck{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;margin-top:12px;font-weight:700}.terr-ck input{width:22px;height:22px}
 dialog.terr-dlg{width:min(680px,94vw)}
+/* ---- ✈ โหมดบิน ---- */
+.fm-btn{background:#0f172a!important;color:#fff!important;border-color:#0f172a!important;margin-top:6px}
+body.flymode #mfWp,body.flymode #gpsHud,body.flymode .gps-wrap,body.flymode .map-tools,body.flymode .sa-float,body.flymode .leaflet-control-zoom,body.flymode #btnFull,body.flymode .leaflet-control-layers{display:none!important}
+.fm-top{position:absolute;left:0;right:0;top:0;z-index:1200;display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;padding:calc(env(safe-area-inset-top,0px) + 8px) 98px 8px 10px;background:rgba(15,23,42,.88);color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+@media (pointer:coarse){.fm-top{padding-top:calc(env(safe-area-inset-top,0px) + 22px)}}
+.fm-wait{font:800 20px var(--f-display);padding:6px}
+.fm-to{flex:1 1 220px;display:flex;flex-direction:column;justify-content:center;min-width:0}.fm-to span{font-size:12px;color:#94a3b8;font-weight:700}
+.fm-to b{font:800 26px var(--f-display);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fm-to em{font-style:normal;font-weight:800;font-size:15px}.fm-to em.ok{color:#4ade80}.fm-to em.mid{color:#fbbf24}.fm-to em.bad{color:#f87171}
+.fm-c{flex:0 1 auto;min-width:92px;background:rgba(255,255,255,.08);border-radius:12px;padding:4px 10px;display:flex;flex-direction:column;justify-content:center}
+.fm-c span{font-size:11.5px;color:#94a3b8;font-weight:700;white-space:nowrap}.fm-c b{font:800 28px var(--f-mono);line-height:1.05}.fm-c i{font-style:normal;font-size:12px;color:#cbd5e1}
+.fm-c.bad{background:#b91c1c}.fm-c.bad span,.fm-c.bad i{color:#fecaca}
+.fm-side{position:absolute;right:calc(env(safe-area-inset-right,0px) + 8px);top:calc(env(safe-area-inset-top,0px) + 8px);bottom:10px;z-index:1250;display:flex;flex-direction:column;gap:8px;width:82px;overflow-y:auto;padding-bottom:4px}
+.fm-side button{width:100%;min-height:66px;border-radius:16px;border:0;background:rgba(15,23,42,.9);color:#fff;font-size:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:4px 2px}
+.fm-side button small{font-size:11.5px;font-weight:700;color:#e2e8f0;line-height:1.1;text-align:center}.fm-side button.on{background:#2563eb}
+.fm-row{display:flex;gap:6px}.fm-row button{min-height:54px;font-size:22px}
+.fm-side .fm-exit{margin-top:auto;background:#b91c1c;position:relative;overflow:hidden;font-size:22px}.fm-exit i{position:absolute;left:0;bottom:0;height:5px;width:0;background:#fff}.fm-exit.hold i{width:100%;transition:width .8s linear}
+body.flymode #gpsAlert{top:calc(env(safe-area-inset-top,0px) + 112px);width:min(560px,calc(100% - 120px));transform:translateX(calc(-50% - 45px))}
+.fm-pop{position:absolute;left:10px;top:calc(env(safe-area-inset-top,0px) + 110px);bottom:10px;z-index:1300;width:min(420px,calc(100% - 120px));overflow-y:auto;background:#0f172a;color:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.45);padding:10px 12px;font-size:16px}
+.fp-top{display:flex;align-items:center;justify-content:space-between;font-size:19px;margin-bottom:6px}.fp-x{min-width:48px;min-height:44px;border-radius:12px;background:#334155;color:#fff;border:0;font-size:18px}
+.fp-fic{background:#1e293b;border-radius:12px;padding:4px 10px;margin-bottom:6px}.fp-r{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed #334155}.fp-r:last-child{border:0}
+.fp-r span{color:#93c5fd;font-weight:700}.fp-r b{font:800 18px var(--f-mono)}.fp-r a{color:#86efac;font-weight:800;font-size:17px}.fp-r.em span,.fp-r.em b{color:#fca5a5}
+.fp-sec{font-size:12.5px;color:#94a3b8;font-weight:800;margin:10px 0 4px;text-transform:uppercase}.fp-ap{background:#1e293b;border-radius:12px;padding:6px 10px;margin-bottom:6px}
+.fp-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.fp-h b{font:800 18px var(--f-display)}.fp-h span{color:#cbd5e1;font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fp-h i{font-style:normal;color:#fbbf24;font-weight:700;font-size:13px}
+body.flymode .map-inkbar{right:100px;left:10px;transform:none;max-width:none}
 dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
 .off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
 .off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
@@ -4590,7 +4614,7 @@ function gpsNear(P){const vr=num(state.g.var,0),navs=((EAIP&&EAIP.navaids)||[]).
     let approx=null;if(!st&&a.eaip&&a.eaip.navaids){const n=a.eaip.navaids.find(x=>/VOR/.test(x.type))||a.eaip.navaids.find(x=>/TACAN/.test(x.type));if(n&&n.id)approx={id:String(n.id).split(/\s/)[0],t:/VOR/.test(n.type)?"VOR":"TACAN"}}
     const S=st?[st.lat,st.lon]:[a.lat,a.lon],rad=norm(trueCourse(S,P)+vr),dme=gcDistNm(S,P);
     return{id:a.id,name:a.name,d,brg:norm(trueCourse(P,[a.lat,a.lon])+vr),rad,dme,st:st?st.id:approx?"≈"+approx.id:null,stt:st?(/VOR/.test(st.type)?"VOR":"TACAN"):approx?approx.t:null}})}
-function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(!P)return;
+function gpsHud(){const P=GPS.last,W=state.wps,vr=num(state.g.var,0),h=$("#gpsHud");if(typeof fmUpdate==="function")fmUpdate();if(!P)return;
   const mag=t=>t==null?"–":hdg(t+vr)+"°",tru=t=>t==null?"–":hdg(t)+"°";const gs=P.gs!=null?Math.round(P.gs):null;
   let nav="";if(W.length>=2||GPS.dto){const DT=GPS.dto,i=DT?0:Math.min(GPS.leg,W.length-2),T=DT?DT:W[i+1],A=DT?{lat:DT.from[0],lon:DT.from[1]}:W[i],d=gcDistNm([P.lat,P.lon],[T.lat,T.lon]),brg=trueCourse([P.lat,P.lon],[T.lat,T.lon]),ete=gs>5?d/gs*60:null,
     xte=gpsXte([P.lat,P.lon],[A.lat,A.lon],[T.lat,T.lon]),row=DT?null:compute().rows[i],dbm=typeof dbMatch==="function"&&dbMatch(T);
@@ -5048,6 +5072,66 @@ function staleCheck(){const bar=$("#staleBar");if(!bar)return;const age=f=>{cons
   bar.innerHTML=`<span>⚠ ข้อมูลไม่อัปเดต: ${L.join(" · ")}${navigator.onLine?"":" — <b>ตอนนี้ออฟไลน์</b>"} · ใช้ประกอบการตัดสินใจด้วยความระวัง</span><button type="button" data-st="r">↻ ดึงใหม่</button><button type="button" data-st="x" aria-label="ซ่อน">✕</button>`;bar.hidden=false;
   bar.onclick=async e=>{const b=e.target.closest("[data-st]");if(!b)return;if(b.dataset.st==="x"){staleDismiss=key;bar.hidden=true;return}b.textContent="⏳";try{await metarLoad()}catch(x){}try{await ntLoadAuto(true)}catch(x){}staleCheck();toast(bar.hidden?"อัปเดตข้อมูลแล้ว":"ยังดึงข้อมูลใหม่ไม่ได้ — ตรวจการเชื่อมต่อ")}}
 setInterval(staleCheck,5*60000);addEventListener("online",()=>{metarLoad&&metarLoad().catch(()=>{});staleCheck()});addEventListener("offline",staleCheck);setTimeout(staleCheck,6000);
+/* ---------- ✈ โหมดบิน — หน้าจอเดียวสำหรับใช้ขณะบิน (ครอบ GPS ไว้ ไม่ได้แทน) ----------
+   แผนที่เต็มจอ + ตัวเลขใหญ่ด้านบน + ปุ่มใหญ่ด้านข้าง · ออกด้วยการกดค้าง กันกดพลาด · จอไม่ดับ */
+let FM=null;
+function fmEnter(){if(FM)return;const box=map.getContainer();mapFull(true);document.body.classList.add("flymode");
+  const top=document.createElement("div");top.className="fm-top";top.innerHTML='<div class="fm-wait">⏳ รอสัญญาณ GPS…</div>';
+  const side=document.createElement("div");side.className="fm-side";
+  side.innerHTML=`<button type="button" data-fm="freq">📻<small>ความถี่</small></button><button type="button" data-fm="cl">✅<small>Checklist</small></button>
+    <button type="button" data-fm="fuel">⛽<small>น้ำมัน</small></button><button type="button" data-fm="dto">➡️<small>Direct-to</small></button>
+    <button type="button" data-fm="ink">✏️<small>วาด</small></button><button type="button" data-fm="follow" class="on">🎯<small>ตาม</small></button>
+    <div class="fm-row"><button type="button" data-fm="prev" aria-label="ขาก่อน">◀</button><button type="button" data-fm="next" aria-label="ขาถัดไป">▶</button></div>
+    <div class="fm-row"><button type="button" data-fm="mute" aria-label="เสียง">${GPS.mute?"🔕":"🔔"}</button><button type="button" data-fm="info" aria-label="ข้อจำกัด">ⓘ</button></div>
+    <button type="button" data-fm="exit" class="fm-exit">✕<small>กดค้างเพื่อออก</small><i></i></button>`;
+  [top,side].forEach(el=>{box.appendChild(el);L.DomEvent.disableClickPropagation(el);L.DomEvent.disableScrollPropagation(el)});
+  FM={top,side,lock:null};
+  try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(l=>{if(FM)FM.lock=l}).catch(()=>{})}catch(e){}
+  side.addEventListener("click",fmClick);
+  /* ออก: กดค้าง 0.8 วินาที */
+  const ex=side.querySelector(".fm-exit");let t=null;const go=e=>{e.preventDefault();ex.classList.add("hold");t=setTimeout(fmExit,800)},stop=()=>{ex.classList.remove("hold");clearTimeout(t)};
+  ex.addEventListener("pointerdown",go);["pointerup","pointerleave","pointercancel"].forEach(v=>ex.addEventListener(v,stop));
+  if(!GPS.on)gpsStart();else{GPS.follow=true;if(GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
+  setTimeout(()=>map.invalidateSize(),60);fmUpdate()}
+function fmExit(){if(!FM)return;document.querySelectorAll(".fm-pop").forEach(x=>x.remove());FM.top.remove();FM.side.remove();try{FM.lock&&FM.lock.release()}catch(e){}FM=null;
+  document.body.classList.remove("flymode");mapFull(false);setTimeout(()=>map.invalidateSize(),60);if(GPS.on)gpsHud();toast("ออกจากโหมดบิน · GPS ยังเปิดอยู่")}
+function fmClick(e){const b=e.target.closest("[data-fm]");if(!b)return;const k=b.dataset.fm,W=state.wps;
+  if(k==="freq")return fmFreq();if(k==="cl"){let id;try{id=localStorage.getItem("vfr_cl_last")}catch(x){}return clOpen(id||"N-3")}
+  if(k==="fuel"){if(!GPS.on)return toast("เปิด GPS ก่อน");GPS.al=GPS.al||{};GPS.al.fuelAt=0;gpsAlerts();return}
+  if(k==="dto")return gpsDtoMenu();if(k==="ink")return mapInkToggle();
+  if(k==="follow"){GPS.follow=!GPS.follow;b.classList.toggle("on",GPS.follow);if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon]);return}
+  if(k==="prev"||k==="next"){if(W.length<2)return;GPS.dto=null;GPS.leg=Math.max(0,Math.min(W.length-2,GPS.leg+(k==="next"?1:-1)));gpsHud();toast(`ขา ${GPS.leg+1}/${W.length-1} → ${W[GPS.leg+1].name}`);return}
+  if(k==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(x){}b.textContent=GPS.mute?"🔕":"🔔";toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
+  if(k==="info")return terrInfo()}
+/* แถบตัวเลขด้านบน (อัปเดตทุกครั้งที่ได้ตำแหน่ง GPS) */
+function fmUpdate(){if(!FM)return;const P=GPS.last,W=state.wps,vr=num(state.g.var,0),top=FM.top;
+  if(!P){top.innerHTML=`<div class="fm-wait">⏳ รอสัญญาณ GPS…${GPS.on?"":" (GPS ปิดอยู่)"}</div>`;return}
+  const gs=P.gs!=null?Math.round(P.gs):null,alt=P.alt!=null?Math.round(P.alt/10)*10:null;
+  let to="–",dist=null,brg=null,ete=null,st="",cls="";
+  if(W.length>=2||GPS.dto){const DT=GPS.dto,i=DT?0:Math.min(GPS.leg,W.length-2),T=DT?DT:W[i+1],A=DT?{lat:DT.from[0],lon:DT.from[1]}:W[i];
+    dist=gcDistNm([P.lat,P.lon],[T.lat,T.lon]);brg=hdg(trueCourse([P.lat,P.lon],[T.lat,T.lon])+vr);ete=gs>5?dist/gs*60:null;to=(DT?"D→ ":"")+T.name;
+    const tc=trueCourse([A.lat,A.lon],[T.lat,T.lon]);if(P.trk!=null&&gs>5){const df=((P.trk-tc+540)%360)-180,ad=Math.round(Math.abs(df));st=ad<=3?"✓ ตรงเส้นทาง":(df>0?"↶ ซ้าย ":"↷ ขวา ")+ad+"°";cls=ad<=3?"ok":ad<=10?"mid":"bad"}}
+  const sa=(()=>{const c=saCtl&&saCtl.getContainer();const m=c&&/([\d,]+)\s*ft/.exec(c.textContent||"");return m?m[1]:null})();
+  const clr=sa&&alt!=null?alt-+sa.replace(/,/g,""):null;
+  const cell=(l,v,u,c)=>`<div class="fm-c ${c||""}"><span>${l}</span><b>${v}</b>${u?`<i>${u}</i>`:""}</div>`;
+  top.innerHTML=`<div class="fm-to"><span>ไป</span><b>${esc(to)}</b>${st?`<em class="${cls}">${st}</em>`:""}</div>`
+    +cell("HDG ไปจุดหมาย",brg!=null?brg+"°":"–","M")+cell("DIST",dist!=null?dist.toFixed(1):"–","NM")+cell("ETE",ete==null?"–":ete<60?mmss(ete):Math.floor(ete/60)+":"+String(Math.round(ete%60)).padStart(2,"0"),ete!=null&&ete>=60?"ชม.":"")
+    +cell("GS",gs!=null?gs:"–","kt")+cell("ALT (GPS)",alt!=null?alt.toLocaleString("en-US"):"–","ft",clr!=null&&clr<0?"bad":"")+cell("SA",sa||"–",sa?"ft":"",clr!=null&&clr<0?"bad":"")}
+/* ความถี่: FIC ณ ตำแหน่งปัจจุบัน + EMER + สนามใกล้ 3 แห่ง (TWR/APP/GND/ATIS + เบอร์ ARO) + ปลายทาง */
+function fmFreq(){const old=document.querySelector(".fm-pop");if(old){old.remove();return}const P=GPS.last,W=state.wps,vr=num(state.g.var,0);
+  const here=P?[P.lat,P.lon]:W.length?[W[0].lat,W[0].lon]:null;if(!here)return toast("รอสัญญาณ GPS ก่อน");
+  const apCard=(a,d)=>{const e=a.eaip||{},cm=(e.comm||[]).filter(c=>/TWR|APP|GND|ATIS|RADAR|DEP|ARR|AFIS|INFO/i.test(c.svc)).slice(0,5),ph=e.rmk23&&(e.rmk23.phones||[]).find(p=>!/fax/i.test(p.t));
+    return`<div class="fp-ap"><div class="fp-h"><b>${esc(a.id)}</b><span>${esc(a.name||"")}</span>${d!=null?`<i>${d.toFixed(0)} NM · ${hdg(trueCourse(here,[a.lat,a.lon])+vr)}°M</i>`:""}</div>
+      ${cm.length?cm.map(c=>`<div class="fp-r"><span>${esc(c.svc)}</span><b>${esc(c.freq)}</b></div>`).join(""):'<div class="fp-r hint">ไม่มีข้อมูลความถี่</div>'}${ph?`<div class="fp-r"><span>📞 ARO</span><a href="tel:${esc(ph.n.replace(/[^\d+]/g,""))}">${esc(ph.n)}</a></div>`:""}</div>`};
+  const near=Object.values(AP).filter(a=>a.lat!=null&&a.eaip&&(a.eaip.comm||[]).length).map(a=>({a,d:gcDistNm(here,[a.lat,a.lon])})).sort((x,y)=>x.d-y.d).slice(0,3);
+  const dst=W.length?AP[String(W.at(-1).name).toUpperCase()]:null;
+  const b=document.createElement("div");b.className="fm-pop";
+  b.innerHTML=`<div class="fp-top"><b>📻 ความถี่</b><button type="button" class="fp-x" aria-label="ปิด">✕</button></div>
+    <div class="fp-fic"><div class="fp-r"><span>FIC ${ficArea(here[0],here[1])}</span><b>${FIC_F}</b></div><div class="fp-r em"><span>EMER</span><b>121.5 / 243.0</b></div></div>
+    ${dst&&!near.some(n=>n.a===dst)?`<div class="fp-sec">ปลายทาง</div>`+apCard(dst,gcDistNm(here,[dst.lat,dst.lon])):""}<div class="fp-sec">สนามใกล้สุด</div>${near.map(n=>apCard(n.a,n.d)).join("")}`;
+  map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);b.querySelector(".fp-x").onclick=()=>b.remove()}
+(function fmInit(){const g=$("#gpsBtn");if(!g)return;const f=document.createElement("button");f.id="fmBtn";f.className="gps-btn fm-btn";f.type="button";f.title="โหมดบิน — แผนที่เต็มจอ ตัวเลขใหญ่ ปุ่มใหญ่ สำหรับใช้ขณะบิน";f.textContent="✈ โหมดบิน";
+  g.after(f);f.addEventListener("click",e=>{e.stopPropagation();fmEnter()});L.DomEvent.disableClickPropagation(f)})();
 </script>
 </body>
 </html>
