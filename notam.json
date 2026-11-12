@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-12T13:44Z",
+"fetched": "2026-11-12T15:19Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -958,6 +958,15 @@
 },
 {
 "loc": "VTBB",
+"id": "H1612/26",
+"icao": "H1612/26 NOTAMN\r\nQ) VTBB/QARCA/IV/BO/E/000/040/1354N10036E999\r\nA) VTBB B) 2611130845 C) 2611130930\r\nE) THE AIRSPACE HEREUNDER UPGRADED TO PINK AWY, LATERAL LIMITS\r\n   5NM EITHER SIDE OF THE ROUTE AND THE MENTIONED AIRSPACE WILL BE\r\n   RELEASED AS VACATED 15 MIN AFTER VIP ACFT HAS PASSED THE KNOWN \r\n   POSITION ALONG THE ESTABLISHED ROUTE:\r\n   VTSB/DCT/RAJJAPRABHA DAM (085821N0984839E) BAN TA KHUN DISTRICT\r\n   SURAT THANI PROVINCE FM GND UP TO 4000FT AMSL",
+"plain": " ",
+"start": "11/13/2026 0845",
+"end": "11/13/2026 0930",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
 "id": "H1608/26",
 "icao": "H1608/26 NOTAMN\r\nQ) VTBB/QARCA/IV/BO/E/000/035/1354N10036E999\r\nA) VTBB B) 2611130615 C) 2611130710\r\nE) THE AIRSPACE HEREUNDER UPGRADED TO PINK AWY, LATERAL LIMITS\r\n   5NM EITHER SIDE OF THE ROUTE AND THE MENTIONED AIRSPACE WILL BE\r\n   RELEASED AS VACATED 15MIN AFTER VIP ACFT HAS PASSED THE KNOWN\r\n   POSITION ALONG THE ESTABLISHED ROUTE:\r\n   CHULACHOMKLAO ROYAL MILITARY ACADEMY (141750N1010958E)\r\n   MUEANG DISTRICT NAKHON NAYOK PROVINCE/DCT/CAVPAD \r\n   FM GND UP TO 3500FT AMSL",
 "plain": " ",
@@ -981,6 +990,15 @@
 "plain": " ",
 "start": "11/13/2026 0613",
 "end": "11/13/2026 0643",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "H1609/26",
+"icao": "H1609/26 NOTAMN\r\nQ) VTBB/QARCA/IV/BO/E/000/040/1354N10036E999\r\nA) VTBB B) 2611130200 C) 2611130245\r\nE) THE AIRSPACE HEREUNDER UPGRADED TO PINK AWY, LATERAL LIMITS\r\n   5NM EITHER SIDE OF THE ROUTE AND THE MENTIONED AIRSPACE WILL BE\r\n   RELEASED AS VACATED 15MIN AFTER VIP ACFT HAS PASSED THE KNOWN \r\n   POSITION ALONG THE ESTABLISHED ROUTE:\r\n   RAJJAPRABHA DAM (085821N0984839E) BAN TA KHUN DISTRICT \r\n   SURAT THANI PROVINCE/DCT/VTSB FM GND UP TO 4000FT AMSL",
+"plain": " ",
+"start": "11/13/2026 0200",
+"end": "11/13/2026 0245",
 "keyword": "INTERNATIONAL"
 },
 {
@@ -1092,15 +1110,6 @@
 "keyword": "INTERNATIONAL"
 },
 {
-"loc": "VTBB",
-"id": "J7338/26",
-"icao": "J7338/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/220/1222N10117E008\r\nA) VTBB B) 2611101030 C) 2611121430\r\nD) 10 1030-1330 12 1030-1430\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE WI AREA\r\n   122923N1011932E-121838N1012323E-121506N1011338E-\r\n   122544N1010938E-122923N1011932E (GULF OF THAILAND)\r\nF) SFC G) FL220",
-"plain": " ",
-"start": "11/10/2026 1030",
-"end": "11/12/2026 1430",
-"keyword": "INTERNATIONAL"
-},
-{
 "loc": "VTCT",
 "id": "A3730/26",
 "icao": "A3730/26 NOTAMN\r\nQ) VTBB/QMRXX/IV/BO/A/000/999/1957N09953E005\r\nA) VTCT B) 2609240446 C) PERM\r\nE) RWY PHYSICAL CHARACTERISTICS CHANGED AS FLW: \r\n   RWY 21 THR ELEV AND HIGHEST ELEV OF TDZ OF PA RWY \r\n   READ 389M (1275FT) INSTEAD OF 389M (1276FT AMSL)\r\n   REF AIP AD VTCT 2.12, AD 2-VTCT-1-5",
@@ -1209,33 +1218,6 @@
 "keyword": "INTERNATIONAL"
 },
 {
-"loc": "VTCT",
-"id": "V0497/26",
-"icao": "V0497/26 NOTAMN \r\nQ) VTBB/QPIAU/I/BO/A/000/999/1957N09952E005 \r\nA) VTCT \r\nB) 2610291854 \r\nC) 2611121500 \r\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE NOT AUTHORIZED VOR RWY 03.",
-"plain": "<table border=\"0\">\r\n<tbody><tr><td><b>Issuing Airport:</b></td><td>(VTCT) Mae Fah Luang Chiang Rai Intl </td></tr>\r\n<tr><td><b>NOTAM Number:</b></td><td> V0497/26</td></tr>\r\n<tr><td colspan=\"2\"><b>Effective Time Frame</b></td></tr>\r\n<tr><td><b>Beginning:</b></td><td>Thursday, October 29, 2026 1854 (UTC)</td></tr>\r\n<tr><td><b>Ending:</b></td><td>Thursday, November 12, 2026 1500 (UTC)</td></tr>\r\n<tr><td colspan=\"2\"><b>Affected Areas</b></td></tr>\r\n<tr><td><b>Airport:</b></td><td>VTCT</td></tr>\r\n<tr><td><b> Operating Status:</b></td><td>Not Authorized</td></tr>\r\n<tr><td><b> Linguistic Type:</b></td><td>Instrument approach procedure</td></tr>\r\n<tr><td><b> Name:</b></td><td>VOR RWY 03.</td></tr>\r\n\r\n <tr><td><b></b></td></tr>\r\n\t<tr></tr>\r\n</tbody></table>",
-"start": "10/29/2026 1854",
-"end": "11/12/2026 1500",
-"keyword": "MILITARY"
-},
-{
-"loc": "VTCT",
-"id": "V0498/26",
-"icao": "V0498/26 NOTAMN \r\nQ) VTBB/QPIAU/I/BO/A/000/999/1957N09952E005 \r\nA) VTCT \r\nB) 2610291857 \r\nC) 2611121500 \r\nE) [US DOD PROCEDURAL NOTAM] INSTRUMENT APPROACH PROCEDURE NOT AUTHORIZED ILS OR LOC Y RWY 03.",
-"plain": "<table border=\"0\">\r\n<tbody><tr><td><b>Issuing Airport:</b></td><td>(VTCT) Mae Fah Luang Chiang Rai Intl </td></tr>\r\n<tr><td><b>NOTAM Number:</b></td><td> V0498/26</td></tr>\r\n<tr><td colspan=\"2\"><b>Effective Time Frame</b></td></tr>\r\n<tr><td><b>Beginning:</b></td><td>Thursday, October 29, 2026 1857 (UTC)</td></tr>\r\n<tr><td><b>Ending:</b></td><td>Thursday, November 12, 2026 1500 (UTC)</td></tr>\r\n<tr><td colspan=\"2\"><b>Affected Areas</b></td></tr>\r\n<tr><td><b>Airport:</b></td><td>VTCT</td></tr>\r\n<tr><td><b> Operating Status:</b></td><td>Not Authorized</td></tr>\r\n<tr><td><b> Linguistic Type:</b></td><td>Instrument approach procedure</td></tr>\r\n<tr><td><b> Name:</b></td><td>ILS or LOC Y RWY 03.</td></tr>\r\n\r\n <tr><td><b></b></td></tr>\r\n\t<tr></tr>\r\n</tbody></table>",
-"start": "10/29/2026 1857",
-"end": "11/12/2026 1500",
-"keyword": "MILITARY"
-},
-{
-"loc": "VTCT",
-"id": "A3675/26",
-"icao": "A3675/26 NOTAMN\r\nQ) VTBB/QMRTT/IV/BO/A/000/999/1957N09953E005\r\nA) VTCT B) 2610291500 C) 2611121500\r\nE) TRIGGER NOTAM-AIRAC AIP SUP A31/26 WEF 29 OCT 2026 TIL \r\n   26 MAR 2027. TEMPO CLOSURE OF RWY03/21 FOR REHABILITATION WORKS\r\n   AT MAE FAH LUANG-CHIANG RAI INTL AP (VTCT)",
-"plain": " ",
-"start": "10/29/2026 1500",
-"end": "11/12/2026 1500",
-"keyword": "INTERNATIONAL"
-},
-{
 "loc": "VTSG",
 "id": "A4070/26",
 "icao": "A4070/26 NOTAMN\r\nQ) VTBB/QPICH/I/NBO/A/000/999/0806N09859E025\r\nA) VTSG B) 2611260000 C) PERM\r\nE) AD VTSG 2.24 CHARTS RELATED TO AN AD,\r\n   SID-ICAO VTSG RWY 14/32, TRANG DVOR/DME TRN \r\n   READ FREQ 115.9MHZ/CH106X INSTEAD OF 116.6MHZ/CH113X\r\n   REF AIP AD VTSG 2.24, AD2-VTSG-6-1, AD2-VTSG-6-3",
@@ -1296,6 +1278,24 @@
 "plain": " ",
 "start": "11/16/2026 0700",
 "end": "11/18/2026 0500",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSB",
+"id": "H1611/26",
+"icao": "H1611/26 NOTAMN\r\nQ) VTBB/QFALT/IV/NBO/A/000/999/0908N09908E005\r\nA) VTSB B) 2611130845 C) 2611130915\r\nE) AD DEP/ARR ACFT WILL BE DLA DUE TO VIP MOV",
+"plain": " ",
+"start": "11/13/2026 0845",
+"end": "11/13/2026 0915",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSB",
+"id": "H1610/26",
+"icao": "H1610/26 NOTAMN\r\nQ) VTBB/QFALT/IV/NBO/A/000/999/0908N09908E005\r\nA) VTSB B) 2611130215 C) 2611130245\r\nE) AD DEP/ARR ACFT WILL BE DLA DUE TO VIP MOV",
+"plain": " ",
+"start": "11/13/2026 0215",
+"end": "11/13/2026 0245",
 "keyword": "INTERNATIONAL"
 },
 {
@@ -1466,6 +1466,15 @@
 "icao": "A4522/26 NOTAMN\r\nQ) VTBB/QFAAH/IV/BO/A/000/999/1723N10247E005\r\nA) VTUD B) 2611121500 C) 2611121600\r\nE) AD OPR HR ATS AND ARO HR SER EXTD TO 1600",
 "plain": " ",
 "start": "11/12/2026 1500",
+"end": "11/12/2026 1600",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSM",
+"id": "A4524/26",
+"icao": "A4524/26 NOTAMR A4523/26\r\nQ) VTBB/QFAAH/IV/BO/A/000/999/0933N10004E005\r\nA) VTSM B) 2611121517 C) 2611121600\r\nE) AD OPR HR ATS AND ARO HR SER EXTD TO 1600",
+"plain": " ",
+"start": "11/12/2026 1517",
 "end": "11/12/2026 1600",
 "keyword": "INTERNATIONAL"
 },
