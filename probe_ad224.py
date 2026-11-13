@@ -5,7 +5,7 @@ d=json.load(open("eaip_data.json")); S=requests.Session(); S.headers["User-Agent
 for ic,a in d["airports"].items():
     for ch in a.get("charts",[]):
         if "VFR" not in ch["name"].upper(): continue
-        if ic not in ("VTBD","VTPH","VTUK","VTPP") and "Tabular" not in ch["name"]: continue
+        if "Tabular" not in ch["name"] or (ic=="VTBD" and not any(k in ch["page"] for k in ("9-3","9-14","9-23"))): continue
         fn=f"probe/{ic}_{ch['page'].split('-')[-2]}-{ch['page'].split('-')[-1]}"
         try:
             r=S.get(ch["url"],timeout=60); open(fn+".pdf","wb").write(r.content)
@@ -14,6 +14,5 @@ for ic,a in d["airports"].items():
         except Exception as e: print("ERR",fn,e)
 import glob
 for fn in sorted(glob.glob("probe/*.txt")):
-    if not any(k in fn for k in ("VTBD_9-17","VTBD_9-18","VTBD_9-15","VTPH_9-4","VTPH_9-3","VTUK_9-2","VTPP_9-2")): continue
     t=open(fn,errors="ignore").read()
-    print("=====",fn,len(t)); print(t[:6000])
+    print("=====",fn,len(t)); print(re.sub(r'\n\s*\n+','\n',t)[:7000])
