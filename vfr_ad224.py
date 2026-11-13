@@ -222,10 +222,11 @@ def build(ap_charts, fetch_text, log=print):
         if pts or rts:
             raw[ic] = (pts, rts)
     # พจนานุกรมจุดรวมทุกสนาม (ชื่อเดียวกันใช้ร่วมกัน เช่น จุดรอบกรุงเทพ VTBD/VTBS)
-    G = {}
+    G, G2 = {}, {}
     for ic, (pts, _) in raw.items():
         for p in pts:
             G.setdefault(norm(p["n"]), p)
+            G2.setdefault(norm(p["n"]).replace("H", ""), p)
     out = {}
     for ic, (pts, rts) in raw.items():
         P, seen = [], set()
@@ -242,6 +243,7 @@ def build(ap_charts, fetch_text, log=print):
                 n = it[0]
                 p = byid.get(n) if r.get("txt") else None
                 p = p or next((q for q in P if norm(q["n"]) == norm(n)), None) or G.get(norm(n))
+                p = p or G2.get(norm(n).replace("H", ""))  # สะกดต่างกันในเอกสาร เช่น SANAP TUEP / SANAP THUEP
                 e = [p["id"] if p and p.get("id") else n, it[1], p["lat"] if p else None, p["lon"] if p else None]
                 if len(it) > 2:
                     e.append(it[2])
