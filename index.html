@@ -682,6 +682,11 @@ body.flymode #gpsAlert{top:calc(var(--fmh,112px) + 10px);width:min(560px,calc(10
 .fp-sec{font-size:12.5px;color:#94a3b8;font-weight:800;margin:10px 0 4px;text-transform:uppercase}.fp-ap{background:#1e293b;border-radius:12px;padding:6px 10px;margin-bottom:6px}
 .fp-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.fp-h b{font:800 18px var(--f-display)}.fp-h span{color:#cbd5e1;font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fp-h i{font-style:normal;color:#fbbf24;font-weight:700;font-size:13px}
 body.flymode .map-inkbar{right:100px;left:10px;transform:none;max-width:none}
+.flog-sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:8px 0}.flog-sum div{border:1px solid var(--line);border-radius:12px;padding:6px 12px;display:flex;flex-direction:column}
+.flog-sum span{font-size:12.5px;color:var(--muted);font-weight:700}.flog-sum b{font:800 24px var(--f-mono)}.flog-sum i{font-style:normal;font-size:12.5px;color:var(--muted)}.flog-sum .rec{border-color:#dc2626}.flog-sum .rec span{color:#dc2626}
+.flog-t td{vertical-align:top}.flog-t small{color:var(--muted)}.flog-a{white-space:nowrap}.flog-a button{min-width:40px;min-height:38px;padding:0 6px;margin:1px}
+dialog.flog-dlg{width:min(980px,96vw)}.flog-body{display:block!important}.flog-map{height:min(60vh,520px);border-radius:12px;overflow:hidden}
+.flog-ctl{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}.flog-ctl input{flex:1;min-width:160px}.flog-ctl button{min-height:40px}.flog-stat{font-size:14px;margin:8px 0 0}
 dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
 .off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
 .off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
@@ -1707,7 +1712,7 @@ body.cl-on{overflow:hidden}
   <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-pink">CP — Checkpoint / Preset ของหน่วย</h2>
    <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
    <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>CP</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = CP 1, ปลายทาง CAVPAD = CP 13 · จุดที่ไม่มี CP แสดงเลขลำดับแบบขอบชมพู</p>
-   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a><a href="#cpCt">7 ผู้ติดต่อ</a></nav></div>
+   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a><a href="#cpCt">7 ผู้ติดต่อ</a><a href="#cpFlog">8 ประวัติการบิน</a></nav></div>
   <div class="card section cp-sec" id="cpFm" style="--cc:#22c55e"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
   <div class="card section cp-sec" id="cpVhf" style="--cc:#3b82f6"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
   <div class="card section cp-sec" id="cpUhf" style="--cc:#a855f7"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
@@ -1736,6 +1741,11 @@ body.cl-on{overflow:hidden}
    <div class="ct-filter"><input id="ctQ" type="search" placeholder="ค้นหา ชื่อ / หน่วย / เบอร์ / หน้าที่ เช่น รถเติมน้ำมัน" autocomplete="off"><select id="ctProvF" aria-label="กรองจังหวัด"></select></div>
    <div class="tablewrap"><table id="ctTable" class="ct-tbl"></table></div>
    <input id="ctFile" type="file" accept=".xlsx,.json,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></div>
+  <div class="card section cp-sec" id="cpFlog" style="--cc:#6366f1">
+   <div class="sechead"><h2 class="cp-h"><span>8</span>🛫 ประวัติการบิน</h2><div class="btns"><button id="flogCsv">📤 ส่งออก Excel (CSV)</button></div></div>
+   <p class="hint">บันทึกอัตโนมัติทุกครั้งที่เปิด <b>✈ โหมดบิน</b> (ไม่บันทึกตอนจำลอง) · เก็บในเครื่องนี้เท่านั้น · ระหว่างบินให้เปิดแอปค้างไว้ — ถ้าสลับไปแอปอื่นหรือปิดจอ ช่วงนั้นจะไม่มีข้อมูล (แสดงเป็นเส้นประสีส้ม) · เวลาขึ้น/ลงตรวจจากความเร็ว แก้ได้ด้วย ✏️</p>
+   <div id="flogSum" class="flog-sum"></div>
+   <div class="tablewrap" id="flogList"></div></div>
  <div hidden><div id="psBands"></div><table id="psTable"><tbody></tbody></table><button id="psAdd"></button></div>
  </div>
 </section>
@@ -1835,6 +1845,13 @@ body.cl-on{overflow:hidden}
 </section>
 
 </main>
+<dialog id="flogDlg" class="kb flog-dlg" aria-labelledby="flogTitle">
+  <div class="kb-head"><h2 id="flogTitle">รอยบิน</h2></div>
+  <div class="kb-body flog-body"><div id="flogMap" class="flog-map"></div>
+    <div class="flog-ctl"><button id="flogPlay" type="button">▶ เล่น</button><input id="flogSlide" type="range" min="0" max="1" value="0" aria-label="เลื่อนเวลา"><span id="flogInfo"></span></div>
+    <p id="flogStat" class="flog-stat"></p></div>
+  <div class="kb-foot"><span class="hint"><b style="color:#f59e0b">╍</b> ช่วงไม่มีข้อมูล · <b style="color:#16a34a">●</b> ขึ้น · <b style="color:#dc2626">●</b> ลง · <b style="color:#ca8a04">●</b> ตำแหน่งตามแถบเวลา</span><div class="btns"><button id="flogClose" class="primary">ปิด</button></div></div>
+</dialog>
 <dialog id="terrDlg" class="kb terr-dlg" aria-labelledby="terrTitle">
   <div class="kb-head"><h2 id="terrTitle">⛰ ข้อจำกัดของการแจ้งเตือนในโหมด GPS</h2></div>
   <div class="kb-body terr-body">
@@ -4510,11 +4527,12 @@ function gpsStart(sim){if(!sim&&!window._terrAsked){let ack=null;try{ack=localSt
   $("#gpsHud").innerHTML='<div class="gh-wait">กำลังหาตำแหน่ง… (ครั้งแรกเบราว์เซอร์จะถามสิทธิ์ — กดอนุญาต)</div>'+gpsBtns();gpsTouchMode(true);
   if(navigator.wakeLock)navigator.wakeLock.request("screen").then(l=>GPS.lock=l).catch(()=>{});
   if(sim){gpsSimStart();return}
+  if(typeof flogBegin==="function")flogBegin();
   if(!navigator.geolocation){toast("อุปกรณ์นี้ไม่รองรับ GPS ในเบราว์เซอร์");return}
   GPS.watch=navigator.geolocation.watchPosition(p=>{const c=p.coords;gpsFix(c.latitude,c.longitude,c.speed!=null&&c.speed>=0?c.speed*1.94384:null,c.heading!=null&&!isNaN(c.heading)&&c.speed>1?c.heading:null,c.altitude!=null?c.altitude*3.28084:null,c.accuracy,p.timestamp)},
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
-function gpsStop(){if(FM)fmExit(true);GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
+function gpsStop(){if(FM)fmExit(true);if(typeof FR!=="undefined"&&FR)flogFinish();GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="✈ โหมดบิน";$("#gpsHud").hidden=true;gpsTouchMode(false)}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
@@ -4623,7 +4641,7 @@ function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
     GPS.crumb=L.polyline([],{color:"#0a6cff",weight:3,opacity:.7,dashArray:"2 6",interactive:false}).addTo(gpsLayer);GPS.mk=L.marker(pt,{icon:gpsIcon(trk),interactive:false,zIndexOffset:2000}).addTo(gpsLayer);gpsHeliInit(GPS.mk.getElement())}
   GPS.mk.setLatLng(pt);{const el=GPS.mk.getElement(),rt=el&&el.querySelector(".gh-rot");if(rt&&trk!=null)rt.style.transform=`rotate(${trk}deg)`}gpsHeliSpeed();GPS.acc.setLatLng(pt).setRadius(acc||0);
   const lp=GPS.pts.at(-1);if(!lp||gcDistNm(lp,pt)>0.02){GPS.pts.push(pt);if(GPS.pts.length>3000)GPS.pts.shift();GPS.crumb.setLatLngs(GPS.pts)}
-  gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud();try{gpsAlerts()}catch(e){}}
+  gpsAutoLeg();if(GPS.follow)map.panTo(pt,{animate:false});gpsHud();try{gpsAlerts()}catch(e){}try{if(typeof flogPoint==="function")flogPoint(GPS.last)}catch(e){}}
 /* เลือก leg อัตโนมัติ: ผ่านจุดหมาย (ใกล้กว่า 0.5 NM หรือเลยแนวตั้งฉาก) → ไปจุดถัดไป */
 function gpsAutoLeg(){const W=state.wps,P=GPS.last;if(GPS.dto){if(P&&!GPS.dto.arr&&gcDistNm([P.lat,P.lon],[GPS.dto.lat,GPS.dto.lon])<0.5){GPS.dto.arr=true;toast("ถึง "+GPS.dto.name+" แล้ว")}return}if(W.length<2)return;if(GPS.leg>W.length-2)GPS.leg=W.length-2;
   if(!GPS.started){let best=0,bd=1e9;for(let i=0;i<W.length-1;i++){const r=distToSeg([P.lat,P.lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);if(r.d<bd){bd=r.d;best=i}}GPS.leg=best;GPS.started=true}
@@ -5162,6 +5180,78 @@ function fmFreq(){const old=document.querySelector(".fm-pop");if(old){old.remove
   map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);b.querySelector(".fp-x").onclick=()=>b.remove()}
 
 $("#simFly").addEventListener("click",()=>{if((state.wps||[]).length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}if(GPS.on)fmExit();fmEnter(true)});
+/* ---------- 🛫 ประวัติการบิน — บันทึกอัตโนมัติขณะเปิดโหมดบิน (เก็บใน IndexedDB ของเครื่องนี้) ----------
+   จุดทุก 5 วินาที หรือ 100 ม. · ขึ้นบิน = GS > 40 kt ต่อเนื่อง 3 จุด · ลง = GS < 20 kt นาน 60 วินาที
+   ช่องว่าง > 60 วินาที (สลับแอป/ปิดจอ) ถือเป็น "ไม่มีข้อมูล" แสดงเป็นเส้นประ */
+let FR=null,frSaveT=0;
+const flogFmtH=ms=>{const m=Math.round(ms/60000);return`${Math.floor(m/60)}:${String(m%60).padStart(2,"0")}`};
+const flogT=t=>t?new Date(t).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"}):"–";
+const flogD=t=>new Date(t).toLocaleDateString("th-TH",{timeZone:"Asia/Bangkok",day:"numeric",month:"short",year:"2-digit"});
+async function flogIndex(){try{return(await CLDB.get("flog:index"))||[]}catch(e){return[]}}
+async function flogBegin(){if(GPS.sim)return;let cur=null;try{cur=await CLDB.get("flog:cur")}catch(e){}
+  if(cur&&cur.pts&&cur.pts.length&&Date.now()-cur.pts.at(-1)[0]<30*60000){FR=cur;toast("บันทึกการบินต่อจากเที่ยวเดิม");return}
+  if(cur)await flogFinish(cur);
+  const W=state.wps||[];FR={id:"F"+Date.now(),start:Date.now(),route:W.length>=2?`${W[0].name} → ${W.at(-1).name}`:"",pts:[],to:null,ld:null,hi:0,lo:0,landings:0,note:""}}
+function flogPoint(P){if(!FR||GPS.sim||!P)return;const t=P.ts||Date.now(),L=FR.pts.at(-1);
+  const gs=P.gs!=null?Math.round(P.gs):null,alt=P.alt!=null?Math.round(P.alt):null;
+  if(L&&t-L[0]<5000&&gcDistNm([L[1],L[2]],[P.lat,P.lon])<0.054)return;
+  FR.pts.push([t,+P.lat.toFixed(5),+P.lon.toFixed(5),alt,gs]);
+  /* ขึ้น / ลง */
+  if(gs!=null){if(gs>40){FR.hi++;FR.lo=0;if(FR.hi>=3&&(!FR.to||FR.ld)){if(!FR.to)FR.to=FR.pts[FR.pts.length-3][0];FR.ld=null;FR.air=true}}
+    else if(gs<20&&FR.air){if(!FR.lo)FR.lo=t;if(t-FR.lo>=60000){FR.ld=FR.lo;FR.air=false;FR.landings++;FR.hi=0}}else FR.hi=0}
+  if(t-frSaveT>30000){frSaveT=t;CLDB.set("flog:cur",FR).catch(()=>{})}}
+function flogStats(F){let d=0,mx=null;for(let i=1;i<F.pts.length;i++){const a=F.pts[i-1],b=F.pts[i];if(b[0]-a[0]<=60000)d+=gcDistNm([a[1],a[2]],[b[1],b[2]])}
+  F.pts.forEach(p=>{if(p[3]!=null&&(mx==null||p[3]>mx))mx=p[3]});const end=F.pts.length?F.pts.at(-1)[0]:F.start;
+  const t0=F.to||F.start,t1=F.ld||(F.to?end:end);return{dist:d,maxAlt:mx,end,dur:t1-t0,est:!(F.to&&F.ld)}}
+async function flogFinish(F){F=F||FR;if(F===FR)FR=null;try{await CLDB.set("flog:cur",null)}catch(e){}
+  if(!F||F.pts.length<2)return;const st=flogStats(F);if(!F.to&&st.end-F.start<2*60000)return;
+  const L=fuelLog().filter(x=>x.t>=F.start-60000&&x.t<=st.end+60000);F.fuel=L;
+  try{await CLDB.set("flog:"+F.id,F);const I=(await flogIndex()).filter(x=>x.id!==F.id);I.unshift({id:F.id,start:F.start,route:F.route,to:F.to,ld:F.ld,end:st.end,dur:st.dur,est:st.est,dist:st.dist,maxAlt:st.maxAlt,n:F.pts.length,landings:F.landings,note:F.note||"",fuel:L.length});
+    await CLDB.set("flog:index",I);toast(`บันทึกเที่ยวบินแล้ว · ${flogFmtH(st.dur)} ชม. (ดูที่แท็บ 8)`);flogRender()}catch(e){toast("บันทึกประวัติการบินไม่ได้")}}
+/* ---------- หน้าแท็บ 8 ---------- */
+async function flogRender(){const box=$("#flogList");if(!box)return;const I=await flogIndex(),now=new Date();
+  const sum=f=>I.filter(f).reduce((a,x)=>a+x.dur,0),ym=t=>new Date(t).toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"}).slice(0,7),y=t=>ym(t).slice(0,4),cm=ym(now),cy=y(now);
+  $("#flogSum").innerHTML=`<div><span>เดือนนี้</span><b>${flogFmtH(sum(x=>ym(x.start)===cm))}</b><i>${I.filter(x=>ym(x.start)===cm).length} เที่ยว</i></div><div><span>ปีนี้</span><b>${flogFmtH(sum(x=>y(x.start)===cy))}</b><i>${I.filter(x=>y(x.start)===cy).length} เที่ยว</i></div><div><span>ทั้งหมด</span><b>${flogFmtH(sum(()=>true))}</b><i>${I.length} เที่ยว</i></div>${FR?`<div class="rec"><span>● กำลังบันทึก</span><b>${FR.pts.length} จุด</b><i>${esc(FR.route||"")}</i></div>`:""}`;
+  box.innerHTML=I.length?`<table class="flog-t"><thead><tr><th>วันที่</th><th>เส้นทาง</th><th>ขึ้น</th><th>ลง</th><th>ชั่วโมงบิน</th><th>ระยะ</th><th></th></tr></thead><tbody>${I.map(x=>`<tr data-fid="${esc(x.id)}">
+    <td>${flogD(x.start)}</td><td><b>${esc(x.route||"–")}</b>${x.note?`<br><small>${esc(x.note)}</small>`:""}</td><td>${flogT(x.to)}</td><td>${flogT(x.ld)}${x.landings>1?`<small> (${x.landings} ครั้ง)</small>`:""}</td>
+    <td><b>${flogFmtH(x.dur)}</b>${x.est?'<small title="ตรวจไม่พบเวลาขึ้นหรือลงครบ ใช้เวลาเริ่ม/จบการบันทึกแทน"> ≈</small>':""}</td><td>${x.dist.toFixed(0)} NM</td>
+    <td class="flog-a"><button type="button" data-fa="view" title="ดูรอยบิน">🗺</button><button type="button" data-fa="edit" title="แก้ไข">✏️</button><button type="button" data-fa="gpx" title="ส่งออก GPX">⬇</button><button type="button" data-fa="del" title="ลบ">🗑</button></td></tr>`).join("")}</tbody></table>`
+    :'<p class="hint">ยังไม่มีประวัติ — เปิด ✈ โหมดบิน ระหว่างบิน ระบบจะบันทึกให้อัตโนมัติ</p>'}
+async function flogGet(id){return CLDB.get("flog:"+id)}
+function flogDl(name,txt,type){const b=new Blob([txt],{type}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+function flogGpx(F){const x=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");let seg="";const segs=[];let cur=[];
+  F.pts.forEach((p,i)=>{if(i&&p[0]-F.pts[i-1][0]>60000){segs.push(cur);cur=[]}cur.push(p)});segs.push(cur);
+  seg=segs.map(sg=>`<trkseg>${sg.map(p=>`<trkpt lat="${p[1]}" lon="${p[2]}">${p[3]!=null?`<ele>${(p[3]/3.28084).toFixed(1)}</ele>`:""}<time>${new Date(p[0]).toISOString()}</time></trkpt>`).join("")}</trkseg>`).join("");
+  return`<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="VFR Planner" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>${x(F.route||F.id)}</name>${seg}</trk></gpx>`}
+async function flogView(id){const F=await flogGet(id);if(!F)return;const d=$("#flogDlg"),st=flogStats(F);$("#flogTitle").textContent=`${flogD(F.start)} · ${F.route||""}`;d.showModal();
+  const el=$("#flogMap");if(window._flogMap){window._flogMap.remove();window._flogMap=null}const m=L.map(el,{zoomControl:true,attributionControl:true});window._flogMap=m;
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18,attribution:"Imagery © Esri"}).addTo(m);
+  const segs=[];let cur=[];F.pts.forEach((p,i)=>{if(i&&p[0]-F.pts[i-1][0]>60000){segs.push(cur);segs.push({gap:[F.pts[i-1],p]});cur=[]}cur.push(p)});segs.push(cur);
+  segs.forEach(s=>{if(s.gap)L.polyline(s.gap.map(p=>[p[1],p[2]]),{color:"#f59e0b",weight:3,dashArray:"6 8"}).bindTooltip("ไม่มีข้อมูลช่วงนี้").addTo(m);else if(s.length)L.polyline(s.map(p=>[p[1],p[2]]),{color:"#22d3ee",weight:4}).addTo(m)});
+  const ll=F.pts.map(p=>[p[1],p[2]]);if(ll.length)m.fitBounds(L.latLngBounds(ll).pad(.15));
+  const dot=c=>L.circleMarker([0,0],{radius:7,color:"#fff",weight:2,fillColor:c,fillOpacity:1});const at=t=>F.pts.find(p=>p[0]>=t)||F.pts.at(-1);
+  if(F.to){const p=at(F.to);dot("#16a34a").setLatLng([p[1],p[2]]).bindTooltip("ขึ้น "+flogT(F.to)).addTo(m)}if(F.ld){const p=at(F.ld);dot("#dc2626").setLatLng([p[1],p[2]]).bindTooltip("ลง "+flogT(F.ld)).addTo(m)}
+  const me=L.circleMarker(ll[0]||[13,100],{radius:8,color:"#111",weight:2,fillColor:"#facc15",fillOpacity:1}).addTo(m),sl=$("#flogSlide"),info=$("#flogInfo");
+  sl.max=F.pts.length-1;sl.value=0;const show=()=>{const p=F.pts[+sl.value];if(!p)return;me.setLatLng([p[1],p[2]]);info.innerHTML=`<b>${flogT(p[0])}</b> · ALT ${p[3]!=null?p[3].toLocaleString("en-US")+" ft":"–"} · GS ${p[4]!=null?p[4]+" kt":"–"}`};sl.oninput=show;show();
+  $("#flogStat").innerHTML=`ขึ้น <b>${flogT(F.to)}</b> · ลง <b>${flogT(F.ld)}</b> · ชั่วโมงบิน <b>${flogFmtH(st.dur)}</b>${st.est?" ≈":""} · ระยะ <b>${st.dist.toFixed(1)} NM</b> · สูงสุด <b>${st.maxAlt!=null?st.maxAlt.toLocaleString("en-US")+" ft":"–"}</b>${(F.fuel||[]).length?` · น้ำมัน ${F.fuel.map(f=>`${flogT(f.t)} ${Math.round(f.f)}`).join(" → ")} lb`:""}`;
+  let playT=null;$("#flogPlay").onclick=e=>{if(playT){clearInterval(playT);playT=null;e.target.textContent="▶ เล่น";return}e.target.textContent="⏸ หยุด";if(+sl.value>=+sl.max)sl.value=0;
+    playT=setInterval(()=>{if(+sl.value>=+sl.max||!d.open){clearInterval(playT);playT=null;e.target.textContent="▶ เล่น";return}sl.value=+sl.value+Math.max(1,Math.round(F.pts.length/300));show()},50)};
+  setTimeout(()=>m.invalidateSize(),80)}
+async function flogEdit(id,tr){const F=await flogGet(id);if(!F)return;const pt=(s,base)=>{if(!s)return null;const m=/^(\d{1,2})[:.]?(\d{2})$/.exec(s.trim());if(!m)return undefined;const d=new Date(base||F.start);
+    const loc=new Date(d.toLocaleString("en-US",{timeZone:"Asia/Bangkok"}));const off=d-loc;loc.setHours(+m[1],+m[2],0,0);return loc.getTime()+off};
+  const r=prompt("เส้นทาง",F.route||"");if(r===null)return;const n=prompt("หมายเหตุ (เช่น ภารกิจ, ลูกเรือ)",F.note||"");if(n===null)return;
+  const a=prompt("เวลาขึ้น (HH:MM เวลาไทย · เว้นว่าง = ไม่ทราบ)",F.to?flogT(F.to):"");if(a===null)return;const b2=prompt("เวลาลง (HH:MM เวลาไทย)",F.ld?flogT(F.ld):"");if(b2===null)return;
+  const ta=pt(a),tb=pt(b2);if(ta===undefined||tb===undefined){toast("รูปแบบเวลาไม่ถูก ใช้ HH:MM");return}F.route=r.trim();F.note=n.trim();F.to=ta;F.ld=tb&&ta&&tb<ta?tb+86400000:tb;
+  await CLDB.set("flog:"+id,F);const st=flogStats(F),I=await flogIndex(),x=I.find(q=>q.id===id);Object.assign(x,{route:F.route,note:F.note,to:F.to,ld:F.ld,dur:st.dur,est:st.est});await CLDB.set("flog:index",I);flogRender();toast("แก้ไขแล้ว")}
+(function flogInit(){const box=$("#flogList");if(!box)return;CLDB.get("flog:cur").then(c=>{if(c&&c.pts&&c.pts.length&&Date.now()-c.pts.at(-1)[0]>30*60000&&!GPS.on)flogFinish(c);else flogRender()}).catch(()=>flogRender());
+  box.addEventListener("click",async e=>{const b=e.target.closest("[data-fa]");if(!b)return;const id=b.closest("tr").dataset.fid,a=b.dataset.fa;
+    if(a==="view")return flogView(id);if(a==="edit")return flogEdit(id);
+    if(a==="gpx"){const F=await flogGet(id);if(F)flogDl(`flight_${new Date(F.start).toISOString().slice(0,10)}_${(F.route||"").replace(/[^\w-]+/g,"_")}.gpx`,flogGpx(F),"application/gpx+xml");return}
+    if(a==="del"){if(!confirm("ลบเที่ยวบินนี้?"))return;await CLDB.set("flog:"+id,null);await CLDB.set("flog:index",(await flogIndex()).filter(x=>x.id!==id));flogRender()}});
+  $("#flogCsv").onclick=async()=>{const I=await flogIndex();if(!I.length)return toast("ยังไม่มีประวัติ");const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+    const rows=[["วันที่","เส้นทาง","ขึ้น","ลง","ชั่วโมงบิน (ชม.:นาที)","ชั่วโมงบิน (ทศนิยม)","ระยะ NM","สูงสุด ft","จำนวนลง","หมายเหตุ"],...I.slice().reverse().map(x=>[new Date(x.start).toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"}),x.route,flogT(x.to),flogT(x.ld),flogFmtH(x.dur)+(x.est?" ≈":""),(x.dur/3600000).toFixed(1),x.dist.toFixed(1),x.maxAlt??"",x.landings||"",x.note||""])];
+    flogDl(`flight_log_${new Date().toISOString().slice(0,10)}.csv`,"﻿"+rows.map(r=>r.map(q).join(",")).join("\r\n"),"text/csv")};
+  $("#flogClose").onclick=()=>$("#flogDlg").close()})();
 </script>
 </body>
 </html>
