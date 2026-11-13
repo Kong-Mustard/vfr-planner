@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-11T03:06",
+ "fetched": "2026-11-13T13:49",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -959,7 +959,3304 @@
     "text": "Don Mueang Aerodrome Traffic Zone (ATZ) a circle , radius 5 NM centred on VTBD ARP ( 135452N 1003620E )"
    },
    "name": "",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBD-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "MUEANG THONG",
+      "lat": 13.909722,
+      "lon": 100.543056,
+      "lm": "Impact Arena Building",
+      "rd": "R-290 / 3.0D"
+     },
+     {
+      "n": "KOH KRET",
+      "lat": 13.911389,
+      "lon": 100.484167,
+      "lm": "Wat Poramai Yikawas, Koh Kret",
+      "rd": "R-280 / 6.5D"
+     },
+     {
+      "n": "BANG BUA THONG",
+      "lat": 13.941667,
+      "lon": 100.418611,
+      "lm": "Bang Bua Thong Interchange",
+      "rd": "R-286 / 10.8D"
+     },
+     {
+      "n": "10 NM WEST",
+      "lat": 13.978611,
+      "lon": 100.438333,
+      "lm": "Pra-u-dom canal",
+      "rd": "R-300 / 10.5D"
+     },
+     {
+      "n": "BANG KHU WAT",
+      "lat": 13.976944,
+      "lon": 100.502778,
+      "lm": "Flora Ville Golf Course",
+      "rd": "R-313 / 7.3D"
+     },
+     {
+      "n": "PATHUMTHANI",
+      "lat": 14.025833,
+      "lon": 100.540278,
+      "lm": "Pathumthani Bridge (Crossing Chaopraya River)",
+      "rd": "R-338 / 8.6D"
+     },
+     {
+      "n": "5 NM WEST",
+      "lat": 13.980833,
+      "lon": 100.54,
+      "lm": "Riverdale Golf Club, Bangkradee, Pathumthani",
+      "rd": "R-325 / 5.9D"
+     },
+     {
+      "n": "3 NM WEST",
+      "lat": 13.938056,
+      "lon": 100.570278,
+      "lm": "Armed Forces Development Command (Dome shape) Si kan",
+      "rd": "R-333 / 3.8D"
+     },
+     {
+      "n": "3 NM EAST",
+      "lat": 13.885833,
+      "lon": 100.649444,
+      "lm": "Sukhaphiban 5, Chalong Rat Expressway Toll Plaza",
+      "rd": "R-095 / 3.1D"
+     },
+     {
+      "n": "LAM LUK KA",
+      "lat": 13.933889,
+      "lon": 100.708611,
+      "lm": "Bangkok Eastern Outer Ring Rd. Crossing Lamlukka Rd.",
+      "rd": "R-075 / 7.5D"
+     },
+     {
+      "n": "BUENG BA",
+      "lat": 14.130833,
+      "lon": 100.818056,
+      "lm": "Outdoor Stadium Between Wat Bueng Ba Prapasawat and Nongsua Wittayakorn School",
+      "rd": "R-042 / 19.3D"
+     },
+     {
+      "n": "SANAP THUEP",
+      "lat": 14.288333,
+      "lon": 100.809722,
+      "lm": "PTT Innovation Institute Sanaptueb, Wang Noi",
+      "rd": "R-028 / 27.0D"
+     },
+     {
+      "n": "PRATUNAM PHRA IN",
+      "lat": 14.201389,
+      "lon": 100.6425,
+      "lm": "Bang Pa-in Interchange, Bangkok Western Outer Ring Rd. Crossing Phaholyothin Rd.",
+      "rd": "R-005 / 16.8D"
+     },
+     {
+      "n": "HIN KONG",
+      "lat": 14.408333,
+      "lon": 100.877778,
+      "lm": "Hin Kong Interchange, Phahonyothin Rd.",
+      "rd": "R-030 / 35.2D"
+     },
+     {
+      "n": "AYUTTHAYA",
+      "lat": 14.352222,
+      "lon": 100.581389,
+      "lm": "Preedee-Thamrong Bridge Crossing Pasak River",
+      "rd": "R-359 / 27.5D"
+     },
+     {
+      "n": "LAT BUA LUANG",
+      "lat": 14.168889,
+      "lon": 100.28,
+      "lm": "Singha Beverage Co.,Ltd. Ladbualuang",
+      "rd": "R-312 / 24.5D"
+     },
+     {
+      "n": "BANG LEN",
+      "lat": 14.028333,
+      "lon": 100.273333,
+      "lm": "Scan Inter Solar Power Plant, Bang Phasi, Bang len",
+      "rd": "R-293 / 20.3D"
+     },
+     {
+      "n": "DON FAEK",
+      "lat": 13.851111,
+      "lon": 100.224444,
+      "lm": "Motorway Bang Yai-Kanchanaburi Bridge Crossing Tha Chin River 4",
+      "rd": "R-263 / 21.7D"
+     },
+     {
+      "n": "EKACHAI",
+      "lat": 13.626944,
+      "lon": 100.343889,
+      "lm": "Ekachai Golf and Country Club",
+      "rd": "R-223 / 21.7D"
+     },
+     {
+      "n": "BANG PAKONG",
+      "lat": 13.487,
+      "lon": 101.002167,
+      "lm": "Devahastin Bridge, Bangna-Chonburi Expressway Crossing Bang Pakong River",
+      "rd": "R-136 / 33.9D"
+     },
+     {
+      "n": "BANG NAM PRIAO",
+      "lat": 13.851389,
+      "lon": 101.049444,
+      "lm": "Bang Nam Priao Intersection",
+      "rd": "R-095 / 26.6D"
+     },
+     {
+      "n": "BANG LUK SUA",
+      "lat": 14.057222,
+      "lon": 101.051389,
+      "lm": "Pradhana Vanalai Studio",
+      "rd": "R-070 / 28.3D"
+     },
+     {
+      "n": "SAMUT SAKHON",
+      "lat": 13.538056,
+      "lon": 100.272222,
+      "lm": "Thachalom Roundabout",
+      "rd": "R-222 / 28.4D"
+     },
+     {
+      "n": "KOH SICHANG",
+      "lat": 13.129167,
+      "lon": 100.811111,
+      "lm": "Koh Sichang",
+      "rd": "R-165 / 47.4D"
+     },
+     {
+      "n": "KOH LAN",
+      "lat": 12.914722,
+      "lon": 100.780278,
+      "lm": "Koh Lan",
+      "rd": "R-170 / 59.5D"
+     },
+     {
+      "n": "LAT LUM KAEO",
+      "lat": 14.049494,
+      "lon": 100.459958,
+      "lm": "Bangkok Western Outer Ring Rd. Crossing Pathumthani-Ladlumkaew Rd.",
+      "rd": "R-319 / 12.3D"
+     },
+     {
+      "n": "BANGYAI",
+      "lat": 13.823739,
+      "lon": 100.409969,
+      "lm": "Rattanathibet Rd.",
+      "rd": "R-249 / 11.6D"
+     },
+     {
+      "n": "RAMA V BRIDGE",
+      "lat": 13.832778,
+      "lon": 100.495278,
+      "lm": "Rama 5 Bridge (Crossing Chaopraya River)",
+      "rd": "R-237 / 6.6D"
+     },
+     {
+      "n": "BANG KHAE",
+      "lat": 13.713333,
+      "lon": 100.4075,
+      "lm": "Bang Khae Interchange",
+      "rd": "R-226 / 15.4D"
+     },
+     {
+      "n": "BHUMIBOL BRIDGE",
+      "lat": 13.6675,
+      "lon": 100.535833,
+      "lm": "Industrial Ring Rd. Interchange between Bhumibol 1-2 Bridge near Lat Pho Canal",
+      "rd": "R-194 / 14.0D"
+     },
+     {
+      "n": "HUAI KHWANG",
+      "lat": 13.765278,
+      "lon": 100.586944,
+      "lm": "Train Repairing Center",
+      "rd": "R-173 / 8.5D"
+     },
+     {
+      "n": "CAVPAD",
+      "lat": 13.772222,
+      "lon": 100.543889,
+      "lm": "2nd Cavalry Division Helipad (Sanam Pao)",
+      "rd": "R-186 / 7.8D"
+     },
+     {
+      "n": "KHLONG CHAN",
+      "lat": 13.754722,
+      "lon": 100.620556,
+      "lm": "Rajamangala National Stadium",
+      "rd": "R-170 / 8.4D"
+     },
+     {
+      "n": "MINBURI",
+      "lat": 13.819722,
+      "lon": 100.676389,
+      "lm": "Bangkok Eastern Outer Ring Rd. Crossing Ram Inthra Rd.",
+      "rd": "R-133 / 6.4D"
+     },
+     {
+      "n": "11TH INFANTRY",
+      "lat": 13.856667,
+      "lon": 100.597222,
+      "lm": "2nd Infantry Battalion, 11th Infantry Regiment, Bangkhen",
+      "rd": "R-179 / 2.2D"
+     },
+     {
+      "n": "TPAD",
+      "lat": 13.859722,
+      "lon": 100.6375,
+      "lm": "Royal Thai Police Aviation Division, Tarang",
+      "rd": "R-131 / 3.1D"
+     },
+     {
+      "n": "PAKNAM",
+      "lat": 13.598283,
+      "lon": 100.598947,
+      "lm": "and Tower",
+      "rd": "R-179 / 17.6D"
+     },
+     {
+      "n": "BANGPU",
+      "lat": 13.512222,
+      "lon": 100.662222,
+      "lm": "Sukta Bridge",
+      "rd": "R-170 / 23.1D"
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ],
+       [
+        "BANG LEN",
+        2500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2500,
+        14.168889,
+        100.28,
+        [
+         "DON FAEK"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ],
+       [
+        "EKACHAI",
+        2500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ],
+       [
+        "EKACHAI",
+        2500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "KOH LAN",
+        2500,
+        12.914722,
+        100.780278,
+        [
+         "KOH SICHANG"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2500,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611,
+        [
+         "BANG NAM PRIAO"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278,
+        [
+         "PRATUNAM PHRA IN"
+        ]
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2000,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "BANG LEN",
+        2000,
+        14.028333,
+        100.273333
+       ],
+       [
+        "10 NM WEST",
+        1500,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "SAMUT SAKHON",
+        2000,
+        13.538056,
+        100.272222
+       ],
+       [
+        "EKACHAI",
+        2000,
+        13.626944,
+        100.343889
+       ],
+       [
+        "BANG BUA THONG",
+        1500,
+        13.941667,
+        100.418611
+       ],
+       [
+        "10 NM WEST",
+        1500,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH LAN",
+        2000,
+        12.914722,
+        100.780278,
+        [
+         "KOH SICHANG"
+        ]
+       ],
+       [
+        "SAMUT SAKHON",
+        2000,
+        13.538056,
+        100.272222
+       ],
+       [
+        "EKACHAI",
+        2000,
+        13.626944,
+        100.343889
+       ],
+       [
+        "BANG BUA THONG",
+        1500,
+        13.941667,
+        100.418611
+       ],
+       [
+        "10 NM WEST",
+        1500,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH SICHANG",
+        2000,
+        13.129167,
+        100.811111
+       ],
+       [
+        "BANG PAKONG",
+        2000,
+        13.487,
+        101.002167
+       ],
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278,
+        [
+         "PRATUNAM PHRA IN"
+        ]
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2000,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "LAT LUM KAEO",
+        1000,
+        14.049494,
+        100.459958
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "10 NM WEST",
+        1500,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "10 NM WEST",
+        1000,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG LEN",
+        2500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2500,
+        14.168889,
+        100.28,
+        [
+         "DON FAEK"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "10 NM WEST",
+        1000,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ],
+       [
+        "EKACHAI",
+        2500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "10 NM WEST",
+        1000,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG BUA THONG",
+        1000,
+        13.941667,
+        100.418611
+       ],
+       [
+        "EKACHAI",
+        2500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "KOH LAN",
+        2500,
+        12.914722,
+        100.780278,
+        [
+         "KOH SICHANG"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2500,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389,
+        [
+         "BANG PAKONG"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "PATHUMTHANI",
+        1500,
+        14.025833,
+        100.540278
+       ],
+       [
+        "LAT LUM KAEO",
+        1500,
+        14.049494,
+        100.459958
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "",
+      "seq": [
+       [
+        "LAT LUM KAEO",
+        1000,
+        14.049494,
+        100.459958
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "",
+      "seq": [
+       [
+        "10 NM WEST",
+        1500,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR OVERFLY PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R 21L/21R",
+      "sec": "OVERFLY",
+      "dir": "OUTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2500,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "DON FAEK",
+        2500,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        2500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2500,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR OVERFLY PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 03L/03R 21L/21R",
+      "sec": "OVERFLY",
+      "dir": "INBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2000,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2000,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        2000,
+        13.129167,
+        100.811111
+       ],
+       [
+        "SAMUT SAKHON",
+        2000,
+        13.538056,
+        100.272222
+       ],
+       [
+        "DON FAEK",
+        2000,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        2000,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2000,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BUENG BA",
+        1000,
+        14.130833,
+        100.818056
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444,
+        [
+         "BANG LEN"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444,
+        [
+         "BANG LEN"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        1500,
+        13.538056,
+        100.272222
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "SAMUT SAKHON",
+        1500,
+        13.538056,
+        100.272222
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111,
+        [
+         "BANG PAKONG"
+        ]
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111,
+        [
+         "BANG PAKONG"
+        ]
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "DEPARTURE",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BUENG BA",
+        1000,
+        14.130833,
+        100.818056
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHBOUND",
+      "seq": [
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "BUENG BA",
+        1000,
+        14.130833,
+        100.818056
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "BANG LEN",
+        1500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "10 NM WEST",
+        1000,
+        13.978611,
+        100.438333
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444,
+        [
+         "BANG LEN"
+        ]
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "SAMUT SAKHON",
+        1500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHBOUND",
+      "seq": [
+       [
+        "SAMUT SAKHON",
+        1500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ],
+       [
+        "BANG PAKONG",
+        1500,
+        13.487,
+        101.002167,
+        [
+         "KOH SICHANG"
+        ]
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ],
+       [
+        "BANG PAKONG",
+        1500,
+        13.487,
+        101.002167,
+        [
+         "KOH SICHANG"
+        ]
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "PRATUNAM PHRA IN",
+        1000,
+        14.201389,
+        100.6425
+       ],
+       [
+        "PATHUMTHANI",
+        1000,
+        14.025833,
+        100.540278
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 21L/21R",
+      "sec": "ARRIVAL",
+      "dir": "NORTHEASTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "SANAP TUEP",
+        1500,
+        null,
+        null
+       ],
+       [
+        "BUENG BA",
+        1000,
+        14.130833,
+        100.818056
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444,
+        [
+         "BANG LEN"
+        ]
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111,
+        [
+         "BANG PAKONG"
+        ]
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947,
+        [
+         "BANGPU"
+        ]
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111,
+        [
+         "BANG PAKONG"
+        ]
+       ],
+       [
+        "KOH SICHANG",
+        1500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "MUEANG THONG",
+        1000,
+        13.909722,
+        100.543056
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444,
+        [
+         "BANG LEN"
+        ]
+       ],
+       [
+        "BANGYAI",
+        1500,
+        13.823739,
+        100.409969
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "3 NM EAST",
+        1000,
+        13.885833,
+        100.649444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "LAM LUK KA",
+        1000,
+        13.933889,
+        100.708611
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "BANG KHAE",
+        1500,
+        13.713333,
+        100.4075
+       ],
+       [
+        "RAMA V BRIDGE",
+        1000,
+        13.832778,
+        100.495278
+       ],
+       [
+        "KOH KRET",
+        1000,
+        13.911389,
+        100.484167
+       ],
+       [
+        "BANG KHU WAT",
+        1000,
+        13.976944,
+        100.502778
+       ],
+       [
+        "5 NM WEST",
+        1000,
+        13.980833,
+        100.54
+       ],
+       [
+        "3 NM WEST",
+        1000,
+        13.938056,
+        100.570278
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR OVERFLY PROCEDURE FOR HELICOPTER CHART - RWY 03L/03R 21L/21R",
+      "sec": "OVERFLY",
+      "dir": "",
+      "seq": [
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        1500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        1500,
+        13.487,
+        101.002167
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        1500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        1500,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     }
+    ]
+   }
   },
   "VTBK": {
    "icao": "VTBK",
@@ -3203,7 +6500,839 @@
     "text": "Suvarnabhumi Aerodrome Traffic Zone (ATZ) a circle, radius 5 NM centred on 134109N 1004456E ( ARP )"
    },
    "name": "Bangkok/ Suvarnabhumi International Airport",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBS-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTBS-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "SUAN LUANG",
+      "lat": 13.688611,
+      "lon": 100.663333,
+      "lm": "Rama 9th Park",
+      "rd": "R-158 / 11.7D"
+     },
+     {
+      "n": "HIN KONG",
+      "lat": 14.408333,
+      "lon": 100.877778,
+      "lm": "Hin Kong Interchange, Phahonyothin Rd.",
+      "rd": "R-030 / 35.2D"
+     },
+     {
+      "n": "AYUTTHAYA",
+      "lat": 14.352222,
+      "lon": 100.581389,
+      "lm": "Preedee-Thamrong Bridge Crossing Pasak River",
+      "rd": "R-359 / 27.5D"
+     },
+     {
+      "n": "LAT BUA LUANG",
+      "lat": 14.168889,
+      "lon": 100.28,
+      "lm": "Singha Beverage Co.,Ltd. Ladbualuang",
+      "rd": "R-312 / 24.5D"
+     },
+     {
+      "n": "BANG LEN",
+      "lat": 14.028333,
+      "lon": 100.273333,
+      "lm": "Scan Inter Solar Power Plant, Bang Phasi, Bang len",
+      "rd": "R-293 / 20.3D"
+     },
+     {
+      "n": "DON FAEK",
+      "lat": 13.851111,
+      "lon": 100.224444,
+      "lm": "Motorway Bang Yai-Kanchanaburi Bridge Crossing Tha Chin River 4",
+      "rd": "R-263 / 21.7D"
+     },
+     {
+      "n": "EKACHAI",
+      "lat": 13.626944,
+      "lon": 100.343889,
+      "lm": "Ekachai Golf and Country Club",
+      "rd": "R-223 / 21.7D"
+     },
+     {
+      "n": "PAKNAM",
+      "lat": 13.598283,
+      "lon": 100.598947,
+      "lm": "and Tower",
+      "rd": "R-179 / 17.6D"
+     },
+     {
+      "n": "BANG SAO THONG",
+      "lat": 13.612222,
+      "lon": 100.838056,
+      "lm": "Assumption University Suvarnabhumi Campus, Bang Sao Thong",
+      "rd": "R-141 / 22.0D"
+     },
+     {
+      "n": "BANG PAKONG",
+      "lat": 13.487,
+      "lon": 101.002167,
+      "lm": "Devahastin Bridge, Bangna-Chonburi Expressway Crossing Bang Pakong River",
+      "rd": "R-136 / 33.9D"
+     },
+     {
+      "n": "BANG NAM PRIAO",
+      "lat": 13.851389,
+      "lon": 101.049444,
+      "lm": "Bang Nam Priao Intersection",
+      "rd": "R-095 / 26.6D"
+     },
+     {
+      "n": "BANG LUK SUA",
+      "lat": 14.057222,
+      "lon": 101.051389,
+      "lm": "Pradhana Vanalai Studio",
+      "rd": "R-070 / 28.3D"
+     },
+     {
+      "n": "KOH SICHANG",
+      "lat": 13.129167,
+      "lon": 100.811111,
+      "lm": "Koh Sichang",
+      "rd": "R-165 / 47.4D"
+     },
+     {
+      "n": "BHUMIBOL BRIDGE",
+      "lat": 13.6675,
+      "lon": 100.535833,
+      "lm": "Industrial Ring Rd. Interchange between Bhumibol 1-2 Bridge near Lat Pho Canal",
+      "rd": "R-194 / 14.0D"
+     },
+     {
+      "n": "BANGPU",
+      "lat": 13.512222,
+      "lon": 100.662222,
+      "lm": "Sukta Bridge",
+      "rd": "R-170 / 23.1D"
+     },
+     {
+      "n": "SAMUT SAKHON",
+      "lat": 13.538056,
+      "lon": 100.272222,
+      "lm": "Thachalom Roundabout",
+      "rd": "R-222 / 28.4D"
+     },
+     {
+      "n": "KHLONG CHAN",
+      "lat": 13.754722,
+      "lon": 100.620556,
+      "lm": "Rajamangala National Stadium",
+      "rd": "R-170 / 8.4D"
+     },
+     {
+      "n": "MINBURI",
+      "lat": 13.819722,
+      "lon": 100.676389,
+      "lm": "Bangkok Eastern Outer Ring Rd. Crossing Ram Inthra Rd.",
+      "rd": "R-133 / 6.4D"
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ],
+       [
+        "BANG PAKONG",
+        2500,
+        13.487,
+        101.002167
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "BANGPAKONG",
+        2500,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "EKACHAI",
+        2500,
+        13.626944,
+        100.343889
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG PAKONG",
+        2000,
+        13.487,
+        101.002167
+       ],
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH SICHANG",
+        2000,
+        13.129167,
+        100.811111
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "SOUTHEASTBOUND",
+      "seq": [
+       [
+        "KOH SICHANG",
+        2000,
+        13.129167,
+        100.811111
+       ],
+       [
+        "BANGPAKONG",
+        2000,
+        13.487,
+        101.002167
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "EKACHAI",
+        2000,
+        13.626944,
+        100.343889
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ],
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR OVERFLY PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "OVERFLY",
+      "dir": "OUTBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2500,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        3500,
+        13.129167,
+        100.811111
+       ],
+       [
+        "SAMUT SAKHON",
+        2500,
+        13.538056,
+        100.272222
+       ],
+       [
+        "DON FAEK",
+        2500,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        2500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2500,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        2500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        3500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "A",
+      "ch": "VFR OVERFLY PROCEDURE FOR LIGHT AIRCRAFT CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "OVERFLY",
+      "dir": "INBOUND",
+      "seq": [
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        2000,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        2000,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        2000,
+        13.487,
+        101.002167
+       ],
+       [
+        "KOH SICHANG",
+        2000,
+        13.129167,
+        100.811111
+       ],
+       [
+        "SAMUT SAKHON",
+        2000,
+        13.538056,
+        100.272222
+       ],
+       [
+        "DON FAEK",
+        2000,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        2000,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        2000,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        2000,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        4500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "KHLONG CHAN",
+        1500,
+        13.754722,
+        100.620556
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "BHUMIBOL BRIDGE",
+        1500,
+        13.6675,
+        100.535833
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ],
+       [
+        "PAKNAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "DEPARTURE",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ],
+       [
+        "BANG PAKONG",
+        1500,
+        13.487,
+        101.002167
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "WESTBOUND",
+      "seq": [
+       [
+        "MINBURI",
+        1000,
+        13.819722,
+        100.676389,
+        [
+         "KHLONG CHAN",
+         "BHUMIBOL BRIDGE",
+         "PAKNAM"
+        ]
+       ],
+       [
+        "SUAN LUANG",
+        1000,
+        13.688611,
+        100.663333
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR ENTRY AND EXIT PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "ARRIVAL",
+      "dir": "EASTBOUND",
+      "seq": [
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444,
+        [
+         "BANG PAKONG"
+        ]
+       ],
+       [
+        "BANG SAO THONG",
+        1000,
+        13.612222,
+        100.838056
+       ]
+      ]
+     },
+     {
+      "c": "H",
+      "ch": "VFR OVERFLY PROCEDURE FOR HELICOPTER CHART - RWY 19/20L/20R 01/02L/02R",
+      "sec": "OVERFLY",
+      "dir": "",
+      "seq": [
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ],
+       [
+        "BANG LUK SUA",
+        1500,
+        14.057222,
+        101.051389
+       ],
+       [
+        "BANG NAM PRIAO",
+        1500,
+        13.851389,
+        101.049444
+       ],
+       [
+        "BANG PAKONG",
+        1500,
+        13.487,
+        101.002167
+       ],
+       [
+        "BANGPU",
+        1000,
+        13.512222,
+        100.662222
+       ],
+       [
+        "PAK NAM",
+        1000,
+        13.598283,
+        100.598947
+       ],
+       [
+        "EKACHAI",
+        1500,
+        13.626944,
+        100.343889
+       ],
+       [
+        "DON FAEK",
+        1500,
+        13.851111,
+        100.224444
+       ],
+       [
+        "BANG LEN",
+        1500,
+        14.028333,
+        100.273333
+       ],
+       [
+        "LAT BUA LUANG",
+        1500,
+        14.168889,
+        100.28
+       ],
+       [
+        "AYUTTHAYA",
+        1500,
+        14.352222,
+        100.581389
+       ],
+       [
+        "HIN KONG",
+        1500,
+        14.408333,
+        100.877778
+       ]
+      ]
+     }
+    ]
+   }
   },
   "VTBU": {
    "icao": "VTBU",
@@ -8138,7 +12267,478 @@
     "text": "A circle of 5 NM radius centred on PSL DVOR/DME ( 164613N 1001729E )"
    },
    "name": "Phitsanulok",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPP-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTPP-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "\"BP\" or BRAVO - PAPA Point",
+      "lat": 16.708547,
+      "lon": 100.578775,
+      "id": "BP",
+      "lm": "Wat Nam Pat, Ban Nam Pat community",
+      "rd": "R-103 / 17.0D PSL"
+     },
+     {
+      "n": "\"BR\" or BRAVO - ROMIO Point",
+      "lat": 16.752256,
+      "lon": 100.115772,
+      "id": "BR",
+      "lm": "Football pitch, Bo Wittaya Bang Rakam School",
+      "rd": "R-264 / 10.2D PSL"
+     },
+     {
+      "n": "\"BT\" or BRAVO - TANGO Point",
+      "lat": 17.194386,
+      "lon": 99.999375,
+      "id": "BT",
+      "lm": "Bridge, Ban Thung Pa Krathin",
+      "rd": "R-327 / 30.4D PSL"
+     },
+     {
+      "n": "\"KK\" or KILO - KILO Point",
+      "lat": 16.932869,
+      "lon": 99.955758,
+      "id": "KK",
+      "lm": "Wat Kong Krailat",
+      "rd": "R-297 / 21.6D PSL"
+     },
+     {
+      "n": "\"NI\" or NOVEMBER - INDIA Point",
+      "lat": 17.270139,
+      "lon": 100.246475,
+      "id": "NI",
+      "lm": "Ridge near Na-In",
+      "rd": "R-355 / 30.0D PSL"
+     },
+     {
+      "n": "\"NP\" or NOVEMBER - PAPA Point",
+      "lat": 16.567106,
+      "lon": 100.635083,
+      "id": "NP",
+      "lm": "Noen Maprang Junction",
+      "rd": "R-121 / 23.2D PSL"
+     },
+     {
+      "n": "\"SN\" or SIERRA - NOVEMBER Point",
+      "lat": 16.507467,
+      "lon": 100.203939,
+      "id": "SN",
+      "lm": "Bridge Samngam district",
+      "rd": "R-198 / 16.5D PSL"
+     },
+     {
+      "n": "\"WB\" or WHISKY - BRAVO Point",
+      "lat": 16.997311,
+      "lon": 100.313108,
+      "id": "WB",
+      "lm": "Wat Bot, Khwae Noi River bend",
+      "rd": "R-005 / 13.6D PSL"
+     },
+     {
+      "n": "\"WK\" or WHISKY - KILO Point",
+      "lat": 16.270919,
+      "lon": 100.288086,
+      "id": "WK",
+      "lm": "Wat Yang Khao",
+      "rd": "R-180 / 29.8D PSL"
+     },
+     {
+      "n": "\"WT\" or WHISKY - TANGO Point",
+      "lat": 16.825664,
+      "lon": 100.429722,
+      "id": "WT",
+      "lm": "Wang Thong Junction",
+      "rd": "R-067 / 8.6D PSL"
+     },
+     {
+      "n": "\"BS\" or BRAVO - SIERRA Point",
+      "lat": 17.069656,
+      "lon": 99.897042,
+      "id": "BS",
+      "lm": "Bueng Yai Ban Suan district",
+      "rd": "R-308 / 28.9D PSL"
+     },
+     {
+      "n": "\"PM\" or PAPA - MIKE Point",
+      "lat": 16.790903,
+      "lon": 100.161253,
+      "id": "PM",
+      "lm": "Wat Pong Mo Khao",
+      "rd": "R-279 / 7.6D PSL"
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
+      "sec": "ARR",
+      "dir": "ARR-RWY14/32 (From North)",
+      "seq": [
+       [
+        "NI",
+        null,
+        17.270139,
+        100.246475
+       ],
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ]
+      ],
+      "txt": "Enter via most direct route through the NI POINT, then heading 168° to WB POINT, heading 148° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
+      "sec": "ARR",
+      "dir": "ARR-RWY14/32 (From North - West)",
+      "seq": [
+       [
+        "BT",
+        null,
+        17.194386,
+        99.999375
+       ],
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ]
+      ],
+      "txt": "Enter via most direct route through the BT POINT, then heading 124° to WB POINT, heading 148° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
+      "sec": "ARR",
+      "dir": "ARR-RWY14/32 (From North - West)",
+      "seq": [
+       [
+        "BT",
+        null,
+        17.194386,
+        99.999375
+       ],
+       [
+        "KK",
+        null,
+        16.932869,
+        99.955758
+       ],
+       [
+        "BR",
+        null,
+        16.752256,
+        100.115772
+       ]
+      ],
+      "txt": "Enter via most direct route through the BT POINT, then heading 190° to KK POINT, heading 141° to BR POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
+      "sec": "ARR",
+      "dir": "ARR-RWY14/32 (From East)",
+      "seq": [
+       [
+        "NP",
+        null,
+        16.567106,
+        100.635083
+       ],
+       [
+        "BP",
+        null,
+        16.708547,
+        100.578775
+       ],
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ]
+      ],
+      "txt": "Enter via most direct route through the NP POINT, then heading 340° to BP POINT, heading 310° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
+      "sec": "ARR",
+      "dir": "ARR-RWY14/32 (From South)",
+      "seq": [
+       [
+        "WK",
+        null,
+        16.270919,
+        100.288086
+       ],
+       [
+        "SN",
+        null,
+        16.507467,
+        100.203939
+       ],
+       [
+        "BR",
+        null,
+        16.752256,
+        100.115772
+       ]
+      ],
+      "txt": "Enter via most direct route through the WK POINT, then heading 342° to SN POINT, heading 342° to BR POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
+      "sec": "DEP",
+      "dir": "DEP-RWY14 (To North)",
+      "seq": [
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ],
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "NI",
+        null,
+        17.270139,
+        100.246475
+       ]
+      ],
+      "txt": "After departure left turn heading 063° to WT POINT, then heading 328° to WB POINT, then heading 348° to NI POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
+      "sec": "DEP",
+      "dir": "DEP-RWY14 (To North - West)",
+      "seq": [
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ],
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "BT",
+        null,
+        17.194386,
+        99.999375
+       ]
+      ],
+      "txt": "After departure left turn heading 063° to WT POINT, then heading 328° to WB POINT, then heading 304° to BT POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
+      "sec": "DEP",
+      "dir": "DEP-RWY14 (To North - West)",
+      "seq": [
+       [
+        "PM",
+        null,
+        16.790903,
+        100.161253
+       ],
+       [
+        "KK",
+        null,
+        16.932869,
+        99.955758
+       ],
+       [
+        "BS",
+        null,
+        17.069656,
+        99.897042
+       ]
+      ],
+      "txt": "After departure right turn heading 288° to PM POINT, then heading 307° to KK POINT, then heading 339° to BS POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
+      "sec": "DEP",
+      "dir": "DEP-RWY14 (To East)",
+      "seq": [
+       [
+        "BP",
+        null,
+        16.708547,
+        100.578775
+       ],
+       [
+        "NP",
+        null,
+        16.567106,
+        100.635083
+       ]
+      ],
+      "txt": "After departure left turn heading 100° to BP POINT, then heading 160° to NP POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
+      "sec": "DEP",
+      "dir": "DEP-RWY14 (To South)",
+      "seq": [
+       [
+        "SN",
+        null,
+        16.507467,
+        100.203939
+       ],
+       [
+        "WK",
+        null,
+        16.270919,
+        100.288086
+       ]
+      ],
+      "txt": "After departure right turn heading 199° to SN POINT, then heading 162° to WK POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
+      "sec": "DEP",
+      "dir": "DEP-RWY32 (To North)",
+      "seq": [
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "NI",
+        null,
+        17.270139,
+        100.246475
+       ]
+      ],
+      "txt": "After departure right turn heading 015° to WB POINT, then heading 348° to NI POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
+      "sec": "DEP",
+      "dir": "DEP-RWY32 (To North - West)",
+      "seq": [
+       [
+        "WB",
+        null,
+        16.997311,
+        100.313108
+       ],
+       [
+        "BT",
+        null,
+        17.194386,
+        99.999375
+       ]
+      ],
+      "txt": "After departure right turn heading 015° to WB POINT, then heading 304° to BT POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
+      "sec": "DEP",
+      "dir": "DEP-RWY32 (To North - West)",
+      "seq": [
+       [
+        "PM",
+        null,
+        16.790903,
+        100.161253
+       ],
+       [
+        "KK",
+        null,
+        16.932869,
+        99.955758
+       ],
+       [
+        "BS",
+        null,
+        17.069656,
+        99.897042
+       ]
+      ],
+      "txt": "After departure left turn heading 260° to PM POINT, then heading 307° to KK POINT, then heading 338° to BS POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
+      "sec": "DEP",
+      "dir": "DEP-RWY32 (To East)",
+      "seq": [
+       [
+        "WT",
+        null,
+        16.825664,
+        100.429722
+       ],
+       [
+        "NP",
+        null,
+        16.567106,
+        100.635083
+       ]
+      ],
+      "txt": "After departure right turn heading 086° to WT POINT, then heading 144° to NP POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
+      "sec": "DEP",
+      "dir": "DEP-RWY32 (To South)",
+      "seq": [
+       [
+        "SN",
+        null,
+        16.507467,
+        100.203939
+       ],
+       [
+        "WK",
+        null,
+        16.270919,
+        100.288086
+       ]
+      ],
+      "txt": "After departure left turn heading 188° to SN POINT, then heading 162° to WK POINT, then proceed to destination."
+     }
+    ]
+   }
   },
   "VTPT": {
    "icao": "VTPT",
@@ -9432,7 +14032,293 @@
     "text": "A circle of 5 nm radius centred on CPN DVOR/DME ( 104240N 0992156E )"
    },
    "name": "Chumphon/ Chumphon",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSE-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTSE-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "A POINT",
+      "lat": 10.848639,
+      "lon": 99.350056,
+      "id": "A",
+      "lm": "Ban Map Ammarit",
+      "rd": "R-354 / 8.3D CPN"
+     },
+     {
+      "n": "L POINT",
+      "lat": 10.654944,
+      "lon": 99.365611,
+      "id": "L",
+      "lm": "Lam Tan Cape",
+      "rd": "R-180 / 3.4D CPN"
+     },
+     {
+      "n": "N1 POINT",
+      "lat": 10.990561,
+      "lon": 99.500719,
+      "id": "N1",
+      "lm": "Khao Bang Berd",
+      "rd": "R-026 / 18.5D CPN"
+     },
+     {
+      "n": "N2 POINT",
+      "lat": 11.072972,
+      "lon": 99.558333,
+      "id": "N2",
+      "lm": "Koh Talu Island",
+      "rd": "R-028 / 24.4D CPN"
+     },
+     {
+      "n": "S1 POINT",
+      "lat": 10.515392,
+      "lon": 99.266742,
+      "id": "S1",
+      "lm": "Lam Kor Kwang (Hua Mong) Cape",
+      "rd": "R-207 / 13.1D CPN"
+     },
+     {
+      "n": "S2 POINT",
+      "lat": 10.367214,
+      "lon": 99.124286,
+      "id": "S2",
+      "lm": "Khao Chedi Temple",
+      "rd": "R-215 / 25.0D CPN"
+     },
+     {
+      "n": "W POINT",
+      "lat": 10.762917,
+      "lon": 99.331806,
+      "id": "W",
+      "lm": "Erawan Nantiyaram Temple",
+      "rd": "R-327 / 3.7D CPN"
+     },
+     {
+      "n": "C POINT",
+      "lat": 10.774444,
+      "lon": 99.369722,
+      "id": "C",
+      "lm": "Chum Kho (Office of subdistrict",
+      "rd": "R-004 / 3.8D CPN"
+     },
+     {
+      "n": "E POINT",
+      "lat": 10.701306,
+      "lon": 99.410139,
+      "id": "E",
+      "lm": "Koh Kai Island",
+      "rd": "R-103 / 2.7D CPN"
+     },
+     {
+      "n": "N3 POINT",
+      "lat": 10.896661,
+      "lon": 99.424072,
+      "id": "N3",
+      "lm": "Bang Waen (Road Intersection)",
+      "rd": "R-018 / 11.6D CPN"
+     },
+     {
+      "n": "N4 POINT",
+      "lat": 11.084683,
+      "lon": 99.48055,
+      "id": "N4",
+      "lm": "Bang Saphan Noi",
+      "rd": "R-017 / 23.3D CPN"
+     },
+     {
+      "n": "S3 POINT",
+      "lat": 10.441867,
+      "lon": 99.294169,
+      "id": "S3",
+      "lm": "Koh Samed Chumphon Island",
+      "rd": "R-195 / 16.6D CPN"
+     },
+     {
+      "n": "S4 POINT",
+      "lat": 10.255417,
+      "lon": 99.256917,
+      "id": "S4",
+      "lm": "Koh Kula Island",
+      "rd": "R-194 / 28.0D CPN"
+     },
+     {
+      "n": "S POINT",
+      "lat": 10.768583,
+      "lon": 99.275528,
+      "id": "S",
+      "lm": "Sahakorn Prachanukul School",
+      "rd": "R-303 / 6.3D CPN"
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
+      "sec": "ARR",
+      "dir": "ARR-RWY06/24From ( North)",
+      "seq": [
+       [
+        "N2",
+        null,
+        11.072972,
+        99.558333
+       ],
+       [
+        "N1",
+        null,
+        10.990561,
+        99.500719
+       ],
+       [
+        "A",
+        null,
+        10.848639,
+        99.350056
+       ],
+       [
+        "W",
+        null,
+        10.762917,
+        99.331806
+       ]
+      ],
+      "txt": "Enter via most direct route through the N2 POINT, then heading N1 POINT, heading 227° to A POINT then heading 192° to W POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
+      "sec": "ARR",
+      "dir": "ARR-RWY06/24From ( South )",
+      "seq": [
+       [
+        "S2",
+        null,
+        10.367214,
+        99.124286
+       ],
+       [
+        "S1",
+        null,
+        10.515392,
+        99.266742
+       ],
+       [
+        "L",
+        null,
+        10.654944,
+        99.365611
+       ]
+      ],
+      "txt": "Enter via most direct route through the S2 POINT, then heading 044° to S1 POINT, heading 035° to L POINT, then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
+      "sec": "DEP",
+      "dir": "DEP-RWY06To ( North)",
+      "seq": [
+       [
+        "C",
+        null,
+        10.774444,
+        99.369722
+       ],
+       [
+        "N3",
+        null,
+        10.896661,
+        99.424072
+       ],
+       [
+        "N4",
+        null,
+        11.084683,
+        99.48055
+       ]
+      ],
+      "txt": "After departure left turn heading 343° to C POINT, then heading 024° to N3 POINT, then heading 017° to N4 POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
+      "sec": "DEP",
+      "dir": "DEP-RWY06To ( South)",
+      "seq": [
+       [
+        "E",
+        null,
+        10.701306,
+        99.410139
+       ],
+       [
+        "S3",
+        null,
+        10.441867,
+        99.294169
+       ],
+       [
+        "S4",
+        null,
+        10.255417,
+        99.256917
+       ]
+      ],
+      "txt": "After departure right turn heading 135° to E POINT, then heading 204° to S3 POINT, then heading 192° to S4 POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
+      "sec": "DEP",
+      "dir": "DEP-RWY24To ( North)",
+      "seq": [
+       [
+        "S",
+        null,
+        10.768583,
+        99.275528
+       ],
+       [
+        "N3",
+        null,
+        10.896661,
+        99.424072
+       ],
+       [
+        "N4",
+        null,
+        11.084683,
+        99.48055
+       ]
+      ],
+      "txt": "After departure right turn heading 317° to S POINT, then heading 049° to N3 POINT, then heading 017° to N4 POINT, then proceed to destination."
+     },
+     {
+      "c": "A",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
+      "sec": "DEP",
+      "dir": "DEP-RWY24To ( South)",
+      "seq": [
+       [
+        "L",
+        null,
+        10.654944,
+        99.365611
+       ],
+       [
+        "S3",
+        null,
+        10.441867,
+        99.294169
+       ],
+       [
+        "S4",
+        null,
+        10.255417,
+        99.256917
+       ]
+      ],
+      "txt": "After departure left turn heading 150° to L POINT, then heading 199° to S3 POINT, then heading 192° to S4 POINT, then proceed to destination."
+     }
+    ]
+   }
   },
   "VTSF": {
    "icao": "VTSF",
@@ -15395,7 +20281,172 @@
     "text": "Beginning at 150112N 1022206E then clockwise along 5 NM arc from Ratchasima DVOR/DME ( 145648N 1021840E ) to 145430N 1021436E then counter clockwise from Khorat Aerodrome Traffic Zone to 145706N 1021424E then direct to the starting point."
    },
    "name": "Nakhon Ratchasima",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUQ-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUQ-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "E POINT",
+      "lat": 14.888903,
+      "lon": 102.3455,
+      "id": "E",
+      "lm": "Ponds",
+      "rd": "R-150 / 4.0D NKR"
+     },
+     {
+      "n": "L POINT",
+      "lat": 14.593175,
+      "lon": 101.840108,
+      "id": "L",
+      "lm": "Lam Phra Phloeng ridge",
+      "rd": "R-232 / 34.6D NKR"
+     },
+     {
+      "n": "J POINT",
+      "lat": 15.015314,
+      "lon": 102.411072,
+      "id": "J",
+      "lm": "Jakkarat district",
+      "rd": "R-055 / 7.1D NKR"
+     },
+     {
+      "n": "K POINT",
+      "lat": 14.629831,
+      "lon": 101.312728,
+      "id": "K",
+      "lm": "Mine",
+      "rd": "R-252 / 61.0D NKR"
+     },
+     {
+      "n": "C POINT",
+      "lat": 15.062308,
+      "lon": 102.372081,
+      "id": "C",
+      "lm": "Curve road",
+      "rd": "R-027 / 7.8D NKR"
+     },
+     {
+      "n": "U POINT",
+      "lat": 15.219281,
+      "lon": 102.285581,
+      "id": "U",
+      "lm": "U-turn bridge on railway and road",
+      "rd": "R-355 / 16.4D NKR"
+     },
+     {
+      "n": "H POINT",
+      "lat": 15.085167,
+      "lon": 102.711806,
+      "id": "H",
+      "lm": "Huai Tha Laeng City",
+      "rd": "R-070 / 24.7D NKR"
+     },
+     {
+      "n": "P POINT",
+      "lat": 14.662742,
+      "lon": 102.146689,
+      "id": "P",
+      "lm": "Bueng Phra ponds",
+      "rd": "R-209 / 19.5D NKR"
+     },
+     {
+      "n": "GIANT",
+      "lat": 14.73,
+      "lon": 101.466667,
+      "lm": "Recovery Exit (R-254 / 40.7D KRT)"
+     },
+     {
+      "n": "M POINT",
+      "lat": 15.012844,
+      "lon": 102.834986,
+      "id": "M",
+      "lm": "Lam Prai Mas",
+      "rd": "R-083 / 30.7D NKR"
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
+      "sec": "ARR",
+      "dir": "ARR - RWY06/24 (From East)",
+      "seq": [
+       [
+        "H",
+        null,
+        15.085167,
+        102.711806
+       ],
+       [
+        "J",
+        null,
+        15.015314,
+        102.411072
+       ],
+       [
+        "E",
+        null,
+        14.888903,
+        102.3455
+       ]
+      ],
+      "txt": "Inbound via H POINT then heading 257° to J POINT. Heading 208° to E POINT, then join aerodrome traffic circuit when directed by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
+      "sec": "ARR",
+      "dir": "ARR - RWY06/24 (From South)",
+      "seq": [
+       [
+        "L",
+        null,
+        14.593175,
+        101.840108
+       ],
+       [
+        "P",
+        null,
+        14.662742,
+        102.146689
+       ],
+       [
+        "E",
+        null,
+        14.888903,
+        102.3455
+       ]
+      ],
+      "txt": "Inbound via L POINT then heading 078° to P POINT. Heading 041° to E POINT, then join aerodrome traffic circuit when directed by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
+      "sec": "ARR",
+      "dir": "ARR - RWY06/24 (From West)",
+      "seq": [
+       [
+        "K",
+        null,
+        14.629831,
+        101.312728
+       ],
+       [
+        "P",
+        null,
+        14.662742,
+        102.146689
+       ],
+       [
+        "E",
+        null,
+        14.888903,
+        102.3455
+       ]
+      ],
+      "txt": "Inbound via K POINT then heading 088° to P POINT. Heading 041° to E POINT, then join aerodrome traffic circuit when directed by ATC."
+     }
+    ]
+   }
   },
   "VTUU": {
    "icao": "VTUU",
@@ -16225,7 +21276,195 @@
     "text": "A circle of 5 NM radius centred on Roi Et DVOR/DME ( 160700.6N 1034619.5E )"
    },
    "name": "Roi Et",
-   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUV-en-GB.html"
+   "url": "https://aip.caat.or.th/2026-10-29-AIRAC/html/eAIP/VT-AD-2.VTUV-en-GB.html",
+   "vfr": {
+    "pts": [
+     {
+      "n": "\"B\" or BRAVO Point",
+      "lat": 16.224889,
+      "lon": 103.922603,
+      "id": "B",
+      "lm": "Pho Si Sawang intersection",
+      "rd": "R-054 / 10.8D ROT"
+     },
+     {
+      "n": "\"C\" or CHALIE Point",
+      "lat": 16.057931,
+      "lon": 103.651147,
+      "id": "C",
+      "lm": "Planchai Swamp",
+      "rd": "R-244 / 7.8D ROT"
+     },
+     {
+      "n": "\"H\" or HOTEL Point",
+      "lat": 15.807953,
+      "lon": 103.386239,
+      "id": "H",
+      "lm": "Hexagon Pond",
+      "rd": "R-231 / 29.0D ROT"
+     },
+     {
+      "n": "\"J\" or JULIET Point",
+      "lat": 16.242547,
+      "lon": 103.250992,
+      "id": "J",
+      "lm": "Mahasarakham University",
+      "rd": "R-285 / 31.0D ROT"
+     },
+     {
+      "n": "\"L\" or LIMA Point",
+      "lat": 15.701672,
+      "lon": 103.546936,
+      "id": "L",
+      "lm": "Lao Luang Temple",
+      "rd": "R-209 / 28.0D ROT"
+     },
+     {
+      "n": "\"S\" or SIERRA Point",
+      "lat": 16.031422,
+      "lon": 103.940275,
+      "id": "S",
+      "lm": "Salaloi Lake",
+      "rd": "R-119 / 11.0D ROT"
+     },
+     {
+      "n": "\"T\" or TANGO Point",
+      "lat": 16.156608,
+      "lon": 103.614397,
+      "id": "T",
+      "lm": "Wat Bueng Sai Thong",
+      "rd": "R-286 / 9.4D ROT"
+     },
+     {
+      "n": "\"Y\" or YANKEE Point",
+      "lat": 15.796006,
+      "lon": 104.147822,
+      "id": "Y",
+      "lm": "Mueang Yasothon",
+      "rd": "R-132 / 29.0D ROT"
+     },
+     {
+      "n": "\"Z\" or ZULU Point",
+      "lat": 16.542058,
+      "lon": 104.048514,
+      "id": "Z",
+      "lm": "Lerng Sew Lake",
+      "rd": "R-033 / 30.0D ROT"
+     },
+     {
+      "n": "ROI ET",
+      "lat": 16.116831,
+      "lon": 103.772069
+     }
+    ],
+    "rt": [
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
+      "sec": "ARR",
+      "dir": "ARR-RWY18/36 (From VTUK)",
+      "seq": [
+       [
+        "J",
+        null,
+        16.242547,
+        103.250992
+       ],
+       [
+        "T",
+        null,
+        16.156608,
+        103.614397
+       ]
+      ],
+      "txt": "Enter via most direct route through the J POINT , then heading 105° to T POINT , then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
+      "sec": "ARR",
+      "dir": "ARR-RWY18/36 (From VTUQ)",
+      "seq": [
+       [
+        "H",
+        null,
+        15.807953,
+        103.386239
+       ],
+       [
+        "C",
+        null,
+        16.057931,
+        103.651147
+       ]
+      ],
+      "txt": "Enter via most direct route through the H POINT , then heading 047° to C POINT , then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
+      "sec": "ARR",
+      "dir": "ARR-RWY18/36 (From VTUO)",
+      "seq": [
+       [
+        "L",
+        null,
+        15.701672,
+        103.546936
+       ],
+       [
+        "C",
+        null,
+        16.057931,
+        103.651147
+       ]
+      ],
+      "txt": "Enter via most direct route through the L POINT , then heading 017° to C POINT , then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
+      "sec": "ARR",
+      "dir": "ARR-RWY18/36 (From VTUW)",
+      "seq": [
+       [
+        "Z",
+        null,
+        16.542058,
+        104.048514
+       ],
+       [
+        "B",
+        null,
+        16.224889,
+        103.922603
+       ]
+      ],
+      "txt": "Enter via most direct route through the Z POINT , then heading 202° to B POINT , then join aerodrome traffic circuit when direct by ATC."
+     },
+     {
+      "c": "A",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
+      "sec": "ARR",
+      "dir": "ARR-RWY18/36 (From VTUU)",
+      "seq": [
+       [
+        "Y",
+        null,
+        15.796006,
+        104.147822
+       ],
+       [
+        "S",
+        null,
+        16.031422,
+        103.940275
+       ]
+      ],
+      "txt": "Enter via most direct route through the Y POINT , then heading 320° to S POINT , then join aerodrome traffic circuit when direct by ATC."
+     }
+    ]
+   }
   },
   "VTUW": {
    "icao": "VTUW",
