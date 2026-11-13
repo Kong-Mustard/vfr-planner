@@ -378,7 +378,12 @@ def parse_geom(g):
     for k in ms:
         before = g[:k.start()].rstrip()
         (centers if before.endswith("(") else pts).append(k)
-    poly = []; prev_end = 0; first_center = None
+    poly = []; prev_end = 0; first_center = None; last_c = None
+    navpos = {}
+    for nm_ in re.finditer(r"\b([A-Z]{3})\s+(?:D?VOR|TACAN|NDB)[A-Z/ ]{0,6}(?:\(\s*channel[^)]*?)?\(?\s*", g):
+        cm_ = C_RE.match(g, nm_.end())
+        if cm_:
+            navpos[nm_.group(1)] = _c(cm_)
     lead = re.search(r"bounded by\s*(\d+(?:\.\d+)?)\s*NM arc", g, re.I)
     for i, k in enumerate(pts):
         p = _c(k)
@@ -388,9 +393,16 @@ def parse_geom(g):
             rm = re.search(r"(\d+(?:\.\d+)?)\s*NM", conn)
             cm = C_RE.search(conn)
             c = _c(cm) if cm else (first_center and _c(first_center))
+            if not cm:  # "centred on KRT TACAN" — ศูนย์กลางอ้างชื่อ navaid ที่ประกาศพิกัดไว้ก่อนหน้าในข้อความ
+                im = re.search(r"\b([A-Z]{3})\s+(?:D?VOR|TACAN|NDB)", conn)
+                if im and im.group(1) in navpos:
+                    c = navpos[im.group(1)]
+                elif last_c:
+                    c = last_c
             if c and rm:
                 cw = not re.search(r"counter|anti", conn, re.I)
                 poly += _arc(c, float(rm.group(1)), _brg(c, poly[-1]), _brg(c, p), cw)[1:-1]
+                last_c = c
         poly.append(p); prev_end = k.end()
         if lead and first_center is None and centers:
             first_center = centers[0]
@@ -399,6 +411,14 @@ def parse_geom(g):
         c = _c(centers[0]); r = float(lead.group(1))
         cw = not re.search(r"counter|anti", tail, re.I)
         poly += _arc(c, r, _brg(c, poly[-1]), _brg(c, poly[0]), cw)[1:-1]
+    elif re.search(r"\barc\b.*starting point", tail, re.I) and poly:
+        rm = re.search(r"(\d+(?:\.\d+)?)\s*NM", tail)
+        im = re.search(r"\b([A-Z]{3})\s+(?:D?VOR|TACAN|NDB)", tail)
+        cm = C_RE.search(tail)
+        c = _c(cm) if cm else navpos.get(im.group(1)) if im else last_c
+        if c and rm:
+            cw = not re.search(r"counter|anti", tail, re.I)
+            poly += _arc(c, float(rm.group(1)), _brg(c, poly[-1]), _brg(c, poly[0]), cw)[1:-1]
     if poly and poly[0] != poly[-1]:
         poly.append(poly[0])
     return poly, approx
@@ -435,7 +455,7 @@ def parse_enr21(html):
                     poly, approx = [], True
                 if len(poly) < 4:
                     continue
-                vm = re.search(r"(?:up to but not including\s*)?(FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)\s*/\s*(GND|SFC|FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)", body)
+                vm = re.search(r"(?:up to but not including\s*)?(FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)\s*/\s*(GND|SFC|FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)", body, re.I)
                 cm = re.search(r"Class of airspace\s*:?\s*([A-G])\b", body)
                 upper = vm.group(1).strip() if vm else ""
                 if vm and "not including" in vm.group(0):
