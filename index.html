@@ -1314,6 +1314,8 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 .pos-r{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--input);margin-bottom:6px}.pos-r>span{min-width:150px;color:var(--muted);font-weight:700;font-size:13px}.pos-r>b{flex:1;font-size:16px;word-break:break-word}
 .pos-r button{min-height:36px;padding:4px 10px}.pos-big .pos-r{background:color-mix(in srgb,var(--cc) 14%,var(--panel));border:1.5px solid var(--cc)}.pos-big .pos-r>b{font-size:22px}
 @media (max-width:600px){.pos-r{flex-wrap:wrap}.pos-r>span{min-width:0;width:100%}.pos-big .pos-r>b{font-size:19px}}
+.bk-dlg{border:0;border-radius:16px;padding:18px 20px;max-width:440px;width:calc(100% - 32px);background:var(--panel);color:var(--ink);box-shadow:0 20px 60px #0006}
+.bk-dlg h3{margin:0 0 8px}.bk-dlg label{display:flex;flex-direction:column;gap:4px;margin:8px 0;font-weight:700}.bk-dlg input{padding:10px;border-radius:10px;font-size:16px}.bk-dlg .btns{margin-top:12px}
 .cr h3{margin:0 0 10px;font:800 18px var(--f-display)}
 .cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:var(--cc);color:#fff;border-color:var(--cc)}
 .cr-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -4595,15 +4597,44 @@ function bkKeys(){const k=[];try{for(let i=0;i<localStorage.length;i++){const n=
 function bkInfo(){const t=store.get("vfr_lastbackup"),el=$("#bkInfo");if(!el)return;
   if(!t){el.innerHTML='<span class="bad">ยังไม่เคยสำรอง</span>';return}const d=Math.floor((Date.now()-new Date(t))/864e5);
   el.innerHTML=`สำรองล่าสุด ${new Date(t).toLocaleDateString("th-TH")} (${d} วันก่อน)`+(d>14?' — <span class="bad">ควรสำรองใหม่</span>':"")}
-$("#bkSave").onclick=()=>{const o={app:"VFR Planner",backup:new Date().toISOString(),data:{}};bkKeys().forEach(k=>{try{o.data[k]=JSON.parse(localStorage.getItem(k))}catch(e){o.data[k]=localStorage.getItem(k)}});
-  download(`VFR_Planner_สำรอง_${new Date().toLocaleDateString("en-CA")}.json`,JSON.stringify(o),"application/json");store.set("vfr_lastbackup",o.backup);bkInfo();toast(`สำรอง ${Object.keys(o.data).length} รายการแล้ว`)};
-let bkArm=null;$("#bkLoad").onchange=e=>{const f=e.target.files[0];e.target.value="";if(!f)return;f.text().then(t=>{let o;try{o=JSON.parse(t)}catch(err){}
-  if(!o||o.app!=="VFR Planner"||!o.data){toast("ไฟล์นี้ไม่ใช่ไฟล์สำรองของแอป");return}
-  const ks=Object.keys(o.data).filter(k=>/^vfr_/.test(k)&&!BK_SKIP.has(k));
-  if(bkArm!==f.name){bkArm=f.name;toast(`ไฟล์สำรอง ${new Date(o.backup).toLocaleDateString("th-TH")} · ${ks.length} รายการ — เลือกไฟล์เดิมอีกครั้งเพื่อยืนยันกู้คืน (ข้อมูลปัจจุบันจะถูกแทนที่)`);setTimeout(()=>bkArm=null,15000);return}
-  bkArm=null;let bad=0;ks.forEach(k=>{try{localStorage.setItem(k,JSON.stringify(/^vfr_(current|wpdb|presets|custom|fpl)/.test(k)?deepStrip(o.data[k]):o.data[k]))}catch(err){bad++}});
+/* ครบทุกอย่าง: localStorage (vfr_*) + IndexedDB (checklist, ประวัติการบิน) · ตั้งรหัสผ่านเข้ารหัสไฟล์ได้ (AES-GCM 256 + PBKDF2) */
+async function bkIdbAll(){try{const db=await CLDB.open();return await new Promise((ok,no)=>{const st=db.transaction("kv").objectStore("kv"),out={};const q=st.openCursor();
+  q.onsuccess=()=>{const c=q.result;if(c){out[c.key]=c.value;c.continue()}else ok(out)};q.onerror=()=>no(q.error)})}catch(e){return{}}}
+const bkB64=u=>{let s="";const a=new Uint8Array(u);for(let i=0;i<a.length;i+=32768)s+=String.fromCharCode.apply(null,a.subarray(i,i+32768));return btoa(s)};
+const bkUnB64=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+async function bkKey(pw,salt){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:250000,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function bkEnc(obj,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},await bkKey(pw,salt),new TextEncoder().encode(JSON.stringify(obj)));
+  return{app:"VFR Planner",backup:obj.backup,enc:"AES-GCM-PBKDF2",salt:bkB64(salt),iv:bkB64(iv),ct:bkB64(ct)}}
+async function bkDec(o,pw){const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:bkUnB64(o.iv)},await bkKey(pw,bkUnB64(o.salt)),bkUnB64(o.ct));return JSON.parse(new TextDecoder().decode(pt))}
+function bkDlg(html){return new Promise(res=>{const d=document.createElement("dialog");d.className="bk-dlg";d.innerHTML=`<form method="dialog">${html}</form>`;document.body.appendChild(d);
+  d.addEventListener("close",()=>{const f=new FormData(d.querySelector("form"));res(d.returnValue==="ok"?Object.fromEntries(f):null);d.remove()});d.showModal();const fi=d.querySelector("input");if(fi)fi.focus()})}
+$("#bkSave").onclick=async()=>{const ks=bkKeys(),idb=await bkIdbAll(),ni=Object.keys(idb).length;
+  const r=await bkDlg(`<h3>💾 สำรองข้อมูลทั้งหมด</h3><p>ในเครื่องนี้: <b>${ks.length}</b> รายการตั้งค่า/ข้อมูล + <b>${ni}</b> รายการในฐานข้อมูล (checklist · ประวัติการบิน)</p>
+    <p class="hint">มีข้อมูลส่วนบุคคลและข้อมูลหน่วย — แนะนำตั้งรหัสผ่าน ไฟล์จะเปิดได้เฉพาะแอปนี้เมื่อใส่รหัสถูก (ลืมรหัส = กู้ไม่ได้)</p>
+    <label>รหัสผ่าน (เว้นว่าง = ไม่เข้ารหัส)<input name="pw" type="password" autocomplete="new-password"></label><label>ยืนยันรหัสผ่าน<input name="pw2" type="password" autocomplete="new-password"></label>
+    <div class="btns"><button value="ok" class="primary">⬇ บันทึกไฟล์สำรอง</button><button value="no" formnovalidate>ยกเลิก</button></div>`);
+  if(!r)return;if(r.pw!==r.pw2){toast("รหัสผ่านทั้งสองช่องไม่ตรงกัน");return}
+  const o={app:"VFR Planner",v:2,backup:new Date().toISOString(),data:{},idb};ks.forEach(k=>{try{o.data[k]=JSON.parse(localStorage.getItem(k))}catch(e){o.data[k]=localStorage.getItem(k)}});
+  let out=o;if(r.pw){try{out=await bkEnc(o,r.pw)}catch(e){toast("เข้ารหัสไม่ได้ในเบราว์เซอร์นี้");return}}
+  download(`VFR_Planner_สำรอง_${new Date().toLocaleDateString("en-CA")}${r.pw?"_เข้ารหัส":""}.json`,JSON.stringify(out),"application/json");store.set("vfr_lastbackup",o.backup);bkInfo();
+  toast(`สำรอง ${ks.length}+${ni} รายการแล้ว${r.pw?" (เข้ารหัส)":""}`)};
+$("#bkLoad").onchange=e=>{const f=e.target.files[0];e.target.value="";if(!f)return;f.text().then(async t=>{let o;try{o=JSON.parse(t)}catch(err){}
+  if(!o||o.app!=="VFR Planner"||!(o.data||o.enc)){toast("ไฟล์นี้ไม่ใช่ไฟล์สำรองของแอป");return}
+  if(o.enc){const r=await bkDlg(`<h3>🔐 ไฟล์สำรองเข้ารหัส</h3><label>รหัสผ่าน<input name="pw" type="password" autocomplete="current-password"></label><div class="btns"><button value="ok" class="primary">ปลดล็อก</button><button value="no" formnovalidate>ยกเลิก</button></div>`);
+    if(!r)return;try{o=await bkDec(o,r.pw)}catch(err){toast("รหัสผ่านไม่ถูกต้อง หรือไฟล์เสียหาย");return}}
+  const ks=Object.keys(o.data||{}).filter(k=>/^vfr_/.test(k)&&!BK_SKIP.has(k)),ik=Object.keys(o.idb||{}).filter(k=>typeof k==="string"&&k.length<100);
+  const c=await bkDlg(`<h3>♻ กู้คืนข้อมูล</h3><p>ไฟล์สำรองวันที่ <b>${esc(new Date(o.backup).toLocaleString("th-TH"))}</b><br>${ks.length} รายการตั้งค่า/ข้อมูล + ${ik.length} รายการในฐานข้อมูล</p>
+    <p class="bad">ข้อมูลปัจจุบันในเครื่องนี้ที่ชื่อเดียวกันจะถูกแทนที่</p><div class="btns"><button value="ok" class="primary">กู้คืน</button><button value="no">ยกเลิก</button></div>`);
+  if(!c)return;let bad=0;ks.forEach(k=>{try{localStorage.setItem(k,JSON.stringify(/^vfr_(current|wpdb|presets|custom|fpl)/.test(k)?deepStrip(o.data[k]):o.data[k]))}catch(err){bad++}});
+  for(const k of ik){try{await CLDB.set(k,o.idb[k])}catch(err){bad++}}
   if(bad){toast(`กู้คืนไม่ครบ ${bad} รายการ (พื้นที่เก็บข้อมูลในเครื่องเต็ม)`);return}toast("กู้คืนแล้ว กำลังโหลดใหม่…");setTimeout(()=>location.reload(),800)})};
 bkInfo();
+/* เตือนสำรองข้อมูล: มีข้อมูลส่วนตัว/หน่วย แต่ไม่ได้สำรองเกิน 14 วัน — เตือนไม่เกิน 3 วันครั้ง */
+setTimeout(()=>{try{const has=["vfr_wpdb","vfr_presets","vfr_contacts","vfr_ppc","vfr_plans"].some(k=>{const v=localStorage.getItem(k);return v&&v.length>20});if(!has)return;
+  const t=store.get("vfr_lastbackup"),d=t?(Date.now()-new Date(t))/864e5:999,n=+localStorage.getItem("vfr_bk_nag")||0;
+  if(d>14&&Date.now()-n>3*864e5){localStorage.setItem("vfr_bk_nag",Date.now());toast(t?`ไม่ได้สำรองข้อมูลมา ${Math.floor(d)} วัน — แท็บ 9 › สำรองข้อมูลทั้งหมด`:"ยังไม่เคยสำรองข้อมูล — แท็บ 9 › สำรองข้อมูลทั้งหมด")}}catch(e){}},6000);
 
 /* ---------- โหมดทีละขั้น (EMER / NORMAL) ---------- */
 let SM=null;
@@ -5059,7 +5090,7 @@ async function ppcPreview(){const box=$("#ppcPrev"),btn=$("#ppcPrevBtn");box.hid
 /* ---------- ผู้ติดต่อ (ฐานข้อมูลส่วนตัว) — นำเข้าจาก Excel/JSON · เก็บในเครื่องนี้เท่านั้น ไม่ส่งออกไปไหน ---------- */
 const CT_COLS=[["name","ชื่อ จนท.",/ชื่อ|name/i],["role","ตำแหน่ง/หน้าที่",/ตำแหน่ง|หน้าที่|role|position/i],["unit","หน่วย",/หน่วย|unit/i],["prov","จังหวัด",/จังหวัด|province/i],
   ["area","พื้นที่/อำเภอ",/พื้นที่|อำเภอ|area|district/i],["tel","เบอร์โทร",/เบอร์|โทร|tel|phone|mobile/i],["radio","วิทยุ/ความถี่",/วิทยุ|ความถี่|radio|freq/i],["pos","พิกัด",/พิกัด|mgrs|coord|lat/i],["note","หมายเหตุ",/หมายเหตุ|note|remark/i]];
-let PROV=null,ctQ="",ctProvF="";
+var PROV=null,ctQ="",ctProvF="";
 function ctLoad(){try{const a=JSON.parse(localStorage.getItem("vfr_contacts"));return Array.isArray(a)?a:[]}catch(e){return[]}}
 function ctSave(a){try{localStorage.setItem("vfr_contacts",JSON.stringify(a))}catch(e){toast("บันทึกผู้ติดต่อไม่ได้ (หน่วยความจำเต็ม?)")}}
 async function provLoad(){if(PROV)return PROV;try{const d=await(await fetch("provinces.json")).json();PROV=d.prov.map(p=>{let b=[180,90,-180,-90];p.p.forEach(r=>r.forEach(([x,y])=>{b=[Math.min(b[0],x),Math.min(b[1],y),Math.max(b[2],x),Math.max(b[3],y)]}));return{...p,b}})}catch(e){PROV=[]}return PROV}
@@ -5380,7 +5411,7 @@ async function flogRender(){const box=$("#flogList");if(!box)return;const I=awai
   $("#flogSum").innerHTML=`<div><span>เดือนนี้</span><b>${flogFmtH(sum(x=>ym(x.start)===cm))}</b><i>${I.filter(x=>ym(x.start)===cm).length} เที่ยว</i></div><div><span>ปีนี้</span><b>${flogFmtH(sum(x=>y(x.start)===cy))}</b><i>${I.filter(x=>y(x.start)===cy).length} เที่ยว</i></div><div><span>ทั้งหมด</span><b>${flogFmtH(sum(()=>true))}</b><i>${I.length} เที่ยว</i></div>${FR?`<div class="rec"><span>● กำลังบันทึก</span><b>${FR.pts.length} จุด</b><i>${esc(FR.route||"")}</i></div>`:""}`;
   box.innerHTML=I.length?`<table class="flog-t"><thead><tr><th>วันที่</th><th>เส้นทาง</th><th>ขึ้น</th><th>ลง</th><th>ชั่วโมงบิน</th><th>ระยะ</th><th></th></tr></thead><tbody>${I.map(x=>`<tr data-fid="${esc(x.id)}">
     <td>${flogD(x.start)}</td><td><b>${esc(x.route||"–")}</b>${x.note?`<br><small>${esc(x.note)}</small>`:""}</td><td>${flogT(x.to)}</td><td>${flogT(x.ld)}${x.landings>1?`<small> (${x.landings} ครั้ง)</small>`:""}</td>
-    <td><b>${flogFmtH(x.dur)}</b>${x.est?'<small title="ตรวจไม่พบเวลาขึ้นหรือลงครบ ใช้เวลาเริ่ม/จบการบันทึกแทน"> ≈</small>':""}</td><td>${x.dist.toFixed(0)} NM</td>
+    <td><b>${flogFmtH(x.dur)}</b>${x.est?'<small title="ตรวจไม่พบเวลาขึ้นหรือลงครบ ใช้เวลาเริ่ม/จบการบันทึกแทน"> ≈</small>':""}</td><td>${(+x.dist||0).toFixed(0)} NM</td>
     <td class="flog-a"><button type="button" data-fa="view" title="ดูรอยบิน">🗺</button><button type="button" data-fa="edit" title="แก้ไข">✏️</button><button type="button" data-fa="gpx" title="ส่งออก GPX">⬇</button><button type="button" data-fa="del" title="ลบ">🗑</button></td></tr>`).join("")}</tbody></table>`
     :'<p class="hint">ยังไม่มีประวัติ — เปิด ✈ โหมดบิน ระหว่างบิน ระบบจะบันทึกให้อัตโนมัติ</p>'}
 async function flogGet(id){return CLDB.get("flog:"+id)}
