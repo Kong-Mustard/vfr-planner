@@ -2491,7 +2491,7 @@ $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(
   store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -3186,7 +3186,7 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();const segH=new
   seg(segH,vfrLayer,"#a21caf");seg(segA,vfrALayer,"#2563eb");
   pts.forEach(({p,ics})=>{const nm=vfrShort(p);
     const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt"><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
-    m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}
+    m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}${p.ocr?'<br><span class="hint">⚠ อ่านจาก chart สแกนด้วย OCR · ตรวจไขว้กับ radial/DME แล้ว — ยืนยันกับ chart ก่อนใช้</span>':""}
       <br><span class="mono">${vfrDms(p.lat,"NS")}  ${vfrDms(p.lon,"EW")}</span><div class="btns" style="margin-top:6px"><button type="button" class="vfr-add" data-n="${esc(nm)}" data-lat="${p.lat}" data-lon="${p.lon}">＋ เพิ่มเป็นจุดเส้นทาง</button></div>`);
     vfrLayer.addLayer(m)})}
 map.on("popupopen",e=>{const b=e.popup.getElement().querySelector(".vfr-add");if(!b)return;b.onclick=()=>{const w={name:b.dataset.n.slice(0,20),lat:+b.dataset.lat,lon:+b.dataset.lon,vor:""};
@@ -4527,6 +4527,13 @@ function drawCtr(){ctrLayer.clearLayers();Object.entries((EAIP&&EAIP.airports)||
   L.polygon(sp.poly,{color:"#8d0f8a",weight:2.8,opacity:1,dashArray:sp.approx?"5 4":"12 5",fillColor:"#a1249e",fillOpacity:.13})
    .bindTooltip(`${esc(sp.name)}${sp.cls?" · Class "+esc(sp.cls):""}${sp.vert?"<br>"+esc(sp.vert):""}`,{sticky:true}).addTo(ctrLayer)})}
 drawCtr();
+/* ENR 2.1 — Control zone / TMA / CTA ทั้งประเทศ (แบบที่ SkyVector วาด): CTR สีม่วงแดง · TMA/CTA สีน้ำเงิน */
+const as21Layer=L.layerGroup().addTo(map);
+function drawAs21(){as21Layer.clearLayers();((EAIP&&EAIP.airspace21)||[]).slice().sort((a,b)=>(a.kind==="CTR")-(b.kind==="CTR")).forEach(a=>{if(!a.poly||a.poly.length<4)return;const ctr=a.kind==="CTR",c=ctr?"#c026d3":"#1d4ed8";
+  const lim=[a.upper,a.lower].filter(Boolean).join(" / ");
+  L.polygon(a.poly,{color:c,weight:ctr?2.2:1.8,opacity:.9,dashArray:a.approx?"4 4":ctr?null:"10 6",fillColor:c,fillOpacity:ctr?.05:.025,interactive:true})
+   .bindTooltip(`<b>${esc(a.name)}</b>${a.cls?` · Class ${esc(a.cls)}`:""}${lim?`<br>${esc(lim)}`:""}${a.unit?`<br>${esc(a.unit)}${a.freq?" · "+esc(a.freq.replace(/\s*121\.5.*$/,"")):""}`:""}${a.approx?'<br><span class="hint">ขอบเขตบางส่วนตามแนวชายแดน — โดยประมาณ</span>':""}`,{sticky:true}).addTo(as21Layer)})}
+drawAs21();
 
 /* ---------- เปิด/ปิดการมองเห็นชั้นข้อมูลบนแผนที่ (จำค่าในเครื่อง) ---------- */
 const VIS=[
@@ -4534,7 +4541,8 @@ const VIS=[
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
  {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
- {k:"ctr",t:"Control zone (CTR/ATZ)",g:"สนามบิน",L:()=>ctrLayer},
+ {k:"ctr",t:"ATZ / CTR สนาม (AD 2.17)",g:"สนามบิน",L:()=>ctrLayer},
+ {k:"as21",t:"CTR / TMA / CTA (ENR 2.1)",g:"สนามบิน",L:()=>as21Layer},
  {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
  {k:"vfr",t:"◆ จุดรายงาน VFR + เส้นทาง ฮ. (AD 2.24)",g:"สนามบิน",L:()=>vfrLayer},
  {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก (AD 2.24)",g:"สนามบิน",L:()=>vfrALayer,off:true},
@@ -4548,11 +4556,11 @@ const VIS=[
  {k:"pwr",t:"🗼⚡ สายไฟแรงสูง (OSM)",g:"สิ่งกีดขวาง",L:()=>pwrLayer,off:true},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem ap ctr rp vfr P R D nt ifr",
+ "ทั้งหมด":"route hbox rem ap ctr as21 rp vfr P R D nt ifr",
  "เฉพาะเส้นทาง":"route hbox rem",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
- "เฉพาะ CTR":"route ap ctr",
+ "เฉพาะ CTR":"route ap ctr as21",
  "Enroute":"route ap enr ifr",
  "ซ่อนทั้งหมด":""};
 let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
@@ -4906,7 +4914,7 @@ fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
-  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 /* ---------- PPC (H-60 Performance Planning Card) — ฟอร์มกรอกเองตาม IPAC · เก็บในเครื่องเท่านั้น (vfr_ppc) ---------- */
 const PPC_PH=[["dep","Departure [DEP]"],["crs","Cruise [CRS]"],["arr1","Arrival [ARR1]"],["arr2","Arrival 2 [ARR2]"],["cfg","Config"]];
 const PPC_OPT={
