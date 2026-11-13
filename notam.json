@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-13T23:04Z",
+"fetched": "2026-11-13T23:57Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1107,33 +1107,6 @@
 "plain": " ",
 "start": "11/13/2026 0000",
 "end": "11/13/2026 2359",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4528/26",
-"icao": "A4528/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611131900 C) 2611132315\r\nE) RWY 02R/20L CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/13/2026 1900",
-"end": "11/13/2026 2315",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4532/26",
-"icao": "A4532/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611131900 C) 2611132315\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY E BTN TWY D11 AND TWY E21\r\n   -TWY E15\r\n   -TWY E17\r\n   -TWY E19\r\n   -TWY E21",
-"plain": " ",
-"start": "11/13/2026 1900",
-"end": "11/13/2026 2315",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4554/26",
-"icao": "A4554/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611131913 C) 2611132315\r\nE) ILS RWY 02R/20L U/S",
-"plain": " ",
-"start": "11/13/2026 1913",
-"end": "11/13/2026 2315",
 "keyword": "INTERNATIONAL"
 },
 {
