@@ -376,6 +376,9 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .wpask .sa-h b{color:#1b2430}.wpask .sa-del{background:#d1242f}
 @media (pointer:coarse){.snapask{width:280px}.snapask button{padding:12px 6px;font-size:14px}}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
 .ifrpop table{border-collapse:collapse;margin:4px 0;font-size:12px}.ifrpop .ifrg{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:4px 0;font-size:12px}.ifrpop .ifrg span{color:#666}.ifrpop .ifrg b{font-weight:600;color:#222}.ifrpop .ifrseg{border-top:1px solid #ddd;margin-top:5px;padding-top:4px}.ifrpop .btn{margin-top:4px}
+.vfrpt{position:relative;width:14px;height:14px}.vfrpt>i{position:absolute;left:2px;top:2px;width:10px;height:10px;background:#ffd400;border:1.5px solid #111;transform:rotate(45deg);box-shadow:0 0 2px #000a}
+.vfrpt>span{position:absolute;left:15px;top:-3px;white-space:nowrap;font:800 11px var(--f-body);color:#4a044e;background:#fffbe6e6;border:1px solid #a21caf;border-radius:4px;padding:0 4px;pointer-events:none}
+.vfr-nolbl .vfrpt>span{display:none}body.printing #pvMap .vfrpt>span{display:block}
 .rptri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid #ffd400;filter:drop-shadow(0 0 1px #000)}
 /* ---- QUIZ ---- */
 .qz{padding:18px;max-width:860px;margin-inline:auto;font-size:17px}
@@ -650,13 +653,23 @@ body.pvprev .pv-panel .pv-ctl .kc-g{margin:0!important;width:auto!important}body
 .pv-panel .kb-ap{padding:6px 10px!important}.pv-panel .kb-ap h4{font-size:14px!important;margin:0 0 2px!important}
 .pv-panel .kb-ap label{padding:1px 0!important;font-size:13px!important;gap:6px!important;line-height:1.3}.pv-panel .kb-ap input{width:18px!important;height:18px}
 @media (pointer:coarse){body.pvprev .pv-bar{padding-top:calc(env(safe-area-inset-top,0px) + 22px)!important}}
-.stale-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fef3c7;color:#78350f;border:1.5px solid #f59e0b;border-radius:12px;padding:8px 12px;margin:0 0 10px;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.stale-bar{position:relative;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fef3c7;color:#78350f;border:1.5px solid #f59e0b;border-radius:12px;padding:8px 12px;margin:0 0 10px;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .stale-bar[hidden]{display:none}.stale-bar b{color:#92400e}.stale-bar span{flex:1;min-width:200px}.stale-bar button{min-height:36px;border-radius:10px;background:#fff;color:#78350f;border:1px solid #f59e0b;font-weight:700}
 .terr-body{display:block!important;font-size:15px;line-height:1.55}.terr-body h4{margin:12px 0 4px;font:800 15px var(--f-display)}.terr-body ul{margin:0;padding-left:20px}.terr-body li{margin:3px 0}
 .terr-ck{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;margin-top:12px;font-weight:700}.terr-ck input{width:22px;height:22px}
 dialog.terr-dlg{width:min(680px,94vw)}
 /* ---- ✈ โหมดบิน ---- */
 .fm-side .fm-sim{min-height:54px;font-size:20px}
+.sim-pan{position:absolute;left:10px;bottom:28px;z-index:1200;background:var(--card,#fff);color:var(--ink);border:2px solid #7c3aed;border-radius:12px;box-shadow:0 6px 20px #0004;padding:6px 8px;font-size:13px;max-width:calc(100% - 120px)}
+.sim-pan .sp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#7c3aed}.sim-pan .sp-h button{border:0;background:none;font-size:16px;cursor:pointer;color:inherit;padding:2px 6px}
+.sim-pan.min .sp-b{display:none}.sim-pan.min .sp-h button{transform:rotate(180deg)}
+.sim-pan .sp-r{display:flex;align-items:center;gap:5px;margin-top:5px;flex-wrap:wrap}.sim-pan .sp-r>span{width:40px;font-weight:700;color:var(--muted)}
+.sim-pan button{min-height:34px;padding:4px 9px;border-radius:8px;border:1px solid var(--line);background:var(--input);color:var(--ink);font-weight:700;cursor:pointer}
+.sim-pan .sp-seg{display:flex;gap:3px}.sim-pan button.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.sim-pan .sp-v{min-width:86px;text-align:center;font:700 14px var(--f-mono)}.sim-pan .sp-v.man{color:#7c3aed}.sim-pan .sp-auto{font-weight:500;font-size:12px}
+.sim-pan .sp-act{border-top:1px solid var(--line);padding-top:6px}
+.sim-pan{top:10px;bottom:auto;left:56px}body.flymode .sim-pan{top:auto;bottom:12px;left:10px}
+
 body.flymode #mfWp,body.flymode #gpsHud,body.flymode .gps-wrap,body.flymode .map-tools,body.flymode .sa-float,body.flymode .leaflet-control-zoom,body.flymode #btnFull,body.flymode .leaflet-control-layers{display:none!important}
 @media (max-width:1000px){.fm-top{grid-template-columns:repeat(6,minmax(0,1fr))}.fm-top .fm-to{grid-column:1/-1;flex-direction:row!important;align-items:baseline;gap:10px;flex-wrap:wrap}}
 .fm-to.dto b{color:#fbbf24}.fm-dtag{font-style:normal;background:#f59e0b;color:#111;border-radius:6px;padding:0 6px;font-weight:800}.fm-dtor{margin-left:auto;background:#334155;color:#fff;border:0;border-radius:10px;min-height:38px;padding:0 12px;font-weight:700}
@@ -2471,7 +2484,7 @@ $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(
   store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
+  EAIP=d;const ok=store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -2706,7 +2719,7 @@ new Ctl3D().addTo(map);
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 /* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
 function ifrBase(quiet){if(typeof baseSet!=="function")return;if(FLMODE==="I")baseSet("chart");else if(!quiet)baseSet("sat")}  // I = พื้นขาวชาร์ต · กลับ V = ดาวเทียม
-function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);/* VFR: เห็นจุดรายงาน/เส้นทาง VFR · IFR: เห็นจุดรายงาน IFR แทน */visSet("rp",!on);if(VIS.some(v=>v.k==="vfr"))visSet("vfr",!on);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
+function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);/* VFR: เห็นจุดรายงาน/เส้นทาง VFR · IFR: เห็นจุดรายงาน IFR แทน */visSet("rp",!on);visSet("vfr",!on);if(on)visSet("vfrA",false);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
   document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase(quiet);if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
@@ -3149,6 +3162,30 @@ function renderProc(){const box=$("#procList");if(!box)return;rpLayer.clearLayer
     .bindTooltip(`${esc(p.name)} (${esc(ic)} ${esc(p.src)})`).addTo(rpLayer)));}
 $("#procList").addEventListener("click",e=>{const b=e.target.closest(".rp");if(!b)return;const p=AP[b.dataset.ic].eaip.points.filter(x=>!/\b(ARP|DVOR|VOR|NDB|TACAN|DME|LOC|ILS|GP)\b/.test(x.name))[+b.dataset.i];
   const w={name:p.name.slice(0,20),lat:p.lat,lon:p.lon,vor:""};const at=Math.max(1,state.wps.length-1);state.wps.splice(at,0,w);state.legs.splice(at-1,0,blankLeg());markEdited();render();toast("เพิ่ม "+w.name)});
+/* ---------- AD 2.24 VFR reporting points + เส้นทาง VFR (จาก Tabular description ใน eAIP) ----------
+   ฮ. = เส้นทางสำหรับเฮลิคอปเตอร์ (สีม่วง) · เครื่องบินเล็ก = สีน้ำเงิน (ชั้นแยก ปิดไว้ก่อน) · จุด = สี่เหลี่ยมข้าวหลามตัดสีเหลือง */
+const vfrLayer=L.layerGroup(),vfrALayer=L.layerGroup();
+const vfrDms=(v,h)=>{const a=Math.abs(v),d=Math.floor(a),m=Math.floor((a-d)*60),s=((a-d)*60-m)*60;return`${d}° ${String(m).padStart(2,"0")}′ ${s.toFixed(0).padStart(2,"0")}″ ${v<0?h[1]:h[0]}`};
+function vfrShort(p){return p.id||p.n.replace(/\s+POINT$/i,"")}
+function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();const segH=new Map(),segA=new Map(),pts=new Map();
+  Object.entries(AP).forEach(([ic,a])=>{const v=a.eaip&&a.eaip.vfr;if(!v)return;
+    (v.pts||[]).forEach(p=>{const k=p.lat.toFixed(4)+","+p.lon.toFixed(4);if(!pts.has(k))pts.set(k,{p,ics:new Set()});pts.get(k).ics.add(ic)});
+    (v.rt||[]).forEach(r=>{const S=r.c==="H"?segH:segA,lab=`${ic} ${r.c==="H"?"ฮ.":"บ."} ${r.sec==="DEPARTURE"||r.sec==="DEP"?"ออก":r.sec==="ARRIVAL"||r.sec==="ARR"?"เข้า":r.sec==="OVERFLY"?"ผ่าน":r.sec} ${r.dir||""}`.trim();
+      for(let i=0;i+1<r.seq.length;i++){const A=r.seq[i],B=r.seq[i+1];if(A[2]==null||B[2]==null)continue;
+        const k=[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");if(!S.has(k))S.set(k,{A,B,labs:new Set()});S.get(k).labs.add(lab)}})});
+  const seg=(S,G,col)=>S.forEach(({A,B,labs})=>{const alt=[A[1],B[1]].filter(Boolean);
+    const pl=L.polyline([[A[2],A[3]],[B[2],B[3]]],{color:col,weight:3,opacity:.85,dashArray:"8 5",className:"vfr-rt"})
+      .bindTooltip(`<b>${esc(A[0])} → ${esc(B[0])}</b>${alt.length?` · ${alt.map(x=>"ALT "+x).join(" → ")}`:""}<br><span class="hint">${[...labs].slice(0,4).map(esc).join("<br>")}${labs.size>4?`<br>+${labs.size-4}`:""}</span>`,{sticky:true});G.addLayer(pl)});
+  seg(segH,vfrLayer,"#a21caf");seg(segA,vfrALayer,"#2563eb");
+  pts.forEach(({p,ics})=>{const nm=vfrShort(p);
+    const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt"><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
+    m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}
+      <br><span class="mono">${vfrDms(p.lat,"NS")}  ${vfrDms(p.lon,"EW")}</span><div class="btns" style="margin-top:6px"><button type="button" class="vfr-add" data-n="${esc(nm)}" data-lat="${p.lat}" data-lon="${p.lon}">＋ เพิ่มเป็นจุดเส้นทาง</button></div>`);
+    vfrLayer.addLayer(m)})}
+map.on("popupopen",e=>{const b=e.popup.getElement().querySelector(".vfr-add");if(!b)return;b.onclick=()=>{const w={name:b.dataset.n.slice(0,20),lat:+b.dataset.lat,lon:+b.dataset.lon,vor:""};
+  const at=Math.max(1,state.wps.length-1);if(state.wps.length<2){state.wps.push(w);if(state.wps.length>1)state.legs.push(blankLeg())}else{state.wps.splice(at,0,w);state.legs.splice(at-1,0,blankLeg())}markEdited();render();map.closePopup();toast("เพิ่ม "+w.name)}});
+map.on("zoomend",()=>map.getContainer().classList.toggle("vfr-nolbl",map.getZoom()<9));map.getContainer().classList.toggle("vfr-nolbl",map.getZoom()<9);
+if(typeof FLMODE==="undefined"||FLMODE!=="I")vfrLayer.addTo(map);drawVfr();
 const spLayer=L.layerGroup();layerCtl.addOverlay(spLayer,"Significant points (ENR 4.4)");
 function drawSig(){spLayer.clearLayers();if(!map.hasLayer(spLayer)||map.getZoom()<8)return;const b=map.getBounds().pad(0.2);
   ((EAIP&&EAIP.sigpoints)||[]).forEach(s=>{if(b.contains([s.lat,s.lon]))L.marker([s.lat,s.lon],{icon:L.divIcon({className:"",html:'<div class="rptri" style="border-bottom-color:#7fb2e8"></div>',iconSize:[14,12],iconAnchor:[7,6]})})
@@ -4438,6 +4475,8 @@ const VIS=[
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
  {k:"ctr",t:"Control zone (CTR/ATZ)",g:"สนามบิน",L:()=>ctrLayer},
  {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
+ {k:"vfr",t:"◆ จุดรายงาน VFR + เส้นทาง ฮ. (AD 2.24)",g:"สนามบิน",L:()=>vfrLayer},
+ {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก (AD 2.24)",g:"สนามบิน",L:()=>vfrALayer,off:true},
  {k:"P",t:"Prohibited",g:"พื้นที่",L:()=>areaLayers.P,c:"#d1242f"},
  {k:"R",t:"Restricted",g:"พื้นที่",L:()=>areaLayers.R,c:"#e07a00"},
  {k:"D",t:"Danger",g:"พื้นที่",L:()=>areaLayers.D,c:"#2f6fd6"},
@@ -4448,7 +4487,7 @@ const VIS=[
  {k:"pwr",t:"🗼⚡ สายไฟแรงสูง (OSM)",g:"สิ่งกีดขวาง",L:()=>pwrLayer,off:true},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem ap ctr rp P R D nt ifr",
+ "ทั้งหมด":"route hbox rem ap ctr rp vfr P R D nt ifr",
  "เฉพาะเส้นทาง":"route hbox rem",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
@@ -4556,7 +4595,7 @@ function gpsStart(sim){if(!sim&&!window._terrAsked){let ack=null;try{ack=localSt
   GPS.watch=navigator.geolocation.watchPosition(p=>{const c=p.coords;gpsFix(c.latitude,c.longitude,c.speed!=null&&c.speed>=0?c.speed*1.94384:null,c.heading!=null&&!isNaN(c.heading)&&c.speed>1?c.heading:null,c.altitude!=null?c.altitude*3.28084:null,c.accuracy,p.timestamp)},
     e=>{const m={1:"ไม่ได้รับอนุญาตให้ใช้ตำแหน่ง — เปิดสิทธิ์ Location ของเบราว์เซอร์/แอปในการตั้งค่า",2:"หาตำแหน่งไม่ได้ (ไม่มีสัญญาณ GPS)",3:"หาตำแหน่งช้าเกินไป กำลังลองใหม่"}[e.code]||e.message;
       $("#gpsHud").querySelector(".gh-wait")&&($("#gpsHud").querySelector(".gh-wait").textContent="⚠ "+m);if(e.code===1)toast(m)},{enableHighAccuracy:true,maximumAge:1000,timeout:20000})}
-function gpsStop(){if(FM)fmExit(true);if(typeof FR!=="undefined"&&FR)flogFinish();GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
+function gpsStop(){if(FM)fmExit(true);if(typeof FR!=="undefined"&&FR)flogFinish();GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim)simStop()
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="✈ โหมดบิน";$("#gpsHud").hidden=true;gpsTouchMode(false)}
 function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/Preset ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
@@ -4567,13 +4606,47 @@ $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.c
   if(g==="info"){terrInfo();return}
   if(g==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(e){}gpsHud();toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
   if(g==="clear"){GPS.pts=GPS.last?[[GPS.last.lat,GPS.last.lon]]:[];if(GPS.crumb)GPS.crumb.setLatLngs(GPS.pts);toast("ล้างรอยบินแล้ว")}
-  if(g==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
+  if(g==="sim"){if(GPS.sim){simStop();toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart()}}
   if(GPS.last)gpsHud();else $("#gpsHud").querySelector(".gh-btns").outerHTML=gpsBtns()});
 map.on("dragstart",()=>{if(GPS.on&&GPS.follow){GPS.follow=false;const b=document.querySelector('#gpsHud [data-g="follow"]');if(b)b.classList.remove("on")}});
-/* จำลองการบินตามเส้นทาง (ทดสอบบนคอมที่ไม่มี GPS) — เร็ว ×10 */
-function gpsSimStart(){if(state.wps.length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}const P=routePath();let d=0,t=Date.now();
-  GPS.sim=setInterval(()=>{const now=Date.now(),dt=(now-t)/3600000*10;t=now;const a=posAt(P,d),gs=a.s.gs;d+=gs*dt;if(d>=P.total){clearInterval(GPS.sim);GPS.sim=null;toast("จำลองถึงปลายทางแล้ว");return}
-    const b=posAt(P,d);gpsFix(b.ll[1],b.ll[0],gs,trueCourse([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]),a.s.alt,10,now)},500);toast("จำลองการบินตามเส้นทาง (เร็ว ×10)")}
+/* จำลองการบินตามเส้นทาง (ทดสอบบนคอมที่ไม่มี GPS) — ปรับค่าได้ระหว่างจำลอง: เวลาเร่ง GS ALT เบี่ยงซ้าย/ขวา หยุด/เล่น ข้ามจุด */
+let SIM=null;
+function gpsSimStart(){if(state.wps.length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}
+  const P=routePath(),keep=SIM||{};SIM={P,d:0,t:Date.now(),mult:keep.mult||10,gs:keep.gs??null,alt:keep.alt??null,off:0,pause:false,trk:null};
+  GPS.sim=setInterval(simTick,500);simPanel();toast(`จำลองการบินตามเส้นทาง (เร็ว ×${SIM.mult}) · ปรับค่าได้ที่แผง 🧪`)}
+function simTick(){const S=SIM;if(!S)return;const now=Date.now(),dt=(now-S.t)/3600000*S.mult;S.t=now;const P=S.P;
+  const a=posAt(P,S.d),gs=S.gs!=null?S.gs:a.s.gs,alt=S.alt!=null?S.alt:a.s.alt;
+  if(!S.pause)S.d+=gs*dt;
+  if(S.d>=P.total){S.d=P.total;simStop();toast("จำลองถึงปลายทางแล้ว");return}
+  const b=posAt(P,S.d),tc=trueCourse([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]),c=b.s,tcs=trueCourse([c.a[1],c.a[0]],[c.b[1],c.b[0]]);
+  /* เบี่ยงออกจากเส้นทาง: เลื่อนตั้งฉากกับขา (บวก = ขวา) */
+  const r=(tcs+90)*Math.PI/180,lat=b.ll[1]+S.off/60*Math.cos(r),lon=b.ll[0]+S.off/60*Math.sin(r)/Math.cos(b.ll[1]*Math.PI/180);
+  const L0=GPS.last,trk=S.pause?(L0&&L0.trk):(L0&&!isNaN(L0.lat)&&(Math.abs(L0.lat-lat)+Math.abs(L0.lon-lon))>1e-7?trueCourse([L0.lat,L0.lon],[lat,lon]):tc);
+  gpsFix(lat,lon,S.pause?0:gs,trk,alt,10,now);simPanelUpd()}
+function simStop(){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}const el=document.querySelector(".sim-pan");if(el)el.remove();const b=document.querySelector('[data-fm="sim"]');if(b)b.classList.remove("on")}
+function simPanel(){let el=document.querySelector(".sim-pan");if(el)el.remove();el=document.createElement("div");el.className="sim-pan";
+  el.innerHTML=`<div class="sp-h"><b>🧪 จำลองการบิน</b><button type="button" data-sp="min" aria-label="ย่อ/ขยาย">▾</button></div><div class="sp-b">
+   <div class="sp-r"><span>เวลา</span><div class="sp-seg">${[1,5,10,30,60].map(m=>`<button type="button" data-sp="mult" data-v="${m}">×${m}</button>`).join("")}</div></div>
+   <div class="sp-r"><span>GS</span><button type="button" data-sp="gs" data-v="-10">−10</button><b class="sp-v" data-spv="gs"></b><button type="button" data-sp="gs" data-v="10">+10</button><button type="button" data-sp="gs0" class="sp-auto">ตามแผน</button></div>
+   <div class="sp-r"><span>ALT</span><button type="button" data-sp="alt" data-v="-500">−500</button><b class="sp-v" data-spv="alt"></b><button type="button" data-sp="alt" data-v="500">+500</button><button type="button" data-sp="alt0" class="sp-auto">ตามแผน</button></div>
+   <div class="sp-r"><span>เบี่ยง</span><button type="button" data-sp="off" data-v="-0.5">◀ ซ้าย</button><b class="sp-v" data-spv="off"></b><button type="button" data-sp="off" data-v="0.5">ขวา ▶</button><button type="button" data-sp="off0" class="sp-auto">กลับเส้น</button></div>
+   <div class="sp-r sp-act"><button type="button" data-sp="pause"></button><button type="button" data-sp="skip">⏭ ข้ามไปจุดถัดไป</button><button type="button" data-sp="restart">⏮ เริ่มใหม่</button><button type="button" data-sp="stop">■ หยุดจำลอง</button></div></div>`;
+  map.getContainer().appendChild(el);L.DomEvent.disableClickPropagation(el);L.DomEvent.disableScrollPropagation(el);
+  el.addEventListener("click",e=>{const b=e.target.closest("[data-sp]");if(!b||!SIM)return;const k=b.dataset.sp,v=+b.dataset.v,S=SIM,a=posAt(S.P,S.d);
+    if(k==="min")el.classList.toggle("min");else if(k==="mult")S.mult=v;
+    else if(k==="gs")S.gs=Math.max(0,Math.min(250,Math.round((S.gs!=null?S.gs:a.s.gs)+v)));else if(k==="gs0")S.gs=null;
+    else if(k==="alt")S.alt=Math.max(0,Math.min(20000,Math.round(((S.alt!=null?S.alt:a.s.alt)+v)/100)*100));else if(k==="alt0")S.alt=null;
+    else if(k==="off")S.off=Math.round((S.off+v)*10)/10;else if(k==="off0")S.off=0;
+    else if(k==="pause")S.pause=!S.pause;else if(k==="restart"){S.d=0;S.pause=false}
+    else if(k==="skip"){const n=S.P.segs.find(x=>x.d0>S.d+0.05);S.d=n?n.d0:S.P.total}
+    else if(k==="stop"){simStop();toast("หยุดจำลอง");return}
+    simTick()});simPanelUpd()}
+function simPanelUpd(){const el=document.querySelector(".sim-pan"),S=SIM;if(!el||!S)return;const a=posAt(S.P,S.d);
+  el.querySelectorAll('[data-sp="mult"]').forEach(b=>b.classList.toggle("on",+b.dataset.v===S.mult));
+  const set=(k,t,man)=>{const v=el.querySelector(`[data-spv="${k}"]`);v.textContent=t;v.classList.toggle("man",!!man)};
+  set("gs",Math.round(S.gs!=null?S.gs:a.s.gs)+" kt",S.gs!=null);set("alt",Math.round(S.alt!=null?S.alt:a.s.alt).toLocaleString("en-US")+" ft",S.alt!=null);
+  set("off",S.off?Math.abs(S.off).toFixed(1)+" NM "+(S.off>0?"ขวา":"ซ้าย"):"บนเส้น",S.off);
+  el.querySelector('[data-sp="pause"]').textContent=S.pause?"▶ เล่นต่อ":"⏸ หยุดชั่วคราว"}
 /* ---------- Direct to: จากตำแหน่งปัจจุบันตรงไปสนามบิน / Preset ใกล้สุด (ไม่แก้แผนการบิน) ---------- */
 /* Direct-to = ล้างเส้นทาง แล้วสร้างใหม่ ตำแหน่งปัจจุบัน → จุดที่เลือก (เก็บเส้นทางเดิมไว้ให้กลับได้) */
 function dtoRoute(t){const P=GPS.last;if(!P){toast("รอสัญญาณ GPS ก่อน");return}document.querySelectorAll(".gh-dto").forEach(x=>x.remove());
@@ -4772,7 +4845,7 @@ fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(d=>{
   if(!d||!d.airports||!d.edition)return;
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched)return;
-  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;store.set("vfr_eaip",d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 /* ---------- PPC (H-60 Performance Planning Card) — ฟอร์มกรอกเองตาม IPAC · เก็บในเครื่องเท่านั้น (vfr_ppc) ---------- */
 const PPC_PH=[["dep","Departure [DEP]"],["crs","Cruise [CRS]"],["arr1","Arrival [ARR1]"],["arr2","Arrival 2 [ARR2]"],["cfg","Config"]];
 const PPC_OPT={
@@ -5172,7 +5245,7 @@ function fmClick(e){const b=e.target.closest("[data-fm]");if(!b)return;const k=b
   if(k==="prev"||k==="next"){if(W.length<2)return;GPS.dto=null;GPS.leg=Math.max(0,Math.min(W.length-2,GPS.leg+(k==="next"?1:-1)));gpsHud();toast(`ขา ${GPS.leg+1}/${W.length-1} → ${W[GPS.leg+1].name}`);return}
   if(k==="mute"){GPS.mute=!GPS.mute;try{localStorage.setItem("vfr_gps_mute",GPS.mute?"1":"")}catch(x){}b.textContent=GPS.mute?"🔕":"🔔";toast(GPS.mute?"ปิดเสียงแจ้งเตือน":"เปิดเสียงแจ้งเตือน");return}
   if(k==="info")return terrInfo();
-  if(k==="sim"){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null;b.classList.remove("on");toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart();b.classList.add("on")}return}}
+  if(k==="sim"){if(GPS.sim){simStop();toast("หยุดจำลอง")}else{if(GPS.watch!=null){navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null}gpsSimStart();b.classList.add("on")}return}}
 /* แถบตัวเลขด้านบน (อัปเดตทุกครั้งที่ได้ตำแหน่ง GPS) */
 function fmUpdate(){if(!FM)return;const P=GPS.last,W=state.wps,vr=num(state.g.var,0),top=FM.top;
   if(!P){top.innerHTML=`<div class="fm-wait">⏳ รอสัญญาณ GPS…${GPS.on?"":" (GPS ปิดอยู่)"}</div>`;return}

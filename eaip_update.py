@@ -8,7 +8,7 @@ eaip_update.py — ดึงข้อมูลสนามบินจาก eAI
      python eaip_update.py 2026-10-29 (ระบุฉบับเอง)
 ต้องติดตั้งก่อนครั้งแรก: pip install requests beautifulsoup4
 """
-import json, re, sys, time, datetime
+import json, os, re, sys, time, datetime
 import requests
 from bs4 import BeautifulSoup
 
@@ -614,6 +614,27 @@ def main():
         print(f"ENR 5.1 พื้นที่ {len(data['areas'])} แห่ง")
     except Exception as e:
         data["errors"].append(f"ENR 5.1: {e}")
+    # AD 2.24 VFR reporting points + เส้นทาง VFR (จาก PDF "Tabular description" — ต้องมี pdftotext)
+    try:
+        import shutil, subprocess, tempfile
+        import vfr_ad224
+        if shutil.which("pdftotext"):
+            def pdf_text(u):
+                r = S.get(u, timeout=60)
+                r.raise_for_status()
+                with tempfile.TemporaryDirectory() as td:
+                    fp = os.path.join(td, "c.pdf")
+                    open(fp, "wb").write(r.content)
+                    subprocess.run(["pdftotext", "-layout", fp, fp + ".txt"], check=True, timeout=60)
+                    time.sleep(0.3)
+                    return open(fp + ".txt", errors="ignore").read()
+            vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text)
+            for ic, v in vfr.items():
+                data["airports"][ic]["vfr"] = v
+        else:
+            data["errors"].append("AD 2.24 VFR: ไม่มี pdftotext (poppler-utils)")
+    except Exception as e:
+        data["errors"].append(f"AD 2.24 VFR: {e}")
     with open("eaip_data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
     print("\nบันทึกแล้ว: eaip_data.json")
