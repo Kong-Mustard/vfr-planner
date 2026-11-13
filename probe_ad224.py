@@ -12,3 +12,8 @@ for ic,a in d["airports"].items():
             subprocess.run(["pdftotext","-layout",fn+".pdf",fn+".txt"])
             print(fn, ch["name"][:90], len(r.content))
         except Exception as e: print("ERR",fn,e)
+import glob
+for fn in sorted(glob.glob("probe/*.txt")):
+    if not any(k in fn for k in ("VTBD_9-17","VTBD_9-18","VTBD_9-15","VTPH_9-4","VTPH_9-3","VTUK_9-2","VTPP_9-2")): continue
+    t=open(fn,errors="ignore").read()
+    print("=====",fn,len(t)); print(t[:6000])
