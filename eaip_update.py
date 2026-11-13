@@ -404,6 +404,51 @@ def parse_geom(g):
     return poly, approx
 
 
+
+KW21 = r"(CONTROL ZONE|TERMINAL CONTROL AREA|CONTROL AREA|TERMINAL AREA)"
+
+
+def parse_enr21(html):
+    """ENR 2.1 FIR/UIR/TMA/CTA/CTR → [{name, kind, poly, approx, upper, lower, cls, unit, freq, rmk}]
+    ข้ามรายการ FIR / Sector / Airways (ไม่ใช่ขอบเขตที่นักบิน VFR ต้องใช้)"""
+    soup = strip_markup(BeautifulSoup(html, "html.parser"))
+    out = []
+    for tb in soup.find_all("table"):
+        for r in rows(tb):
+            if not r or not re.search(KW21, r[0]):
+                continue
+            cell = re.sub(r"\s+", " ", r[0])
+            # ช่องเดียวอาจมีหลายส่วน: "A. X CONTROL ZONE ... B. X TERMINAL CONTROL AREA ..."
+            parts = re.split(r"(?:(?<=\s)|^)(?=[A-Ea-e]\.\s+[A-Z][A-Z /'-]*?" + KW21 + r")", cell)
+            for part in parts:
+                m = re.match(r"^(?:[A-Ea-e]\.\s+)?(.*?" + KW21 + r")\s*(.*)$", part.strip())
+                if not m:
+                    continue
+                name = m.group(1).strip()
+                if re.search(r"SECTOR|FLIGHT INFORMATION|AIRWAYS", name, re.I):
+                    continue
+                body = m.group(3)
+                geo = re.split(r"Sectori[sz]|Class of airspace", body, 1)[0]
+                try:
+                    poly, approx = parse_geom(geo)
+                except Exception:
+                    poly, approx = [], True
+                if len(poly) < 4:
+                    continue
+                vm = re.search(r"(?:up to but not including\s*)?(FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)\s*/\s*(GND|SFC|FL\s*\d{2,3}|(?:ALT\s*)?\d[\d,]*\s*ft(?:\s*(?:AGL|AMSL))?)", body)
+                cm = re.search(r"Class of airspace\s*:?\s*([A-G])\b", body)
+                upper = vm.group(1).strip() if vm else ""
+                if vm and "not including" in vm.group(0):
+                    upper = "< " + upper
+                kind = "CTR" if "CONTROL ZONE" in name else "TMA" if "TERMINAL" in name else "CTA"
+                out.append({"name": name.title().replace("Ctr", "CTR"), "kind": kind, "poly": poly, "approx": approx,
+                            "upper": upper, "lower": vm.group(2).strip() if vm else "", "cls": cm.group(1) if cm else "",
+                            "unit": r[1] if len(r) > 1 else "", "call": (r[2] if len(r) > 2 else "")[:80],
+                            "freq": (r[3] if len(r) > 3 else "")[:160], "rmk": (r[4] if len(r) > 4 else "")[:300],
+                            "text": geo[:600]})
+    return out
+
+
 def parse_enr51(html):
     soup = strip_markup(BeautifulSoup(html, "html.parser"))
     out = []
@@ -605,6 +650,13 @@ def main():
             print(f"ENR {pg} เส้นทาง {len(aw)} เส้น")
         except Exception as e:
             data["errors"].append(f"ENR {pg}: {e}")
+    # ENR 2.1 CTR / TMA / CTA (ขอบเขตห้วงอากาศควบคุม เหมือนที่ SkyVector วาด)
+    try:
+        raw = get(root + "VT-ENR-2.1-en-GB.html")
+        data["airspace21"] = parse_enr21(raw)
+        print(f"ENR 2.1 ห้วงอากาศ {len(data['airspace21'])} รายการ: " + ", ".join(f"{a['name']}[{a['upper']}/{a['lower']} {a['cls']}]" for a in data["airspace21"]))
+    except Exception as e:
+        data["errors"].append(f"ENR 2.1: {e}")
     # ENR 5.1 Prohibited / Restricted / Danger areas
     try:
         raw = get(root + "VT-ENR-5.1-en-GB.html")
@@ -628,7 +680,31 @@ def main():
                     subprocess.run(["pdftotext", "-layout", fp, fp + ".txt"], check=True, timeout=60)
                     time.sleep(0.3)
                     return open(fp + ".txt", errors="ignore").read()
-            vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text)
+            def ocr_text(u):
+                if not shutil.which("tesseract"):
+                    return ""
+                r = S.get(u, timeout=60)
+                r.raise_for_status()
+                with tempfile.TemporaryDirectory() as td:
+                    fp = os.path.join(td, "c.pdf")
+                    open(fp, "wb").write(r.content)
+                    subprocess.run(["pdftoppm", "-r", "300", "-png", "-f", "1", "-l", "1", fp, os.path.join(td, "pg")], check=True, timeout=120)
+                    png = sorted(f for f in os.listdir(td) if f.endswith(".png"))[0]
+                    subprocess.run(["tesseract", os.path.join(td, png), os.path.join(td, "o"), "--psm", "6"], check=True, timeout=120, capture_output=True)
+                    return open(os.path.join(td, "o.txt"), errors="ignore").read()
+
+            def vor_of(ic):
+                """VOR ใกล้สนามที่สุด (ใช้ตรวจไขว้พิกัด OCR กับ radial/DME) — ไม่ทราบ magnetic variation ใช้ 0 (ไทย ~0–1°W) แล้วเผื่อค่าคลาดไว้"""
+                a = data["airports"][ic]
+                if a.get("lat") is None:
+                    return None, 0.0
+                vs = [n for n in data.get("navaids", []) if "VOR" in n.get("type", "") or "VORTAC" in n.get("type", "")]
+                if not vs:
+                    return None, 0.0
+                b = min(vs, key=lambda n: vfr_ad224._nm((a["lat"], a["lon"]), (n["lat"], n["lon"])))
+                return ((b["lat"], b["lon"]) if vfr_ad224._nm((a["lat"], a["lon"]), (b["lat"], b["lon"])) < 15 else None), 0.0
+
+            vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text, ocr_text=ocr_text, vor_of=vor_of)
             for ic, v in vfr.items():
                 data["airports"][ic]["vfr"] = v
         else:

@@ -157,9 +157,11 @@ def parse_routes(txt):
     def flush():
         if not para:
             return
-        t = " ".join(para)
-        names = re.findall(r"(?:\"([A-Z0-9]{1,3})\"|\b([A-Z0-9]{1,3}))\s*POINT\b", t)
-        seq = [[a or b, None] for a, b in names]
+        t = re.sub(r"\|\s*POINT", "I POINT", " ".join(para))  # OCR อ่าน I เป็น |
+        hits = [(m.start(), m.group(1) or m.group(2)) for m in re.finditer(r"(?:\"([A-Z0-9]{1,3})\"|\b([A-Z0-9]{1,3}))\s*POINT\b", t)]
+        # "Inbound via Khao Wang." — จุดที่เป็นชื่อสถานที่ (ไม่ใช่ X POINT)
+        hits += [(m.start(1), m.group(1)) for m in re.finditer(r"\bvia\s+(?:the\s+)?([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})(?=\s*[.,])", t)]
+        seq = [[n, None] for _, n in sorted(hits)]
         if len(seq) >= 1:
             sec = "ARR" if title.upper().startswith("ARR") else "DEP" if title.upper().startswith("DEP") else ""
             res.append({"sec": sec, "dir": title, "seq": seq, "txt": re.sub(r"\s+", " ", t)[:300]})
@@ -188,7 +190,67 @@ def chart_cat(name):
     return "H" if "HELICOPTER" in u else "A"
 
 
-def build(ap_charts, fetch_text, log=print):
+# ---------- หน้า PDF ที่เป็นภาพสแกน: อ่านด้วย OCR แล้ว "ตรวจไขว้" กับ radial/DME ----------
+# OCR อ่านตัวเลขพลาดได้ จึงรับเฉพาะจุดที่พิกัดตรงกับตำแหน่งที่คำนวณจาก radial/DME ของ VOR สนามนั้น
+DMS_OCR = re.compile(r"(\d{1,2})\s*[°º]\s*(\d{1,2})\s*['’\"”]\s*(\d{1,2}(?:[.,]\d+)?)\s*['’\"”]{0,2}\s*([NS])\s*"
+                     r"(\d{2,3})\s*[°º]\s*(\d{1,2})\s*['’\"”]\s*(\d{1,2}(?:[.,]\d+)?)\s*['’\"”]{0,2}\s*([EW])")
+RAD_OCR = re.compile(r"R\s*-\s*(\d{3})\s*/\s*(\d{1,3}(?:\.\d)?)\s*D")
+
+
+def _dest(lat, lon, brg, nm):
+    import math
+    R = 3440.065; d = nm / R; b = math.radians(brg); la = math.radians(lat); lo = math.radians(lon)
+    la2 = math.asin(math.sin(la) * math.cos(d) + math.cos(la) * math.sin(d) * math.cos(b))
+    lo2 = lo + math.atan2(math.sin(b) * math.sin(d) * math.cos(la), math.cos(d) - math.sin(la) * math.sin(la2))
+    return math.degrees(la2), math.degrees(lo2)
+
+
+def _nm(a, b):
+    import math
+    la1, la2 = math.radians(a[0]), math.radians(b[0]); dl = math.radians(b[1] - a[1])
+    return 3440.065 * math.acos(max(-1, min(1, math.sin(la1) * math.sin(la2) + math.cos(la1) * math.cos(la2) * math.cos(dl))))
+
+
+def parse_points_ocr(txt, vor, var=0.0, log=print):
+    """vor = (lat, lon) ของ VOR ที่ใช้อ้าง radial · var = magnetic variation (E บวก)"""
+    pts, rej = [], 0
+    L = [re.sub(r"[|\[\]{}]", " ", l) for l in txt.split("\n")]
+    for i, l in enumerate(L):
+        m = DMS_OCR.search(l)
+        if not m:
+            continue
+        g = [x.replace(",", ".") for x in m.groups()]
+        lat, lon = _deg(*g[:4]), _deg(*g[4:])
+        rd = RAD_OCR.search(l)
+        if not rd or not vor:
+            rej += 1
+            continue
+        exp = _dest(vor[0], vor[1], float(rd.group(1)) + var, float(rd.group(2)))
+        err, tol = _nm((lat, lon), exp), 0.35 + float(rd.group(2)) * 0.035
+        if err > tol:
+            rej += 1
+            log(f"    OCR ไม่ผ่านการตรวจ radial/DME ({err:.1f} NM): {l.strip()[:90]}")
+            continue
+        head = l[:rd.start()].strip(" -")
+        nm = head
+        sc = short_of(head)
+        if sc:
+            nm = re.match(r'(.*?\bPoint)\b', head, re.I).group(1) if re.search(r"\bPoint\b", head, re.I) else head
+        if not nm and i > 0:
+            nm = L[i - 1].strip()
+        if not nm or re.search(r"VOR|DME", nm):
+            continue
+        p = {"n": re.sub(r"\s+", " ", nm)[:60], "lat": lat, "lon": lon, "rd": f"R-{rd.group(1)} / {rd.group(2)}D", "ocr": 1}
+        if sc:
+            p["id"] = sc
+            lm = head[len(nm):].strip()
+            if lm:
+                p["lm"] = lm[:60]
+        pts.append(p)
+    return pts, rej
+
+
+def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None):
     """ap_charts: {icao: [chart,...]} · fetch_text(url) -> ข้อความ pdftotext
     คืน {icao: {"pts": [...], "rt": [...]}} โดย rt.seq = [[ชื่อ, alt, lat, lon, ทางเลือก?], ...]"""
     raw = {}
@@ -204,9 +266,22 @@ def build(ap_charts, fetch_text, log=print):
             except Exception as e:
                 log(f"  {ic} {ch.get('page')}: โหลดไม่ได้ {e}")
                 continue
+            ocr = False
             if not t or len(t.strip()) < 50:
-                continue  # หน้าเป็นภาพสแกน — อ่านข้อความไม่ได้
-            P = parse_points(t)
+                if not ocr_text:
+                    continue  # หน้าเป็นภาพสแกน — อ่านข้อความไม่ได้
+                try:
+                    t = ocr_text(ch["url"])
+                except Exception as e:
+                    log(f"  {ic} {ch.get('page')}: OCR ไม่ได้ {e}")
+                    continue
+                ocr = True
+            if ocr:
+                vor, var = (vor_of(ic) if vor_of else (None, 0.0))
+                P, rej = parse_points_ocr(t, vor, var, log)
+                log(f"  {ic} {ch.get('page')}: OCR ได้ {len(P)} จุด (ตัดทิ้ง {rej})")
+            else:
+                P = parse_points(t)
             R = parse_routes(t)
             for r in R:
                 if not r["sec"]:
@@ -243,7 +318,8 @@ def build(ap_charts, fetch_text, log=print):
                 n = it[0]
                 p = byid.get(n) if r.get("txt") else None
                 p = p or next((q for q in P if norm(q["n"]) == norm(n)), None) or G.get(norm(n))
-                p = p or G2.get(norm(n).replace("H", ""))  # สะกดต่างกันในเอกสาร เช่น SANAP TUEP / SANAP THUEP
+                p = p or G2.get(norm(n).replace("H", ""))
+                p = p or next((q for q in P if len(norm(n)) >= 5 and norm(q["n"]).startswith(norm(n))), None)  # สะกดต่างกันในเอกสาร เช่น SANAP TUEP / SANAP THUEP
                 e = [p["id"] if p and p.get("id") else n, it[1], p["lat"] if p else None, p["lon"] if p else None]
                 if len(it) > 2:
                     e.append(it[2])
