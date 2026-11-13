@@ -1307,6 +1307,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 #gpsAlert .ga>b:first-child{font-size:16px}
 #gpsAlert .ga.blue{background:#1d4ed8}#gpsAlert .ga.red{background:#b91c1c}#gpsAlert .ga.amber{background:#b45309}#gpsAlert .ga.green{background:#15803d}
 #gpsAlert .ga-x{margin-left:auto;min-height:34px;padding:2px 12px;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.5);font:700 13px var(--f-body)}
+#gpsAlert .ga-reset{min-height:30px;padding:0 10px;border-radius:8px;border:0;background:rgba(255,255,255,.25);color:#fff;font:700 12px var(--f-body);margin-left:6px}
 #gpsAlert .ga-f{display:flex;gap:6px;width:100%}#gpsAlert .ga-f input{flex:1;min-width:0;min-height:40px!important;border-radius:10px;background:#fff!important;color:#111!important;font:700 17px var(--f-mono)!important;padding:4px 10px!important;color-scheme:light}
 #gpsAlert .ga-f button{min-height:40px;padding:0 14px;border-radius:10px;background:#fff;color:#111;border:0;font:800 14px var(--f-body)}#gpsAlert .ga-f .ga-skip{background:rgba(255,255,255,.2);color:#fff}
 @keyframes gaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
@@ -4585,8 +4586,9 @@ function gpsAlerts(){const P=GPS.last,W=state.wps;if(!P||!GPS.on)return;const A=
   /* 2.5) ภูมิประเทศข้างหน้า (ทุก 5 วินาที) */
   gpsTerrain(P,A);
   /* 3) ตรวจน้ำมันทุก 30 นาที + คาดน้ำมันถึงปลายทาง */
-  if(Date.now()>=A.fuelAt){A.fuelAt=Date.now()+30*60000;const el=gaShow("fuel","amber",`<b>⛽ ตรวจน้ำมัน</b> (ทุก 30 นาที)<form class="ga-f"><input type="text" inputmode="decimal" placeholder="น้ำมันตอนนี้ (lb)" aria-label="น้ำมันตอนนี้ lb"><button type="submit">บันทึก</button><button type="button" class="ga-skip">ข้าม</button></form>`,{form:true});
+  if(Date.now()>=A.fuelAt){A.fuelAt=Date.now()+30*60000;const el=gaShow("fuel","amber",`<b>⛽ ตรวจน้ำมัน</b> (ทุก 30 นาที)${(()=>{const L=fuelLog(),l=L.at(-1);return l&&Date.now()-l.t<3*3600000?`<br><small>ครั้งก่อน ${Math.round(l.f).toLocaleString("en-US")} lb เมื่อ ${mmss((Date.now()-l.t)/60000)} นาทีที่แล้ว · บันทึกแล้ว ${L.length} ครั้ง <button type="button" class="ga-reset">เริ่มนับใหม่</button></small>`:""})()}<form class="ga-f"><input type="text" inputmode="decimal" placeholder="น้ำมันตอนนี้ (lb)" aria-label="น้ำมันตอนนี้ lb"><button type="submit">บันทึก</button><button type="button" class="ga-skip">ข้าม</button></form>`,{form:true});
     el.querySelector(".ga-skip").onclick=()=>el.remove();
+    const rs=el.querySelector(".ga-reset");if(rs)rs.onclick=()=>{fuelLogSave([]);rs.parentNode.remove();toast("เริ่มนับ Burn rate ใหม่")};
     el.querySelector("form").onsubmit=e=>{e.preventDefault();const f=num(el.querySelector("input").value.replace(",","."),null);if(f==null){toast("ใส่ปริมาณน้ำมัน (lb)");return}el.remove();gpsFuelCheck(f)}}}
 /* ภูมิประเทศข้างหน้า: มองตามทิศที่บินจริง 5 NM (กว้างข้างละ 0.5 NM) เทียบความสูง GPS
    สูงกว่ายอด < 500 ft → เหลือง "เพิ่มความสูง" · ต่ำกว่ายอด → แดง · ข้อมูล DEM ~150 ม. ไม่รวมเสา/อาคาร */
@@ -4602,9 +4604,18 @@ async function gpsTerrain(P,A){if(gtBusy||P.alt==null||P.trk==null||!(P.gs>15))r
     if(A.terrMute&&now-A.terrMute<60000&&lvl<=(A.terrL||0))return;
     if(el0)el0.remove();A.terrL=lvl;A.terrAt=now;const e2=gaShow("terr",lvl===2?"red":"amber",html);e2.querySelector(".ga-x").onclick=()=>{e2.remove();A.terrMute=Date.now()}}
   catch(e){}finally{gtBusy=false}}
-function gpsFuelCheck(f){const P=GPS.last,burn=num(state.burn,0),res=num(state.reserve,0),m=P?gpsRemainMin(P,P.gs):null;
-  if(!(burn>0)||m==null){gaShow("fuel2","blue",`⛽ บันทึกน้ำมัน ${Math.round(f)} lb${!(burn>0)?" · ใส่ Burn rate ในแผนการบินเพื่อคาดน้ำมันถึงปลายทาง":" · รอความเร็ว GPS เพื่อคาดการณ์"}`,{ttl:12000,beep:false});return}
-  const at=f-burn*m,low=at<res;gaShow("fuel2",low?"red":"green",`<b>${low?"⛽ น้ำมันถึงปลายทางต่ำกว่าสำรอง!":"⛽ น้ำมันพอ"}</b><br>ตอนนี้ ${Math.round(f)} lb · อีก ${mmss(m)} นาที · ใช้ ~${Math.round(burn*m)} lb<br>คาดเหลือที่ปลายทาง <b>${Math.round(at)} lb</b> (สำรอง ${Math.round(res)} lb)`,low?{}:{ttl:15000,beep:false})}
+/* บันทึกน้ำมันระหว่างบิน → คำนวณ Burn rate จริง (เฉลี่ยตั้งแต่ครั้งแรก) แล้วใช้คาดการณ์แทนค่าในแผน */
+function fuelLog(){try{const a=JSON.parse(localStorage.getItem("vfr_fuel_log")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
+function fuelLogSave(a){try{localStorage.setItem("vfr_fuel_log",JSON.stringify(a.slice(-40)))}catch(e){}}
+function fuelBurnActual(L,plan){if(L.length<2)return null;const a=L[0],b=L.at(-1),h=(b.t-a.t)/3600000;if(h<10/60||!(a.f>b.f))return null;const r=(a.f-b.f)/h;
+  if(plan>0?(r<plan*.4||r>plan*2.5):(r<100||r>3000))return{r,bad:true,h,n:L.length};return{r,h,n:L.length}}
+function gpsFuelCheck(f){const L=fuelLog();if(L.length&&Date.now()-L.at(-1).t>3*3600000)L.length=0;L.push({t:Date.now(),f});fuelLogSave(L);
+  const P=GPS.last,plan=num(state.burn,0),A=fuelBurnActual(L,plan),burn=A&&!A.bad?A.r:plan,res=num(state.reserve,0),m=P?gpsRemainMin(P,P.gs):null;
+  const src=A?(A.bad?`<br><small>⚠ Burn จริงคำนวณได้ ${Math.round(A.r)} lb/hr ผิดปกติ (เทียบแผน ${Math.round(plan)}) — ตรวจตัวเลขที่กรอก · ใช้ค่าแผนแทน</small>`
+    :`<br><small>Burn จริง <b>${Math.round(A.r)} lb/hr</b> (เฉลี่ย ${A.n} ครั้ง ใน ${mmss(A.h*60)} นาที)${plan>0?` · แผน ${Math.round(plan)} lb/hr ${A.r>plan*1.05?"▲ สูงกว่าแผน":A.r<plan*.95?"▼ ต่ำกว่าแผน":"≈ ตามแผน"}`:""}</small>`)
+    :`<br><small>${L.length<2?"บันทึกครั้งแรกแล้ว — ครั้งถัดไป (ห่าง ≥ 10 นาที) จะคำนวณ Burn rate จริงให้":"ห่างจากครั้งแรกไม่ถึง 10 นาที — ยังใช้ Burn rate ตามแผน"}</small>`;
+  if(!(burn>0)||m==null){gaShow("fuel2","blue",`⛽ บันทึกน้ำมัน ${Math.round(f)} lb${!(burn>0)?" · ใส่ Burn rate ในแผนการบินเพื่อคาดน้ำมันถึงปลายทาง":" · รอความเร็ว GPS เพื่อคาดการณ์"}${src}`,{ttl:15000,beep:false});return}
+  const use=burn*m/60,at=f-use,low=at<res;gaShow("fuel2",low?"red":"green",`<b>${low?"⛽ น้ำมันถึงปลายทางต่ำกว่าสำรอง!":"⛽ น้ำมันพอ"}</b><br>ตอนนี้ ${Math.round(f)} lb · อีก ${mmss(m)} นาที · ใช้ ~${Math.round(use)} lb<br>คาดเหลือที่ปลายทาง <b>${Math.round(at)} lb</b> (สำรอง ${Math.round(res)} lb)${src}`,low?{}:{ttl:15000,beep:false})}
 function gpsFix(lat,lon,gs,trk,alt,acc,ts){const pt=[lat,lon],L0=GPS.last;
   if((gs==null||trk==null)&&L0){const dd=gcDistNm([L0.lat,L0.lon],pt),dh=(ts-L0.ts)/3600000;if(dd>0.01&&dh>=2/3600){const g2=dd/dh;if(gs==null&&g2<=250)gs=g2;if(trk==null&&g2<=250)trk=trueCourse([L0.lat,L0.lon],pt)}}
   if(trk==null&&L0)trk=L0.trk;GPS.last={lat,lon,gs,trk,alt,acc,ts};
