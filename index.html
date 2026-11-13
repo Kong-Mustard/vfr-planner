@@ -1307,6 +1307,13 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 #pvMulti.on{background:#2563eb;color:#fff;border-color:#2563eb}
 @media print{.pv-blk{outline:none!important}}body.pv-snap .pv-blk{outline:none!important}
 .cr{border-radius:20px;padding:16px 18px;border:2px solid var(--cc,#ec4899);box-shadow:0 0 12px var(--cc,#ec4899),0 0 28px color-mix(in srgb,var(--cc,#ec4899) 30%,transparent);background:linear-gradient(135deg,color-mix(in srgb,var(--cc,#ec4899) 14%,var(--panel)),var(--panel))}
+.pos .pos-in{display:flex;flex-direction:column;gap:6px;font-weight:700}.pos .pos-in input{font:600 18px var(--f-mono);padding:12px;border-radius:12px}
+.pos-src{margin:8px 0}.pos-opt{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0 12px}.pos-opt>span{font-weight:700;color:var(--muted)}
+.pos-seg{display:flex;flex-wrap:wrap;gap:6px}.pos-seg button{display:flex;flex-direction:column;align-items:flex-start;padding:6px 12px;border-radius:10px;font-weight:700}.pos-seg button small{font:500 12px var(--f-mono);color:var(--muted)}
+.pos-seg button.on{background:var(--cc);color:#fff;border-color:var(--cc)}.pos-seg button.on small{color:#fffd}.pos-opt select{margin-left:6px}
+.pos-r{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--input);margin-bottom:6px}.pos-r>span{min-width:150px;color:var(--muted);font-weight:700;font-size:13px}.pos-r>b{flex:1;font-size:16px;word-break:break-word}
+.pos-r button{min-height:36px;padding:4px 10px}.pos-big .pos-r{background:color-mix(in srgb,var(--cc) 14%,var(--panel));border:1.5px solid var(--cc)}.pos-big .pos-r>b{font-size:22px}
+@media (max-width:600px){.pos-r{flex-wrap:wrap}.pos-r>span{min-width:0;width:100%}.pos-big .pos-r>b{font-size:19px}}
 .cr h3{margin:0 0 10px;font:800 18px var(--f-display)}
 .cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:var(--cc);color:#fff;border-color:var(--cc)}
 .cr-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -4104,9 +4111,10 @@ function cvOutHtml(){const c=CONV[CV.c],v=num(String(CV.v).replace(",","."));
   return `<div class="cv-res"><span class="cv-ri">${CV_IC[CV.c][0]}</span><div><span>${esc(CV.v||"–")} ${c.u[CV.from][0]} =</span><div><b>${v==null?"–":cvFmt(cvConv(CV.c,v,CV.from,CV.to))}</b> <em>${c.u[CV.to][0]}</em></div></div></div>
    ${v==null?"":`<h3>เท่ากับหน่วยอื่น</h3><div class="cv-all">${c.u.map((u,i)=>i===CV.from?"":`<button class="cv-u${i===CV.to?" on":""}" data-to="${i}"><b>${cvFmt(cvConv(CV.c,v,CV.from,i))}</b><i>${u[0]}</i></button>`).join("")}</div>`}`}
 function cvOut(){const o=$("#cvOut");if(o)o.innerHTML=cvOutHtml()}
-const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"],CALC_TILE=["🧮","#64748b","เครื่องคิดเลข"];
-function cvCatsHtml(){return`<div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}<button class="cv-cat${CV.c==="cr"?" on":""}" data-cvc="cr" style="--cc:${CR_TILE[1]}"><span>${CR_TILE[0]}</span>${CR_TILE[2]}</button><button class="cv-cat${CV.c==="calc"?" on":""}" data-cvc="calc" style="--cc:${CALC_TILE[1]}"><span>${CALC_TILE[0]}</span>${CALC_TILE[2]}</button></div>`}
+const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"],POS_TILE=["📍","#0d9488","พิกัด Lat/Long ⇄ MGRS"],CALC_TILE=["🧮","#64748b","เครื่องคิดเลข"];
+function cvCatsHtml(){return`<div class="cv-cats">${CONV.map((x,i)=>`<button class="cv-cat${i===CV.c?" on":""}" data-cvc="${i}" style="--cc:${CV_IC[i][1]}"><span>${CV_IC[i][0]}</span>${x.t}</button>`).join("")}<button class="cv-cat${CV.c==="cr"?" on":""}" data-cvc="cr" style="--cc:${CR_TILE[1]}"><span>${CR_TILE[0]}</span>${CR_TILE[2]}</button><button class="cv-cat${CV.c==="pos"?" on":""}" data-cvc="pos" style="--cc:${POS_TILE[1]}"><span>${POS_TILE[0]}</span>${POS_TILE[2]}</button><button class="cv-cat${CV.c==="calc"?" on":""}" data-cvc="calc" style="--cc:${CALC_TILE[1]}"><span>${CALC_TILE[0]}</span>${CALC_TILE[2]}</button></div>`}
 function cvRender(){if(CV.c==="calc"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CALC_TILE[1]}">${cvCatsHtml()}<div id="calcWrap" class="calc"></div></div>`;calcRender();return}
+  if(CV.c==="pos"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${POS_TILE[1]}">${cvCatsHtml()}<div id="posWrap" class="cr pos"></div></div>`;posRender();return}
   if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CR_TILE[1]}">${cvCatsHtml()}<div id="crWrap" class="cr"></div></div>`;crRender();return}
   if(!CONV[CV.c])CV.c=3;const c=CONV[CV.c];const opts=sel=>c.u.map((u,i)=>`<option value="${i}"${i===sel?" selected":""}>${u[0]}</option>`).join("");
   $("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CV_IC[CV.c][1]}">
@@ -4118,7 +4126,7 @@ function cvRender(){if(CV.c==="calc"){$("#cvWrap").innerHTML=`<div class="cv1" s
    <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
 $("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
-  if(t.dataset.cvc==="cr"||t.dataset.cvc==="calc"){CV.c=t.dataset.cvc;cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>/^US gal/.test(u[0]));CV.to=U.findIndex(u=>/^L(\/|$)/.test(u[0]))}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
+  if(t.dataset.cvc==="cr"||t.dataset.cvc==="calc"||t.dataset.cvc==="pos"){CV.c=t.dataset.cvc;cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>/^US gal/.test(u[0]));CV.to=U.findIndex(u=>/^L(\/|$)/.test(u[0]))}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
   if(t.id==="cvSwap"){[CV.from,CV.to]=[CV.to,CV.from];cvRender()}
   if(t.dataset.to!=null){CV.to=+t.dataset.to;cvRender()}
   if(t.dataset.pre!=null){const x=CV_PRE[+t.dataset.pre];CV.c=x[1];CV.from=x[2];CV.to=x[3];cvRender();$("#cvV").focus();$("#cvV").select()}});
@@ -4127,6 +4135,59 @@ $("#cvWrap").addEventListener("input",e=>{const t=e.target;
   if(t.id==="cvDens"){const d=num(t.value.replace(",","."));if(d!=null&&d>0){state.fuelDens=d;store.set("vfr_current",state)}cvOut()}});
 $("#cvWrap").addEventListener("change",e=>{const t=e.target;if(t.id==="cvFrom")CV.from=+t.value;if(t.id==="cvTo")CV.to=+t.value;if(t.id==="cvFrom"||t.id==="cvTo")cvRender()});
 
+
+/* ---------- แปลงพิกัด Lat/Long ⇄ MGRS (แท็บ 7) ----------
+   รับได้ทุกแบบ: ทศนิยม (14.9494, 100.6430) · องศา ลิปดา ฟิลิปดา (14°56′58″N 100°38′35″E / 145658N 1003835E) · องศา ลิปดาทศนิยม (N14 56.97 E100 38.58) · MGRS
+   MGRS แสดง 10 หลักเสมอ (ความละเอียด 1 m) · Lat/Long เลือกรูปแบบและจำนวนทศนิยมได้ */
+let POS=(()=>{try{return{q:"",f:"dms",p:1,...JSON.parse(localStorage.getItem("vfr_pos")||"{}")}}catch(e){return{q:"",f:"dms",p:1}}})();
+const POS_F={dd:{t:"องศาทศนิยม",ex:"14.949400°",ps:[4,5,6],u:"ตำแหน่ง",d:5},dm:{t:"องศา ลิปดา (ทศนิยม)",ex:"14° 56.964′",ps:[1,2,3,4],u:"ตำแหน่งของลิปดา",d:3},dms:{t:"องศา ลิปดา ฟิลิปดา",ex:"14° 56′ 57.8″",ps:[0,1,2],u:"ตำแหน่งของฟิลิปดา",d:1}};
+function posParse(txt){const t=String(txt||"").trim().toUpperCase().replace(/[‘’′']/g,"'").replace(/[“”″]|''/g,'"').replace(/º|˚/g,"°");if(!t)return null;
+  const g=t.replace(/\s+/g,"");if(/^\d{1,2}[C-X][A-Z]{2}\d{2,10}$/.test(g)){try{const p=mgrs.toPoint(g);return[p[1],p[0]]}catch(e){return null}}
+  const dec=t.match(/^([NS])?\s*(-?\d+(?:\.\d+)?)\s*°?\s*([NS])?\s*[, ;/]\s*([EW])?\s*(-?\d+(?:\.\d+)?)\s*°?\s*([EW])?$/);
+  if(dec&&!/\s\d+\s+\d/.test(t)){let la=+dec[2],lo=+dec[5];if((dec[1]||dec[3])==="S")la=-Math.abs(la);if((dec[4]||dec[6])==="W")lo=-Math.abs(lo);if(Math.abs(la)<=90&&Math.abs(lo)<=180)return[la,lo]}
+  /* แบบติดกันใน AIP: 145658N 1003835E · 145658.12N 1003835.40E · 1456N 10038E */
+  const cp=t.replace(/\s+/g,"").match(/^(\d{2})(\d{2})(\d{2}(?:\.\d+)?)?([NS])(\d{3})(\d{2})(\d{2}(?:\.\d+)?)?([EW])$/);
+  if(cp){const la=+cp[1]+cp[2]/60+(+cp[3]||0)/3600,lo=+cp[5]+cp[6]/60+(+cp[7]||0)/3600;return[cp[4]==="S"?-la:la,cp[8]==="W"?-lo:lo]}
+  /* องศา ลิปดา (ฟิลิปดา) แยกด้วยช่องว่าง/สัญลักษณ์ + N/S E/W ข้างหน้าหรือข้างหลัง */
+  const part=/([NSEW])?\s*(\d{1,3})\s*[°\s:-]\s*(\d{1,2}(?:\.\d+)?)\s*'?\s*(?:[:\s-]?\s*(\d{1,2}(?:\.\d+)?)\s*"?)?\s*([NSEW])?/g;
+  const out=[];let m;while((m=part.exec(t))&&out.length<2){if(!m[0].trim())break;const h=m[1]||m[5];if(m[1]&&m[5])part.lastIndex=m.index+m[0].length-1;out.push({v:+m[2]+m[3]/60+(m[4]?m[4]/3600:0),h,mn:+m[3],sc:m[4]?+m[4]:0});part.lastIndex=Math.max(part.lastIndex,m.index+1)}
+  if(out.length===2&&out.every(o=>o.mn<60&&o.sc<60)){let[a,b]=out;if(/[EW]/.test(a.h||"")&&/[NS]/.test(b.h||""))[a,b]=[b,a];const la=a.h==="S"?-a.v:a.v,lo=b.h==="W"?-b.v:b.v;if(Math.abs(la)<=90&&Math.abs(lo)<=180)return[la,lo]}
+  return null}
+function posFmt(v,isLat,f,p){const h=isLat?(v<0?"S":"N"):(v<0?"W":"E"),a=Math.abs(v),w=isLat?2:3,D=n=>String(n).padStart(w,"0");
+  if(f==="dd")return`${a.toFixed(p)}° ${h}`;
+  let d=Math.floor(a),mi=(a-d)*60;
+  if(f==="dm"){let ms=mi.toFixed(p);if(+ms>=60){d++;ms=(0).toFixed(p)}return`${D(d)}° ${ms.padStart(p?p+3:2,"0")}′ ${h}`}
+  let m2=Math.floor(mi),sc=((mi-m2)*60).toFixed(p);if(+sc>=60){sc=(0).toFixed(p);m2++}if(m2>=60){m2=0;d++}
+  return`${D(d)}° ${String(m2).padStart(2,"0")}′ ${sc.padStart(p?p+3:2,"0")}″ ${h}`}
+function posRender(){const box=$("#posWrap");if(!box)return;const F=POS_F[POS.f];if(!F.ps.includes(+POS.p))POS.p=F.d;
+  box.innerHTML=`<h3>📍 แปลงพิกัด Lat/Long ⇄ MGRS</h3>
+   <label class="pos-in">ใส่พิกัด (Lat/Long แบบใดก็ได้ หรือ MGRS)<input id="posQ" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(POS.q)}" placeholder="เช่น 14 56 58N 100 38 35E · 14.9494, 100.6430 · 47P PS 76697 53383"></label>
+   <div class="btns pos-src"><button type="button" data-pos="gps">🛰 ตำแหน่งปัจจุบัน (GPS)</button><button type="button" data-pos="clr">ล้าง</button></div>
+   <div class="pos-opt"><span>รูปแบบ Lat/Long</span><div class="pos-seg">${Object.entries(POS_F).map(([k,x])=>`<button type="button" data-posf="${k}" class="${k===POS.f?"on":""}">${x.t}<small>${x.ex}</small></button>`).join("")}</div>
+    <label>ความละเอียด <select id="posP">${F.ps.map(n=>`<option value="${n}"${n===+POS.p?" selected":""}>ทศนิยม ${n} ${F.u}</option>`).join("")}</select></label></div>
+   <div id="posOut"></div>`;posOut()}
+function posOut(){const o=$("#posOut");if(!o)return;const ll=posParse(POS.q);
+  if(!POS.q.trim()){o.innerHTML='<p class="hint">พิมพ์หรือวางพิกัดด้านบน ระบบรู้เองว่าเป็น Lat/Long แบบไหนหรือ MGRS</p>';return}
+  if(!ll){o.innerHTML='<p class="bad">อ่านพิกัดไม่ได้ — ตรวจรูปแบบ เช่น 14 56 58N 100 38 35E หรือ 47P PS 76697 53383</p>';return}
+  const[la,lo]=ll,mg=toMgrs(la,lo),M=mg?fmtMgrs(mg):"–",LL=`${posFmt(la,true,POS.f,+POS.p)}  ${posFmt(lo,false,POS.f,+POS.p)}`;
+  const row=(t,v)=>`<div class="pos-r"><span>${t}</span><b class="mono">${esc(v)}</b><button type="button" data-copy="${esc(v)}" aria-label="คัดลอก">📋</button></div>`;
+  o.innerHTML=`<div class="pos-big">${row("MGRS (10 หลัก · 1 m)",M)}${row("Lat / Long",LL)}</div>
+   <h3>ทุกรูปแบบ</h3><div class="pos-all">${row("องศาทศนิยม",`${la.toFixed(6)}, ${lo.toFixed(6)}`)}${row("องศา ลิปดา",`${posFmt(la,true,"dm",3)}  ${posFmt(lo,false,"dm",3)}`)}${row("องศา ลิปดา ฟิลิปดา",`${posFmt(la,true,"dms",1)}  ${posFmt(lo,false,"dms",1)}`)}${row("แบบ AIP (ติดกัน)",posFmt(la,true,"dms",0).replace(/[°′″ ]/g,"")+" "+posFmt(lo,false,"dms",0).replace(/[°′″ ]/g,""))}</div>
+   <div class="btns" style="margin-top:10px"><button type="button" data-pos="add">＋ เพิ่มเป็นจุดเส้นทาง (แท็บ 1)</button><button type="button" data-pos="map">🗺 ดูบนแผนที่</button></div>`;
+  o.dataset.ll=la+","+lo}
+function posSave(){try{localStorage.setItem("vfr_pos",JSON.stringify(POS))}catch(e){}}
+$("#cvWrap").addEventListener("input",e=>{if(e.target.id==="posQ"){POS.q=e.target.value;posSave();posOut()}});
+$("#cvWrap").addEventListener("change",e=>{if(e.target.id==="posP"){POS.p=+e.target.value;posSave();posOut()}});
+$("#cvWrap").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!b.closest("#posWrap"))return;
+  if(b.dataset.posf){POS.f=b.dataset.posf;POS.p=POS_F[POS.f].d;posSave();posRender();return}
+  if(b.dataset.copy!=null){const v=b.dataset.copy;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast("คัดลอกแล้ว: "+v)).catch(()=>toast(v));return}
+  const k=b.dataset.pos;if(k==="clr"){POS.q="";posSave();posRender();$("#posQ").focus();return}
+  if(k==="gps"){if(GPS.last){POS.q=GPS.last.lat.toFixed(6)+", "+GPS.last.lon.toFixed(6);posSave();posRender();return}
+    if(!navigator.geolocation)return toast("เครื่องนี้ไม่มี GPS");toast("กำลังหาตำแหน่ง…");navigator.geolocation.getCurrentPosition(p=>{POS.q=p.coords.latitude.toFixed(6)+", "+p.coords.longitude.toFixed(6);posSave();posRender()},()=>toast("หาตำแหน่งไม่ได้ — อนุญาตการเข้าถึงตำแหน่งก่อน"),{enableHighAccuracy:true,timeout:15000});return}
+  const ll=posParse(POS.q);if(!ll)return;
+  if(k==="add"){const nm=(prompt("ชื่อจุด",fmtMgrs(toMgrs(ll[0],ll[1])).split(" ").slice(1).join(""))||"").trim();if(!nm)return;const w={name:nm.slice(0,20),lat:ll[0],lon:ll[1],vor:""};
+    if(state.wps.length<2){state.wps.push(w);if(state.wps.length>1)state.legs.push(blankLeg())}else{const at=state.wps.length-1;state.wps.splice(at,0,w);state.legs.splice(at-1,0,blankLeg())}markEdited();render();toast("เพิ่ม "+w.name+" ในแท็บ 1")}
+  if(k==="map"){document.querySelector('.rail [data-tab=plan]').click();setTimeout(()=>{map.setView(ll,12);L.popup().setLatLng(ll).setContent(`<b>📍 ${esc(fmtMgrs(toMgrs(ll[0],ll[1])))}</b><br>${esc(posFmt(ll[0],true,"dms",1))} ${esc(posFmt(ll[1],false,"dms",1))}`).openOn(map)},250)}});
 /* ---------- คำนวณอัตราไต่ / ร่อน ---------- */
 let CR=(()=>{try{return{mode:"dist",a0:"1500",a1:"6500",gs:"100",d:"20",r:"500",...JSON.parse(localStorage.getItem("vfr_cr")||"{}")}}catch(e){return{mode:"dist",a0:"1500",a1:"6500",gs:"100",d:"20",r:"500"}}})();
 function crCalc(){const a0=num(String(CR.a0).replace(",",".")),a1=num(String(CR.a1).replace(",",".")),gs=num(String(CR.gs).replace(",",".")),o=$("#crOut");if(!o)return;
