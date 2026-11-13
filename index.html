@@ -687,6 +687,17 @@ body.flymode .map-inkbar{right:100px;left:10px;transform:none;max-width:none}
 .flog-t td{vertical-align:top}.flog-t small{color:var(--muted)}.flog-a{white-space:nowrap}.flog-a button{min-width:40px;min-height:38px;padding:0 6px;margin:1px}
 dialog.flog-dlg{width:min(980px,96vw)}.flog-body{display:block!important}.flog-map{height:min(60vh,520px);border-radius:12px;overflow:hidden}
 .flog-ctl{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}.flog-ctl input{flex:1;min-width:160px}.flog-ctl button{min-height:40px}.flog-stat{font-size:14px;margin:8px 0 0}
+/* Kneeboard: ขนาดหมุด/ป้ายเหมาะกับกระดาษ · ชื่อสนามข้างหมุด · ซ่อนสนามที่ไม่เลือก */
+.wpap{display:none}
+body.printing #pvMap .wpap{display:block;position:absolute;left:calc(24px * var(--pvwp,1) - 2px);top:50%;transform:translateY(-50%);font:800 calc(11px*var(--pvrpfs,1)) Arial,sans-serif;color:#111;background:rgba(255,255,255,.92);border:1px solid #111;border-radius:4px;padding:0 3px;white-space:nowrap;line-height:1.35}
+body.printing #pvMap .dbpin{transform:scale(calc(.72*var(--pvrpfs,1)));transform-origin:center}
+body.printing #pvMap .rptri{transform:scale(calc(.85*var(--pvrpfs,1)))}
+body.printing #pvMap .apmk{transform:scale(calc(.8*var(--pvrpfs,1)))}
+body.printing #pvMap .vfrpt{transform:scale(var(--pvrpfs,1));transform-origin:left center}
+body.printing #pvMap .apmk.kb-off{display:none!important}
+.kc-aps{max-height:220px;overflow:auto;border:1px solid #e2e8f0;border-radius:8px;padding:4px 8px;background:#fff;grid-column:1/-1}
+.kc-aps label{display:flex!important;flex-direction:row!important;align-items:center;gap:6px;font-size:13px;padding:2px 0;color:#111}.kc-aps input{width:18px!important;height:18px}.kc-aps .r{color:#2563eb;font-weight:700}
+.kc-apb{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}.kc-apb button{min-height:32px;font-size:12.5px;padding:0 10px}
 dialog.off .kb-body{display:block}dialog.off{width:min(640px,94vw)}
 .off-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}.off-opts fieldset{border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;flex-direction:column;gap:4px}
 .off-opts label{display:flex;flex-direction:column;gap:4px;font-size:14px}.off-opts fieldset label{flex-direction:row;align-items:center;gap:8px}.off-opts input[type=checkbox]{width:auto}
@@ -1077,6 +1088,19 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .cp-sec{border-top:4px solid var(--cc)}.cp-h{display:flex;align-items:center;gap:10px;margin:0;font:800 20px var(--f-display)}.cp-h>span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--cc);color:#fff;font-size:15px}
 .cp-h b,.cp-h .cpn{font:700 13px var(--f-mono);padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--cc) 20%,transparent);color:var(--ink)}
 .cp-sub{margin:10px 0 4px;font-size:14px;color:var(--muted)}.cp-tbl{width:100%}.cp-tbl input.cp-no{width:64px;text-align:center;font-weight:800}
+/* แท็บ 8 Preset — สีอ่านง่าย: 3 กลุ่มสี หัวหมวดมีแถบพื้น หัวตารางเข้มขึ้น แถวสลับสี */
+#tab-wpdb .cp-nav{gap:10px}#tab-wpdb .cpg{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:4px 6px 4px 10px;border-radius:12px;background:color-mix(in srgb,var(--cc) 9%,transparent);border:1px solid color-mix(in srgb,var(--cc) 30%,transparent)}
+#tab-wpdb .cpg>i{font:700 12.5px var(--f-body);font-style:normal;color:var(--cc);margin-right:2px}
+#tab-wpdb .cpg a{border-color:color-mix(in srgb,var(--cc) 35%,transparent);background:var(--card,var(--bg))}#tab-wpdb .cpg a:hover{background:var(--cc);color:#fff}
+#tab-wpdb .cp-sec{border-top:0;border-left:5px solid var(--cc);padding-top:0;overflow:hidden}
+#tab-wpdb .cp-sec>.sechead{margin:0 -14px;padding:10px 14px;background:color-mix(in srgb,var(--cc) 10%,transparent);border-bottom:1px solid color-mix(in srgb,var(--cc) 25%,transparent)}
+#tab-wpdb .cp-h{font-size:19px;color:var(--ink)}#tab-wpdb .cp-h>span{background:var(--cc)}
+#tab-wpdb .cp-h b,#tab-wpdb .cp-h .cpn{background:var(--cc);color:#fff}
+#tab-wpdb th{background:color-mix(in srgb,var(--cc,#64748b) 16%,var(--input));color:var(--ink);font:700 13px var(--f-body);text-transform:none;letter-spacing:0}
+#tab-wpdb tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--ink) 3.5%,transparent)}
+#tab-wpdb .cp-sub{color:var(--cc);font-weight:800;font-size:14.5px}
+#tab-wpdb .hint{color:color-mix(in srgb,var(--ink) 70%,transparent)}
+
 .wpicon.seq{background:#fff!important;color:#d6198f!important;border-color:#d6198f!important}
 .xl-demo{margin:10px 0;border:1px solid #c8c8c8;border-radius:8px;overflow:hidden;background:#fff;color:#222;font:13px Calibri,Arial,sans-serif;max-width:720px}
 .xl-bar{background:#217346;color:#fff;padding:6px 10px;font-weight:700;display:flex;gap:8px;align-items:center}.xl-ic{background:#fff;color:#217346;border-radius:3px;padding:0 5px;font-weight:900}
@@ -1392,7 +1416,7 @@ body.cl-on{overflow:hidden}
   <button class="tab emer" role="tab" data-tab="emer" aria-selected="false"><i><svg width="26" height="24" viewBox="0 0 26 24" aria-hidden="true"><path d="M13 2 L24.5 22 H1.5 Z" fill="#ef4444" stroke="#111" stroke-width="2" stroke-linejoin="round"/><rect x="11.6" y="8" width="2.8" height="8" rx="1.2" fill="#fff"/><circle cx="13" cy="19" r="1.6" fill="#fff"/></svg></i><small>6</small>EMER</button>
   <button class="tab" role="tab" data-tab="conv" aria-selected="false"><i>⇄</i><small>7</small>แปลงหน่วย</button>
   <!-- ข้อสอบต้องเป็นแท็บสุดท้ายเสมอ: แท็บใหม่ให้แทรกก่อนบรรทัดนี้ -->
-  <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>CP</button>
+  <button class="tab" role="tab" data-tab="wpdb" aria-selected="false"><i>⌖</i><small>8</small>Preset</button>
   <button class="tab" role="tab" data-tab="data" aria-selected="false"><i>📘</i><small>9</small>คู่มือ/ข้อมูล</button>
   <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><i>✎</i><small>10</small>ข้อสอบ</button>
   <span id="netChip" class="netchip" title="สถานะการเชื่อมต่อ"></span>
@@ -1489,7 +1513,7 @@ body.cl-on{overflow:hidden}
     </div>
     <details class="wp-help"><summary>💡 วิธีใช้แผนที่ (เพิ่ม / แทรก / ย้าย / ลบจุด)</summary><p class="hint wp-hint">    <span>👆 แตะแผนที่ = เมนูเพิ่มจุด</span><span>⚡ Shift+คลิก / คลิกขวา / แตะค้าง = เพิ่มทันที</span><span>↔ ลากกลางเส้นชมพู = แทรกจุด</span><span>✋ ลากหมุด = ย้าย · แตะหมุด = ลบ</span><span>พิกัด: <code>14.8812, 100.6431</code> หรือ <code>47PQS 1234 5678</code></span></p></details>
     <div class="tablewrap"><table id="wpTable">
-      <thead><tr><th>#</th><th>CP</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
+      <thead><tr><th>#</th><th>Preset</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
   </div>
@@ -1709,16 +1733,16 @@ body.cl-on{overflow:hidden}
 </section>
 <section id="tab-wpdb" class="tabpanel" hidden>
  <div class="cp-wrap">
-  <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-pink">CP — Checkpoint / Preset ของหน่วย</h2>
+  <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-blue">Preset ของหน่วย</h2>
    <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
-   <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>CP</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = CP 1, ปลายทาง CAVPAD = CP 13 · จุดที่ไม่มี CP แสดงเลขลำดับแบบขอบชมพู</p>
-   <nav class="cp-nav"><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a><a href="#cpCt">7 ผู้ติดต่อ</a><a href="#cpFlog">8 ประวัติการบิน</a></nav></div>
-  <div class="card section cp-sec" id="cpFm" style="--cc:#22c55e"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
-  <div class="card section cp-sec" id="cpVhf" style="--cc:#3b82f6"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
-  <div class="card section cp-sec" id="cpUhf" style="--cc:#a855f7"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
-  <div class="card section cp-sec" id="cpNav" style="--cc:#f59e0b"><div class="sechead"><h2 class="cp-h"><span>4</span>🧭 VOR / ADF</h2><div class="btns"><button data-cpadd="vor">＋ VOR</button><button data-cpadd="adf">＋ ADF</button></div></div>
+   <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>Preset</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = Preset 1, ปลายทาง CAVPAD = Preset 13 · จุดที่ไม่มี Preset แสดงเลขลำดับแบบขอบชมพู</p>
+   <nav class="cp-nav"><span class="cpg" style="--cc:#2563eb"><i>📻 วิทยุ</i><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a></span><span class="cpg" style="--cc:#0d9488"><i>📍 จุด / DTD</i><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a></span><span class="cpg" style="--cc:#6d5bd0"><i>👤 ส่วนตัว</i><a href="#cpCt">7 ผู้ติดต่อ</a><a href="#cpFlog">8 ประวัติการบิน</a></span></nav></div>
+  <div class="card section cp-sec" id="cpFm" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
+  <div class="card section cp-sec" id="cpVhf" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
+  <div class="card section cp-sec" id="cpUhf" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
+  <div class="card section cp-sec" id="cpNav" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>4</span>🧭 VOR / ADF</h2><div class="btns"><button data-cpadd="vor">＋ VOR</button><button data-cpadd="adf">＋ ADF</button></div></div>
    <h3 class="cp-sub">VOR / ILS</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="vor"></table></div><h3 class="cp-sub">ADF / NDB</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="adf"></table></div></div>
-  <div class="card section cp-sec" id="cpWp" style="--cc:#f472b6">
+  <div class="card section cp-sec" id="cpWp" style="--cc:#0d9488">
    <div class="sechead"><h2 class="cp-h"><span>5</span>📍 Waypoint <b id="cpWpN"></b></h2>
     <div class="btns"><button id="dbAdd" class="primary">＋ เพิ่มแถว</button><button id="dbExport">Export</button>
      <button id="dbClear">ลบทั้งหมด</button></div></div>
@@ -1728,20 +1752,20 @@ body.cl-on{overflow:hidden}
     <textarea id="dbPaste" rows="6" class="nt-text" placeholder="1	VTBH	47P PS 76283 53429&#10;2	VTBD	47P ..."></textarea>
     <div class="btns" style="margin-top:6px"><button id="dbPasteAdd" class="primary">เพิ่ม / อัปเดตตามเลข</button><button id="dbPasteReplace">แทนที่ทั้งตาราง</button></div>
     <p id="dbPasteInfo" class="hint"></p></details>
-   <div class="tablewrap"><table id="dbTable"><thead><tr><th>CP</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
+   <div class="tablewrap"><table id="dbTable"><thead><tr><th>Preset</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
   </div>
- <div class="card section cp-sec" id="cpChk" style="--cc:#10b981">
+ <div class="card section cp-sec" id="cpChk" style="--cc:#0d9488">
    <div class="sechead"><h2 class="cp-h"><span>6</span>✅ ตรวจความพร้อมก่อนเสียบการ์ด DTD</h2><div class="btns"><button id="chkCopy" title="คัดลอกผลตรวจเป็นข้อความ">📋 คัดลอกผลตรวจ</button><button id="dbCopyRoute" class="primary" title="คัดลอกรายการที่ต้องคีย์ใน FalconView">📋 คัดลอกรายการที่ต้องคีย์</button></div></div>
    <p class="hint">เทียบเส้นทางในแท็บ 1 และความถี่ที่เลือกพิมพ์ลง Kneeboard กับข้อมูลในหมวด 1–5 ด้านบน · อัปเดตเองทุกครั้งที่แก้แผน</p>
    <div id="chkBox"></div><div id="keyBox" class="keybox"></div></div>
-  <div class="card section cp-sec" id="cpCt" style="--cc:#0ea5e9">
+  <div class="card section cp-sec" id="cpCt" style="--cc:#6d5bd0">
    <div class="sechead"><h2 class="cp-h"><span>7</span>👥 ผู้ติดต่อ <b id="ctN"></b></h2>
     <div class="btns"><button id="ctAdd" class="primary">＋ เพิ่ม</button><button id="ctImpAdd">📥 นำเข้า Excel / JSON</button><button id="ctImpRep">แทนที่ทั้งหมด</button><button id="ctExport">📤 ส่งออก JSON</button><button id="ctTpl">⬇ ไฟล์ตัวอย่าง Excel</button><button id="ctClear">ลบทั้งหมด</button></div></div>
    <p class="hint ct-lock">🔒 <b>ข้อมูลส่วนบุคคล — เก็บในเครื่องนี้เท่านั้น</b> ไม่ขึ้น GitHub / อินเทอร์เน็ต ผู้อื่นที่เปิดแอปไม่เห็น · ย้ายไปเครื่องอื่นใช้ “ส่งออก JSON” แล้วนำเข้าที่เครื่องนั้น · ไฟล์ Excel ต้องมีหัวคอลัมน์ เช่น ชื่อ จนท. · ตำแหน่ง/หน้าที่ · หน่วย · จังหวัด · พื้นที่/อำเภอ · เบอร์โทร · วิทยุ/ความถี่ · พิกัด · หมายเหตุ (ไฟล์ตัวอย่างมี dropdown จังหวัดให้)</p>
    <div class="ct-filter"><input id="ctQ" type="search" placeholder="ค้นหา ชื่อ / หน่วย / เบอร์ / หน้าที่ เช่น รถเติมน้ำมัน" autocomplete="off"><select id="ctProvF" aria-label="กรองจังหวัด"></select></div>
    <div class="tablewrap"><table id="ctTable" class="ct-tbl"></table></div>
    <input id="ctFile" type="file" accept=".xlsx,.json,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></div>
-  <div class="card section cp-sec" id="cpFlog" style="--cc:#6366f1">
+  <div class="card section cp-sec" id="cpFlog" style="--cc:#6d5bd0">
    <div class="sechead"><h2 class="cp-h"><span>8</span>🛫 ประวัติการบิน</h2><div class="btns"><button id="flogCsv">📤 ส่งออก Excel (CSV)</button></div></div>
    <p class="hint">บันทึกอัตโนมัติทุกครั้งที่เปิด <b>✈ โหมดบิน</b> (ไม่บันทึกตอนจำลอง) · เก็บในเครื่องนี้เท่านั้น · ระหว่างบินให้เปิดแอปค้างไว้ — ถ้าสลับไปแอปอื่นหรือปิดจอ ช่วงนั้นจะไม่มีข้อมูล (แสดงเป็นเส้นประสีส้ม) · เวลาขึ้น/ลงตรวจจากความเร็ว แก้ได้ด้วย ✏️</p>
    <div id="flogSum" class="flog-sum"></div>
@@ -1751,12 +1775,10 @@ body.cl-on{overflow:hidden}
 </section>
 <section id="tab-data" class="tabpanel" hidden>
  <div class="data-grid">
-  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-green">1. ข้อมูล eAIP</h2>
-    <div class="btns"><button type="button" onclick="document.getElementById('importEaip').click()">Import ไฟล์ eAIP เอง</button><input id="importEaip" type="file" accept=".json,application/json" hidden></div></div>
+  <div class="card section dbox"><div class="sechead"><h2 class="hd hd-green">1. ข้อมูล eAIP</h2><input id="importEaip" type="file" accept=".json,application/json" hidden></div>
    <p id="eaipStatus" class="hint"></p>
    <ul class="dhelp"><li><b>ใช้กับ:</b> ความถี่ สนามบิน navaid airway พื้นที่ P/R/D และ CTR ในแท็บ 1, Kneeboard และ Flight Plan</li>
     <li><b>อัปเดต:</b> ระบบดึงจาก AIP Thailand ให้อัตโนมัติทุก 5 วัน — เปิดแอปตอนต่อเน็ตก็ได้ชุดล่าสุดเอง ไม่ต้องกดอะไร</li>
-    <li><b>กดปุ่ม Import เมื่อ:</b> ได้ไฟล์ eaip_data.json มาจากที่อื่นและต้องการใช้แทนชุดอัตโนมัติ</li>
     <li><b>ตรวจ:</b> ดูวันที่ฉบับด้านบน ถ้าเก่าเกิน 28 วันแอปจะขึ้นเตือน — ตรวจกับ AIP ฉบับปัจจุบันเสมอ</li></ul></div>
   <div class="card section dbox"><div class="sechead"><h2 class="hd hd-red">2. ข้อมูล TM (EMER / NORMAL)</h2>
     <div class="btns"><button class="primary" type="button" onclick="document.getElementById('epImport').click()">Import emergency_data.json</button><button id="epClear">ลบข้อมูล TM</button><input id="epImport" type="file" accept=".json,application/json" hidden></div></div>
@@ -1769,18 +1791,18 @@ body.cl-on{overflow:hidden}
     <li><b>ทำครั้งเดียวต่อเครื่อง</b> — Import ใหม่เมื่อ TM ออกฉบับแก้ไข แล้วตรวจวันที่ฉบับด้านบน</li>
     <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
-   <div class="sechead"><h2 class="hd hd-indigo">3. CP — Waypoint / Preset วิทยุ (Excel)</h2>
+   <div class="sechead"><h2 class="hd hd-indigo">3. Preset — Waypoint / วิทยุ (Excel)</h2>
     <div class="btns"><button type="button" id="cpTplDl">⬇️ โหลดไฟล์ตัวอย่าง</button><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
    <ol class="dhelp"><li>กด <b>⬇️ โหลดไฟล์ตัวอย่าง</b> แล้วเปิดใน Excel — มี 6 ชีต: <b>Waypoint, FM, VHF, UHF, VOR, ADF PRESET</b></li>
     <li>ลบแถวตัวอย่าง แล้วใส่ข้อมูลของหน่วย <b>เริ่มที่แถว 4</b> ห้ามแก้หัวตาราง (แถว 3) และชื่อชีต</li>
-    <li>ชีต Waypoint: <b>NO.</b> = เลข CP ที่จะแสดงบนแผนที่ · ใส่ <b>MGRS</b> หรือ <b>LAT/LON</b> (ทศนิยม) อย่างใดอย่างหนึ่ง</li>
+    <li>ชีต Waypoint: <b>NO.</b> = เลข Preset ที่จะแสดงบนแผนที่ · ใส่ <b>MGRS</b> หรือ <b>LAT/LON</b> (ทศนิยม) อย่างใดอย่างหนึ่ง</li>
     <li>ชีต PRESET: <b>NO.</b> = ช่อง · <b>FREQ</b> ตัวเลขอย่างเดียว (ADF เป็น kHz)</li>
-    <li>บันทึกไฟล์ แล้วกด <b>📥 Import Excel</b> — ไฟล์ Excel ที่ export จาก FalconView (SOP_COMCoordinate) ก็ใช้ได้เหมือนกัน · ผลดูที่แท็บ 8 CP</li></ol>
+    <li>บันทึกไฟล์ แล้วกด <b>📥 Import Excel</b> — ไฟล์ Excel ที่ export จาก FalconView (SOP_COMCoordinate) ก็ใช้ได้เหมือนกัน · ผลดูที่แท็บ 8 Preset</li></ol>
    <div class="xl-demo" aria-label="ตัวอย่างหน้าตาไฟล์ Excel">
     <div class="xl-bar"><span class="xl-ic">X</span>CP_ตัวอย่าง.xlsx</div>
     <table><tr class="xl-cols"><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
      <tr><th>1</th><td colspan="6"><b>WAYPOINT</b></td></tr>
-     <tr><th>2</th><td colspan="6" class="xl-note">NO. = เลข CP · ใส่ MGRS หรือ LAT/LON</td></tr>
+     <tr><th>2</th><td colspan="6" class="xl-note">NO. = เลข Preset · ใส่ MGRS หรือ LAT/LON</td></tr>
      <tr class="xl-h"><th>3</th><td>NO.</td><td>DTD ID</td><td>DESCRIPTION</td><td>MGRS</td><td>LAT</td><td>LON</td></tr>
      <tr><th>4</th><td>1</td><td>VTBH</td><td>สนามต้นทาง</td><td>47P PS 76697 53383</td><td></td><td></td></tr>
      <tr><th>5</th><td>2</td><td>VTBD</td><td>ดอนเมือง</td><td></td><td>13.9126</td><td>100.6068</td></tr>
@@ -1813,7 +1835,7 @@ body.cl-on{overflow:hidden}
     <div class="ug"><b>4 NOTAM</b><p>ดึงอัตโนมัติจาก FAA (ระหว่างประเทศ) · <b>บินในประเทศต้องวางจาก AEROTHAI เอง</b> · แดชบอร์ดบอกจำนวนที่เกี่ยวข้อง · แผนที่เลือกหมวดได้</p></div>
     <div class="ug"><b>5–6 NORMAL / EMER</b><p>ข้อมูลจาก TM ที่ Import (ข้อ 2) · ติ๊กทีละข้อ ข้อถัดไปจะเด่นขึ้น · WARNING/CAUTION/NOTE แตะเพื่อยุบ · ▶ โหมดทีละขั้น · ใช้ CL จริงเสมอ</p></div>
     <div class="ug"><b>7 แปลงหน่วย</b><p>เลือกหมวด → ใส่ค่า → ดูทุกหน่วยพร้อมกัน · ปุ่มลัด QNH / น้ำมัน</p></div>
-    <div class="ug"><b>8 CP</b><p>Preset FM/VHF/UHF/VOR/ADF และ Waypoint ของหน่วย · เลข CP แสดงบนแผนที่แทนเลขลำดับ · นำเข้าจาก Excel (ข้อ 3)</p></div>
+    <div class="ug"><b>8 Preset</b><p>Preset FM/VHF/UHF/VOR/ADF และ Waypoint ของหน่วย · เลข Preset แสดงบนแผนที่แทนเลขลำดับ · นำเข้าจาก Excel (ข้อ 3)</p></div>
     <div class="ug"><b>10 ข้อสอบ</b><p>เลือกระดับ ปกติ/ซับซ้อน · เฉลยละเอียดพร้อมอ้างอิง TM · ทบทวนข้อที่เคยผิดได้</p></div>
     <div class="ug"><b>💡 GPS / เต็มจอ</b><p>ปุ่ม 📍 GPS บนแผนที่: ตามตำแหน่ง เทียบ TC กับทิศบินจริง บอก XTE/ETE/ETA (L+Z) · แตะ 2 นิ้วพร้อมกัน = วัดระยะ · Ctrl+Z ย้อนกลับ</p></div>
     <div class="ug"><b>🔒 ความปลอดภัย</b><p>ข้อมูลอยู่ในเครื่องนี้เท่านั้น · สำรองทุกครั้งหลัง Import (ข้อ 5) · บน iPad เพิ่มไปหน้าจอโฮมเพื่อไม่ให้ Safari ลบข้อมูล</p></div>
@@ -2083,7 +2105,7 @@ const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
 AIRPORTS.forEach(a=>{const hp=a[4]==="heliport",nm=String(a[1]).replace(/\s*(International\s+)?(Airport|Airfield|Heliport|Air Base|Airstrip)\b/gi,"").trim()||a[0];
   const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk"+(/^VT[A-Z]{2}$/.test(a[0])?"":" ap-minor"),html:`<span class="ap-e">${hp?"🚁":"✈️"}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
-  .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);
+  .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);mk.options.apId=a[0];mk.options.apNm=nm;
   mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
 apLayer.addTo(map);
 {const zc=()=>{const c=map.getContainer().classList;c.toggle("ap-lo",map.getZoom()<8);c.toggle("ap-vlo",map.getZoom()<7)};map.on("zoomend",zc);zc()}layerCtl.addOverlay(apLayer,"สนามบิน/ฮ.ไทย");
@@ -2130,7 +2152,7 @@ function drawMap(rows){
   state.wps.forEach((w,i)=>{
     const dm=typeof dbMatch==="function"?dbMatch(w):null;if(dm&&/^WP\d*$/i.test(String(w.name||"").trim())&&dm.name)w.name=dm.name;
     if(dm&&dm.name&&String(dm.name).toUpperCase()!==String(w.name).toUpperCase())L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="wpdbl">${esc(dm.name)}</span>`,iconSize:null,iconAnchor:[-14,-4]})}).addTo(routeLayer);
-    const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:(()=>{const cp=cpNoFor(w);return`<div class="wpicon${w.rp?" rpt":""}${cp?" cp":" seq"}" title="${cp?"CP "+esc(cp):"ลำดับที่ "+(i+1)}">${cp?esc(cp):i+1}</div>`})(),iconSize:[24,24],iconAnchor:[12,12]})})
+    const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:(()=>{const cp=cpNoFor(w);const ic=String(w.name||"").toUpperCase(),isAp=/^VT[A-Z]{2}$/.test(ic)&&AP[ic];return`<div class="wpicon${w.rp?" rpt":""}${cp?" cp":" seq"}" title="${cp?"Preset "+esc(cp):"ลำดับที่ "+(i+1)}">${cp?esc(cp):i+1}</div>${isAp?`<span class="wpap">${esc(ic)}</span>`:""}`})(),iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${esc(w.name||"WP")}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
     m.on("drag",e=>ifrSnapHint(e.target.getLatLng()));
@@ -2215,9 +2237,9 @@ function tapPlace(){if(!tapBox||!tapGhost)return;const pt=map.latLngToContainerP
 function tapNearLeg(ll){const W=state.wps;if(W.length<2)return-1;const P=map.latLngToContainerPoint(ll);let bi=-1,bd=Infinity;
   for(let i=0;i<W.length-1;i++){const a=map.latLngToContainerPoint([W[i].lat,W[i].lon]),b=map.latLngToContainerPoint([W[i+1].lat,W[i+1].lon]),d=L.LineUtil.pointToSegmentDistance(P,a,b);if(d<bd){bd=d;bi=i}}return bi}
 function tapSnap(ll){return typeof snapNear==="function"?snapNear(ll):null}
-/* CP ของหน่วยที่อยู่ใกล้จุด (ไม่เกิน 0.5 NM แต่ไม่ใช่จุดเดียวกัน) → ถามว่าจะใช้ CP นั้นเป็น waypoint ไหม */
+/* Preset ของหน่วยที่อยู่ใกล้จุด (ไม่เกิน 0.5 NM แต่ไม่ใช่จุดเดียวกัน) → ถามว่าจะใช้ Preset นั้นเป็น waypoint ไหม */
 function cpNear(lat,lon,max){let best=null,bd=max||0.5;(typeof dbAll==="function"?dbAll():[]).forEach(x=>{if(x.lat==null)return;const d=gcDistNm([lat,lon],[x.lat,x.lon]);if(d>0.05&&d<bd){bd=d;best=x}});
-  return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:+best.lat,lon:+best.lon,lab:`CP No.${best.no} · ห่าง ${bd.toFixed(2)} NM`,ico:`<span class="dbno">No.${esc(best.no)}</span>`}:null}
+  return best?{name:String(best.name||("No."+best.no)).slice(0,20),lat:+best.lat,lon:+best.lon,lab:`Preset No.${best.no} · ห่าง ${bd.toFixed(2)} NM`,ico:`<span class="dbno">No.${esc(best.no)}</span>`}:null}
 function cpSnapCheck(w){if(FLMODE==="I"||!w)return;const i=state.wps.indexOf(w);if(i<0)return;const f=cpNear(w.lat,w.lon);if(f)setTimeout(()=>ifrSnapAsk(w,i,f),60)}
 function tapInsert(w,leg){const W=state.wps;if(leg<0||W.length<2){W.push(w)}else{W.splice(leg+1,0,w);state.legs.splice(leg+1,0,{...(state.legs[leg]||blankLeg()),ate:"",fact:""})}markEdited();render();cpSnapCheck(w)}
 function tapAddDirect(ll){tapClose();const w={name:"WP"+(state.wps.length+1),lat:+ll.lat.toFixed(6),lon:+ll.lng.toFixed(6),vor:""};state.wps.push(w);markEdited();render();toast("เพิ่ม "+w.name)}
@@ -2240,7 +2262,7 @@ function tapMenu(ll,info){if(document.querySelector(".wpask"))return;if(tapBox){
   if(q(".ta-snap"))q(".ta-snap").onclick=()=>{const w=mk(sn);if(sn.vor)w.vor=sn.vor;if(sn.rp)w.rp=true;tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name)};
   if(q(".ta-info"))q(".ta-info").onclick=()=>{tapClose();L.popup().setLatLng(ll).setContent(info()).openOn(map)};
   q(".ta-coord").onsubmit=e=>{e.preventDefault();const t=q(".ta-coord input").value.trim();if(!t)return;const p=resolvePoint(t);
-    if(!p){toast("อ่านพิกัดไม่ได้ — ใช้ lat,lon · MGRS · ICAO · No.CP");q(".ta-coord input").focus();return}
+    if(!p){toast("อ่านพิกัดไม่ได้ — ใช้ lat,lon · MGRS · ICAO · No.Preset");q(".ta-coord input").focus();return}
     const w={name:p.name||"WP"+(state.wps.length+1),lat:+(+p.lat).toFixed(6),lon:+(+p.lon).toFixed(6),vor:""};tapClose();tapInsert(w,-1);toast("เพิ่ม "+w.name+" จากพิกัดที่พิมพ์");
     try{map.panTo([w.lat,w.lon])}catch(err){}};
   q(".ta-x").onclick=tapClose}
@@ -2684,7 +2706,7 @@ new Ctl3D().addTo(map);
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 /* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
 function ifrBase(quiet){if(typeof baseSet!=="function")return;if(FLMODE==="I")baseSet("chart");else if(!quiet)baseSet("sat")}  // I = พื้นขาวชาร์ต · กลับ V = ดาวเทียม
-function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
+function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);/* VFR: เห็นจุดรายงาน/เส้นทาง VFR · IFR: เห็นจุดรายงาน IFR แทน */visSet("rp",!on);if(VIS.some(v=>v.k==="vfr"))visSet("vfr",!on);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
   document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase(quiet);if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
@@ -3431,7 +3453,7 @@ function ficAreas(){const W=(state&&state.wps)||[],out=[];const add=n=>{if(out.a
 function ficMode(){const v=state&&state.unitFreq;return!v||v==="auto"?"auto":v}
 function ficText(){const m=ficMode();if(m==="none")return"";if(m==="auto"){const a=ficAreas();return a.length?`${a.join(" → ")} ${FIC_F}`:""}return m}
 function ficHtml(){const t=ficText();if(!t)return"";const m=t.match(/^(?:FIC )?(.*?)\s+(127\.0.*)$/);return m?`${esc(m[1])}<br><small>${esc(m[2])} MHz</small>`:esc(t)}
-const KB_LAY0={paper:"A5",dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:1,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
+const KB_LAY0={paper:"A5",dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:0.85,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
 /* แถวปรับค่าแบบแถบเลื่อน + ตัวเลข */
 function kcR(t,k,mn,mx,st,KL,u,f){const v=KL[k];return`<label class="kc-r"><span>${t}</span><input type="range" data-kl="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><output data-o="${k}">${f?f(v):(+v).toString()+(u||"")}</output></label>`}
 const KC_FMT={lop:v=>Math.round(v*100)+"%",mapw:v=>v+" mm",maph:v=>v+" mm",fs:v=>v+" pt",tfs:v=>v+" pt"};
@@ -3580,7 +3602,8 @@ function kneePrint(preview){
         <div class="kc-r"><span>สีหมุดจุด</span><span class="kc-sw">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b"].map(c=>`<button type="button" data-sw="wpc" data-v="${c}" style="--c:${c}" class="${c===KL.wpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="wpc" value="${KL.wpc}" aria-label="สีหมุดอื่น"></span></div>
         ${kcR("ขนาดหมุดจุด","wpsz",0.6,1.8,0.1,KL,"×")}
         <div class="kc-r"><span>สีป้ายจุดรายงาน</span><span class="kc-sw">${["#ffd400","#f97316","#22c55e","#38bdf8","#ffffff","#111827"].map(c=>`<button type="button" data-sw="rpc" data-v="${c}" style="--c:${c}" class="${c===KL.rpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="rpc" value="${KL.rpc}" aria-label="สีป้ายอื่น"></span></div>
-        ${kcR("ตัวอักษรจุดรายงาน","rpfs",0.6,2,0.1,KL,"×")}</div>
+        ${kcR("ขนาดจุดรายงาน / Waypoint หน่วย / สนาม","rpfs",0.5,2,0.1,KL,"×")}</div>
+      <div class="kc-g"><h4>✈ สนามบินที่แสดงบน Kneeboard</h4><div class="kc-apb"><button type="button" data-apq="route">เฉพาะในเส้นทาง</button><button type="button" data-apq="all">แสดงทั้งหมด</button><button type="button" data-apq="none">ไม่แสดง</button></div><div class="kc-aps" id="kcAps"></div></div>
       <div class="kc-g"><h4>🔤 ตัวอักษร</h4>
         ${kcR("หัวกระดาษ","hd",0.7,1.6,0.1,KL,"×")}${kcR("ความถี่","fs",6,12,0.5,KL," pt")}${kcR("ตาราง","tfs",6,12,0.5,KL," pt")}
         <label class="kc-r"><span>ความถี่พื้นที่ (FIC)</span><select id="pvUnit">${[["auto","อัตโนมัติ"+(ficAreas().length?" ("+ficAreas().join(" → ")+")":"")],...UNIT_FREQS.map(v=>[v,v]),["none","— ไม่แสดง —"]].concat(ficMode()!=="auto"&&ficMode()!=="none"&&!UNIT_FREQS.includes(ficMode())?[[ficMode(),ficMode()]]:[]).map(([v,t])=>`<option value="${esc(v)}" ${v===ficMode()?"selected":""}>${esc(t)}</option>`).join("")}</select></label></div>
@@ -3598,14 +3621,15 @@ function kneePrint(preview){
     if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
       const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
       const mh=Math.max(60,Math.min(P.h-20,Math.floor(Math.max(mhNow,bh*25.4/96)+(lim-used)*25.4/96-1.5)));if(Math.abs(mh-mhNow)>=1){KL.maph=mh;pv.style.setProperty("--pvmh",mh+"mm");map.invalidateSize();const el=pv.querySelector('[data-kl="maph"]');if(el)el.value=mh;kcOut(pv,"maph",mh)}}}
-    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);
+    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
   if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw){const first=pp.querySelector(".pp-sec");first.after(cw);pp.insertAdjacentHTML("afterbegin",'<p class="pp-tip">💡 แตะตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้ (เฉพาะใบนี้) · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>')}}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
+    if(window._apMv)map.off("moveend",window._apMv);window._apMv=()=>{if(typeof kbApList==="function"){kbApApply(KL);kbApList(KL,pv)}};map.on("moveend",window._apMv);
     window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};setTimeout(kbVisRender,80);
     window._pvCards=()=>{const c=pv.querySelector(".pv-cards");if(c){c.innerHTML=kbCards();c.querySelectorAll(".fcard h3,.fcard .r b,.fcard .r span").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}applyKL()};
     pv.querySelector(".pv-ctl").addEventListener("click",e=>{const b=e.target.closest("[data-lc],[data-sw]");if(!b)return;const k=b.dataset.sw||"lcol",c=pv.querySelector(`[data-kl="${k}"]`);c.value=b.dataset.lc||b.dataset.v;c.dispatchEvent(new Event("input",{bubbles:true}))});
@@ -4202,7 +4226,7 @@ function dbAll(){return store.get("vfr_wpdb")||[]}
 function dbSave(L){L.sort((a,b)=>(+a.no||1e9)-(+b.no||1e9));return store.set("vfr_wpdb",L)}
 function dbMatch(w){if(!w)return null;const L=dbAll(),n=String(w.name||"").toUpperCase().trim();
   return L.find(x=>x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<0.05)||L.find(x=>String(x.name).toUpperCase()===n&&x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<1)||null}
-/* เลข CP ของจุด (ตรงกับ Waypoint ในแท็บ 8) */
+/* เลข Preset ของจุด (ตรงกับ Waypoint ในแท็บ 8) */
 function cpNoFor(w){const m=typeof dbMatch==="function"&&dbMatch(w);return m&&m.no!=null&&String(m.no).trim()!==""?String(m.no):null}
 function dbBadge(w){const m=dbMatch(w);return m?`<span class="dbno">No.${esc(m.no)}</span>`:`<span class="hint">—</span>`}
 function dbNoTxt(w,plain){const m=dbMatch(w);return m?(plain?`No.${esc(m.no)} `:`<span class="dbno">No.${esc(m.no)}</span> `):""}
@@ -4240,9 +4264,9 @@ function psFind(f,ap){const d=psAll(),out=[];PS_BANDS.forEach(b=>{if(f<b.lo||f>=
   if(ap){const mine=out.filter(o=>String(o.x.call||"").toUpperCase().includes(String(ap).toUpperCase()));if(mine.length)return mine}return out}
 function psTags(t,ap){const fs=freqNums(t);return fs.map(f=>psFind(f,ap).map(({b,x})=>`<span class="pstag" title="${esc(b.t)} ช่อง ${esc(x.ch)} · ${esc(x.call||"")}">${b.tag}${esc(x.ch)}</span>`).join("")).join("")}
 function psTagTxt(t,ap){return freqNums(t).flatMap(f=>psFind(f,ap).map(({b,x})=>b.tag+x.ch)).join(",")}
-/* แท็บ 8 CP: ตาราง preset แยกตามย่าน (แนวตั้ง) */
+/* แท็บ 8 Preset: ตาราง preset แยกตามย่าน (แนวตั้ง) */
 function cpRender(){const d=psAll();document.querySelectorAll(".cp-tbl[data-cpband]").forEach(T=>{const k=T.dataset.cpband,b=PS_BANDS.find(x=>x.k===k),L=d[k]||[];
-  T.innerHTML=`<thead><tr><th>CP</th><th>Call sign / ID</th><th>ความถี่</th><th>รายละเอียด</th><th></th></tr></thead><tbody>${L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);
+  T.innerHTML=`<thead><tr><th>Preset</th><th>Call sign / ID</th><th>ความถี่</th><th>รายละเอียด</th><th></th></tr></thead><tbody>${L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);
     return`<tr><td class="w-s"><input data-cp="${i}" data-k="ch" value="${esc(x.ch)}" class="cp-no" inputmode="numeric"></td><td class="name"><input data-cp="${i}" data-k="call" value="${esc(x.call||"")}"></td>
     <td class="w-m"><input data-cp="${i}" data-k="freq" value="${esc(x.freq??"")}" class="${bad?"bad":""}" inputmode="decimal">${bad?`<br><span class="area-alert" style="font-size:11px">นอกย่าน ${b.lo}–${b.hi}</span>`:""}</td>
     <td class="name"><input data-cp="${i}" data-k="desc" value="${esc([x.desc,x.fix].filter(Boolean).join(" · "))}"></td><td><button class="mini" data-cpdel="${i}" aria-label="ลบ">✕</button></td></tr>`}).join("")
@@ -4535,7 +4559,7 @@ function gpsStart(sim){if(!sim&&!window._terrAsked){let ack=null;try{ack=localSt
 function gpsStop(){if(FM)fmExit(true);if(typeof FR!=="undefined"&&FR)flogFinish();GPS.on=false;GPS.al=null;gaClear();if(GPS.watch!=null)navigator.geolocation.clearWatch(GPS.watch);GPS.watch=null;if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}
   if(GPS.lock){GPS.lock.release().catch(()=>{});GPS.lock=null}gpsLayer.clearLayers();if(GPS.lot){try{GPS.lot.destroy()}catch(e){}GPS.lot=null}GPS.mk=GPS.acc=GPS.crumb=GPS.dtoLine=null;GPS.dto=null;
   $("#gpsBtn").classList.remove("on");$("#gpsBtn").textContent="✈ โหมดบิน";$("#gpsHud").hidden=true;gpsTouchMode(false)}
-function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/CP ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
+function gpsBtns(){return`<div class="gh-btns"><button data-g="prev" title="กลับไปขาก่อนหน้า">◀ ขาก่อน</button><button data-g="next" title="ข้ามไปขาถัดไป">ขาถัดไป ▶</button><button data-g="follow" class="${GPS.follow?"on":""}">🎯 ตาม</button><button data-g="sim">${GPS.sim?"⏹ หยุดจำลอง":"🧪 จำลอง"}</button><button data-g="mute" class="${GPS.mute?"":"on"}" title="เสียงแจ้งเตือน">${GPS.mute?"🔕":"🔔"}</button><button data-g="info" title="ข้อจำกัดของการแจ้งเตือน">ⓘ</button><button data-g="dto" class="${GPS.dto?"on":""}" title="บินตรงไปสนามบิน/Preset ใกล้สุดจากตำแหน่งปัจจุบัน">➜ Direct to</button><button hidden data-g="clear" title="ล้างรอยเส้นประสีฟ้าที่บินผ่านมา (แผนการบินไม่ถูกลบ)">⌫ ล้างรอยบิน</button><button data-g="off">✕</button></div>`}
 $("#gpsHud").addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("[data-g]");if(!b)return;const g=b.dataset.g,W=state.wps;
   if(g==="off")gpsStop();if(g==="next"&&GPS.leg<W.length-2)GPS.leg++;if(g==="prev"&&GPS.leg>0)GPS.leg--;
   if(g==="follow"){GPS.follow=!GPS.follow;if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
@@ -4550,7 +4574,7 @@ map.on("dragstart",()=>{if(GPS.on&&GPS.follow){GPS.follow=false;const b=document
 function gpsSimStart(){if(state.wps.length<2){toast("สร้างเส้นทางก่อนจึงจะจำลองได้");return}const P=routePath();let d=0,t=Date.now();
   GPS.sim=setInterval(()=>{const now=Date.now(),dt=(now-t)/3600000*10;t=now;const a=posAt(P,d),gs=a.s.gs;d+=gs*dt;if(d>=P.total){clearInterval(GPS.sim);GPS.sim=null;toast("จำลองถึงปลายทางแล้ว");return}
     const b=posAt(P,d);gpsFix(b.ll[1],b.ll[0],gs,trueCourse([a.ll[1],a.ll[0]],[b.ll[1],b.ll[0]]),a.s.alt,10,now)},500);toast("จำลองการบินตามเส้นทาง (เร็ว ×10)")}
-/* ---------- Direct to: จากตำแหน่งปัจจุบันตรงไปสนามบิน / CP ใกล้สุด (ไม่แก้แผนการบิน) ---------- */
+/* ---------- Direct to: จากตำแหน่งปัจจุบันตรงไปสนามบิน / Preset ใกล้สุด (ไม่แก้แผนการบิน) ---------- */
 /* Direct-to = ล้างเส้นทาง แล้วสร้างใหม่ ตำแหน่งปัจจุบัน → จุดที่เลือก (เก็บเส้นทางเดิมไว้ให้กลับได้) */
 function dtoRoute(t){const P=GPS.last;if(!P){toast("รอสัญญาณ GPS ก่อน");return}document.querySelectorAll(".gh-dto").forEach(x=>x.remove());
   if(GPS.dtoLine){gpsLayer.removeLayer(GPS.dtoLine);GPS.dtoLine=null}GPS.dto=null;
@@ -4574,7 +4598,7 @@ function gpsDtoMenu(){const old=document.querySelector(".gh-dto");if(old){old.re
   const rw=(state.dtoBak?state.dtoBak.wps:state.wps).filter(w=>w.lat!=null&&w.name!=="PPOS").map(w=>({name:w.name,lat:+w.lat,lon:+w.lon,d:gcDistNm(here,[+w.lat,+w.lon])}));
   d.innerHTML=`<h4>📍 Direct to จุดในเส้นทาง${state.dtoBak?" (เดิม)":""}</h4><div class="dl">${rw.map(a=>row(a,a.d,trueCourse(here,[a.lat,a.lon]))).join("")}</div>
    <h4>✈ Direct to สนามบินใกล้สุด</h4><div class="dl">${aps.map(a=>row(a,a.d,trueCourse(here,[a.lat,a.lon]))).join("")||'<span class="hint">ไม่พบสนามบิน</span>'}</div>
-   <h4>◎ Direct to CP ใกล้สุด</h4><div class="dl">${cps.map(c=>row(c,c.d,trueCourse(here,[c.lat,c.lon]),`<span class="dbno">No.${esc(c.no)}</span> `)).join("")||'<span class="hint">ยังไม่มี CP ในแท็บ 8</span>'}</div>
+   <h4>◎ Direct to Preset ใกล้สุด</h4><div class="dl">${cps.map(c=>row(c,c.d,trueCourse(here,[c.lat,c.lon]),`<span class="dbno">No.${esc(c.no)}</span> `)).join("")||'<span class="hint">ยังไม่มี Preset ในแท็บ 8</span>'}</div>
    <div class="dx">${state.dtoBak?'<button type="button" data-dtor="1">↩ กลับเส้นทางเดิม</button>':""}${GPS.dto?'<button type="button" data-dtox="1">✕ ยกเลิก Direct to</button>':""}<button type="button" data-dtoclr="1">⌫ ล้างรอยบิน</button><button type="button" data-dtoc="1">ปิด</button></div>`;
   map.getContainer().appendChild(d);L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);d.addEventListener("click",e=>{e.stopPropagation();const b=e.target.closest("button");if(!b)return;
     if(b.dataset.dto){gpsDtoSet(JSON.parse(b.dataset.dto));return}if(b.dataset.dtor){d.remove();dtoRestore();return}if(b.dataset.dtox){gpsDtoSet(null);return}
@@ -4707,7 +4731,7 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
 new CtlUndo().addTo(map);
 modeSet(FLMODE,true);
 /* โหลดไฟล์ตัวอย่าง: บน iPad/iPhone ใช้ Share sheet (บันทึกลงไฟล์ได้ และไม่ออกจากแอป) · เครื่องอื่นดาวน์โหลดตรง */
-$("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx")).blob(),name="CP_template.xlsx";
+$("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx")).blob(),name="Preset_template.xlsx";
   const f=new File([b],name,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
   if(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)){if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}
   const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
@@ -5252,6 +5276,14 @@ async function flogEdit(id,tr){const F=await flogGet(id);if(!F)return;const pt=(
     const rows=[["วันที่","เส้นทาง","ขึ้น","ลง","ชั่วโมงบิน (ชม.:นาที)","ชั่วโมงบิน (ทศนิยม)","ระยะ NM","สูงสุด ft","จำนวนลง","หมายเหตุ"],...I.slice().reverse().map(x=>[new Date(x.start).toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"}),x.route,flogT(x.to),flogT(x.ld),flogFmtH(x.dur)+(x.est?" ≈":""),(x.dur/3600000).toFixed(1),x.dist.toFixed(1),x.maxAlt??"",x.landings||"",x.note||""])];
     flogDl(`flight_log_${new Date().toISOString().slice(0,10)}.csv`,"﻿"+rows.map(r=>r.map(q).join(",")).join("\r\n"),"text/csv")};
   $("#flogClose").onclick=()=>$("#flogDlg").close()})();
+/* ---------- Kneeboard: เลือกสนามบินที่แสดง ---------- */
+function kbApApply(KL){const hide=new Set(KL.apHide||[]),pr=document.body.classList.contains("printing");apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.toggle("kb-off",pr&&hide.has(m.options.apId))})}
+function kbApList(KL,pv){const box=pv.querySelector("#kcAps");if(!box)return;const b=map.getBounds().pad(.05),hide=new Set(KL.apHide||[]),rt=new Set((state.wps||[]).map(w=>String(w.name||"").toUpperCase()));
+  const L=[];apLayer.eachLayer(m=>{if(b.contains(m.getLatLng()))L.push({id:m.options.apId,nm:m.options.apNm})});L.sort((a,c)=>(rt.has(c.id)-rt.has(a.id))||a.id.localeCompare(c.id));
+  box.innerHTML=L.length?L.map(x=>`<label><input type="checkbox" data-ap="${esc(x.id)}" ${hide.has(x.id)?"":"checked"}><span class="${rt.has(x.id)?"r":""}">${esc(x.id)}</span> ${esc(x.nm||"")}</label>`).join(""):'<p class="hint">ไม่มีสนามในกรอบแผนที่</p>';
+  if(!box._on){box._on=1;box.addEventListener("change",e=>{const c=e.target.closest("[data-ap]");if(!c)return;const h=new Set(KL.apHide||[]);c.checked?h.delete(c.dataset.ap):h.add(c.dataset.ap);KL.apHide=[...h];kbLaySave(KL);kbApApply(KL)});
+    pv.querySelector(".kc-apb").addEventListener("click",e=>{const q=e.target.closest("[data-apq]");if(!q)return;const ids=[];apLayer.eachLayer(m=>ids.push(m.options.apId));const rt2=new Set((state.wps||[]).map(w=>String(w.name||"").toUpperCase()));
+      KL.apHide=q.dataset.apq==="all"?[]:q.dataset.apq==="none"?ids:ids.filter(i=>!rt2.has(i));kbLaySave(KL);kbApApply(KL);kbApList(KL,pv)})}}
 </script>
 </body>
 </html>
