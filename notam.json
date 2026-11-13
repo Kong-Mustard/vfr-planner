@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-13T19:22Z",
+"fetched": "2026-11-13T20:20Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1143,15 +1143,6 @@
 "plain": " ",
 "start": "11/13/2026 1623",
 "end": "11/13/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4549/26",
-"icao": "A4549/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611131900 C) 2611132000\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY D BEHIND ACFT STAND NR 509\r\n   -TWY D3",
-"plain": " ",
-"start": "11/13/2026 1900",
-"end": "11/13/2026 2000",
 "keyword": "INTERNATIONAL"
 },
 {
