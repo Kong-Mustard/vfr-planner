@@ -267,7 +267,7 @@ def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None):
                 log(f"  {ic} {ch.get('page')}: โหลดไม่ได้ {e}")
                 continue
             ocr = False
-            if not t or len(t.strip()) < 50 or (not DMS.search(t) and "POINT" not in t.upper() and "[ALT" not in t):
+            if not t or len(t.strip()) < 50 or (not parse_points(t) and not parse_routes(t)):
                 if not ocr_text:
                     continue  # หน้าเป็นภาพสแกน — อ่านข้อความไม่ได้
                 try:
