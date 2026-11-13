@@ -376,6 +376,13 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .wpask .sa-h b{color:#1b2430}.wpask .sa-del{background:#d1242f}
 @media (pointer:coarse){.snapask{width:280px}.snapask button{padding:12px 6px;font-size:14px}}body.hide-ifr .ifrmk,body.hide-ifr .ifr-aw{display:none}
 .ifrpop table{border-collapse:collapse;margin:4px 0;font-size:12px}.ifrpop .ifrg{display:grid;grid-template-columns:auto 1fr;gap:1px 10px;margin:4px 0;font-size:12px}.ifrpop .ifrg span{color:#666}.ifrpop .ifrg b{font-weight:600;color:#222}.ifrpop .ifrseg{border-top:1px solid #ddd;margin-top:5px;padding-top:4px}.ifrpop .btn{margin-top:4px}
+.vfrpt>span.lh{visibility:hidden}.vfrpt.hi>span{background:#a21caf;color:#fff;border-color:#fff}.vfrpt.hi>i{background:#fff200;transform:rotate(45deg) scale(1.25)}
+.vfr-dim .vfr-rt{opacity:.22}.vfr-dim .vfrpt.hi>span{display:none}.vfr-dim .vfrpt:not(.hi){opacity:.45}
+.vfr-arw{color:var(--c);font-size:16px;line-height:18px;text-align:center;text-shadow:0 0 3px #fff,0 0 3px #fff}
+.vfr-alt{white-space:nowrap;font:800 11px var(--f-body);color:#fff;background:#4a044e;border-radius:4px;padding:1px 5px;border:1px solid #fff}
+.vfr-hix{white-space:nowrap;font:800 12px var(--f-body);background:#fff;color:#4a044e;border:2px solid #a21caf;border-radius:999px;padding:4px 10px;cursor:pointer;box-shadow:0 2px 6px #0004}
+.vfr-pick{display:flex;flex-direction:column;gap:5px;margin-top:6px;max-height:260px;overflow:auto}.vfr-pick button{text-align:left;padding:6px 8px;border-radius:8px;font-weight:700}.vfr-pick small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+#map .wpicon,#map .wpdbl,#map .rplabel{transform:scale(var(--wpz,1));transition:transform .15s}
 .vfrpt{position:relative;width:14px;height:14px}.vfrpt>i{position:absolute;left:2px;top:2px;width:10px;height:10px;background:#ffd400;border:1.5px solid #111;transform:rotate(45deg);box-shadow:0 0 2px #000a}
 .vfrpt>span{position:absolute;left:15px;top:-3px;white-space:nowrap;font:800 11px var(--f-body);color:#4a044e;background:#fffbe6e6;border:1px solid #a21caf;border-radius:4px;padding:0 4px;pointer-events:none}
 .vfr-nolbl .vfrpt>span{display:none}body.printing #pvMap .vfrpt>span{display:block}
@@ -1489,11 +1496,10 @@ body.cl-on{overflow:hidden}
         <label>hPa<input class="qnh-h" type="number" step="1" inputmode="decimal" placeholder="1013"></label></div>
       <div class="grid2" id="planMeta">
         <label style="grid-column:1/-1">ชื่อแผน / ภารกิจ<input id="planName" type="text"></label>
-        <label>Aircraft No.<input id="acft" type="text"></label>
-        <label>วันที่<input id="date" type="date"></label>
+        <input id="acft" type="hidden"><input id="date" type="hidden">
         <label>เวลาเริ่มบิน<input id="depTime" type="time" value="08:00"></label>
         <label>น้ำมันเริ่มต้น (lb)<input id="fuel0" type="number" inputmode="decimal"></label>
-        <label>Burn rate (lb/นาที)<input id="burn" type="number" step="0.1" inputmode="decimal"></label>
+        <label>Burn rate (ลิตร/ชม.)<input id="burnL" type="number" step="10" inputmode="decimal" placeholder="800"></label>
         <label>น้ำมันสำรองขั้นต่ำ (lb)<input id="reserve" type="number" inputmode="decimal"></label>
         <label>SA / ระดับปลอดภัย (ft)<input id="sa" type="text" placeholder="900" style="background:var(--hl);font-weight:800"></label>
         <label hidden>ความถี่พื้นที่ (FIC)<input id="unitFreq" type="text" placeholder="OSCAR 127.0" list="unitFreqList"><datalist id="unitFreqList"><option value="auto"><option value="FOCAL 127.0 / 331.3"><option value="OSCAR 127.0 / 331.3"><option value="BIG SHELL 127.0 / 331.3"><option value="none"></datalist></label>
@@ -2100,7 +2106,7 @@ function windTri(tc,tas,wd,wv){const ang=(wd-tc)*D2R,x=wv*Math.sin(ang)/tas;
 /* ---------- state ---------- */
 let state=null;
 const procOpen=new Set(),procShut=new Set(); /* จำว่าผู้ใช้กาง/ยุบอันไหน · กล่องสนามในกรอบขั้นตอนเข้า-ออกสนามกางไว้ก่อน */
-const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป บทบ.ยว.3",acft:"",date:"",depTime:"08:00",fuel0:2400,burn:23.5,reserve:470,
+const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป บทบ.ยว.3",acft:"",date:"",depTime:"08:00",fuel0:2400,burn:23.6,reserve:470,
   depIn:"VTBH",dstIn:"47Q QU 27275 13325 บทบ.ยว.3",
   g:{alt:1000,cas:120,wd:230,wv:15,temp:30,var:0},
   wps:[{name:"VTBH",lat:14.9494,lon:100.643,vor:""},{name:"บทบ.ยว.3",lat:16.39053,lon:101.12801,vor:""}],
@@ -2323,7 +2329,7 @@ function apFreqText(name){const a=AP[String(name||"").toUpperCase()];if(!a||!a.e
 function renderNavlogExtras(res){
   const W=state.wps;$("#nlTitle").textContent=W.length>1?`${W[0].name} → ${W[W.length-1].name}`:"ยังไม่มีเส้นทาง";
   $("#nlHead").innerHTML=[["Aircraft",state.acft||"–"],["Date",state.date||"–"],["เริ่มบิน",state.depTime||"–"],["น้ำมันเริ่ม",(state.fuel0||"–")+" lb"],
-    ["Burn",(state.burn||"–")+" lb/นาที"],["สำรองขั้นต่ำ",(state.reserve||"–")+" lb"],["QNH",qnhText()],["ระยะรวม",res.rows.length?res.total.toFixed(1)+" NM":"–"],["เวลารวม",res.rows.length?mmss(res.cumMin):"–"]]
+    ["Burn",state.burn?burnToL(num(state.burn,0))+" L/ชม. ("+num(state.burn,0).toFixed(1)+" lb/นาที)":"–"],["สำรองขั้นต่ำ",(state.reserve||"–")+" lb"],["QNH",qnhText()],["ระยะรวม",res.rows.length?res.total.toFixed(1)+" NM":"–"],["เวลารวม",res.rows.length?mmss(res.cumMin):"–"]]
     .map(([k,v])=>`<span>${k}: <b>${esc(v)}</b></span>`).join("")+(state.windSrc?`<span class="hint" style="flex-basis:100%">ลม/อุณหภูมิตั้งต้นจาก ${esc(state.windSrc)} — ค่าคร่าวๆ ตรวจและแก้ก่อนบิน</span>`:"");
   const act=document.activeElement;if(act&&act.closest("#wxLog"))return;
   state.wxlog=state.wxlog||{};const altn=state.fpl&&state.fpl.v&&state.fpl.v.altn;
@@ -2403,7 +2409,7 @@ function render(){
      if(res.cumMin>endMin)W.push(`⚠ เวลาบินรวม ${mmss(res.cumMin)} เกิน endurance ${A.endurance}`);
      if(res.total>A.rangeNm)W.push(`⚠ ระยะรวม ${res.total.toFixed(0)} NM เกินพิสัย ${A.rangeNm} NM`);
      if(num(state.fuel0,0)>A.fuelLb+50)W.push(`⚠ น้ำมันเริ่มต้นเกินความจุถัง ${A.fuelLb.toLocaleString("en-US")} lb (${A.fuelL.toLocaleString("en-US")} ลิตร)`);
-     if(b&&b<A.burnLbMin*0.4)W.push(`ℹ Burn rate ${b} lb/นาที ต่ำกว่าค่าเฉลี่ยเครื่อง (~${A.burnLbMin} lb/นาที = ${A.burnLph} ลิตร/ชม.) — ตรวจหน่วย`);}
+     if(b&&b<A.burnLbMin*0.4)W.push(`ℹ Burn rate ${burnToL(b)} ลิตร/ชม. ต่ำกว่าค่าเฉลี่ยเครื่อง (~${A.burnLph} ลิตร/ชม.) — ตรวจค่าอีกครั้ง`);}
      el.innerHTML=W.length?W.map(x=>`<div>${x}</div>`).join(""):res.rows.length?`<span class="hint">✓ อยู่ในขีดความสามารถ ${esc(A.name)} (endurance ${A.endurance} · range ${A.rangeNm} NM)</span>`:""}}
   if(typeof pmSumRender==="function")pmSumRender();
   const sf=$("#sFuel");sf.textContent=res.rows.length?res.fuel.toFixed(0)+" lb":"–";sf.className=rv!=null&&res.fuel<rv?"bad":"";
@@ -2427,17 +2433,21 @@ function safeUrl(u){try{const x=new URL(String(u||""),location.href);return/^htt
 /* ข้อมูลจากไฟล์นำเข้า: ตัด < > ในข้อความ (กันโค้ดแฝง) + ตรวจชนิดข้อมูลของแผน */
 function deepStrip(o,d=0){if(d>8)return null;if(typeof o==="string")return o.replace(/[<>]/g,"").slice(0,20000);if(Array.isArray(o))return o.slice(0,2000).map(x=>deepStrip(x,d+1));
   if(o&&typeof o==="object"){const r={};Object.keys(o).slice(0,300).forEach(k=>{if(k==="__proto__"||k==="constructor"||k==="prototype")return;r[k]=deepStrip(o[k],d+1)});return r}return typeof o==="number"&&!isFinite(o)?null:o}
-function planClean(st){st=deepStrip(st)||{};const okN=(v,a)=>typeof v==="number"&&isFinite(v)&&Math.abs(v)<=a;
+function planClean(st){st=deepStrip(st)||{};st.date="";st.acft="";const okN=(v,a)=>typeof v==="number"&&isFinite(v)&&Math.abs(v)<=a;
   st.wps=(Array.isArray(st.wps)?st.wps:[]).map(w=>w&&typeof w==="object"?{...w,lat:+w.lat,lon:+w.lon,name:String(w.name??"").slice(0,40),vor:String(w.vor??"").slice(0,80)}:null).filter(w=>w&&okN(w.lat,90)&&okN(w.lon,180));
   st.legs=(Array.isArray(st.legs)?st.legs:[]).filter(l=>l&&typeof l==="object");if(!st.g||typeof st.g!=="object"||Array.isArray(st.g))st.g=null;return st}
 function markEdited(){if(state.example){state.example=false}}
 
 /* ---------- form binding ---------- */
-const fields={planName:"planName",acft:"acft",date:"date",depTime:"depTime",fuel0:"fuel0",burn:"burn",reserve:"reserve",sa:"sa",unitFreq:"unitFreq",remStep:"remStep"};
+const fields={planName:"planName",depTime:"depTime",fuel0:"fuel0",reserve:"reserve",sa:"sa",unitFreq:"unitFreq",remStep:"remStep"};
+/* Burn rate: กรอกเป็น ลิตร/ชม. (ค่าหลัก 800) แต่ภายในเก็บเป็น lb/นาที เหมือนเดิม (ทุกสูตรใช้ lb/นาที) */
+const BURN_LPH0=800,burnK=()=>num(state.fuelDens,6.7)/3.785412/60;
+const burnToL=b=>b>0?Math.round(b/burnK()):"",burnFromL=l=>+(l*burnK()).toFixed(3);
 const gfields={gAlt:"alt",gCas:"cas",gWd:"wd",gWv:"wv",gTemp:"temp",gVar:"var"};
 function fillForm(){if($("#boxScale"))$("#boxScale").value=state.boxScale||1;$("#boxRotMode").value=state.boxRotMode||"mh";["dep","dst"].forEach(k=>{const v=state[k+"In"]||"";$("#"+k+"In").value=v;showRes($("#"+k+"Res"),resolvePoint(v,false),v)});
-  for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??"";remQSync()}
+  for(const[id,k]of Object.entries(fields))$("#"+id).value=state[k]??"";$("#burnL").value=burnToL(num(state.burn,0));for(const[id,k]of Object.entries(gfields))$("#"+id).value=state.g[k]??"";remQSync()}
 for(const[id,k]of Object.entries(fields))$("#"+id).addEventListener("input",e=>{state[k]=e.target.value;markEdited();render();if(id==="remStep")remQSync()});
+$("#burnL").addEventListener("input",e=>{const l=num(e.target.value,0);state.burn=l>0?burnFromL(l):"";markEdited();render()});
 document.addEventListener("click",e=>{const b=e.target.closest(".dhQ");if(!b)return;visSet("hbox",!visOn("hbox"));visSave();dhQSync()});setTimeout(()=>{try{dhQSync()}catch(e){}},0);
 function remQSync(){document.querySelectorAll(".remQ").forEach(x=>x.value=String(state.remStep??"10"))}
 document.querySelectorAll(".remQ").forEach(x=>x.addEventListener("change",()=>{const r=$("#remStep");r.value=x.value;r.dispatchEvent(new Event("input"));
@@ -2728,7 +2738,7 @@ new Ctl3D().addTo(map);
 var FLMODE=(()=>{try{return localStorage.getItem("vfr_mode")||"V"}catch(e){return"V"}})();
 /* IFR → พื้นขาวชาร์ตอัตโนมัติ · กลับ VFR → คืนแผนที่เดิม */
 function ifrBase(quiet){if(typeof baseSet!=="function")return;if(FLMODE==="I")baseSet("chart");else if(!quiet)baseSet("sat")}  // I = พื้นขาวชาร์ต · กลับ V = ดาวเทียม
-function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);/* VFR: เห็นจุดรายงาน/เส้นทาง VFR · IFR: เห็นจุดรายงาน IFR แทน */visSet("rp",!on);visSet("vfr",!on);if(on)visSet("vfrA",false);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
+function modeSet(m,quiet){const was=FLMODE;FLMODE=m==="I"?"I":"V";if(typeof visSet==="function"&&was!==FLMODE&&!quiet){const on=FLMODE==="I";visSet("enr",on);visSet("ifr",on);/* VFR: เห็นจุดรายงาน/เส้นทาง VFR · IFR: เห็นจุดรายงาน IFR แทน */visSet("vfr",!on);if(on)visSet("vfrA",false);if(typeof visSave==="function")visSave();if(on&&typeof drawEnr==="function")drawEnr()}try{localStorage.setItem("vfr_mode",FLMODE)}catch(e){}const b=$("#modeBtn");if(b){b.textContent=FLMODE;b.classList.toggle("ifr",FLMODE==="I");b.title=`โหมดการบิน: ${FLMODE==="I"?"I = IFR":"V = VFR"} · กดเพื่อสลับ`}
   document.body.classList.toggle("mode-ifr",FLMODE==="I");ifrBase(quiet);if(typeof drawIfr==="function")drawIfr();saLast="";saSched(true);if(!quiet)toast(FLMODE==="I"?"โหมด IFR (I) — กำลังเตรียมข้อมูล IFR จาก eAIP":"โหมด VFR (V)")}
 $("#modeBtn").onclick=()=>modeSet(FLMODE==="I"?"V":"I");
 const TERR_Z=10,terrCache=new Map();
@@ -3176,21 +3186,47 @@ $("#procList").addEventListener("click",e=>{const b=e.target.closest(".rp");if(!
 const vfrLayer=L.layerGroup(),vfrALayer=L.layerGroup();
 const vfrDms=(v,h)=>{const a=Math.abs(v),d=Math.floor(a),m=Math.floor((a-d)*60),s=((a-d)*60-m)*60;return`${d}° ${String(m).padStart(2,"0")}′ ${s.toFixed(0).padStart(2,"0")}″ ${v<0?h[1]:h[0]}`};
 function vfrShort(p){return p.id||p.n.replace(/\s+POINT$/i,"")}
-function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();const segH=new Map(),segA=new Map(),pts=new Map();
+/* อ่านง่าย: ขาออก = เส้นทึบ · ขาเข้า = เส้นประ · แตะเส้น → เลือกเส้นทาง → เน้นเส้นนั้น (ลูกศรทิศ + ALT) ที่เหลือจาง · ชื่อจุดที่ทับกันซ่อนอัตโนมัติ */
+let VFR_RT=[],VFR_HI=null;const vfrHiLayer=L.layerGroup();
+const vfrSecTh=s=>s==="DEPARTURE"||s==="DEP"?"ออก":s==="ARRIVAL"||s==="ARR"?"เข้า":s==="OVERFLY"?"ผ่าน":s||"";
+function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();vfrHiLayer.clearLayers();VFR_RT=[];const segs=new Map(),pts=new Map();
   Object.entries(AP).forEach(([ic,a])=>{const v=a.eaip&&a.eaip.vfr;if(!v)return;
     (v.pts||[]).forEach(p=>{const k=p.lat.toFixed(4)+","+p.lon.toFixed(4);if(!pts.has(k))pts.set(k,{p,ics:new Set()});pts.get(k).ics.add(ic)});
-    (v.rt||[]).forEach(r=>{const S=r.c==="H"?segH:segA,lab=`${ic} ${r.c==="H"?"ฮ.":"บ."} ${r.sec==="DEPARTURE"||r.sec==="DEP"?"ออก":r.sec==="ARRIVAL"||r.sec==="ARR"?"เข้า":r.sec==="OVERFLY"?"ผ่าน":r.sec} ${r.dir||""}`.trim();
-      for(let i=0;i+1<r.seq.length;i++){const A=r.seq[i],B=r.seq[i+1];if(A[2]==null||B[2]==null)continue;
-        const k=[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");if(!S.has(k))S.set(k,{A,B,labs:new Set()});S.get(k).labs.add(lab)}})});
-  const seg=(S,G,col)=>S.forEach(({A,B,labs})=>{const alt=[A[1],B[1]].filter(Boolean);
-    const pl=L.polyline([[A[2],A[3]],[B[2],B[3]]],{color:col,weight:3,opacity:.85,dashArray:"8 5",className:"vfr-rt"})
-      .bindTooltip(`<b>${esc(A[0])} → ${esc(B[0])}</b>${alt.length?` · ${alt.map(x=>"ALT "+x).join(" → ")}`:""}<br><span class="hint">${[...labs].slice(0,4).map(esc).join("<br>")}${labs.size>4?`<br>+${labs.size-4}`:""}</span>`,{sticky:true});G.addLayer(pl)});
-  seg(segH,vfrLayer,"#a21caf");seg(segA,vfrALayer,"#2563eb");
+    (v.rt||[]).forEach(r=>{const seq=r.seq.filter(e=>e[2]!=null);if(seq.length<2)return;const id=VFR_RT.length,dep=/^DEP/.test(r.sec);
+      VFR_RT.push({id,ic,c:r.c,dep,lab:`${ic} ${r.c==="H"?"ฮ.":"บ."} ${vfrSecTh(r.sec)} ${r.dir||""}`.trim(),seq,txt:r.txt});
+      for(let i=0;i+1<seq.length;i++){const A=seq[i],B=seq[i+1],k=r.c+[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");
+        if(!segs.has(k))segs.set(k,{A,B,c:r.c,ids:[],dep:0,arr:0});const S=segs.get(k);S.ids.push(id);dep?S.dep++:S.arr++}})});
+  segs.forEach(S=>{const col=S.c==="H"?"#a21caf":"#2563eb",G=S.c==="H"?vfrLayer:vfrALayer;
+    const pl=L.polyline([[S.A[2],S.A[3]],[S.B[2],S.B[3]]],{color:col,weight:3,opacity:.85,dashArray:S.dep?null:"7 6",className:"vfr-rt"});
+    pl._vfrIds=S.ids;pl.bindTooltip(`<b>${esc(S.A[0])} — ${esc(S.B[0])}</b><br><span class="hint">แตะเพื่อเลือกเส้นทาง (${S.ids.length})</span>`,{sticky:true});
+    pl.on("click",e=>{L.DomEvent.stop(e);const ids=[...new Set(S.ids)];if(ids.length===1)return vfrHi(ids[0]);
+      L.popup({maxWidth:300}).setLatLng(e.latlng).setContent(`<b>เลือกเส้นทาง VFR</b><div class="vfr-pick">${ids.map(i=>`<button type="button" data-vfrhi="${i}">${VFR_RT[i].dep?"↗":"↘"} ${esc(VFR_RT[i].lab)}<small>${VFR_RT[i].seq.map(x=>esc(x[0])).join(" → ")}</small></button>`).join("")}</div>`).openOn(map)});
+    G.addLayer(pl)});
   pts.forEach(({p,ics})=>{const nm=vfrShort(p);
-    const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt"><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
+    const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt" data-k="${esc(norm8(nm))}"><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
     m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}${p.ocr?'<br><span class="hint">⚠ อ่านจาก chart สแกนด้วย OCR · ตรวจไขว้กับ radial/DME แล้ว — ยืนยันกับ chart ก่อนใช้</span>':""}
       <br><span class="mono">${vfrDms(p.lat,"NS")}  ${vfrDms(p.lon,"EW")}</span><div class="btns" style="margin-top:6px"><button type="button" class="vfr-add" data-n="${esc(nm)}" data-lat="${p.lat}" data-lon="${p.lon}">＋ เพิ่มเป็นจุดเส้นทาง</button></div>`);
-    vfrLayer.addLayer(m)})}
+    vfrLayer.addLayer(m)});
+  vfrLayer.addLayer(vfrHiLayer);VFR_HI=null;setTimeout(vfrDeclutter,50)}
+function norm8(n){return String(n).toUpperCase().replace(/[^A-Z0-9]/g,"")}
+function vfrHi(id){vfrHiLayer.clearLayers();VFR_HI=id==null?null:VFR_RT[id];map.closePopup();const box=map.getContainer();box.classList.toggle("vfr-dim",!!VFR_HI);
+  document.querySelectorAll(".vfrpt.hi").forEach(x=>x.classList.remove("hi"));if(!VFR_HI){setTimeout(vfrDeclutter,30);return}
+  const R=VFR_HI,col=R.c==="H"?"#a21caf":"#2563eb",ll=R.seq.map(e=>[e[2],e[3]]);
+  L.polyline(ll,{color:"#fff",weight:9,opacity:.9,interactive:false}).addTo(vfrHiLayer);L.polyline(ll,{color:col,weight:5,opacity:1,interactive:false}).addTo(vfrHiLayer);
+  for(let i=0;i+1<ll.length;i++){const a=ll[i],b=ll[i+1],brg=trueCourse(a,b);
+    L.marker([(a[0]+b[0])/2,(a[1]+b[1])/2],{interactive:false,icon:L.divIcon({className:"",html:`<div class="vfr-arw" style="transform:rotate(${brg}deg);--c:${col}">▲</div>`,iconSize:[18,18],iconAnchor:[9,9]})}).addTo(vfrHiLayer)}
+  R.seq.forEach((e,i)=>{if(e[1])L.marker([e[2],e[3]],{interactive:false,icon:L.divIcon({className:"",html:`<span class="vfr-alt">${i+1}. ${esc(e[0])} · ALT ${e[1]}</span>`,iconSize:null,iconAnchor:[-10,22]})}).addTo(vfrHiLayer);
+    document.querySelectorAll(`.vfrpt[data-k="${norm8(e[0])}"]`).forEach(x=>x.classList.add("hi"))});
+  const ctl=L.marker(ll[0],{icon:L.divIcon({className:"",html:`<button type="button" class="vfr-hix" title="เลิกเน้น">✕ ${esc(R.lab)}</button>`,iconSize:null,iconAnchor:[0,48]})}).addTo(vfrHiLayer);
+  ctl.on("click",()=>vfrHi(null));setTimeout(vfrDeclutter,30)}
+/* ซ่อนชื่อจุดที่ทับกัน (จุดในเส้นทางที่เน้นได้สิทธิ์ก่อน) */
+function vfrDeclutter(){const sp=[...document.querySelectorAll(".leaflet-marker-pane .vfrpt>span")];if(!sp.length)return;sp.forEach(x=>x.classList.remove("lh"));
+  sp.sort((a,b)=>b.parentNode.classList.contains("hi")-a.parentNode.classList.contains("hi"));const kept=[];
+  sp.forEach(x=>{const r=x.getBoundingClientRect();if(!r.width)return;if(kept.some(k=>r.left<k.right+2&&r.right>k.left-2&&r.top<k.bottom&&r.bottom>k.top)){x.classList.add("lh");return}kept.push(r)})}
+map.on("zoomend",()=>setTimeout(vfrDeclutter,60));
+/* จุดเส้นทางเล็กลงเมื่อซูมออก — ขาสั้น ๆ (เช่น 9 → 10 → 4) จะไม่ถูกวงกลมเลขบังจนมองไม่เห็นเส้น */
+function wpZoomScale(){const z=map.getZoom();map.getContainer().style.setProperty("--wpz",z>=11?1:z>=10?.85:z>=9?.7:.58)}map.on("zoomend",wpZoomScale);wpZoomScale();map.on("click",()=>{if(VFR_HI)vfrHi(null)});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-vfrhi]");if(b)vfrHi(+b.dataset.vfrhi)});
 map.on("popupopen",e=>{const b=e.popup.getElement().querySelector(".vfr-add");if(!b)return;b.onclick=()=>{const w={name:b.dataset.n.slice(0,20),lat:+b.dataset.lat,lon:+b.dataset.lon,vor:""};
   const at=Math.max(1,state.wps.length-1);if(state.wps.length<2){state.wps.push(w);if(state.wps.length>1)state.legs.push(blankLeg())}else{state.wps.splice(at,0,w);state.legs.splice(at-1,0,blankLeg())}markEdited();render();map.closePopup();toast("เพิ่ม "+w.name)}});
 map.on("zoomend",()=>map.getContainer().classList.toggle("vfr-nolbl",map.getZoom()<9));map.getContainer().classList.toggle("vfr-nolbl",map.getZoom()<9);
@@ -4530,7 +4566,7 @@ function drawCtr(){ctrLayer.clearLayers();Object.entries((EAIP&&EAIP.airports)||
    .bindTooltip(`${esc(sp.name)}${sp.cls?" · Class "+esc(sp.cls):""}${sp.vert?"<br>"+esc(sp.vert):""}`,{sticky:true}).addTo(ctrLayer)})}
 drawCtr();
 /* ENR 2.1 — Control zone / TMA / CTA ทั้งประเทศ (แบบที่ SkyVector วาด): CTR สีม่วงแดง · TMA/CTA สีน้ำเงิน */
-const as21Layer=L.layerGroup().addTo(map);
+const as21Layer=L.layerGroup();map.removeLayer(ctrLayer);const ctrAll=L.layerGroup([ctrLayer,as21Layer]).addTo(map);
 function drawAs21(){as21Layer.clearLayers();((EAIP&&EAIP.airspace21)||[]).slice().sort((a,b)=>(a.kind==="CTR")-(b.kind==="CTR")).forEach(a=>{if(!a.poly||a.poly.length<4)return;const ctr=a.kind==="CTR",c=ctr?"#c026d3":"#1d4ed8";
   const lim=[a.upper,a.lower].filter(Boolean).join(" / ");
   L.polygon(a.poly,{color:c,weight:ctr?2.2:1.8,opacity:.9,dashArray:a.approx?"4 4":ctr?null:"10 6",fillColor:c,fillOpacity:ctr?.05:.025,interactive:true})
@@ -4543,44 +4579,46 @@ const VIS=[
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
  {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
- {k:"ctr",t:"ATZ / CTR สนาม (AD 2.17)",g:"สนามบิน",L:()=>ctrLayer},
- {k:"as21",t:"CTR / TMA / CTA (ENR 2.1)",g:"สนามบิน",L:()=>as21Layer},
- {k:"rp",t:"จุดรายงาน (eAIP)",g:"สนามบิน",L:()=>rpLayer},
- {k:"vfr",t:"◆ จุดรายงาน VFR + เส้นทาง ฮ. (AD 2.24)",g:"สนามบิน",L:()=>vfrLayer},
- {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก (AD 2.24)",g:"สนามบิน",L:()=>vfrALayer,off:true},
+ {k:"ctr",t:"ห้วงอากาศควบคุม (ATZ · CTR · TMA)",g:"สนามบิน",L:()=>ctrAll},
+ {k:"vfr",t:"◆ จุดรายงาน + เส้นทาง VFR ฮ.",g:"สนามบิน",L:()=>vfrLayer,m:"V"},
+ {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก",g:"สนามบิน",L:()=>vfrALayer,off:true,m:"V"},
  {k:"P",t:"Prohibited",g:"พื้นที่",L:()=>areaLayers.P,c:"#d1242f"},
  {k:"R",t:"Restricted",g:"พื้นที่",L:()=>areaLayers.R,c:"#e07a00"},
  {k:"D",t:"Danger",g:"พื้นที่",L:()=>areaLayers.D,c:"#2f6fd6"},
  {k:"nt",t:"NOTAM",g:"พื้นที่",L:()=>ntLayer},
- {k:"enr",t:"Airway + VOR/NDB",g:"เดินอากาศ",L:()=>enrLayer},
- {k:"ifr",t:"จุดรายงาน IFR / Significant points",g:"เดินอากาศ",css:"hide-ifr"},
+ {k:"enr",t:"Airway + VOR/NDB",g:"เดินอากาศ",L:()=>enrLayer,m:"I"},
+ {k:"ifr",t:"จุดรายงาน IFR / Significant points",g:"เดินอากาศ",css:"hide-ifr",m:"I"},
  {k:"db",t:"Waypoint หน่วย (No.)",g:"เดินอากาศ",L:()=>dbLayer},
  {k:"pwr",t:"🗼⚡ สายไฟแรงสูง (OSM)",g:"สิ่งกีดขวาง",L:()=>pwrLayer,off:true},
  {k:"lbl",t:"ชื่อสถานที่",g:"พื้นหลัง",L:()=>labels}];
 const VIS_PRESET={
- "ทั้งหมด":"route hbox rem ap ctr as21 rp vfr P R D nt ifr",
+ "ทั้งหมด":"route hbox rem ap ctr vfr P R D nt enr ifr",
  "เฉพาะเส้นทาง":"route hbox rem",
  "เฉพาะ Danger":"route D",
  "P / R / D":"route P R D",
- "เฉพาะ CTR":"route ap ctr as21",
+ "เฉพาะ CTR":"route ap ctr",
  "Enroute":"route ap enr ifr",
  "ซ่อนทั้งหมด":""};
 let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
 function visOn(k){const v=VIS.find(x=>x.k===k);if(v.css)return!document.body.classList.contains(v.css);return map.hasLayer(v.L())}
-function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;if(k==="ifr"&&typeof drawIfr==="function")setTimeout(drawIfr,0);
+function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;if(k==="vfr"&&typeof rpLayer!=="undefined"){if(on)rpLayer.addTo(map);else map.removeLayer(rpLayer)}if(k==="ifr"&&typeof drawIfr==="function")setTimeout(drawIfr,0);
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
 function dhQSync(){const on=visOn("hbox");const kd=$("#kbDog");if(kd&&kd.checked!==on){kd.checked=on;if(window._pvRemap&&!window._pvBusy)window._pvRemap()}document.querySelectorAll(".dhQ").forEach(b=>{b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
-function visSync(){dhQSync();document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>c.checked=visOn(c.dataset.vis));const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
-function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>VIS.find(v=>v.k===k)&&visOn(k))}
-function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
+function visSync(){dhQSync();document.querySelectorAll("#visPanel input[data-vis]").forEach(c=>{c.checked=visOn(c.dataset.vis);const v=VIS.find(x=>x.k===c.dataset.vis),lb=c.closest("label");if(lb)lb.hidden=!visMode(v)});
+  document.querySelectorAll("#visPanel .vis-g[data-g]").forEach(g=>g.hidden=![...g.querySelectorAll("label")].some(l=>!l.hidden));
+  const mh=document.querySelector("#visPanel .vis-mode");if(mh)mh.innerHTML=FLMODE==="I"?"โหมด <b>IFR</b> — แสดงเฉพาะชั้นสำหรับ IFR":"โหมด <b>VFR</b> — แสดงเฉพาะชั้นสำหรับ VFR";const a=document.querySelector('#visPanel [data-pre="ทั้งหมด"]');if(a){const o=visAllOn();a.classList.toggle("on",o);a.textContent=o?"ซ่อนทั้งหมด":"แสดงทั้งหมด"}}
+const visMode=v=>!v.m||v.m===(typeof FLMODE==="undefined"?"V":FLMODE);
+function visAllOn(){return VIS_PRESET["ทั้งหมด"].split(" ").every(k=>{const v=VIS.find(x=>x.k===k);return v&&(!visMode(v)||visOn(k))})}
+function visPreset(name){if(name==="ทั้งหมด"&&visAllOn())name="ซ่อนทั้งหมด";const on=new Set(VIS_PRESET[name].split(" ").filter(Boolean));VIS.forEach(v=>{if(v.g!=="พื้นหลัง")visSet(v.k,on.has(v.k)&&visMode(v),true)});visSave();if(on.has("enr")||on.has("sp")){drawEnr();drawSig()}toast("แสดง: "+name)}
 const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.DomUtil.create("div","leaflet-bar vis-ctl");
   const groups=[...new Set(VIS.map(v=>v.g))];
   d.innerHTML=`<a href="#" class="btn3d" id="visBtn" title="เลือกชั้นข้อมูลที่จะแสดง">◧ ชั้นข้อมูล</a><div id="visPanel" class="vis-panel" hidden>
     <div class="vis-g"><b>แผนที่ฐาน</b><div class="vis-base">${BASES.map(b=>`<button type="button" data-base="${b[0]}" class="${baseCur()===b[0]?"on":""}">${b[1]}</button>`).join("")}</div></div>
     <div class="vis-pre">${Object.keys(VIS_PRESET).filter(n=>n!=="ซ่อนทั้งหมด").map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
-    ${groups.map(g=>`<div class="vis-g"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
+    <div class="vis-mode hint"></div>
+    ${groups.map(g=>`<div class="vis-g" data-g="${g}"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
     if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
@@ -4590,6 +4628,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
 new CtlVis().addTo(map);
 map.on("overlayadd overlayremove",()=>{visSave()});
 if(visState)VIS.forEach(v=>{if(v.k in visState)visSet(v.k,visState[v.k],true)});
+VIS.forEach(v=>{if(!visMode(v)&&visOn(v.k))visSet(v.k,false,true)});if(!visOn("vfr"))map.removeLayer(rpLayer);
 
 /* ---------- สำรอง / กู้คืนข้อมูลทั้งหมดในเครื่อง (ยกเว้น eAIP ที่โหลดใหม่ได้เอง) ---------- */
 const BK_SKIP=new Set(["vfr_eaip","vfr_lastbackup"]);
@@ -4939,6 +4978,9 @@ function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon
 state=store.get("vfr_current");state=state&&typeof state==="object"?planClean(state):JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
 if(state.remStep==null)state.remStep="10";
+/* ไม่มีช่อง Aircraft / วันที่ ในแผนแล้ว (ไปกรอกใน Flight Plan PDF) · ใช้วันนี้เสมอสำหรับพยากรณ์/NOTAM */
+state.date="";state.acft="";
+if(!(num(state.burn,0)>=5)){state.burn=burnFromL(BURN_LPH0)}
 try{npRenderList();npRenderMain()}catch(e){}
 fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
 /* โหลด eaip_data.json ที่ GitHub อัปเดตให้อัตโนมัติ (อยู่ข้างไฟล์แอป) */
