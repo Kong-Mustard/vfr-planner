@@ -693,7 +693,10 @@ body.flymode .gh-dto{top:calc(var(--fmh,112px) + 10px);transform:translateX(-50%
 .fm-side button{width:100%;min-height:66px;border-radius:16px;border:0;background:rgba(15,23,42,.9);color:#fff;font-size:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 3px 10px rgba(0,0,0,.35);padding:4px 2px}
 .fm-side button small{font-size:11.5px;font-weight:700;color:#e2e8f0;line-height:1.1;text-align:center}.fm-side button.on{background:#2563eb}
 .fm-row{display:flex;gap:6px}.fm-row button{min-height:54px;font-size:22px}
-.fm-side .fm-exit{margin-top:auto;background:#b91c1c;position:relative;overflow:hidden;font-size:22px}.fm-exit i{position:absolute;left:0;bottom:0;height:5px;width:0;background:#fff}.fm-exit.hold i{width:100%;transition:width .4s linear}
+body.flymode .vis-ctl>#visBtn{display:none}.vis-ctl.fm-vis{position:absolute;top:0;right:0;z-index:1300;border:0;box-shadow:none;background:none}
+body.flymode #visPanel{position:fixed;top:calc(var(--fmh,112px) + 10px);right:100px;left:auto;max-height:calc(100% - var(--fmh,112px) - 24px)!important;width:min(340px,calc(100vw - 120px));overflow:auto;z-index:1300;font-size:15px}
+body.flymode #visPanel label{padding:7px 4px}
+.fm-side .fm-exit{margin-top:auto;background:#b91c1c;position:relative;overflow:hidden;font-size:22px}.fm-exit i{position:absolute;left:0;bottom:0;height:5px;width:0;background:#fff}.fm-exit.hold i{width:100%;transition:width .3s linear}
 body.flymode #gpsAlert{top:calc(var(--fmh,112px) + 10px);width:min(560px,calc(100% - 120px));transform:translateX(calc(-50% - 45px))}
 .fm-pop{position:absolute;left:10px;top:calc(var(--fmh,112px) + 8px);bottom:10px;z-index:1300;width:min(420px,calc(100% - 120px));overflow-y:auto;background:#0f172a;color:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.45);padding:10px 12px;font-size:16px}
 .fp-top{display:flex;align-items:center;justify-content:space-between;font-size:19px;margin-bottom:6px}.fp-x{min-width:48px;min-height:44px;border-radius:12px;background:#334155;color:#fff;border:0;font-size:18px}
@@ -1979,7 +1982,7 @@ body.cl-on{overflow:hidden}
     <button id="v3dFly" class="primary">▶ บินตามเส้นทาง</button>
     <label>ความเร็ว<select id="v3dSpd"><option value="5">×5</option><option value="10" selected>×10</option><option value="30">×30</option><option value="60">×60</option></select></label>
     <button id="v3dTop">มุมมองภาพรวม</button>
-    <span class="v3d-ly" id="v3dLy"><button type="button" data-l3="prd" class="on">P/R/D</button><button type="button" data-l3="nt" class="on">NOTAM</button><button type="button" data-l3="pwr">🗼⚡ สายไฟ</button><button type="button" data-l3="rad">🌧 เรดาร์ฝน</button><button type="button" data-l3="wind">💨 ลม</button></span>
+    <span class="v3d-ly" id="v3dLy"><button type="button" data-l3="prd" class="on">P/R/D</button><button type="button" data-l3="nt" class="on">NOTAM</button><button type="button" data-l3="pwr">🗼⚡ สายไฟ</button><button type="button" data-l3="rad">🌧 เรดาร์ฝน</button><button type="button" data-l3="wind">💨 ลม</button><button type="button" data-l3="as">🟪 CTR/TMA 3D</button><button type="button" data-l3="vfr">◆ VFR</button></span>
     <button id="v3dClose">ปิด ✕</button>
   </div>
   <div id="v3dMap"></div>
@@ -2866,12 +2869,24 @@ async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
   {const m0=ml,tryL=()=>{if(ml===m0&&m0.isStyleLoaded()&&!m0.getSource("prd"))v3dLayers().catch(()=>{})};m0.once("idle",tryL);let k=0;const iv=setInterval(()=>{tryL();if(++k>40||ml!==m0||m0.getSource("prd"))clearInterval(iv)},500)}ml.on("load",()=>{v3dLayers().catch(()=>{});try{ml.setTerrain({source:"dem",exaggeration:V3D_EX})}catch(e){}ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
   ml._box=b}
 /* ---------- ชั้นข้อมูลในภาพ 3D: P/R/D · NOTAM · สายไฟแรงสูง · เรดาร์ฝน ---------- */
-const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,wind:false,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
+const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,wind:false,as:true,vfr:true,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
 function l3Geo(group,props){const F=[];const add=(l,pr)=>{if(l instanceof L.LayerGroup&&!(l instanceof L.FeatureGroup&&l.getLayers===undefined)){l.eachLayer(x=>add(x,pr));return}
     if(l instanceof L.Circle){const c=l.getLatLng(),r=l.getRadius(),ring=[];for(let k=0;k<=64;k++){const a=k/64*2*Math.PI,dy=r*Math.cos(a)/111320,dx=r*Math.sin(a)/(111320*Math.cos(c.lat*D2R));ring.push([c.lng+dx,c.lat+dy])}
       F.push({type:"Feature",properties:{...pr(l)},geometry:{type:"Polygon",coordinates:[ring]}});return}
     if(l instanceof L.Polyline){try{const g=l.toGeoJSON();g.properties={...pr(l)};F.push(g)}catch(e){}}};
   if(group)group.eachLayer(l=>add(l,props));return{type:"FeatureCollection",features:F}}
+/* ความสูงห้วงอากาศ → ฟุต: "FL 145"→14500 · "ALT 11000 ft"→11000 · GND/SFC/AGL(ล้วน)→0 */
+function asFt(t){t=String(t||"").toUpperCase();if(!t.trim()||/^\s*(GND|SFC|AGL|MSL)\s*$/.test(t))return 0;const f=/FL\s*(\d{2,3})/.exec(t);if(f)return +f[1]*100;const n=/(\d[\d,]*)\s*FT/.exec(t)||/(\d[\d,]*)/.exec(t);return n?+n[1].replace(/,/g,""):0}
+function v3dAsGeo(){const F=[],P=[];const add=(poly,name,up,lo,kind,cls)=>{if(!poly||poly.length<4)return;const ring=poly.map(p=>[p[1],p[0]]);if(ring[0][0]!==ring.at(-1)[0]||ring[0][1]!==ring.at(-1)[1])ring.push(ring[0]);
+    const top=asFt(up),base=asFt(lo);if(!(top>base))return;const ctr=kind==="CTR"||kind==="ATZ";
+    F.push({type:"Feature",properties:{c:ctr?"#d946ef":"#3b82f6",h:top*.3048,b:base*.3048,o:ctr?1:0},geometry:{type:"Polygon",coordinates:[ring]}});
+    let x=0,y=0;ring.forEach(q=>{x+=q[0];y+=q[1]});P.push({type:"Feature",properties:{t:`${name}\n${top.toLocaleString("en-US")} / ${base?base.toLocaleString("en-US")+" ft":"GND"}${cls?" · "+cls:""}`,c:ctr?"#f0abfc":"#93c5fd"},geometry:{type:"Point",coordinates:[x/ring.length,y/ring.length]}})};
+  ((EAIP&&EAIP.airspace21)||[]).forEach(a=>add(a.poly,a.name.replace(/ Control Zone$/,"").replace(/ Terminal Control Area$/," TMA").replace(/ Control Area$/," CTA")+(a.kind==="CTR"?" CTR":""),a.upper,a.lower,a.kind,a.cls));
+  Object.values(AP).forEach(a=>{const s=a.eaip&&a.eaip.airspace;if(!s||!s.vert)return;const[u,l]=String(s.vert).split("/");add(s.poly,s.name,u,l,/ATZ/.test(s.name)?"ATZ":"CTR",s.cls)});
+  return{F:{type:"FeatureCollection",features:F},P:{type:"FeatureCollection",features:P}}}
+function v3dVfrGeo(){const F=[];Object.values(AP).forEach(a=>{const v=a.eaip&&a.eaip.vfr;if(!v)return;
+  (v.rt||[]).forEach(r=>{const c=r.seq.filter(e=>e[2]!=null).map(e=>[e[3],e[2]]);if(c.length>1)F.push({type:"Feature",properties:{c:r.c==="A"?"#60a5fa":"#e879f9",d:/^DEP/.test(r.sec)?1:0},geometry:{type:"LineString",coordinates:c}})});
+  (v.pts||[]).forEach(p=>F.push({type:"Feature",properties:{n:vfrShort(p)},geometry:{type:"Point",coordinates:[p.lon,p.lat]}}))});return{type:"FeatureCollection",features:F}}
 async function v3dLayers(){if(!ml)return;const col=l=>(l.options&&l.options.color)||"#f59e0b";
   const set=(id,data,layers)=>{if(ml.getSource(id))ml.getSource(id).setData(data);else{ml.addSource(id,{type:"geojson",data});layers.forEach(x=>ml.addLayer(x,"rl"))}};
   set("prd",{type:"FeatureCollection",features:["P","R","D"].flatMap(k=>l3Geo(areaLayers[k],l=>({c:col(l)})).features)},[
@@ -2887,8 +2902,16 @@ async function v3dLayers(){if(!ml)return;const col=l=>(l.options&&l.options.colo
   if(V3L.rad&&!ml.getSource("rad")){try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json(),f=(d.radar.past||[]).at(-1);
     if(f&&ml){ml.addSource("rad",{type:"raster",tiles:[`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`],tileSize:256,maxzoom:7,attribution:"Radar © RainViewer"});ml.addLayer({id:"rad",type:"raster",source:"rad",paint:{"raster-opacity":.6}},"rl");
       const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});toast("เรดาร์ฝน RainViewer เวลา "+t+" น.")}}catch(e){toast("โหลดเรดาร์ฝนไม่ได้ (ต้องต่อเน็ต)")}}
+  {const g=v3dAsGeo();set("as",g.F,[
+    {id:"as-x",type:"fill-extrusion",source:"as",paint:{"fill-extrusion-color":["get","c"],"fill-extrusion-height":["get","h"],"fill-extrusion-base":["get","b"],"fill-extrusion-opacity":.22}},
+    {id:"as-l",type:"line",source:"as",paint:{"line-color":["get","c"],"line-width":2}}]);
+   set("asp",g.P,[{id:"as-t",type:"symbol",source:"asp",minzoom:7,layout:{"text-field":["get","t"],"text-font":["Open Sans Semibold"],"text-size":12,"text-allow-overlap":false},paint:{"text-color":["get","c"],"text-halo-color":"#000","text-halo-width":1.5}}])}
+  set("v3vfr",v3dVfrGeo(),[
+    {id:"vfr-l",type:"line",source:"v3vfr",filter:["==","$type","LineString"],paint:{"line-color":["get","c"],"line-width":2.5,"line-dasharray":[2,1.5]}},
+    {id:"vfr-p",type:"circle",source:"v3vfr",filter:["==","$type","Point"],paint:{"circle-radius":5,"circle-color":"#ffd400","circle-stroke-color":"#111","circle-stroke-width":1.5}},
+    {id:"vfr-t",type:"symbol",source:"v3vfr",filter:["==","$type","Point"],minzoom:9,layout:{"text-field":["get","n"],"text-font":["Open Sans Semibold"],"text-size":12,"text-offset":[0,1.1],"text-allow-overlap":false},paint:{"text-color":"#fff","text-halo-color":"#4a044e","text-halo-width":1.5}}]);
   const vis=(ids,on)=>ids.forEach(i=>{if(ml.getLayer(i))ml.setLayoutProperty(i,"visibility",on?"visible":"none")});
-  v3dWind();vis(["prd-f","prd-l"],V3L.prd);vis(["nt-f","nt-l"],V3L.nt);vis(["pwr-l","pwr-t"],V3L.pwr);vis(["rad"],V3L.rad);
+  v3dWind();vis(["prd-f","prd-l"],V3L.prd);vis(["nt-f","nt-l"],V3L.nt);vis(["pwr-l","pwr-t"],V3L.pwr);vis(["rad"],V3L.rad);vis(["as-x","as-l","as-t"],V3L.as);vis(["vfr-l","vfr-p","vfr-t"],V3L.vfr);
   document.querySelectorAll("#v3dLy [data-l3]").forEach(b=>b.classList.toggle("on",!!V3L[b.dataset.l3]))}
 $("#v3dLy").addEventListener("click",e=>{const b=e.target.closest("[data-l3]");if(!b)return;const k=b.dataset.l3;V3L[k]=!V3L[k];try{localStorage.setItem("vfr_v3l",JSON.stringify(V3L))}catch(er){}
   if(k==="pwr"&&V3L.pwr)pwrWarn();if(ml&&ml.getSource("prd"))v3dLayers();else document.querySelectorAll("#v3dLy [data-l3]").forEach(x=>x.classList.toggle("on",!!V3L[x.dataset.l3]))});
@@ -4623,7 +4646,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
     if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
-  document.addEventListener("pointerdown",e=>{const p=d.querySelector("#visPanel");if(!p.hidden&&!e.target.closest(".vis-ctl"))p.hidden=true},true);
+  document.addEventListener("pointerdown",e=>{const p=d.querySelector("#visPanel");if(!p.hidden&&!e.target.closest('.vis-ctl,[data-fm="vis"]')){p.hidden=true;const fb=document.querySelector('[data-fm="vis"]');if(fb)fb.classList.remove("on")}},true);
   d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&c.dataset.vis==="enr")drawEnr();if(c.dataset.vis==="ifr")drawIfr();if(c.dataset.vis==="pwr"&&c.checked){pwrWarn();pwrDraw()}}});
   d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
@@ -5363,7 +5386,7 @@ function fmEnter(sim){if(FM)return;const box=map.getContainer();mapFull(true);do
   const side=document.createElement("div");side.className="fm-side";
   side.innerHTML=`<button type="button" data-fm="freq">📻<small>ความถี่</small></button><button type="button" data-fm="cl">📕<small>Checklist</small></button>
     <button type="button" data-fm="fuel">⛽<small>น้ำมัน</small></button><button type="button" data-fm="dto">➡️<small>Direct-to</small></button>
-    <button type="button" data-fm="ink">✏️<small>วาด</small></button><button type="button" data-fm="follow" class="on">🎯<small>ตาม</small></button>
+    <button type="button" data-fm="ink">✏️<small>วาด</small></button><button type="button" data-fm="follow" class="on">🎯<small>ตาม</small></button><button type="button" data-fm="vis">◧<small>ชั้นข้อมูล</small></button>
     <div class="fm-row"><button type="button" data-fm="prev" aria-label="ขาก่อน">◀</button><button type="button" data-fm="next" aria-label="ขาถัดไป">▶</button></div>
     <div class="fm-row"><button type="button" data-fm="mute" aria-label="เสียง">${GPS.mute?"🔕":"🔔"}</button><button type="button" data-fm="info" aria-label="ข้อจำกัด">ⓘ</button></div>
     <button type="button" data-fm="exit" class="fm-exit">✕<small>กดค้างเพื่อออก</small><i></i></button>`;
@@ -5371,18 +5394,19 @@ function fmEnter(sim){if(FM)return;const box=map.getContainer();mapFull(true);do
   FM={top,side,lock:null};
   try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(l=>{if(FM)FM.lock=l}).catch(()=>{})}catch(e){}
   side.addEventListener("click",fmClick);top.addEventListener("click",e=>{if(e.target.closest('[data-fmt="restore"]'))dtoRestore()});
-  /* ออก: กดค้าง 0.8 วินาที */
-  const ex=side.querySelector(".fm-exit");let t=null;const go=e=>{e.preventDefault();ex.classList.add("hold");t=setTimeout(fmExit,400)},stop=()=>{ex.classList.remove("hold");clearTimeout(t)};
+  /* ออก: กดค้าง 0.3 วินาที */
+  const ex=side.querySelector(".fm-exit");let t=null;const go=e=>{e.preventDefault();ex.classList.add("hold");t=setTimeout(fmExit,300)},stop=()=>{ex.classList.remove("hold");clearTimeout(t)};
   ex.addEventListener("pointerdown",go);["pointerup","pointerleave","pointercancel"].forEach(v=>ex.addEventListener(v,stop));
   if(!GPS.on)gpsStart(!!sim);else{GPS.follow=true;if(GPS.last)map.panTo([GPS.last.lat,GPS.last.lon])}
   setTimeout(()=>map.invalidateSize(),60);fmUpdate()}
 /* โหมดบิน = โหมด GPS (ปุ่มเดียว): เข้า = เปิด GPS · ออก = ปิด GPS */
-function fmExit(fromStop){if(FM){document.querySelectorAll(".fm-pop,.gh-dto").forEach(x=>x.remove());FM.top.remove();FM.side.remove();try{FM.lock&&FM.lock.release()}catch(e){}FM=null;
+function fmExit(fromStop){if(FM){const vp=$("#visPanel");if(vp)vp.hidden=true;if(FM.visHome){const vc=document.querySelector(".vis-ctl");if(vc){vc.classList.remove("fm-vis");FM.visHome[0].insertBefore(vc,FM.visHome[1])}}document.querySelectorAll(".fm-pop,.gh-dto").forEach(x=>x.remove());FM.top.remove();FM.side.remove();try{FM.lock&&FM.lock.release()}catch(e){}FM=null;
   document.body.classList.remove("flymode");mapFull(false);setTimeout(()=>map.invalidateSize(),60)}
   if(!fromStop&&GPS.on){gpsStop();toast("ปิด GPS · ออกจากโหมดบิน")}}
 function fmClick(e){const b=e.target.closest("[data-fm]");if(!b)return;const k=b.dataset.fm,W=state.wps;
   if(k==="freq")return fmFreq();if(k==="cl"){let id;try{id=localStorage.getItem("vfr_cl_last")}catch(x){}return clOpen(id||"N-3")}
   if(k==="fuel"){if(!GPS.on)return toast("เปิดโหมดบินก่อน");const f=document.querySelector('#gpsAlert [data-ga="fuel"],#gpsAlert [data-ga="fuel2"]');if(f){f.remove();GPS.al&&(GPS.al.fuelAt=Date.now()+30*60000);b.classList.remove("on");return}GPS.al=GPS.al||{};GPS.al.fuelAt=0;gpsAlerts();b.classList.add("on");return}
+  if(k==="vis"){const vc=document.querySelector(".vis-ctl");if(vc&&!FM.visHome){FM.visHome=[vc.parentNode,vc.nextSibling];map.getContainer().appendChild(vc);vc.classList.add("fm-vis")}const p=$("#visPanel");p.hidden=!p.hidden;b.classList.toggle("on",!p.hidden);if(!p.hidden){visSync();p.style.maxHeight=""}return}
   if(k==="dto")return gpsDtoMenu();if(k==="ink")return mapInkToggle();
   if(k==="follow"){GPS.follow=!GPS.follow;b.classList.toggle("on",GPS.follow);if(GPS.follow&&GPS.last)map.panTo([GPS.last.lat,GPS.last.lon]);return}
   if(k==="prev"||k==="next"){if(W.length<2)return;GPS.dto=null;GPS.leg=Math.max(0,Math.min(W.length-2,GPS.leg+(k==="next"?1:-1)));gpsHud();toast(`ขา ${GPS.leg+1}/${W.length-1} → ${W[GPS.leg+1].name}`);return}
