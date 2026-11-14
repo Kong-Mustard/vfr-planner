@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-14T11:04Z",
+"fetched": "2026-11-14T11:59Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -324,6 +324,15 @@
 "plain": " ",
 "start": "11/23/2026 0100",
 "end": "12/07/2026 0100",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBS",
+"id": "A4569/26",
+"icao": "A4569/26 NOTAMN\r\nQ) VTBB/QMXTT/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611180000 C) 2612012359\r\nE) TRIGGER NOTAM NON-AIRAC AIP SUP A41/26 WEF 18 NOV 2026. \r\n   THE ESTABLISHMENT OF THE EXTENSION OF TAXIWAY D AND ASSOCIATED\r\n   TAXIWAYS AT SUVARNABHUMI INTERNATIONAL AIRPORT (VTBS)",
+"plain": " ",
+"start": "11/18/2026 0000",
+"end": "12/01/2026 2359",
 "keyword": "INTERNATIONAL"
 },
 {
