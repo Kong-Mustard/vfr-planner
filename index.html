@@ -1323,6 +1323,7 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 @media (max-width:600px){.pos-r{flex-wrap:wrap}.pos-r>span{min-width:0;width:100%}.pos-big .pos-r>b{font-size:19px}}
 .bk-dlg{border:0;border-radius:16px;padding:18px 20px;max-width:440px;width:calc(100% - 32px);background:var(--panel);color:var(--ink);box-shadow:0 20px 60px #0006}
 .bk-dlg h3{margin:0 0 8px}.bk-dlg label{display:flex;flex-direction:column;gap:4px;margin:8px 0;font-weight:700}.bk-dlg input{padding:10px;border-radius:10px;font-size:16px}.bk-dlg .btns{margin-top:12px}
+.ppc-off{text-decoration:line-through;opacity:.45;filter:grayscale(1);cursor:not-allowed;pointer-events:none}
 .cr h3{margin:0 0 10px;font:800 18px var(--f-display)}
 .cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:var(--cc);color:#fff;border-color:var(--cc)}
 .cr-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -1638,7 +1639,7 @@ body.cl-on{overflow:hidden}
 <section id="tab-log" class="tabpanel" hidden>
  <div style="display:flex;flex-direction:column;gap:12px">
   <div class="card section">
-    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="nl-btns"><button id="kneePdf2" class="primary">Kneeboard PDF (A5 / A4)</button><button id="ppcBtn" class="primary ppc-btn" type="button" title="UH-60 Performance Planning Card — กรอกผลจาก IPAC">📊 UH-60 PPC</button></span></div>
+    <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="nl-btns"><button id="kneePdf2" class="primary">Kneeboard PDF (A5 / A4)</button><button id="ppcBtn" class="ppc-btn ppc-off" type="button" disabled aria-disabled="true" title="ปิดการใช้งานชั่วคราว">📊 UH-60 PPC</button></span></div>
     <div class="nl-head" id="nlHead"></div>
     <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
@@ -5122,7 +5123,7 @@ async function ppcPrevDraw(){const box=$("#ppcPrev");try{box.innerHTML=ppcSvg(pp
 async function ppcPreview(){const box=$("#ppcPrev"),btn=$("#ppcPrevBtn");box.hidden=!box.hidden;btn.textContent=box.hidden?"👁 ดูการ์ด":"✕ ปิดการ์ด";
   try{localStorage.setItem("vfr_ppc_prev",box.hidden?"0":"1")}catch(e){}if(!box.hidden){await ppcPrevDraw();box.scrollIntoView({block:"start",behavior:"smooth"})}}
 (function ppcInit(){const d=$("#ppcDlg");if(!d)return;
-  $("#ppcBtn").onclick=ppcOpen;$("#ppcClose").onclick=()=>d.close();$("#ppcPdfBtn").onclick=ppcPdf;$("#ppcPrevBtn").onclick=ppcPreview;
+  $("#ppcClose").onclick=()=>d.close();$("#ppcPdfBtn").onclick=ppcPdf;$("#ppcPrevBtn").onclick=ppcPreview;
   $("#ppcTabs").addEventListener("click",e=>{const b=e.target.closest("[data-pt]");if(!b)return;ppcTab=b.dataset.pt;ppcRender();ppcPrevRefresh()});
   d.addEventListener("input",e=>{const t=e.target;if(t.classList&&t.classList.contains("ppc-in"))ppcUpd(t)});
   d.addEventListener("click",e=>{const c=e.target.closest("[data-ppccopy]"),a=e.target.closest("[data-ppcauto]");
