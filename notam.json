@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-14T06:09Z",
+"fetched": "2026-11-14T07:30Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1224,6 +1224,15 @@
 "plain": " ",
 "start": "11/26/2026 0000",
 "end": "PERM",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSG",
+"id": "A4560/26",
+"icao": "A4560/26 NOTAMN\r\nQ) VTBB/QFATT/IV/BO/A/000/999/0806N09859E005\r\nA) VTSG B) 2612240000 C) 2701062359\r\nE) TRIGGER NOTAM-PERM AIRAC AIP AMDT 13/26 WEF 24 DEC 2026.\r\n   AD 2-VTSG-1 AD 2.2 AD GEOGRAPHICAL AND ADMINISTRATIVE DATA\r\n               AD 2.3 OPR HR\r\n               AD 2.8 APN, TWY AND CK LCA/PSN DATA\r\n               AD 2.9 SFC MOV GUIDANCE AND CTL SYSTEM AND MARKINGS \r\n               AD 2.10 AD OBST\r\n               AD 2.14 APCH AND RWY LGT\r\n               AD 2.15 OTHER LGT, SRY PWR SUPPLY\r\n               AD 2.20 LCA AD REGULATIONS\r\n               AD 2.24 CHARTS RELATED TO AN AD\r\n   AD 2-VTSG-2 ADC-ICAO\r\n               APDC-ICAO\r\n               APDC-ICAO (TABULAR DESCRIPTION)\r\n               AD GMC-ICAO\r\n   AD 2-VTSG-3 AOC-ICAO TYPE A-RWY 14/32\r\n   AD 2-VTSG-6 SID-ICAO RWY 14, RWY 32",
+"plain": " ",
+"start": "12/24/2026 0000",
+"end": "01/06/2027 2359",
 "keyword": "INTERNATIONAL"
 },
 {
