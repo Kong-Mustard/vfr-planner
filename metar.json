@@ -1,96 +1,96 @@
 {
-"fetched": "2026-11-14T19:44Z",
+"fetched": "2026-11-14T20:40Z",
 "source": "aviationweather.gov",
 "metar": {
-"VTSP": {
-"raw": "METAR VTSP 141930Z 00000KT 9999 BKN020 26/25 Q1011 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
-"cat": "MVFR",
-"wdir": 0,
-"wspd": 0,
-"visib": "6+",
-"temp": 26
-},
-"VTSS": {
-"raw": "METAR VTSS 141930Z VRB02KT 9999 FEW020 BKN100 26/25 Q1011 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
+"VTBD": {
+"raw": "METAR VTBD 142030Z 32003KT 290V350 9999 FEW020 26/24 Q1012 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
 "cat": "VFR",
-"wdir": "VRB",
-"wspd": 2,
+"wdir": 320,
+"wspd": 3,
 "visib": "6+",
 "temp": 26
 },
 "VTBU": {
-"raw": "METAR VTBU 141930Z 32002KT 7000 FEW020 SCT100 26/26 Q1012 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
+"raw": "METAR VTBU 142030Z 32002KT 7000 FEW020 SCT100 26/26 Q1011 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
 "cat": "MVFR",
 "wdir": 320,
 "wspd": 2,
 "visib": 4.35,
 "temp": 26
 },
-"VTBD": {
-"raw": "METAR VTBD 141930Z 35004KT 9999 FEW020 26/25 Q1012 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
+"VTSS": {
+"raw": "METAR VTSS 142030Z 00000KT 8000 FEW020 BKN100 26/25 Q1010 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
+"cat": "MVFR",
+"wdir": 0,
+"wspd": 0,
+"visib": 4.97,
+"temp": 26
+},
+"VTSP": {
+"raw": "METAR VTSP 142030Z 00000KT 9999 SCT020 26/25 Q1010 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
 "cat": "VFR",
-"wdir": 350,
-"wspd": 4,
+"wdir": 0,
+"wspd": 0,
 "visib": "6+",
 "temp": 26
 },
+"VTCC": {
+"raw": "METAR VTCC 142030Z 02002KT 9999 FEW035 20/19 Q1014 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
+"cat": "VFR",
+"wdir": 20,
+"wspd": 2,
+"visib": "6+",
+"temp": 20
+},
 "VTBS": {
-"raw": "METAR VTBS 141930Z 33004KT 9999 FEW020 27/25 Q1012 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
+"raw": "METAR VTBS 142030Z 33004KT 9999 FEW020 27/25 Q1012 NOSIG",
+"time": "2026-11-14T20:30:00.000Z",
 "cat": "VFR",
 "wdir": 330,
 "wspd": 4,
 "visib": "6+",
 "temp": 27
 },
-"VTCC": {
-"raw": "METAR VTCC 141930Z 01003KT 9999 FEW035 20/19 Q1015 NOSIG",
-"time": "2026-11-14T19:30:00.000Z",
-"cat": "VFR",
-"wdir": 10,
-"wspd": 3,
-"visib": "6+",
-"temp": 20
-},
 "VTUU": {
-"raw": "METAR VTUU 141900Z 00000KT CAVOK 25/25 Q1012 NOSIG",
-"time": "2026-11-14T19:00:00.000Z",
+"raw": "METAR VTUU 142000Z 00000KT CAVOK 24/24 Q1012 NOSIG",
+"time": "2026-11-14T20:00:00.000Z",
 "cat": "VFR",
 "wdir": 0,
 "wspd": 0,
-"visib": "6+",
-"temp": 25
-},
-"VTUK": {
-"raw": "METAR VTUK 141900Z 27002KT 9999 FEW030 24/22 Q1013 NOSIG",
-"time": "2026-11-14T19:00:00.000Z",
-"cat": "VFR",
-"wdir": 270,
-"wspd": 2,
 "visib": "6+",
 "temp": 24
 },
 "VTCT": {
-"raw": "METAR VTCT 141900Z 04001KT 8000 FEW002 SCT004 19/19 Q1015 NOSIG",
-"time": "2026-11-14T19:00:00.000Z",
-"cat": "MVFR",
-"wdir": 40,
+"raw": "METAR VTCT 142000Z VRB01KT 9999 FEW003 SCT040 19/19 Q1015 NOSIG",
+"time": "2026-11-14T20:00:00.000Z",
+"cat": "VFR",
+"wdir": "VRB",
 "wspd": 1,
-"visib": 4.97,
+"visib": "6+",
 "temp": 19
 },
 "VTSG": {
-"raw": "METAR VTSG 141900Z 00000KT 9000 FEW020 SCT100 25/24 Q1012 NOSIG",
-"time": "2026-11-14T19:00:00.000Z",
-"cat": "VFR",
+"raw": "METAR VTSG 142000Z 00000KT 8000 FEW020 SCT100 25/24 Q1011 NOSIG",
+"time": "2026-11-14T20:00:00.000Z",
+"cat": "MVFR",
 "wdir": 0,
 "wspd": 0,
-"visib": 5.59,
+"visib": 4.97,
 "temp": 25
+},
+"VTUK": {
+"raw": "METAR VTUK 142000Z 32003KT 9999 FEW030 24/22 Q1013 NOSIG",
+"time": "2026-11-14T20:00:00.000Z",
+"cat": "VFR",
+"wdir": 320,
+"wspd": 3,
+"visib": "6+",
+"temp": 24
 }
 },
 "taf": {
@@ -136,10 +136,6 @@
 },
 "VTPB": {
 "raw": "TAF VTPB 141700Z 1418/1518 36005KT 9999 SCT025",
-"issue": "2026-11-14T17:00:00.000Z"
-},
-"VTPH": {
-"raw": "TAF VTPH 141700Z 1418/1518 34005KT 9000 SCT030 TEMPO 1505/1512 VRB15G25KT -TSRA FEW016CB SCT018 BKN100",
 "issue": "2026-11-14T17:00:00.000Z"
 },
 "VTPM": {
@@ -232,6 +228,10 @@
 },
 "VTUW": {
 "raw": "TAF VTUW 141700Z 1418/1518 36005KT 9000 FEW030",
+"issue": "2026-11-14T17:00:00.000Z"
+},
+"VTPH": {
+"raw": "TAF VTPH 141700Z 1418/1518 34005KT 9000 SCT030 TEMPO 1505/1512 VRB15G25KT -TSRA FEW016CB SCT018 BKN100",
 "issue": "2026-11-14T17:00:00.000Z"
 }
 }
