@@ -3194,10 +3194,10 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();vfrHiLayer.cle
   Object.entries(AP).forEach(([ic,a])=>{const v=a.eaip&&a.eaip.vfr;if(!v)return;
     (v.pts||[]).forEach(p=>{const k=p.lat.toFixed(4)+","+p.lon.toFixed(4);if(!pts.has(k))pts.set(k,{p,ics:new Set()});pts.get(k).ics.add(ic)});
     (v.rt||[]).forEach(r=>{const seq=r.seq.filter(e=>e[2]!=null);if(seq.length<2)return;const id=VFR_RT.length,dep=/^DEP/.test(r.sec);
-      VFR_RT.push({id,ic,c:r.c,dep,lab:`${ic} ${r.c==="H"?"ฮ.":"บ."} ${vfrSecTh(r.sec)} ${r.dir||""}`.trim(),seq,txt:r.txt});
+      VFR_RT.push({id,ic,c:r.c,dep,lab:`${ic} ${r.c==="H"?"ฮ.":r.c==="A"?"บ.เล็ก":"VFR"} ${vfrSecTh(r.sec)} ${r.dir||""}`.trim(),seq,txt:r.txt});
       for(let i=0;i+1<seq.length;i++){const A=seq[i],B=seq[i+1],k=r.c+[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");
         if(!segs.has(k))segs.set(k,{A,B,c:r.c,ids:[],dep:0,arr:0});const S=segs.get(k);S.ids.push(id);dep?S.dep++:S.arr++}})});
-  segs.forEach(S=>{const col=S.c==="H"?"#a21caf":"#2563eb",G=S.c==="H"?vfrLayer:vfrALayer;
+  segs.forEach(S=>{const col=S.c==="A"?"#2563eb":"#a21caf",G=S.c==="A"?vfrALayer:vfrLayer;
     const pl=L.polyline([[S.A[2],S.A[3]],[S.B[2],S.B[3]]],{color:col,weight:3,opacity:.85,dashArray:S.dep?null:"7 6",className:"vfr-rt"});
     pl._vfrIds=S.ids;pl.bindTooltip(`<b>${esc(S.A[0])} — ${esc(S.B[0])}</b><br><span class="hint">แตะเพื่อเลือกเส้นทาง (${S.ids.length})</span>`,{sticky:true});
     pl.on("click",e=>{L.DomEvent.stop(e);const ids=[...new Set(S.ids)];if(ids.length===1)return vfrHi(ids[0]);
@@ -3212,7 +3212,7 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();vfrHiLayer.cle
 function norm8(n){return String(n).toUpperCase().replace(/[^A-Z0-9]/g,"")}
 function vfrHi(id){vfrHiLayer.clearLayers();VFR_HI=id==null?null:VFR_RT[id];map.closePopup();const box=map.getContainer();box.classList.toggle("vfr-dim",!!VFR_HI);
   document.querySelectorAll(".vfrpt.hi").forEach(x=>x.classList.remove("hi"));if(!VFR_HI){setTimeout(vfrDeclutter,30);return}
-  const R=VFR_HI,col=R.c==="H"?"#a21caf":"#2563eb",ll=R.seq.map(e=>[e[2],e[3]]);
+  const R=VFR_HI,col=R.c==="A"?"#2563eb":"#a21caf",ll=R.seq.map(e=>[e[2],e[3]]);
   L.polyline(ll,{color:"#fff",weight:9,opacity:.9,interactive:false}).addTo(vfrHiLayer);L.polyline(ll,{color:col,weight:5,opacity:1,interactive:false}).addTo(vfrHiLayer);
   for(let i=0;i+1<ll.length;i++){const a=ll[i],b=ll[i+1],brg=trueCourse(a,b);
     L.marker([(a[0]+b[0])/2,(a[1]+b[1])/2],{interactive:false,icon:L.divIcon({className:"",html:`<div class="vfr-arw" style="transform:rotate(${brg}deg);--c:${col}">▲</div>`,iconSize:[18,18],iconAnchor:[9,9]})}).addTo(vfrHiLayer)}
@@ -4581,8 +4581,8 @@ const VIS=[
  {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
  {k:"ctr",t:"ห้วงอากาศควบคุม (ATZ · CTR · TMA)",g:"สนามบิน",L:()=>ctrAll},
- {k:"vfr",t:"◆ จุดรายงาน + เส้นทาง VFR ฮ.",g:"สนามบิน",L:()=>vfrLayer,m:"V"},
- {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก",g:"สนามบิน",L:()=>vfrALayer,off:true,m:"V"},
+ {k:"vfr",t:"◆ จุดรายงาน + เส้นทาง VFR (ฮ. / ทั่วไป)",g:"สนามบิน",L:()=>vfrLayer,m:"V"},
+ {k:"vfrA",t:"เส้นทาง VFR เครื่องบินเล็ก (VTBD/VTBS)",g:"สนามบิน",L:()=>vfrALayer,off:true,m:"V"},
  {k:"P",t:"Prohibited",g:"พื้นที่",L:()=>areaLayers.P,c:"#d1242f"},
  {k:"R",t:"Restricted",g:"พื้นที่",L:()=>areaLayers.R,c:"#e07a00"},
  {k:"D",t:"Danger",g:"พื้นที่",L:()=>areaLayers.D,c:"#2f6fd6"},

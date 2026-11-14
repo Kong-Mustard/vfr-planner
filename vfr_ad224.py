@@ -187,7 +187,8 @@ def parse_routes(txt):
 
 def chart_cat(name):
     u = name.upper()
-    return "H" if "HELICOPTER" in u else "A"
+    # H = เฮลิคอปเตอร์ · A = เครื่องบินเล็ก (ระบุใน chart) · G = VFR ทั่วไป (ใช้ได้ทุกแบบ)
+    return "H" if "HELICOPTER" in u else "A" if "LIGHT AIRCRAFT" in u else "G"
 
 
 # ---------- หน้า PDF ที่เป็นภาพสแกน: อ่านด้วย OCR แล้ว "ตรวจไขว้" กับ radial/DME ----------
