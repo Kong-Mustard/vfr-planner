@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-13T23:57Z",
+"fetched": "2026-11-14T01:29Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1089,24 +1089,6 @@
 "plain": " ",
 "start": "11/14/2026 0215",
 "end": "11/14/2026 0300",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4545/26",
-"icao": "A4545/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611131300 C) 2611140100\r\nE) TXL B BTN TWY D AND TWY E CLSD DUE TO TEMPO ACFT PRKG",
-"plain": " ",
-"start": "11/13/2026 1300",
-"end": "11/14/2026 0100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "A4520/26",
-"icao": "A4520/26 NOTAMN\r\nQ) VTBB/QANCA/I/BO/E/130/460/1354N10036E999\r\nA) VTBB B) 2611130000 C) 2611132359\r\nE) CDR Y5 (RNAV 2) AVBL FOR FLIGHT PLANNING AS FLW:\r\n   PERIOD      : MEA LOWER/UPPER LIMITS\r\n   0000-0229     FL130/FL460\r\n   0230-0430     FL270/FL460\r\n   0431-0529     FL130/FL460\r\n   0530-0630     FL370/FL460\r\n   0631-2359     FL130/FL460",
-"plain": " ",
-"start": "11/13/2026 0000",
-"end": "11/13/2026 2359",
 "keyword": "INTERNATIONAL"
 },
 {
