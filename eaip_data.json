@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-13T14:27",
+ "fetched": "2026-11-14T04:28",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -10846,7 +10846,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 16/34",
       "sec": "ARR",
       "dir": "ARR-RWY 16/34 (From North)",
@@ -10873,7 +10873,7 @@
       "txt": "Inbound via Khao Wang. Then heading 184° to N POINT, heading 187° to K POINT, then turn left heading 146° proceed to over aerodrome and join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 16/34",
       "sec": "ARR",
       "dir": "ARR-RWY 16/34 (From South)",
@@ -12638,7 +12638,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
       "sec": "ARR",
       "dir": "ARR-RWY14/32 (From North)",
@@ -12665,7 +12665,7 @@
       "txt": "Enter via most direct route through the NI POINT, then heading 168° to WB POINT, heading 148° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
       "sec": "ARR",
       "dir": "ARR-RWY14/32 (From North - West)",
@@ -12692,7 +12692,7 @@
       "txt": "Enter via most direct route through the BT POINT, then heading 124° to WB POINT, heading 148° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
       "sec": "ARR",
       "dir": "ARR-RWY14/32 (From North - West)",
@@ -12719,7 +12719,7 @@
       "txt": "Enter via most direct route through the BT POINT, then heading 190° to KK POINT, heading 141° to BR POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
       "sec": "ARR",
       "dir": "ARR-RWY14/32 (From East)",
@@ -12746,7 +12746,7 @@
       "txt": "Enter via most direct route through the NP POINT, then heading 340° to BP POINT, heading 310° to WT POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 14/32",
       "sec": "ARR",
       "dir": "ARR-RWY14/32 (From South)",
@@ -12773,7 +12773,7 @@
       "txt": "Enter via most direct route through the WK POINT, then heading 342° to SN POINT, heading 342° to BR POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
       "sec": "DEP",
       "dir": "DEP-RWY14 (To North)",
@@ -12800,7 +12800,7 @@
       "txt": "After departure left turn heading 063° to WT POINT, then heading 328° to WB POINT, then heading 348° to NI POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
       "sec": "DEP",
       "dir": "DEP-RWY14 (To North - West)",
@@ -12827,7 +12827,7 @@
       "txt": "After departure left turn heading 063° to WT POINT, then heading 328° to WB POINT, then heading 304° to BT POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
       "sec": "DEP",
       "dir": "DEP-RWY14 (To North - West)",
@@ -12854,7 +12854,7 @@
       "txt": "After departure right turn heading 288° to PM POINT, then heading 307° to KK POINT, then heading 339° to BS POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
       "sec": "DEP",
       "dir": "DEP-RWY14 (To East)",
@@ -12875,7 +12875,7 @@
       "txt": "After departure left turn heading 100° to BP POINT, then heading 160° to NP POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 14",
       "sec": "DEP",
       "dir": "DEP-RWY14 (To South)",
@@ -12896,7 +12896,7 @@
       "txt": "After departure right turn heading 199° to SN POINT, then heading 162° to WK POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
       "sec": "DEP",
       "dir": "DEP-RWY32 (To North)",
@@ -12917,7 +12917,7 @@
       "txt": "After departure right turn heading 015° to WB POINT, then heading 348° to NI POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
       "sec": "DEP",
       "dir": "DEP-RWY32 (To North - West)",
@@ -12938,7 +12938,7 @@
       "txt": "After departure right turn heading 015° to WB POINT, then heading 304° to BT POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
       "sec": "DEP",
       "dir": "DEP-RWY32 (To North - West)",
@@ -12965,7 +12965,7 @@
       "txt": "After departure left turn heading 260° to PM POINT, then heading 307° to KK POINT, then heading 338° to BS POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
       "sec": "DEP",
       "dir": "DEP-RWY32 (To East)",
@@ -12986,7 +12986,7 @@
       "txt": "After departure right turn heading 086° to WT POINT, then heading 144° to NP POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 32",
       "sec": "DEP",
       "dir": "DEP-RWY32 (To South)",
@@ -14419,7 +14419,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
       "dir": "ARR-RWY06/24From ( North)",
@@ -14452,7 +14452,7 @@
       "txt": "Enter via most direct route through the N2 POINT, then heading N1 POINT, heading 227° to A POINT then heading 192° to W POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
       "dir": "ARR-RWY06/24From ( South )",
@@ -14479,7 +14479,7 @@
       "txt": "Enter via most direct route through the S2 POINT, then heading 044° to S1 POINT, heading 035° to L POINT, then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
       "sec": "DEP",
       "dir": "DEP-RWY06To ( North)",
@@ -14506,7 +14506,7 @@
       "txt": "After departure left turn heading 343° to C POINT, then heading 024° to N3 POINT, then heading 017° to N4 POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
       "sec": "DEP",
       "dir": "DEP-RWY06To ( South)",
@@ -14533,7 +14533,7 @@
       "txt": "After departure right turn heading 135° to E POINT, then heading 204° to S3 POINT, then heading 192° to S4 POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
       "sec": "DEP",
       "dir": "DEP-RWY24To ( North)",
@@ -14560,7 +14560,7 @@
       "txt": "After departure right turn heading 317° to S POINT, then heading 049° to N3 POINT, then heading 017° to N4 POINT, then proceed to destination."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
       "sec": "DEP",
       "dir": "DEP-RWY24To ( South)",
@@ -19322,7 +19322,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (NORTH)",
       "sec": "ARR",
       "dir": "ARR-RWY03/21 (From West)",
@@ -19349,7 +19349,7 @@
       "txt": "Inbound via G POINT then heading 080° to H POINT, heading 098° to I POINT, and heading 090° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (NORTH)",
       "sec": "ARR",
       "dir": "ARR-RWY03/21 (From North-East)",
@@ -19376,7 +19376,7 @@
       "txt": "Inbound via A POINT with recommended altitude at or above 2000 ft then heading 227° to B POINT, heading 233° to C POINT, and heading 270° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (SOUTH)",
       "sec": "ARR",
       "dir": "ARR-RWY03/21 (From East)",
@@ -19409,7 +19409,7 @@
       "txt": "Inbound via J POINT then heading 319° to K POINT, heading 280° to L POINT, heading 280° to M POINT, and heading 280° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (SOUTH)",
       "sec": "ARR",
       "dir": "ARR-RWY03/21 (From South)",
@@ -19448,7 +19448,7 @@
       "txt": "Inbound via N POINT then heading 024° to O POINT, heading 054° to P POINT, heading 011° to D POINT, heading 312° to M POINT, and heading 280° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY03 (North-East)",
@@ -19475,7 +19475,7 @@
       "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 095° to U POINT, heading 061° to B POINT, and heading 047° to A POINT with recommended altitude at or above 2000 ft."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY03 (North-East)",
@@ -19502,7 +19502,7 @@
       "txt": "After departure climb to altitude 500 ft then heading 065° to S POINT, heading 060° to R POINT, and heading 069° to A POINT with recommended altitude at or above 2000 ft."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY03 (West)",
@@ -19523,7 +19523,7 @@
       "txt": "After departure turn left proceed westbound (heading 300°) until 2.5 DME then heading 265° to H POINT, and heading 260° to G POINT."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (SOUTH)",
       "sec": "DEP",
       "dir": "DEP-RWY03 (South)",
@@ -19556,7 +19556,7 @@
       "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 135° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY21 (North-East)",
@@ -19583,7 +19583,7 @@
       "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 075° to U POINT, heading 061° to B POINT, and heading 047° to A POINT with recommended altitude at or above 2000 ft."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY21 (North-East)",
@@ -19610,7 +19610,7 @@
       "txt": "After departure turn right proceed westbound (heading 300°) until 2.5 DME then turn right to join right downwind then heading 070° to S POINT, heading 060° to R POINT, and heading 069° to A POINT with recommended altitude at or above 2000 ft."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY21 (West)",
@@ -19631,7 +19631,7 @@
       "txt": "After departure climb to altitude 500 ft then heading 280° to H POINT, and heading 260° to G POINT. |"
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (SOUTH)",
       "sec": "DEP",
       "dir": "DEP-RWY21 (South)",
@@ -21097,7 +21097,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
       "dir": "ARR - RWY06/24 (From East)",
@@ -21124,7 +21124,7 @@
       "txt": "Inbound via H POINT then heading 257° to J POINT. Heading 208° to E POINT, then join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
       "dir": "ARR - RWY06/24 (From South)",
@@ -21151,7 +21151,7 @@
       "txt": "Inbound via L POINT then heading 078° to P POINT. Heading 041° to E POINT, then join aerodrome traffic circuit when directed by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
       "dir": "ARR - RWY06/24 (From West)",
@@ -22091,7 +22091,7 @@
     ],
     "rt": [
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
       "sec": "ARR",
       "dir": "ARR-RWY18/36 (From VTUK)",
@@ -22112,7 +22112,7 @@
       "txt": "Enter via most direct route through the J POINT , then heading 105° to T POINT , then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
       "sec": "ARR",
       "dir": "ARR-RWY18/36 (From VTUQ)",
@@ -22133,7 +22133,7 @@
       "txt": "Enter via most direct route through the H POINT , then heading 047° to C POINT , then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
       "sec": "ARR",
       "dir": "ARR-RWY18/36 (From VTUO)",
@@ -22154,7 +22154,7 @@
       "txt": "Enter via most direct route through the L POINT , then heading 017° to C POINT , then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
       "sec": "ARR",
       "dir": "ARR-RWY18/36 (From VTUW)",
@@ -22175,7 +22175,7 @@
       "txt": "Enter via most direct route through the Z POINT , then heading 202° to B POINT , then join aerodrome traffic circuit when direct by ATC."
      },
      {
-      "c": "A",
+      "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 18/36",
       "sec": "ARR",
       "dir": "ARR-RWY18/36 (From VTUU)",
