@@ -2902,10 +2902,12 @@ async function v3dLayers(){if(!ml)return;const col=l=>(l.options&&l.options.colo
   if(V3L.rad&&!ml.getSource("rad")){try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json(),f=(d.radar.past||[]).at(-1);
     if(f&&ml){ml.addSource("rad",{type:"raster",tiles:[`${d.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`],tileSize:256,maxzoom:7,attribution:"Radar © RainViewer"});ml.addLayer({id:"rad",type:"raster",source:"rad",paint:{"raster-opacity":.6}},"rl");
       const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});toast("เรดาร์ฝน RainViewer เวลา "+t+" น.")}}catch(e){toast("โหลดเรดาร์ฝนไม่ได้ (ต้องต่อเน็ต)")}}
-  {const g=v3dAsGeo();set("as",g.F,[
-    {id:"as-x",type:"fill-extrusion",source:"as",paint:{"fill-extrusion-color":["get","c"],"fill-extrusion-height":["get","h"],"fill-extrusion-base":["get","b"],"fill-extrusion-opacity":.22}},
-    {id:"as-l",type:"line",source:"as",paint:{"line-color":["get","c"],"line-width":2}}]);
-   set("asp",g.P,[{id:"as-t",type:"symbol",source:"asp",minzoom:7,layout:{"text-field":["get","t"],"text-font":["Open Sans Semibold"],"text-size":12,"text-allow-overlap":false},paint:{"text-color":["get","c"],"text-halo-color":"#000","text-halo-width":1.5}}])}
+  {const g=v3dAsGeo(),top=(id,data,L)=>{if(ml.getSource(id))ml.getSource(id).setData(data);else{ml.addSource(id,{type:"geojson",data});L.forEach(x=>ml.addLayer(x))}};
+   /* กล่องห้วงอากาศวาดไว้บนสุด — ชั้นที่ปูบนพื้น (เส้นทาง) จะถูกวาดลงพื้นก่อน จึงยังมองเห็นผ่านกล่องโปร่งแสง */
+   top("as",g.F,[
+    {id:"as-x",type:"fill-extrusion",source:"as",paint:{"fill-extrusion-color":["get","c"],"fill-extrusion-height":["get","h"],"fill-extrusion-base":["get","b"],"fill-extrusion-opacity":.16}}]);
+   if(!ml.getLayer("as-l"))ml.addLayer({id:"as-l",type:"line",source:"as",paint:{"line-color":["get","c"],"line-width":2}},"rl");
+   top("asp",g.P,[{id:"as-t",type:"symbol",source:"asp",minzoom:7,layout:{"text-field":["get","t"],"text-font":["Open Sans Semibold"],"text-size":12,"text-allow-overlap":false},paint:{"text-color":["get","c"],"text-halo-color":"#000","text-halo-width":1.5}}])}
   set("v3vfr",v3dVfrGeo(),[
     {id:"vfr-l",type:"line",source:"v3vfr",filter:["==","$type","LineString"],paint:{"line-color":["get","c"],"line-width":2.5,"line-dasharray":[2,1.5]}},
     {id:"vfr-p",type:"circle",source:"v3vfr",filter:["==","$type","Point"],paint:{"circle-radius":5,"circle-color":"#ffd400","circle-stroke-color":"#111","circle-stroke-width":1.5}},
@@ -4625,7 +4627,9 @@ const VIS_PRESET={
  "ซ่อนทั้งหมด":""};
 let visState=(()=>{try{return JSON.parse(localStorage.getItem("vfr_vis"))||null}catch(e){return null}})();
 function visOn(k){const v=VIS.find(x=>x.k===k);if(v.css)return!document.body.classList.contains(v.css);return map.hasLayer(v.L())}
-function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;if(k==="vfr"&&typeof rpLayer!=="undefined"){if(on)rpLayer.addTo(map);else map.removeLayer(rpLayer)}if(k==="ifr"&&typeof drawIfr==="function")setTimeout(drawIfr,0);
+function visSet(k,on,quiet){const v=VIS.find(x=>x.k===k);if(!v)return;
+  /* เปิดป้ายบอกระยะ แต่ระยะถูกตั้งเป็น "ปิด" อยู่ → ตั้งเป็นทุก 10 NM ให้ (เดิมติ๊กแล้วไม่มีอะไรขึ้น) */
+  if(k==="rem"&&on&&state&&!(num(state.remStep,0)>0)){state.remStep="10";const r=$("#remStep");if(r)r.value="10";if(typeof remQSync==="function")remQSync();setTimeout(()=>render(),0)}if(k==="vfr"&&typeof rpLayer!=="undefined"){if(on)rpLayer.addTo(map);else map.removeLayer(rpLayer)}if(k==="ifr"&&typeof drawIfr==="function")setTimeout(drawIfr,0);
   if(v.css)document.body.classList.toggle(v.css,!on);else{const l=v.L();if(on&&!map.hasLayer(l))l.addTo(map);if(!on&&map.hasLayer(l))map.removeLayer(l)}
   if(k==="D"&&$("#areaShowD"))$("#areaShowD").checked=on;if(!quiet)visSave()}
 function visSave(){const o={};VIS.forEach(v=>o[v.k]=visOn(v.k));try{localStorage.setItem("vfr_vis",JSON.stringify(o))}catch(e){}visSync()}
@@ -5001,7 +5005,7 @@ function fitPad(){return innerWidth>=1000&&!$(".top>.side").classList.contains("
 function fit(){if(state.wps.length>1)map.fitBounds(state.wps.map(w=>[w.lat,w.lon]),fitPad());else if(state.wps.length)map.setView([state.wps[0].lat,state.wps[0].lon],11)}
 state=store.get("vfr_current");state=state&&typeof state==="object"?planClean(state):JSON.parse(JSON.stringify(EXAMPLE));
 if(!state.g)state.g={...EXAMPLE.g};
-if(state.remStep==null)state.remStep="10";
+if(state.remStep==null)state.remStep="10";if(typeof visOn==="function"&&visOn("rem")&&!(num(state.remStep,0)>0))state.remStep="10";
 /* ไม่มีช่อง Aircraft / วันที่ ในแผนแล้ว (ไปกรอกใน Flight Plan PDF) · ใช้วันนี้เสมอสำหรับพยากรณ์/NOTAM */
 state.date="";state.acft="";
 if(!(num(state.burn,0)>=5)){state.burn=burnFromL(BURN_LPH0)}
