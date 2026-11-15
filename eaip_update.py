@@ -708,10 +708,12 @@ def main():
                 with tempfile.TemporaryDirectory() as td:
                     fp = os.path.join(td, "c.pdf")
                     open(fp, "wb").write(r.content)
-                    subprocess.run(["pdftoppm", "-r", "300", "-png", "-f", "1", "-l", "1", fp, os.path.join(td, "pg")], check=True, timeout=120)
-                    png = sorted(f for f in os.listdir(td) if f.endswith(".png"))[0]
-                    subprocess.run(["tesseract", os.path.join(td, png), os.path.join(td, "o"), "--psm", "6"], check=True, timeout=120, capture_output=True)
-                    return open(os.path.join(td, "o.txt"), errors="ignore").read()
+                    subprocess.run(["pdftoppm", "-r", "300", "-png", "-f", "1", "-l", "3", fp, os.path.join(td, "pg")], check=True, timeout=180)
+                    out = []
+                    for png in sorted(f for f in os.listdir(td) if f.endswith(".png")):
+                        subprocess.run(["tesseract", os.path.join(td, png), os.path.join(td, "o"), "--psm", "6"], check=True, timeout=120, capture_output=True)
+                        out.append(open(os.path.join(td, "o.txt"), errors="ignore").read())
+                    return "\n".join(out)
 
             def vor_of(ic):
                 """VOR ใกล้สนามที่สุด (ใช้ตรวจไขว้พิกัด OCR กับ radial/DME) — ไม่ทราบ magnetic variation ใช้ 0 (ไทย ~0–1°W) แล้วเผื่อค่าคลาดไว้"""
@@ -724,7 +726,8 @@ def main():
                 b = min(vs, key=lambda n: vfr_ad224._nm((a["lat"], a["lon"]), (n["lat"], n["lon"])))
                 return ((b["lat"], b["lon"]) if vfr_ad224._nm((a["lat"], a["lon"]), (b["lat"], b["lon"])) < 15 else None), 0.0
 
-            vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text, ocr_text=ocr_text, vor_of=vor_of)
+            vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text, ocr_text=ocr_text, vor_of=vor_of,
+                                   ap_pos={ic: (a["lat"], a["lon"]) for ic, a in data["airports"].items() if a.get("lat") is not None})
             for ic, v in vfr.items():
                 data["airports"][ic]["vfr"] = v
         else:

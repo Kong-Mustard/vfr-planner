@@ -27,7 +27,7 @@ def norm(n):
 
 
 def short_of(n):
-    m = re.match(r'["“”]?([A-Z0-9]{1,3})["“”]?\s+or\b', n)
+    m = re.search(r'["“”]([A-Z0-9]{1,3})["“”]\s+or\b', n) or re.match(r'([A-Z0-9]{1,3})\s+or\b', n)
     if m:
         return m.group(1)
     m = re.match(r"([A-Z0-9]{1,3})\s+POINT$", n.strip(), re.I)
@@ -251,7 +251,7 @@ def parse_points_ocr(txt, vor, var=0.0, log=print):
     return pts, rej
 
 
-def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None):
+def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=None):
     """ap_charts: {icao: [chart,...]} · fetch_text(url) -> ข้อความ pdftotext
     คืน {icao: {"pts": [...], "rt": [...]}} โดย rt.seq = [[ชื่อ, alt, lat, lon, ทางเลือก?], ...]"""
     raw = {}
@@ -312,14 +312,19 @@ def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None):
                 seen.add(k)
                 P.append(p)
         byid = {p["id"]: p for p in P if p.get("id")}
+        arp = ap_pos.get(ic) if ap_pos else None
         R, rseen = [], set()
         for r in rts:
             seq = []
             for it in r["seq"]:
                 n = it[0]
                 p = byid.get(n) if r.get("txt") else None
-                p = p or next((q for q in P if norm(q["n"]) == norm(n)), None) or G.get(norm(n))
-                p = p or G2.get(norm(n).replace("H", ""))
+                p = p or next((q for q in P if norm(q["n"]) == norm(n)), None)
+                # ใช้จุดของสนามอื่นได้เฉพาะชื่อเต็ม (≥5 ตัว เช่น BANG LUK SUA) — ห้ามใช้กับรหัสสั้น เช่น K / L / P ที่ซ้ำกันทุกสนาม
+                if not p and len(norm(n)) >= 5:
+                    p = G.get(norm(n)) or G2.get(norm(n).replace("H", ""))
+                if p and arp and _nm(arp, (p["lat"], p["lon"])) > 60:
+                    p = None  # ไกลเกินกว่าจะเป็นจุด VFR ของสนามนี้ — ถือว่าจับคู่ผิด
                 p = p or next((q for q in P if len(norm(n)) >= 5 and norm(q["n"]).startswith(norm(n))), None)  # สะกดต่างกันในเอกสาร เช่น SANAP TUEP / SANAP THUEP
                 e = [p["id"] if p and p.get("id") else n, it[1], p["lat"] if p else None, p["lon"] if p else None]
                 if len(it) > 2:
