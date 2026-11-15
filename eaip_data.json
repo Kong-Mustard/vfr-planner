@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-14T04:28",
+ "fetched": "2026-11-15T10:01",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -19313,11 +19313,13 @@
       "lm": "Phra That Kham"
      },
      {
-      "n": "rT \"T\" or TANGO Point Bridge",
+      "n": "rT \"T\" or TANGO Point",
       "lat": 16.725278,
       "lon": 102.8025,
       "rd": "R-004 / 15.2D",
-      "ocr": 1
+      "ocr": 1,
+      "id": "T",
+      "lm": "Bridge"
      }
     ],
     "rt": [
@@ -19369,8 +19371,8 @@
        [
         "C",
         null,
-        10.774444,
-        99.369722
+        null,
+        null
        ]
       ],
       "txt": "Inbound via A POINT with recommended altitude at or above 2000 ft then heading 227° to B POINT, heading 233° to C POINT, and heading 270° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
@@ -19390,14 +19392,14 @@
        [
         "K",
         null,
-        14.629831,
-        101.312728
+        null,
+        null
        ],
        [
         "L",
         null,
-        10.654944,
-        99.365611
+        null,
+        null
        ],
        [
         "M",
@@ -19429,8 +19431,8 @@
        [
         "P",
         null,
-        14.662742,
-        102.146689
+        null,
+        null
        ],
        [
         "D",
@@ -19524,39 +19526,6 @@
      },
      {
       "c": "G",
-      "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (SOUTH)",
-      "sec": "DEP",
-      "dir": "DEP-RWY03 (South)",
-      "seq": [
-       [
-        "D",
-        null,
-        null,
-        null
-       ],
-       [
-        "P",
-        null,
-        14.662742,
-        102.146689
-       ],
-       [
-        "O",
-        null,
-        16.057583,
-        102.715972
-       ],
-       [
-        "N",
-        null,
-        null,
-        null
-       ]
-      ],
-      "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 135° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
-     },
-     {
-      "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
       "sec": "DEP",
       "dir": "DEP-RWY21 (North-East)",
@@ -19629,39 +19598,6 @@
        ]
       ],
       "txt": "After departure climb to altitude 500 ft then heading 280° to H POINT, and heading 260° to G POINT. |"
-     },
-     {
-      "c": "G",
-      "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (SOUTH)",
-      "sec": "DEP",
-      "dir": "DEP-RWY21 (South)",
-      "seq": [
-       [
-        "D",
-        null,
-        null,
-        null
-       ],
-       [
-        "P",
-        null,
-        14.662742,
-        102.146689
-       ],
-       [
-        "O",
-        null,
-        16.057583,
-        102.715972
-       ],
-       [
-        "N",
-        null,
-        null,
-        null
-       ]
-      ],
-      "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 105° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
      }
     ]
    }
@@ -21159,8 +21095,8 @@
        [
         "K",
         null,
-        14.629831,
-        101.312728
+        null,
+        null
        ],
        [
         "P",
