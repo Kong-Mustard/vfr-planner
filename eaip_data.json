@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-15T10:16",
+ "fetched": "2026-11-15T12:21",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -19205,67 +19205,157 @@
    "vfr": {
     "pts": [
      {
-      "n": "\"A\" or ALPHA Point",
-      "lat": 16.701667,
-      "lon": 103.249444,
-      "rd": "R-063 / 30.0D",
-      "ocr": 1,
       "id": "A",
-      "lm": "Ban Nong Chum"
+      "n": "A POINT",
+      "lm": "Ban Nong Chum Sang Temple",
+      "rd": "R-063 / 30.0D",
+      "lat": 16.7016667,
+      "lon": 103.2494444,
+      "man": 1
      },
      {
-      "n": "\"B\" or BRAVO Point",
-      "lat": 16.529728,
-      "lon": 103.066264,
-      "rd": "R-078 / 16.4D",
-      "ocr": 1,
       "id": "B",
-      "lm": "Sam Sung Police"
+      "n": "B POINT",
+      "lm": "Sam Sung Police Station",
+      "rd": "R-078 / 16.4D",
+      "lat": 16.5297278,
+      "lon": 103.0662639,
+      "man": 1
      },
      {
-      "n": "\"E\" or ECHO Point",
-      "lat": 16.590853,
-      "lon": 102.561472,
-      "rd": "R-300 / 14.9D",
-      "ocr": 1,
+      "id": "C",
+      "n": "C POINT",
+      "lm": "White Pagoda",
+      "rd": "R-096 / 10.4D",
+      "lat": 16.4552778,
+      "lon": 102.9676111,
+      "man": 1
+     },
+     {
       "id": "E",
-      "lm": "Sa Wang Cherng"
+      "n": "E POINT",
+      "lm": "Sa Wang Cherng Khao Temple",
+      "rd": "R-300 / 14.9D",
+      "lat": 16.5853528,
+      "lon": 102.5614722,
+      "man": 1
      },
      {
-      "n": "\"G\" or GOLF Point",
-      "lat": 16.464417,
-      "lon": 102.291611,
-      "rd": "R-270 / 28.6D",
-      "ocr": 1,
+      "id": "F",
+      "n": "F POINT",
+      "lm": "Phu Wiang Hill",
+      "rd": "R-295 / 29.6D",
+      "lat": 16.672325,
+      "lon": 102.3188639,
+      "man": 1
+     },
+     {
       "id": "G",
-      "lm": "Ei San Temple"
+      "n": "G POINT",
+      "lm": "Ei San Temple (Road Intersection)",
+      "rd": "R-270 / 28.6D",
+      "lat": 16.4644167,
+      "lon": 102.2916111,
+      "man": 1
      },
      {
-      "n": "\"H\" or HOTEL Point",
-      "lat": 16.491556,
-      "lon": 102.435056,
-      "rd": "R-274 / 20.4D",
-      "ocr": 1,
       "id": "H",
-      "lm": "Nhong Reua"
+      "n": "H POINT",
+      "lm": "Nhong Reua (Road Intersection)",
+      "rd": "R-274 / 20.4D",
+      "lat": 16.4915556,
+      "lon": 102.4350556,
+      "man": 1
      },
      {
-      "n": "\"I\" or INDIA Point",
-      "lat": 16.474083,
-      "lon": 102.586778,
-      "rd": "R-272 / 11.6D",
-      "ocr": 1,
       "id": "I",
-      "lm": "Khon Kaen 4 Power"
+      "n": "I POINT",
+      "lm": "Khon Kaen 4 Power Plant",
+      "rd": "R-272 / 11.6D",
+      "lat": 16.4740833,
+      "lon": 102.5867778,
+      "man": 1
      },
      {
-      "n": "\"J\" or JULIETT Point",
-      "lat": 16.242547,
-      "lon": 103.250992,
-      "rd": "R-118 / 30.0D",
-      "ocr": 1,
+      "id": "Q",
+      "n": "Q POINT",
+      "lm": "Au Bon Rat Dam",
+      "rd": "R-333 / 20.5D",
+      "lat": 16.7722778,
+      "lon": 102.6199722,
+      "man": 1
+     },
+     {
+      "id": "U",
+      "n": "U POINT",
+      "lm": "Pho Tha Ram Temple",
+      "rd": "R-092 / 9.6D",
+      "lat": 16.4669444,
+      "lon": 102.9536111,
+      "man": 1
+     },
+     {
+      "id": "R",
+      "n": "R POINT",
+      "lm": "Nhong Krung Yai Village",
+      "rd": "R-060 / 19.1D",
+      "lat": 16.6332222,
+      "lon": 103.0721111,
+      "man": 1
+     },
+     {
+      "id": "S",
+      "n": "S POINT",
+      "lm": "Phra That Kham Kaen",
+      "rd": "R-060 / 11.0D",
+      "lat": 16.5636111,
+      "lon": 102.9516667,
+      "man": 1
+     },
+     {
+      "id": "T",
+      "n": "T POINT",
+      "lm": "Bridge",
+      "rd": "R-004 / 15.2D",
+      "lat": 16.7252778,
+      "lon": 102.8025,
+      "man": 1
+     },
+     {
+      "id": "D",
+      "n": "D POINT",
+      "lm": "Wang Yang Weir",
+      "rd": "R-124 / 11.0D",
+      "lat": 16.3686111,
+      "lon": 102.9473889,
+      "man": 1
+     },
+     {
       "id": "J",
-      "lm": "Ma Ha Sa Ra Kham"
+      "n": "J POINT",
+      "lm": "Maha Sarakham University",
+      "rd": "R-118 / 30.0D",
+      "lat": 16.2425472,
+      "lon": 103.2509917,
+      "man": 1
+     },
+     {
+      "id": "O",
+      "n": "O POINT",
+      "lm": "Ban Phai (Road Intersection)",
+      "rd": "R-190 / 25.0D",
+      "lat": 16.0575833,
+      "lon": 102.7159722,
+      "man": 1
+     },
+     {
+      "id": "P",
+      "n": "P POINT",
+      "lm": "Khon Sak Creek",
+      "rd": "R-156 / 17.7D",
+      "lat": 16.2013056,
+      "lon": 102.9149444,
+      "man": 1
      },
      {
       "n": "\"M\" or MIKE Point",
@@ -19275,54 +19365,51 @@
       "ocr": 1,
       "id": "M",
       "lm": "Beung Thung Sang"
-     },
-     {
-      "n": "\"O\" or OSCAR Point",
-      "lat": 16.057583,
-      "lon": 102.715972,
-      "rd": "R-190 / 25.0D",
-      "ocr": 1,
-      "id": "O",
-      "lm": "Ban Phai"
-     },
-     {
-      "n": "\"U\" or UNIFORM Point",
-      "lat": 16.466944,
-      "lon": 102.953611,
-      "rd": "R-092 / 9.6D",
-      "ocr": 1,
-      "id": "U",
-      "lm": "Pho Tha Ram"
-     },
-     {
-      "n": "\"R\" or ROMEO Point",
-      "lat": 16.633222,
-      "lon": 103.072111,
-      "rd": "R-060 / 19.1D",
-      "ocr": 1,
-      "id": "R",
-      "lm": "Nhong Krung Yai"
-     },
-     {
-      "n": "\"S\" or SIERRA Point",
-      "lat": 16.563611,
-      "lon": 102.951667,
-      "rd": "R-060 / 11.0D",
-      "ocr": 1,
-      "id": "S",
-      "lm": "Phra That Kham"
-     },
-     {
-      "n": "rT \"T\" or TANGO Point",
-      "lat": 16.725278,
-      "lon": 102.8025,
-      "rd": "R-004 / 15.2D",
-      "ocr": 1,
-      "id": "T",
-      "lm": "Bridge"
      }
     ],
     "rt": [
+     {
+      "c": "G",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (NORTH)",
+      "sec": "ARR",
+      "dir": "ARR-RWY 03/21 (From North)",
+      "seq": [
+       [
+        "Q",
+        null,
+        16.7722778,
+        102.6199722
+       ],
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ]
+      ],
+      "txt": "Inbound via Q POINT then heading 198° to E POINT and heading 120° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
+     },
+     {
+      "c": "G",
+      "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (NORTH)",
+      "sec": "ARR",
+      "dir": "ARR-RWY03/21 (From North-West)",
+      "seq": [
+       [
+        "F",
+        null,
+        16.672325,
+        102.3188639
+       ],
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ]
+      ],
+      "txt": "Inbound via F POINT then heading 110° to E POINT and heading 120° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
+     },
      {
       "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (NORTH)",
@@ -19332,20 +19419,20 @@
        [
         "G",
         null,
-        16.464417,
-        102.291611
+        16.4644167,
+        102.2916111
        ],
        [
         "H",
         null,
-        16.491556,
-        102.435056
+        16.4915556,
+        102.4350556
        ],
        [
         "I",
         null,
-        16.474083,
-        102.586778
+        16.4740833,
+        102.5867778
        ]
       ],
       "txt": "Inbound via G POINT then heading 080° to H POINT, heading 098° to I POINT, and heading 090° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
@@ -19359,20 +19446,20 @@
        [
         "A",
         null,
-        16.701667,
-        103.249444
+        16.7016667,
+        103.2494444
        ],
        [
         "B",
         null,
-        16.529728,
-        103.066264
+        16.5297278,
+        103.0662639
        ],
        [
         "C",
         null,
-        null,
-        null
+        16.4552778,
+        102.9676111
        ]
       ],
       "txt": "Inbound via A POINT with recommended altitude at or above 2000 ft then heading 227° to B POINT, heading 233° to C POINT, and heading 270° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
@@ -19386,8 +19473,8 @@
        [
         "J",
         null,
-        16.242547,
-        103.250992
+        16.2425472,
+        103.2509917
        ],
        [
         "K",
@@ -19425,20 +19512,20 @@
        [
         "O",
         null,
-        16.057583,
-        102.715972
+        16.0575833,
+        102.7159722
        ],
        [
         "P",
         null,
-        null,
-        null
+        16.2013056,
+        102.9149444
        ],
        [
         "D",
         null,
-        null,
-        null
+        16.3686111,
+        102.9473889
        ],
        [
         "M",
@@ -19453,25 +19540,46 @@
       "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
       "sec": "DEP",
+      "dir": "DEP-RWY03 (North)",
+      "seq": [
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ],
+       [
+        "Q",
+        null,
+        16.7722778,
+        102.6199722
+       ]
+      ],
+      "txt": "After departure turn left proceed westbound (heading 300°) until 2.5 DME then heading 290° to E POINT, and heading 018° to Q POINT."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
+      "sec": "DEP",
       "dir": "DEP-RWY03 (North-East)",
       "seq": [
        [
         "U",
         null,
-        16.466944,
-        102.953611
+        16.4669444,
+        102.9536111
        ],
        [
         "B",
         null,
-        16.529728,
-        103.066264
+        16.5297278,
+        103.0662639
        ],
        [
         "A",
         null,
-        16.701667,
-        103.249444
+        16.7016667,
+        103.2494444
        ]
       ],
       "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 095° to U POINT, heading 061° to B POINT, and heading 047° to A POINT with recommended altitude at or above 2000 ft."
@@ -19485,23 +19593,44 @@
        [
         "S",
         null,
-        16.563611,
-        102.951667
+        16.5636111,
+        102.9516667
        ],
        [
         "R",
         null,
-        16.633222,
-        103.072111
+        16.6332222,
+        103.0721111
        ],
        [
         "A",
         null,
-        16.701667,
-        103.249444
+        16.7016667,
+        103.2494444
        ]
       ],
       "txt": "After departure climb to altitude 500 ft then heading 065° to S POINT, heading 060° to R POINT, and heading 069° to A POINT with recommended altitude at or above 2000 ft."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (NORTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY03 (North-West)",
+      "seq": [
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ],
+       [
+        "F",
+        null,
+        16.672325,
+        102.3188639
+       ]
+      ],
+      "txt": "After departure turn left proceed westbound (heading 300°) until 2.5 DME then heading 290° to E POINT, and heading 290° to F POINT."
      },
      {
       "c": "G",
@@ -19512,17 +19641,92 @@
        [
         "H",
         null,
-        16.491556,
-        102.435056
+        16.4915556,
+        102.4350556
        ],
        [
         "G",
         null,
-        16.464417,
-        102.291611
+        16.4644167,
+        102.2916111
        ]
       ],
       "txt": "After departure turn left proceed westbound (heading 300°) until 2.5 DME then heading 265° to H POINT, and heading 260° to G POINT."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (SOUTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY03 (South-East)",
+      "seq": [
+       [
+        "D",
+        null,
+        16.3686111,
+        102.9473889
+       ],
+       [
+        "J",
+        null,
+        16.2425472,
+        103.2509917
+       ]
+      ],
+      "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 135° to D POINT, and heading 114° to J POINT."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 03 (SOUTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY03 (South)",
+      "seq": [
+       [
+        "D",
+        null,
+        16.3686111,
+        102.9473889
+       ],
+       [
+        "P",
+        null,
+        16.2013056,
+        102.9149444
+       ],
+       [
+        "O",
+        null,
+        16.0575833,
+        102.7159722
+       ],
+       [
+        "N",
+        null,
+        null,
+        null
+       ]
+      ],
+      "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 135° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY21 (North)",
+      "seq": [
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ],
+       [
+        "Q",
+        null,
+        16.7722778,
+        102.6199722
+       ]
+      ],
+      "txt": "After departure turn right proceed westbound (heading 300°) until 2.5 DME then heading 310° to E POINT, and heading 018° to Q POINT."
      },
      {
       "c": "G",
@@ -19533,20 +19737,20 @@
        [
         "U",
         null,
-        16.466944,
-        102.953611
+        16.4669444,
+        102.9536111
        ],
        [
         "B",
         null,
-        16.529728,
-        103.066264
+        16.5297278,
+        103.0662639
        ],
        [
         "A",
         null,
-        16.701667,
-        103.249444
+        16.7016667,
+        103.2494444
        ]
       ],
       "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 075° to U POINT, heading 061° to B POINT, and heading 047° to A POINT with recommended altitude at or above 2000 ft."
@@ -19560,23 +19764,44 @@
        [
         "S",
         null,
-        16.563611,
-        102.951667
+        16.5636111,
+        102.9516667
        ],
        [
         "R",
         null,
-        16.633222,
-        103.072111
+        16.6332222,
+        103.0721111
        ],
        [
         "A",
         null,
-        16.701667,
-        103.249444
+        16.7016667,
+        103.2494444
        ]
       ],
       "txt": "After departure turn right proceed westbound (heading 300°) until 2.5 DME then turn right to join right downwind then heading 070° to S POINT, heading 060° to R POINT, and heading 069° to A POINT with recommended altitude at or above 2000 ft."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (NORTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY21 (North-West)",
+      "seq": [
+       [
+        "E",
+        null,
+        16.5853528,
+        102.5614722
+       ],
+       [
+        "F",
+        null,
+        16.672325,
+        102.3188639
+       ]
+      ],
+      "txt": "After departure turn right proceed westbound (heading 300°) until 2.5 DME then heading 310° to E POINT, and heading 290° to F POINT."
      },
      {
       "c": "G",
@@ -19587,17 +19812,71 @@
        [
         "H",
         null,
-        16.491556,
-        102.435056
+        16.4915556,
+        102.4350556
        ],
        [
         "G",
         null,
-        16.464417,
-        102.291611
+        16.4644167,
+        102.2916111
        ]
       ],
       "txt": "After departure climb to altitude 500 ft then heading 280° to H POINT, and heading 260° to G POINT. |"
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (SOUTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY21 (South-East)",
+      "seq": [
+       [
+        "D",
+        null,
+        16.3686111,
+        102.9473889
+       ],
+       [
+        "J",
+        null,
+        16.2425472,
+        103.2509917
+       ]
+      ],
+      "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 105° to D POINT, and heading 114° to J POINT."
+     },
+     {
+      "c": "G",
+      "ch": "VFR EXIT PROCEDURE CHART - RWY 21 (SOUTH)",
+      "sec": "DEP",
+      "dir": "DEP-RWY21 (South)",
+      "seq": [
+       [
+        "D",
+        null,
+        16.3686111,
+        102.9473889
+       ],
+       [
+        "P",
+        null,
+        16.2013056,
+        102.9149444
+       ],
+       [
+        "O",
+        null,
+        16.0575833,
+        102.7159722
+       ],
+       [
+        "N",
+        null,
+        null,
+        null
+       ]
+      ],
+      "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 105° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
      }
     ]
    }
