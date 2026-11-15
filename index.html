@@ -4414,7 +4414,7 @@ function dbRender(){if(typeof cpRender==="function")setTimeout(cpRender,0);const
     ||`<tr><td colspan="6" class="placeholder" style="text-align:left;padding:16px"><b>ยังไม่มีตาราง waypoint ของหน่วย</b><br><span class="hint">วางตารางจาก Excel ในกล่อง "วางตารางจาก Excel / ข้อความ" หรือกด ＋ เพิ่มแถว · ตัวอย่างรูปแบบ: <code>1  VTBH  47P PS 76283 53429</code></span></td></tr>`;
   if(dup.size)toast("มีเลขซ้ำ: No."+[...dup].join(", "));dbRouteRender();dbDraw()}
 /* ---------- Preset วิทยุ (เก็บถาวร แก้ได้ทุกช่อง) ---------- */
-const PS_BANDS=[{k:"vhf",t:"VHF AM",tag:"V",lo:118,hi:137},{k:"uhf",t:"UHF",tag:"U",lo:225,hi:400},{k:"fm",t:"FM",tag:"FM",lo:30,hi:88},{k:"vor",t:"VOR/ILS",tag:"VOR",lo:108,hi:118},{k:"adf",t:"ADF",tag:"ADF",lo:190,hi:1800}];
+const PS_BANDS=[{k:"vhf",t:"VHF AM",tag:"V",lo:116,hi:174},{k:"uhf",t:"UHF",tag:"U",lo:225,hi:400},{k:"fm",t:"FM",tag:"FM",lo:30,hi:88},{k:"vor",t:"VOR/ILS",tag:"VOR",lo:108,hi:118},{k:"adf",t:"ADF",tag:"ADF",lo:190,hi:1800}];
 let psBand="vhf";
 function psAll(){const d=store.get("vfr_presets")||{};PS_BANDS.forEach(b=>d[b.k]=d[b.k]||[]);return d}
 function psSave(d){store.set("vfr_presets",d)}
@@ -4528,13 +4528,13 @@ async function dbFromXlsx(f){await loadScript("https://cdn.jsdelivr.net/npm/exce
 /* preset วิทยุจาก Excel ของ FalconView (ชีต FM / VHF AM / UHF / ADF|VOR) */
 async function psFromXlsx(f){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
   const val=c=>{const v=c&&c.value;return v&&typeof v==="object"?(v.result??v.text??(v.richText?v.richText.map(t=>t.text).join(""):"")):v};
-  const bandOfName=t=>/VOR|ILS/i.test(t)?"vor":/ADF/i.test(t)?"adf":/UHF/i.test(t)?"uhf":/VHF/i.test(t)?"vhf":/\bFM\b/i.test(t)?"fm":null;
+  const bandOfName=t=>/TACAN|TCN/i.test(t)?"skip":/VOR|ILS/i.test(t)?"vor":/ADF/i.test(t)?"adf":/UHF/i.test(t)?"uhf":/VHF/i.test(t)?"vhf":/\bFM\b/i.test(t)?"fm":null;
   const out={};PS_BANDS.forEach(b=>out[b.k]=[]);let found=false;
   wb.worksheets.forEach(ws=>{let band=/ADF|VOR/i.test(ws.name)?"adf":bandOfName(ws.name),col=null;if(!band||!/PRESET|ADF|VOR/i.test(ws.name))return;
     ws.eachRow(row=>{const c=[];row.eachCell({includeEmpty:true},(x,i)=>c[i]=val(x));const txt=c.filter(v=>v!=null&&String(v).trim()).map(String);
       if(new Set(txt).size===1&&/PRESET/i.test(txt[0])){const b2=bandOfName(txt.join(" "));if(b2){band=b2;col=null}return}
       if(txt.some(t=>/^FREQ/i.test(t.trim()))){col={no:1};c.forEach((v,i)=>{const t=String(v||"").toUpperCase().trim();if(/^NO\.?$|^CH/.test(t))col.no=i;if(/CALL|^ID$/.test(t))col.call=i;if(/DESC/.test(t))col.desc=i;if(/^FREQ/.test(t))col.freq=i;if(/FIX/.test(t))col.fix=i;if(/MORSE/.test(t))col.morse=i});return}
-      if(!col||!band)return;const ch=c[col.no],fr=c[col.freq];if(ch==null||String(ch).trim()===""||fr==null||String(fr).trim()==="")return;found=true;
+      if(!col||!band||band==="skip")return;const ch=c[col.no],fr=c[col.freq];if(ch==null||String(ch).trim()===""||fr==null||String(fr).trim()==="")return;found=true;
       out[band].push({ch:String(ch).trim(),call:String(c[col.call]??"").trim(),desc:String(c[col.desc]??"").trim(),fix:String(c[col.fix]??"").trim(),freq:String(fr).trim(),morse:String(c[col.morse]??"").trim()})})});
   return found?out:null}
 function sopDiff(oldW,newW,oldP,newP){const out=[],byNo=L=>new Map(L.map(x=>[String(x.no),x]));const A=byNo(oldW),B=byNo(newW);
