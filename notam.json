@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-15T15:02Z",
+"fetched": "2026-11-15T16:00Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1125,6 +1125,15 @@
 "plain": " ",
 "start": "11/04/2026 0818",
 "end": "11/20/2026 1500",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTSB",
+"id": "A4579/26",
+"icao": "A4579/26 NOTAMN\r\nQ) VTBB/QFAAH/IV/BO/A/000/999/0908N09908E005\r\nA) VTSB B) 2611151502 C) 2611151700\r\nE) AD OPR HR ATS AND ARO HR SER EXTD TO 1700",
+"plain": " ",
+"start": "11/15/2026 1502",
+"end": "11/15/2026 1700",
 "keyword": "INTERNATIONAL"
 },
 {
