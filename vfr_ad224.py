@@ -303,7 +303,12 @@ def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=N
             continue
         pts, rts = raw.get(ic, ([], []))
         ids = {p["id"] for p in m.get("pts", []) if p.get("id")}
-        pts = [dict(p, man=1) for p in m.get("pts", [])] + [p for p in pts if p.get("id") not in ids]
+        if m.get("replace"):  # แทนที่ทั้งชุด (เช่น สนามที่ OCR อ่านชื่อ/จุดสังเกตเพี้ยน)
+            pts = [dict(p, man=1) for p in m.get("pts", [])]
+        else:
+            pts = [dict(p, man=1) for p in m.get("pts", [])] + [p for p in pts if p.get("id") not in ids]
+        if m.get("rt"):  # เส้นทางที่กรอกเอง: seq = [[ชื่อ/id, alt|null], ...]
+            rts = [dict(r, ch=r.get("ch", "manual")) for r in m["rt"]] + ([] if m.get("rt_replace") else rts)
         raw[ic] = (pts, rts)
     # พจนานุกรมจุดรวมทุกสนาม (ชื่อเดียวกันใช้ร่วมกัน เช่น จุดรอบกรุงเทพ VTBD/VTBS)
     G, G2 = {}, {}
