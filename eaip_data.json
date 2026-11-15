@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-15T14:18",
+ "fetched": "2026-11-15T15:13",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -10731,269 +10731,260 @@
    "vfr": {
     "pts": [
      {
-      "n": "\"N\" or NOVEMBER Point",
-      "lat": 12.878339,
-      "lon": 99.917167,
+      "n": "N POINT",
+      "lm": "Ban Nong Pao Tan (Road Intersection)",
       "rd": "R-353 / 14.7D",
-      "ocr": 1,
+      "lat": 12.8783389,
+      "lon": 99.9171667,
       "id": "N",
-      "lm": "Ban Nong Pao Tan"
+      "man": 1
      },
      {
-      "n": "\"K\" or KILO Point",
-      "lat": 12.709533,
-      "lon": 99.898203,
+      "n": "K POINT",
+      "lm": "Hill",
       "rd": "R-326 / 5.5D",
-      "ocr": 1,
-      "id": "K"
+      "lat": 12.7095333,
+      "lon": 99.8982028,
+      "id": "K",
+      "man": 1
      },
      {
-      "n": "\"P\" or PAPA Point",
-      "lat": 12.392039,
-      "lon": 99.884139,
+      "n": "P POINT",
+      "lm": "Amphoe Pran Buri (Road Intersection)",
       "rd": "R-196 / 15.0D",
-      "ocr": 1,
+      "lat": 12.3920389,
+      "lon": 99.8841389,
       "id": "P",
-      "lm": "Amphoe Pran Buri"
+      "man": 1
      },
      {
-      "n": "\"X\" or X-RAY Point",
-      "lat": 12.576108,
-      "lon": 99.866947,
+      "n": "X POINT",
+      "lm": "Road Intersection",
       "rd": "R-235 / 6.0D",
-      "ocr": 1,
+      "lat": 12.5761083,
+      "lon": 99.8669472,
       "id": "X",
-      "lm": "Road Intersection"
+      "man": 1
      },
      {
-      "n": "Khao Wang Khao Wang Palace",
-      "lat": 13.107511,
-      "lon": 99.933194,
+      "n": "KHAO WANG",
+      "lm": "Khao Wang Palace",
       "rd": "R-358 / 28.3D",
-      "ocr": 1
+      "lat": 13.1075111,
+      "lon": 99.9331944,
+      "man": 1
      },
      {
-      "n": "Sam Roi Yot Sam Roi Yot",
-      "lat": 12.212694,
-      "lon": 99.880639,
+      "n": "SAM ROI YOT",
+      "lm": "Sam Roi Yot Railway Station",
       "rd": "R-190 / 25.5D",
-      "ocr": 1
+      "lat": 12.2126944,
+      "lon": 99.8806389,
+      "man": 1
      },
      {
       "n": "Parachute Jumping Area",
-      "lat": 12.688756,
-      "lon": 99.961111,
+      "lm": "Landmark · Notified by NOTAM",
       "rd": "R-011 / 3.3D",
-      "ocr": 1
+      "lat": 12.6887556,
+      "lon": 99.9611111,
+      "man": 1
      },
      {
       "n": "Abandoned Aerodrome (North)",
-      "lat": 12.871933,
-      "lon": 99.794486,
+      "lm": "Landmark",
       "rd": "R-328 / 16.9D",
-      "ocr": 1
+      "lat": 12.8719333,
+      "lon": 99.7944861,
+      "man": 1
      },
      {
       "n": "Huai Sai Tai Temple",
-      "lat": 12.669503,
-      "lon": 99.945058,
+      "lm": "Landmark",
       "rd": "R-351 / 2.1D",
-      "ocr": 1
+      "lat": 12.6695028,
+      "lon": 99.9450583,
+      "man": 1
      },
      {
       "n": "Palm Pavilion Condo",
-      "lat": 12.617986,
-      "lon": 99.954539,
+      "lm": "Landmark",
       "rd": "R-169 / 1.0D",
-      "ocr": 1
+      "lat": 12.6179861,
+      "lon": 99.9545389,
+      "man": 1
      },
      {
       "n": "Abandoned Aerodrome (South)",
-      "lat": 12.390542,
-      "lon": 99.959806,
+      "lm": "Landmark",
       "rd": "R-179 / 14.6D",
-      "ocr": 1
-     },
-     {
-      "n": "\"SE\" or SOUTH EAST pon!",
-      "lat": 12.600975,
-      "lon": 100.0476,
-      "rd": "R-110 / 6.0D",
-      "ocr": 1,
-      "id": "SE"
-     },
-     {
-      "n": "Lham Pak Bia Lham Pak Bia",
-      "lat": 13.062978,
-      "lon": 100.105478,
-      "rd": "R-020 / 27.1D",
-      "ocr": 1
-     },
-     {
-      "n": "Sat Ta Kut Sat Ta Kut Island",
-      "lat": 12.210247,
-      "lon": 100.029864,
-      "rd": "R-170 / 25.8D",
-      "ocr": 1
-     },
-     {
-      "n": "Sam Roi Yot Sam Rol Yot",
-      "lat": 12.212694,
-      "lon": 99.880639,
-      "rd": "R-190 / 25.5D",
-      "ocr": 1
+      "lat": 12.3905417,
+      "lon": 99.9598056,
+      "man": 1
      }
     ],
     "rt": [
      {
-      "c": "G",
-      "ch": "VFR ENTRY PROCEDURE CHART - RWY 16/34",
-      "sec": "ARR",
-      "dir": "ARR-RWY 16/34 (From North)",
-      "seq": [
-       [
-        "Khao Wang",
-        null,
-        13.107511,
-        99.933194
-       ],
-       [
-        "N",
-        null,
-        12.878339,
-        99.917167
-       ],
-       [
-        "K",
-        null,
-        12.709533,
-        99.898203
-       ]
-      ],
-      "txt": "Inbound via Khao Wang. Then heading 184° to N POINT, heading 187° to K POINT, then turn left heading 146° proceed to over aerodrome and join aerodrome traffic circuit when directed by ATC."
-     },
-     {
-      "c": "G",
-      "ch": "VFR ENTRY PROCEDURE CHART - RWY 16/34",
-      "sec": "ARR",
-      "dir": "ARR-RWY 16/34 (From South)",
-      "seq": [
-       [
-        "Sam Roi Yot",
-        null,
-        12.212694,
-        99.880639
-       ],
-       [
-        "P",
-        null,
-        12.392039,
-        99.884139
-       ],
-       [
-        "X",
-        null,
-        12.576108,
-        99.866947
-       ]
-      ],
-      "txt": "Inbound via Sam Roi Yot. Then heading 002° to P POINT, heading 355° to X POINT, then turn right heading 055° procced to over aerodrome and join aerodrome traffic circuit when directed by ATC."
-     },
-     {
       "c": "H",
-      "ch": "VFR ENTRY PROCEDURE FOR HELICOPTER CHART - RWY 16/34",
+      "ch": "manual",
       "sec": "ARR",
-      "dir": "ARR-RWY 16/34 (From North)",
+      "dir": "ARR-RWY16/34 (From North)",
       "seq": [
        [
-        "Khao Wang",
+        "KHAO WANG",
         null,
-        13.107511,
-        99.933194
+        13.1075111,
+        99.9331944
        ],
        [
         "N",
         null,
-        12.878339,
-        99.917167
+        12.8783389,
+        99.9171667
        ],
        [
         "K",
         null,
-        12.709533,
-        99.898203
+        12.7095333,
+        99.8982028
        ]
       ],
       "txt": "Inbound via Khao Wang. Then heading 184° to N POINT, heading 187° to K POINT, then turn left heading 148° to join aerodrome traffic circuit when directed by ATC."
      },
      {
       "c": "H",
-      "ch": "VFR ENTRY PROCEDURE FOR HELICOPTER CHART - RWY 16/34",
+      "ch": "manual",
       "sec": "ARR",
-      "dir": "ARR-RWY 16/34 (From South)",
+      "dir": "ARR-RWY16/34 (From South)",
       "seq": [
        [
-        "Sam Roi Yot",
+        "SAM ROI YOT",
         null,
-        12.212694,
-        99.880639
+        12.2126944,
+        99.8806389
        ],
        [
         "P",
         null,
-        12.392039,
-        99.884139
+        12.3920389,
+        99.8841389
        ],
        [
         "X",
         null,
-        12.576108,
-        99.866947
+        12.5761083,
+        99.8669472
        ]
       ],
       "txt": "Inbound via Sam Roi Yot. Then heading 002° to P POINT, heading 355° to X POINT, then turn right heading 051° to join aerodrome traffic circuit when directed by ATC."
      },
      {
       "c": "H",
-      "ch": "VFR EXIT PROCEDURE FOR HELICOPTER CHART - RWY 34",
+      "ch": "manual",
       "sec": "DEP",
-      "dir": "DEP-RWY3é4 (North)",
+      "dir": "DEP-RWY16 (North)",
       "seq": [
        [
         "K",
         null,
-        12.709533,
-        99.898203
+        12.7095333,
+        99.8982028
        ],
        [
         "N",
         null,
-        12.878339,
-        99.917167
+        12.8783389,
+        99.9171667
+       ],
+       [
+        "KHAO WANG",
+        null,
+        13.1075111,
+        99.9331944
+       ]
+      ],
+      "txt": "To avoid VT R3, after departure turn right heading 270° as soon as possible. Then turn right to join right downwind and heading 340° to K POINT. Then turn right heading 007° to N POINT and proceed to Khao Wang."
+     },
+     {
+      "c": "H",
+      "ch": "manual",
+      "sec": "DEP",
+      "dir": "DEP-RWY16 (South)",
+      "seq": [
+       [
+        "X",
+        null,
+        12.5761083,
+        99.8669472
+       ],
+       [
+        "P",
+        null,
+        12.3920389,
+        99.8841389
+       ],
+       [
+        "SAM ROI YOT",
+        null,
+        12.2126944,
+        99.8806389
+       ]
+      ],
+      "txt": "To avoid VT R3, after departure turn right heading 270° as soon as possible until 2.5 DME. Then turn left heading 223° to X POINT. Then turn left heading 175° to P POINT and heading 182° to Sam Roi Yot."
+     },
+     {
+      "c": "H",
+      "ch": "manual",
+      "sec": "DEP",
+      "dir": "DEP-RWY34 (North)",
+      "seq": [
+       [
+        "K",
+        null,
+        12.7095333,
+        99.8982028
+       ],
+       [
+        "N",
+        null,
+        12.8783389,
+        99.9171667
+       ],
+       [
+        "KHAO WANG",
+        null,
+        13.1075111,
+        99.9331944
        ]
       ],
       "txt": "After departure turn left heading 319° to K POINT. Then turn right heading 007° to N POINT and proceed to Khao Wang."
      },
      {
       "c": "H",
-      "ch": "VFR EXIT PROCEDURE FOR HELICOPTER CHART - RWY 34",
+      "ch": "manual",
       "sec": "DEP",
       "dir": "DEP-RWY34 (South)",
       "seq": [
        [
         "X",
         null,
-        12.576108,
-        99.866947
+        12.5761083,
+        99.8669472
        ],
        [
         "P",
         null,
-        12.392039,
-        99.884139
+        12.3920389,
+        99.8841389
+       ],
+       [
+        "SAM ROI YOT",
+        null,
+        12.2126944,
+        99.8806389
        ]
       ],
-      "txt": "After departure turn left to join left downwind. Continue on left downwind until mid of runway. Then turn right heading 229 ° to X POINT. Then turn left heading 175° to P POINT and heading 182° to Sam Roi Yot."
+      "txt": "After departure turn left to join left downwind. Continue on left downwind until mid of runway. Then turn right heading 229° to X POINT. Then turn left heading 175° to P POINT and heading 182° to Sam Roi Yot."
      }
     ]
    }
