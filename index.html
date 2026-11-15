@@ -1327,6 +1327,23 @@ body.pvprev .pv-free .pv-blk.sel[data-g]{outline:2px dashed #7c3aed}
 .bk-dlg{border:0;border-radius:16px;padding:18px 20px;max-width:440px;width:calc(100% - 32px);background:var(--panel);color:var(--ink);box-shadow:0 20px 60px #0006}
 .bk-dlg h3{margin:0 0 8px}.bk-dlg label{display:flex;flex-direction:column;gap:4px;margin:8px 0;font-weight:700}.bk-dlg input{padding:10px;border-radius:10px;font-size:16px}.bk-dlg .btns{margin-top:12px}
 .ppc-off{text-decoration:line-through;opacity:.45;filter:grayscale(1);cursor:not-allowed;pointer-events:none}
+.cp-subs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.cp-subs button{padding:8px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--cc) 40%,transparent);background:color-mix(in srgb,var(--cc) 8%,transparent);color:var(--ink);font-weight:700;cursor:pointer}
+#tab-wpdb .cp-subs button:hover{background:color-mix(in srgb,var(--cc) 18%,transparent);color:var(--ink)}#tab-wpdb .cp-subs button.on,#tab-wpdb .cp-subs button.on:hover{background:var(--cc);color:#fff;border-color:var(--cc)}
+.cp-pickbar{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0}.cp-pickbar label{display:flex!important;flex-direction:row!important;align-items:center;gap:6px;white-space:nowrap}#tab-wpdb .cp-pickbar input{width:80px}
+.base-q{display:flex;gap:8px;margin:10px 0;align-items:center}#tab-wpdb .base-q input{flex:1 1 auto;min-width:0;width:auto}#tab-wpdb .base-q select{flex:0 0 auto;width:auto;max-width:40%}
+.base-cat{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:800;color:#fff;background:#64748b;white-space:nowrap}
+.base-cat.c-wp{background:#0d9488}.base-cat.c-fm{background:#15803d}.base-cat.c-vhf{background:#2563eb}.base-cat.c-uhf{background:#7c3aed}.base-cat.c-vor{background:#b45309}.base-cat.c-adf{background:#be123c}.base-cat.c-tcn{background:#475569}
+.pick-dlg{max-width:720px}.pick-list{max-height:55vh;overflow:auto;display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.pick-r{display:grid!important;grid-template-columns:auto auto 100px 1fr auto;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;background:var(--input);margin:0!important;font-weight:500!important}
+.pick-r i{font-style:normal;font-size:12px;color:var(--muted);white-space:nowrap}.pick-r span:not(.base-cat){font-size:13px}
+@media (max-width:600px){.pick-r{grid-template-columns:auto auto 1fr}.pick-r>span:not(.base-cat),.pick-r i{grid-column:2/-1}}
+.fpl-r{border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}.fpl-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.fpl-h input{width:120px;font-weight:800}.fpl-h .btns{margin-left:auto}
+.fpl-seq{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.fpl-seq span{font:600 13px var(--f-mono);padding:3px 8px;border-radius:6px;background:var(--input)}.fpl-seq span i{font-style:normal;color:var(--muted);font-size:11px}.fpl-seq span.bad{background:#fee2e2;color:#991b1b}
+.box-bar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1300;background:#0d9488;color:#fff;font-weight:800;padding:8px 14px;border-radius:999px;box-shadow:0 4px 14px #0005;display:flex;gap:10px;align-items:center}.box-bar button{border:0;border-radius:999px;padding:4px 10px;font-weight:700;cursor:pointer}
+.box-sel{cursor:crosshair!important;touch-action:none}
+.imp-rep{margin:6px 0 10px;padding-left:18px;line-height:1.6}.imp-rep .bad{color:#dc2626;font-weight:700}
+.cmp-tbl tr.st-0 td{background:color-mix(in srgb,#ef4444 10%,transparent)}.cmp-tbl tr.st-1 td{background:color-mix(in srgb,#f59e0b 9%,transparent)}
+.sop-stats .ok b{color:#16a34a}.sop-stats .bad b{color:#dc2626}.sop-stats .warn b{color:#d97706}
 .cr h3{margin:0 0 10px;font:800 18px var(--f-display)}
 .cr-mode{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cr-mode button{border-radius:999px;padding:8px 14px}.cr-mode button.on{background:var(--cc);color:#fff;border-color:var(--cc)}
 .cr-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
@@ -1766,15 +1783,18 @@ body.cl-on{overflow:hidden}
 <section id="tab-wpdb" class="tabpanel" hidden>
  <div class="cp-wrap">
   <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-blue">Preset ของหน่วย</h2>
-   <div class="btns"><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
+   <div class="btns"><button type="button" id="cpXlsOut">📤 ส่งออก Excel (ตรวจทาน / พิมพ์)</button><button type="button" onclick="document.querySelector('.rail [data-tab=data]').click()">📥 นำเข้า / ตัวอย่าง Excel (แท็บ 9)</button></div></div>
    <p class="hint">เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · เลข <b>Preset</b> ของ Waypoint จะแสดงแทนเลขลำดับบนแผนที่ เช่น ต้นทาง VTBH = Preset 1, ปลายทาง CAVPAD = Preset 13 · จุดที่ไม่มี Preset แสดงเลขลำดับแบบขอบชมพู</p>
-   <nav class="cp-nav"><span class="cpg" style="--cc:#2563eb"><i>📻 วิทยุ</i><a href="#cpFm">1 FM</a><a href="#cpVhf">2 VHF</a><a href="#cpUhf">3 UHF</a><a href="#cpNav">4 VOR/ADF</a></span><span class="cpg" style="--cc:#0d9488"><i>📍 จุด / DTD</i><a href="#cpWp">5 Waypoint</a><a href="#cpChk">6 ตรวจความพร้อม</a></span><span class="cpg" style="--cc:#6d5bd0"><i>👤 ส่วนตัว</i><a href="#cpCt">7 ผู้ติดต่อ</a><a href="#cpFlog">8 ประวัติการบิน</a></span></nav></div>
-  <div class="card section cp-sec" id="cpFm" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
-  <div class="card section cp-sec" id="cpVhf" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
-  <div class="card section cp-sec" id="cpUhf" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
-  <div class="card section cp-sec" id="cpNav" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>4</span>🧭 VOR / ADF</h2><div class="btns"><button data-cpadd="vor">＋ VOR</button><button data-cpadd="adf">＋ ADF</button></div></div>
-   <h3 class="cp-sub">VOR / ILS</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="vor"></table></div><h3 class="cp-sub">ADF / NDB</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="adf"></table></div></div>
-  <div class="card section cp-sec" id="cpWp" style="--cc:#0d9488">
+   <nav class="cp-subs" role="tablist" aria-label="หมวดในแท็บ Preset">
+    <button type="button" data-cpsub="radio" style="--cc:#2563eb">📻 วิทยุ</button><button type="button" data-cpsub="wp" style="--cc:#0d9488">📍 Waypoint</button><button type="button" data-cpsub="fpl" style="--cc:#0d9488">🗺 Flight plan</button>
+    <button type="button" data-cpsub="base" style="--cc:#b45309">📚 คลัง BASE</button><button type="button" data-cpsub="chk" style="--cc:#16a34a">✅ ตรวจ / เทียบ</button>
+    <button type="button" data-cpsub="ct" style="--cc:#6d5bd0">👥 ผู้ติดต่อ</button><button type="button" data-cpsub="flog" style="--cc:#6d5bd0">🛫 ประวัติการบิน</button></nav></div>
+  <div class="card section cp-sec" id="cpFm" data-sub="radio" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>1</span>📻 FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
+  <div class="card section cp-sec" id="cpVhf" data-sub="radio" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>2</span>📡 VHF</h2><div class="btns"><button data-cpadd="vhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="vhf"></table></div></div>
+  <div class="card section cp-sec" id="cpUhf" data-sub="radio" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>3</span>📡 UHF</h2><div class="btns"><button data-cpadd="uhf">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="uhf"></table></div></div>
+  <div class="card section cp-sec" id="cpNav" data-sub="radio" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>4</span>🧭 VOR / ADF</h2><div class="btns"><button data-cpadd="vor">＋ VOR</button><button data-cpadd="adf">＋ ADF</button><button data-cpadd="tcn">＋ TACAN</button></div></div>
+   <h3 class="cp-sub">VOR / ILS</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="vor"></table></div><h3 class="cp-sub">ADF / NDB</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="adf"></table></div><h3 class="cp-sub">TACAN</h3><div class="tablewrap"><table class="cp-tbl" data-cpband="tcn"></table></div></div>
+  <div class="card section cp-sec" id="cpWp" data-sub="wp" style="--cc:#0d9488">
    <div class="sechead"><h2 class="cp-h"><span>5</span>📍 Waypoint <b id="cpWpN"></b></h2>
     <div class="btns"><button id="dbAdd" class="primary">＋ เพิ่มแถว</button><button id="dbExport">Export</button>
      <button id="dbClear">ลบทั้งหมด</button></div></div>
@@ -1786,18 +1806,38 @@ body.cl-on{overflow:hidden}
     <p id="dbPasteInfo" class="hint"></p></details>
    <div class="tablewrap"><table id="dbTable"><thead><tr><th>Preset</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
   </div>
- <div class="card section cp-sec" id="cpChk" style="--cc:#0d9488">
+ <div class="card section cp-sec" id="cpChk" data-sub="chk" style="--cc:#0d9488">
    <div class="sechead"><h2 class="cp-h"><span>6</span>✅ ตรวจความพร้อมก่อนเสียบการ์ด DTD</h2><div class="btns"><button id="chkCopy" title="คัดลอกผลตรวจเป็นข้อความ">📋 คัดลอกผลตรวจ</button><button id="dbCopyRoute" class="primary" title="คัดลอกรายการที่ต้องคีย์ใน FalconView">📋 คัดลอกรายการที่ต้องคีย์</button></div></div>
    <p class="hint">เทียบเส้นทางในแท็บ 1 และความถี่ที่เลือกพิมพ์ลง Kneeboard กับข้อมูลในหมวด 1–5 ด้านบน · อัปเดตเองทุกครั้งที่แก้แผน</p>
    <div id="chkBox"></div><div id="keyBox" class="keybox"></div></div>
-  <div class="card section cp-sec" id="cpCt" style="--cc:#6d5bd0">
+  <div class="card section cp-sec" id="cpPick" data-sub="wp" style="--cc:#0d9488">
+   <div class="sechead"><h2 class="cp-h"><span>＋</span>เพิ่ม Waypoint ของเที่ยวบินนี้</h2></div>
+   <p class="hint">Preset หลักของหน่วยใช้เลข 1–60 · จุดของเที่ยวบิน (เช่น VFR entry/exit ของปลายทาง) เพิ่มต่อจากเลขที่ตั้งไว้ · หยิบจาก <b>คลัง BASE</b> และจุด VFR ของ eAIP (AD 2.24)</p>
+   <div class="cp-pickbar"><label>เริ่มที่เลข <input id="cpStart" type="number" min="1" value="61" inputmode="numeric"></label><label>ห่างเส้นทางไม่เกิน <input id="cpCorr" type="number" min="1" value="10" inputmode="decimal"> NM</label></div>
+   <div class="btns"><button type="button" class="primary" data-cppick="route">🧭 ตามเส้นทางแท็บ 1</button><button type="button" data-cppick="box">⬚ ลากกรอบบนแผนที่</button><button type="button" data-cppick="vfr">◆ จุด VFR ของสนามในเส้นทาง</button></div></div>
+  <div class="card section cp-sec" id="cpFpl" data-sub="fpl" style="--cc:#0d9488">
+   <div class="sechead"><h2 class="cp-h"><span>🗺</span>Flight plan (FLT PLANS) <b id="fplN"></b></h2><div class="btns"><button type="button" class="primary" id="fplFromRoute">＋ สร้างจากเส้นทางแท็บ 1</button></div></div>
+   <p class="hint">เหมือนหน้า FPLN ในจอ FMS: เลข · ชื่อไม่เกิน 8 ตัว · ลำดับเลข Waypoint preset · กด ⇄ เพื่อกลับเส้นทาง (REVERSE)</p>
+   <div id="fplList"></div>
+   <h3 class="cp-sub">Flight plan ในคลัง BASE</h3><div id="fplBase"></div></div>
+  <div class="card section cp-sec" id="cpBase" data-sub="base" style="--cc:#b45309">
+   <div class="sechead"><h2 class="cp-h"><span>📚</span>คลัง BASE</h2><div class="btns"><button type="button" class="primary" id="baseImp">📥 นำเข้า BASE (Excel)</button><button type="button" id="baseTpl">⬇️ เทมเพลต BASE</button><button type="button" id="baseClr">ลบคลัง</button><input id="baseFile" type="file" accept=".xlsx" hidden></div></div>
+   <p class="hint">คลังข้อมูลรวมทุกสนาม/ทุกความถี่ของหน่วย — <b>ไม่ใช่</b> ชุดที่ใส่การ์ด · ใช้หยิบมาเป็น Preset ของเที่ยวบิน และใช้เทียบกับไฟล์จาก FalconView · เก็บในเครื่องนี้เท่านั้น</p>
+   <div id="baseInfo"></div>
+   <div class="base-q"><input id="baseQ" type="search" placeholder="ค้นหา ID / callsign / รายละเอียด / ความถี่ เช่น VTUK, 122.7" autocomplete="off"><select id="baseCat" aria-label="หมวด"><option value="">ทุกหมวด</option><option value="wp">Waypoint</option><option value="fm">FM</option><option value="vhf">VHF</option><option value="uhf">UHF</option><option value="vor">VOR/ILS</option><option value="adf">ADF</option><option value="tcn">TACAN</option></select></div>
+   <div class="tablewrap" id="baseList"></div></div>
+  <div class="card section cp-sec" id="cpCmp" data-sub="chk" style="--cc:#16a34a">
+   <div class="sechead"><h2 class="cp-h"><span>⇄</span>เทียบชุดปัจจุบันกับคลัง BASE</h2><div class="btns"><button type="button" id="cmpImp">📥 นำเข้าไฟล์จาก FalconView</button><button type="button" id="cmpCopy">คัดลอกผล</button></div></div>
+   <p class="hint">เทียบ Preset ชุดปัจจุบัน (เช่น ที่นำเข้าจาก FalconView) กับคลัง BASE ด้วย ID / callsign · ✓ ตรง · ✗ ค่าไม่ตรง · ⚠ ไม่มีใน BASE</p>
+   <div id="cmpBox"></div></div>
+  <div class="card section cp-sec" id="cpCt" data-sub="ct" style="--cc:#6d5bd0">
    <div class="sechead"><h2 class="cp-h"><span>7</span>👥 ผู้ติดต่อ <b id="ctN"></b></h2>
     <div class="btns"><button id="ctAdd" class="primary">＋ เพิ่ม</button><button id="ctImpAdd">📥 นำเข้า Excel / JSON</button><button id="ctImpRep">แทนที่ทั้งหมด</button><button id="ctExport">📤 ส่งออก JSON</button><button id="ctTpl">⬇ ไฟล์ตัวอย่าง Excel</button><button id="ctClear">ลบทั้งหมด</button></div></div>
    <p class="hint ct-lock">🔒 <b>ข้อมูลส่วนบุคคล — เก็บในเครื่องนี้เท่านั้น</b> ไม่ขึ้น GitHub / อินเทอร์เน็ต ผู้อื่นที่เปิดแอปไม่เห็น · ย้ายไปเครื่องอื่นใช้ “ส่งออก JSON” แล้วนำเข้าที่เครื่องนั้น · ไฟล์ Excel ต้องมีหัวคอลัมน์ เช่น ชื่อ จนท. · ตำแหน่ง/หน้าที่ · หน่วย · จังหวัด · พื้นที่/อำเภอ · เบอร์โทร · วิทยุ/ความถี่ · พิกัด · หมายเหตุ (ไฟล์ตัวอย่างมี dropdown จังหวัดให้)</p>
    <div class="ct-filter"><input id="ctQ" type="search" placeholder="ค้นหา ชื่อ / หน่วย / เบอร์ / หน้าที่ เช่น รถเติมน้ำมัน" autocomplete="off"><select id="ctProvF" aria-label="กรองจังหวัด"></select></div>
    <div class="tablewrap"><table id="ctTable" class="ct-tbl"></table></div>
    <input id="ctFile" type="file" accept=".xlsx,.json,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden></div>
-  <div class="card section cp-sec" id="cpFlog" style="--cc:#6d5bd0">
+  <div class="card section cp-sec" id="cpFlog" data-sub="flog" style="--cc:#6d5bd0">
    <div class="sechead"><h2 class="cp-h"><span>8</span>🛫 ประวัติการบิน</h2><div class="btns"><button id="flogCsv">📤 ส่งออก Excel (CSV)</button></div></div>
    <p class="hint">บันทึกอัตโนมัติทุกครั้งที่เปิด <b>✈ โหมดบิน</b> (ไม่บันทึกตอนจำลอง) · เก็บในเครื่องนี้เท่านั้น · ระหว่างบินให้เปิดแอปค้างไว้ — ถ้าสลับไปแอปอื่นหรือปิดจอ ช่วงนั้นจะไม่มีข้อมูล (แสดงเป็นเส้นประสีส้ม) · เวลาขึ้น/ลงตรวจจากความเร็ว แก้ได้ด้วย ✏️</p>
    <div id="flogSum" class="flog-sum"></div>
@@ -1825,22 +1865,11 @@ body.cl-on{overflow:hidden}
   <div class="card section dbox dwide">
    <div class="sechead"><h2 class="hd hd-indigo">3. Preset — Waypoint / วิทยุ (Excel)</h2>
     <div class="btns"><button type="button" id="cpTplDl">⬇️ โหลดไฟล์ตัวอย่าง</button><button class="primary" type="button" onclick="document.getElementById('dbImport').click()">📥 Import Excel</button><input id="dbImport" type="file" accept=".xlsx,.json,.csv,.txt,application/json,text/csv" hidden></div></div>
-   <ol class="dhelp"><li>กด <b>⬇️ โหลดไฟล์ตัวอย่าง</b> แล้วเปิดใน Excel — มี 6 ชีต: <b>Waypoint, FM, VHF, UHF, VOR, ADF PRESET</b></li>
-    <li>ลบแถวตัวอย่าง แล้วใส่ข้อมูลของหน่วย <b>เริ่มที่แถว 4</b> ห้ามแก้หัวตาราง (แถว 3) และชื่อชีต</li>
-    <li>ชีต Waypoint: <b>NO.</b> = เลข Preset ที่จะแสดงบนแผนที่ · ใส่ <b>MGRS</b> หรือ <b>LAT/LON</b> (ทศนิยม) อย่างใดอย่างหนึ่ง</li>
-    <li>ชีต PRESET: <b>NO.</b> = ช่อง · <b>FREQ</b> ตัวเลขอย่างเดียว (ADF เป็น kHz)</li>
-    <li>บันทึกไฟล์ แล้วกด <b>📥 Import Excel</b> — ไฟล์ Excel ที่ export จาก FalconView (SOP_COMCoordinate) ก็ใช้ได้เหมือนกัน · ผลดูที่แท็บ 8 Preset</li></ol>
-   <div class="xl-demo" aria-label="ตัวอย่างหน้าตาไฟล์ Excel">
-    <div class="xl-bar"><span class="xl-ic">X</span>CP_ตัวอย่าง.xlsx</div>
-    <table><tr class="xl-cols"><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
-     <tr><th>1</th><td colspan="6"><b>WAYPOINT</b></td></tr>
-     <tr><th>2</th><td colspan="6" class="xl-note">NO. = เลข Preset · ใส่ MGRS หรือ LAT/LON</td></tr>
-     <tr class="xl-h"><th>3</th><td>NO.</td><td>DTD ID</td><td>DESCRIPTION</td><td>MGRS</td><td>LAT</td><td>LON</td></tr>
-     <tr><th>4</th><td>1</td><td>VTBH</td><td>สนามต้นทาง</td><td>47P PS 76697 53383</td><td></td><td></td></tr>
-     <tr><th>5</th><td>2</td><td>VTBD</td><td>ดอนเมือง</td><td></td><td>13.9126</td><td>100.6068</td></tr>
-     <tr><th>6</th><td>13</td><td>CP13</td><td>จุดที่หน่วยกำหนด</td><td>47P QS 12345 67890</td><td></td><td></td></tr></table>
-    <div class="xl-tabs"><span class="on">Waypoint</span><span>FM PRESET</span><span>VHF PRESET</span><span>UHF PRESET</span><span>VOR PRESET</span><span>ADF PRESET</span></div>
-   </div>
+   <ol class="dhelp"><li>กด <b>⬇️ โหลดไฟล์ตัวอย่าง</b> — ไฟล์เดียวกับ <b>คลัง BASE</b> (แท็บ 8) มีชีต <b>FM / VHF / UHF Presets · WAYPOINT · ADF-VOR Presets · ROUTE</b></li>
+    <li>ปุ่ม <b>📥 Import Excel</b> ที่นี่ = ใส่เป็น <b>ชุดปัจจุบัน</b> (ชุดที่จะเขียนลงการ์ด DTD) เช่น ไฟล์ที่ export จาก FalconView — แทนที่ชุดเดิมทั้งหมด</li>
+    <li>คลังข้อมูลรวมของหน่วย ให้นำเข้าที่ <b>แท็บ 8 › 📚 คลัง BASE</b> (คนละที่กัน เพื่อเอามาเทียบกันได้)</li>
+    <li>ห้ามเปลี่ยนชื่อชีต / ชื่อหัวคอลัมน์ · ห้ามใส่ comment ในเซลล์ · ย้ายแถว/สลับคอลัมน์ได้ · หลังนำเข้าจะมีรายงานว่าอ่านเจออะไรบ้าง</li>
+    <li>LAT/LONG เป็นทศนิยม (14.950535) · MGRS และ MORSE เว้นว่างได้ แอปคำนวณให้</li></ol>
    <div id="sopInfo" class="sop-info"></div>
    <div id="sopDiff"></div>
   </div>
@@ -4416,7 +4445,8 @@ function dbRender(){if(typeof cpRender==="function")setTimeout(cpRender,0);const
 /* ---------- Preset วิทยุ (เก็บถาวร แก้ได้ทุกช่อง) ---------- */
 const PS_BANDS=[{k:"vhf",t:"VHF AM",tag:"V",lo:116,hi:174},{k:"uhf",t:"UHF",tag:"U",lo:225,hi:400},{k:"fm",t:"FM",tag:"FM",lo:30,hi:88},{k:"vor",t:"VOR/ILS",tag:"VOR",lo:108,hi:118},{k:"adf",t:"ADF",tag:"ADF",lo:190,hi:1800}];
 let psBand="vhf";
-function psAll(){const d=store.get("vfr_presets")||{};PS_BANDS.forEach(b=>d[b.k]=d[b.k]||[]);return d}
+function psAll(){const d=store.get("vfr_presets")||{};PS_BANDS.forEach(b=>d[b.k]=d[b.k]||[]);d.tcn=d.tcn||[];return d}
+const TCN_BAND={k:"tcn",t:"TACAN",tag:"TCN",lo:-Infinity,hi:Infinity};
 function psSave(d){store.set("vfr_presets",d)}
 function bandOf(f){return PS_BANDS.find(b=>f>=b.lo&&f<b.hi&&!(b.k==="vor"&&f>=118))||null}
 /* ตัวเลขที่ไม่มีทศนิยมรับเฉพาะย่าน ADF/UHF · ตัดเลขช่อง TACAN (38X) และเลขที่ติดตัวอักษร */
@@ -4427,8 +4457,8 @@ function psFind(f,ap){const d=psAll(),out=[];PS_BANDS.forEach(b=>{if(f<b.lo||f>=
 function psTags(t,ap){const fs=freqNums(t);return fs.map(f=>psFind(f,ap).map(({b,x})=>`<span class="pstag" title="${esc(b.t)} ช่อง ${esc(x.ch)} · ${esc(x.call||"")}">${b.tag}${esc(x.ch)}</span>`).join("")).join("")}
 function psTagTxt(t,ap){return freqNums(t).flatMap(f=>psFind(f,ap).map(({b,x})=>b.tag+x.ch)).join(",")}
 /* แท็บ 8 Preset: ตาราง preset แยกตามย่าน (แนวตั้ง) */
-function cpRender(){const d=psAll();document.querySelectorAll(".cp-tbl[data-cpband]").forEach(T=>{const k=T.dataset.cpband,b=PS_BANDS.find(x=>x.k===k),L=d[k]||[];
-  T.innerHTML=`<thead><tr><th>Preset</th><th>Call sign / ID</th><th>ความถี่</th><th>รายละเอียด</th><th></th></tr></thead><tbody>${L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);
+function cpRender(){const d=psAll();document.querySelectorAll(".cp-tbl[data-cpband]").forEach(T=>{const k=T.dataset.cpband,b=PS_BANDS.find(x=>x.k===k)||TCN_BAND,L=d[k]||[];
+  T.innerHTML=`<thead><tr><th>Preset</th><th>Call sign / ID</th><th>${k==="tcn"?"Channel":"ความถี่"}</th><th>รายละเอียด</th><th></th></tr></thead><tbody>${L.map((x,i)=>{const f=num(x.freq),bad=f!=null&&!(f>=b.lo&&f<b.hi);
     return`<tr><td class="w-s"><input data-cp="${i}" data-k="ch" value="${esc(x.ch)}" class="cp-no" inputmode="numeric"></td><td class="name"><input data-cp="${i}" data-k="call" value="${esc(x.call||"")}"></td>
     <td class="w-m"><input data-cp="${i}" data-k="freq" value="${esc(x.freq??"")}" class="${bad?"bad":""}" inputmode="decimal">${bad?`<br><span class="area-alert" style="font-size:11px">นอกย่าน ${b.lo}–${b.hi}</span>`:""}</td>
     <td class="name"><input data-cp="${i}" data-k="desc" value="${esc([x.desc,x.fix].filter(Boolean).join(" · "))}"></td><td><button class="mini" data-cpdel="${i}" aria-label="ลบ">✕</button></td></tr>`}).join("")
@@ -4511,30 +4541,32 @@ let dbRepArm=false;$("#dbPasteReplace").onclick=e=>{if(!dbRepArm){dbRepArm=true;
 let dbClrArm=false;$("#dbClear").onclick=e=>{if(!dbClrArm){dbClrArm=true;e.target.textContent="กดอีกครั้งเพื่อยืนยันลบ";setTimeout(()=>{dbClrArm=false;e.target.textContent="ลบทั้งหมด"},3000);return}dbClrArm=false;e.target.textContent="ลบทั้งหมด";store.set("vfr_wpdb",[]);dbRender();render()};
 $("#dbExport").onclick=()=>download("waypoint_หน่วย.json",JSON.stringify(dbAll(),null,1),"application/json");
 /* อ่านไฟล์ Excel แบบตาราง DTD ของหน่วย (ชีต Waypoints-LL หรือ Waypoints-MGRS) */
-async function dbFromXlsx(f){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
+async function dbFromXlsx(f,rep){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
   const ws=wb.worksheets.find(w=>/waypoint.*ll/i.test(w.name))||wb.worksheets.find(w=>/waypoint/i.test(w.name));if(!ws)throw new Error("ไม่พบชีต Waypoint");
   const val=c=>{const v=c&&c.value;return v&&typeof v==="object"?(v.result??v.text??(v.richText?v.richText.map(t=>t.text).join(""):"")):v};
   let hdr=null,col={};const out=[];
   ws.eachRow((row,ri)=>{const cells=[];row.eachCell({includeEmpty:true},(c,ci)=>cells[ci]=val(c));
     if(!hdr){const i=cells.findIndex(v=>/DTD\s*ID|^ID$/i.test(String(v||"")));if(i>0){hdr=ri;cells.forEach((v,ci)=>{const t=String(v||"").toUpperCase();
-      if(/DTD|^ID$/.test(t))col.id=ci;if(/DESC/.test(t))col.desc=ci;if(/MGRS/.test(t))col.mgrs=ci;if(/^LAT/.test(t))col.lat=ci;if(/^LON/.test(t))col.lon=ci;if(/FIX/.test(t))col.fix=ci;if(/ELEV/.test(t))col.elev=ci})}return}
-    const id=String(cells[col.id]||"").trim();if(!id)return;const no=cells[1]!=null&&String(cells[1]).trim()!==""?String(cells[1]).trim():String(out.length+1);
+      if(/^NO\.?$|^NUMBER$|^ลำดับ$/.test(t.trim()))col.no=ci;if(/DTD|^ID$/.test(t))col.id=ci;if(/DESC/.test(t))col.desc=ci;if(/MGRS/.test(t))col.mgrs=ci;if(/^LAT/.test(t))col.lat=ci;if(/^LON/.test(t))col.lon=ci;if(/FIX/.test(t))col.fix=ci;if(/ELEV/.test(t))col.elev=ci})}return}
+    const id=String(cells[col.id]||"").trim();if(!id){if(rep&&cells.some(v=>v!=null&&String(v).trim()))rep.skipW=(rep.skipW||0)+1;return}const nc=col.no||1,no=cells[nc]!=null&&String(cells[nc]).trim()!==""?String(cells[nc]).trim():String(out.length+1);
     let lat=+cells[col.lat],lon=+cells[col.lon];const mg=String(cells[col.mgrs]||"").trim();
     if(!(isFinite(lat)&&isFinite(lon))||(lat===0&&lon===0)){const p=mg?parseCoord(mg):null;lat=p?p[0]:null;lon=p?p[1]:null}
     if(lat===0&&lon===0){lat=lon=null}
+    if(/^ตัวอย่าง/.test(String(cells[col.desc]||"").trim())){if(rep)rep.sample=(rep.sample||0)+1;return} /* แถวตัวอย่างในเทมเพลต */
     const note=[cells[col.desc],cells[col.fix]].filter(v=>v!=null&&String(v).trim()).join(" · ");
     out.push({no:String(+no||no),name:id.replace(/^\//,"").trim(),dtd:id,lat:lat!=null?+(+lat).toFixed(6):null,lon:lon!=null?+(+lon).toFixed(6):null,mgrs:mg||(lat!=null?fmtMgrs(toMgrs(lat,lon)):""),note,elev:cells[col.elev]??""})});
+  if(rep){rep.wSheet=ws.name;rep.wCols=["no","id","desc","mgrs","lat","lon","fix","elev"].filter(k=>col[k]!=null);rep.wMiss=["id","lat","lon"].filter(k=>col[k]==null&&!(k!=="id"&&col.mgrs!=null))}
   if(!out.length)throw new Error("ไม่พบแถวข้อมูล");return out}
 /* preset วิทยุจาก Excel ของ FalconView (ชีต FM / VHF AM / UHF / ADF|VOR) */
-async function psFromXlsx(f){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
+async function psFromXlsx(f,rep){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
   const val=c=>{const v=c&&c.value;return v&&typeof v==="object"?(v.result??v.text??(v.richText?v.richText.map(t=>t.text).join(""):"")):v};
-  const bandOfName=t=>/TACAN|TCN/i.test(t)?"skip":/VOR|ILS/i.test(t)?"vor":/ADF/i.test(t)?"adf":/UHF/i.test(t)?"uhf":/VHF/i.test(t)?"vhf":/\bFM\b/i.test(t)?"fm":null;
-  const out={};PS_BANDS.forEach(b=>out[b.k]=[]);let found=false;
+  const bandOfName=t=>/TACAN|TCN/i.test(t)?"tcn":/VOR|ILS/i.test(t)?"vor":/ADF/i.test(t)?"adf":/UHF/i.test(t)?"uhf":/VHF/i.test(t)?"vhf":/\bFM\b/i.test(t)?"fm":null;
+  const out={tcn:[]};PS_BANDS.forEach(b=>out[b.k]=[]);let found=false;if(rep)rep.ps=rep.ps||{};
   wb.worksheets.forEach(ws=>{let band=/ADF|VOR/i.test(ws.name)?"adf":bandOfName(ws.name),col=null;if(!band||!/PRESET|ADF|VOR/i.test(ws.name))return;
     ws.eachRow(row=>{const c=[];row.eachCell({includeEmpty:true},(x,i)=>c[i]=val(x));const txt=c.filter(v=>v!=null&&String(v).trim()).map(String);
       if(new Set(txt).size===1&&/PRESET/i.test(txt[0])){const b2=bandOfName(txt.join(" "));if(b2){band=b2;col=null}return}
-      if(txt.some(t=>/^FREQ/i.test(t.trim()))){col={no:1};c.forEach((v,i)=>{const t=String(v||"").toUpperCase().trim();if(/^NO\.?$|^CH/.test(t))col.no=i;if(/CALL|^ID$/.test(t))col.call=i;if(/DESC/.test(t))col.desc=i;if(/^FREQ/.test(t))col.freq=i;if(/FIX/.test(t))col.fix=i;if(/MORSE/.test(t))col.morse=i});return}
-      if(!col||!band||band==="skip")return;const ch=c[col.no],fr=c[col.freq];if(ch==null||String(ch).trim()===""||fr==null||String(fr).trim()==="")return;found=true;
+      if(txt.some(t=>/^(FREQ|CHANNEL|CH\b)/i.test(t.trim()))&&!txt.every(t=>/^\d/.test(t))){col={no:1};c.forEach((v,i)=>{const t=String(v||"").toUpperCase().trim();if(/^NO\.?$|^CH\.?$/.test(t))col.no=i;if(/CALL|^ID$/.test(t))col.call=i;if(/DESC/.test(t))col.desc=i;if(/^FREQ|^CHANNEL$/.test(t))col.freq=i;if(/FIX/.test(t))col.fix=i;if(/MORSE/.test(t))col.morse=i});if(rep){const r=rep.ps[band]=rep.ps[band]||{n:0,skip:0};r.cols=Object.keys(col);r.sheet=ws.name}return}
+      if(!col||!band)return;const ch=c[col.no],fr=c[col.freq];if(ch==null||String(ch).trim()===""||fr==null||String(fr).trim()===""){if(rep&&rep.ps[band]&&txt.length&&!(new Set(txt).size===1))rep.ps[band].skip++;return}if(/^ตัวอย่าง/.test(String(c[col.desc]??"").trim())){if(rep)rep.sample=(rep.sample||0)+1;return}found=true;if(rep&&rep.ps[band])rep.ps[band].n++;
       out[band].push({ch:String(ch).trim(),call:String(c[col.call]??"").trim(),desc:String(c[col.desc]??"").trim(),fix:String(c[col.fix]??"").trim(),freq:String(fr).trim(),morse:String(c[col.morse]??"").trim()})})});
   return found?out:null}
 function sopDiff(oldW,newW,oldP,newP){const out=[],byNo=L=>new Map(L.map(x=>[String(x.no),x]));const A=byNo(oldW),B=byNo(newW);
@@ -4550,10 +4582,11 @@ function sopInfoRender(){const m=store.get("vfr_sop_meta"),box=$("#sopInfo");if(
   $("#sopDiff").innerHTML=m&&m.diff?(m.diff.length?`<details class="sop-d" open><summary>⚠ ไฟล์ล่าสุดต่างจากข้อมูลเดิม ${m.diff.length} รายการ</summary><ul>${m.diff.slice(0,120).map(t=>`<li>${esc(t)}</li>`).join("")}</ul>${store.get("vfr_sop_prev")?'<button id="sopUndo">↩ ย้อนกลับเป็นข้อมูลก่อนนำเข้า</button>':""}</details>`:'<p class="ok">✓ ไฟล์ล่าสุดตรงกับข้อมูลเดิมทุกจุด</p>'):"";
   const u=$("#sopUndo");if(u)u.onclick=()=>{const p=store.get("vfr_sop_prev");if(!p)return;store.set("vfr_wpdb",p.wpdb);store.set("vfr_presets",p.presets);store.set("vfr_sop_prev",null);const mm=store.get("vfr_sop_meta")||{};mm.diff=null;store.set("vfr_sop_meta",mm);dbRender();psRender();sopInfoRender();render();toast("ย้อนกลับแล้ว")}}
 $("#dbImport").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
-  if(/\.xlsx$/i.test(f.name)){try{const items=await dbFromXlsx(f);let ps=null;try{ps=await psFromXlsx(f)}catch(err){}
+  if(/\.xlsx$/i.test(f.name)){try{const rep={};const items=await dbFromXlsx(f,rep);rep.wN=items.length;let ps=null;try{ps=await psFromXlsx(f,rep)}catch(err){}
       const oldW=dbAll(),oldP=psAll(),diff=oldW.length||PS_BANDS.some(b=>oldP[b.k].length)?sopDiff(oldW,items,oldP,ps):null;
       store.set("vfr_sop_prev",{wpdb:oldW,presets:oldP});dbMerge(items,true);if(ps)psSave(ps);
       store.set("vfr_sop_meta",{file:f.name,at:new Date().toISOString(),diff});dbRender();psRender();sopInfoRender();render();
+      if(typeof cmpRender==="function")cmpRender();repDlg(impReport(rep,`นำเข้า Preset ชุดปัจจุบัน: ${f.name}`));
       const bad=items.filter(x=>dbWarn(x)).length;toast(`นำเข้า ${items.length} จุด${ps?" + preset วิทยุ":""}`+(diff&&diff.length?` · ต่างจากเดิม ${diff.length} รายการ`:"")+(bad?` · ตรวจพิกัด ${bad} จุด`:""))}
     catch(err){toast("อ่าน Excel ไม่ได้: "+err.message)}return}
   f.text().then(t=>{let items=null;try{const d=JSON.parse(t);if(Array.isArray(d))items=d.filter(x=>x&&x.no!=null)}catch(err){}
@@ -4561,6 +4594,165 @@ $("#dbImport").onchange=async e=>{const f=e.target.files[0];e.target.value="";if
 $("#dbCopyRoute").onclick=()=>{const k=window._sopKey;if(!k)return;const t=["รายการเตรียมคีย์ใน FalconView","WAYPOINT (No. · DTD ID · MGRS):",...k.needW.map(x=>`${x.no}\t${x.id}\t${fmtMgrs(toMgrs(x.w.lat,x.w.lon))}\t${x.fix?"(แก้พิกัด)":x.w.name}`),"PRESET (ย่าน · ช่อง · call · ความถี่):",...k.needF.map(x=>`${x.b.t}\t${x.ch}\t${x.call}\t${x.f}`)].join("\n");
   (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>toast("คัดลอกไม่ได้"))};
 dbRender();psRender();sopInfoRender();
+/* ---------- แท็บ 8 ใหม่: แท็บย่อย · คลัง BASE · เพิ่มจุดของเที่ยวบิน (61+) · Flight plan · เทียบกับ BASE ---------- */
+const CP_SUB_KEY="vfr_cp_sub";
+function cpSub(k){const W=$("#tab-wpdb");if(!W)return;k=k||"radio";W.dataset.sub=k;
+  W.querySelectorAll("[data-cpsub]").forEach(b=>{b.classList.toggle("on",b.dataset.cpsub===k);b.setAttribute("aria-selected",b.dataset.cpsub===k)});
+  W.querySelectorAll(".cp-sec[data-sub]").forEach(s=>s.hidden=s.dataset.sub!==k);try{localStorage.setItem(CP_SUB_KEY,k)}catch(e){}
+  if(k==="base")baseRender();if(k==="fpl")fplRender();if(k==="chk")cmpRender()}
+$("#tab-wpdb").addEventListener("click",e=>{const b=e.target.closest("[data-cpsub]");if(b)cpSub(b.dataset.cpsub)});
+/* Morse จาก ID (ส่วนหน้า "/") */
+const MORSE={A:"•−",B:"−•••",C:"−•−•",D:"−••",E:"•",F:"••−•",G:"−−•",H:"••••",I:"••",J:"•−−−",K:"−•−",L:"•−••",M:"−−",N:"−•",O:"−−−",P:"•−−•",Q:"−−•−",R:"•−•",S:"•••",T:"−",U:"••−",V:"•••−",W:"•−−",X:"−••−",Y:"−•−−",Z:"−−••",
+  0:"−−−−−",1:"•−−−−",2:"••−−−",3:"•••−−",4:"••••−",5:"•••••",6:"−••••",7:"−−•••",8:"−−−••",9:"−−−−•"};
+const morseOf=id=>String(id||"").split("/")[0].toUpperCase().replace(/[^A-Z0-9]/g,"").split("").map(c=>MORSE[c]||"").join("   ");
+/* ---- คลัง BASE: localStorage "vfr_base" ---- */
+function baseGet(){return store.get("vfr_base")||null}
+const CAT_T={wp:"Waypoint",fm:"FM",vhf:"VHF",uhf:"UHF",vor:"VOR/ILS",adf:"ADF",tcn:"TACAN"};
+async function rtFromXlsx(f,rep){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook();await wb.xlsx.load(await f.arrayBuffer());
+  const ws=wb.worksheets.find(w=>/ROUTE|FPLN|FLT\s*PLAN/i.test(w.name));if(!ws)return[];
+  const val=c=>{const v=c&&c.value;return v&&typeof v==="object"?(v.result??v.text??(v.richText?v.richText.map(t=>t.text).join(""):"")):v};let col=null;const out=[];
+  ws.eachRow(row=>{const c=[];row.eachCell({includeEmpty:true},(x,i)=>c[i]=val(x));
+    if(!col){if(c.some(v=>/SEQ|WPT/i.test(String(v||"")))){col={};c.forEach((v,i)=>{const t=String(v||"").toUpperCase();if(/NO/.test(t)&&col.no==null)col.no=i;if(/NAME/.test(t))col.name=i;if(/DESC/.test(t))col.desc=i;if(/SEQ|WPT/.test(t))col.seq=i})}return}
+    const seq=String(c[col.seq]??"").split(/[^0-9]+/).filter(Boolean);const name=String(c[col.name]??"").trim();if(!seq.length&&!name)return;if(/^ตัวอย่าง/.test(String(c[col.desc]??"").trim())){if(rep)rep.sample=(rep.sample||0)+1;return}
+    out.push({no:String(c[col.no]??out.length+1).trim(),name:name.toUpperCase().slice(0,8),desc:String(c[col.desc]??"").trim(),seq})});
+  if(rep)rep.rt={sheet:ws.name,n:out.length,cols:col?Object.keys(col):[]};return out}
+/* รายงานการนำเข้า: เจอคอลัมน์ไหน ขาดอะไร ข้ามกี่แถว */
+function impReport(rep,title){const L=[];
+  if(rep.wSheet)L.push(`<li><b>Waypoint</b> (ชีต ${esc(rep.wSheet)}): ${rep.wN||0} จุด · คอลัมน์: ${rep.wCols.join(", ")}${rep.wMiss&&rep.wMiss.length?` · <span class="bad">ไม่พบ ${rep.wMiss.join(", ")}</span>`:""}${rep.skipW?` · ข้าม ${rep.skipW} แถว (ไม่มี DTD ID)`:""}</li>`);
+  else L.push(`<li class="bad">ไม่พบชีต Waypoint (ชื่อชีตต้องมีคำว่า WAYPOINT และมีหัวคอลัมน์ DTD ID)</li>`);
+  ["fm","vhf","uhf","vor","adf","tcn"].forEach(k=>{const r=rep.ps&&rep.ps[k];L.push(r?`<li><b>${CAT_T[k]}</b> (ชีต ${esc(r.sheet)}): ${r.n} ช่อง${r.skip?` · ข้าม ${r.skip} แถว (ไม่มีเลข/ความถี่)`:""}${!r.cols.includes("call")&&k!=="fm"?' · <span class="bad">ไม่พบคอลัมน์ CALLSIGN/ID</span>':""}</li>`:`<li class="hint">${CAT_T[k]}: ไม่พบตาราง (ชื่อชีต/หัวตาราง "… Presets")</li>`)});
+  if(rep.sample)L.push(`<li class="hint">ข้ามแถวตัวอย่าง (DESCRIPTION ขึ้นต้น "ตัวอย่าง") ${rep.sample} แถว</li>`);
+  if(rep.rt)L.push(`<li><b>Flight plan</b> (ชีต ${esc(rep.rt.sheet)}): ${rep.rt.n} เส้นทาง</li>`);
+  return`<h3>${esc(title)}</h3><ul class="imp-rep">${L.join("")}</ul>`}
+function repDlg(html){const d=document.createElement("dialog");d.className="bk-dlg";d.innerHTML=`<form method="dialog">${html}<div class="btns"><button value="ok" class="primary">ตกลง</button></div></form>`;document.body.appendChild(d);d.addEventListener("close",()=>d.remove());d.showModal()}
+$("#baseImp").onclick=()=>$("#baseFile").click();
+$("#baseFile").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const rep={};
+  try{let wp=[];try{wp=await dbFromXlsx(f,rep)}catch(err){}rep.wN=wp.length;const ps=await psFromXlsx(f,rep)||{tcn:[]};const rt=await rtFromXlsx(f,rep);
+    PS_BANDS.forEach(b=>ps[b.k]=ps[b.k]||[]);const n=wp.length+Object.values(ps).reduce((m,L)=>m+L.length,0);
+    if(!n){toast("ไม่พบข้อมูลในไฟล์นี้");repDlg(impReport(rep,"นำเข้า BASE ไม่ได้"));return}
+    store.set("vfr_base",{file:f.name,at:new Date().toISOString(),wp,ps,rt});baseRender();repDlg(impReport(rep,`นำเข้าคลัง BASE: ${f.name}`));toast(`นำเข้า BASE ${n} รายการ`)}
+  catch(err){toast("อ่าน Excel ไม่ได้: "+err.message)}};
+let baseClrArm=false;$("#baseClr").onclick=e=>{if(!baseGet())return;if(!baseClrArm){baseClrArm=true;e.target.textContent="กดอีกครั้งเพื่อลบคลัง";setTimeout(()=>{baseClrArm=false;e.target.textContent="ลบคลัง"},3000);return}
+  baseClrArm=false;e.target.textContent="ลบคลัง";store.set("vfr_base",null);baseRender();toast("ลบคลัง BASE แล้ว")};
+$("#baseTpl").onclick=async()=>{try{const b=await(await fetch("BASE_template.xlsx")).blob();const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="BASE_template.xlsx";a.click()}catch(e){toast("โหลดเทมเพลตไม่ได้ — ต่อเน็ตก่อน")}};
+function baseItems(){const B=baseGet();if(!B)return[];const out=[];(B.wp||[]).forEach(x=>out.push({cat:"wp",id:x.dtd||x.name,desc:x.note||"",val:x.lat!=null?fmtMgrs(toMgrs(x.lat,x.lon)):"",x}));
+  Object.keys(CAT_T).filter(k=>k!=="wp").forEach(k=>(B.ps[k]||[]).forEach(x=>out.push({cat:k,id:x.call||"",desc:[x.desc,x.fix].filter(Boolean).join(" · "),val:x.freq,x})));return out}
+function baseRender(){const B=baseGet(),info=$("#baseInfo");if(!info)return;
+  if(!B){info.innerHTML='<p class="placeholder" style="text-align:left;padding:12px"><b>ยังไม่มีคลัง BASE</b><br><span class="hint">กด ⬇️ เทมเพลต BASE → กรอกใน Excel → 📥 นำเข้า BASE</span></p>';$("#baseList").innerHTML="";return}
+  info.innerHTML=`<div class="sop-stats"><span>Waypoint <b>${(B.wp||[]).length}</b></span>${Object.keys(CAT_T).filter(k=>k!=="wp").map(k=>`<span>${CAT_T[k]} <b>${(B.ps[k]||[]).length}</b></span>`).join("")}<span>Flight plan <b>${(B.rt||[]).length}</b></span><span class="hint">${esc(B.file)} · ${new Date(B.at).toLocaleString("th-TH")}</span></div>`;
+  const q=($("#baseQ").value||"").trim().toUpperCase(),cat=$("#baseCat").value;let L=baseItems().filter(r=>(!cat||r.cat===cat)&&(!q||(r.id+" "+r.desc+" "+r.val).toUpperCase().includes(q)));const tot=L.length;L=L.slice(0,300);
+  $("#baseList").innerHTML=`<table class="cp-tbl base-tbl"><thead><tr><th>หมวด</th><th>No.</th><th>ID / Callsign</th><th>รายละเอียด</th><th>ความถี่ / พิกัด</th><th></th></tr></thead><tbody>${L.map(r=>`<tr><td><span class="base-cat c-${r.cat}">${CAT_T[r.cat]}</span></td><td>${esc(r.x.no??r.x.ch??"")}</td><td><b>${esc(r.id)}</b></td><td>${esc(r.desc)}</td><td class="mono">${esc(r.val||"")}</td>
+    <td><button type="button" class="mini" data-baseadd="${r.cat}|${esc(r.cat==="wp"?r.x.no:r.x.ch)}|${esc(r.id)}">＋ ใส่ชุดปัจจุบัน</button></td></tr>`).join("")||'<tr><td colspan="6" class="hint" style="padding:12px">ไม่พบรายการ</td></tr>'}</tbody></table>${tot>300?`<p class="hint">แสดง 300 จาก ${tot} รายการ — พิมพ์ค้นหาเพื่อกรอง</p>`:""}`}
+$("#baseQ").addEventListener("input",baseRender);$("#baseCat").addEventListener("change",baseRender);
+/* ใส่ลงชุดปัจจุบัน: waypoint ได้เลขว่างตัวแรกตั้งแต่ "เริ่มที่เลข" · วิทยุได้เลขว่างตัวแรกในย่านนั้น */
+function cpStartNo(){return Math.max(1,num($("#cpStart")&&$("#cpStart").value,61)||61)}
+function wpFreeNo(start){const used=new Set(dbAll().map(x=>+x.no));let n=start;while(used.has(n))n++;return n}
+function wpAddCur(o){const L=dbAll();if(o.lat!=null&&L.some(x=>x.lat!=null&&gcDistNm([x.lat,x.lon],[o.lat,o.lon])<0.05))return null;const no=wpFreeNo(cpStartNo());
+  const it={no:String(no),name:o.name,dtd:o.dtd||o.name,lat:o.lat,lon:o.lon,mgrs:o.lat!=null?fmtMgrs(toMgrs(o.lat,o.lon)):"",note:o.note||"",elev:o.elev??""};L.push(it);dbSave(L);return no}
+function psAddCur(k,x){const d=psAll(),L=d[k]=d[k]||[];if(L.some(y=>String(y.call).toUpperCase()===String(x.call||"").toUpperCase()&&String(y.freq)===String(x.freq)))return null;
+  const used=new Set(L.map(y=>+y.ch));let n=1;while(used.has(n))n++;L.push({ch:String(n),call:x.call||"",freq:x.freq||"",desc:x.desc||"",fix:x.fix||""});L.sort((a,b)=>(+a.ch||0)-(+b.ch||0));psSave(d);return n}
+$("#baseList").addEventListener("click",e=>{const b=e.target.closest("[data-baseadd]");if(!b)return;const[cat,no]=b.dataset.baseadd.split("|"),B=baseGet();
+  if(cat==="wp"){const x=(B.wp||[]).find(y=>String(y.no)===no);const n=x&&wpAddCur({name:x.name,dtd:x.dtd,lat:x.lat,lon:x.lon,note:x.note,elev:x.elev});toast(n?`เพิ่ม ${x.name} เป็น Waypoint No.${n}`:"มีจุดนี้ในชุดปัจจุบันแล้ว");if(n){dbRender();render()}}
+  else{const x=(B.ps[cat]||[]).find(y=>String(y.ch)===no);const n=x&&psAddCur(cat,x);toast(n?`เพิ่ม ${x.call} ${x.freq} เป็น ${CAT_T[cat]} ช่อง ${n}`:"มีรายการนี้ในชุดปัจจุบันแล้ว");if(n){cpRender();render()}}});
+/* ---- หาจุดตามเส้นทาง / กรอบ ---- */
+function segDistNm(p,a,b){const k=Math.cos(p[0]*D2R),P=[p[1]*k*60,p[0]*60],A=[a[1]*k*60,a[0]*60],B=[b[1]*k*60,b[0]*60],dx=B[0]-A[0],dy=B[1]-A[1],L2=dx*dx+dy*dy;
+  let t=L2?((P[0]-A[0])*dx+(P[1]-A[1])*dy)/L2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(P[0]-A[0]-t*dx,P[1]-A[1]-t*dy)}
+function routeDist(lat,lon){const W=state.wps.filter(w=>w.lat!=null);if(!W.length)return Infinity;if(W.length===1)return gcDistNm([lat,lon],[W[0].lat,W[0].lon]);
+  let m=Infinity;for(let i=0;i+1<W.length;i++)m=Math.min(m,segDistNm([lat,lon],[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]));return m}
+function vfrPtsAll(filterIc){const out=[];Object.entries(AP).forEach(([ic,a])=>{const v=a.eaip&&a.eaip.vfr;if(!v||(filterIc&&!filterIc.has(ic)))return;(v.pts||[]).forEach(p=>out.push({ic,p}))});return out}
+function vfrDtd(ic,p,used){return p.id?dtdId(ic+p.id,used):dtdId(p.n,used)}
+/* ผู้สมัคร: BASE waypoint + จุด VFR (AD 2.24) + ความถี่ BASE ของสนาม/navaid ในพื้นที่ */
+function pickCands(test,opt){const cur=dbAll(),used=new Set(cur.map(x=>String(x.dtd||x.name).toUpperCase())),C=[],has=(lat,lon)=>cur.some(x=>x.lat!=null&&gcDistNm([x.lat,x.lon],[lat,lon])<0.05);
+  const B=baseGet();if(B&&!opt.vfrOnly)(B.wp||[]).forEach(x=>{if(x.lat!=null&&test(x.lat,x.lon)&&!has(x.lat,x.lon))C.push({k:"wp",src:"BASE",id:x.dtd||x.name,desc:x.note||"",lat:x.lat,lon:x.lon,o:{name:x.name,dtd:x.dtd,lat:x.lat,lon:x.lon,note:x.note,elev:x.elev}})});
+  vfrPtsAll(opt.ics).forEach(({ic,p})=>{if(!test(p.lat,p.lon)||has(p.lat,p.lon)||C.some(c=>c.lat!=null&&gcDistNm([c.lat,c.lon],[p.lat,p.lon])<0.05))return;const id=vfrDtd(ic,p,used);
+    C.push({k:"wp",src:"VFR "+ic,id,desc:[p.n,p.lm].filter(Boolean).join(" · "),lat:p.lat,lon:p.lon,o:{name:id,dtd:id,lat:p.lat,lon:p.lon,note:`${ic} VFR ${p.n}${p.lm?" — "+p.lm:""}`}})});
+  if(B&&!opt.vfrOnly){const aps=new Set(Object.values(AP).filter(a=>a.lat!=null&&test(a.lat,a.lon)).map(a=>a.id)),navs=new Set(((EAIP&&EAIP.navaids)||[]).filter(n=>n.lat!=null&&test(n.lat,n.lon)).map(n=>n.id));
+    const curP=psAll();Object.keys(CAT_T).filter(k=>k!=="wp").forEach(k=>(B.ps[k]||[]).forEach(x=>{const t=(x.call+" "+x.desc+" "+x.fix).toUpperCase(),idp=String(x.call||"").split("/")[0].toUpperCase();
+      const hit=[...aps].some(ic=>t.includes(ic))||(["vor","adf","tcn"].includes(k)&&navs.has(idp));if(!hit)return;
+      if((curP[k]||[]).some(y=>String(y.freq)===String(x.freq)&&String(y.call).toUpperCase()===String(x.call).toUpperCase()))return;
+      C.push({k,src:"BASE",id:x.call,desc:x.desc||"",freq:x.freq,o:x})}))}
+  return C}
+function pickDlg(C,title){if(!C.length){toast("ไม่พบรายการใหม่ในพื้นที่นี้");return}const d=document.createElement("dialog");d.className="bk-dlg pick-dlg";
+  const P=state.wps.length?C.map(c=>c.lat!=null?routeDist(c.lat,c.lon):null):C.map(()=>null);
+  d.innerHTML=`<form method="dialog"><h3>${esc(title)}</h3><p class="hint">ติ๊กรายการที่จะเพิ่มเข้า <b>ชุดปัจจุบัน</b> · Waypoint ได้เลขต่อจาก ${cpStartNo()} · วิทยุได้ช่องว่างตัวแรกของย่าน</p>
+    <div class="btns"><button type="button" data-pk="all">เลือกทั้งหมด</button><button type="button" data-pk="none">ไม่เลือก</button></div>
+    <div class="pick-list">${C.map((c,i)=>`<label class="pick-r"><input type="checkbox" data-pi="${i}" checked><span class="base-cat c-${c.k}">${CAT_T[c.k]}</span><b>${esc(c.id)}</b><span>${esc(c.desc)}</span><i>${c.freq?esc(c.freq):P[i]!=null?P[i].toFixed(1)+" NM":""} · ${esc(c.src)}</i></label>`).join("")}</div>
+    <div class="btns"><button value="ok" class="primary">＋ เพิ่มที่เลือก</button><button value="no" formnovalidate>ยกเลิก</button></div></form>`;
+  document.body.appendChild(d);d.addEventListener("click",e=>{const b=e.target.closest("[data-pk]");if(b)d.querySelectorAll("[data-pi]").forEach(c=>c.checked=b.dataset.pk==="all")});
+  d.addEventListener("close",()=>{if(d.returnValue==="ok"){let w=0,r=0;[...d.querySelectorAll("[data-pi]:checked")].map(c=>C[+c.dataset.pi]).sort((a,b)=>(P[C.indexOf(a)]??0)-(P[C.indexOf(b)]??0)).forEach(c=>{if(c.k==="wp"){if(wpAddCur(c.o))w++}else if(psAddCur(c.k,c.o))r++});
+    dbRender();cpRender();render();toast(`เพิ่ม Waypoint ${w} จุด · วิทยุ ${r} ช่อง`)}d.remove()});d.showModal()}
+function routeIcs(){return new Set(state.wps.map(w=>String(w.name||"").toUpperCase()).filter(n=>AP[n]))}
+/* ลากกรอบบนแผนที่ */
+function boxSelect(cb){document.querySelector('.rail [data-tab=plan]').click();const box=map.getContainer();let a=null,rect=null;
+  const bar=document.createElement("div");bar.className="box-bar";bar.innerHTML='⬚ ลากกรอบครอบพื้นที่บนแผนที่ <button type="button">ยกเลิก</button>';box.appendChild(bar);L.DomEvent.disableClickPropagation(bar);
+  map.dragging.disable();box.classList.add("box-sel");
+  const ll=e=>map.mouseEventToLatLng(e),end=()=>{map.dragging.enable();box.classList.remove("box-sel");bar.remove();box.removeEventListener("pointerdown",dn);box.removeEventListener("pointermove",mv);box.removeEventListener("pointerup",up)};
+  const dn=e=>{if(e.target.closest(".box-bar,.leaflet-control"))return;a=ll(e);rect&&rect.remove();rect=L.rectangle([a,a],{color:"#0d9488",weight:2,dashArray:"6 4",fillOpacity:.08}).addTo(map);try{box.setPointerCapture(e.pointerId)}catch(x){}},
+    mv=e=>{if(a&&rect)rect.setBounds(L.latLngBounds(a,ll(e)))},
+    up=e=>{if(!a)return;const b=L.latLngBounds(a,ll(e));a=null;end();setTimeout(()=>rect&&rect.remove(),1500);if(map.latLngToContainerPoint(b.getNorthWest()).distanceTo(map.latLngToContainerPoint(b.getSouthEast()))<20){toast("กรอบเล็กเกินไป");return}cb(b)};
+  bar.querySelector("button").onclick=()=>{end();rect&&rect.remove()};box.addEventListener("pointerdown",dn);box.addEventListener("pointermove",mv);box.addEventListener("pointerup",up);toast("ลากกรอบบนแผนที่ได้เลย")}
+$("#cpPick").addEventListener("click",e=>{const b=e.target.closest("[data-cppick]");if(!b)return;const k=b.dataset.cppick;
+  if(k==="route"){if(state.wps.length<1)return toast("ยังไม่มีเส้นทางในแท็บ 1");const nm=Math.max(1,num($("#cpCorr").value,10));pickDlg(pickCands((la,lo)=>routeDist(la,lo)<=nm,{}),`ตามเส้นทาง (ห่างไม่เกิน ${nm} NM)`)}
+  if(k==="vfr"){const ics=routeIcs();if(!ics.size)return toast("เส้นทางยังไม่มีสนามที่มีจุด VFR");pickDlg(pickCands(()=>true,{vfrOnly:true,ics}),`จุด VFR (AD 2.24) ของ ${[...ics].join(", ")}`)}
+  if(k==="box")boxSelect(bb=>{document.querySelector('.rail [data-tab=wpdb]').click();cpSub("wp");pickDlg(pickCands((la,lo)=>bb.contains([la,lo]),{}),"ในกรอบที่ลากบนแผนที่")})});
+try{const s0=localStorage.getItem("vfr_cp_start");if(s0)$("#cpStart").value=s0}catch(e){}
+$("#cpStart").addEventListener("change",()=>{try{localStorage.setItem("vfr_cp_start",$("#cpStart").value)}catch(e){}});
+/* ---- Flight plan (FLT PLANS): localStorage "vfr_fpln" = [{no,name,desc,seq:[เลข waypoint]}] ---- */
+const fplAll=()=>store.get("vfr_fpln")||[],fplSave=L=>store.set("vfr_fpln",L);
+function wpByNo(no,src){return(src||dbAll()).find(x=>String(x.no)===String(no))}
+function fplRow(F,i,base){const src=base?(baseGet()||{}).wp||[]:null;return`<div class="fpl-r"><div class="fpl-h"><b class="mono">${esc(String(F.no).padStart(2,"0"))}</b>
+  ${base?`<b>${esc(F.name)}</b>`:`<input data-fpl="${i}" data-k="name" value="${esc(F.name)}" maxlength="8" class="mono" aria-label="ชื่อ FPLN">`}<span class="hint">${esc(F.desc||"")}</span>
+  <div class="btns">${base?`<button type="button" class="mini" data-fplb="copy" data-i="${i}">คัดลอกเข้า FLT PLANS</button>`:`<button type="button" class="mini" data-fpla="rev" data-i="${i}" title="REVERSE">⇄</button><button type="button" class="mini" data-fpla="del" data-i="${i}">✕</button>`}
+  <button type="button" class="mini" data-${base?"fplb":"fpla"}="use" data-i="${i}">ใช้ในแท็บ 1</button></div></div>
+  <div class="fpl-seq">${F.seq.map((n,j)=>{const w=wpByNo(n,src);return`<span class="${w?"":"bad"}"><i>${String(j+1).padStart(2,"0")}</i> ${esc(n)} ${esc(w?(w.dtd||w.name):"?")}</span>`}).join("")}</div></div>`}
+function fplRender(){const L=fplAll();$("#fplN").textContent=L.length||"";$("#fplList").innerHTML=L.map((F,i)=>fplRow(F,i,false)).join("")||'<p class="hint">ยังไม่มี — กด ＋ สร้างจากเส้นทางแท็บ 1</p>';
+  const B=baseGet();$("#fplBase").innerHTML=B&&(B.rt||[]).length?B.rt.map((F,i)=>fplRow(F,i,true)).join(""):'<p class="hint">ไม่มี (ชีต ROUTE ในไฟล์ BASE)</p>'}
+function fplUse(F,src){const W=F.seq.map(n=>wpByNo(n,src)).filter(w=>w&&w.lat!=null);if(W.length<2)return toast("จุดในเส้นทางไม่ครบ (ต้องมีพิกัดอย่างน้อย 2 จุด)");
+  if(state.wps.length&&!confirm(`แทนที่เส้นทางในแท็บ 1 ด้วย ${F.name} (${W.length} จุด)?`))return;
+  state.wps=W.map(w=>({name:String(w.dtd||w.name).slice(0,20),lat:w.lat,lon:w.lon,vor:""}));state.legs=W.slice(1).map(()=>blankLeg());markEdited();render();document.querySelector('.rail [data-tab=plan]').click();toast("ใช้เส้นทาง "+F.name)}
+$("#fplFromRoute").onclick=()=>{const W=state.wps.filter(w=>w.lat!=null);if(W.length<2)return toast("สร้างเส้นทางในแท็บ 1 ก่อน");let miss=0;
+  const seq=W.map(w=>{let n=cpNoFor(w);if(!n){n=wpAddCur({name:dtdId(w.name,new Set(dbAll().map(x=>String(x.dtd||x.name).toUpperCase()))),lat:w.lat,lon:w.lon,note:"จากเส้นทางแท็บ 1"});miss++}return String(n)});
+  const L=fplAll(),used=new Set(L.map(f=>+f.no));let no=1;while(used.has(no))no++;const nm=(String(W[0].name).replace(/^VT/,"")+String(W.at(-1).name).replace(/^VT/,"")).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8)||"FPLN"+no;
+  L.push({no:String(no),name:nm,desc:`${W[0].name} → ${W.at(-1).name}`,seq});L.sort((a,b)=>+a.no-+b.no);fplSave(L);dbRender();fplRender();render();toast(`สร้าง FPLN ${no} ${nm}`+(miss?` · เพิ่ม Waypoint ใหม่ ${miss} จุด (เลข ${cpStartNo()}+)`:""))};
+$("#cpFpl").addEventListener("change",e=>{const t=e.target;if(t.dataset.fpl==null)return;const L=fplAll(),F=L[+t.dataset.fpl];if(!F)return;F[t.dataset.k]=t.value.toUpperCase().replace(/[^A-Z0-9 ]/g,"").slice(0,8);fplSave(L);fplRender()});
+$("#cpFpl").addEventListener("click",e=>{const a=e.target.closest("[data-fpla]"),b=e.target.closest("[data-fplb]");
+  if(a){const L=fplAll(),i=+a.dataset.i,F=L[i];if(!F)return;if(a.dataset.fpla==="rev"){F.seq.reverse();fplSave(L);fplRender();toast("กลับเส้นทาง "+F.name)}
+    if(a.dataset.fpla==="del"){if(!confirm(`ลบ FPLN ${F.no} ${F.name}?`))return;L.splice(i,1);fplSave(L);fplRender()}if(a.dataset.fpla==="use")fplUse(F)}
+  if(b){const B=baseGet(),F=B&&B.rt[+b.dataset.i];if(!F)return;if(b.dataset.fplb==="use")fplUse(F,B.wp);
+    if(b.dataset.fplb==="copy"){const L=fplAll(),used=new Set(L.map(f=>+f.no));let no=+F.no||1;while(used.has(no))no++;
+      const seq=F.seq.map(n=>{const w=wpByNo(n,B.wp);if(!w)return String(n);const c=dbMatch({name:w.dtd||w.name,lat:w.lat,lon:w.lon});return c?String(c.no):String(wpAddCur({name:w.name,dtd:w.dtd,lat:w.lat,lon:w.lon,note:w.note,elev:w.elev})||n)});
+      L.push({no:String(no),name:F.name,desc:F.desc,seq});L.sort((x,y)=>+x.no-+y.no);fplSave(L);dbRender();fplRender();render();toast(`คัดลอก ${F.name} เป็น FPLN ${no}`)}}});
+/* ---- เทียบชุดปัจจุบันกับ BASE ---- */
+let CMP_TXT="";
+function cmpRender(){const box=$("#cmpBox");if(!box)return;const B=baseGet();if(!B){box.innerHTML='<p class="hint">ยังไม่มีคลัง BASE — นำเข้าที่แท็บย่อย 📚 คลัง BASE ก่อน</p>';CMP_TXT="";return}
+  const rows=[],up=s=>String(s||"").toUpperCase().trim(),fe=(a,b)=>Math.abs(num(a,NaN)-num(b,NaN))<0.0005||up(a)===up(b);
+  dbAll().forEach(x=>{const id=up(x.dtd||x.name),m=(B.wp||[]).find(y=>up(y.dtd||y.name)===id);let st="⚠",msg="ไม่มีใน BASE";
+    if(m){const d=x.lat!=null&&m.lat!=null?gcDistNm([x.lat,x.lon],[m.lat,m.lon]):null;if(d!=null&&d<=0.05){st="✓";msg=`BASE No.${m.no}`}else{st="✗";msg=d!=null?`พิกัดต่างจาก BASE No.${m.no} ${d.toFixed(2)} NM`:"ไม่มีพิกัดเทียบ"}}
+    rows.push({cat:"wp",no:x.no,id,val:x.mgrs||"",st,msg})});
+  const P=psAll();Object.keys(CAT_T).filter(k=>k!=="wp").forEach(k=>(P[k]||[]).forEach(x=>{const L=B.ps[k]||[],id=up(x.call),m=id?L.find(y=>up(y.call)===id):null,mf=L.find(y=>fe(y.freq,x.freq));let st="⚠",msg="ไม่มีใน BASE";
+    if(m){if(fe(m.freq,x.freq)){st="✓";msg=`BASE ช่อง ${m.ch}`}else{st="✗";msg=`BASE ${m.call} = ${m.freq}`}}else if(mf){st="⚠";msg=`ความถี่ตรงกับ BASE ${mf.call||"ช่อง "+mf.ch} แต่ชื่อต่าง`}
+    rows.push({cat:k,no:x.ch,id:x.call,val:x.freq,st,msg})}));
+  if(!rows.length){box.innerHTML='<p class="hint">ชุดปัจจุบันยังว่าง — นำเข้าไฟล์จาก FalconView หรือหยิบจากคลัง BASE</p>';CMP_TXT="";return}
+  const cnt=s=>rows.filter(r=>r.st===s).length,order={"✗":0,"⚠":1,"✓":2};rows.sort((a,b)=>order[a.st]-order[b.st]);
+  box.innerHTML=`<div class="sop-stats"><span class="ok">✓ ตรง <b>${cnt("✓")}</b></span><span class="bad">✗ ไม่ตรง <b>${cnt("✗")}</b></span><span class="warn">⚠ ไม่มีใน BASE <b>${cnt("⚠")}</b></span></div>
+    <div class="tablewrap"><table class="cp-tbl cmp-tbl"><thead><tr><th></th><th>หมวด</th><th>No.</th><th>ID / Callsign</th><th>ค่าในชุดปัจจุบัน</th><th>ผลเทียบ</th></tr></thead><tbody>${rows.map(r=>`<tr class="st-${order[r.st]}"><td><b>${r.st}</b></td><td><span class="base-cat c-${r.cat}">${CAT_T[r.cat]}</span></td><td>${esc(r.no)}</td><td><b>${esc(r.id)}</b></td><td class="mono">${esc(r.val)}</td><td>${esc(r.msg)}</td></tr>`).join("")}</tbody></table></div>`;
+  CMP_TXT=["ผลเทียบ Preset กับคลัง BASE",...rows.map(r=>`${r.st} ${CAT_T[r.cat]} ${r.no} ${r.id} ${r.val} — ${r.msg}`)].join("\n")}
+$("#cmpImp").onclick=()=>$("#dbImport").click();
+$("#cmpCopy").onclick=()=>{if(!CMP_TXT)return;(navigator.clipboard?navigator.clipboard.writeText(CMP_TXT):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>toast("คัดลอกไม่ได้"))};
+/* ---- ส่งออกชุดปัจจุบันเป็น Excel (รูปแบบเดียวกับ BASE) ---- */
+$("#cpXlsOut").onclick=async()=>{try{await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook(),P=psAll(),H={font:{bold:true,name:"Arial"},fill:{type:"pattern",pattern:"solid",fgColor:{argb:"FFFFFF00"}}},T={font:{bold:true,name:"Arial",size:13},fill:{type:"pattern",pattern:"solid",fgColor:{argb:"FFBDEBF7"}}};
+  const tbl=(ws,title,heads,rows)=>{const r0=ws.rowCount?ws.rowCount+2:1;ws.getCell(r0,1).value=title;Object.assign(ws.getCell(r0,1),T);ws.mergeCells(r0,1,r0,heads.length);
+    heads.forEach((h,i)=>{const c=ws.getCell(r0+1,i+1);c.value=h;Object.assign(c,H)});rows.forEach((r,j)=>r.forEach((v,i)=>{const c=ws.getCell(r0+2+j,i+1);c.value=v;c.font={name:"Arial"};c.border={top:{style:"thin"},bottom:{style:"thin"},left:{style:"thin"},right:{style:"thin"}}}))};
+  const band=(k,n)=>{const ws=wb.addWorksheet(n);ws.columns=[{width:7},{width:14},{width:40},{width:14}];tbl(ws,n,["No.","CALLSIGN","DESCRIPTION","FREQ (MHz)"],(P[k]||[]).map(x=>[+x.ch||x.ch,x.call,[x.desc,x.fix].filter(Boolean).join(" · "),x.freq]))};
+  band("fm","FM Presets");band("vhf","VHF Presets");band("uhf","UHF Presets");
+  const w=wb.addWorksheet("WAYPOINT");w.columns=[{width:7},{width:12},{width:11},{width:40},{width:22},{width:12},{width:12},{width:10}];
+  tbl(w,"Waypoint Presets",["No.","DTD ID","FIX/Point","DESCRIPTION","MGRS","LAT","LONG","ELEV (ft)"],dbAll().map(x=>[+x.no||x.no,x.dtd||x.name,"",x.note||"",x.mgrs||(x.lat!=null?fmtMgrs(toMgrs(x.lat,x.lon)):""),x.lat,x.lon,x.elev??""]));
+  const n=wb.addWorksheet("ADF-VOR Presets");n.columns=[{width:7},{width:10},{width:11},{width:36},{width:11},{width:34}];
+  [["adf","ADF Presets","FREQ"],["vor","VOR / ILS Presets","FREQ"],["tcn","TACAN Presets","CHANNEL"]].forEach(([k,t,f])=>tbl(n,t,["No.","ID","Fix/Point","DESCRIPTION",f,"MORSE CODE"],(P[k]||[]).map(x=>[+x.ch||x.ch,x.call,x.fix||"",x.desc||"",x.freq,morseOf(x.call)])));
+  const r=wb.addWorksheet("ROUTE");r.columns=[{width:10},{width:12},{width:36},{width:50}];tbl(r,"Flight Plans (FLT PLANS)",["FPLN No.","FPLN NAME","DESCRIPTION","WPT SEQ (No. จาก WAYPOINT)"],fplAll().map(F=>[+F.no||F.no,F.name,F.desc||"",F.seq.join("-")]));
+  const buf=await wb.xlsx.writeBuffer();download(`Preset_${(state.planName||"ชุดปัจจุบัน").replace(/[\\/:*?"<>|]/g,"_").slice(0,40)}_${new Date().toLocaleDateString("en-CA")}.xlsx`,buf,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");toast("ส่งออก Excel แล้ว")}
+  catch(e){toast("ส่งออกไม่ได้: "+e.message)}};
+cpSub((()=>{try{return localStorage.getItem(CP_SUB_KEY)}catch(e){return null}})()||"radio");
 
 /* ---------- Enroute chart (แบบ SkyVector World Lo) จากข้อมูล eAIP: airways ENR 3, VOR/NDB ENR 4.1, fixes ENR 4.4 ---------- */
 const enrLayer=L.layerGroup();layerCtl.addOverlay(enrLayer,"Enroute chart (airway/VOR) eAIP");
@@ -4971,7 +5163,7 @@ const CtlUndo=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.
 new CtlUndo().addTo(map);
 modeSet(FLMODE,true);
 /* โหลดไฟล์ตัวอย่าง: บน iPad/iPhone ใช้ Share sheet (บันทึกลงไฟล์ได้ และไม่ออกจากแอป) · เครื่องอื่นดาวน์โหลดตรง */
-$("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("cp_template.xlsx")).blob(),name="Preset_template.xlsx";
+$("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("BASE_template.xlsx")).blob(),name="Preset_template.xlsx";
   const f=new File([b],name,{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
   if(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)){if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}
   const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}

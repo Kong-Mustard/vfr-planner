@@ -30,3 +30,4 @@ TM_*
 contacts*.json
 !ppc_tpl.json
 !vfr_manual.json
+!BASE_template.xlsx
