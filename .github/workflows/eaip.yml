@@ -9,6 +9,7 @@ on:
     paths:
       - eaip_update.py
       - vfr_ad224.py
+      - vfr_manual.json
       - .github/workflows/eaip.yml
 
 concurrency: { group: data-commit, cancel-in-progress: false }

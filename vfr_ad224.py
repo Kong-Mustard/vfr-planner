@@ -251,7 +251,7 @@ def parse_points_ocr(txt, vor, var=0.0, log=print):
     return pts, rej
 
 
-def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=None):
+def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=None, manual=None):
     """ap_charts: {icao: [chart,...]} · fetch_text(url) -> ข้อความ pdftotext
     คืน {icao: {"pts": [...], "rt": [...]}} โดย rt.seq = [[ชื่อ, alt, lat, lon, ทางเลือก?], ...]"""
     raw = {}
@@ -297,6 +297,14 @@ def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=N
             rts += R
         if pts or rts:
             raw[ic] = (pts, rts)
+    # จุดที่กรอกเอง (vfr_manual.json) แทนที่ค่า OCR ที่ id เดียวกัน
+    for ic, m in (manual or {}).items():
+        if ic.startswith("_") or not isinstance(m, dict):
+            continue
+        pts, rts = raw.get(ic, ([], []))
+        ids = {p["id"] for p in m.get("pts", []) if p.get("id")}
+        pts = [dict(p, man=1) for p in m.get("pts", [])] + [p for p in pts if p.get("id") not in ids]
+        raw[ic] = (pts, rts)
     # พจนานุกรมจุดรวมทุกสนาม (ชื่อเดียวกันใช้ร่วมกัน เช่น จุดรอบกรุงเทพ VTBD/VTBS)
     G, G2 = {}, {}
     for ic, (pts, _) in raw.items():

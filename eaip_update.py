@@ -727,7 +727,8 @@ def main():
                 return ((b["lat"], b["lon"]) if vfr_ad224._nm((a["lat"], a["lon"]), (b["lat"], b["lon"])) < 15 else None), 0.0
 
             vfr = vfr_ad224.build({ic: a.get("charts", []) for ic, a in data["airports"].items()}, pdf_text, ocr_text=ocr_text, vor_of=vor_of,
-                                   ap_pos={ic: (a["lat"], a["lon"]) for ic, a in data["airports"].items() if a.get("lat") is not None})
+                                   ap_pos={ic: (a["lat"], a["lon"]) for ic, a in data["airports"].items() if a.get("lat") is not None},
+                                   manual=json.load(open("vfr_manual.json", encoding="utf-8")) if os.path.exists("vfr_manual.json") else None)
             for ic, v in vfr.items():
                 data["airports"][ic]["vfr"] = v
         else:

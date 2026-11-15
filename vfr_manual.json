@@ -1,0 +1,144 @@
+{
+ "_note": "จุด VFR ที่อ่านจาก chart สแกนไม่ได้ — กรอกจาก AIP AD 2.24 (ข้อมูลสาธารณะ) · ใช้แทนค่าที่ OCR อ่านได้ (id เดียวกัน)",
+ "VTUK": {
+  "src": "AIP AD 2.24 VTUK (ผู้ใช้ตรวจจาก chart 15 พ.ย. 2026)",
+  "pts": [
+   {
+    "id": "A",
+    "n": "A POINT",
+    "lm": "Ban Nong Chum Sang Temple",
+    "rd": "R-063 / 30.0D",
+    "lat": 16.7016667,
+    "lon": 103.2494444
+   },
+   {
+    "id": "B",
+    "n": "B POINT",
+    "lm": "Sam Sung Police Station",
+    "rd": "R-078 / 16.4D",
+    "lat": 16.5297278,
+    "lon": 103.0662639
+   },
+   {
+    "id": "C",
+    "n": "C POINT",
+    "lm": "White Pagoda",
+    "rd": "R-096 / 10.4D",
+    "lat": 16.4552778,
+    "lon": 102.9676111
+   },
+   {
+    "id": "E",
+    "n": "E POINT",
+    "lm": "Sa Wang Cherng Khao Temple",
+    "rd": "R-300 / 14.9D",
+    "lat": 16.5853528,
+    "lon": 102.5614722
+   },
+   {
+    "id": "F",
+    "n": "F POINT",
+    "lm": "Phu Wiang Hill",
+    "rd": "R-295 / 29.6D",
+    "lat": 16.672325,
+    "lon": 102.3188639
+   },
+   {
+    "id": "G",
+    "n": "G POINT",
+    "lm": "Ei San Temple (Road Intersection)",
+    "rd": "R-270 / 28.6D",
+    "lat": 16.4644167,
+    "lon": 102.2916111
+   },
+   {
+    "id": "H",
+    "n": "H POINT",
+    "lm": "Nhong Reua (Road Intersection)",
+    "rd": "R-274 / 20.4D",
+    "lat": 16.4915556,
+    "lon": 102.4350556
+   },
+   {
+    "id": "I",
+    "n": "I POINT",
+    "lm": "Khon Kaen 4 Power Plant",
+    "rd": "R-272 / 11.6D",
+    "lat": 16.4740833,
+    "lon": 102.5867778
+   },
+   {
+    "id": "Q",
+    "n": "Q POINT",
+    "lm": "Au Bon Rat Dam",
+    "rd": "R-333 / 20.5D",
+    "lat": 16.7722778,
+    "lon": 102.6199722
+   },
+   {
+    "id": "U",
+    "n": "U POINT",
+    "lm": "Pho Tha Ram Temple",
+    "rd": "R-092 / 9.6D",
+    "lat": 16.4669444,
+    "lon": 102.9536111
+   },
+   {
+    "id": "R",
+    "n": "R POINT",
+    "lm": "Nhong Krung Yai Village",
+    "rd": "R-060 / 19.1D",
+    "lat": 16.6332222,
+    "lon": 103.0721111
+   },
+   {
+    "id": "S",
+    "n": "S POINT",
+    "lm": "Phra That Kham Kaen",
+    "rd": "R-060 / 11.0D",
+    "lat": 16.5636111,
+    "lon": 102.9516667
+   },
+   {
+    "id": "T",
+    "n": "T POINT",
+    "lm": "Bridge",
+    "rd": "R-004 / 15.2D",
+    "lat": 16.7252778,
+    "lon": 102.8025
+   },
+   {
+    "id": "D",
+    "n": "D POINT",
+    "lm": "Wang Yang Weir",
+    "rd": "R-124 / 11.0D",
+    "lat": 16.3686111,
+    "lon": 102.9473889
+   },
+   {
+    "id": "J",
+    "n": "J POINT",
+    "lm": "Maha Sarakham University",
+    "rd": "R-118 / 30.0D",
+    "lat": 16.2425472,
+    "lon": 103.2509917
+   },
+   {
+    "id": "O",
+    "n": "O POINT",
+    "lm": "Ban Phai (Road Intersection)",
+    "rd": "R-190 / 25.0D",
+    "lat": 16.0575833,
+    "lon": 102.7159722
+   },
+   {
+    "id": "P",
+    "n": "P POINT",
+    "lm": "Khon Sak Creek",
+    "rd": "R-156 / 17.7D",
+    "lat": 16.2013056,
+    "lon": 102.9149444
+   }
+  ]
+ }
+}
