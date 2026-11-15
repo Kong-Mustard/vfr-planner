@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-15T19:12Z",
+"fetched": "2026-11-15T19:59Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -926,15 +926,6 @@
 "icao": "A4541/26 NOTAMN\r\nQ) VTBB/QFDAS/I/M/A/000/999/1341N10045E005\r\nA) VTBS B) 2611152000 C) 2611152200\r\nE) ADVANCED VISUAL DOCKING GUIDANCE SYSTEM (A-VDGS)\r\n   ACFT STAND NR S101-S128 U/S DUE TO MAINT\r\n   RMK: ACFT HAVE TO FLW MARSHALLING SIGNALS STRICTLY",
 "plain": " ",
 "start": "11/15/2026 2000",
-"end": "11/15/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4580/26",
-"icao": "A4580/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611151618 C) 2611152200\r\nE) ILS RWY 21L U/S",
-"plain": " ",
-"start": "11/15/2026 1618",
 "end": "11/15/2026 2200",
 "keyword": "INTERNATIONAL"
 },
