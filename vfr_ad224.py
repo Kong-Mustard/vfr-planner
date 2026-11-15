@@ -323,8 +323,8 @@ def build(ap_charts, fetch_text, log=print, ocr_text=None, vor_of=None, ap_pos=N
                 # ใช้จุดของสนามอื่นได้เฉพาะชื่อเต็ม (≥5 ตัว เช่น BANG LUK SUA) — ห้ามใช้กับรหัสสั้น เช่น K / L / P ที่ซ้ำกันทุกสนาม
                 if not p and len(norm(n)) >= 5:
                     p = G.get(norm(n)) or G2.get(norm(n).replace("H", ""))
-                if p and arp and _nm(arp, (p["lat"], p["lon"])) > 60:
-                    p = None  # ไกลเกินกว่าจะเป็นจุด VFR ของสนามนี้ — ถือว่าจับคู่ผิด
+                if p and arp and _nm(arp, (p["lat"], p["lon"])) > 80:
+                    p = None  # ไกลเกิน 80 NM — ไม่น่าใช่จุด VFR ของสนามนี้ — ถือว่าจับคู่ผิด
                 p = p or next((q for q in P if len(norm(n)) >= 5 and norm(q["n"]).startswith(norm(n))), None)  # สะกดต่างกันในเอกสาร เช่น SANAP TUEP / SANAP THUEP
                 e = [p["id"] if p and p.get("id") else n, it[1], p["lat"] if p else None, p["lon"] if p else None]
                 if len(it) > 2:

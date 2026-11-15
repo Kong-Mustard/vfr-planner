@@ -3220,7 +3220,7 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();vfrHiLayer.cle
     (v.pts||[]).forEach(p=>{const k=p.lat.toFixed(4)+","+p.lon.toFixed(4);if(!pts.has(k))pts.set(k,{p,ics:new Set()});pts.get(k).ics.add(ic)});
     (v.rt||[]).forEach(r=>{const seq=r.seq.filter(e=>e[2]!=null);if(seq.length<2)return;const id=VFR_RT.length,dep=/^DEP/.test(r.sec);
       VFR_RT.push({id,ic,c:r.c,dep,lab:`${ic} ${r.c==="H"?"ฮ.":r.c==="A"?"บ.เล็ก":"VFR"} ${vfrSecTh(r.sec)} ${r.dir||""}`.trim(),seq,txt:r.txt});
-      for(let i=0;i+1<seq.length;i++){const A=seq[i],B=seq[i+1],k=r.c+[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");
+      for(let i=0;i+1<r.seq.length;i++){const A=r.seq[i],B=r.seq[i+1];if(A[2]==null||B[2]==null)continue;const k=r.c+[A[2],A[3],B[2],B[3]].map(x=>x.toFixed(4)).join(",");
         if(!segs.has(k))segs.set(k,{A,B,c:r.c,ids:[],dep:0,arr:0});const S=segs.get(k);S.ids.push(id);dep?S.dep++:S.arr++}})});
   segs.forEach(S=>{const col=S.c==="A"?"#2563eb":"#a21caf",G=S.c==="A"?vfrALayer:vfrLayer;
     const pl=L.polyline([[S.A[2],S.A[3]],[S.B[2],S.B[3]]],{color:col,weight:3,opacity:.85,dashArray:S.dep?null:"7 6",className:"vfr-rt"});
