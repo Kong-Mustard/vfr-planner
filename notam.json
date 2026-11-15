@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-15T21:58Z",
+"fetched": "2026-11-15T22:57Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -900,33 +900,6 @@
 "plain": " ",
 "start": "11/15/2026 1220",
 "end": "11/15/2026 2300",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4538/26",
-"icao": "A4538/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611142030 C) 2611152230\r\nD) 14 2030-2145, 15 1900-2230\r\nE) RWY 01/19 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/14/2026 2030",
-"end": "11/15/2026 2230",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4582/26",
-"icao": "A4582/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611151906 C) 2611152230\r\nE) ILS RWY 01/19 U/S",
-"plain": " ",
-"start": "11/15/2026 1906",
-"end": "11/15/2026 2230",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4541/26",
-"icao": "A4541/26 NOTAMN\r\nQ) VTBB/QFDAS/I/M/A/000/999/1341N10045E005\r\nA) VTBS B) 2611152000 C) 2611152200\r\nE) ADVANCED VISUAL DOCKING GUIDANCE SYSTEM (A-VDGS)\r\n   ACFT STAND NR S101-S128 U/S DUE TO MAINT\r\n   RMK: ACFT HAVE TO FLW MARSHALLING SIGNALS STRICTLY",
-"plain": " ",
-"start": "11/15/2026 2000",
-"end": "11/15/2026 2200",
 "keyword": "INTERNATIONAL"
 },
 {
