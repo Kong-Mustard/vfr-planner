@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-15T12:21",
+ "fetched": "2026-11-15T14:18",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -19358,13 +19358,40 @@
       "man": 1
      },
      {
-      "n": "\"M\" or MIKE Point",
-      "lat": 16.446506,
-      "lon": 102.854192,
-      "rd": "R-112 / 4.1D",
-      "ocr": 1,
+      "id": "K",
+      "n": "K POINT",
+      "lm": "Chiang Yeun",
+      "rd": "R-102 / 18.3D",
+      "lat": 16.4098056,
+      "lon": 103.0980556,
+      "man": 1
+     },
+     {
+      "id": "L",
+      "n": "L POINT",
+      "lm": "Bridge",
+      "rd": "R-106 / 7.8D",
+      "lat": 16.4369528,
+      "lon": 102.9178667,
+      "man": 1
+     },
+     {
       "id": "M",
-      "lm": "Beung Thung Sang"
+      "n": "M POINT",
+      "lm": "Beung Thung Sang Park",
+      "rd": "R-112 / 4.1D",
+      "lat": 16.4465056,
+      "lon": 102.8541917,
+      "man": 1
+     },
+     {
+      "id": "N",
+      "n": "N POINT",
+      "lm": "Mueang Pol",
+      "rd": "R-196 / 40.7D",
+      "lat": 15.8124722,
+      "lon": 102.6074722,
+      "man": 1
      }
     ],
     "rt": [
@@ -19479,20 +19506,20 @@
        [
         "K",
         null,
-        null,
-        null
+        16.4098056,
+        103.0980556
        ],
        [
         "L",
         null,
-        null,
-        null
+        16.4369528,
+        102.9178667
        ],
        [
         "M",
         null,
-        16.446506,
-        102.854192
+        16.4465056,
+        102.8541917
        ]
       ],
       "txt": "Inbound via J POINT then heading 319° to K POINT, heading 280° to L POINT, heading 280° to M POINT, and heading 280° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
@@ -19506,8 +19533,8 @@
        [
         "N",
         null,
-        null,
-        null
+        15.8124722,
+        102.6074722
        ],
        [
         "O",
@@ -19530,8 +19557,8 @@
        [
         "M",
         null,
-        16.446506,
-        102.854192
+        16.4465056,
+        102.8541917
        ]
       ],
       "txt": "Inbound via N POINT then heading 024° to O POINT, heading 054° to P POINT, heading 011° to D POINT, heading 312° to M POINT, and heading 280° to over aerodrome. Join aerodrome traffic circuit when directed by ATC."
@@ -19701,8 +19728,8 @@
        [
         "N",
         null,
-        null,
-        null
+        15.8124722,
+        102.6074722
        ]
       ],
       "txt": "After departure turn right proceed eastbound (heading 120°) until 2.5 DME then heading 135° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
@@ -19872,8 +19899,8 @@
        [
         "N",
         null,
-        null,
-        null
+        15.8124722,
+        102.6074722
        ]
       ],
       "txt": "After departure turn left proceed eastbound (heading 120°) until 2.5 DME then heading 105° to D POINT, heading 191° to P POINT, heading 234° to O POINT, and heading 204° to N POINT."
