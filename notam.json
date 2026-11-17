@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-16T23:08Z",
+"fetched": "2026-11-17T00:02Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1017,51 +1017,6 @@
 "plain": " ",
 "start": "11/16/2026 1400",
 "end": "11/17/2026 0100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "A4577/26",
-"icao": "A4577/26 NOTAMN\r\nQ) VTBB/QANCA/I/BO/E/130/460/1354N10036E999\r\nA) VTBB B) 2611160000 C) 2611162359\r\nE) CDR Y5 (RNAV 2) AVBL FOR FLIGHT PLANNING AS FLW:\r\n   PERIOD      : MEA LOWER/UPPER LIMITS\r\n   0000-0229     FL130/FL460\r\n   0230-0330     FL370/FL460\r\n   0331-2359     FL130/FL460",
-"plain": " ",
-"start": "11/16/2026 0000",
-"end": "11/16/2026 2359",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4586/26",
-"icao": "A4586/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611161900 C) 2611162330\r\nE) RWY 01/19 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/16/2026 1900",
-"end": "11/16/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4589/26",
-"icao": "A4589/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611161900 C) 2611162330\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY B BTN TWY C7 AND TWY B13 \r\n   -TWY B5 TO TWY B13\r\n   -TWY C BTN TXL T18 AND TWY K\r\n   -TWY C8\r\n   -TWY C9\r\n   -TWY J BTN TWY C AND TWY J2 \r\n   -TXL T19 BTN TWY C AND BEHIND ACFT STAND NR S102",
-"plain": " ",
-"start": "11/16/2026 1900",
-"end": "11/16/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4590/26",
-"icao": "A4590/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611161930 C) 2611162330\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY B BTN TWY C2 AND TWY C7\r\n   -TWY B1 TO TWY B4\r\n   -TWY C2 TO TWY C7",
-"plain": " ",
-"start": "11/16/2026 1930",
-"end": "11/16/2026 2330",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBS",
-"id": "A4601/26",
-"icao": "A4601/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611161855 C) 2611162330\r\nE) ILS RWY 01/19 U/S",
-"plain": " ",
-"start": "11/16/2026 1855",
-"end": "11/16/2026 2330",
 "keyword": "INTERNATIONAL"
 },
 {
