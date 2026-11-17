@@ -247,7 +247,7 @@ body.printing #printView{position:static;padding:0}
 .vis-g input{width:18px;height:18px;accent-color:var(--accent)}
 .vis-g i{display:inline-block;width:12px;height:12px;border-radius:3px}
 body.hide-hbox .hbox,body.hide-hbox .leaflet-overlay-pane path[stroke-dasharray="4 3"]{display:none}
-body.hide-rem .remtag{display:none}
+body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
@@ -2192,7 +2192,8 @@ let pePick=null;
 function infoClick(e,html){L.DomEvent.stop(e);if(pePick!=null||(typeof pick!=="undefined"&&pick)){map.fire("click",{latlng:e.latlng,originalEvent:e.originalEvent});return}
   if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng,html)}
 /* ป้ายบอกระยะ: จุดบนเส้นทางที่ระยะถึงปลายทางเป็นทวีคูณของ step (ไม่รวมจุด 0) */
-function remMarkers(rows){const step=num(state.remStep,10);if(!step||rows.length===0)return[];
+function remMarkers(rows){return[]; /* ยกเลิกป้ายบอกระยะทุกส่วน (ตามสั่ง พ.ย. 69) */
+  const step=num(state.remStep,10);if(!step||rows.length===0)return[];
   const total=rows.reduce((s,r)=>s+r.dist,0);const out=[];let done=0;
   rows.forEach((r,i)=>{const a=state.wps[i],b=state.wps[i+1];
     for(let rem=Math.floor((total-done-1e-6)/step)*step;rem>0&&total-rem>=done;rem-=step){const f=(total-rem-done)/r.dist;if(f>1)break;if(f<0.03||f>0.97)continue;
@@ -3398,7 +3399,7 @@ $("#kbMapSeg").onclick=e=>{const b=e.target.closest("[data-km]");if(!b)return;kb
   const ro=kbMapMode==="route";["#kbLayers","#kbNames"].forEach(id=>{$(id).disabled=ro;$(id).closest("label").classList.toggle("dis",ro)});if(window._pvRemap)window._pvRemap();kbVisRender()};
 /* ชั้นข้อมูลบน Kneeboard — รายการเดียวกับปุ่ม "ชั้นข้อมูล" บนแผนที่ */
 function kbVisRender(){const box=$("#kbVis");if(!box)return;const ro=kbMapMode==="route",keep=new Set(["route","hbox","rem"]);box.classList.toggle("ro",ro);
-  box.innerHTML=(ro?'<p class="hint">โหมด "เฉพาะเส้นทาง" แสดงแค่เส้นทาง · doghouse · ป้ายระยะ</p>':"")+[...new Set(VIS.map(v=>v.g))].map(g=>{const its=VIS.filter(v=>v.g===g&&(!ro||keep.has(v.k))&&visMode(v));if(!its.length)return"";
+  box.innerHTML=(ro?'<p class="hint">โหมด "เฉพาะเส้นทาง" แสดงแค่เส้นทาง · doghouse</p>':"")+[...new Set(VIS.map(v=>v.g))].map(g=>{const its=VIS.filter(v=>v.g===g&&(!ro||keep.has(v.k))&&visMode(v));if(!its.length)return"";
     return`<div class="kv-g"><b>${g}</b><div>${its.map(v=>`<label><input type="checkbox" data-kbvis="${v.k}" ${visOn(v.k)?"checked":""}>${v.c?`<i style="background:${v.c}"></i>`:""}${esc(v.t)}</label>`).join("")}</div></div>`}).join("")}
 $("#kbVis").addEventListener("change",e=>{const c=e.target.closest("[data-kbvis]");if(!c)return;const k=c.dataset.kbvis,on=c.checked;
   if(window._pvVis)window._pvVis(k,on);else{visSet(k,on);visSave()}if(on&&k==="enr")drawEnr();if(k==="ifr")drawIfr();if(k==="pwr"&&on){pwrWarn();pwrDraw()}kbVisRender()});
@@ -3749,8 +3750,8 @@ function kneePrint(preview){
         <div class="kc-r"><span>สีเส้น</span><span class="kc-sw">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b"].map(c=>`<button type="button" data-lc="${c}" style="--c:${c}" class="${c===KL.lcol?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="lcol" value="${KL.lcol}" aria-label="สีเส้นอื่น"></span></div>
         <label class="kc-r"><span>ลักษณะเส้น</span><select data-kl="ldash">${[["solid","━━ เส้นทึบ"],["dash","╍╍ เส้นประ"],["dot","··· จุด"],["dashdot","─·─ ประ-จุด"]].map(([v,t])=>`<option value="${v}" ${v===KL.ldash?"selected":""}>${t}</option>`).join("")}</select></label>
         ${kcR("ความหนา","line",0.5,2.5,0.25,KL,"×")}${kcR("ความทึบ","lop",0.3,1,0.05,KL,"",v=>Math.round(v*100)+"%")}
-        <label class="kc-r"><span>ป้ายระยะ</span><select data-kl="rem">${[["0","ปิด"],["5","ทุก 5 NM"],["10","ทุก 10 NM"],["20","ทุก 20 NM"],["25","ทุก 25 NM"],["50","ทุก 50 NM"]].map(([v,t])=>`<option value="${v}" ${v===String(KL.rem)?"selected":""}>${t}</option>`).join("")}</select></label>
-        ${kcR("ขนาดป้ายระยะ","remsz",0.6,1.8,0.1,KL,"×")}${kcR("Doghouse","dog",0.5,1.8,0.1,KL,"×")}</div>
+        
+        ${kcR("Doghouse","dog",0.5,1.8,0.1,KL,"×")}</div>
       <div class="kc-g"><h4>📍 จุดเส้นทาง / จุดรายงาน</h4>
         <div class="kc-r"><span>สีหมุดจุด</span><span class="kc-sw">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b"].map(c=>`<button type="button" data-sw="wpc" data-v="${c}" style="--c:${c}" class="${c===KL.wpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="wpc" value="${KL.wpc}" aria-label="สีหมุดอื่น"></span></div>
         ${kcR("ขนาดหมุดจุด","wpsz",0.6,1.8,0.1,KL,"×")}
@@ -4812,7 +4813,7 @@ drawAs21();
 const VIS=[
  {k:"route",t:"เส้นทาง + จุด",g:"เส้นทาง",L:()=>routeLayer},
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
- {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem"},
+ {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem",m:"X"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
  {k:"ctr",t:"ห้วงอากาศควบคุม (ATZ · CTR · TMA)",g:"สนามบิน",L:()=>ctrAll},
  {k:"vfr",t:"◆ จุดรายงาน + เส้นทาง VFR (ฮ. / ทั่วไป)",g:"สนามบิน",L:()=>vfrLayer,m:"V"},
@@ -4855,7 +4856,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
     <div class="vis-g"><b>แผนที่ฐาน</b><div class="vis-base">${BASES.map(b=>`<button type="button" data-base="${b[0]}" class="${baseCur()===b[0]?"on":""}">${b[1]}</button>`).join("")}</div></div>
     <div class="vis-pre">${Object.keys(VIS_PRESET).filter(n=>n!=="ซ่อนทั้งหมด").map(n=>`<button type="button" class="mini" data-pre="${n}">${n}</button>`).join("")}</div>
     <div class="vis-mode hint"></div>
-    ${groups.map(g=>`<div class="vis-g" data-g="${g}"><b>${g}</b>${VIS.filter(v=>v.g===g).map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
+    ${groups.map(g=>`<div class="vis-g" data-g="${g}"><b>${g}</b>${VIS.filter(v=>v.g===g&&v.m!=="X").map(v=>`<label><input type="checkbox" data-vis="${v.k}">${v.c?`<i style="background:${v.c}"></i>`:""}${v.t}</label>`).join("")}</div>`).join("")}</div>`;
   L.DomEvent.disableClickPropagation(d);L.DomEvent.disableScrollPropagation(d);
   d.querySelector("#visBtn").onclick=e=>{e.preventDefault();const p=d.querySelector("#visPanel");p.hidden=!p.hidden;visSync();
     if(!p.hidden){const mr=map.getContainer().getBoundingClientRect(),pr=p.getBoundingClientRect();p.style.maxHeight=Math.max(200,Math.min(mr.bottom,innerHeight)-pr.top-12)+"px"}};
