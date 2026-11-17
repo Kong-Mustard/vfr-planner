@@ -1160,8 +1160,9 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 .rlab{font:800 15px var(--f-display);color:var(--ink);letter-spacing:.02em}.rlab.dep{color:#16a34a}.rlab.dst{color:#d6198f}
 .swapbtn{font-size:22px!important;line-height:1;padding:6px 14px!important;font-weight:700}
 .hitag{background:#c62f24;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:3px;white-space:nowrap;border:1px solid #fff}.hitag-wrap{background:none;border:0}.hitag-wrap .hitag{cursor:pointer;display:inline-block}
-.apmk{display:flex;flex-direction:column;align-items:center;overflow:visible}.ap-e{font-size:17px;line-height:22px;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 1px 1px rgba(0,0,0,.6))}
-.ap-n{font:600 8.5px/1 var(--f-body);color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;white-space:nowrap;margin-top:-1px}.ap-lo .ap-n{display:none}.ap-lo .ap-e{font-size:12px;line-height:16px}.ap-vlo .apmk.ap-minor{display:none}
+.apmk{display:flex;flex-direction:column;align-items:center;overflow:visible}.ap-e{width:20px;height:20px;box-sizing:border-box;border-radius:50%;background:#fff;border:2.5px solid #dc2626;color:#dc2626;display:grid;place-items:center;font:900 12px/1 Arial,sans-serif;box-shadow:0 0 0 1.5px rgba(0,0,0,.65),0 2px 4px rgba(0,0,0,.5)}
+.ap-e svg{width:13px;height:13px;fill:currentColor}.ap-minor .ap-e{width:16px;height:16px;border-width:2px;font-size:10px}.ap-minor .ap-e svg{width:10px;height:10px}
+.ap-n{font:700 9.5px/1.25 var(--f-body);color:#fff;background:rgba(15,23,42,.8);padding:1px 5px;border-radius:4px;white-space:nowrap;margin-top:2px;text-shadow:none}.ap-lo .ap-n{display:none}.ap-lo .ap-e{width:15px;height:15px;border-width:2px;font-size:9px}.ap-lo .ap-e svg{width:9px;height:9px}.ap-vlo .apmk.ap-minor{display:none}
 .wpdbl{background:#123c69;color:#fff;font:700 11px var(--f-mono);padding:1px 5px;border-radius:4px;white-space:nowrap;border:1px solid #fff}
 .undo-bar a{display:grid!important;place-items:center}
 #mfWp{position:fixed;left:calc(14px + env(safe-area-inset-left,0px));top:calc(max(env(safe-area-inset-top,0px),10px) + 16px);z-index:2600;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 40px - env(safe-area-inset-top,0px));display:flex;flex-direction:column;background:var(--panel);border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,.45)}
@@ -2177,8 +2178,10 @@ function baseCur(){const b=BASES.find(x=>map.hasLayer(x[2]));return b?b[0]:"sat"
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
 const routeLayer=L.layerGroup().addTo(map);
 const apLayer=L.layerGroup();
+/* สัญลักษณ์สนาม: วงกลมขาวขอบแดง + เครื่องบินแดง · ฮ. = ขอบน้ำเงินตัว H · ชื่ออยู่ในป้ายพื้นเข้ม — เห็นชัดทั้งบนภาพดาวเทียมและแผนที่ถนน */
+const AP_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.9 0 1.6.7 1.6 1.6V9l8.4 4.6v2.3l-8.4-2.6v4.9l2.6 2v1.8L12 21l-4.2 1v-1.8l2.6-2v-4.9L2 15.9v-2.3L10.4 9V3.1c0-.9.7-1.6 1.6-1.6z"/></svg>';
 AIRPORTS.forEach(a=>{const hp=a[4]==="heliport",nm=String(a[1]).replace(/\s*(International\s+)?(Airport|Airfield|Heliport|Air Base|Airstrip)\b/gi,"").trim()||a[0];
-  const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk"+(/^VT[A-Z]{2}$/.test(a[0])?"":" ap-minor"),html:`<span class="ap-e">${hp?"🚁":"✈️"}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
+  const mk=L.marker([a[2],a[3]],{icon:L.divIcon({className:"apmk"+(/^VT[A-Z]{2}$/.test(a[0])?"":" ap-minor"),html:`<span class="ap-e ${hp?"hp":"af"}">${hp?"H":AP_SVG}</span><span class="ap-n">${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
   .bindTooltip(`<b>${a[0]}</b> ${esc(a[1])}`).addTo(apLayer);mk.options.apId=a[0];mk.options.apNm=nm;
   mk.on("click",e=>{L.DomEvent.stopPropagation(e);state.wps.push({name:a[0],lat:a[2],lon:a[3],vor:""});markEdited();render();toast("เพิ่ม "+a[0])})});
 apLayer.addTo(map);
