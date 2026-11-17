@@ -2158,7 +2158,10 @@ const EXAMPLE={example:true,planName:"ตัวอย่าง — VTBH ไป �
   wps:[{name:"VTBH",lat:14.9494,lon:100.643,vor:""},{name:"บทบ.ยว.3",lat:16.39053,lon:101.12801,vor:""}],
   legs:[]};
 function blankLeg(){return{alt:state.g.alt,cas:state.g.cas,wd:state.g.wd,wv:state.g.wv,temp:state.g.temp,dev:0,ate:""}}
-function syncLegs(){const need=Math.max(0,state.wps.length-1);while(state.legs.length<need)state.legs.push(blankLeg());state.legs.length=need}
+function wpNum(){if(!Array.isArray(state.wps))state.wps=[];state.wps=state.wps.filter(w=>w&&isFinite(parseFloat(w.lat))&&isFinite(parseFloat(w.lon)));state.wps.forEach(w=>{if(typeof w.lat!=="number")w.lat=parseFloat(w.lat);if(typeof w.lon!=="number")w.lon=parseFloat(w.lon)})}
+/* แจ้งข้อผิดพลาดบนจอ (ครั้งละไม่เกิน 1 ข้อความ/10 วิ) เพื่อให้ผู้ใช้แคปส่งมาได้ */
+let _errT=0;window.addEventListener("error",e=>{if(!e.message||/Script error|ResizeObserver/.test(e.message))return;const n=Date.now();if(n-_errT<10000)return;_errT=n;try{toast("⚠ แอพเจอข้อผิดพลาด: "+e.message+" — แคปจอนี้ส่งให้ผู้พัฒนา");clearTimeout(toast._t);toast._t=setTimeout(()=>$("#toast").classList.remove("show"),7000)}catch(_){}});
+function syncLegs(){wpNum();const need=Math.max(0,state.wps.length-1);while(state.legs.length<need)state.legs.push(blankLeg());state.legs.length=need}
 
 /* ---------- map ---------- */
 const map=L.map("map",{zoomControl:false}).setView([14.95,100.63],10);
@@ -4440,7 +4443,7 @@ function sideSet(col){const sd=$(".top>.side"),b=$("#sideToggle");sd.classList.t
 $("#sideToggle").onclick=()=>sideSet(!$(".top>.side").classList.contains("collapsed"));
 try{if(localStorage.getItem("vfr_side")==="1")sideSet(true)}catch(e){}
 /* ---------- Waypoint มาตรฐานหน่วย (No.x) — localStorage "vfr_wpdb" เท่านั้น ---------- */
-function dbAll(){return store.get("vfr_wpdb")||[]}
+function dbAll(){const L=store.get("vfr_wpdb");if(!Array.isArray(L))return[];L.forEach(x=>{if(x&&x.lat!=null&&typeof x.lat!=="number"){const v=parseFloat(x.lat);x.lat=isFinite(v)?v:null}if(x&&x.lon!=null&&typeof x.lon!=="number"){const v=parseFloat(x.lon);x.lon=isFinite(v)?v:null}});return L}
 function dbSave(L){L.sort((a,b)=>(+a.no||1e9)-(+b.no||1e9));return store.set("vfr_wpdb",L)}
 function dbMatch(w){if(!w)return null;const L=dbAll(),n=String(w.name||"").toUpperCase().trim();
   return L.find(x=>x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<0.05)||L.find(x=>String(x.name).toUpperCase()===n&&x.lat!=null&&gcDistNm([w.lat,w.lon],[x.lat,x.lon])<1)||null}
@@ -4748,7 +4751,7 @@ function fpnRender(){const L=fpnAll();$("#fplN").textContent=L.length||"";$("#fp
   const B=baseGet();$("#fplBase").innerHTML=B&&(B.rt||[]).length?B.rt.map((F,i)=>fpnRow(F,i,true)).join(""):'<p class="hint">ไม่มี (ชีต ROUTE ในไฟล์ BASE)</p>'}
 function fpnUse(F,src){const W=F.seq.map(n=>wpByNo(n,src)).filter(w=>w&&w.lat!=null);if(W.length<2)return toast("จุดในเส้นทางไม่ครบ (ต้องมีพิกัดอย่างน้อย 2 จุด)");
   if(state.wps.length&&!confirm(`แทนที่เส้นทางในแท็บ 1 ด้วย ${F.name} (${W.length} จุด)?`))return;
-  state.wps=W.map(w=>({name:String(w.dtd||w.name).slice(0,20),lat:w.lat,lon:w.lon,vor:""}));state.legs=W.slice(1).map(()=>blankLeg());markEdited();render();document.querySelector('.rail [data-tab=plan]').click();toast("ใช้เส้นทาง "+F.name)}
+  state.wps=W.map(w=>({name:String(w.dtd||w.name).slice(0,20),lat:+w.lat,lon:+w.lon,vor:""}));state.legs=W.slice(1).map(()=>blankLeg());markEdited();render();document.querySelector('.rail [data-tab=plan]').click();toast("ใช้เส้นทาง "+F.name)}
 $("#fplFromRoute").onclick=()=>{const W=state.wps.filter(w=>w.lat!=null);if(W.length<2)return toast("สร้างเส้นทางในแท็บ 1 ก่อน");let miss=0;
   const seq=W.map(w=>{let n=cpNoFor(w);if(!n){n=wpAddCur({name:dtdId(w.name,new Set(dbAll().map(x=>String(x.dtd||x.name).toUpperCase()))),lat:w.lat,lon:w.lon,note:"จากเส้นทางแท็บ 1"});miss++}return String(n)});
   const L=fpnAll(),used=new Set(L.map(f=>+f.no));let no=1;while(used.has(no))no++;const nm=(String(W[0].name).replace(/^VT/,"")+String(W.at(-1).name).replace(/^VT/,"")).toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8)||"FPLN"+no;
