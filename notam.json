@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-17T16:21Z",
+"fetched": "2026-11-17T17:28Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1242,6 +1242,15 @@
 "plain": " ",
 "start": "11/21/2026 2330",
 "end": "11/22/2026 1100",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTPB",
+"id": "J7452/26",
+"icao": "J7452/26 NOTAMN\r\nQ) VTBB/QWLLW/IV/NBO/AW/000/060/1645N10109E010\r\nA) VTPB B) 2611201100 C) 2611201659\r\nE) SKY LANTERN (KHOMLOY) FESTIVAL WILL TAKE PLACE WI 10NM\r\n   CENTRE 164435.1N1010925.7E DIRECTION UNKNOWN\r\nF) GND G) 6000FT AGL",
+"plain": " ",
+"start": "11/20/2026 1100",
+"end": "11/20/2026 1659",
 "keyword": "INTERNATIONAL"
 },
 {
