@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-17T15:15Z",
+"fetched": "2026-11-17T16:21Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1116,6 +1116,15 @@
 "plain": " ",
 "start": "11/17/2026 1930",
 "end": "11/17/2026 2300",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBD",
+"id": "A4617/26",
+"icao": "A4617/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611171603 C) 2611172200\r\nE) ILS RWY 21L U/S",
+"plain": " ",
+"start": "11/17/2026 1603",
+"end": "11/17/2026 2200",
 "keyword": "INTERNATIONAL"
 },
 {
