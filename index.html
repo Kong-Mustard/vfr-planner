@@ -184,7 +184,7 @@ body.printing #pvMap .leaflet-overlay-pane path[stroke="#d6198f"]:not(.leghit):n
 #printView .pv-tbl{font-size:var(--pvtfs,8pt)}#printView .pv-tbl th{font-size:var(--pvtfs,8pt)}
 #printView .pv-unit{font-size:calc(var(--pvfs,7.5pt)*1.45)}
 body.pvprev .pv-ed{outline:1px dashed transparent;cursor:text}body.pvprev .pv-ed:hover{outline-color:#60a5fa}body.pvprev .pv-ed:focus{outline:2px solid #2563eb;background:#eff6ff}
-.pv-cards .fcard h3{font-size:9pt;margin:0}.pv-cards .fcard h3 small{display:none}
+.pv-cards .fcard h3{font-size:9pt;margin:0}.fcard h3 .ap-el,.fcard h3 .ap-rw{font-weight:700;font-size:.82em;margin-left:.35em}.fcard h3 .ap-el{color:#475569}.pv-cards .fcard h3 small{display:none}
 .pv-cards .fcard .r{padding:0}
 .pv-unit{border:2px solid #e07a00;font:700 11pt var(--f-display);padding:1mm 2mm;color:#e07a00}
 .pv-tbl{width:100%;border-collapse:collapse;margin-top:1.5mm;font:8pt var(--f-mono)}
@@ -3593,7 +3593,9 @@ $("#fplPrevClose").onclick=()=>{$("#fplPrev").close()};
 $("#fplPrev").addEventListener("close",()=>{$("#fplFrame").src="about:blank";if(fplPrevUrl){URL.revokeObjectURL(fplPrevUrl);fplPrevUrl=null}});
 $("#fplPrevDl").onclick=()=>$("#fplPdf").click();
 function kbCards(){return kbAirports().map(a=>{const its=kbItems(a).filter(it=>kbOn(a,it));if(!its.length)return"";
-  return`<div class="fcard"><h3>${esc(a.id)}</h3>${its.map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
+  /* หัวการ์ด: รหัสสนาม · ความสูง (ft) · ทางวิ่ง — บรรทัดเดียว เช่น VTBH 95' 06-24/01-19 */
+  const rw=its.find(it=>it.svc==="RW"),el=a.elev!=null&&a.elev!==""&&isFinite(+a.elev)?`${Math.round(+a.elev)}'`:"",rwt=rw?String(rw.txt).replace(/\s*,\s*/g,"/"):"";
+  return`<div class="fcard"><h3>${esc(a.id)}${el?` <span class="ap-el">${el}</span>`:""}${rwt?` <span class="ap-rw">${esc(rwt)}</span>`:""}</h3>${its.filter(it=>it!==rw).map(it=>`<div class="r"><b>${esc(it.svc)}</b><span>${esc(it.txt)}</span></div>`).join("")}</div>`}).join("")}
 /* ความถี่พื้นที่ (FIC) สำหรับ VFR นอกห้วงอากาศควบคุม — AIP Thailand ENR 1.2 ข้อ 12: 127.0 / 331.3 MHz
    FOCAL = เหนือเส้น 14°57'N 098°15'E → 16°00'N 101°30'E → 16°30'N 104°45'E · BIG SHELL = ใต้ 11°00'N · OSCAR = ระหว่างนั้น (ขอบเขตตามแนวชายแดนประมาณเอา) */
 const FIC_F="127.0 / 331.3",FIC_NAMES=["FOCAL","OSCAR","BIG SHELL"];
