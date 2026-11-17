@@ -2073,7 +2073,7 @@ function splitCoordName(t){
 function resolvePoint(text,remember=true){
   const t=String(text||"").trim();if(!t)return null;const U=t.toUpperCase();
   if(AP[U]){const a=AP[U];return{name:a.id,lat:a.lat,lon:a.lon,info:`${String(a.name).replace(/\s*(International\s+)?(Airport|Airfield|Air Base)\b/gi,"").trim()}${a.elev?` · ${Math.round(a.elev)} ft`:""}`,
-    src:a.eaip?"eAIP":"⚠ ไม่ใช่ eAIP",full:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?" · eAIP "+EAIP.edition:" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
+    src:a.eaip?"eAIP":"⚠ ไม่ใช่ eAIP",full:`${a.name}${a.elev?` · elev ${Math.round(a.elev)} ft`:""}${a.eaip?(a.eaip.custom?" · กรอกเอง":" · eAIP "+(EAIP&&EAIP.edition||"")):" · OurAirports (ยังไม่ยืนยันกับ eAIP)"}`}}
   const dn=U.match(/^(?:NO\.?\s*|#)(\d+)$/);const dbp=dn?dbAll().find(x=>String(x.no)===String(+dn[1])):dbAll().find(x=>String(x.name).toUpperCase()===U);
   if(dbp&&dbp.lat!=null)return{name:dbp.name||("No."+dbp.no),lat:dbp.lat,lon:dbp.lon,info:`Waypoint หน่วย No.${dbp.no}${dbp.note?" · "+dbp.note:""}`};
   const c=customPts()[U];if(c)return{name:c.name,lat:c.lat,lon:c.lon,info:"จุดที่บันทึกไว้"};
@@ -5219,7 +5219,8 @@ if(state.remStep==null)state.remStep="10";if(typeof visOn==="function"&&visOn("r
 state.date="";state.acft="";
 if(!(num(state.burn,0)>=5)){state.burn=burnFromL(BURN_LPH0)}
 try{npRenderList();npRenderMain()}catch(e){}
-fillDatalist();fillForm();refreshSel();drawAreas();render();fit();
+/* เรียกทีละขั้น — ขั้นไหนพังจะไม่ลากส่วนที่เหลือของแอพ (ปุ่ม/โหมดบิน) ให้ตายตาม */
+[fillDatalist,fillForm,refreshSel,drawAreas,render,fit].forEach(f=>{try{f()}catch(e){console.error(e);setTimeout(()=>{throw e},0)}});
 /* โหลด eaip_data.json ที่ GitHub อัปเดตให้อัตโนมัติ (อยู่ข้างไฟล์แอป) */
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).catch(()=>null).then(async d=>{
   if(!d||!d.airports||!d.edition){d=await CLDB.get("eaip").catch(()=>null);if(!d||!d.airports)return} /* ออฟไลน์และไม่มีใน cache → ใช้ฉบับที่เก็บไว้ใน IndexedDB */
