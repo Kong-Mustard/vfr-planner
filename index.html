@@ -2211,7 +2211,9 @@ let _errT=0;window.addEventListener("error",e=>{if(!e.message||/Script error|Res
 function syncLegs(){wpNum();const need=Math.max(0,state.wps.length-1);while(state.legs.length<need)state.legs.push(blankLeg());state.legs.length=need}
 
 /* ---------- map ---------- */
-const map=L.map("map",{zoomControl:false}).setView([14.95,100.63],10);
+/* ล็อกพื้นที่แผนที่: ไทย + ขอบเพื่อนบ้านเล็กน้อย — กันเลื่อนออกไปไกลแล้วต้องโหลดภาพที่ไม่ได้ใช้ */
+const MAP_BOUNDS=L.latLngBounds([3.5,95.0],[22.5,108.5]);
+const map=L.map("map",{zoomControl:false,maxBounds:MAP_BOUNDS,maxBoundsViscosity:1,minZoom:5}).setView([14.95,100.63],10);
 L.control.zoom({position:"topright"}).addTo(map);
 const sat=L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,maxNativeZoom:18,attribution:"Imagery © Esri"});
 const topo=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{maxZoom:17,attribution:"© OpenTopoMap © OSM"});
