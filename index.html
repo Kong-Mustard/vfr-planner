@@ -265,6 +265,11 @@ body.printing #printView{position:static;padding:0}
 body.hide-hbox .hbox,body.hide-hbox .leaflet-overlay-pane path[stroke-dasharray="4 3"]{display:none}
 body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
+.ps-box{position:absolute;z-index:1001;top:10px;left:50%;transform:translateX(-50%);width:min(380px,calc(100% - 150px))}
+.ps-in{display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;box-shadow:0 2px 10px #0005;padding:0 6px 0 12px;height:42px}.ps-in input{flex:1;border:0!important;outline:0;box-shadow:none!important;background:transparent!important;padding:0!important;font:500 15px var(--f-body);color:#111;min-width:0}.ps-in .ps-x{border:0;background:none;color:#64748b;min-width:32px;min-height:32px}
+.ps-res{margin-top:6px;background:#fff;border-radius:14px;box-shadow:0 6px 20px #0006;max-height:min(60vh,420px);overflow:auto;padding:4px}.ps-res button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:10px;color:#111}.ps-res button:hover{background:#f1f5f9}.ps-res b{display:block;font-size:14px}.ps-res small{display:block;color:#64748b;font-size:12px}.ps-i{width:22px;text-align:center}.ps-res .hint{margin:4px 10px;font-size:12px}
+.ps-pin{font-size:26px;line-height:28px;filter:drop-shadow(0 2px 2px #0007)}.ps-pop b{display:block;font-size:14px}.ps-pop small{display:block;color:#64748b;margin-bottom:4px}.ps-pop .mono{font-size:12px}.ps-b{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.ps-b button{min-height:32px;font-size:12px;padding:0 8px;border-radius:8px}
+body.pvprev .ps-box,body.flymode .ps-box{display:none}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}.hbox-s{cursor:pointer;filter:none}
 .dgp{position:absolute;display:inline-flex;gap:5px;align-items:baseline;white-space:nowrap;background:#fff;border:1.5px solid #111;border-radius:999px;padding:1px 8px;font:700 11px Inter,Arial,sans-serif;color:#111;box-shadow:0 1px 3px #0005}.dgp b{color:#0a6cff;font-size:13px;font-weight:800}.dgp span::after{content:" NM";font-size:9px;color:#555}
 .pv-legn{display:inline-grid;place-items:center;width:1.35em;height:1.35em;border:1.5px solid #111;border-radius:50%;font-weight:800;font-size:.85em;margin-right:3px}
@@ -2835,6 +2840,42 @@ const Ctl3D=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.Do
   b.onclick=e=>{e.preventDefault();if(state.wps.length<2){toast("ยังไม่มีเส้นทาง");return}
     const bb=L.latLngBounds(state.wps.map(w=>[w.lat,w.lon])).pad(0.15);open3D(bb)};return d}});
 new Ctl3D().addTo(map);
+/* ---------- ค้นหาสถานที่ (แบบ Google Earth): ชื่ออำเภอ/ตำบล/สถานที่ · จุดในแอพ · พิกัด/MGRS ----------
+   ข้อมูลในเครื่องค้นก่อน (สนามบิน จุดรายงาน จุดลงบ่อย Preset) แล้วค่อยถาม OpenStreetMap (Nominatim) เมื่อกด Enter — ต้องต่อเน็ต */
+const PS={mk:null,ab:null};
+function psLocal(q){const Q=q.toUpperCase(),out=[],add=(n,info,lat,lon,src)=>{if(isFinite(lat)&&isFinite(lon)&&out.length<12&&!out.some(o=>Math.abs(o.lat-lat)<1e-4&&Math.abs(o.lon-lon)<1e-4))out.push({n,info,lat:+lat,lon:+lon,src})};
+  Object.entries(AP).forEach(([ic,a])=>{if(ic.toUpperCase().includes(Q)||String(a.name||"").toUpperCase().includes(Q))add(`${ic} ${a.name||""}`,"สนามบิน",a.lat,a.lon,"✈")});
+  vfrPtsAll().forEach(({ic,p})=>{if(String(p.n).toUpperCase().includes(Q)||String(p.lm||"").toUpperCase().includes(Q))add(`${p.n}`,`จุดรายงาน ${ic}${p.lm?" · "+p.lm:""}`,p.lat,p.lon,"◆")});
+  schFavAll().forEach(f=>{if(f.n.toUpperCase().includes(Q))add(f.n,"จุดลงบ่อย (ในเครื่อง)",f.lat,f.lon,"🟡")});
+  dbAll().forEach(x=>{if(x.lat!=null&&(String(x.name||"").toUpperCase().includes(Q)||String(x.dtd||"").toUpperCase().includes(Q)))add(`${x.dtd||x.name}`,`Preset No.${x.no}${x.desc?" · "+x.desc:""}`,x.lat,x.lon,"№")});
+  return out}
+function psShow(list,note){const r=PS.box.querySelector(".ps-res");r.hidden=false;
+  r.innerHTML=(list.length?list.map((o,i)=>`<button type="button" data-psi="${i}"><span class="ps-i">${o.src}</span><span><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small></span></button>`).join(""):"")+(note?`<p class="hint">${note}</p>`:"");PS.list=list}
+async function psRun(q,online){q=String(q||"").trim();if(!q){PS.box.querySelector(".ps-res").hidden=true;return}
+  const c=parseCoord(q);if(c){psGo({n:fmtMgrs(toMgrs(c[0],c[1])),info:"พิกัดที่พิมพ์",lat:c[0],lon:c[1],src:"📍"});return}
+  const loc=psLocal(q);if(!online){psShow(loc,loc.length?"กด Enter เพื่อค้นชื่อสถานที่/อำเภอเพิ่ม":"กด Enter เพื่อค้นชื่อสถานที่/อำเภอ");return}
+  psShow(loc,"กำลังค้น…");if(PS.ab)PS.ab.abort();PS.ab=new AbortController();
+  try{const c0=map.getCenter(),u=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=10&accept-language=th,en&countrycodes=th,la,mm,kh,my&q=${encodeURIComponent(q)}&viewbox=${c0.lng-3},${c0.lat+3},${c0.lng+3},${c0.lat-3}`;
+    const d=await(await fetch(u,{signal:PS.ab.signal})).json();
+    const on=(d||[]).map(x=>({n:String(x.name||x.display_name||"").trim()||x.display_name,info:String(x.display_name||"").split(",").slice(1,4).join(",").trim(),lat:+x.lat,lon:+x.lon,src:"🔎"}));
+    psShow(loc.concat(on),on.length?"ผลค้นจาก © OpenStreetMap":"ไม่พบใน OpenStreetMap — ลองสะกดใหม่ เช่น อำเภออู่ทอง")}
+  catch(e){if(e.name!=="AbortError")psShow(loc,"ค้นออนไลน์ไม่ได้ (ไม่มีเน็ต?) — แสดงเฉพาะข้อมูลในเครื่อง")}}
+function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.removeLayer(PS.mk);
+  PS.mk=L.marker([o.lat,o.lon],{zIndexOffset:2000,icon:L.divIcon({className:"",html:'<div class="ps-pin">📍</div>',iconSize:[28,28],iconAnchor:[14,26]})}).addTo(map);
+  const dms=`${posFmt(o.lat,true,"dms",2)}  ${posFmt(o.lon,false,"dms",2)}`;
+  PS.mk.bindPopup(`<div class="ps-pop"><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small><div class="mono">${fmtMgrs(toMgrs(o.lat,o.lon))}</div><div class="mono">${dms}</div>
+    <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="fav">🟡 เก็บเป็นจุดลงบ่อย</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
+  PS.cur=o;map.setView([o.lat,o.lon],Math.max(map.getZoom(),13))}
+{const box=document.createElement("div");box.className="ps-box";box.innerHTML='<div class="ps-in"><span>🔍</span><input type="text" placeholder="ค้นหาสถานที่ / อำเภอ / จุด / พิกัด" aria-label="ค้นหาสถานที่" enterkeyhint="search"><button type="button" class="ps-x" aria-label="ล้าง">✕</button></div><div class="ps-res" hidden></div>';
+  map.getContainer().appendChild(box);PS.box=box;L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);const inp=box.querySelector("input");let t=0;
+  inp.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>psRun(inp.value,false),200)});
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();clearTimeout(t);psRun(inp.value,true)}if(e.key==="Escape"){box.querySelector(".ps-res").hidden=true;inp.blur()}});
+  box.querySelector(".ps-x").onclick=()=>{inp.value="";box.querySelector(".ps-res").hidden=true;if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}};
+  box.querySelector(".ps-res").addEventListener("click",e=>{const b=e.target.closest("[data-psi]");if(b)psGo(PS.list[+b.dataset.psi])});
+  map.getContainer().addEventListener("click",e=>{const b=e.target.closest("[data-psa]");if(!b||!PS.cur)return;const o=PS.cur;
+    if(b.dataset.psa==="wp"){state.wps.push({name:o.src==="📍"?"WP"+(state.wps.length+1):String(o.n).replace(/\s+/g," ").slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6),vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
+    if(b.dataset.psa==="fav"){const n=(prompt("ชื่อจุดลงบ่อย",String(o.n).slice(0,24))||"").trim();if(n){const L2=schFavAll().filter(x=>x.n.toUpperCase()!==n.toUpperCase());L2.push({n,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});store.set("vfr_altpts",L2);toast("เก็บ "+n+" แล้ว (ใช้ในแผนผังเส้นทาง)")}}
+    if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}})}
 /* ---------- โหมด V (VFR) / I (IFR) + Safety Altitude ----------
    V: ภูมิประเทศสูงสุดในแนวเส้นทาง ±buf NM (AWS Terrain tiles) + 1000 ft ปัดขึ้นทีละ 100
    I: เตรียมไว้สำหรับ MEA / MOCA / MSA จาก eAIP (ยังไม่ได้ดึง) */
@@ -2944,7 +2985,7 @@ map.on("click",e=>{if(!pick)return;if(!pick.a){pick.a=e.latlng;toast("แตะ�
 map.on("mousemove",e=>{if(!pick||!pick.a)return;if(pickLayer)map.removeLayer(pickLayer);pickLayer=L.rectangle(L.latLngBounds(pick.a,e.latlng),{color:"#ffd400",weight:2,fill:false,dashArray:"6 4"}).addTo(map)});
 async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
   $("#v3d").hidden=false;document.body.style.overflow="hidden";
-  const route={type:"FeatureCollection",features:[{type:"Feature",geometry:{type:"LineString",coordinates:state.wps.map(w=>[w.lon,w.lat])}},
+  const route={type:"FeatureCollection",features:[...(state.wps.length>1?[{type:"Feature",geometry:{type:"LineString",coordinates:state.wps.map(w=>[w.lon,w.lat])}}]:[]),
     ...state.wps.map((w,i)=>({type:"Feature",properties:{n:`${i+1} ${w.name}`},geometry:{type:"Point",coordinates:[w.lon,w.lat]}}))]};
   const b=[[bb.getWest(),bb.getSouth()],[bb.getEast(),bb.getNorth()]];
   if(ml){ml.remove();ml=null}
