@@ -265,7 +265,11 @@ body.printing #printView{position:static;padding:0}
 body.hide-hbox .hbox,body.hide-hbox .leaflet-overlay-pane path[stroke-dasharray="4 3"]{display:none}
 body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .leghit{cursor:grab}.leghit:active{cursor:grabbing}
-.hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}
+.hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}.hbox-s{cursor:pointer;filter:none}
+.dgp{position:absolute;display:inline-flex;gap:5px;align-items:baseline;white-space:nowrap;background:#fff;border:1.5px solid #111;border-radius:999px;padding:1px 8px;font:700 11px Inter,Arial,sans-serif;color:#111;box-shadow:0 1px 3px #0005}.dgp b{color:#0a6cff;font-size:13px;font-weight:800}.dgp span::after{content:" NM";font-size:9px;color:#555}
+.pv-legn{display:inline-grid;place-items:center;width:1.35em;height:1.35em;border:1.5px solid #111;border-radius:50%;font-weight:800;font-size:.85em;margin-right:3px}
+.dgn{position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #111;display:grid;place-items:center;font:800 11px Inter,Arial,sans-serif;color:#111;box-shadow:0 1px 3px #0005}
+.hb-sty{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}.hb-sty button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:6px 8px;border-radius:10px;border:1.5px solid var(--line,#cbd5e1);background:#fff;min-height:44px}.hb-sty button.on{border-color:#2563eb;background:#eff6ff}.hb-sty small{font-size:11px;color:#64748b}
 .hbwrap{position:relative;width:100%;height:100%;transform-origin:50% 50%}
 .hrot{position:absolute;left:50%;top:-22px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:#0a6cff;color:#fff;
   display:grid;place-items:center;font:700 14px/1 Arial,sans-serif;cursor:grab;touch-action:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}
@@ -2258,14 +2262,21 @@ function drawMap(rows){
     m.on("click",e=>{L.DomEvent.stop(e);window._suppressClick=Date.now();wpAsk(i)});
     m.on("dragend",e=>{const p=e.target.getLatLng();ifrSnapHint(null);let f=snapNear(p);if(f&&f.name===w.name)f=null;w.lat=+p.lat.toFixed(6);w.lon=+p.lng.toFixed(6);render();if(f)ifrSnapAsk(w,i,f);else cpSnapCheck(w)});
   });
+  const DS=state.dogStyle||"full";
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
     const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
-
+    /* ก = ป้าย heading บนเส้น · ค = เลขขา (ดู heading ในตาราง) — วางกลางขา หมุนตามแนวเส้น แตะเพื่อเปลี่ยนรูปแบบ */
+    if(DS==="pill"||DS==="num"){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b);let ang=Math.atan2(pb.y-pa.y,pb.x-pa.x)*R2D;if(ang>90)ang-=180;if(ang<-90)ang+=180;
+      const h=DS==="pill"?`<div class="dgp" style="transform:translate(-50%,-50%) rotate(${ang.toFixed(1)}deg) scale(${s})"><b>${isFinite(r.mh)?hdg(r.mh):"---"}°</b><span>${r.dist.toFixed(1)}</span></div>`
+        :`<div class="dgn" style="transform:translate(-50%,-50%) scale(${s})">${i+1}</div>`;
+      const mk=L.marker(mid,{zIndexOffset:900,title:"แตะเพื่อเปลี่ยนรูปแบบกล่อง heading",icon:L.divIcon({className:"hbox hbox-s",html:h,iconSize:[0,0],iconAnchor:[0,0]})}).addTo(routeLayer);
+      mk.on("click",ev=>{L.DomEvent.stop(ev);window._suppressClick=Date.now();hbAsk(ev.target.getLatLng())});return}
     const key=legKey(i);let pos=state.boxPos[key];
     if(!pos){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,off=85*s;
       const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
     const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
-    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${hboxSvg(r,s,boxRot(i,r))}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(92*s),Math.round(150*s)],iconAnchor:[Math.round(46*s),Math.round(75*s)]})}).addTo(routeLayer);
+    const cmp=DS==="mini",bw0=cmp?72:92,bh0=cmp?96:150;
+    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"แตะ = เปลี่ยนรูปแบบ/ขนาด · ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${cmp?hboxSvgMini(r,s,boxRot(i,r)):hboxSvg(r,s,boxRot(i,r))}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(bw0*s),Math.round(bh0*s)],iconAnchor:[Math.round(bw0/2*s),Math.round(bh0/2*s)]})}).addTo(routeLayer);
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
@@ -2302,7 +2313,9 @@ function wpAsk(i){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.
 /* แตะกล่อง heading (doghouse) → ปรับขนาดกล่องทุกกล่อง */
 function hbAsk(ll){tapClose();document.querySelectorAll(".snapask").forEach(x=>x.remove());const b=document.createElement("div");b.className="snapask wpask hbpop";
   const v=()=>Math.round((+state.boxScale||1)*100)+"%";
-  b.innerHTML=`<div class="sa-h"><span class="sa-ico">⬡</span><div><b>ขนาดกล่อง heading</b><small>ปรับทุกกล่องพร้อมกัน · ลากกล่องเพื่อย้าย · ดับเบิลคลิก = ตำแหน่งเดิม</small></div></div>
+  const DSO=[["full","⬡ เต็ม","MH · NM · เวลา · ทิศกลับ"],["mini","ข ย่อ","MH ใหญ่ + NM"],["pill","ก บนเส้น","ป้ายเล็กบนเส้น"],["num","ค เลขขา","① ② ③ ดู heading ในตาราง"]],cur=state.dogStyle||"full";
+  b.innerHTML=`<div class="sa-h"><span class="sa-ico">⬡</span><div><b>กล่อง heading</b><small>เลือกรูปแบบ + ขนาด · ใช้กับทุกขา · ลากกล่องเพื่อย้าย · ดับเบิลคลิก = ตำแหน่งเดิม</small></div></div>
+   <div class="hb-sty">${DSO.map(o=>`<button type="button" data-ds="${o[0]}" class="${o[0]===cur?"on":""}"><b>${o[1]}</b><small>${o[2]}</small></button>`).join("")}</div>
    <div class="hb-row"><button type="button" data-hb="-1" aria-label="เล็กลง">−</button><input type="range" min="0.6" max="2" step="0.1" value="${+state.boxScale||1}" aria-label="ขนาดกล่อง"><button type="button" data-hb="1" aria-label="ใหญ่ขึ้น">＋</button><span class="hb-v">${v()}</span></div>
    <div class="sa-b"><button class="sa-no">ค่าเดิม 100%</button><button class="sa-yes">✓ เสร็จ</button></div>`;
   const pvMode=document.body.classList.contains("pvprev");if(pvMode){b.classList.add("hb-dock");document.body.appendChild(b)}else map.getContainer().appendChild(b);L.DomEvent.disableClickPropagation(b);L.DomEvent.disableScrollPropagation(b);
@@ -2312,7 +2325,8 @@ function hbAsk(ll){tapClose();document.querySelectorAll(".snapask").forEach(x=>x
   rg.oninput=()=>set(+rg.value);b.querySelectorAll("[data-hb]").forEach(x=>x.onclick=()=>set((+state.boxScale||1)+0.1*+x.dataset.hb));
   place();map.on("move zoom",place);const close=()=>{map.off("move zoom",place);map.off("click",close);b.remove();document.removeEventListener("keydown",k);histSched&&histSched()};
   const k=e=>{if(e.key==="Escape")close()};document.addEventListener("keydown",k);setTimeout(()=>map.once("click",close),0);
-  b.querySelector(".sa-no").onclick=()=>set(1);b.querySelector(".sa-yes").onclick=close;requestAnimationFrame(()=>b.classList.add("in"))}
+  b.querySelector(".sa-no").onclick=()=>set(1);b.querySelector(".sa-yes").onclick=close;
+  b.querySelectorAll("[data-ds]").forEach(x=>x.onclick=()=>{state.dogStyle=x.dataset.ds==="full"?undefined:x.dataset.ds;b.querySelectorAll("[data-ds]").forEach(y=>y.classList.toggle("on",y===x));store.set("vfr_current",state);render();if(window._pvRemap)window._pvRemap()});requestAnimationFrame(()=>b.classList.add("in"))}
 /* แตะแผนที่ด้วย 2 นิ้วพร้อมกัน (ไม่ลาก) → วัดระยะ/ทิศระหว่าง 2 จุดที่นิ้วแตะ */
 let measLayer=null,measT=null;
 function measClear(){if(measLayer){map.removeLayer(measLayer);measLayer=null}clearTimeout(measT)}
@@ -2430,6 +2444,12 @@ function hboxRotInit(mk,key){const el=mk._icon;if(!el||el._rotInit)return;el._ro
     const up=()=>{h.removeEventListener("pointermove",mv);h.removeEventListener("pointerup",up);h.removeEventListener("pointercancel",up);
       mk.dragging.enable();map.dragging.enable();state.boxRot=state.boxRot||{};state.boxRot[key]=deg%360;store.set("vfr_current",state);histSched()};
     h.addEventListener("pointermove",mv);h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
+/* ข = กล่องย่อ: MH ตัวใหญ่ + ระยะ NM (ตัด ETE/ทิศกลับ) */
+function hboxSvgMini(r,s,rot){const w=Math.round(72*s),hgt=Math.round(96*s),flip=isFinite(rot)&&norm(rot)>90&&norm(rot)<270;
+  const T=(y,sz,wt,fill,txt)=>`<text x="36" y="${y}" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="${wt}" font-size="${sz}" fill="${fill}">${txt}</text>`;
+  const mh=`${isFinite(r.mh)?hdg(r.mh):"---"}°`,d=`${r.dist.toFixed(1)} NM`;
+  const txt=flip?`<g transform="rotate(180 36 48)">${T(40,15,700,"#111",d)}${T(76,24,800,"#0a6cff",mh)}</g>`:`${T(38,24,800,"#0a6cff",mh)}${T(72,15,700,"#111",d)}`;
+  return`<svg width="${w}" height="${hgt}" viewBox="0 0 72 96" aria-hidden="true"><path d="M36 2 L69 20 L69 76 L36 94 L3 76 L3 20 Z" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/><line x1="10" y1="52" x2="62" y2="52" stroke="#111" stroke-width="1.5"/>${txt}</svg>`}
 function hboxSvg(r,s,rot){const w=Math.round(92*s),hgt=Math.round(150*s);
   /* กล่องหันไปทางใต้ (90°–270°) → กลับตัวหนังสือ 180° ให้อ่านได้ โดยเลข MH ยังอยู่ปลายด้านทิศที่บิน */
   const flip=isFinite(rot)&&norm(rot)>90&&norm(rot)<270;
@@ -3765,7 +3785,7 @@ function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map
   pv.appendChild(panel);kbRender()}
 function kbPanelHome(){if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
 function pvTblHtml(res,W){return `<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
-    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
+    res.rows.map((r,i)=>`<tr><td>${state.dogStyle==="num"?`<span class="pv-legn">${i+1}</span>`:""}${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
 function pvUnitSync(pv){const u=pv.querySelector(".pv-unit");if(!u)return;const h=ficHtml();u.hidden=!h;u.innerHTML=h}
 /* แก้เส้นทางระหว่างดูตัวอย่าง Kneeboard (เช่น ลากเพิ่มจุด/สนามสำรอง) → อัปเดตหัวกระดาษ ตาราง ความถี่ และรายการความถี่ด้านซ้าย */
 let pvRouteSig="";
