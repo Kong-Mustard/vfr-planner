@@ -268,8 +268,10 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .ps-box{position:absolute;z-index:1001;top:10px;left:50%;transform:translateX(-50%);width:min(380px,calc(100% - 150px))}
 .ps-in{display:flex;align-items:center;gap:6px;background:#fff;border-radius:999px;box-shadow:0 2px 10px #0005;padding:0 6px 0 12px;height:42px}.ps-in input{flex:1;border:0!important;outline:0;box-shadow:none!important;background:transparent!important;padding:0!important;font:500 15px var(--f-body);color:#111;min-width:0}.ps-in .ps-x{border:0;background:none;color:#64748b;min-width:32px;min-height:32px}
 .ps-res{margin-top:6px;background:#fff;border-radius:14px;box-shadow:0 6px 20px #0006;max-height:min(60vh,420px);overflow:auto;padding:4px}.ps-res button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:10px;color:#111}.ps-res button:hover{background:#f1f5f9}.ps-res b{display:block;font-size:14px}.ps-res small{display:block;color:#64748b;font-size:12px}.ps-i{width:22px;text-align:center}.ps-res .hint{margin:4px 10px;font-size:12px}
+.lmk{position:relative;width:26px;height:26px}.lmk i{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:15px;background:#fff;border:2px solid #f59e0b;border-radius:50%;box-shadow:0 1px 4px #0006}.lmk span{position:absolute;left:29px;top:4px;white-space:nowrap;font:800 11px var(--f-body);color:#fff;background:rgba(15,23,42,.8);padding:1px 5px;border-radius:5px}
 .ovl-lb{position:absolute;transform:translate(-50%,-140%);white-space:nowrap;font:800 11px var(--f-body);color:#fff;background:var(--c);padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px #0006}
 .ovl-r{display:flex!important;align-items:center;gap:6px}.ovl-c{width:18px;height:18px;min-height:0!important;min-width:0!important;padding:0!important;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #94a3b8}.ovl-r small{color:#64748b}
+.lmk-ts{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:4px}.lmk-ts label{display:flex;flex-direction:column;align-items:center;border:1.5px solid #cbd5e1;border-radius:10px;padding:4px;cursor:pointer}.lmk-ts input{position:absolute;opacity:0}.lmk-ts label:has(input:checked){border-color:#2563eb;background:#eff6ff}.lmk-ts span{font-size:20px}.lmk-ts small{font-size:11px;text-align:center}
 .ps-pin{font-size:26px;line-height:28px;filter:drop-shadow(0 2px 2px #0007)}.ps-pop b{display:block;font-size:14px}.ps-pop small{display:block;color:#64748b;margin-bottom:4px}.ps-pop .mono{font-size:12px}.ps-b{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.ps-b button{min-height:32px;font-size:12px;padding:0 8px;border-radius:8px}
 body.pvprev .ps-box,body.flymode .ps-box{display:none}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}.hbox-s{cursor:pointer;filter:none}
@@ -2208,7 +2210,7 @@ const BASES=[["sat","ดาวเทียม",sat],["topo","ภูมิปร�
 function baseSet(k){const b=BASES.find(x=>x[0]===k)||BASES[0];BASES.forEach(x=>{if(x!==b&&map.hasLayer(x[2]))map.removeLayer(x[2])});if(!map.hasLayer(b[2]))b[2].addTo(map);b[2].bringToBack&&b[2].bringToBack();try{localStorage.setItem("vfr_base",b[0])}catch(e){}document.querySelectorAll("#visPanel [data-base]").forEach(x=>x.classList.toggle("on",x.dataset.base===b[0]))}
 function baseCur(){const b=BASES.find(x=>map.hasLayer(x[2]));return b?b[0]:"sat"}
 L.control.scale({imperial:true,metric:true,position:"bottomright"}).addTo(map);
-const routeLayer=L.layerGroup().addTo(map),ovlLayer=L.layerGroup();
+const routeLayer=L.layerGroup().addTo(map),ovlLayer=L.layerGroup(),lmkLayer=L.layerGroup();
 /* ---------- เส้นทางซ้อน: แผนที่บันทึกไว้ แสดงทับคนละสี (เทียบเส้นหลัก/สำรอง) ---------- */
 const OVL_C=["#ef4444","#f59e0b","#22c55e","#06b6d4","#8b5cf6","#f97316","#0f172a"];
 function ovlCfg(){const c=store.get("vfr_ovl");return c&&typeof c==="object"?c:{}}
@@ -2221,6 +2223,28 @@ function ovlRender(){const box=document.getElementById("ovlList");if(!box)return
   box.innerHTML=names.length?names.map((n,i)=>{const o=C[n]||{},c=o.c||OVL_C[i%OVL_C.length];return`<label class="ovl-r"><input type="checkbox" data-ovl="${esc(n)}" ${o.on?"checked":""}><button type="button" class="ovl-c" data-ovlc="${esc(n)}" style="background:${c}" title="เปลี่ยนสี"></button><span>${esc(n)}${n===state.planName?' <small>(แผนนี้)</small>':""}</span></label>`}).join("")
     :'<p class="hint" style="margin:2px 0">ยังไม่มีแผนที่บันทึก — กด "บันทึก" ที่แผนก่อน แล้วจะเลือกมาซ้อนได้</p>'}
 function ovlSet(n,o){const C=ovlCfg(),i=Object.keys(plans()).sort().indexOf(n);C[n]={c:OVL_C[(i<0?0:i)%OVL_C.length],...(C[n]||{}),...o};store.set("vfr_ovl",C);ovlRender();ovlDraw();if(o.on&&!visOn("ovl"))visSet("ovl",true)}
+/* ---------- จุดสังเกต / จุดลงบ่อย: ไอคอนตามชนิด (แบบหมุด Google Earth) · เก็บในเครื่องเท่านั้น ---------- */
+const LMK_T=[["gen","📍","ทั่วไป"],["lz","🛬","ลานจอด / LZ"],["temple","🛕","วัด"],["school","🏫","โรงเรียน"],["gov","🏛️","ศาลากลาง / ราชการ"],["hosp","🏥","โรงพยาบาล"],["junc","🛣️","แยก / ถนน"],["mtn","⛰️","เขา"],["water","💧","แหล่งน้ำ"],["tower","📡","เสา / อาคารสูง"],["town","🏘️","ชุมชน / อำเภอ"],["mil","🎖️","ค่ายทหาร"]];
+const lmkT=t=>LMK_T.find(x=>x[0]===t)||LMK_T[0];
+/* ความสูงพื้นดิน (AWS Terrain ~150 ม./พิกเซล — ค่าประมาณ) */
+async function gndElev(lat,lon){try{const m=await terrElevM(lat,lon);return isFinite(m)?m:null}catch(e){return null}}
+function gndFill(el,lat,lon){if(!el)return;el.textContent="ความสูงพื้นดิน: กำลังวัด…";gndElev(lat,lon).then(m=>{el.textContent=m==null?"ความสูงพื้นดิน: วัดไม่ได้ (ต้องต่อเน็ตครั้งแรก)":`ความสูงพื้นดิน ≈ ${Math.round(m*3.28084).toLocaleString()} ft (${Math.round(m)} ม.)`})}
+async function lmkDlg(o){const r=await bkDlg(`<h3>${o.edit?"✎ แก้จุดสังเกต":"🟡 เก็บเป็นจุดสังเกต / จุดลงบ่อย"}</h3>
+   <label>ชื่อ<input name="n" required maxlength="40" value="${esc(o.n||"")}"></label>
+   <p style="margin:8px 0 4px">ชนิด (ไอคอนบนแผนที่)</p><div class="lmk-ts">${LMK_T.map(t=>`<label><input type="radio" name="t" value="${t[0]}" ${t[0]===(o.t||"gen")?"checked":""}><span>${t[1]}</span><small>${t[2]}</small></label>`).join("")}</div>
+   <p class="hint">เก็บในเครื่องนี้เท่านั้น · ขึ้นในชั้น "จุดสังเกต / จุดลงบ่อย" และแผนผังเส้นทางเมื่ออยู่ใกล้เส้นทาง</p>
+   <menu><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">บันทึก</button></menu>`);
+  if(!r||!String(r.n||"").trim())return null;return{n:String(r.n).trim(),t:r.t||"gen"}}
+function lmkSave(old,o){const L2=schFavAll().filter(x=>x.n!==old&&x.n.toUpperCase()!==o.n.toUpperCase());L2.push(o);store.set("vfr_altpts",L2);lmkDraw();if(typeof schFavList==="function"){const pv=document.querySelector(".pv-ctl");if(pv)schFavList(pv.closest("body"))}}
+function lmkDraw(){lmkLayer.clearLayers();schFavAll().forEach(f=>{const t=lmkT(f.t);
+  const mk=L.marker([+f.lat,+f.lon],{icon:L.divIcon({className:"",html:`<div class="lmk"><i>${t[1]}</i><span>${esc(f.n)}</span></div>`,iconSize:[26,26],iconAnchor:[13,13]})});
+  mk.bindPopup(()=>{const d=document.createElement("div");d.className="ps-pop";d.innerHTML=`<b>${t[1]} ${esc(f.n)}</b><small>${esc(t[2])} · จุดในเครื่อง</small><div class="mono">${fmtMgrs(toMgrs(+f.lat,+f.lon))}</div><div class="mono">${posFmt(+f.lat,true,"dms",2)}  ${posFmt(+f.lon,false,"dms",2)}</div><div class="gnd hint"></div>
+    <div class="ps-b"><button type="button" data-lm="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-lm="ed">✎ แก้</button><button type="button" data-lm="del">🗑 ลบ</button></div>`;
+    gndFill(d.querySelector(".gnd"),+f.lat,+f.lon);
+    d.onclick=async e=>{const b=e.target.closest("[data-lm]");if(!b)return;map.closePopup();
+      if(b.dataset.lm==="wp"){state.wps.push({name:f.n.slice(0,24),lat:+f.lat,lon:+f.lon,vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
+      if(b.dataset.lm==="ed"){const r=await lmkDlg({...f,edit:1});if(r)lmkSave(f.n,{...f,...r})}
+      if(b.dataset.lm==="del"&&confirm(`ลบจุด "${f.n}" ออกจากเครื่องนี้?`)){store.set("vfr_altpts",schFavAll().filter(x=>x.n!==f.n));lmkDraw()}};return d},{maxWidth:290});lmkLayer.addLayer(mk)})}
 const apLayer=L.layerGroup();
 /* สัญลักษณ์สนาม: วงกลมขาวขอบแดง + เครื่องบินแดง · ฮ. = ขอบน้ำเงินตัว H · ชื่ออยู่ในป้ายพื้นเข้ม — เห็นชัดทั้งบนภาพดาวเทียมและแผนที่ถนน */
 const AP_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.9 0 1.6.7 1.6 1.6V9l8.4 4.6v2.3l-8.4-2.6v4.9l2.6 2v1.8L12 21l-4.2 1v-1.8l2.6-2v-4.9L2 15.9v-2.3L10.4 9V3.1c0-.9.7-1.6 1.6-1.6z"/></svg>';
@@ -2877,9 +2901,9 @@ async function psRun(q,online){q=String(q||"").trim();if(!q){PS.box.querySelecto
 function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.removeLayer(PS.mk);
   PS.mk=L.marker([o.lat,o.lon],{zIndexOffset:2000,icon:L.divIcon({className:"",html:'<div class="ps-pin">📍</div>',iconSize:[28,28],iconAnchor:[14,26]})}).addTo(map);
   const dms=`${posFmt(o.lat,true,"dms",2)}  ${posFmt(o.lon,false,"dms",2)}`;
-  PS.mk.bindPopup(`<div class="ps-pop"><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small><div class="mono">${fmtMgrs(toMgrs(o.lat,o.lon))}</div><div class="mono">${dms}</div>
+  PS.mk.bindPopup(`<div class="ps-pop"><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small><div class="mono">${fmtMgrs(toMgrs(o.lat,o.lon))}</div><div class="mono">${dms}</div><div class="gnd hint"></div>
     <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="fav">🟡 เก็บเป็นจุดลงบ่อย</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
-  PS.cur=o;map.setView([o.lat,o.lon],Math.max(map.getZoom(),13))}
+  PS.cur=o;gndFill(PS.mk.getPopup().getElement()&&PS.mk.getPopup().getElement().querySelector(".gnd"),o.lat,o.lon);map.setView([o.lat,o.lon],Math.max(map.getZoom(),13))}
 {const box=document.createElement("div");box.className="ps-box";box.innerHTML='<div class="ps-in"><span>🔍</span><input type="text" placeholder="ค้นหาสถานที่ / อำเภอ / จุด / พิกัด" aria-label="ค้นหาสถานที่" enterkeyhint="search"><button type="button" class="ps-x" aria-label="ล้าง">✕</button></div><div class="ps-res" hidden></div>';
   map.getContainer().appendChild(box);PS.box=box;L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);const inp=box.querySelector("input");let t=0;
   inp.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>psRun(inp.value,false),200)});
@@ -2888,7 +2912,7 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
   box.querySelector(".ps-res").addEventListener("click",e=>{const b=e.target.closest("[data-psi]");if(b)psGo(PS.list[+b.dataset.psi])});
   map.getContainer().addEventListener("click",e=>{const b=e.target.closest("[data-psa]");if(!b||!PS.cur)return;const o=PS.cur;
     if(b.dataset.psa==="wp"){state.wps.push({name:o.src==="📍"?"WP"+(state.wps.length+1):String(o.n).replace(/\s+/g," ").slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6),vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
-    if(b.dataset.psa==="fav"){const n=(prompt("ชื่อจุดลงบ่อย",String(o.n).slice(0,24))||"").trim();if(n){const L2=schFavAll().filter(x=>x.n.toUpperCase()!==n.toUpperCase());L2.push({n,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});store.set("vfr_altpts",L2);toast("เก็บ "+n+" แล้ว (ใช้ในแผนผังเส้นทาง)")}}
+    if(b.dataset.psa==="fav"){lmkDlg({n:String(o.n).slice(0,24)}).then(r=>{if(!r)return;lmkSave(null,{n:r.n,t:r.t,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});if(!visOn("lmk"))visSet("lmk",true);toast("เก็บ "+r.n+" แล้ว")})}
     if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}})}
 /* ---------- บนคอม: กดลูกกลิ้งเมาส์ค้างแล้วลาก (แบบ Google Earth) → เปิดภาพ 3D ตรงบริเวณที่ดูอยู่
    ลากซ้าย-ขวา = หมุน · ขึ้น-ลง = เอียง (ทำต่อได้ในหน้าจอ 3D เลยโดยไม่ต้องปล่อย) ---------- */
@@ -4966,6 +4990,7 @@ drawAs21();
 const VIS=[
  {k:"route",t:"เส้นทาง + จุด",g:"เส้นทาง",L:()=>routeLayer},
  {k:"ovl",t:"เส้นทางซ้อน (แผนอื่นที่บันทึกไว้)",g:"เส้นทาง",L:()=>ovlLayer},
+ {k:"lmk",t:"จุดสังเกต / จุดลงบ่อย (ไอคอน)",g:"เส้นทาง",L:()=>lmkLayer},
  {k:"hbox",t:"กล่อง heading (doghouse)",g:"เส้นทาง",css:"hide-hbox"},
  {k:"rem",t:"ป้ายบอกระยะ",g:"เส้นทาง",css:"hide-rem",m:"X"},
  {k:"ap",t:"สนามบิน / ฮ.",g:"สนามบิน",L:()=>apLayer},
@@ -5022,7 +5047,7 @@ const CtlVis=L.Control.extend({options:{position:"topright"},onAdd(){const d=L.D
   d.addEventListener("change",e=>{const c=e.target.closest("input[data-vis]");if(c){visSet(c.dataset.vis,c.checked);if(c.checked&&c.dataset.vis==="enr")drawEnr();if(c.dataset.vis==="ifr")drawIfr();if(c.dataset.vis==="pwr"&&c.checked){pwrWarn();pwrDraw()}}});
   d.addEventListener("click",e=>{const b=e.target.closest("[data-pre]");if(b)visPreset(b.dataset.pre);const bs=e.target.closest("[data-base]");if(bs)baseSet(bs.dataset.base)});return d}});
 new CtlVis().addTo(map);
-try{ovlDraw()}catch(e){console.error(e)}
+try{ovlDraw();lmkDraw()}catch(e){console.error(e)}
 map.on("overlayadd overlayremove",()=>{visSave()});
 if(visState)VIS.forEach(v=>{if(v.k in visState)visSet(v.k,visState[v.k],true)});
 VIS.forEach(v=>{if(!visMode(v)&&visOn(v.k))visSet(v.k,false,true)});if(!visOn("vfr"))map.removeLayer(rpLayer);
