@@ -2876,6 +2876,15 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
     if(b.dataset.psa==="wp"){state.wps.push({name:o.src==="📍"?"WP"+(state.wps.length+1):String(o.n).replace(/\s+/g," ").slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6),vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
     if(b.dataset.psa==="fav"){const n=(prompt("ชื่อจุดลงบ่อย",String(o.n).slice(0,24))||"").trim();if(n){const L2=schFavAll().filter(x=>x.n.toUpperCase()!==n.toUpperCase());L2.push({n,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});store.set("vfr_altpts",L2);toast("เก็บ "+n+" แล้ว (ใช้ในแผนผังเส้นทาง)")}}
     if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}})}
+/* ---------- บนคอม: กดลูกกลิ้งเมาส์ค้างแล้วลาก (แบบ Google Earth) → เปิดภาพ 3D ตรงบริเวณที่ดูอยู่
+   ลากซ้าย-ขวา = หมุน · ขึ้น-ลง = เอียง (ทำต่อได้ในหน้าจอ 3D เลยโดยไม่ต้องปล่อย) ---------- */
+{const C=map.getContainer();let md=null;
+  C.addEventListener("mousedown",e=>{if(e.button!==1)return;e.preventDefault();md={x:e.clientX,y:e.clientY,go:false}});
+  C.addEventListener("auxclick",e=>{if(e.button===1)e.preventDefault()});
+  addEventListener("mousemove",e=>{if(!md||md.go)return;if(Math.hypot(e.clientX-md.x,e.clientY-md.y)<18)return;md.go=true;const st=md;
+    open3D(map.getBounds(),true).then(()=>{if(!ml)return;const apply=()=>{if(ml&&ml._mm&&st.down!==false)ml._mm(st.lx??st.x,st.ly??st.y,st.x,st.y)};apply();ml.once("load",apply)})});
+  addEventListener("mousemove",e=>{if(md){md.lx=e.clientX;md.ly=e.clientY}});
+  addEventListener("mouseup",e=>{if(e.button===1&&md){md.down=false;md=null}})}
 /* ---------- โหมด V (VFR) / I (IFR) + Safety Altitude ----------
    V: ภูมิประเทศสูงสุดในแนวเส้นทาง ±buf NM (AWS Terrain tiles) + 1000 ft ปัดขึ้นทีละ 100
    I: เตรียมไว้สำหรับ MEA / MOCA / MSA จาก eAIP (ยังไม่ได้ดึง) */
@@ -2983,7 +2992,7 @@ map.on("click",e=>{if(!pick)return;if(!pick.a){pick.a=e.latlng;toast("แตะ�
   const bb=L.latLngBounds(pick.a,e.latlng);pick=null;map.getContainer().classList.remove("pick3d");
   if(pickLayer)map.removeLayer(pickLayer);pickLayer=L.rectangle(bb,{color:"#ffd400",weight:2,fill:false,dashArray:"6 4"}).addTo(map);open3D(bb)});
 map.on("mousemove",e=>{if(!pick||!pick.a)return;if(pickLayer)map.removeLayer(pickLayer);pickLayer=L.rectangle(L.latLngBounds(pick.a,e.latlng),{color:"#ffd400",weight:2,fill:false,dashArray:"6 4"}).addTo(map)});
-async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
+async function open3D(bb,fromMid){try{await loadML()}catch(e){toast(e.message);return}
   $("#v3d").hidden=false;document.body.style.overflow="hidden";
   const route={type:"FeatureCollection",features:[...(state.wps.length>1?[{type:"Feature",geometry:{type:"LineString",coordinates:state.wps.map(w=>[w.lon,w.lat])}}]:[]),
     ...state.wps.map((w,i)=>({type:"Feature",properties:{n:`${i+1} ${w.name}`},geometry:{type:"Point",coordinates:[w.lon,w.lat]}}))]};
@@ -3003,11 +3012,12 @@ async function open3D(bb){try{await loadML()}catch(e){toast(e.message);return}
   ml.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");try{ml.touchPitch.enable();ml.touchZoomRotate.enable()}catch(e){}
   /* คลิกปุ่มลูกกลิ้งค้างแล้วลาก (แบบ Google Earth): ขึ้น-ลง = เอียง · ซ้าย-ขวา = หมุน */
   {const cv=ml.getCanvasContainer();let mm=null;cv.addEventListener("mousedown",e=>{if(e.button!==1)return;e.preventDefault();mm={x:e.clientX,y:e.clientY,p:ml.getPitch(),b:ml.getBearing()}});
+   ml._mm=(cx,cy,x0,y0)=>{mm={x:x0,y:y0,p:0,b:ml.getBearing()};ml.jumpTo({pitch:Math.max(0,Math.min(85,-(cy-y0)*.3)),bearing:mm.b+(cx-x0)*.3})};
    cv.addEventListener("auxclick",e=>{if(e.button===1)e.preventDefault()});
    addEventListener("mousemove",e=>{if(!mm||!ml)return;ml.jumpTo({pitch:Math.max(0,Math.min(85,mm.p-(e.clientY-mm.y)*.3)),bearing:mm.b+(e.clientX-mm.x)*.3})});
    addEventListener("mouseup",e=>{if(e.button===1)mm=null})}
-  {const m0=ml,tryL=()=>{if(ml===m0&&m0.isStyleLoaded()&&!m0.getSource("prd"))v3dLayers().catch(()=>{})};m0.once("idle",tryL);let k=0;const iv=setInterval(()=>{tryL();if(++k>40||ml!==m0||m0.getSource("prd"))clearInterval(iv)},500)}ml.on("load",()=>{v3dLayers().catch(()=>{});try{ml.setTerrain({source:"dem",exaggeration:V3D_EX})}catch(e){}ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
-  ml._box=b}
+  {const m0=ml,tryL=()=>{if(ml===m0&&m0.isStyleLoaded()&&!m0.getSource("prd"))v3dLayers().catch(()=>{})};m0.once("idle",tryL);let k=0;const iv=setInterval(()=>{tryL();if(++k>40||ml!==m0||m0.getSource("prd"))clearInterval(iv)},500)}ml.on("load",()=>{v3dLayers().catch(()=>{});try{ml.setTerrain({source:"dem",exaggeration:V3D_EX})}catch(e){}if(!ml._mm||!ml._fromMid)ml.easeTo({pitch:60,bearing:ml.getBearing(),duration:1200})});
+  ml._box=b;ml._fromMid=!!fromMid}
 /* ---------- ชั้นข้อมูลในภาพ 3D: P/R/D · NOTAM · สายไฟแรงสูง · เรดาร์ฝน ---------- */
 const V3L=(()=>{try{return{prd:true,nt:true,pwr:false,rad:false,wind:false,as:true,vfr:true,...JSON.parse(localStorage.getItem("vfr_v3l")||"{}")}}catch(e){return{prd:true,nt:true,pwr:false,rad:false}}})();
 function l3Geo(group,props){const F=[];const add=(l,pr)=>{if(l instanceof L.LayerGroup&&!(l instanceof L.FeatureGroup&&l.getLayers===undefined)){l.eachLayer(x=>add(x,pr));return}
