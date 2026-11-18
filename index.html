@@ -383,6 +383,7 @@ body.mapfull #map{position:fixed!important;inset:0!important;z-index:2500;width:
 .vfr-hix{white-space:nowrap;font:800 12px var(--f-body);background:#fff;color:#4a044e;border:2px solid #a21caf;border-radius:999px;padding:4px 10px;cursor:pointer;box-shadow:0 2px 6px #0004}
 .vfr-pick{display:flex;flex-direction:column;gap:5px;margin-top:6px;max-height:260px;overflow:auto}.vfr-pick button{text-align:left;padding:6px 8px;border-radius:8px;font-weight:700}.vfr-pick small{display:block;font-weight:500;color:var(--muted);font-size:11px}
 #map .wpicon,#map .wpdbl,#map .rplabel{transform:scale(var(--wpz,1));transition:transform .15s}
+.obsmk{position:relative;width:14px;height:14px;color:#dc2626;font-size:13px;line-height:14px;text-shadow:0 0 2px #fff,0 0 2px #fff}.obsmk>span{position:absolute;left:13px;top:0;font:800 10px var(--f-body);color:#7f1d1d;background:#fff8;border-radius:3px;padding:0 2px;white-space:nowrap}
 .vfrpt{position:relative;width:14px;height:14px}.vfrpt>i{position:absolute;left:2px;top:2px;width:10px;height:10px;background:#ffd400;border:1.5px solid #111;transform:rotate(45deg);box-shadow:0 0 2px #000a}
 .vfrpt>span{position:absolute;left:15px;top:-3px;white-space:nowrap;font:800 11px var(--f-body);color:#4a044e;background:#fffbe6e6;border:1px solid #a21caf;border-radius:4px;padding:0 4px;pointer-events:none}
 .vfr-nolbl .vfrpt>span{display:none}body.printing #pvMap .vfrpt>span{display:block}
@@ -2099,7 +2100,8 @@ function parseCustLines(txt,kind){return String(txt||"").split(/\n/).map(l=>l.tr
 function applyCustom(){for(const[ic,c]of Object.entries(custAll())){const base=AP[ic]||{};
   const lat=c.lat??base.lat,lon=c.lon??base.lon;if(lat==null)continue;
   AP[ic]={...base,id:ic,name:c.name||base.name||ic,lat,lon,elev:c.elev!==""&&c.elev!=null?c.elev:base.elev,
-    eaip:{custom:true,rwy:c.rwy?[c.rwy]:[],comm:parseCustLines(c.comm,"comm"),navaids:parseCustLines(c.nav,"nav")}}}}
+    eaip:{custom:true,rwy:c.rwy?[c.rwy]:[],comm:parseCustLines(c.comm,"comm"),navaids:parseCustLines(c.nav,"nav"),
+      vfr:Array.isArray(c.pts)&&c.pts.length?{pts:c.pts.filter(p=>p&&isFinite(+p.lat)&&isFinite(+p.lon)).map(p=>({n:String(p.n||"").toUpperCase(),lat:+p.lat,lon:+p.lon,lm:[p.lm,p.alt].filter(Boolean).join(" · "),rd:p.rd||"",loc:1})),rt:[]}:null}}}}
 applyCustom();
 /* ระยะ (NM) จากจุดถึงเส้น leg แบบ local projection — แม่นพอสำหรับคัดสนามใกล้เส้นทาง */
 function distToSeg(p,a,b){const k=Math.cos(p[0]*D2R)*60,P=[p[1]*k,p[0]*60],A=[a[1]*k,a[0]*60],B=[b[1]*k,b[0]*60];
@@ -2544,13 +2546,24 @@ $("#cSave").onclick=()=>{const ic=$("#cId").value.trim().toUpperCase();if(!ic){t
   if(ct){const p=parseCoord(ct);if(!p){toast("อ่านพิกัดไม่ได้");return}[lat,lon]=p}
   else if(!AP[ic]){toast("สนามนี้ไม่มีบนแผนที่ ต้องใส่พิกัด");return}
   const er=$("#cElevRwy").value.split("/").map(s=>s.trim());const elev=er[0]!==""&&isFinite(+er[0])?+er[0]:null;
-  const c=custAll();c[ic]={name:$("#cName").value.trim(),lat,lon,elev,rwy:er.slice(elev!=null?1:0).join("/").trim(),comm:$("#cComm").value,nav:$("#cNav").value};
+  const c=custAll();c[ic]={...(c[ic]||{}),name:$("#cName").value.trim(),lat,lon,elev,rwy:er.slice(elev!=null?1:0).join("/").trim(),comm:$("#cComm").value,nav:$("#cNav").value};
   if(!store.set("vfr_custom_ap",c)){toast("บันทึกในเครื่องไม่ได้");return}toast("บันทึก "+ic+" แล้ว");setTimeout(custRefresh,600)};
 $("#cDel").onclick=()=>{const ic=$("#cId").value.trim().toUpperCase();const c=custAll();if(!c[ic]){toast("ยังไม่มีสนามนี้ในรายการ");return}
   delete c[ic];store.set("vfr_custom_ap",c);toast("ลบ "+ic+" แล้ว");setTimeout(custRefresh,600)};
 $("#cExport").onclick=()=>download("สนามที่กรอกเอง.json",JSON.stringify(custAll(),null,1),"application/json");
 $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=deepStrip(JSON.parse(t));if(typeof d!=="object"||Array.isArray(d))throw 0;
-  store.set("vfr_custom_ap",{...custAll(),...d});toast("นำเข้า "+Object.keys(d).length+" สนาม");setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
+  /* รวมแบบไม่ทับของเดิม: ช่องที่ก้องกรอกไว้แล้ว (ชื่อ/พิกัด/ความสูง/RWY) ใช้ของเดิม · ความถี่/navaid เติมเฉพาะบรรทัดที่ยังไม่มี
+     · จุดรายงาน/สิ่งกีดขวาง/พื้นที่ จากไฟล์แทนของเดิม */
+  const c=custAll(),has=v=>v!=null&&v!=="";let nPt=0,nOb=0;
+  const fqs=l=>(l.match(/\d+\.\d+/g)||[]).map(x=>String(+x)),sv=l=>(l.trim().split(/\s+/)[0]||"").toUpperCase();
+  const addLines=(a,b)=>{const L=String(a||"").split(/\n/).map(x=>x.trim()).filter(Boolean);
+    String(b||"").split(/\n/).map(x=>x.trim()).filter(Boolean).forEach(l=>{const F=fqs(l);
+      const i=L.findIndex(x=>sv(x)===sv(l)&&(F.length?fqs(x).some(f=>F.includes(f)):x.toUpperCase()===l.toUpperCase()));
+      if(i<0)L.push(l);else if(fqs(L[i]).every(f=>F.includes(f))&&F.length>fqs(L[i]).length)L[i]=l});return L.join("\n")};
+  Object.entries(d).forEach(([ic,n])=>{if(!n||typeof n!=="object")return;ic=ic.toUpperCase();const o=c[ic]||{};const m={...n,...o};
+    ["name","lat","lon","elev","rwy"].forEach(k=>{m[k]=has(o[k])?o[k]:n[k]});m.comm=addLines(o.comm,n.comm);m.nav=addLines(o.nav,n.nav);
+    ["pts","obs","area","notes","src"].forEach(k=>{if(n[k]!=null)m[k]=n[k]});nPt+=(m.pts||[]).length;nOb+=(m.obs||[]).length;c[ic]=m});
+  store.set("vfr_custom_ap",c);toast("นำเข้า "+Object.keys(d).length+" สนาม"+(nPt?` · จุดรายงาน ${nPt}`:"")+(nOb?` · สิ่งกีดขวาง ${nOb}`:""));setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
   EAIP=d;const ok=eaipPersist(d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
@@ -3279,6 +3292,12 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();vfrHiLayer.cle
     m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}${p.ocr?'<br><span class="hint">⚠ อ่านจาก chart สแกนด้วย OCR · ตรวจไขว้กับ radial/DME แล้ว — ยืนยันกับ chart ก่อนใช้</span>':""}
       <br><span class="mono">${vfrDms(p.lat,"NS")}  ${vfrDms(p.lon,"EW")}</span><div class="btns" style="margin-top:6px"><button type="button" class="vfr-add" data-n="${esc(nm)}" data-lat="${p.lat}" data-lon="${p.lon}">＋ เพิ่มเป็นจุดเส้นทาง</button></div>`);
     vfrLayer.addLayer(m)});
+  /* ข้อมูลสนามจากไฟล์ในเครื่อง (สนามทหาร): สิ่งกีดขวาง + พื้นที่ฝึก */
+  Object.entries(custAll()).forEach(([ic,c])=>{(c.area||[]).forEach(a=>{const P=(a.poly||[]).filter(q=>q&&isFinite(+q[0])&&isFinite(+q[1]));if(P.length<3)return;
+      vfrLayer.addLayer(L.polygon(P,{color:"#7c3aed",weight:1.5,dashArray:"6 5",fillOpacity:.05,interactive:true}).bindTooltip(`${esc(a.n||"พื้นที่ฝึก")} · ${esc(ic)}`,{sticky:true}))});
+    (c.obs||[]).forEach(o=>{if(!isFinite(+o.lat)||!isFinite(+o.lon))return;
+      vfrLayer.addLayer(L.marker([+o.lat,+o.lon],{icon:L.divIcon({className:"",html:`<div class="obsmk"><i>▲</i><span>${esc(String(o.ft||""))}'</span></div>`,iconSize:[14,14],iconAnchor:[7,10]})})
+        .bindPopup(`<b>▲ ${esc(o.n||"สิ่งกีดขวาง")}</b> <span class="hint">${esc(ic)}</span><br>${esc(String(o.ft||"?"))} ft${o.rd?` · ${esc(o.rd)}`:""}<br><span class="hint">ตำแหน่งประมาณจาก radial/DME</span>`))})});
   vfrLayer.addLayer(vfrHiLayer);VFR_HI=null;setTimeout(vfrDeclutter,50)}
 function norm8(n){return String(n).toUpperCase().replace(/[^A-Z0-9]/g,"")}
 function vfrHi(id){vfrHiLayer.clearLayers();VFR_HI=id==null?null:VFR_RT[id];map.closePopup();const box=map.getContainer();box.classList.toggle("vfr-dim",!!VFR_HI);
