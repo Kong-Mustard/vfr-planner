@@ -185,7 +185,19 @@ body.printing #pvMap .leaflet-overlay-pane path[stroke="#d6198f"]:not(.leghit):n
 #printView .pv-unit{font-size:calc(var(--pvfs,7.5pt)*1.45)}
 body.pvprev .pv-ed{outline:1px dashed transparent;cursor:text}body.pvprev .pv-ed:hover{outline-color:#60a5fa}body.pvprev .pv-ed:focus{outline:2px solid #2563eb;background:#eff6ff}
 .sch-fav{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow:auto;margin:3px 0}.sch-fav label{display:flex;gap:6px;align-items:center;font-size:12.5px}.sch-fav label small{color:#64748b}.sch-fav button{margin-left:auto;min-height:24px;padding:0 6px;font-size:11px}.sch-add{display:grid;grid-template-columns:1fr 1.3fr auto;gap:4px}.sch-add input{min-width:0}
-#pvMap .pv-schc{position:absolute;inset:0;z-index:901;pointer-events:none}#pvMap .pv-schc .fcard{position:absolute;background:#fff;border:1.5px solid #111;border-radius:2px;padding:1mm 1.5mm;font-size:var(--pvfs,7.5pt);box-sizing:border-box}#pvMap .pv-schc .fcard h3{font-size:9pt;margin:0;color:#111}#pvMap .pv-schc .fcard .r{padding:0}
+body.pvprev #pvMap,#pvMap{position:relative}
+#pvMap .pv-schl{position:absolute;inset:0;z-index:901;pointer-events:none;overflow:hidden}
+#pvMap .sch-it{position:absolute;width:0;height:0;transform-origin:0 0}
+#pvMap .sch-in{position:absolute;white-space:nowrap;line-height:1.15;padding:0 1px;font-family:var(--f-body),sans-serif;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff}
+#pvMap .sch-m{transform:translate(-50%,-50%)}#pvMap .sch-s{transform:translate(0,-50%)}#pvMap .sch-e{transform:translate(-100%,-50%)}#pvMap .sch-tl{white-space:normal;text-shadow:none}
+#pvMap .sch-card .fcard{width:100%;background:#fff;border:1.5px solid #111;border-radius:2px;padding:1mm 1.5mm;font-size:var(--pvfs,7.5pt);box-sizing:border-box;color:#111}#pvMap .sch-card .fcard h3{font-size:9pt;margin:0;color:#111}#pvMap .sch-card .fcard .r{padding:0}
+#pvMap .sch-h{display:none}#pvMap.sch-edit .sch-h{display:block;opacity:.3}
+#pvMap.sch-edit .pv-schl{pointer-events:auto}#pvMap.sch-edit .sch-in{cursor:move;outline:1px dashed #94a3b8;outline-offset:1px}#pvMap.sch-edit .sch-it.sel .sch-in{outline:2px solid #2563eb}
+#pvMap .sch-in[contenteditable]{cursor:text;outline:2px solid #f59e0b!important;user-select:text}
+.sch-hd{position:absolute;width:12px;height:12px;border:2px solid #2563eb;background:#fff;border-radius:50%;touch-action:none}.sch-hr{left:50%;top:-20px;margin-left:-6px;cursor:grab}.sch-hs{right:-8px;bottom:-8px;border-radius:2px;cursor:nwse-resize}
+.sch-tb{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:3000;display:flex;flex-wrap:wrap;gap:4px;align-items:center;background:#0f172a;color:#fff;border-radius:12px;padding:6px 8px;box-shadow:0 8px 24px #0006;max-width:calc(100vw - 24px)}
+.sch-tb[hidden]{display:none}.sch-tb>b{font:700 12px var(--f-body);margin-right:4px}.sch-tb button{min-height:32px;min-width:32px;padding:0 8px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#fff;font-size:13px}.sch-tb button.sw{padding:0;width:26px;min-width:26px;border:2px solid #fff}.sch-tb button.primary{background:#2563eb}.sch-tb-sp{flex:1}
+#schEditBtn.on{background:#2563eb;color:#fff}
 body.sch-cards .pv-side .pv-cards{display:none}
 #pvMap .pv-sch{position:absolute;inset:0;z-index:900;background:#fff;width:100%;height:100%}#pvMap .pv-sch text{font-family:var(--f-body),sans-serif}
 .pv-cards .fcard h3{font-size:9pt;margin:0}.fcard h3 .ap-el,.fcard h3 .ap-rw{font-weight:700;font-size:.82em;margin-left:.35em}.fcard h3 .ap-el{color:#475569}.pv-cards .fcard h3 small{display:none}
@@ -2057,6 +2069,9 @@ function parseCoord(txt){
   const t=String(txt).trim().toUpperCase();
   const dec=t.match(/^(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)$/);
   if(dec){const la=+dec[1],lo=+dec[2];if(Math.abs(la)<=90&&Math.abs(lo)<=180)return[la,lo]}
+  /* ลิปดา/ฟิลิปดา เช่น 14°47'58.60"N 100°38'03.05"E */
+  const dm=t.replace(/[′’]/g,"'").replace(/[″”]/g,'"').match(/(\d{1,2})\s*[°\s:]\s*(\d{1,2})\s*['\s:]\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([NS])[\s,]*(\d{1,3})\s*[°\s:]\s*(\d{1,2})\s*['\s:]\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([EW])/);
+  if(dm){const la=(+dm[1]+dm[2]/60+dm[3]/3600)*(dm[4]==="S"?-1:1),lo=(+dm[5]+dm[6]/60+dm[7]/3600)*(dm[8]==="W"?-1:1);if(Math.abs(la)<=90&&Math.abs(lo)<=180)return[la,lo]}
   const g=t.replace(/\s+/g,"");
   if(/^\d{1,2}[C-X][A-Z]{2}\d{2,10}$/.test(g)){try{const p=mgrs.toPoint(g);return[p[1],p[0]]}catch(e){}}
   return null;
@@ -2245,6 +2260,7 @@ function drawMap(rows){
   });
   rows.forEach((r,i)=>{if(!isFinite(r.dist))return;const a=pts[i],b=pts[i+1];
     const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2],s=num(state.boxScale,1);state.boxPos=state.boxPos||{};
+
     const key=legKey(i);let pos=state.boxPos[key];
     if(!pos){const pa=map.latLngToLayerPoint(a),pb=map.latLngToLayerPoint(b),dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,off=85*s;
       const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
@@ -3794,6 +3810,7 @@ function kneePrint(preview){
         <div class="kc-r"><span>สีป้ายจุดรายงาน</span><span class="kc-sw">${["#ffd400","#f97316","#22c55e","#38bdf8","#ffffff","#111827"].map(c=>`<button type="button" data-sw="rpc" data-v="${c}" style="--c:${c}" class="${c===KL.rpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="rpc" value="${KL.rpc}" aria-label="สีป้ายอื่น"></span></div>
         ${kcR("ขนาดจุดรายงาน / Waypoint หน่วย / สนาม","rpfs",0.5,2,0.1,KL,"×")}</div>
       <div class="kc-g kc-sch"><h4>📐 แผนผังเส้นทาง</h4><p class="hint" style="margin:0 0 4px">เลือก "📐 แผนผังเส้นทาง" ในหัวข้อแผนที่ · สนามสำรอง/จุดสังเกตจะต่อด้วยเส้นประจากจุดที่ใกล้ที่สุด</p>
+        <button type="button" id="schEditBtn" class="mini" style="width:100%;min-height:38px;margin:2px 0 6px">✏️ แก้ไขแผนผัง — ย้าย · หมุน · ย่อ/ขยาย · เน้นคำ</button>
         <label class="kc-r kc-ck"><span>วางกล่องความถี่ในแผนผัง</span><input type="checkbox" data-kl="schCards" ${KL.schCards?"checked":""}></label>
         <label class="kc-r" style="grid-template-columns:1fr"><span>สนามสำรอง / จุดสังเกต (คั่นด้วย ,)</span><input type="text" id="schAlt" placeholder="VTBD, VTBL" value="${esc(schAltTxt())}"></label>
         <div class="kc-r" style="grid-template-columns:1fr"><span>🟡 จุดสำรอง / พื้นที่ลงบ่อย <small class="hint">(เก็บในเครื่องนี้เท่านั้น · ขึ้นเองเมื่อห่างเส้นทางไม่เกิน <input type="number" id="schNear" min="0" max="60" step="1" value="${num(KL.schNear,10)}" style="width:52px"> NM)</small></span>
@@ -3837,6 +3854,8 @@ function kneePrint(preview){
       kbLaySave(KL);applyKL();if(k==="paper")setTimeout(()=>{map.invalidateSize();fit()},60)});
     $("#schAlt").oninput=e=>{state.schAlt=e.target.value;store.set("vfr_current",state);try{schDraw(pv,KL)}catch(err){}};
     const favRe=()=>{schFavList(pv);try{schDraw(pv,KL)}catch(err){}};schFavList(pv);
+    $("#schEditBtn").onclick=()=>{if(kbMapMode!=="sch"){const b=pv.querySelector('[data-km="sch"]');if(b)b.click()}setTimeout(()=>schEditToggle(pv),kbMapMode==="sch"?0:400)};
+    ["#pvPdf","#pvPrint","#pvClose"].forEach(id=>{const b=pv.querySelector(id);if(b)b.addEventListener("click",()=>schEditToggle(pv,false),true)});
     $("#schNear").oninput=e=>{KL.schNear=+e.target.value||0;kbLaySave(KL);favRe()};
     $("#schFavAdd").onclick=()=>{const n=$("#schFavN").value.trim(),c=$("#schFavC").value.trim();if(!n||!c){toast("ใส่ชื่อและพิกัด");return}const p=parseCoord(c);if(!p){toast("อ่านพิกัดไม่ได้");return}
       const L=schFavAll().filter(x=>x.n.toUpperCase()!==n.toUpperCase());L.push({n,lat:p[0],lon:p[1]});store.set("vfr_altpts",L);$("#schFavN").value="";$("#schFavC").value="";favRe()};
@@ -5622,15 +5641,16 @@ function schFavList(pv){const box=pv&&pv.querySelector("#schFav");if(!box)return
   box.innerHTML=L.length?L.map(f=>`<label><input type="checkbox" data-fav="${esc(f.n)}" ${schFavOn(f,near)?"checked":""}>${esc(f.n)} <small>${f.d<999?f.d.toFixed(1)+" NM จากเส้นทาง":""}</small><button type="button" data-favdel="${esc(f.n)}" title="ลบออกจากรายการ">ลบ</button></label>`).join(""):'<p class="hint" style="margin:0">ยังไม่มี — เพิ่มชื่อ + พิกัดด้านล่าง (เช่น ราบ11, CAVPAD) ครั้งเดียว ใช้ได้ทุกแผน</p>'}
 function schAltTxt(){if(state.schAlt!=null)return state.schAlt;const v=state.fpl&&state.fpl.v||{};return[v.altn,v.altn2].filter(x=>x&&x!=="ZZZZ").join(", ")}
 function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;let svg=box.querySelector(".pv-sch");
-  const oldc=box.querySelector(".pv-schc");document.body.classList.toggle("sch-cards",kbMapMode==="sch"&&!!KL.schCards);
-  if(kbMapMode!=="sch"){if(svg)svg.remove();if(oldc)oldc.remove();return}
-  const W=state.wps.filter(w=>isFinite(w.lat)&&isFinite(w.lon));if(W.length<2){if(svg)svg.remove();return}
+  const oldl=box.querySelector(".pv-schl");document.body.classList.toggle("sch-cards",kbMapMode==="sch"&&!!KL.schCards);
+  if(kbMapMode!=="sch"){if(svg)svg.remove();if(oldl)oldl.remove();box.classList.remove("sch-edit");return}
+  const W=state.wps.filter(w=>isFinite(w.lat)&&isFinite(w.lon));if(W.length<2){if(svg)svg.remove();if(oldl)oldl.remove();return}
   const vr=num(state.g&&state.g.var,0),r3=a=>String(Math.round(norm(a))||360).padStart(3,"0")+"°";
   const FV=schFavAll(),near=num(KL.schNear,10);
   const alts=String(schAltTxt()||"").split(/[,;\n]+/).map(x=>x.trim()).filter(Boolean).map(t=>{const f=FV.find(x=>x.n.toUpperCase()===t.toUpperCase());if(f)return{name:f.n,lat:+f.lat,lon:+f.lon};const r=resolvePoint(t,false);return r&&isFinite(r.lat)?{name:t.toUpperCase(),lat:+r.lat,lon:+r.lon}:null}).filter(Boolean);
   FV.forEach(f=>{if(schFavOn(f,near)&&!alts.some(a=>a.name.toUpperCase()===f.n.toUpperCase()))alts.push({name:f.n,lat:+f.lat,lon:+f.lon})});
-  const bw=box.clientWidth||340,bh=box.clientHeight||500,fz=Math.max(.7,Math.min(1.6,(KL.rpfs||1))),pad=46*fz;
-  /* ทิศของทุกขาตรงตามจริง แต่ความยาวย่อแบบรากที่สอง — ขาสั้นจะไม่เบียดจนอ่านไม่ออก (แบบแผนผังของหน่วย) */
+  /* ค่าจากแผงปรับรูปแบบ (ใช้กับแผนผังด้วย): สี/ความหนา/ลักษณะเส้น · สี/ขนาดหมุด · สีจุดสำรอง · ขนาดตัวอักษร */
+  const bw=box.clientWidth||340,bh=box.clientHeight||500,fz=Math.max(.6,Math.min(1.8,num(KL.rpfs,1))),pz=Math.max(.5,Math.min(2,num(KL.wpsz,.85)/.85)),lw=Math.max(.4,num(KL.line,1)),pad=46*fz;
+  const lcol=KL.lcol||"#111",wpc=KL.wpc||"#2f6fd6",apc=KL.rpc||"#facc15",dash=pvLDash(KL.ldash,3.2*lw);
   const step=(a,b)=>{const t=trueCourse([a.lat,a.lon],[b.lat,b.lon])*Math.PI/180,l=Math.sqrt(Math.max(.05,gcDistNm([a.lat,a.lon],[b.lat,b.lon])));return[Math.sin(t)*l,-Math.cos(t)*l]};
   const raw=[[0,0]];for(let i=1;i<W.length;i++){const d=step(W[i-1],W[i]);raw.push([raw[i-1][0]+d[0],raw[i-1][1]+d[1]])}
   const nearI=A=>{let bi=0,bd=1e9;W.forEach((w,i)=>{const d=gcDistNm([w.lat,w.lon],[A.lat,A.lon]);if(d<bd){bd=d;bi=i}});return[bi,bd]};
@@ -5638,46 +5658,97 @@ function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;
   const allr=raw.concat(araw),xs=allr.map(q=>q[0]),ys=allr.map(q=>q[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
   const sc=Math.min((bw-2*pad)/Math.max(1e-6,x1-x0),(bh-2*pad)/Math.max(1e-6,y1-y0)),ox=(bw-(x1-x0)*sc)/2,oy=(bh-(y1-y0)*sc)/2;
   const PR=q=>[ox+(q[0]-x0)*sc,oy+(q[1]-y0)*sc],pts=raw.map(PR),apts=araw.map(PR);
-  const T=(x,y,txt,o={})=>`<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="${(o.fs||10)*fz}" font-weight="${o.fw||700}" fill="${o.c||"#111"}" text-anchor="${o.a||"middle"}" dominant-baseline="middle"${o.rot!=null?` transform="rotate(${o.rot.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})"`:""} paint-order="stroke" stroke="#fff" stroke-width="${3*fz}" stroke-linejoin="round">${esc(txt)}</text>`;
-  /* ป้ายตามแนวเส้น: หมุนให้อ่านได้เสมอ · วางด้านข้างเส้น */
-  const legLbl=(a,b,txt,o={})=>{const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;let ang=Math.atan2(dy,dx)*180/Math.PI;if(ang>90)ang-=180;if(ang<-90)ang+=180;
-    const nx=-dy/L,ny=dx/L,off=(o.off||9)*fz*(o.side||1);return T((a[0]+b[0])/2+nx*off,(a[1]+b[1])/2+ny*off,txt,{...o,rot:ang})};
+  /* ป้ายทั้งหมดเป็นชิ้น HTML แยก (ย้าย/หมุน/ย่อขยาย/เน้นคำได้ในโหมดแก้ไข) */
+  const IT=[],T=(k,x,y,txt,o={})=>IT.push({k,x,y,txt,fs:(o.fs||10)*fz,fw:o.fw||700,c:o.c||"#111",a:o.a||"m",rot:o.rot||0});
+  const legLbl=(k,a,b,txt,o={})=>{const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;let ang=Math.atan2(dy,dx)*180/Math.PI;if(ang>90)ang-=180;if(ang<-90)ang+=180;
+    const nx=-dy/L,ny=dx/L,off=(o.off||9)*fz*(o.side||1);T(k,(a[0]+b[0])/2+nx*off,(a[1]+b[1])/2+ny*off,txt,{...o,rot:ang})};
   let g="";
-  /* สนามสำรอง (เส้นประ) — วาดก่อนให้อยู่ใต้เส้นทาง */
   alts.forEach((A,k)=>{const[bi,bd]=nearI(A),a=pts[bi],b=apts[k],w=W[bi];
     const c=norm(trueCourse([w.lat,w.lon],[A.lat,A.lon])+vr);
     g+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#9ca3af" stroke-width="${1.6*fz}" stroke-dasharray="${2*fz} ${4*fz}" stroke-linecap="round"/>`;
-    if(Math.hypot(b[0]-a[0],b[1]-a[1])>70*fz)g+=legLbl(a,b,`< ${r3(c)} / ${bd<10?bd.toFixed(1):Math.round(bd)} / ${r3(c+180)} >`,{fs:8,fw:600,c:"#6b7280"});
-    g+=`<circle cx="${b[0]}" cy="${b[1]}" r="${7*fz}" fill="#facc15" stroke="#444" stroke-width="${1.2*fz}"/>`+T(b[0],b[1]+15*fz,A.name,{fs:9.5,fw:700})});
-  /* เส้นทาง */
-  g+=`<polyline points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="#111" stroke-width="${3.2*fz}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(Math.hypot(b[0]-a[0],b[1]-a[1])>70*fz)legLbl("al:"+A.name,a,b,`< ${r3(c)} / ${bd<10?bd.toFixed(1):Math.round(bd)} / ${r3(c+180)} >`,{fs:8,fw:600,c:"#6b7280"});
+    g+=`<circle cx="${b[0]}" cy="${b[1]}" r="${7*fz*pz}" fill="${apc}" stroke="#444" stroke-width="${1.2*fz}"/>`;T("a:"+A.name,b[0],b[1]+(15*fz*pz),A.name,{fs:9.5,fw:700})});
+  g+=`<polyline points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(",")).join(" ")}" fill="none" stroke="${lcol}" stroke-opacity="${num(KL.lop,1)}" stroke-width="${3.2*lw*fz}" ${dash?`stroke-dasharray="${dash}"`:""} stroke-linejoin="round" stroke-linecap="round"/>`;
   const ndir=pts.map((p,i)=>{let vx=0,vy=0;[pts[i-1],pts[i+1]].forEach(q=>{if(!q)return;const dx=q[0]-p[0],dy=q[1]-p[1],L=Math.hypot(dx,dy)||1;vx+=dx/L;vy+=dy/L});
     let L=Math.hypot(vx,vy);if(L<.2){const q=pts[i+1]||pts[i-1],dx=q[0]-p[0],dy=q[1]-p[1],l=Math.hypot(dx,dy)||1;vx=dy/l;vy=-dx/l;L=1}return[-vx/L,-vy/L]});
-  /* ป้ายแต่ละขา: อยู่คนละฝั่งกับชื่อจุดหัว-ท้ายของขา */
   for(let i=0;i+1<W.length;i++){const a=pts[i],b=pts[i+1];if(Math.hypot(b[0]-a[0],b[1]-a[1])<34*fz)continue;
     const c=norm(trueCourse([W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon])+vr),d=gcDistNm([W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]);
     const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1,nx=-dy/L,ny=dx/L,s0=(ndir[i][0]+ndir[i+1][0])*nx+(ndir[i][1]+ndir[i+1][1])*ny,side=s0>0?-1:1;
     const txt=`< ${r3(c)} / ${d.toFixed(1)} / ${r3(c+180)} >`,fs=Math.max(6,Math.min(9.5,(L-34*fz)/(txt.length*.62*fz)));
-    g+=legLbl(a,b,txt,{fs,fw:700,side,off:10})}
-  /* จุด + ชื่อ (วางฝั่งตรงข้ามกับเส้นที่เข้า-ออก) */
+    legLbl(`l:${i}:${W[i].name}>${W[i+1].name}`,a,b,txt,{fs,fw:700,side,off:10})}
   W.forEach((w,i)=>{const p=pts[i],end=i===0||i===W.length-1,[vx,vy]=ndir[i];
-    const rr=(end?8:6.5)*fz,lx=p[0]+vx*(rr+6*fz),ly=p[1]+vy*(rr+6*fz),an=Math.abs(vx)<.35?"middle":vx>0?"start":"end";
-    g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rr}" fill="${end?"#1e40af":"#2f6fd6"}" stroke="#0f172a" stroke-width="${1.3*fz}"/>`;
-    g+=T(lx,ly+(Math.abs(vx)<.35?vy*4*fz:0),String(w.name||("WP"+(i+1))),{fs:end?11:10,fw:800,a:an})});
-  /* ทิศเหนือ */
-  g+=`<g transform="translate(${bw-18*fz},${20*fz})"><path d="M0 ${-12*fz} L${5*fz} ${4*fz} L0 0 L${-5*fz} ${4*fz}Z" fill="#111"/>${T(0,10*fz,"N",{fs:9,fw:800})}</g>`;
+    const rr=(end?8:6.5)*fz*pz,lx=p[0]+vx*(rr+6*fz),ly=p[1]+vy*(rr+6*fz),an=Math.abs(vx)<.35?"m":vx>0?"s":"e";
+    g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rr}" fill="${wpc}" stroke="#0f172a" stroke-width="${1.3*fz}"${end?` stroke-width="${2.2*fz}"`:""}/>`;
+    T(`w:${i}:${w.name}`,lx,ly+(Math.abs(vx)<.35?vy*4*fz:0),String(w.name||("WP"+(i+1))),{fs:end?11:10,fw:800,a:an})});
+  g+=`<g transform="translate(${bw-18*fz},${20*fz})"><path d="M0 ${-12*fz} L${5*fz} ${4*fz} L0 0 L${-5*fz} ${4*fz}Z" fill="#111"/></g>`;T("n",bw-18*fz,30*fz,"N",{fs:9,fw:800});
   const html=`<svg class="pv-sch" viewBox="0 0 ${bw} ${bh}" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
   if(svg)svg.outerHTML=html;else box.insertAdjacentHTML("beforeend",html);
-  if(oldc)oldc.remove();if(KL.schCards)schPlaceCards(box,bw,bh)}
-/* วางกล่องความถี่ลงในที่ว่างของแผนผัง: ลองทุกตำแหน่งบนตาราง เลือกที่ทับเส้น/ชื่อ/ป้ายน้อยที่สุด */
-function schPlaceCards(box,bw,bh){const html=kbCards();if(!html)return;const svg=box.querySelector(".pv-sch"),br=box.getBoundingClientRect(),z=br.width/(box.offsetWidth||br.width)||1;
-  const occ=[];svg.querySelectorAll("text,circle").forEach(e=>{const r=e.getBoundingClientRect();occ.push([(r.left-br.left)/z-3,(r.top-br.top)/z-3,(r.right-br.left)/z+3,(r.bottom-br.top)/z+3])});
+  const lay=document.createElement("div");lay.className="pv-schl";if(oldl)oldl.replaceWith(lay);else box.appendChild(lay);
+  lay.innerHTML=IT.map(t=>`<div class="sch-it" data-sk="${esc(t.k)}" data-bx="${t.x.toFixed(1)}" data-by="${t.y.toFixed(1)}" data-br="${t.rot.toFixed(1)}"><div class="sch-in sch-${t.a}" style="font-size:${t.fs.toFixed(2)}px;font-weight:${t.fw};color:${t.c}">${esc(t.txt)}</div></div>`).join("");
+  if(KL.schCards)schPlaceCards(box,lay,bw,bh);
+  lay.querySelectorAll(".sch-it").forEach(schApplyEd);box._schW=bw;box._schH=bh;
+  /* ขนาดกรอบแผนที่เปลี่ยน (เช่น ซ่อนกล่องด้านข้าง/ปรับกว้าง) → วาดใหม่ให้ป้ายตรงกับเส้น */
+  if(!box._schRO&&window.ResizeObserver){box._schRO=new ResizeObserver(()=>{clearTimeout(box._schT);box._schT=setTimeout(()=>{if(kbMapMode==="sch"&&box.isConnected&&(box.clientWidth!==box._schW||box.clientHeight!==box._schH))schDraw(pv,kbLay())},120)});box._schRO.observe(box)}
+  if(box.classList.contains("sch-edit")){const k=box._schSel&&box._schSel.dataset.sk;schSel(box,k?[...lay.querySelectorAll(".sch-it")].find(x=>x.dataset.sk===k):null)}}
+/* ค่าที่ผู้ใช้ปรับเองต่อชิ้น (เก็บกับแผน): dx,dy ย้าย · r หมุน · s ขนาด · c สี · bg ไฮไลต์ · b ตัวหนา · u ขีดเส้นใต้ · h ซ่อน · html ข้อความที่แก้ */
+function schEd(k){state.schEd=state.schEd||{};return state.schEd[k]||{}}
+function schEdSet(k,o){state.schEd=state.schEd||{};const v={...(state.schEd[k]||{}),...o};Object.keys(v).forEach(x=>{if(v[x]==null||v[x]==="")delete v[x]});if(Object.keys(v).length)state.schEd[k]=v;else delete state.schEd[k];store.set("vfr_current",state)}
+function schClean(h){const d=document.createElement("div");d.innerHTML=String(h||"");d.querySelectorAll("script,style,iframe,object,img,svg,a,link,meta").forEach(e=>e.remove());
+  d.querySelectorAll("*").forEach(e=>{[...e.attributes].forEach(at=>{if(at.name==="style"){const st=e.style,keep=["color","background-color","font-weight","text-decoration","font-style","font-size"],out=keep.map(k=>st.getPropertyValue(k)?`${k}:${st.getPropertyValue(k)}`:"").filter(Boolean).join(";");if(out)e.setAttribute("style",out);else e.removeAttribute("style")}else if(!(at.name==="class"&&/^(r|fcard|ap-el|ap-rw)$/.test(at.value))&&at.name!=="color")e.removeAttribute(at.name)})});return d.innerHTML}
+function schApplyEd(el){const o=schEd(el.dataset.sk),inn=el.querySelector(".sch-in");
+  el.style.left=(+el.dataset.bx+(o.dx||0))+"px";el.style.top=(+el.dataset.by+(o.dy||0))+"px";el.style.transform=`rotate(${(+el.dataset.br||0)+(o.r||0)}deg) scale(${o.s||1})`;
+  el.classList.toggle("sch-h",!!o.h);if(o.html!=null&&inn.dataset.orig==null){inn.dataset.orig=inn.innerHTML}if(o.html!=null)inn.innerHTML=schClean(o.html);
+  inn.style.background=o.bg||"";if(o.c)inn.style.color=o.c;if(o.b!=null)inn.style.fontWeight=o.b?"800":"500";inn.style.textDecoration=o.u?"underline":""}
+/* วางกล่องความถี่ในที่ว่าง (ตำแหน่งตั้งต้น — ลากย้ายต่อได้ในโหมดแก้ไข) */
+function schPlaceCards(box,lay,bw,bh){const html=kbCards();if(!html)return;const svg=box.querySelector(".pv-sch"),br=box.getBoundingClientRect(),z=br.width/(box.offsetWidth||br.width)||1;
+  const occ=[];[...svg.querySelectorAll("circle"),...lay.querySelectorAll(".sch-in")].forEach(e=>{const r=e.getBoundingClientRect();occ.push([(r.left-br.left)/z-3,(r.top-br.top)/z-3,(r.right-br.left)/z+3,(r.bottom-br.top)/z+3])});
   svg.querySelectorAll("polyline,line").forEach(e=>{const L=e.getTotalLength?e.getTotalLength():0;for(let t=0;t<=L;t+=5){const p=e.getPointAtLength(t);occ.push([p.x-5,p.y-5,p.x+5,p.y+5])}});
-  const wrap=document.createElement("div");wrap.className="pv-schc";wrap.innerHTML=html;box.appendChild(wrap);const cw=Math.round(Math.min(170,bw*.42));
-  [...wrap.querySelectorAll(".fcard")].forEach(c=>{c.style.width=cw+"px";const h=c.offsetHeight;let best=null;
+  const tmp=document.createElement("div");tmp.innerHTML=html;const cw=Math.round(Math.min(170,bw*.42));
+  [...tmp.querySelectorAll(".fcard")].forEach((c,ci)=>{const ic=(c.querySelector("h3")||{}).textContent||("card"+ci);const k="c:"+ic.trim().split(/\s+/)[0];
+    const it=document.createElement("div");it.className="sch-it sch-card";it.dataset.sk=k;it.innerHTML=`<div class="sch-in sch-tl"></div>`;it.firstChild.appendChild(c);it.firstChild.style.width=cw+"px";lay.appendChild(it);
+    it.style.left="0px";it.style.top="0px";const h=c.offsetHeight;let best=null;
     for(let y=4;y+h<=bh-4||y===4;y+=6)for(let x=4;x+cw<=bw-4;x+=6){let hit=0;for(const o of occ)if(o[0]<x+cw&&o[2]>x&&o[1]<y+h&&o[3]>y)hit++;
       const edge=Math.min(x,bw-cw-x)+Math.min(y,bh-h-y)*.5,sc=hit*1000+edge;if(!best||sc<best.sc)best={x,y,sc}}
-    if(!best)best={x:4,y:4};c.style.left=best.x+"px";c.style.top=best.y+"px";occ.push([best.x-4,best.y-4,best.x+cw+4,best.y+h+4])})}
+    if(!best)best={x:4,y:4};it.dataset.bx=best.x;it.dataset.by=best.y;it.dataset.br=0;occ.push([best.x-4,best.y-4,best.x+cw+4,best.y+h+4])})}
+/* ---------- โหมดแก้ไขแผนผัง (แบบ PowerPoint): แตะเลือก · ลากย้าย · ◯ บนหมุน · ◢ มุมขวาล่างย่อ/ขยาย · แถบเครื่องมือเน้นคำ ---------- */
+function schSel(box,el){box.querySelectorAll(".sch-it.sel").forEach(x=>{x.classList.remove("sel");x.querySelectorAll(".sch-hd").forEach(h=>h.remove())});box._schSel=null;
+  const tb=document.querySelector(".sch-tb");if(!el||!el.isConnected){if(tb)tb.hidden=true;return}box._schSel=el;el.classList.add("sel");
+  const inn=el.querySelector(".sch-in");inn.insertAdjacentHTML("beforeend",'<span class="sch-hd sch-hr" title="ลากเพื่อหมุน"></span><span class="sch-hd sch-hs" title="ลากเพื่อย่อ/ขยาย"></span>');if(tb)tb.hidden=false}
+function schEditToggle(pv,on){const box=pv.querySelector("#pvMap");if(!box)return;on=on==null?!box.classList.contains("sch-edit"):on;box.classList.toggle("sch-edit",on);
+  let tb=document.querySelector(".sch-tb");if(on&&!tb){document.body.insertAdjacentHTML("beforeend",`<div class="sch-tb" hidden><b>แก้ไขชิ้นที่เลือก</b>
+    <button type="button" data-st="b"><b>B</b></button><button type="button" data-st="u"><u>U</u></button>
+    ${["#111111","#dc2626","#1d4ed8","#15803d","#6b7280"].map(c=>`<button type="button" data-st="c" data-v="${c}" class="sw" style="background:${c}"></button>`).join("")}
+    ${["#fde047","#bfdbfe","#fecaca"].map(c=>`<button type="button" data-st="bg" data-v="${c}" class="sw hl" style="background:${c}" title="ไฮไลต์"></button>`).join("")}<button type="button" data-st="bg" data-v="" title="เอาไฮไลต์ออก">⌀</button>
+    <button type="button" data-st="s-">A−</button><button type="button" data-st="s+">A+</button><button type="button" data-st="r0" title="หมุนกลับตรง">⟲0°</button>
+    <button type="button" data-st="txt" title="แก้ข้อความ / เลือกเน้นบางคำ">✎ ข้อความ</button><button type="button" data-st="h" title="ซ่อน/แสดงชิ้นนี้">👁</button><button type="button" data-st="reset">↺ ชิ้นนี้</button>
+    <span class="sch-tb-sp"></span><button type="button" data-st="all">↺ คืนค่าทั้งหมด</button><button type="button" data-st="done" class="primary">เสร็จ</button></div>`);tb=document.querySelector(".sch-tb");schTbWire(pv,tb)}
+  if(tb)tb.hidden=!on||!box._schSel;const b=pv.querySelector("#schEditBtn");if(b)b.classList.toggle("on",on);if(!on){schTxtEnd(box);schSel(box,null);if(tb)tb.remove()}}
+function schTxtEnd(box){const ed=box.querySelector(".sch-in[contenteditable]");if(!ed)return;ed.removeAttribute("contenteditable");ed.querySelectorAll(".sch-hd").forEach(h=>h.remove());const el=ed.closest(".sch-it");
+  const orig=ed.dataset.orig!=null?ed.dataset.orig:null,h=schClean(ed.innerHTML);schEdSet(el.dataset.sk,{html:orig!=null&&h===orig?null:h})}
+function schTbWire(pv,tb){tb.addEventListener("mousedown",e=>{if(e.target.closest("button"))e.preventDefault()});
+  tb.addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(!b)return;pv=document.querySelector("#pvMap")?document.querySelector("#pvMap").closest(".pv-root,#pv,body"):pv;const box=document.querySelector("#pvMap"),el=box._schSel,st=b.dataset.st;
+    if(st==="done"){schEditToggle(pv,false);return}
+    if(st==="all"){if(!confirmSoft("คืนค่าตำแหน่ง/ขนาด/การเน้นของทุกชิ้นในแผนผังนี้?"))return;state.schEd={};store.set("vfr_current",state);schDraw(pv,kbLay());return}
+    if(!el)return;const k=el.dataset.sk,o=schEd(k),ed=el.querySelector(".sch-in[contenteditable]");
+    if(ed&&["b","u","c","bg"].includes(st)){document.execCommand("styleWithCSS",false,true);if(st==="b")document.execCommand("bold");else if(st==="u")document.execCommand("underline");else if(st==="c")document.execCommand("foreColor",false,b.dataset.v);else document.execCommand("hiliteColor",false,b.dataset.v||"transparent");return}
+    if(st==="b")schEdSet(k,{b:!(o.b!=null?o.b:true)});else if(st==="u")schEdSet(k,{u:!o.u});else if(st==="c")schEdSet(k,{c:b.dataset.v});else if(st==="bg")schEdSet(k,{bg:b.dataset.v||null});
+    else if(st==="s-"||st==="s+")schEdSet(k,{s:Math.max(.4,Math.min(4,+((o.s||1)*(st==="s+"?1.12:1/1.12)).toFixed(3)))});else if(st==="r0")schEdSet(k,{r:-(+el.dataset.br||0)});
+    else if(st==="h")schEdSet(k,{h:!o.h||null});else if(st==="reset"){state.schEd&&delete state.schEd[k];store.set("vfr_current",state);schDraw(pv,kbLay());return}
+    else if(st==="txt"){const inn=el.querySelector(".sch-in");if(inn.isContentEditable){schTxtEnd(box);schDraw(pv,kbLay());const n=[...box.querySelectorAll(".sch-it")].find(x=>x.dataset.sk===k);schSel(box,n);return}inn.querySelectorAll(".sch-hd").forEach(h=>h.remove());if(inn.dataset.orig==null)inn.dataset.orig=inn.innerHTML;inn.setAttribute("contenteditable","true");inn.focus();return}
+    const inn=el.querySelector(".sch-in");if(st==="c"||st==="bg"||st==="b"||st==="u"){inn.style.color="";}schApplyEd(el)})}
+function confirmSoft(m){try{return confirm(m)}catch(e){return true}}
+/* ลาก: ย้าย / หมุน / ย่อขยาย — บันทึกเมื่อปล่อย */
+document.addEventListener("pointerdown",e=>{const box=e.target.closest("#pvMap.sch-edit");if(!box)return;const el=e.target.closest(".sch-it");
+  if(!el){if(!e.target.closest(".sch-tb")){schTxtEnd(box);schSel(box,null)}return}if(e.target.closest("[contenteditable]"))return;
+  if(box._schSel!==el){schTxtEnd(box);schSel(box,el)}e.preventDefault();e.stopPropagation();const k=el.dataset.sk,o={...schEd(k)},r0=el.getBoundingClientRect(),cx=r0.left+r0.width/2,cy=r0.top+r0.height/2;
+  const br=box.getBoundingClientRect(),z=br.width/(box.offsetWidth||br.width)||1,sx=e.clientX,sy=e.clientY,mode=e.target.classList.contains("sch-hr")?"r":e.target.classList.contains("sch-hs")?"s":"m";
+  const a0=Math.atan2(sy-cy,sx-cx),d0=Math.hypot(sx-cx,sy-cy)||1;let moved=false;
+  const mv=ev=>{moved=true;const n={...o};if(mode==="m"){n.dx=(o.dx||0)+(ev.clientX-sx)/z;n.dy=(o.dy||0)+(ev.clientY-sy)/z}
+    else if(mode==="r"){let r=(o.r||0)+(Math.atan2(ev.clientY-cy,ev.clientX-cx)-a0)*180/Math.PI;const tot=r+(+el.dataset.br||0),sn=Math.round(tot/15)*15;if(Math.abs(tot-sn)<4)r=sn-(+el.dataset.br||0);n.r=+r.toFixed(1)}
+    else n.s=+Math.max(.4,Math.min(4,(o.s||1)*Math.hypot(ev.clientX-cx,ev.clientY-cy)/d0)).toFixed(3);
+    state.schEd=state.schEd||{};state.schEd[k]=n;schApplyEd(el)};
+  const up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);if(moved)schEdSet(k,{})};
+  document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up)},true);
 function pvLegsDraw(KL,pv){if(!pvLegLayer)pvLegLayer=L.layerGroup();if(!map.hasLayer(pvLegLayer))pvLegLayer.addTo(map);pvLegLayer.clearLayers();
   const on=visOn("route");document.body.classList.toggle("pvlegs",on);if(!on)return;const W=(state.wps||[]).filter(w=>w.lat!=null&&w.lon!=null);
   for(let i=0;i<W.length-1;i++){const k=pvLegKey(W[i],W[i+1]),s=pvLegStyle(KL,k),wt=4*s.w,ll=[[W[i].lat,W[i].lon],[W[i+1].lat,W[i+1].lon]];
