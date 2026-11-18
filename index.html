@@ -273,6 +273,11 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .ovl-lb{position:absolute;transform:translate(-50%,-140%);white-space:nowrap;font:800 11px var(--f-body);color:#fff;background:var(--c);padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px #0006}
 .ovl-r{display:flex!important;align-items:center;gap:6px}.ovl-c{width:18px;height:18px;min-height:0!important;min-width:0!important;padding:0!important;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #94a3b8}.ovl-r small{color:#64748b}
 .lmk-ts{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:4px}.lmk-ts label{display:flex;flex-direction:column;align-items:center;border:1.5px solid #cbd5e1;border-radius:10px;padding:4px;cursor:pointer}.lmk-ts input{position:absolute;opacity:0}.lmk-ts label:has(input:checked){border-color:#2563eb;background:#eff6ff}.lmk-ts span{font-size:20px}.lmk-ts small{font-size:11px;text-align:center}
+.br-box{margin:8px 0 2px;padding:8px 10px;border:1px dashed var(--line);border-radius:12px}.br-box>b{font-size:13.5px}.br-add{display:flex;gap:6px;margin:6px 0}.br-add input{flex:1;min-width:0}
+.br-list{display:flex;flex-wrap:wrap;gap:6px}.br-chip{display:inline-flex;align-items:center;gap:6px;background:#fef9c3;color:#111;border:1px solid #eab308;border-radius:999px;padding:2px 4px 2px 10px;font-size:12.5px}.br-chip small{color:#555}.br-chip button{border:0;background:none;min-height:26px;min-width:26px;padding:0;color:#555}
+.br-mk{position:relative;width:16px;height:16px}.br-mk i{position:absolute;inset:0;background:#facc15;border:2px solid #444;border-radius:50%;box-shadow:0 1px 3px #0006}.br-mk span{position:absolute;left:19px;top:-1px;white-space:nowrap;font:800 11px var(--f-body);color:#111;background:#fffde7e6;border:1px solid #eab308;padding:0 5px;border-radius:5px}
+.kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
+.kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .ps-pin{font-size:26px;line-height:28px;filter:drop-shadow(0 2px 2px #0007)}.ps-pop b{display:block;font-size:14px}.ps-pop small{display:block;color:#64748b;margin-bottom:4px}.ps-pop .mono{font-size:12px}.ps-b{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.ps-b button{min-height:32px;font-size:12px;padding:0 8px;border-radius:8px}
 body.pvprev .ps-box,body.flymode .ps-box{display:none}
 .hbox{cursor:move;filter:drop-shadow(0 1px 3px rgba(0,0,0,.45))}.hbox-s{cursor:pointer;filter:none}
@@ -1604,6 +1609,8 @@ body.cl-on{overflow:hidden}
       <thead><tr><th>#</th><th>Preset</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
+    <div class="br-box"><b>🟡 จุดแยก</b> <span class="hint">สนาม/พื้นที่อื่นที่ใช้เส้นทางเดียวกัน (ไว้รายงาน · ไม่ต้องทำแผนซ้ำ) — ต่อเส้นประจากจุดที่ใกล้ที่สุด</span>
+      <div class="br-add"><input id="brIn" placeholder="ICAO / ชื่อจุด / MGRS / พิกัด เช่น VTBD, ราบ11"><button type="button" id="brAdd" class="mini">＋ เพิ่ม</button></div><div id="brList" class="br-list"></div></div>
   </div>
 
   <div class="card section" id="freqCard">
@@ -2288,8 +2295,23 @@ function legDragStart(ev,i){if(ev.button>0)return;ev.preventDefault();ev.stopPro
 let remMk=[];function remThin(){if(document.body.classList.contains("printing"))return remMk.forEach(m=>{const e=m.getElement();if(e)e.style.display=""});let last=null;
   remMk.forEach(m=>{const e=m.getElement();if(!e)return;const p=map.latLngToContainerPoint(m.getLatLng());const ok=!last||p.distanceTo(last)>=34;e.style.display=ok?"":"none";if(ok)last=p})}
 map.on("zoomend",()=>remThin());
+/* ---------- จุดแยก (สนาม/พื้นที่อื่นบนเส้นทางเดียวกัน) — เก็บกับแผน ---------- */
+function brAll(){return(Array.isArray(state.branches)?state.branches:[]).filter(b=>b&&isFinite(+b.lat)&&isFinite(+b.lon))}
+function brNear(b){const W=state.wps;let bi=0,bd=1e9;W.forEach((w,i)=>{const d=gcDistNm([w.lat,w.lon],[+b.lat,+b.lon]);if(d<bd){bd=d;bi=i}});return[bi,bd]}
+function brInfo(b){const W=state.wps;if(!W.length)return"";const[i,d]=brNear(b),w=W[i],vr=num(state.g&&state.g.var,0),c=norm(trueCourse([w.lat,w.lon],[+b.lat,+b.lon])+vr);
+  return`จาก ${w.name||"จุด "+(i+1)} · ${hdg(c)}° / ${d<10?d.toFixed(1):Math.round(d)} NM`}
+function brRender(){const box=document.getElementById("brList");if(!box)return;const B=brAll();
+  box.innerHTML=B.length?B.map((b,k)=>`<span class="br-chip"><b>${esc(b.name)}</b><small>${esc(brInfo(b))}</small><button type="button" data-brdel="${k}" aria-label="ลบ">✕</button></span>`).join(""):""}
+function brAdd(t){t=String(t||"").trim();if(!t)return false;const f=(typeof schFavAll==="function"?schFavAll():[]).find(x=>x.n.toUpperCase()===t.toUpperCase());
+  let r=f?{lat:+f.lat,lon:+f.lon}:resolvePoint(t,false),nm=f?f.n:t;if(!r||!isFinite(r.lat)){const c=parseCoord(t);if(c){r={lat:c[0],lon:c[1]};nm="จุดแยก "+(brAll().length+1)}}if(!r||!isFinite(r.lat)){toast("หาตำแหน่ง \""+t+"\" ไม่เจอ — ใส่ ICAO/ชื่อจุด/MGRS/พิกัด");return false}
+  state.branches=brAll().concat([{name:String(nm).toUpperCase().slice(0,24),lat:+(+r.lat).toFixed(6),lon:+(+r.lon).toFixed(6)}]);markEdited();render();return true}
+document.addEventListener("click",e=>{if(e.target.id==="brAdd"){if(brAdd($("#brIn").value))$("#brIn").value=""}const d=e.target.closest("[data-brdel]");if(d){const B=brAll();B.splice(+d.dataset.brdel,1);state.branches=B;markEdited();render()}});
+document.addEventListener("keydown",e=>{if(e.target.id==="brIn"&&e.key==="Enter"){e.preventDefault();if(brAdd(e.target.value))e.target.value=""}});
 function drawMap(rows){
   routeLayer.clearLayers();
+  brAll().forEach(b=>{if(!state.wps.length)return;const[i]=brNear(b),w=state.wps[i];
+    L.polyline([[w.lat,w.lon],[+b.lat,+b.lon]],{color:"#6b7280",weight:2.5,dashArray:"3 7",lineCap:"round",interactive:false}).addTo(routeLayer);
+    L.marker([+b.lat,+b.lon],{interactive:true,icon:L.divIcon({className:"",html:`<div class="br-mk"><i></i><span>${esc(b.name)}</span></div>`,iconSize:[16,16],iconAnchor:[8,8]})}).bindTooltip(esc(brInfo(b)),{direction:"top"}).addTo(routeLayer)});
   const pts=state.wps.map(w=>[w.lat,w.lon]);
   if(pts.length>1)L.polyline(pts,{color:"#d6198f",weight:4,opacity:.95,interactive:false}).addTo(routeLayer);
   /* ลากกลางเส้นเพื่อแทรกจุด (แบบ SkyVector): เส้นโปร่งใสกว้างๆ ไว้จับง่าย */
@@ -2508,6 +2530,7 @@ function hboxSvg(r,s,rot){const w=Math.round(92*s),hgt=Math.round(150*s);
 function legKey(i){const a=state.wps[i],b=state.wps[i+1];return[a.lat,a.lon,b.lat,b.lon].map(v=>v.toFixed(4)).join(",")}
 
 function render(){
+  try{brRender()}catch(e){}
   const res=compute();const rv=state.reserve!==""&&state.reserve!=null?num(state.reserve):null;
   // waypoints
   $("#wpTable tbody").innerHTML=state.wps.map((w,i)=>`<tr>
@@ -2903,7 +2926,7 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
   PS.mk=L.marker([o.lat,o.lon],{zIndexOffset:2000,icon:L.divIcon({className:"",html:'<div class="ps-pin">📍</div>',iconSize:[28,28],iconAnchor:[14,26]})}).addTo(map);
   const dms=`${posFmt(o.lat,true,"dms",2)}  ${posFmt(o.lon,false,"dms",2)}`;
   PS.mk.bindPopup(`<div class="ps-pop"><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small><div class="mono">${fmtMgrs(toMgrs(o.lat,o.lon))}</div><div class="mono">${dms}</div><div class="gnd hint"></div>
-    <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="fav">🟡 เก็บเป็นจุดลงบ่อย</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
+    <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="br">🟡 เพิ่มเป็นจุดแยก</button><button type="button" data-psa="fav">⭐ เก็บไว้ใช้ซ้ำ</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
   PS.cur=o;gndFill(PS.mk.getPopup().getElement()&&PS.mk.getPopup().getElement().querySelector(".gnd"),o.lat,o.lon);map.setView([o.lat,o.lon],Math.max(map.getZoom(),13))}
 {const box=document.createElement("div");box.className="ps-box";box.innerHTML='<div class="ps-in"><span>🔍</span><input type="text" placeholder="ค้นหาสถานที่ / อำเภอ / จุด / พิกัด" aria-label="ค้นหาสถานที่" enterkeyhint="search"><button type="button" class="ps-x" aria-label="ล้าง">✕</button></div><div class="ps-res" hidden></div>';
   map.getContainer().appendChild(box);PS.box=box;L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);const inp=box.querySelector("input");let t=0;
@@ -2913,7 +2936,7 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
   box.querySelector(".ps-res").addEventListener("click",e=>{const b=e.target.closest("[data-psi]");if(b)psGo(PS.list[+b.dataset.psi])});
   map.getContainer().addEventListener("click",e=>{const b=e.target.closest("[data-psa]");if(!b||!PS.cur)return;const o=PS.cur;
     if(b.dataset.psa==="wp"){state.wps.push({name:o.src==="📍"?"WP"+(state.wps.length+1):String(o.n).replace(/\s+/g," ").slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6),vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
-
+    if(b.dataset.psa==="br"){state.branches=brAll().concat([{name:String(o.src==="📍"?"จุดแยก"+(brAll().length+1):o.n).toUpperCase().slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)}]);markEdited();render();toast("เพิ่มจุดแยกแล้ว (แท็บ 1 ใต้ตารางจุด)")}
     if(b.dataset.psa==="fav"){lmkDlg({n:String(o.n).slice(0,24)}).then(r=>{if(!r)return;lmkSave(null,{n:r.n,t:r.t,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});toast("เก็บ "+r.n+" แล้ว")})}
     if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}})}
 /* ---------- บนคอม: กดลูกกลิ้งเมาส์ค้างแล้วลาก (แบบ Google Earth) → เปิดภาพ 3D ตรงบริเวณที่ดูอยู่
@@ -3560,7 +3583,7 @@ $("#kbMapSeg").onclick=e=>{const b=e.target.closest("[data-km]");if(!b)return;kb
 /* ชั้นข้อมูลบน Kneeboard — รายการเดียวกับปุ่ม "ชั้นข้อมูล" บนแผนที่ */
 function kbVisRender(){const box=$("#kbVis");if(!box)return;const ro=kbMapMode==="route",keep=new Set(["route","hbox","rem"]);box.classList.toggle("ro",ro);
   /* แผนผังเส้นทางไม่มีแผนที่ข้างหลัง → ชั้นข้อมูลใช้ไม่ได้ ซ่อนไว้ · แสดงตัวเลือกของแผนผังแทน */
-  const sch=kbMapMode==="sch";box.hidden=sch;let so=$("#kbSchOpt");if(!so){box.insertAdjacentHTML("beforebegin",'<div id="kbSchOpt" class="kb-schopt" hidden><label><input type="checkbox" id="kbSchCards"> วางกล่องความถี่ในแผนผัง</label><p class="hint">แตะป้าย/ชื่อ/กล่องบนแผนผังเพื่อ ย้าย · หมุน · ย่อ-ขยาย · แก้ข้อความ</p></div>');so=$("#kbSchOpt");
+  const sch=kbMapMode==="sch";box.hidden=sch;let so=$("#kbSchOpt");if(!so){box.insertAdjacentHTML("beforebegin",'<div id="kbSchOpt" class="kb-schopt" hidden><label><input type="checkbox" id="kbSchCards"> วางกล่องความถี่ในแผนผัง</label><p class="hint">แตะป้าย/ชื่อ/กล่องบนแผนผังเพื่อ ย้าย · หมุน · ย่อ-ขยาย · แก้ข้อความ · จุดแยก (สนาม/พื้นที่อื่น) เพิ่มที่แท็บ 1</p></div>');so=$("#kbSchOpt");
     $("#kbSchCards").onchange=e=>{const K=kbLay();K.schCards=e.target.checked;kbLaySave(K);if(window._pvRemap)window._pvRemap()}}
   so.hidden=!sch;$("#kbSchCards").checked=!!kbLay().schCards;if(sch)return;
   box.innerHTML='<p class="hint">เปิด/ปิดตรงนี้ = เปิด/ปิดที่แท็บ 1 ด้วย (ชุดเดียวกัน)</p>'+[...new Set(VIS.map(v=>v.g))].map(g=>{const its=VIS.filter(v=>v.g===g&&visMode(v));if(!its.length)return"";
@@ -3774,7 +3797,7 @@ function ficAreas(){const W=(state&&state.wps)||[],out=[];const add=n=>{if(out.a
 function ficMode(){const v=state&&state.unitFreq;return!v||v==="auto"?"auto":v}
 function ficText(){const m=ficMode();if(m==="none")return"";if(m==="auto"){const a=ficAreas();return a.length?`${a.join(" → ")} ${FIC_F}`:""}return m}
 function ficHtml(){const t=ficText();if(!t)return"";const m=t.match(/^(?:FIC )?(.*?)\s+(127\.0.*)$/);return m?`${esc(m[1])}<br><small>${esc(m[2])} MHz</small>`:esc(t)}
-const KB_LAY0={paper:"A5",schCards:false,schNear:10,dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:0.85,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
+const KB_LAY0={paper:"A5",wpCall:false,callsz:1,schCards:false,schNear:10,dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:0.85,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
 /* แถวปรับค่าแบบแถบเลื่อน + ตัวเลข */
 function kcR(t,k,mn,mx,st,KL,u,f){const v=KL[k];return`<label class="kc-r"><span>${t}</span><input type="range" data-kl="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><output data-o="${k}">${f?f(v):(+v).toString()+(u||"")}</output></label>`}
 const KC_FMT={lop:v=>Math.round(v*100)+"%",mapw:v=>v+" mm",maph:v=>v+" mm",fs:v=>v+" pt",tfs:v=>v+" pt"};
@@ -3878,7 +3901,7 @@ function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map
   const panel=document.createElement("div");panel.className="pv-panel";const op=innerWidth<900?"":"open";panel.innerHTML=`<details class="pp-sec" ${op}><summary>🗺️ แผนที่</summary><div class="pp-map"></div></details><details class="pp-sec" ${op}><summary>📻 ความถี่ที่จะพิมพ์</summary><div class="pp-btns"></div><div class="pp-count"></div><div class="pp-body"></div></details>`;
   panel.querySelector(".pp-map").appendChild(nodes[0]);panel.querySelector(".pp-btns").appendChild(nodes[1]);panel.querySelector(".pp-count").appendChild(nodes[2]);panel.querySelector(".pp-body").appendChild(nodes[3]);
   pv.appendChild(panel);kbRender()}
-function kbPanelHome(){if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
+function kbPanelHome(){try{if(map.hasLayer(callLayer))map.removeLayer(callLayer)}catch(e){}if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
 function pvTblHtml(res,W){return `<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
     res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
 function pvUnitSync(pv){const u=pv.querySelector(".pv-unit");if(!u)return;const h=ficHtml();u.hidden=!h;u.innerHTML=h}
@@ -3921,7 +3944,7 @@ function kneePrint(preview){
         ${kcR("Doghouse","dog",0.5,1.8,0.1,KL,"×")}</div>
       <div class="kc-g"><h4>📍 จุดเส้นทาง / จุดรายงาน</h4>
         <div class="kc-r"><span>สีหมุดจุด</span><span class="kc-sw">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b"].map(c=>`<button type="button" data-sw="wpc" data-v="${c}" style="--c:${c}" class="${c===KL.wpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="wpc" value="${KL.wpc}" aria-label="สีหมุดอื่น"></span></div>
-        ${kcR("ขนาดหมุดจุด","wpsz",0.6,1.8,0.1,KL,"×")}
+        ${kcR("ขนาดหมุดจุด","wpsz",0.6,1.8,0.1,KL,"×")}<label class="kc-r kc-ck" title="กล่องเหลืองบอกชื่อจุดพร้อมเส้นชี้ — ลากกล่องเพื่อย้าย"><span>กล่องชื่อจุด (callout)</span><input type="checkbox" data-kl="wpCall" ${KL.wpCall?"checked":""}></label>${kcR("ขนาดกล่องชื่อจุด","callsz",0.6,2,0.1,KL,"×")}
         <div class="kc-r"><span>สีป้ายจุดรายงาน</span><span class="kc-sw">${["#ffd400","#f97316","#22c55e","#38bdf8","#ffffff","#111827"].map(c=>`<button type="button" data-sw="rpc" data-v="${c}" style="--c:${c}" class="${c===KL.rpc?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="rpc" value="${KL.rpc}" aria-label="สีป้ายอื่น"></span></div>
         ${kcR("ขนาดจุดรายงาน / Waypoint หน่วย / สนาม","rpfs",0.5,2,0.1,KL,"×")}</div>
       <div class="kc-g"><h4>✈ สนามบินที่แสดงบน Kneeboard</h4><div class="kc-apb"><button type="button" data-apq="route">เฉพาะในเส้นทาง</button><button type="button" data-apq="all">แสดงทั้งหมด</button><button type="button" data-apq="none">ไม่แสดง</button></div><div class="kc-aps" id="kcAps"></div></div>
@@ -3942,7 +3965,7 @@ function kneePrint(preview){
     if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
       const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
       const mh=Math.max(60,Math.min(P.h-20,Math.floor(Math.max(mhNow,bh*25.4/96)+(lim-used)*25.4/96-1.5)));if(Math.abs(mh-mhNow)>=1){KL.maph=mh;pv.style.setProperty("--pvmh",mh+"mm");map.invalidateSize();const el=pv.querySelector('[data-kl="maph"]');if(el)el.value=mh;kcOut(pv,"maph",mh)}}}
-    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);try{schDraw(pv,KL)}catch(e){console.error(e)}if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}
+    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);try{schDraw(pv,KL)}catch(e){console.error(e)}try{kbCallDraw(KL)}catch(e){console.error(e)}if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
   let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
@@ -5733,6 +5756,22 @@ let pvLegLayer=null;
 const pvLDash=(d,w)=>({dash:`${3*w} ${2*w}`,dot:`0.1 ${1.8*w}`,dashdot:`${3*w} ${1.5*w} 0.1 ${1.5*w}`})[d]||null;
 const pvLegKey=(a,b)=>`${a.name||""}@${(+a.lat).toFixed(3)},${(+a.lon).toFixed(3)}>${b.name||""}@${(+b.lat).toFixed(3)},${(+b.lon).toFixed(3)}`;
 function pvLegStyle(KL,k){const o=(KL.legs||{})[k]||{};return{c:o.c||KL.lcol||"#d6198f",d:o.d||KL.ldash||"solid",w:o.w||KL.line||1,own:!!(KL.legs||{})[k]}}
+/* ---------- กล่องชื่อจุด (callout แบบ kneeboard ของหน่วย): กล่องเหลืองขอบน้ำเงิน + เส้นชี้ไปที่จุด · ลากกล่องเพื่อย้าย (จำต่อแผน) ---------- */
+const callLayer=L.layerGroup();
+function kbCallDraw(KL){callLayer.clearLayers();const on=KL&&KL.wpCall&&document.body.classList.contains("pvprev")&&kbMapMode!=="sch";
+  if(!on){if(map.hasLayer(callLayer))map.removeLayer(callLayer);return}if(!map.hasLayer(callLayer))callLayer.addTo(map);
+  const W=state.wps,P=W.map(w=>map.latLngToLayerPoint([w.lat,w.lon])),sz=num(KL.callsz,1);state.callPos=state.callPos||{};
+  W.forEach((w,i)=>{const k=(w.name||"")+"@"+i;let o=state.callPos[k];
+    if(!o){let vx=0,vy=0;[P[i-1],P[i+1]].forEach(q=>{if(!q)return;const dx=q.x-P[i].x,dy=q.y-P[i].y,L=Math.hypot(dx,dy)||1;vx+=dx/L;vy+=dy/L});let L=Math.hypot(vx,vy);
+      if(L<.2){const q=P[i+1]||P[i-1]||P[i],dx=q.x-P[i].x,dy=q.y-P[i].y,l=Math.hypot(dx,dy)||1;vx=dy/l;vy=-dx/l;L=1}o=[-vx/L*48*sz,-vy/L*40*sz]}
+    const html=`<div class="kcall-w"><svg class="kcall-ln" width="1" height="1"><line x1="0" y1="0" x2="${o[0]}" y2="${o[1]}"/></svg><div class="kcall" data-ck="${esc(k)}" style="left:${o[0]}px;top:${o[1]}px;font-size:${(11*sz).toFixed(1)}px">${esc(w.name||"WP"+(i+1))}</div></div>`;
+    callLayer.addLayer(L.marker([w.lat,w.lon],{interactive:false,zIndexOffset:1500,icon:L.divIcon({className:"kcall-ic",html,iconSize:[0,0],iconAnchor:[0,0]})}))})}
+/* ลากกล่องชื่อจุด */
+document.addEventListener("pointerdown",e=>{const c=e.target.closest(".kcall");if(!c)return;e.preventDefault();e.stopPropagation();const k=c.dataset.ck,sx=e.clientX,sy=e.clientY,o0=(state.callPos&&state.callPos[k])||[parseFloat(c.style.left),parseFloat(c.style.top)];
+  const ln=c.parentNode.querySelector("line"),z=c.getBoundingClientRect().width/(c.offsetWidth||1)||1;let o=o0;
+  const mv=ev=>{o=[o0[0]+(ev.clientX-sx)/z,o0[1]+(ev.clientY-sy)/z];c.style.left=o[0]+"px";c.style.top=o[1]+"px";ln.setAttribute("x2",o[0]);ln.setAttribute("y2",o[1])};
+  const up=()=>{window._suppressClick=Date.now();removeEventListener("pointermove",mv);removeEventListener("pointerup",up);state.callPos=state.callPos||{};state.callPos[k]=o.map(v=>Math.round(v));store.set("vfr_current",state)};
+  addEventListener("pointermove",mv);addEventListener("pointerup",up)},true);
 /* ---------- แผนผังเส้นทาง (schematic) — แบบ kneeboard ของหน่วย: ไม่มีแผนที่ข้างหลัง ----------
    เส้นดำต่อจุด · วงกลมน้ำเงิน = จุดเส้นทาง · ป้าย < ทิศ / ระยะ / ทิศกลับ > ตามแนวแต่ละขา (ทิศแม่เหล็ก ไม่คิดลม)
    สนามสำรอง/จุดสังเกต = วงเหลือง + เส้นประสีเทาจากจุดเส้นทางที่ใกล้ที่สุด */
@@ -5748,7 +5787,7 @@ function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;
   if(kbMapMode!=="sch"){if(svg)svg.remove();if(oldl)oldl.remove();box.classList.remove("sch-edit");return}
   const W=state.wps.filter(w=>isFinite(w.lat)&&isFinite(w.lon));if(W.length<2){if(svg)svg.remove();if(oldl)oldl.remove();return}
   const vr=num(state.g&&state.g.var,0),r3=a=>String(Math.round(norm(a))||360).padStart(3,"0")+"°";
-  const alts=[];
+  const alts=brAll().map(b=>({name:b.name,lat:+b.lat,lon:+b.lon}));
   /* ค่าจากแผงปรับรูปแบบ (ใช้กับแผนผังด้วย): สี/ความหนา/ลักษณะเส้น · สี/ขนาดหมุด · สีจุดสำรอง · ขนาดตัวอักษร */
   const bw=box.clientWidth||340,bh=box.clientHeight||500,fz=Math.max(.6,Math.min(1.8,num(KL.rpfs,1))),pz=Math.max(.5,Math.min(2,num(KL.wpsz,.85)/.85)),lw=Math.max(.4,num(KL.line,1)),pad=46*fz;
   const lcol=KL.lcol||"#111",wpc=KL.wpc||"#2f6fd6",apc=KL.rpc||"#facc15",dash=pvLDash(KL.ldash,3.2*lw);
