@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-18T19:23Z",
+"fetched": "2026-11-18T21:15Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1074,21 +1074,12 @@
 "keyword": "INTERNATIONAL"
 },
 {
-"loc": "VTBD",
-"id": "A4630/26",
-"icao": "A4630/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611181607 C) 2611182200\r\nE) ILS RWY 21L U/S",
+"loc": "VTBS",
+"id": "A4632/26",
+"icao": "A4632/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611182024 C) 2611182145\r\nE) ILS RWY 01/19 U/S",
 "plain": " ",
-"start": "11/18/2026 1607",
-"end": "11/18/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4628/26",
-"icao": "A4628/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611181700 C) 2611182100\r\nE) TXL B BTN PIER 4 AND PIER 5 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/18/2026 1700",
-"end": "11/18/2026 2100",
+"start": "11/18/2026 2024",
+"end": "11/18/2026 2145",
 "keyword": "INTERNATIONAL"
 },
 {
