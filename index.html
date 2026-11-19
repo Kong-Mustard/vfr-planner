@@ -882,6 +882,8 @@ dialog.kb::backdrop{background:rgba(17,24,39,.45)}
 @media (min-width:1000px){
   .top{display:block;position:relative}
   #map{height:calc(100vh - 120px);min-height:640px}
+  .ps-box{left:16px;top:16px;transform:none;width:390px}
+  body:not(.mapfull) .top>.side{top:68px}
   .top>.side{position:absolute;z-index:600;top:16px;left:16px;bottom:16px;width:390px;max-height:none;overflow:auto;border-radius:22px;box-shadow:var(--shadow);
     background:color-mix(in srgb,var(--panel) 97%,transparent)}
 }
