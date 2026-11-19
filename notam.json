@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-19T18:12Z",
+"fetched": "2026-11-19T19:26Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1030,6 +1030,15 @@
 },
 {
 "loc": "VTBS",
+"id": "A4644/26",
+"icao": "A4644/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611191852 C) 2611192330\r\nE) ILS RWY 01/19 U/S",
+"plain": " ",
+"start": "11/19/2026 1852",
+"end": "11/19/2026 2330",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBS",
 "id": "A4635/26",
 "icao": "A4635/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611191500 C) 2611192300\r\nE) RWY 02L/20R CLSD DUE TO WIP",
 "plain": " ",
@@ -1062,15 +1071,6 @@
 "plain": " ",
 "start": "11/19/2026 1613",
 "end": "11/19/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7471/26",
-"icao": "J7471/26 NOTAMN\r\nQ) VTBB/QWMLW/IV/BO/W/000/010/1646N10111E002\r\nA) VTBB B) 2611190800 C) 2611191900\r\nE) FIREWORKS DISPLAY WILL TAKE PLACE RADIUS 1.5NM CENTRE\r\n   164606.9N1011055.2E (LOM SAK DISTRICT PHETCHABUN PROVINCE)\r\nF) GND G) 1000FT AGL",
-"plain": " ",
-"start": "11/19/2026 0800",
-"end": "11/19/2026 1900",
 "keyword": "INTERNATIONAL"
 },
 {
