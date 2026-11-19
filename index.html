@@ -287,6 +287,10 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+body.pin-mode #map,body.pin-mode #map .leaflet-interactive{cursor:crosshair!important}.pin-ctl a.on{background:#2563eb;color:#fff}.pin-ctl a small,.off-ctl a small{display:block;font-size:10px;line-height:1}
+.pin-pos{margin:0 0 8px;font-size:12.5px;color:var(--muted)}.pin-kind{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.pin-kind label{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;cursor:pointer}.pin-kind label:has(input:checked){border-color:#2563eb;background:#eff6ff;color:#111}
+.pin-f{display:flex;flex-direction:column;gap:6px}.pin-f[hidden]{display:none}.pin-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.bk-dlg textarea{width:100%;font:inherit}
+button.danger{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
 .pl-r[draggable=true]{cursor:grab}.pl-over{outline:2px dashed #2563eb;background:#dbeafe55!important}#plPanel.pl-dragging [data-pdrop]{outline:1px dashed #94a3b8}.pl-dst{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 #plPanel{display:none;position:fixed;z-index:1200;left:0;right:0;bottom:0;height:58vh;background:var(--panel);color:var(--ink);border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);flex-direction:column}
 body.pl-open #plPanel{display:flex}
@@ -2377,7 +2381,8 @@ function plOpen(on){document.body.classList.toggle("pl-open",on);if(on)plRender(
   d.addEventListener("pointerdown",e=>{const r=e.pointerType!=="mouse"&&e.target.closest("[data-pdrag]");if(!r||e.target.closest("input,button"))return;clearTimeout(lp);const x0=e.clientX,y0=e.clientY;
     lp=setTimeout(()=>{lp=null;plMoveDlg(JSON.parse(r.dataset.pdrag))},550);const cancel=ev=>{if(ev.type!=="pointermove"||Math.hypot(ev.clientX-x0,ev.clientY-y0)>10){clearTimeout(lp);d.removeEventListener("pointermove",cancel);d.removeEventListener("pointerup",cancel)}};
     d.addEventListener("pointermove",cancel);d.addEventListener("pointerup",cancel)});
-  d.addEventListener("contextmenu",e=>{const r=e.target.closest("[data-pdrag]");if(!r)return;e.preventDefault();plMoveDlg(JSON.parse(r.dataset.pdrag))});
+  d.addEventListener("contextmenu",e=>{const f=e.target.closest('summary[data-pdrop^="ap:"]');if(f){e.preventDefault();const ic=f.dataset.pdrop.slice(3),a=AP[ic];if(a)pinDlg({lat:a.lat,lon:a.lon,edit:ic});return}
+    const r=e.target.closest("[data-pdrag]");if(!r)return;e.preventDefault();plMoveDlg(JSON.parse(r.dataset.pdrag))});
   d.querySelector("#plQ").addEventListener("input",()=>plRender());
   const tb=document.createElement("div");tb.className="pl-tabs pl-tabs-side";tb.innerHTML='<button type="button" class="on" data-pltab="plan">✈ แผนการบิน</button><button type="button" data-pltab="pl">📂 จุดของฉัน</button>';
   const side=document.querySelector(".top>.side");if(side)side.prepend(tb);tb.addEventListener("click",e=>{if(e.target.closest('[data-pltab="pl"]'))plOpen(true)});
@@ -2476,7 +2481,7 @@ map.on("zoomend",()=>{if(state&&state.wps.length>1)drawMap(compute().rows)});
 /* กันคลิกทะลุ: ปุ่มบนแผงที่ซ้อนแผนที่ (GPS, เมนู, ป๊อปอัป, ปุ่มควบคุม) หรือปุ่มที่ถูกวาดใหม่ระหว่างกด จะไม่ถูกนับเป็นการแตะแผนที่ */
 function overlayClick(e){const t=e&&e.originalEvent&&e.originalEvent.target;if(!t)return false;if(t.isConnected===false)return true;
   return!!(t.closest&&t.closest(".gps-hud,.leaflet-control,.snapask,.tapask,.meas,#mfWp,.sa-chip,.jumpbar"))}
-map.on("click",e=>{if(overlayClick(e))return;if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
+map.on("click",e=>{if(PIN_MODE)return;if(overlayClick(e))return;if(window._suppressClick&&Date.now()-window._suppressClick<400)return;if(pePick!=null){peTakePick(e.latlng);return}if(typeof pick!=="undefined"&&pick)return;
   if(e.originalEvent&&e.originalEvent.shiftKey){tapAddDirect(e.latlng);return}tapMenu(e.latlng)});
 /* แตะแผนที่ → หมุดจาง + เมนูเล็ก (ไม่มีโหมดเปิด/ปิด) · Shift+คลิก หรือ แตะค้าง/คลิกขวา = เพิ่มทันที */
 let tapGhost=null,tapBox=null;
@@ -5221,8 +5226,8 @@ async function bkEnc(obj,pw){const salt=crypto.getRandomValues(new Uint8Array(16
   const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},await bkKey(pw,salt),new TextEncoder().encode(JSON.stringify(obj)));
   return{app:"VFR Planner",backup:obj.backup,enc:"AES-GCM-PBKDF2",salt:bkB64(salt),iv:bkB64(iv),ct:bkB64(ct)}}
 async function bkDec(o,pw){const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:bkUnB64(o.iv)},await bkKey(pw,bkUnB64(o.salt)),bkUnB64(o.ct));return JSON.parse(new TextDecoder().decode(pt))}
-function bkDlg(html){return new Promise(res=>{const d=document.createElement("dialog");d.className="bk-dlg";d.innerHTML=`<form method="dialog">${html}</form>`;document.body.appendChild(d);
-  d.addEventListener("close",()=>{const f=new FormData(d.querySelector("form"));res(d.returnValue==="ok"?Object.fromEntries(f):null);d.remove()});d.showModal();const fi=d.querySelector("input");if(fi)fi.focus()})}
+function bkDlg(html,setup){return new Promise(res=>{const d=document.createElement("dialog");d.className="bk-dlg";d.innerHTML=`<form method="dialog">${html}</form>`;document.body.appendChild(d);
+  d.addEventListener("close",()=>{const f=new FormData(d.querySelector("form"));res(d.returnValue==="ok"?Object.fromEntries(f):d.returnValue==="del"?{_btn:"del"}:null);d.remove()});if(setup)try{setup(d)}catch(e){console.error(e)}d.showModal();const fi=d.querySelector("input");if(fi)fi.focus()})}
 $("#bkSave").onclick=async()=>{const ks=bkKeys(),idb=await bkIdbAll(),ni=Object.keys(idb).length;
   const r=await bkDlg(`<h3>💾 สำรองข้อมูลทั้งหมด</h3><p>ในเครื่องนี้: <b>${ks.length}</b> รายการตั้งค่า/ข้อมูล + <b>${ni}</b> รายการในฐานข้อมูล (checklist · ประวัติการบิน)</p>
     <p class="hint">มีข้อมูลส่วนบุคคลและข้อมูลหน่วย — แนะนำตั้งรหัสผ่าน ไฟล์จะเปิดได้เฉพาะแอปนี้เมื่อใส่รหัสถูก (ลืมรหัส = กู้ไม่ได้)</p>
@@ -5800,6 +5805,55 @@ async function offStart(){const r=await offCalc();if(!r||!r.cnt)return;
     if((run.done+run.fail+run.skip)%20===0)tick()}};
   await Promise.all(Array.from({length:6},worker));tick();OFF_RUN=null;$("#offGo").hidden=false;$("#offStop").hidden=true;
   toast(run.stop?"หยุดโหลดแล้ว":`โหลดแผนที่ออฟไลน์เสร็จ ${(run.done+run.skip).toLocaleString()} ภาพ`+(run.fail?` (ล้มเหลว ${run.fail})`:""));offCalc()}
+/* ---------- 📍 ปักหมุด (แบบ Google Earth): แตะแผนที่ → กรอกข้อมูล → เก็บเป็น สนามที่เพิ่มเอง / ลานจอด ฮ. / จุดรายงานของสนาม / จุดของฉัน
+   ข้อมูลเก็บในเครื่องเท่านั้น (vfr_custom_ap · vfr_altpts) และขึ้นในแผง 📂 ทันที ---------- */
+let PIN_MODE=false;
+function pinMode(on){PIN_MODE=on;document.body.classList.toggle("pin-mode",on);const b=document.querySelector(".pin-ctl a");if(b)b.classList.toggle("on",on);if(on)toast("📍 แตะตำแหน่งบนแผนที่เพื่อปักหมุด (Esc = ยกเลิก)")}
+addEventListener("keydown",e=>{if(e.key==="Escape"&&PIN_MODE)pinMode(false)});
+/* โหมดปักหมุด: ดักคลิกก่อนถึงเส้น/พื้นที่/หมุดอื่นบนแผนที่ (ไม่งั้นคลิกโดนพื้นที่ P/R/D หรือเส้นทางแล้วไม่ปัก) */
+map.getContainer().addEventListener("click",e=>{if(!PIN_MODE||e.target.closest(".leaflet-control,.map-tools,.ps-box,.pl-mbtn,.sa-float"))return;e.stopPropagation();e.preventDefault();const ll=map.mouseEventToLatLng(e);pinMode(false);pinDlg({lat:ll.lat,lon:ll.lng})},true);
+function pinNearCustom(lat,lon){let best=null;Object.entries(AP).forEach(([ic,a])=>{if(!a||!a.eaip||!a.eaip.custom||a.lat==null)return;const d=gcDistNm([lat,lon],[a.lat,a.lon]);if(!best||d<best.d)best={ic,d}});return best}
+/* หน้าต่างกรอกข้อมูลหมุด — ใช้ทั้งเพิ่มใหม่และแก้สนามที่เพิ่มเอง */
+async function pinDlg(o){const C=custAll(),ed=o.edit?C[o.edit]||{}:null,near=pinNearCustom(o.lat,o.lon),cus=Object.entries(AP).filter(([,a])=>a&&a.eaip&&a.eaip.custom).sort();
+  const kind0=ed?(ed.heli?"heli":"ap"):(o.kind||"ap");
+  const r=await bkDlg(`<h3>${ed?"✎ แก้ไขสนาม "+esc(o.edit):"📍 ปักหมุดใหม่"}</h3>
+   <p class="mono pin-pos">${fmtMgrs(toMgrs(o.lat,o.lon))} · ${posFmt(o.lat,true,"dms",1)} ${posFmt(o.lon,false,"dms",1)}</p>
+   ${ed?"":`<div class="pin-kind">${[["ap","✈ สนามบิน"],["heli","🚁 ลานจอด ฮ."],["rp","◆ จุดรายงานของสนาม"],["my","🟡 จุดของฉัน"]].map(k=>`<label><input type="radio" name="kind" value="${k[0]}" ${k[0]===kind0?"checked":""}><span>${k[1]}</span></label>`).join("")}</div>`}
+   <div class="pin-f" data-for="ap heli"><label>รหัส (ICAO หรือรหัสที่หน่วยใช้)<input name="ic" maxlength="8" value="${esc(o.edit||"")}" ${ed?"readonly":""} placeholder="เช่น VTBH, ราบ11"></label>
+     <label>ชื่อ<input name="name" maxlength="40" value="${esc(ed?ed.name||"":"")}" placeholder="เช่น สระพรานนาค"></label>
+     <div class="pin-2"><label>ความสูง (ft)<input name="elev" inputmode="numeric" value="${esc(ed?ed.elev??"":"")}"></label><label>ทางวิ่ง / ทิศร่อนลง<input name="rwy" value="${esc(ed?ed.rwy||"":"")}" placeholder="06-24/01-19"></label></div>
+     <label>ความถี่ (บรรทัดละ 1 · เช่น TWR 122.1 / 234.5)<textarea name="comm" rows="3">${esc(ed?ed.comm||"":"")}</textarea></label>
+     <label>เครื่องช่วยเดินอากาศ (เช่น VOR SPN 117.3)<textarea name="nav" rows="2">${esc(ed?ed.nav||"":"")}</textarea></label></div>
+   ${ed?"":`<div class="pin-f" data-for="rp my"><label>ชื่อจุด<input name="pn" maxlength="24" placeholder="เช่น KILO, ราบ11"></label><label class="pin-f" data-for="rp">หมายเหตุ (ความสูง / จุดสังเกต)<input name="lm" maxlength="60" placeholder="เช่น บ.โคกกะเทียม · ฮ. 1,000 ft"></label></div>
+   <div class="pin-f" data-for="rp"><label>เป็นจุดรายงานของสนาม<select name="ap">${cus.length?cus.map(([ic,a])=>`<option value="${esc(ic)}" ${near&&near.ic===ic?"selected":""}>${esc(ic)} ${esc(a.name||"")}${near&&near.ic===ic?` (ใกล้สุด ${near.d.toFixed(1)} NM)`:""}</option>`).join(""):'<option value="">— ยังไม่มีสนามที่เพิ่มเอง —</option>'}</select></label></div>`}
+   <p class="hint">เก็บในเครื่องนี้เท่านั้น · ขึ้นในแผง 📂 จุดของฉัน · ส่งต่อให้เพื่อนด้วย Excel (แท็บ 8 — ขั้นถัดไป)</p>
+   <menu>${ed?'<button value="del" class="danger" formnovalidate>🗑 ลบสนามนี้</button>':""}<button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">บันทึก</button></menu>`,
+   dlg=>{const sync=()=>{const k=(dlg.querySelector('input[name="kind"]:checked')||{}).value||kind0;dlg.querySelectorAll(".pin-f").forEach(f=>{const on=f.dataset.for.split(" ").includes(k);f.hidden=!on;f.querySelectorAll("input,select,textarea").forEach(i=>i.disabled=!on)})};dlg.addEventListener("change",sync);sync()});
+  if(!r)return;
+  if(r._btn==="del"){if(confirm(`ลบสนาม ${o.edit} (และจุดรายงานที่เพิ่มไว้) ออกจากเครื่องนี้?`)){delete C[o.edit];store.set("vfr_custom_ap",C);delete AP[o.edit];pinRefresh();toast("ลบแล้ว")}return}
+  const kind=ed?kind0:(r.kind||"ap");
+  if(kind==="ap"||kind==="heli"){const ic=String(r.ic||"").trim().toUpperCase().replace(/\s+/g,"");if(!ic){toast("ใส่รหัสสนามก่อน");return}
+    if(!ed&&AP[ic]&&!(AP[ic].eaip&&AP[ic].eaip.custom)&&AP[ic].eaip&&!confirm(`${ic} มีใน AIP แล้ว — จะสร้างข้อมูลของตัวเองทับไหม?`))return;
+    C[ic]={...(C[ic]||{}),name:String(r.name||"").trim()||ic,lat:+(+o.lat).toFixed(6),lon:+(+o.lon).toFixed(6),elev:r.elev===""?"":+r.elev,rwy:String(r.rwy||"").trim(),comm:String(r.comm||""),nav:String(r.nav||""),heli:kind==="heli"||undefined};
+    store.set("vfr_custom_ap",C);pinRefresh();toast(`${ed?"แก้":"เพิ่ม"}สนาม ${ic} แล้ว`)}
+  else if(kind==="rp"){const nm=String(r.pn||"").trim().toUpperCase();if(!nm||!r.ap){toast(r.ap?"ใส่ชื่อจุดก่อน":"ต้องมีสนามที่เพิ่มเองก่อน");return}
+    const P=(Array.isArray(C[r.ap]&&C[r.ap].pts)?C[r.ap].pts:((apVfr(AP[r.ap])||{}).pts||[]).map(p=>({n:p.n,lat:p.lat,lon:p.lon,lm:p.lm||"",rd:p.rd||""}))).filter(p=>String(p.n).toUpperCase()!==nm);
+    P.push({n:nm,lat:+(+o.lat).toFixed(6),lon:+(+o.lon).toFixed(6),lm:String(r.lm||""),rd:""});C[r.ap]={...(C[r.ap]||{}),pts:P};store.set("vfr_custom_ap",C);pinRefresh();toast(`เพิ่ม ${nm} เป็นจุดรายงานของ ${r.ap}`)}
+  else{const nm=String(r.pn||"").trim();if(!nm){toast("ใส่ชื่อจุดก่อน");return}lmkSave(null,{n:nm,t:"gen",lat:+(+o.lat).toFixed(6),lon:+(+o.lon).toFixed(6)});if(!plVisOn("my")){visSet("my",true);visSave()}toast("เก็บ "+nm+" แล้ว")}}
+/* หลังแก้ข้อมูล: คำนวณ AP ใหม่ วาดหมุดสนามที่ไม่มีในรายการเดิม + จุดรายงาน + แผง */
+const custApMk=L.layerGroup().addTo(map);
+function custApDraw(){custApMk.clearLayers();const known=new Set(AIRPORTS.map(a=>a[0]));Object.entries(custAll()).forEach(([ic,c])=>{const a=AP[ic];if(!a||a.lat==null||known.has(ic)||plOffAp(ic)||!map.hasLayer(apLayer))return;
+  const hp=!!c.heli,nm=String(c.name||ic);const mk=L.marker([a.lat,a.lon],{icon:L.divIcon({className:"apmk",html:`<span class="ap-e ${hp?"hp":"af"}">${hp?"H":AP_SVG}</span><span class="ap-n">${esc(ic)} ${esc(nm)}</span>`,iconSize:[22,22],iconAnchor:[11,11]})})
+   .bindTooltip(`<b>${esc(ic)}</b> ${esc(nm)} · สนามที่เพิ่มเอง`).addTo(custApMk);mk.options.apId=ic;
+  mk.on("click",e=>{L.DomEvent.stopPropagation(e);plAddWp({name:ic,lat:a.lat,lon:a.lon})});mk.on("contextmenu",e=>{L.DomEvent.stop(e);pinDlg({lat:a.lat,lon:a.lon,edit:ic})})})}
+map.on("layeradd layerremove",e=>{if(e.layer===apLayer)custApDraw()});
+function pinRefresh(){Object.keys(AP).forEach(ic=>{if(AP[ic]&&AP[ic].eaip&&AP[ic].eaip.custom&&!custAll()[ic]){const b=AIRPORTS.find(a=>a[0]===ic);if(b)AP[ic]={id:ic,name:b[1],lat:b[2],lon:b[3]};else delete AP[ic]}});
+  try{applyCustom()}catch(e){}try{if(EAIP)applyEaip&&0}catch(e){}custApDraw();try{drawVfr()}catch(e){}lmkDraw();plRender();try{custRefresh&&custRefresh()}catch(e){}render()}
+setTimeout(custApDraw,0);
+{const bar=L.DomUtil.create("div","leaflet-bar leaflet-control pin-ctl");bar.innerHTML='<a href="#" title="ปักหมุด: สนามบิน / ลานจอด ฮ. / จุดรายงาน / จุดของฉัน" role="button">📍<small>ปักหมุด</small></a>';
+  L.DomEvent.disableClickPropagation(bar);bar.querySelector("a").onclick=e=>{e.preventDefault();pinMode(!PIN_MODE)};
+  const body=map.getContainer().querySelector(".map-tools .mt-body");(body||map.getContainer().querySelector(".leaflet-top.leaflet-right")).appendChild(bar)}
+
 function offOpen(){const d=$("#offDlg");d.showModal();if(!OFF_RUN){$("#offProg").hidden=true;$("#offGo").hidden=false;$("#offStop").hidden=true}offCalc()}
 (function offInit(){const d=$("#offDlg");if(!d)return;
   d.addEventListener("change",e=>{if(e.target.closest("#offOpts"))offCalc()});
