@@ -1072,7 +1072,8 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .rail .logo{border:0;cursor:pointer;padding:0}.rail .logo.ifr{background:#7c3aed}.rail .logo:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .sa-info{display:block;font:500 13px/1.5 var(--f-body);color:var(--ink);margin-top:-4px;background:color-mix(in srgb,#b45309 8%,transparent);border-radius:8px;padding:6px 8px}.sa-info:empty{display:none}.sa-info select{width:auto;padding:0 4px;font-size:12px;min-height:0}.sa-info .sa-v{color:#b45309}.sa-info button{padding:1px 8px;min-height:0}
 .sa-chip{background:rgba(255,255,255,.92);color:#7a3e00;border:1.5px solid #b45309;border-radius:8px;padding:3px 8px;font:800 13px var(--f-mono);box-shadow:0 1px 4px rgba(0,0,0,.3)}.sa-chip[hidden]{display:none}
-.sa-float{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:800;pointer-events:auto}
+.sa-float{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:800;pointer-events:auto;touch-action:none;cursor:move}
+body.pvprev .sa-float{left:8px;bottom:8px;transform:none}
 /* ค่าเริ่มต้น leg แบบย่อ */
 .pm-box input,.pm-box select{background:var(--panel)!important}
 .pm-sw{display:flex;justify-content:flex-end;padding:0 10px}.pm-box:not([open]) .pm-sw{display:none}
@@ -3043,9 +3044,16 @@ function saAsk(r,sig){if(typeof tapClose==="function")tapClose();document.queryS
   b.querySelector(".sa-no").onclick=close;b.querySelector(".sa-del").onclick=()=>{close();saHidden=sig;saMark(r);toast("ซ่อนป้ายจุดสูงสุดแล้ว · แตะป้าย SA เพื่อแสดงอีกครั้ง")};
   const hm=b.querySelector(".sa-home");if(hm)hm.onclick=()=>{close();state.saTagOff=null;store.set("vfr_current",state);saMark(r)};
   requestAnimationFrame(()=>b.classList.add("in"))}
-function saChip(t){if(!saCtl){const d=L.DomUtil.create("div","sa-chip sa-float",map.getContainer());L.DomEvent.disableClickPropagation(d);saCtl={getContainer:()=>d}}
+function saPosKey(){return document.body.classList.contains("pvprev")?"vfr_sapos_kb":"vfr_sapos"}
+function saPosApply(){if(!saCtl)return;const el=saCtl.getContainer(),p=store.get(saPosKey());if(p&&isFinite(p.x)&&isFinite(p.y)){el.style.left=(p.x*100)+"%";el.style.top=(p.y*100)+"%";el.style.bottom="auto";el.style.transform="none"}else{el.style.left=el.style.top=el.style.bottom=el.style.transform=""}}
+function saChip(t){if(!saCtl){const d=L.DomUtil.create("div","sa-chip sa-float",map.getContainer());L.DomEvent.disableClickPropagation(d);saCtl={getContainer:()=>d};
+    /* ลากย้ายได้อิสระ (จำตำแหน่งแยก หน้าจอหลัก / Kneeboard) */
+    d.addEventListener("pointerdown",e=>{e.preventDefault();e.stopPropagation();const C=map.getContainer().getBoundingClientRect(),r=d.getBoundingClientRect(),z=C.width/(map.getContainer().offsetWidth||C.width)||1,ox=e.clientX-r.left,oy=e.clientY-r.top;let mv=false;
+      const m=ev=>{if(!mv&&Math.hypot(ev.clientX-e.clientX,ev.clientY-e.clientY)<4)return;mv=true;const x=Math.max(0,Math.min(C.width-r.width,ev.clientX-C.left-ox))/C.width,y=Math.max(0,Math.min(C.height-r.height,ev.clientY-C.top-oy))/C.height;d.style.left=(x*100)+"%";d.style.top=(y*100)+"%";d.style.bottom="auto";d.style.transform="none";d._p={x,y}};
+      const u=()=>{removeEventListener("pointermove",m);removeEventListener("pointerup",u);if(mv&&d._p){store.set(saPosKey(),d._p);d._moved=Date.now()}};addEventListener("pointermove",m);addEventListener("pointerup",u)})}
+  saPosApply();
   const el=saCtl.getContainer();el.textContent=t;el.hidden=!t;el.title="Safety Altitude ตามเส้นทาง · แตะเพื่อแสดงป้ายจุดสูงสุดที่ซ่อนไว้";
-  if(!el._tap){el._tap=1;el.style.cursor="pointer";el.addEventListener("click",()=>{if(saHidden&&SA_RES){saHidden="";saMark(SA_RES);toast("แสดงป้ายจุดสูงสุดแล้ว")}})}}
+  if(!el._tap){el._tap=1;el.style.cursor="pointer";el.addEventListener("click",()=>{if(el._moved&&Date.now()-el._moved<400)return;if(saHidden&&SA_RES){saHidden="";saMark(SA_RES);toast("แสดงป้ายจุดสูงสุดแล้ว")}})}}
 /* เต็มจอ: ปุ่มอยู่มุมขวาล่างใกล้ GPS · ในโหมดเต็มจอย้ายกรอบ "จุดเส้นทาง" มาลอยบนแผนที่เพื่อจัดการ waypoint ได้ */
 let mfHome=null;
 function mapFull(on){document.body.classList.toggle("mapfull",on);const a=document.getElementById("btnFull");if(a)a.textContent=on?"✕ ออกจากเต็มจอ":"⛶ เต็มจอ";
@@ -3988,8 +3996,8 @@ function kneePrint(preview){
     if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);try{schDraw(pv,KL)}catch(e){console.error(e)}try{kbCallDraw(KL)}catch(e){console.error(e)}if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
-  let done=false;const back=()=>{if(done)return;done=true;pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
-  document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");
+  let done=false;const back=()=>{if(done)return;done=true;setTimeout(()=>{try{saPosApply()}catch(e){}},0);pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
+  document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");try{saPosApply()}catch(e){}
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
   if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw){pvRibbon(pv,cw);pp.insertAdjacentHTML("afterbegin",'<p class="pp-tip">💡 แตะตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้ (เฉพาะใบนี้) · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>')}}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
