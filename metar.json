@@ -1,321 +1,321 @@
 {
-"fetched": "2026-11-19T09:06Z",
+"fetched": "2026-11-19T10:12Z",
 "source": "aviationweather.gov",
 "metar": {
-"VTCN": {
-"raw": "METAR VTCN 190900Z 29003KT 250V010 9999 FEW035 31/23 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTCT": {
+"raw": "METAR VTCT 191000Z VRB02KT 9999 SCT040 28/22 Q1017 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": 290,
+"wdir": "VRB",
+"wspd": 2,
+"visib": "6+",
+"temp": 28
+},
+"VTSR": {
+"raw": "METAR VTSR 191000Z VRB03KT 9999 BKN020 27/25 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "MVFR",
+"wdir": "VRB",
 "wspd": 3,
+"visib": "6+",
+"temp": 27
+},
+"VTPB": {
+"raw": "METAR VTPB 191000Z 04003KT 350V100 9999 SCT025 33/22 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 40,
+"wspd": 3,
+"visib": "6+",
+"temp": 33
+},
+"VTST": {
+"raw": "METAR VTST 191000Z 03005KT 9999 FEW030 27/26 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 30,
+"wspd": 5,
+"visib": "6+",
+"temp": 27
+},
+"VTPO": {
+"raw": "METAR VTPO 191000Z 12003KT 9999 FEW025 34/23 Q1013 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 120,
+"wspd": 3,
+"visib": "6+",
+"temp": 34
+},
+"VTSY": {
+"raw": "METAR VTSY 191000Z 30003KT 250V350 9999 VCSH FEW020TCU 27/25 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 300,
+"wspd": 3,
+"visib": "6+",
+"temp": 27
+},
+"VTSB": {
+"raw": "METAR VTSB 191000Z 32003KT 9999 FEW020 BKN100 27/27 Q1011 TEMPO FM1030 TL1050 4000 RA",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 320,
+"wspd": 3,
+"visib": "6+",
+"temp": 27
+},
+"VTPP": {
+"raw": "METAR VTPP 191000Z 20003KT 9999 FEW040 33/23 Q1013 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 200,
+"wspd": 3,
+"visib": "6+",
+"temp": 33
+},
+"VTPM": {
+"raw": "METAR VTPM 191000Z 06006KT 020V090 9999 FEW035 32/23 Q1013 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 60,
+"wspd": 6,
+"visib": "6+",
+"temp": 32
+},
+"VTBO": {
+"raw": "METAR VTBO 191000Z 23003KT 9999 FEW025 32/25 Q1012",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 230,
+"wspd": 3,
+"visib": "6+",
+"temp": 32
+},
+"VTSM": {
+"raw": "METAR VTSM 191000Z 14017KT 9999 SCT020 28/24 Q1013 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 140,
+"wspd": 17,
+"visib": "6+",
+"temp": 28
+},
+"VTBD": {
+"raw": "METAR VTBD 191000Z 10010KT 9999 FEW020 33/21 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 100,
+"wspd": 10,
+"visib": "6+",
+"temp": 33
+},
+"VTBS": {
+"raw": "METAR VTBS 191000Z 07011KT 9999 FEW020 34/21 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 70,
+"wspd": 11,
+"visib": "6+",
+"temp": 34
+},
+"VTUW": {
+"raw": "METAR VTUW 191000Z 08007KT 9999 FEW040 29/21 Q1016 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 80,
+"wspd": 7,
+"visib": "6+",
+"temp": 29
+},
+"VTPH": {
+"raw": "METAR VTPH 191000Z 07004KT 040V100 9999 FEW030 31/24 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 70,
+"wspd": 4,
 "visib": "6+",
 "temp": 31
 },
-"VTBU": {
-"raw": "METAR VTBU 190900Z 15005KT 9999 FEW025 31/28 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTSC": {
+"raw": "METAR VTSC 191000Z 08006KT 9999 FEW020 29/25 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": 150,
+"wdir": 80,
+"wspd": 6,
+"visib": "6+",
+"temp": 29
+},
+"VTSE": {
+"raw": "METAR VTSE 191000Z VRB02KT 9000 FEW020 BKN100 28/26 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": "VRB",
+"wspd": 2,
+"visib": 5.59,
+"temp": 28
+},
+"VTSF": {
+"raw": "METAR VTSF 191000Z VRB02KT 7000 -RA BKN013 BKN016 25/25 Q1012 RERA NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "MVFR",
+"wdir": "VRB",
+"wspd": 2,
+"visib": 4.35,
+"temp": 25
+},
+"VTSG": {
+"raw": "METAR VTSG 191000Z 04005KT 340V090 9999 SCT020 26/24 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 40,
 "wspd": 5,
+"visib": "6+",
+"temp": 26
+},
+"VTCC": {
+"raw": "METAR VTCC 191000Z 27003KT 240V310 9999 SCT035 30/22 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 270,
+"wspd": 3,
+"visib": "6+",
+"temp": 30
+},
+"VTSP": {
+"raw": "METAR VTSP 191000Z 08008KT 9999 FEW020 29/25 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 80,
+"wspd": 8,
+"visib": "6+",
+"temp": 29
+},
+"VTSS": {
+"raw": "METAR VTSS 191000Z 28005KT 9999 -RA SCT020 BKN100 27/25 Q1011 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 280,
+"wspd": 5,
+"visib": "6+",
+"temp": 27
+},
+"VTBU": {
+"raw": "METAR VTBU 191000Z 17004KT 9999 FEW025 31/28 Q1012 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 170,
+"wspd": 4,
 "visib": "6+",
 "temp": 31
 },
 "VTUD": {
-"raw": "METAR VTUD 190900Z 06006KT 010V100 9999 SCT045 33/20 Q1015 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 60,
-"wspd": 6,
-"visib": "6+",
-"temp": 33
-},
-"VTPO": {
-"raw": "METAR VTPO 190900Z VRB02KT 9999 SCT025 35/23 Q1013 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": "VRB",
-"wspd": 2,
-"visib": "6+",
-"temp": 35
-},
-"VTCH": {
-"raw": "METAR VTCH 190900Z VRB03KT 9999 VCSH FEW020CB 32/24 Q1014 TEMPO -TSRA",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": "VRB",
-"wspd": 3,
-"visib": "6+",
-"temp": 32
-},
-"VTCL": {
-"raw": "METAR VTCL 190900Z VRB02KT 9999 FEW030 31/23 Q1015 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": "VRB",
-"wspd": 2,
-"visib": "6+",
-"temp": 31
-},
-"VTCP": {
-"raw": "METAR VTCP 190900Z 35004KT 290V050 9999 FEW040 33/21 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 350,
-"wspd": 4,
-"visib": "6+",
-"temp": 33
-},
-"VTPH": {
-"raw": "METAR VTPH 190900Z 06004KT 030V100 9999 FEW030 31/24 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 60,
-"wspd": 4,
-"visib": "6+",
-"temp": 31
-},
-"VTSY": {
-"raw": "METAR VTSY 190900Z 29004KT 260V330 9999 VCSH FEW020TCU SCT030 27/25 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 290,
-"wspd": 4,
-"visib": "6+",
-"temp": 27
-},
-"VTSG": {
-"raw": "METAR VTSG 190900Z 05005KT 360V090 9999 FEW015 BKN020 27/25 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "MVFR",
-"wdir": 50,
-"wspd": 5,
-"visib": "6+",
-"temp": 27
-},
-"VTST": {
-"raw": "METAR VTST 190900Z 02008KT 9999 FEW030 27/26 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 20,
-"wspd": 8,
-"visib": "6+",
-"temp": 27
-},
-"VTSR": {
-"raw": "METAR VTSR 190900Z VRB03KT 9999 BKN020 27/24 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "MVFR",
-"wdir": "VRB",
-"wspd": 3,
-"visib": "6+",
-"temp": 27
-},
-"VTSM": {
-"raw": "METAR VTSM 190900Z 13017G29KT 9999 4000S -RA FEW018CB SCT020 31/25 Q1013 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 130,
-"wspd": 17,
-"visib": "6+",
-"temp": 31
-},
-"VTSF": {
-"raw": "METAR VTSF 190900Z 28003KT 230V350 9999 SCT018 BKN100 26/25 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 280,
-"wspd": 3,
-"visib": "6+",
-"temp": 26
-},
-"VTSE": {
-"raw": "METAR VTSE 190900Z VRB03KT 9999 SCT020 BKN100 29/26 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": "VRB",
-"wspd": 3,
-"visib": "6+",
-"temp": 29
-},
-"VTSC": {
-"raw": "METAR VTSC 190900Z 08008KT 9999 FEW020 29/25 Q1010 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 80,
-"wspd": 8,
-"visib": "6+",
-"temp": 29
-},
-"VTSB": {
-"raw": "METAR VTSB 190900Z 33003KT 9999 FEW020 BKN100 27/27 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 330,
-"wspd": 3,
-"visib": "6+",
-"temp": 27
-},
-"VTUW": {
-"raw": "METAR VTUW 190900Z 11007KT 9999 SCT045 31/21 Q1015 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 110,
-"wspd": 7,
-"visib": "6+",
-"temp": 31
-},
-"VTUV": {
-"raw": "METAR VTUV 190900Z 08007KT 040V110 9999 SCT030 33/19 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 80,
-"wspd": 7,
-"visib": "6+",
-"temp": 33
-},
-"VTUU": {
-"raw": "METAR VTUU 190900Z 06006KT 9999 FEW045 34/19 Q1013 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 60,
-"wspd": 6,
-"visib": "6+",
-"temp": 34
-},
-"VTUQ": {
-"raw": "METAR VTUQ 190900Z 36006KT 320V030 9999 SCT035 32/20 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 360,
-"wspd": 6,
-"visib": "6+",
-"temp": 32
-},
-"VTUO": {
-"raw": "METAR VTUO 190900Z 07007KT 9999 SCT035 BKN100 32/19 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"raw": "METAR VTUD 191000Z 07006KT 030V090 9999 FEW045 32/20 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
 "wdir": 70,
-"wspd": 7,
+"wspd": 6,
 "visib": "6+",
 "temp": 32
 },
-"VTUK": {
-"raw": "METAR VTUK 190900Z 08003KT 040V120 9999 FEW030 32/19 Q1015 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTCH": {
+"raw": "METAR VTCH 191000Z VRB03KT 9999 FEW020CB 32/24 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": 80,
+"wdir": "VRB",
 "wspd": 3,
 "visib": "6+",
 "temp": 32
 },
 "VTUI": {
-"raw": "METAR VTUI 190900Z 10008KT 9999 SCT030 32/23 Q1015 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"raw": "METAR VTUI 191000Z 10006KT 9999 FEW035 30/23 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
 "wdir": 100,
-"wspd": 8,
+"wspd": 6,
+"visib": "6+",
+"temp": 30
+},
+"VTUK": {
+"raw": "METAR VTUK 191000Z 07005KT 040V100 9999 FEW030 32/20 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 70,
+"wspd": 5,
 "visib": "6+",
 "temp": 32
 },
-"VTCT": {
-"raw": "METAR VTCT 190900Z VRB02KT 9999 FEW020 SCT040 27/22 Q1016 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTCL": {
+"raw": "METAR VTCL 191000Z 12003KT 9999 FEW030 SCT100 30/23 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": "VRB",
-"wspd": 2,
+"wdir": 120,
+"wspd": 3,
 "visib": "6+",
-"temp": 27
+"temp": 30
 },
-"VTBO": {
-"raw": "METAR VTBO 190900Z 06002KT 9999 FEW020 33/24 Q1012",
-"time": "2026-11-19T09:00:00.000Z",
+"VTUL": {
+"raw": "METAR VTUL 191000Z 00000KT 9999 FEW030 31/21 Q1016 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 0,
+"wspd": 0,
+"visib": "6+",
+"temp": 31
+},
+"VTUO": {
+"raw": "METAR VTUO 191000Z 06004KT 9999 FEW035 SCT100 32/19 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
 "wdir": 60,
+"wspd": 4,
+"visib": "6+",
+"temp": 32
+},
+"VTCN": {
+"raw": "METAR VTCN 191000Z 25003KT 220V290 9999 FEW035 31/22 Q1015 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 250,
+"wspd": 3,
+"visib": "6+",
+"temp": 31
+},
+"VTUQ": {
+"raw": "METAR VTUQ 191000Z 01002KT 9999 FEW035 29/21 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
+"cat": "VFR",
+"wdir": 10,
 "wspd": 2,
 "visib": "6+",
-"temp": 33
+"temp": 29
 },
-"VTPM": {
-"raw": "METAR VTPM 190900Z 08006KT 050V110 9999 FEW035 33/21 Q1013 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTUU": {
+"raw": "METAR VTUU 191000Z 02007KT 9999 FEW045 32/21 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": 80,
-"wspd": 6,
+"wdir": 20,
+"wspd": 7,
 "visib": "6+",
-"temp": 33
+"temp": 32
 },
-"VTPB": {
-"raw": "METAR VTPB 190900Z VRB02KT 9999 SCT025 33/22 Q1014 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTUV": {
+"raw": "METAR VTUV 191000Z 12005KT 080V150 9999 FEW030 31/21 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": "VRB",
-"wspd": 2,
-"visib": "6+",
-"temp": 33
-},
-"VTPP": {
-"raw": "METAR VTPP 190900Z 19005KT 9999 SCT035 33/22 Q1013 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 190,
-"wspd": 5,
-"visib": "6+",
-"temp": 33
-},
-"VTBD": {
-"raw": "METAR VTBD 190900Z 06009KT 9999 FEW020 33/21 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 60,
-"wspd": 9,
-"visib": "6+",
-"temp": 33
-},
-"VTBS": {
-"raw": "METAR VTBS 190900Z 07012KT 9999 FEW020 34/21 Q1012 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 70,
-"wspd": 12,
-"visib": "6+",
-"temp": 34
-},
-"VTCC": {
-"raw": "METAR VTCC 190900Z VRB05KT 9999 -SHRA FEW025CB SCT035 31/23 Q1015 TEMPO -TSRA",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": "VRB",
+"wdir": 120,
 "wspd": 5,
 "visib": "6+",
 "temp": 31
 },
-"VTSP": {
-"raw": "METAR VTSP 190900Z 06005KT 320V100 9999 FEW020 29/25 Q1011 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
+"VTCP": {
+"raw": "METAR VTCP 191000Z VRB02KT 9999 FEW040 32/21 Q1014 NOSIG",
+"time": "2026-11-19T10:00:00.000Z",
 "cat": "VFR",
-"wdir": 60,
-"wspd": 5,
+"wdir": "VRB",
+"wspd": 2,
 "visib": "6+",
-"temp": 29
-},
-"VTSS": {
-"raw": "METAR VTSS 190900Z 31004KT 9999 FEW018CB SCT020 BKN100 26/25 Q1010 NOSIG",
-"time": "2026-11-19T09:00:00.000Z",
-"cat": "VFR",
-"wdir": 310,
-"wspd": 4,
-"visib": "6+",
-"temp": 26
-},
-"VTUL": {
-"raw": "METAR VTUL 190800Z 08004KT 9999 SCT030 30/22 Q1015 NOSIG",
-"time": "2026-11-19T08:00:00.000Z",
-"cat": "VFR",
-"wdir": 80,
-"wspd": 4,
-"visib": "6+",
-"temp": 30
+"temp": 32
 }
 },
 "taf": {
@@ -431,6 +431,10 @@
 "raw": "TAF VTUI 190500Z 1906/2006 11007KT 9000 FEW030",
 "issue": "2026-11-19T05:00:00.000Z"
 },
+"VTUK": {
+"raw": "TAF VTUK 190500Z 1906/2006 09007KT 9000 FEW030",
+"issue": "2026-11-19T05:00:00.000Z"
+},
 "VTUL": {
 "raw": "TAF VTUL 190500Z 1906/2006 07007KT 9000 FEW030",
 "issue": "2026-11-19T05:00:00.000Z"
@@ -453,10 +457,6 @@
 },
 "VTUW": {
 "raw": "TAF VTUW 190500Z 1906/2006 11007KT 9000 FEW030",
-"issue": "2026-11-19T05:00:00.000Z"
-},
-"VTUK": {
-"raw": "TAF VTUK 190500Z 1906/2006 09007KT 9000 FEW030",
 "issue": "2026-11-19T05:00:00.000Z"
 }
 }
