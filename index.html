@@ -287,6 +287,12 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+.vfrpt>i{background:var(--vc,#ffd400)}.lmk i{border-color:var(--lc,#f59e0b)!important}
+.pl-menu{position:fixed;z-index:3000;min-width:210px;max-width:290px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:4px;display:flex;flex-direction:column}
+.pl-menu .pl-mh{font:700 12px var(--f-body);color:var(--muted);padding:6px 10px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-menu button{border:0;background:none;color:inherit;text-align:left;font:600 14px var(--f-body);padding:9px 10px;border-radius:8px;min-height:38px}.pl-menu button:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}.pl-menu button.danger{color:#dc2626}
+.pl-kml{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}.pl-kml button{font-size:12.5px;padding:4px 10px;min-height:32px}.pl-kml .hint{font-size:11.5px;margin:0}
+.pl-cols{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.pl-cols input{position:absolute;opacity:0}.pl-cols span{display:block;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);box-shadow:inset 0 0 0 2px #fff}.pl-cols input:checked+span{outline:3px solid var(--accent);outline-offset:2px}
 .pd-body h3{margin:14px 0 6px;font-size:15px}.pd-t{width:100%;border-collapse:collapse;font-size:13px}.pd-t th,.pd-t td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}.pd-t th{color:var(--muted);font-weight:700;font-size:12px}.pd-body details>summary{cursor:pointer;color:var(--accent);margin:4px 0}
 .pl-use{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;min-height:24px;padding:0 8px;font:700 11.5px var(--f-body)}
 body.draw-mode #map,body.draw-mode #map .leaflet-interactive{cursor:crosshair!important}.draw-ctl a.on{background:#f59e0b;color:#111}.draw-ctl a small{display:block;font-size:10px;line-height:1}
@@ -1874,7 +1880,7 @@ body.cl-on{overflow:hidden}
     <button type="button" data-cpsub="wp" hidden>📍 Waypoint</button><button type="button" data-cpsub="base" hidden>📚 คลัง BASE</button><button type="button" data-cpsub="chk" hidden>✅ ตรวจ / เทียบ</button>
     <button type="button" data-cpsub="ct" style="--cc:#6d5bd0">👥 ผู้ติดต่อ</button><button type="button" data-cpsub="flog" style="--cc:#6d5bd0">🛫 ประวัติการบิน</button></nav></div>
   <div class="card section cp-sec" id="cpPd" data-sub="pd" style="--cc:#b45309"><div class="sechead"><h2 class="cp-h"><span>📋</span>ข้อมูลจุด — ไฟล์ Excel ชุดเดียวกันทั้งหน่วย</h2>
-    <div class="btns"><button type="button" class="primary" onclick="document.getElementById('cpXlsOut').click()">📤 ส่งออก Excel</button><button type="button" onclick="document.getElementById('dbImport').click()">📥 นำเข้า Excel</button><button type="button" onclick="document.getElementById('cpTplDl').click()">⬇️ ไฟล์ตัวอย่าง</button></div></div>
+    <div class="btns"><button type="button" class="primary" onclick="document.getElementById('cpXlsOut').click()">📤 ส่งออก Excel</button><button type="button" onclick="document.getElementById('dbImport').click()">📥 นำเข้า Excel</button><button type="button" onclick="document.getElementById('cpTplDl').click()">⬇️ ไฟล์ตัวอย่าง</button><button type="button" onclick="kmlExport('all')">🌍 ส่งออก KML</button><button type="button" onclick="document.getElementById('kmlImport').click()">🌍 นำเข้า KML/KMZ</button></div></div>
    <p class="hint">ทุกจุดที่เพิ่มบนแผนที่ (📍 ปักหมุด · ลากย้ายในแผง 📂) มารวมที่นี่ · <b>ส่งออก</b> แล้วส่งไฟล์ให้เพื่อน → เพื่อน <b>นำเข้า</b> ไฟล์เดียวกันก็ได้จุดชุดเดียวกัน · ชีต: WAYPOINT (BASE) · AIRFIELD · REPORTING POINT · MY POINTS + วิทยุ / ROUTE · จุดรายงานที่ไม่ใส่ชื่อสนาม ระบบเดาให้จาก ICAO ในชื่อ หรือสนามที่ใกล้สุด (≤ 25 NM) · 🔒 เก็บในเครื่องนี้เท่านั้น</p>
    <div id="pdBody" class="pd-body"></div></div>
   <div class="card section cp-sec" id="cpFm" data-sub="radio" style="--cc:#2563eb"><div class="sechead"><h2 class="cp-h"><span>📻</span>FM</h2><div class="btns"><button data-cpadd="fm">＋ เพิ่ม</button></div></div><div class="tablewrap"><table class="cp-tbl" data-cpband="fm"></table></div></div>
@@ -2288,8 +2294,8 @@ async function lmkDlg(o){const r=await bkDlg(`<h3>${o.edit?"✎ แก้จุ�
    <menu><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">บันทึก</button></menu>`);
   if(!r||!String(r.n||"").trim())return null;return{n:String(r.n).trim(),t:r.t||"gen"}}
 function lmkSave(old,o){const L2=schFavAll().filter(x=>x.n!==old&&x.n.toUpperCase()!==o.n.toUpperCase());L2.push(o);store.set("vfr_altpts",L2);lmkDraw();if(typeof schFavList==="function"){const pv=document.querySelector(".pv-ctl");if(pv)schFavList(pv.closest("body"))}}
-function lmkDraw(){lmkLayer.clearLayers();schFavAll().forEach(f=>{if(plOff("my:"+f.n))return;const t=lmkT(f.t);
-  const mk=L.marker([+f.lat,+f.lon],{icon:L.divIcon({className:"",html:`<div class="lmk"><i>${t[1]}</i><span>${esc(f.n)}</span></div>`,iconSize:[26,26],iconAnchor:[13,13]})});
+function lmkDraw(){lmkLayer.clearLayers();const lc=(plColAll()||{}).my;schFavAll().forEach(f=>{if(plOff("my:"+f.n))return;const t=lmkT(f.t);
+  const mk=L.marker([+f.lat,+f.lon],{icon:L.divIcon({className:"",html:`<div class="lmk"${lc?` style="--lc:${esc(lc)}"`:""}><i>${t[1]}</i><span>${esc(f.n)}</span></div>`,iconSize:[26,26],iconAnchor:[13,13]})});
   mk.bindPopup(()=>{const d=document.createElement("div");d.className="ps-pop";d.innerHTML=`<b>${t[1]} ${esc(f.n)}</b><small>${esc(t[2])} · จุดในเครื่อง</small><div class="mono">${fmtMgrs(toMgrs(+f.lat,+f.lon))}</div><div class="mono">${posFmt(+f.lat,true,"dms",2)}  ${posFmt(+f.lon,false,"dms",2)}</div><div class="gnd hint"></div>
     <div class="ps-b"><button type="button" data-lm="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-lm="ed">✎ แก้</button><button type="button" data-lm="del">🗑 ลบ</button></div>`;
     gndFill(d.querySelector(".gnd"),+f.lat,+f.lon);
@@ -2329,7 +2335,7 @@ function plTree(){const T=[],apName=a=>String(a.name||"").replace(/\s*(Internati
     return{k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],kids,drop:"ap:"+ic}};
   const all=Object.entries(AP).filter(([,a])=>a&&a.lat!=null).sort((x,y)=>x[0].localeCompare(y[0]));
   T.push({k:"#aip",root:["ap","vfr","vfrA"],t:"✈ สนามบิน (AIP)",kids:all.filter(([,a])=>a.eaip&&!a.eaip.custom).map(([ic,a])=>apFolder(ic,a))});
-  T.push({k:"mil",t:"🎖 สนามที่เพิ่มเอง (ไม่มีใน AIP)",kids:all.filter(([,a])=>a.eaip&&a.eaip.custom).map(([ic,a])=>apFolder(ic,a)),empty:"ยังไม่มี — เพิ่มที่แท็บ 1 (สนามที่กรอกเอง) · เครื่องมือ 📍 ปักหมุดจะมาในขั้นถัดไป"});
+  T.push({k:"mil",t:"🎖 สนามที่เพิ่มเอง (ไม่มีใน AIP)",kids:all.filter(([,a])=>a.eaip&&a.eaip.custom).map(([ic,a])=>apFolder(ic,a)),empty:"ยังไม่มี — ใช้ 📍 ปักหมุด บนแผนที่ หรือนำเข้า Excel / KML"});
   T.push({k:"oth",t:"🛬 สนามอื่น / ลานจอด ฮ.",kids:all.filter(([,a])=>!a.eaip).map(([ic,a])=>({k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],wp:{name:ic,lat:a.lat,lon:a.lon}}))});
   T.push({k:"#nav",root:["nav"],t:"📡 VOR / NDB / TACAN",kids:((EAIP&&EAIP.navaids)||[]).filter(n=>n.lat!=null).map(n=>({k:"nav:"+n.id+":"+n.type,t:`${n.id} ${n.name||""}`,sub:`${n.type||""} ${n.freq||""}`,ll:[n.lat,n.lon],wp:{name:n.id,lat:n.lat,lon:n.lon,vor:`${n.id} ${(n.freq||"").replace(/\s*\(.*$/,"")}`}})),empty:"ยังไม่มีข้อมูล eAIP"});
   const D=dbAll().filter(x=>x.lat!=null),wpI=x=>({k:"db:"+x.no,t:`No.${x.no} ${x.dtd||x.name||""}`,sub:x.desc||x.mgrs||"",ll:[x.lat,x.lon],wp:{name:x.name||("No."+x.no),lat:x.lat,lon:x.lon}});
@@ -2345,8 +2351,8 @@ function plRow(n,depth,path){const kids=n.kids||[],hasK=kids.length||n.empty;con
   const dragA=n.wp&&/^(vp|my|db):/.test(n.k)?` draggable="true" data-pdrag="${esc(JSON.stringify({k:n.k,wp:n.wp,lm:n.sub||""}))}"`:"";
   const dropA=n.drop?` data-pdrop="${esc(n.drop)}"`:"";
   const lab=`<span class="pl-t" ${n.ll?`data-pfly="${n.ll[0]},${n.ll[1]}"`:""}>${esc(n.t)}${n.sub?`<small>${esc(n.sub)}</small>`:""}</span>${n.wp?`<button type="button" class="pl-add" data-pwp="${esc(JSON.stringify(n.wp))}" title="เพิ่มเข้าเส้นทาง">➕</button>`:""}${n.use?`<button type="button" class="pl-use" data-puse="${esc(n.use)}" title="เปิดเป็นแผนการบิน">↪ ใช้</button>`:""}`;
-  if(!hasK)return`<div class="pl-r" style="--d:${depth}"${dragA}${dropA}>${cb}${lab}</div>`;
-  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}"${dropA}>${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
+  const mk=` data-pmk="${esc(n.k)}"`;if(!hasK)return`<div class="pl-r" style="--d:${depth}"${dragA}${dropA}${mk}>${cb}${lab}</div>`;
+  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}"${dropA}${mk}>${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
 function plRender(){const box=document.getElementById("plTree");if(!box)return;const q=(document.getElementById("plQ")||{}).value||"";const T=plTree();
   if(q.trim()){const Q=q.trim().toUpperCase(),out=[];const walk=(n,trail)=>{(n.kids||[]).forEach(c=>{if(c.ll&&(c.t.toUpperCase().includes(Q)||String(c.sub||"").toUpperCase().includes(Q)))out.push({...c,kids:null,empty:null,sub:trail});walk(c,c.k&&/^ap:/.test(c.k)?c.t:trail)})};T.forEach(n=>walk(n,n.t.replace(/^\S+\s/,"")));
     box.innerHTML=out.length?out.slice(0,200).map(c=>plRow(c,0,"q")).join(""):'<p class="hint pl-empty">ไม่พบ</p>';return}
@@ -2377,11 +2383,12 @@ async function plMoveDlg(src){const D=plDests();const r=await bkDlg(`<h3>ย้�
   <p class="hint">จุดรายงานที่เพิ่มให้สนาม AIP เก็บแยก ไม่ทับข้อมูล AIP · สนามที่ไม่มีใน AIP ให้ 📍 ปักหมุดเพิ่มก่อน</p><menu><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">ตกลง</button></menu>`);if(r&&r.d)plMove(src,r.d)}
 function plOpen(on){document.body.classList.toggle("pl-open",on);if(on)plRender()}
 {const d=document.createElement("div");d.id="plPanel";d.innerHTML=`<div class="pl-head"><div class="pl-tabs"><button type="button" data-pltab="plan">✈ แผนการบิน</button><button type="button" class="on" data-pltab="pl">📂 จุดของฉัน</button></div><button type="button" class="pl-x" aria-label="ปิด">✕</button></div>
-  <div id="plTree" class="pl-tree"></div><div class="pl-foot"><input id="plQ" type="text" placeholder="🔍 กรองชื่อในรายการ" aria-label="กรองชื่อ"></div>`;
+  <div id="plTree" class="pl-tree"></div><div class="pl-foot"><input id="plQ" type="text" placeholder="🔍 กรองชื่อ · คลิกขวา / กดค้าง = เมนู" aria-label="กรองชื่อ"><div class="pl-kml"><button type="button" data-kml="out" title="ส่งออกจุด/เส้นทางของเราเป็น KML เปิดใน Google Earth Pro">🌍 ส่งออก KML</button><button type="button" data-kml="in" title="นำเข้า KML / KMZ จาก Google Earth Pro">🌍 นำเข้า KML/KMZ</button></div></div>`;
   (document.querySelector(".top")||document.body).appendChild(d);
   d.addEventListener("toggle",e=>{const f=e.target;if(!f.matches||!f.matches("details.pl-f"))return;const id=f.dataset.pid;if(f.open){if(!PL_OPEN.has(id)){PL_OPEN.add(id);plRender()}}else PL_OPEN.delete(id)},true);
-  d.addEventListener("click",e=>{const t=e.target;if(t.closest(".pl-x")||t.closest('[data-pltab="plan"]')){plOpen(false);return}
+  d.addEventListener("click",e=>{const t=e.target;if(window._plLp&&Date.now()-window._plLp<700){e.preventDefault();return}if(t.closest(".pl-x")||t.closest('[data-pltab="plan"]')){plOpen(false);return}
     if(t.matches("input[data-pk]"))return;
+    const kb=t.closest("[data-kml]");if(kb){kb.dataset.kml==="out"?kmlExport("all"):document.getElementById("kmlImport").click();return}
     const a=t.closest("[data-pwp]");if(a){e.preventDefault();plAddWp(JSON.parse(a.dataset.pwp));return}
     const u=t.closest("[data-puse]");if(u){e.preventDefault();plUsePlan(u.dataset.puse);return}
     const f=t.closest(".pl-t[data-pfly]");if(f){if(t.closest("summary")&&!e.altKey){/* แตะชื่อโฟลเดอร์ = บินไปด้วย แต่ไม่ขวางการเปิด/ปิด */}const[la,lo]=f.dataset.pfly.split(",").map(Number);map.setView([la,lo],Math.max(map.getZoom(),11));if(innerWidth<1000&&!t.closest("summary"))plOpen(false)}});
@@ -2392,11 +2399,10 @@ function plOpen(on){document.body.classList.toggle("pl-open",on);if(on)plRender(
   d.addEventListener("dragover",e=>{const t=dragSrc&&e.target.closest&&e.target.closest("[data-pdrop]");if(!t)return;e.preventDefault();d.querySelectorAll(".pl-over").forEach(x=>x!==t&&x.classList.remove("pl-over"));t.classList.add("pl-over")});
   d.addEventListener("drop",e=>{const t=dragSrc&&e.target.closest&&e.target.closest("[data-pdrop]");if(!t)return;e.preventDefault();const s=dragSrc;dragSrc=null;plMove(s,t.dataset.pdrop)});
   /* มือถือ: กดค้างที่จุด = เมนูย้าย */
-  d.addEventListener("pointerdown",e=>{const r=e.pointerType!=="mouse"&&e.target.closest("[data-pdrag]");if(!r||e.target.closest("input,button"))return;clearTimeout(lp);const x0=e.clientX,y0=e.clientY;
-    lp=setTimeout(()=>{lp=null;plMoveDlg(JSON.parse(r.dataset.pdrag))},550);const cancel=ev=>{if(ev.type!=="pointermove"||Math.hypot(ev.clientX-x0,ev.clientY-y0)>10){clearTimeout(lp);d.removeEventListener("pointermove",cancel);d.removeEventListener("pointerup",cancel)}};
+  d.addEventListener("pointerdown",e=>{const r=e.pointerType!=="mouse"&&e.target.closest("[data-pmk]");if(!r||e.target.closest("input,button"))return;clearTimeout(lp);const x0=e.clientX,y0=e.clientY;
+    lp=setTimeout(()=>{lp=null;window._plLp=Date.now();plMenu(r.dataset.pmk,x0,y0)},550);const cancel=ev=>{if(ev.type!=="pointermove"||Math.hypot(ev.clientX-x0,ev.clientY-y0)>10){clearTimeout(lp);d.removeEventListener("pointermove",cancel);d.removeEventListener("pointerup",cancel)}};
     d.addEventListener("pointermove",cancel);d.addEventListener("pointerup",cancel)});
-  d.addEventListener("contextmenu",e=>{const f=e.target.closest('summary[data-pdrop^="ap:"]');if(f){e.preventDefault();const ic=f.dataset.pdrop.slice(3),a=AP[ic];if(a)pinDlg({lat:a.lat,lon:a.lon,edit:ic});return}
-    const r=e.target.closest("[data-pdrag]");if(!r)return;e.preventDefault();plMoveDlg(JSON.parse(r.dataset.pdrag))});
+  d.addEventListener("contextmenu",e=>{const r=e.target.closest("[data-pmk]");if(!r)return;e.preventDefault();if(window._plLp&&Date.now()-window._plLp<800)return;plMenu(r.dataset.pmk,e.clientX,e.clientY)});
   d.querySelector("#plQ").addEventListener("input",()=>plRender());
   const tb=document.createElement("div");tb.className="pl-tabs pl-tabs-side";tb.innerHTML='<button type="button" class="on" data-pltab="plan">✈ แผนการบิน</button><button type="button" data-pltab="pl">📂 จุดของฉัน</button>';
   const side=document.querySelector(".top>.side");if(side)side.prepend(tb);tb.addEventListener("click",e=>{if(e.target.closest('[data-pltab="pl"]'))plOpen(true)});
@@ -3604,8 +3610,8 @@ function drawVfr(){vfrLayer.clearLayers();vfrALayer.clearLayers();savLayer.clear
     pl.on("click",e=>{L.DomEvent.stop(e);const ids=[...new Set(S.ids)];if(ids.length===1)return vfrHi(ids[0]);
       L.popup({maxWidth:300}).setLatLng(e.latlng).setContent(`<b>เลือกเส้นทาง VFR</b><div class="vfr-pick">${ids.map(i=>`<button type="button" data-vfrhi="${i}">${VFR_RT[i].dep?"↗":"↘"} ${esc(VFR_RT[i].lab)}<small>${VFR_RT[i].seq.map(x=>esc(x[0])).join(" → ")}</small></button>`).join("")}</div>`).openOn(map)});
     G.addLayer(pl)});
-  pts.forEach(({p,ics})=>{const nm=vfrShort(p);
-    const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt" data-k="${esc(norm8(nm))}"><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
+  const PCOL=plColAll();pts.forEach(({p,ics})=>{const nm=vfrShort(p),vc=[...(ics||[])].map(i=>PCOL["ap:"+i]).find(Boolean);
+    const m=L.marker([p.lat,p.lon],{icon:L.divIcon({className:"",html:`<div class="vfrpt" data-k="${esc(norm8(nm))}"${vc?` style="--vc:${esc(vc)}"`:""}><i></i><span>${esc(nm)}</span></div>`,iconSize:[14,14],iconAnchor:[7,7]})});
     m.bindPopup(`<b>◆ ${esc(p.n)}</b> <span class="hint">VFR reporting point · ${[...ics].map(esc).join(", ")}</span>${p.lm?`<br>${esc(p.lm)}`:""}${p.rd?`<br>${esc(p.rd)}`:""}${p.ocr?'<br><span class="hint">⚠ อ่านจาก chart สแกนด้วย OCR · ตรวจไขว้กับ radial/DME แล้ว — ยืนยันกับ chart ก่อนใช้</span>':""}
       <br><span class="mono">${vfrDms(p.lat,"NS")}  ${vfrDms(p.lon,"EW")}</span><div class="btns" style="margin-top:6px"><button type="button" class="vfr-add" data-n="${esc(nm)}" data-lat="${p.lat}" data-lon="${p.lon}">＋ เพิ่มเป็นจุดเส้นทาง</button></div>`);
     vfrLayer.addLayer(m)});
@@ -5828,17 +5834,17 @@ async function offStart(){const r=await offCalc();if(!r||!r.cnt)return;
   toast(run.stop?"หยุดโหลดแล้ว":`โหลดแผนที่ออฟไลน์เสร็จ ${(run.done+run.skip).toLocaleString()} ภาพ`+(run.fail?` (ล้มเหลว ${run.fail})`:""));offCalc()}
 /* ---------- 📍 ปักหมุด (แบบ Google Earth): แตะแผนที่ → กรอกข้อมูล → เก็บเป็น สนามที่เพิ่มเอง / ลานจอด ฮ. / จุดรายงานของสนาม / จุดของฉัน
    ข้อมูลเก็บในเครื่องเท่านั้น (vfr_custom_ap · vfr_altpts) และขึ้นในแผง 📂 ทันที ---------- */
-let PIN_MODE=false;
-function pinMode(on){PIN_MODE=on;document.body.classList.toggle("pin-mode",on);const b=document.querySelector(".pin-ctl a");if(b)b.classList.toggle("on",on);if(on)toast("📍 แตะตำแหน่งบนแผนที่เพื่อปักหมุด (Esc = ยกเลิก)")}
+let PIN_MODE=false,PIN_RP=null;
+function pinMode(on){PIN_MODE=on;if(!on)setTimeout(()=>{if(!PIN_MODE)PIN_RP=null},0);document.body.classList.toggle("pin-mode",on);const b=document.querySelector(".pin-ctl a");if(b)b.classList.toggle("on",on);if(on)toast("📍 แตะตำแหน่งบนแผนที่เพื่อปักหมุด (Esc = ยกเลิก)")}
 addEventListener("keydown",e=>{if(e.key==="Escape"&&PIN_MODE)pinMode(false)});
 /* โหมดปักหมุด: ดักคลิกก่อนถึงเส้น/พื้นที่/หมุดอื่นบนแผนที่ (ไม่งั้นคลิกโดนพื้นที่ P/R/D หรือเส้นทางแล้วไม่ปัก) */
-map.getContainer().addEventListener("click",e=>{if(!PIN_MODE||e.target.closest(".leaflet-control,.map-tools,.ps-box,.pl-mbtn,.sa-float"))return;e.stopPropagation();e.preventDefault();const ll=map.mouseEventToLatLng(e);pinMode(false);pinDlg({lat:ll.lat,lon:ll.lng})},true);
+map.getContainer().addEventListener("click",e=>{if(!PIN_MODE||e.target.closest(".leaflet-control,.map-tools,.ps-box,.pl-mbtn,.sa-float"))return;e.stopPropagation();e.preventDefault();const ll=map.mouseEventToLatLng(e),rp=PIN_RP;pinMode(false);pinDlg({lat:ll.lat,lon:ll.lng,rpAp:rp})},true);
 const apRpOk=(ic,a)=>a&&a.lat!=null&&(/^VT[A-Z]{2}$/.test(ic)||!!(a.eaip&&a.eaip.custom));
 function pinNearAp(lat,lon){let best=null;Object.entries(AP).forEach(([ic,a])=>{if(!apRpOk(ic,a))return;const d=gcDistNm([lat,lon],[a.lat,a.lon]);if(!best||d<best.d)best={ic,d}});return best}
 function pinNearCustom(lat,lon){let best=null;Object.entries(AP).forEach(([ic,a])=>{if(!a||!a.eaip||!a.eaip.custom||a.lat==null)return;const d=gcDistNm([lat,lon],[a.lat,a.lon]);if(!best||d<best.d)best={ic,d}});return best}
 /* หน้าต่างกรอกข้อมูลหมุด — ใช้ทั้งเพิ่มใหม่และแก้สนามที่เพิ่มเอง */
-async function pinDlg(o){const C=custAll(),ed=o.edit?C[o.edit]||{}:null,near=pinNearAp(o.lat,o.lon),cus=Object.entries(AP).filter(([ic,a])=>apRpOk(ic,a)).sort((x,y)=>(near&&x[0]===near.ic?-1:0)||(near&&y[0]===near.ic?1:0)||x[0].localeCompare(y[0]));
-  const kind0=ed?(ed.heli?"heli":"ap"):(o.kind||"ap");
+async function pinDlg(o){const C=custAll(),ed=o.edit?C[o.edit]||{}:null,near=o.rpAp&&AP[o.rpAp]?{ic:o.rpAp,d:gcDistNm([o.lat,o.lon],[AP[o.rpAp].lat,AP[o.rpAp].lon])}:pinNearAp(o.lat,o.lon),cus=Object.entries(AP).filter(([ic,a])=>apRpOk(ic,a)).sort((x,y)=>(near&&x[0]===near.ic?-1:0)||(near&&y[0]===near.ic?1:0)||x[0].localeCompare(y[0]));
+  const kind0=ed?(ed.heli?"heli":"ap"):(o.kind||(o.rpAp?"rp":"ap"));
   const r=await bkDlg(`<h3>${ed?"✎ แก้ไขสนาม "+esc(o.edit):"📍 ปักหมุดใหม่"}</h3>
    <p class="mono pin-pos">${fmtMgrs(toMgrs(o.lat,o.lon))} · ${posFmt(o.lat,true,"dms",1)} ${posFmt(o.lon,false,"dms",1)}</p>
    ${ed?"":`<div class="pin-kind">${[["ap","✈ สนามบิน"],["heli","🚁 ลานจอด ฮ."],["rp","◆ จุดรายงานของสนาม"],["my","🟡 จุดของฉัน"]].map(k=>`<label><input type="radio" name="kind" value="${k[0]}" ${k[0]===kind0?"checked":""}><span>${k[1]}</span></label>`).join("")}</div>`}
@@ -5958,7 +5964,7 @@ async function placesFromXlsx(f,dbItems){await loadScript("https://cdn.jsdelivr.
 function plReportHtml(R){if(!R||!(R.af||R.rp||R.my||R.skip.length))return"";
   return`<h3>📂 ข้อมูลจุดที่นำเข้า</h3><p>สนามที่เพิ่มเอง <b>${R.af}</b> · จุดรายงาน <b>${R.rp}</b> · จุดของฉัน <b>${R.my}</b></p>
     ${R.guess.length?`<details open><summary>ระบบเดาสนามให้ ${R.guess.length} จุด — ถ้าผิด ลากย้ายในแผง 📂 ได้</summary><ul>${R.guess.slice(0,80).map(g=>`<li>${esc(g)}</li>`).join("")}</ul></details>`:""}
-    ${R.skip.length?`<details><summary>ข้าม ${R.skip.length} แถว (ไม่มีพิกัด/รหัส)</summary><ul>${R.skip.slice(0,60).map(g=>`<li>${esc(g)}</li>`).join("")}</ul></details>`:""}`}
+    ${R.skip.length?`<details><summary>ข้าม ${R.skip.length} รายการ (ดูเหตุผล)</summary><ul>${R.skip.slice(0,60).map(g=>`<li>${esc(g)}</li>`).join("")}</ul></details>`:""}`}
 /* ส่งออก: เพิ่ม 3 ชีตต่อท้ายไฟล์ BASE (เรียกจากปุ่มส่งออกเดิม) */
 function placesToWb(wb,tbl){const C=custAll(),af=wb.addWorksheet("AIRFIELD");af.columns=[{width:12},{width:28},{width:10},{width:12},{width:12},{width:20},{width:9},{width:16},{width:40},{width:28}];
   tbl(af,"สนามที่เพิ่มเอง (ไม่มีใน AIP)",["ICAO / รหัส","ชื่อ","ชนิด","LAT","LONG","MGRS","ELEV (ft)","RWY","ความถี่ (คั่นด้วย ;)","NAVAID (คั่นด้วย ;)"],
@@ -5981,6 +5987,97 @@ document.addEventListener("click",e=>{const ed=e.target.closest("[data-pded]");i
   const d=e.target.closest("[data-pddel]");if(!d)return;const[src,ic,n]=d.dataset.pddel.split("|");if(!confirm(`ลบ "${n}"?`))return;
   if(src==="m")store.set("vfr_altpts",schFavAll().filter(x=>x.n!==n));else if(src==="x"){const X=xptsAll();X[ic]=(X[ic]||[]).filter(p=>p.n!==n);xptsSave(X)}else{const C=custAll();if(C[ic])C[ic].pts=(C[ic].pts||[]).filter(p=>p.n!==n);store.set("vfr_custom_ap",C)}
   pinRefresh();pdRender()});
+
+/* ---------- 4e: เมนูคลิกขวา / กดค้าง ในแผง 📂 · สีต่อโฟลเดอร์ · KML/KMZ (Google Earth Pro) ---------- */
+function plColAll(){const o=store.get("vfr_plcol");return o&&typeof o==="object"?o:{}}
+const PL_COLS=["#ffd400","#ef4444","#f97316","#22c55e","#06b6d4","#3b82f6","#8b5cf6","#ec4899","#0f172a","#ffffff"];
+function plNode(k){let node=null;const f=a=>a.forEach(n=>{if(node)return;if(n.k===k)node=n;else if(n.kids)f(n.kids)});f(plTree());return node}
+function planFromWps(n,wps){const P=plans();P[n]=JSON.parse(JSON.stringify({...state,example:false,planName:n,wps,legs:wps.slice(1).map(()=>blankLeg()),branches:[],callPos:{},schEd:{},boxPos:{}}));store.set("vfr_plans",P);try{refreshSel()}catch(e){}}
+async function plColDlg(k,label){const cur=k.startsWith("rt:")?((ovlCfg()[k.slice(3)]||{}).c||""):(plColAll()[k]||"");
+  const r=await bkDlg(`<h3>🎨 สี — ${esc(label)}</h3><div class="pl-cols">${PL_COLS.map(c=>`<label><input type="radio" name="c" value="${c}" ${c===cur?"checked":""}><span style="background:${c}"></span></label>`).join("")}</div>
+   <label>หรือเลือกเอง<input type="color" name="cc" value="${cur||"#ffd400"}"></label><menu><button value="del" formnovalidate>↺ ค่าเดิม</button><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">ใช้สีนี้</button></menu>`,
+   dlg=>{dlg.querySelector('input[name="cc"]').addEventListener("input",()=>dlg.querySelectorAll('input[name="c"]').forEach(i=>i.checked=false))});
+  if(!r)return;const c=r._btn==="del"?null:(r.c||r.cc);
+  if(k.startsWith("rt:")){const n=k.slice(3);if(c)ovlSet(n,{c});else{const C=ovlCfg();if(C[n])delete C[n].c;store.set("vfr_ovl",C);ovlSet(n,{})}}
+  else{const C=plColAll();if(c)C[k]=c;else delete C[k];store.set("vfr_plcol",C);try{drawVfr()}catch(e){}lmkDraw()}plRender()}
+/* เมนูตามชนิดรายการ */
+function plMenuItems(n){const k=n.k,I=[],C=custAll();
+  if(n.ll)I.push(["fly","🔍 ซูมไปที่"]);if(n.wp)I.push(["wp","➕ เพิ่มเข้าเส้นทาง"]);if(n.use)I.push(["use","↪ ใช้เป็นแผนการบิน"]);
+  if(/^(vp|my|db):/.test(k)&&n.wp)I.push(["mv","📂 ย้าย / คัดลอกไป…"]);
+  const ap=k.match(/^ap:(.+)$/);if(ap&&AP[ap[1]]){const cu=AP[ap[1]].eaip&&AP[ap[1]].eaip.custom;if(cu)I.push(["ed","✎ แก้ไขสนาม"]);I.push(["rp","◆ ปักจุดรายงานของสนามนี้"]);I.push(["col","🎨 สีจุดรายงาน"]);if(cu)I.push(["del","🗑 ลบสนาม"])}
+  const vp=k.match(/^vp:([^:]+):(.+)$/);if(vp){const nm=vp[2].toUpperCase(),own=(C[vp[1]]&&(C[vp[1]].pts||[]).some(p=>String(p.n).toUpperCase()===nm))||(xptsAll()[vp[1]]||[]).some(p=>String(p.n).toUpperCase()===nm);if(own)I.push(["del","🗑 ลบจุดนี้"])}
+  if(/^my:/.test(k))I.push(["med","✎ แก้ชื่อ / ไอคอน"],["del","🗑 ลบจุดนี้"]);
+  if(k==="#my")I.push(["col","🎨 สีหมุดจุดของฉัน"]);
+  if(/^rt:/.test(k))I.push(["col","🎨 สีเส้นทาง"],["del","🗑 ลบเส้นทาง"]);
+  if(/^(#my|#rt|mil|ap:|#db)/.test(k)||/^vfr:[^:]+:pts$/.test(k))I.push(["kml","🌍 ส่งออก KML (เฉพาะนี้)"]);
+  return I}
+function plMenuClose(){document.querySelectorAll(".pl-menu").forEach(m=>m.remove())}
+function plMenu(k,x,y){plMenuClose();const n=plNode(k);if(!n)return;const I=plMenuItems(n);if(!I.length)return;
+  const m=document.createElement("div");m.className="pl-menu";m.setAttribute("role","menu");m.innerHTML=`<div class="pl-mh">${esc(n.t)}</div>`+I.map(i=>`<button type="button" role="menuitem" data-pma="${i[0]}"${i[0]==="del"?' class="danger"':""}>${i[1]}</button>`).join("");
+  document.body.appendChild(m);const r=m.getBoundingClientRect();m.style.left=Math.max(6,Math.min(x,innerWidth-r.width-6))+"px";m.style.top=Math.max(6,Math.min(y,innerHeight-r.height-6))+"px";
+  m.addEventListener("click",e=>{const b=e.target.closest("[data-pma]");if(!b)return;plMenuClose();plMenuDo(n,b.dataset.pma)});
+  setTimeout(()=>{const off=e=>{if(!e.target.closest(".pl-menu")){plMenuClose();removeEventListener("pointerdown",off,true)}};addEventListener("pointerdown",off,true)},0)}
+addEventListener("keydown",e=>{if(e.key==="Escape")plMenuClose()});
+async function plMenuDo(n,a){const k=n.k;
+  if(a==="fly"&&n.ll){map.setView(n.ll,Math.max(map.getZoom(),12));if(innerWidth<1000)plOpen(false)}
+  if(a==="wp")plAddWp(n.wp);if(a==="use")plUsePlan(n.use);
+  if(a==="mv")plMoveDlg({k,wp:n.wp,lm:n.sub||""});
+  if(a==="ed"){const ic=k.slice(3),q=AP[ic];pinDlg({lat:q.lat,lon:q.lon,edit:ic})}
+  if(a==="rp"){const ic=k.slice(3),q=AP[ic];map.setView([q.lat,q.lon],Math.max(map.getZoom(),11));if(innerWidth<1000)plOpen(false);PIN_RP=ic;pinMode(true);setTimeout(()=>{if(PIN_RP===ic)toast(`📍 แตะตำแหน่งจุดรายงานของ ${ic}`)},0);}
+  if(a==="col")plColDlg(/^ap:|^#my$|^rt:/.test(k)?(k==="#my"?"my":k):k,n.t);
+  if(a==="med"){const f=schFavAll().find(x=>"my:"+x.n===k);if(f){const r=await lmkDlg({...f,edit:1});if(r){lmkSave(f.n,{...f,...r});plRender();try{pdRender()}catch(e){}}}}
+  if(a==="kml")kmlExport(k);
+  if(a==="del"){
+    if(/^my:/.test(k)){if(!confirm(`ลบ "${k.slice(3)}"?`))return;store.set("vfr_altpts",schFavAll().filter(x=>"my:"+x.n!==k))}
+    else if(/^rt:/.test(k)){const nm=k.slice(3);if(!confirm(`ลบเส้นทาง "${nm}"?`))return;const P=plans();delete P[nm];store.set("vfr_plans",P);const C=ovlCfg();delete C[nm];store.set("vfr_ovl",C);try{refreshSel()}catch(e){}ovlRender();ovlDraw()}
+    else if(/^vp:/.test(k)){const[,ic,nm]=k.match(/^vp:([^:]+):(.+)$/);if(!confirm(`ลบจุด ${nm} ของ ${ic}?`))return;const C=custAll();
+      if(C[ic]&&Array.isArray(C[ic].pts)){C[ic].pts=C[ic].pts.filter(p=>String(p.n).toUpperCase()!==nm.toUpperCase());store.set("vfr_custom_ap",C)}else{const X=xptsAll();X[ic]=(X[ic]||[]).filter(p=>String(p.n).toUpperCase()!==nm.toUpperCase());xptsSave(X)}}
+    else if(/^ap:/.test(k)){const ic=k.slice(3);if(!confirm(`ลบสนาม ${ic} (และจุดรายงานที่เพิ่มไว้) ออกจากเครื่องนี้?`))return;const C=custAll();delete C[ic];store.set("vfr_custom_ap",C);delete AP[ic]}
+    pinRefresh();toast("ลบแล้ว")}}
+/* ---------- KML / KMZ ---------- */
+const kx=s=>String(s??"").replace(/[<>&"']/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&apos;"}[c]));
+const kCol=h=>{const m=String(h||"#ffd400").replace("#","").padEnd(6,"0");return"ff"+m.slice(4,6)+m.slice(2,4)+m.slice(0,2)};
+function kPt(name,lat,lon,data,style,desc){return`<Placemark><name>${kx(name)}</name>${desc?`<description>${kx(desc)}</description>`:""}${style?`<styleUrl>#${style}</styleUrl>`:""}<ExtendedData>${Object.entries(data).filter(([,v])=>v!=null&&v!=="").map(([a,v])=>`<Data name="${kx(a)}"><value>${kx(v)}</value></Data>`).join("")}</ExtendedData><Point><coordinates>${(+lon).toFixed(6)},${(+lat).toFixed(6)},0</coordinates></Point></Placemark>`}
+function kmlBuild(scope){const C=custAll(),X=xptsAll(),F=schFavAll(),P=plans(),O=ovlCfg(),PC=plColAll(),D=dbAll(),out=[],st=new Map();
+  const sty=(id,col,shape)=>{if(!st.has(id))st.set(id,`<Style id="${id}"><IconStyle><color>${kCol(col)}</color><scale>${shape==="ap"?1.1:.9}</scale><Icon><href>http://maps.google.com/mapfiles/kml/shapes/${shape==="ap"?"airports":shape==="my"?"placemark_circle":"placemark_square"}.png</href></Icon></IconStyle><LabelStyle><scale>.8</scale></LabelStyle><LineStyle><color>${kCol(col)}</color><width>4</width></LineStyle></Style>`);return id};
+  const want=k=>scope==="all"||scope===k;const rpF=(ic,L)=>`<Folder><name>◆ ${kx(ic)} จุดรายงาน</name>${L.map(p=>kPt(p.n,p.lat,p.lon,{vfr:"rp",ap:ic,note:p.lm||""},sty("rp_"+ic.replace(/\W/g,"_"),PC["ap:"+ic]||"#ffd400","rp"),p.lm||"")).join("")}</Folder>`;
+  const one=scope.match(/^ap:(.+)$/)||scope.match(/^vfr:([^:]+):pts$/);
+  if(one){const ic=one[1],c=C[ic],a=AP[ic]||{};
+    if(c&&scope.startsWith("ap:"))out.push(kPt(ic,c.lat,c.lon,{vfr:"af",icao:ic,name:c.name||"",elev:c.elev??"",rwy:c.rwy||"",comm:c.comm||"",nav:c.nav||"",heli:c.heli?1:""},sty("af","#ef4444","ap"),c.name||""));
+    const pts=c?(c.pts||[]):((apVfr(a)||{}).pts||[]).map(p=>({n:p.n,lat:p.lat,lon:p.lon,lm:p.lm||""}));if(pts.length)out.push(rpF(ic,pts))}
+  if(want("mil")){const A=Object.entries(C).filter(([,c])=>c&&c.lat!=null);if(A.length)out.push(`<Folder><name>🎖 สนามที่เพิ่มเอง</name>${A.map(([ic,c])=>kPt(ic,c.lat,c.lon,{vfr:"af",icao:ic,name:c.name||"",elev:c.elev??"",rwy:c.rwy||"",comm:c.comm||"",nav:c.nav||"",heli:c.heli?1:""},sty("af","#ef4444","ap"),c.name||"")+((c.pts||[]).length?rpF(ic,c.pts):"")).join("")}</Folder>`)}
+  if(scope==="all"){const E=Object.entries(X).filter(([,L])=>L&&L.length);if(E.length)out.push(`<Folder><name>◆ จุดรายงานที่เพิ่ม (สนาม AIP)</name>${E.map(([ic,L])=>rpF(ic,L)).join("")}</Folder>`)}
+  if(want("#my")&&F.length)out.push(`<Folder><name>🟡 จุดของฉัน</name>${F.map(f=>kPt(f.n,f.lat,f.lon,{vfr:"my",t:f.t},sty("my",PC.my||"#f59e0b","my"),lmkT(f.t)[2])).join("")}</Folder>`);
+  const rts=scope.startsWith("rt:")?[scope.slice(3)]:want("#rt")?Object.keys(P).sort():[];
+  if(rts.length)out.push(`<Folder><name>🛣 เส้นทางที่บันทึก</name>${rts.filter(n=>P[n]).map((n,i)=>{const W=(P[n].wps||[]).filter(w=>isFinite(+w.lat)&&isFinite(+w.lon));const col=(O[n]&&O[n].c)||OVL_C[i%OVL_C.length];
+    return`<Folder><name>${kx(n)}</name><Placemark><name>${kx(n)}</name><description>${kx(W.map(w=>w.name).join(" → "))}</description><styleUrl>#${sty("rt"+i,col,"rt")}</styleUrl><ExtendedData><Data name="vfr"><value>rt</value></Data><Data name="wps"><value>${kx(W.map(w=>w.name||"").join("|"))}</value></Data></ExtendedData><LineString><tessellate>1</tessellate><coordinates>${W.map(w=>`${(+w.lon).toFixed(6)},${(+w.lat).toFixed(6)},0`).join(" ")}</coordinates></LineString></Placemark></Folder>`}).join("")}</Folder>`);
+  if(want("#db")&&D.length)out.push(`<Folder><name>📍 Waypoint หน่วย (BASE)</name>${D.filter(x=>x.lat!=null).map(x=>kPt(`${x.no} ${x.dtd||x.name||""}`,x.lat,x.lon,{vfr:"db",no:x.no},sty("db","#0d9488","rp"),x.note||"")).join("")}</Folder>`);
+  return`<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>VFR Planner — ${kx(scope==="all"?"ข้อมูลจุดทั้งหมด":scope.replace(/^[#a-z]+:/,""))}</name>${[...st.values()].join("")}${out.join("")}</Document></kml>`}
+function kmlExport(scope){const x=kmlBuild(scope||"all"),nm=(scope&&scope!=="all"?scope.replace(/^[#a-z]+:/,"").replace(/[\\/:*?"<>|]/g,"_"):"VFR_ข้อมูลจุด")+"_"+new Date().toLocaleDateString("en-CA")+".kml";
+  download(nm,x,"application/vnd.google-earth.kml+xml");toast("ส่งออก KML แล้ว — เปิดใน Google Earth Pro ได้")}
+async function kmlText(f){if(/\.kmz$/i.test(f.name)){await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");const z=await JSZip.loadAsync(await f.arrayBuffer());const e=Object.values(z.files).find(x=>/\.kml$/i.test(x.name));if(!e)throw new Error("ไม่มีไฟล์ .kml ใน KMZ");return e.async("string")}return f.text()}
+async function kmlImport(f){const doc=new DOMParser().parseFromString(await kmlText(f),"application/xml");if(doc.querySelector("parsererror"))throw new Error("ไฟล์ KML อ่านไม่ได้");
+  const R={af:0,rp:0,my:0,rt:0,skip:[],guess:[]},C=custAll(),F=schFavAll();const tx=(el,s)=>{const q=el.querySelector(s);return q?q.textContent.trim():""};
+  const pms=[...doc.getElementsByTagName("Placemark")];
+  const dat=pm=>{const o={};pm.querySelectorAll("ExtendedData Data").forEach(d=>o[d.getAttribute("name")]=tx(d,"value"));return o};
+  const folders=pm=>{const o=[];let p=pm.parentElement;while(p){if(p.tagName==="Folder"){const n=[...p.children].find(c=>c.tagName==="name");if(n)o.push(n.textContent.trim())}p=p.parentElement}return o};
+  const coords=s=>String(s||"").trim().split(/\s+/).map(t=>t.split(",").map(Number)).filter(c=>c.length>=2&&isFinite(c[0])&&isFinite(c[1])).map(c=>[c[1],c[0]]);
+  /* สนามก่อน แล้วค่อยจุดรายงาน */
+  pms.filter(pm=>dat(pm).vfr==="af").forEach(pm=>{const d=dat(pm),c=coords(tx(pm,"Point coordinates"))[0];if(!c||!d.icao)return;const ic=d.icao.toUpperCase();
+    C[ic]={...(C[ic]||{}),name:d.name||tx(pm,"name"),lat:+c[0].toFixed(6),lon:+c[1].toFixed(6),elev:d.elev===""||d.elev==null?"":+d.elev,rwy:d.rwy||"",comm:d.comm||"",nav:d.nav||"",heli:d.heli?true:undefined};R.af++});
+  if(R.af){store.set("vfr_custom_ap",C);try{applyCustom()}catch(e){}}
+  pms.forEach(pm=>{const d=dat(pm),nm=tx(pm,"name");if(d.vfr==="af")return;
+    const ls=pm.querySelector("LineString coordinates");if(ls){const W=coords(ls.textContent);if(W.length<2){R.skip.push(nm+" (เส้นสั้นเกิน)");return}const names=String(d.wps||"").split("|");
+      let n=(nm||"เส้นทาง KML").slice(0,40);const P=plans();if(P[n])n=n+" (KML)";planFromWps(n,W.map((c,i)=>({name:(names[i]||("WP"+(i+1))).slice(0,24),lat:+c[0].toFixed(6),lon:+c[1].toFixed(6),vor:""})));ovlSet(n,{on:true});R.rt++;return}
+    const pt=pm.querySelector("Point coordinates");if(!pt){if(pm.querySelector("Polygon"))R.skip.push(nm+" (พื้นที่ — ยังไม่รองรับ)");return}const c=coords(pt.textContent)[0];if(!c)return;
+    if(d.vfr==="db"){R.skip.push(nm+" (Waypoint BASE — นำเข้าด้วย Excel)");return}
+    if(d.vfr==="my"||(!d.vfr&&!/จุดรายงาน|REPORTING|\bVT[A-Z]{2}\b/i.test(folders(pm).join(" ")))){const n=(nm||"จุด").slice(0,40),i=F.findIndex(x=>x.n.toUpperCase()===n.toUpperCase()),v={n,t:LMK_T.some(t=>t[0]===d.t)?d.t:"gen",lat:+c[0].toFixed(6),lon:+c[1].toFixed(6)};if(i>=0)F[i]=v;else F.push(v);R.my++;return}
+    let ic=(d.ap||"").toUpperCase();if(!ic||!AP[ic]){const g=rpGuessAp(folders(pm).join(" ")+" "+nm,c[0],c[1]);if(!g){R.skip.push(nm+" (หาสนามไม่ได้)");return}ic=g.ic;R.guess.push(`${nm} → ${ic} (${g.why})`)}
+    const ok=rpAdd(ic,{n:nm,lat:c[0],lon:c[1],lm:d.note||""});if(ok==="dup")R.skip.push(`${nm} (${ic} มีใน AIP แล้ว)`);else if(ok)R.rp++});
+  store.set("vfr_altpts",F);if(R.my&&!plVisOn("my")){visSet("my",true);visSave()}pinRefresh();ovlDraw();
+  repDlg(plReportHtml({...R,skip:R.skip}).replace("📂 ข้อมูลจุดที่นำเข้า","🌍 นำเข้า KML: "+esc(f.name))+(R.rt?`<p>เส้นทาง <b>${R.rt}</b> → โฟลเดอร์ 🛣 เส้นทางที่บันทึก (กด ↪ ใช้ เพื่อเปิดเป็นแผน)</p>`:""));return R}
+{const inp=document.createElement("input");inp.type="file";inp.accept=".kml,.kmz,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz";inp.hidden=true;inp.id="kmlImport";document.body.appendChild(inp);
+  inp.onchange=async()=>{const f=inp.files[0];inp.value="";if(!f)return;try{await kmlImport(f)}catch(e){toast("นำเข้า KML ไม่ได้: "+e.message)}}}
 
 function offOpen(){const d=$("#offDlg");d.showModal();if(!OFF_RUN){$("#offProg").hidden=true;$("#offGo").hidden=false;$("#offStop").hidden=true}offCalc()}
 (function offInit(){const d=$("#offDlg");if(!d)return;
