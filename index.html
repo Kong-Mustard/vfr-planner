@@ -287,6 +287,14 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+.etools{position:absolute;z-index:1001;top:10px;left:10px;display:flex;flex-direction:column;gap:8px}
+.etools .leaflet-bar{margin:0!important;border:0!important;box-shadow:0 2px 8px rgba(0,0,0,.35);border-radius:14px;overflow:hidden;float:none;clear:none}
+.etools .leaflet-bar a{width:auto!important;height:auto!important;min-width:68px;min-height:56px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 8px!important;background:#fff;color:#0f172a;text-decoration:none;border:0!important}
+.etools .leaflet-bar .et-i{font-size:26px;line-height:1}.etools .leaflet-bar a small{display:block;font:800 12px var(--f-body);line-height:1.1;white-space:nowrap}
+.etools .pin-ctl a.on{background:#2563eb;color:#fff}.etools .draw-ctl a.on{background:#f59e0b;color:#111}
+@media (min-width:1000px){.etools{left:418px;top:16px;flex-direction:row}}
+@media (max-width:760px){.etools{gap:6px}.etools .leaflet-bar a{min-width:58px;min-height:50px;padding:5px 4px!important}.etools .et-i{font-size:22px}.etools .leaflet-bar a small{font-size:10.5px}}
+body.flymode .etools,body.pvprev .etools{display:none!important}
 .vfrpt>i{background:var(--vc,#ffd400)}.lmk i{border-color:var(--lc,#f59e0b)!important}
 .pl-menu{position:fixed;z-index:3000;min-width:210px;max-width:290px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:4px;display:flex;flex-direction:column}
 .pl-menu .pl-mh{font:700 12px var(--f-body);color:var(--muted);padding:6px 10px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -6089,6 +6097,9 @@ function offOpen(){const d=$("#offDlg");d.showModal();if(!OFF_RUN){$("#offProg")
   const bar=L.DomUtil.create("div","leaflet-bar leaflet-control off-ctl");bar.innerHTML='<a href="#" title="โหลดแผนที่ตามเส้นทางไว้ใช้ตอนไม่มีเน็ต" role="button">⬇<small>ออฟไลน์</small></a>';
   L.DomEvent.disableClickPropagation(bar);bar.querySelector("a").onclick=e=>{e.preventDefault();offOpen()};
   const body=map.getContainer().querySelector(".map-tools .mt-body");(body||map.getContainer().querySelector(".leaflet-top.leaflet-right")).appendChild(bar)})();
+/* แถบเครื่องมือแก้ข้อมูล มุมซ้ายบนของแผนที่ (ข้างช่องค้นหา): ปักหมุด · วาดเส้นทาง · ออฟไลน์ */
+(function etools(){const M=map.getContainer(),box=document.createElement("div");box.className="etools";M.appendChild(box);
+  [[".pin-ctl","📌","ปักหมุด"],[".draw-ctl","🛤️","วาดเส้นทาง"],[".off-ctl","💾","ออฟไลน์"]].forEach(([q,ic,t])=>{const b=M.querySelector(q);if(!b)return;const a=b.querySelector("a");if(a)a.innerHTML=`<span class="et-i">${ic}</span><small>${t}</small>`;box.appendChild(b)})})();
 /* ---------- ปากกา / ข้อความ / สัญลักษณ์ (Kneeboard + แผนที่) — เก็บในเครื่องนี้ ----------
    รายการ: {t:"s",c,w,o,p:[[x,y]..]} เส้น · {t:"x",c,s,v,x,y,b} ข้อความ/สัญลักษณ์
    พิกัดของ Kneeboard = หน่วยหน้ากระดาษ (px ก่อนซูม) · ของแผนที่ = [lat,lon] */
