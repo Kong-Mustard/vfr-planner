@@ -307,6 +307,8 @@ button.danger{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
 .pl-r[draggable=true]{cursor:grab}.pl-over{outline:2px dashed #2563eb;background:#dbeafe55!important}#plPanel.pl-dragging [data-pdrop]{outline:1px dashed #94a3b8}.pl-dst{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 #plPanel{display:none;position:fixed;z-index:1200;left:0;right:0;bottom:0;height:58vh;background:var(--panel);color:var(--ink);border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);flex-direction:column}
 body.pl-open #plPanel{display:flex}
+@media (min-width:761px) and (max-width:999px){#plPanel{left:96px}body.gps-touch #plPanel{left:56px}}
+@media (max-width:760px){#plPanel{bottom:calc(66px + env(safe-area-inset-bottom,0px));height:calc(58vh - 40px)}body.gps-touch #plPanel{bottom:calc(48px + env(safe-area-inset-bottom,0px))}}
 @media (min-width:1000px){#plPanel{position:absolute;left:16px;right:auto;top:68px;bottom:16px;height:auto;width:390px;border-radius:22px;z-index:650;box-shadow:var(--shadow)}}
 .pl-head{display:flex;align-items:center;gap:6px;padding:10px 10px 6px;border-bottom:1px solid var(--line)}.pl-x{margin-left:auto;min-width:36px;min-height:36px;border:0;background:none;color:var(--muted);font-size:16px}
 .pl-tabs{display:flex;gap:4px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:999px;padding:3px}.pl-tabs button{border:0;background:none;color:var(--muted);font:700 13px var(--f-body);padding:6px 12px;border-radius:999px;min-height:32px}.pl-tabs button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
