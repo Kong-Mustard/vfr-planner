@@ -287,6 +287,7 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+.pl-r[draggable=true]{cursor:grab}.pl-over{outline:2px dashed #2563eb;background:#dbeafe55!important}#plPanel.pl-dragging [data-pdrop]{outline:1px dashed #94a3b8}.pl-dst{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 #plPanel{display:none;position:fixed;z-index:1200;left:0;right:0;bottom:0;height:58vh;background:var(--panel);color:var(--ink);border-radius:18px 18px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.35);flex-direction:column}
 body.pl-open #plPanel{display:flex}
 @media (min-width:1000px){#plPanel{position:absolute;left:16px;right:auto;top:68px;bottom:16px;height:auto;width:390px;border-radius:22px;z-index:650;box-shadow:var(--shadow)}}
@@ -2309,7 +2310,8 @@ function plTree(){const T=[],apName=a=>String(a.name||"").replace(/\s*(Internati
     if((v.pts||[]).length)kids.push({k:"vfr:"+ic+":pts",t:`◆ จุดรายงาน (${v.pts.length})`,kids:v.pts.map(p=>({k:"vp:"+ic+":"+p.n,t:p.n,sub:p.lm||"",ll:[p.lat,p.lon],wp:{name:p.n,lat:p.lat,lon:p.lon}}))});
     const rd=(v.rt||[]).filter(r=>/^DEP/.test(r.sec)).length,ra=(v.rt||[]).length-rd;
     if(rd)kids.push({k:"vfr:"+ic+":dep",t:`🟢 เส้นทางออก (Exit) · ${rd}`});if(ra)kids.push({k:"vfr:"+ic+":arr",t:`🟠 เส้นทางเข้า (Entry) · ${ra}`});
-    return{k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],kids}};
+    const cu=!!(a.eaip&&a.eaip.custom);if(cu){const pf=kids.find(x=>x.k==="vfr:"+ic+":pts");if(pf)pf.drop="ap:"+ic;else kids.push({k:"vfr:"+ic+":pts",t:"◆ จุดรายงาน (0)",kids:[],empty:"ลากจุดมาวางที่นี่",drop:"ap:"+ic})}
+    return{k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],kids,drop:cu?"ap:"+ic:null}};
   const all=Object.entries(AP).filter(([,a])=>a&&a.lat!=null).sort((x,y)=>x[0].localeCompare(y[0]));
   T.push({k:"#aip",root:["ap","vfr","vfrA"],t:"✈ สนามบิน (AIP)",kids:all.filter(([,a])=>a.eaip&&!a.eaip.custom).map(([ic,a])=>apFolder(ic,a))});
   T.push({k:"mil",t:"🎖 สนามที่เพิ่มเอง (ไม่มีใน AIP)",kids:all.filter(([,a])=>a.eaip&&a.eaip.custom).map(([ic,a])=>apFolder(ic,a)),empty:"ยังไม่มี — เพิ่มที่แท็บ 1 (สนามที่กรอกเอง) · เครื่องมือ 📍 ปักหมุดจะมาในขั้นถัดไป"});
@@ -2318,22 +2320,44 @@ function plTree(){const T=[],apName=a=>String(a.name||"").replace(/\s*(Internati
   const D=dbAll().filter(x=>x.lat!=null),wpI=x=>({k:"db:"+x.no,t:`No.${x.no} ${x.dtd||x.name||""}`,sub:x.desc||x.mgrs||"",ll:[x.lat,x.lon],wp:{name:x.name||("No."+x.no),lat:x.lat,lon:x.lon}});
   T.push({k:"#db",root:["db"],t:"📍 Waypoint หน่วย (BASE)",kids:D.length?[{k:"db:a",t:`Preset 1–60 (ประจำ) · ${D.filter(x=>+x.no<=60).length}`,kids:D.filter(x=>+x.no<=60).map(wpI),empty:"—"},{k:"db:b",t:`61+ (เฉพาะเที่ยว) · ${D.filter(x=>+x.no>60).length}`,kids:D.filter(x=>+x.no>60).map(wpI),empty:"—"}]:[],empty:"ยังไม่มี — นำเข้า Excel ที่แท็บ 9"});
   const P=plans(),C=ovlCfg();T.push({k:"#rt",root:["ovl"],t:"🛣 เส้นทางที่บันทึก",kids:Object.keys(P).sort().map(n=>({k:"rt:"+n,t:n,rt:n,on:!!(C[n]&&C[n].on),ll:(P[n].wps||[])[0]?[P[n].wps[0].lat,P[n].wps[0].lon]:null})),empty:"ยังไม่มี — กด \"บันทึก\" ที่แผนการบิน"});
-  T.push({k:"#my",root:["my"],t:"🟡 จุดของฉัน",kids:schFavAll().map(f=>({k:"my:"+f.n,t:`${lmkT(f.t)[1]} ${f.n}`,ll:[+f.lat,+f.lon],wp:{name:f.n,lat:+f.lat,lon:+f.lon}})),empty:"ยังไม่มี — ค้นหาสถานที่แล้วกด ⭐ เก็บไว้ใช้ซ้ำ"});
+  T.push({k:"#my",root:["my"],drop:"my",t:"🟡 จุดของฉัน",kids:schFavAll().map(f=>({k:"my:"+f.n,t:`${lmkT(f.t)[1]} ${f.n}`,ll:[+f.lat,+f.lon],wp:{name:f.n,lat:+f.lat,lon:+f.lon}})),empty:"ยังไม่มี — ค้นหาสถานที่แล้วกด ⭐ เก็บไว้ใช้ซ้ำ"});
   return T}
-function plIsOn(n){if(n.root)return n.root.some(k=>{try{return visOn(k)}catch(e){return false}});if(n.rt)return n.on;return!plOff(n.k)}
+/* ชั้นแผนที่จริงที่อยู่ใต้แต่ละรายการ — ติ๊กรายการใดก็ต้องเปิดชั้นนั้นด้วย ไม่งั้นติ๊กแล้วไม่เห็นอะไร */
+function plLayersOf(k){if(/^(ap:|apm:|mil$|oth$)/.test(k))return["ap","vfr"];if(/^(vfr:|vp:)/.test(k))return["vfr"];if(/^db:/.test(k))return["db"];if(/^nav:/.test(k))return["nav"];if(/^my:/.test(k))return["my"];return[]}
+function plVisOn(k){try{return visOn(k)}catch(e){return false}}
+function plIsOn(n){if(n.root)return n.root.some(plVisOn);if(n.rt)return n.on&&plVisOn("ovl");const L=plLayersOf(n.k);return!plOff(n.k)&&(!L.length||L.some(plVisOn))}
 function plRow(n,depth,path){const kids=n.kids||[],hasK=kids.length||n.empty;const cb=n.noTog?'<span class="pl-sp"></span>':`<input type="checkbox" data-pk="${esc(n.k)}" ${plIsOn(n)?"checked":""} aria-label="แสดง ${esc(n.t)}">`;
+  const dragA=n.wp&&/^(vp|my|db):/.test(n.k)?` draggable="true" data-pdrag="${esc(JSON.stringify({k:n.k,wp:n.wp,lm:n.sub||""}))}"`:"";
+  const dropA=n.drop?` data-pdrop="${esc(n.drop)}"`:"";
   const lab=`<span class="pl-t" ${n.ll?`data-pfly="${n.ll[0]},${n.ll[1]}"`:""}>${esc(n.t)}${n.sub?`<small>${esc(n.sub)}</small>`:""}</span>${n.wp?`<button type="button" class="pl-add" data-pwp="${esc(JSON.stringify(n.wp))}" title="เพิ่มเข้าเส้นทาง">➕</button>`:""}`;
-  if(!hasK)return`<div class="pl-r" style="--d:${depth}">${cb}${lab}</div>`;
-  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}">${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
+  if(!hasK)return`<div class="pl-r" style="--d:${depth}"${dragA}${dropA}>${cb}${lab}</div>`;
+  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}"${dropA}>${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
 function plRender(){const box=document.getElementById("plTree");if(!box)return;const q=(document.getElementById("plQ")||{}).value||"";const T=plTree();
   if(q.trim()){const Q=q.trim().toUpperCase(),out=[];const walk=(n,trail)=>{(n.kids||[]).forEach(c=>{if(c.ll&&(c.t.toUpperCase().includes(Q)||String(c.sub||"").toUpperCase().includes(Q)))out.push({...c,kids:null,empty:null,sub:trail});walk(c,c.k&&/^ap:/.test(c.k)?c.t:trail)})};T.forEach(n=>walk(n,n.t.replace(/^\S+\s/,"")));
     box.innerHTML=out.length?out.slice(0,200).map(c=>plRow(c,0,"q")).join(""):'<p class="hint pl-empty">ไม่พบ</p>';return}
   const st=box.scrollTop;box.innerHTML=T.map((n,i)=>plRow(n,0,String(i))).join("");box.scrollTop=st}
 function plToggle(k,on){const T=plTree();let node=null;const find=a=>a.forEach(n=>{if(n.k===k)node=n;else if(n.kids)find(n.kids)});find(T);
   if(node&&node.root){node.root.forEach(r=>{try{visSet(r,on)}catch(e){}});visSave()}
-  else if(node&&node.rt){ovlSet(node.rt,{on})}
-  else{on?PL_HIDE.delete(k):PL_HIDE.add(k);plSave()}
+  else if(node&&node.rt){ovlSet(node.rt,{on});if(on&&!plVisOn("ovl")){visSet("ovl",true);visSave()}}
+  else{on?PL_HIDE.delete(k):PL_HIDE.add(k);plSave();
+    if(on){/* เปิดชั้นแผนที่ + โฟลเดอร์แม่ที่ถูกซ่อนอยู่ */plLayersOf(k).forEach(v=>{if(!plVisOn(v))visSet(v,true)});visSave();
+      const m=k.match(/^(?:vp|vfr):([^:]+)/);if(m){PL_HIDE.delete("ap:"+m[1]);if(/^vp:/.test(k))PL_HIDE.delete("vfr:"+m[1]+":pts");const a=AP[m[1]];if(a&&a.eaip&&a.eaip.custom)PL_HIDE.delete("mil");plSave()}
+      if(/^db:\d/.test(k)){PL_HIDE.delete("db:a");PL_HIDE.delete("db:b");plSave()}}}
   try{drawVfr()}catch(e){}plApplyAp();dbDraw();if(map.hasLayer(navLayer))navDraw();lmkDraw()}
+/* ย้าย/คัดลอกจุดเข้าโฟลเดอร์อื่น: ลากวาง (คอม) หรือกดค้าง (มือถือ)
+   ปลายทาง = สนามที่เพิ่มเอง (เป็นจุดรายงานของสนามนั้น) หรือ จุดของฉัน · ต้นทางเป็นของที่เราเพิ่มเอง = ย้าย · ต้นทาง AIP/BASE = คัดลอก */
+function plMove(src,dst){const w=src.wp,nm=String(w.name||"").trim().toUpperCase().slice(0,24);if(!nm)return;const C=custAll();let done="คัดลอก";
+  const sm=src.k.match(/^vp:([^:]+):(.+)$/),fromCu=sm&&C[sm[1]]&&Array.isArray(C[sm[1]].pts)&&C[sm[1]].pts.some(p=>String(p.n).toUpperCase()===String(sm[2]).toUpperCase());
+  if(dst==="my"){const F=schFavAll().filter(x=>x.n.toUpperCase()!==nm);F.push({n:nm,lat:+w.lat,lon:+w.lon,t:"gen"});store.set("vfr_altpts",F)}
+  else{const ic=dst.replace(/^ap:/,"");if(sm&&sm[1]===ic){toast("อยู่โฟลเดอร์นี้อยู่แล้ว");return}if(!C[ic]){const a=AP[ic]||{};C[ic]={name:a.name||ic,lat:a.lat,lon:a.lon}}
+    const P=(Array.isArray(C[ic].pts)?C[ic].pts:(apVfr(AP[ic])||{}).pts||[]).filter(p=>String(p.n).toUpperCase()!==nm).map(p=>({n:p.n,lat:p.lat,lon:p.lon,lm:p.lm||"",rd:p.rd||""}));
+    P.push({n:nm,lat:+(+w.lat).toFixed(6),lon:+(+w.lon).toFixed(6),lm:src.lm||"",rd:""});C[ic].pts=P}
+  if(fromCu&&!(dst==="ap:"+sm[1])){C[sm[1]].pts=C[sm[1]].pts.filter(p=>String(p.n).toUpperCase()!==String(sm[2]).toUpperCase());done="ย้าย"}
+  if(/^my:/.test(src.k)&&dst!=="my"){store.set("vfr_altpts",schFavAll().filter(x=>"my:"+x.n!==src.k));done="ย้าย"}
+  store.set("vfr_custom_ap",C);try{applyCustom()}catch(e){}try{drawVfr()}catch(e){}lmkDraw();plRender();toast(`${done} ${nm} → ${dst==="my"?"จุดของฉัน":dst.replace(/^ap:/,"")}`)}
+function plDests(){const out=[["my","🟡 จุดของฉัน"]];Object.entries(AP).filter(([,a])=>a&&a.eaip&&a.eaip.custom).sort().forEach(([ic,a])=>out.push(["ap:"+ic,`🎖 ${ic} ${a.name||""} — จุดรายงาน`]));return out}
+async function plMoveDlg(src){const D=plDests();const r=await bkDlg(`<h3>ย้าย / คัดลอก "${esc(src.wp.name)}" ไปที่…</h3><div class="pl-dst">${D.map((d,i)=>`<label><input type="radio" name="d" value="${esc(d[0])}" ${i?"":"checked"}> ${esc(d[1])}</label>`).join("")}</div>
+  <p class="hint">สนามที่ไม่มีใน AIP ต้องเพิ่มก่อน (แท็บ 1 → สนามที่กรอกเอง) ถึงจะเป็นปลายทางได้</p><menu><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">ตกลง</button></menu>`);if(r&&r.d)plMove(src,r.d)}
 function plOpen(on){document.body.classList.toggle("pl-open",on);if(on)plRender()}
 {const d=document.createElement("div");d.id="plPanel";d.innerHTML=`<div class="pl-head"><div class="pl-tabs"><button type="button" data-pltab="plan">✈ แผนการบิน</button><button type="button" class="on" data-pltab="pl">📂 จุดของฉัน</button></div><button type="button" class="pl-x" aria-label="ปิด">✕</button></div>
   <div id="plTree" class="pl-tree"></div><div class="pl-foot"><input id="plQ" type="text" placeholder="🔍 กรองชื่อในรายการ" aria-label="กรองชื่อ"></div>`;
@@ -2344,6 +2368,16 @@ function plOpen(on){document.body.classList.toggle("pl-open",on);if(on)plRender(
     const a=t.closest("[data-pwp]");if(a){e.preventDefault();plAddWp(JSON.parse(a.dataset.pwp));return}
     const f=t.closest(".pl-t[data-pfly]");if(f){if(t.closest("summary")&&!e.altKey){/* แตะชื่อโฟลเดอร์ = บินไปด้วย แต่ไม่ขวางการเปิด/ปิด */}const[la,lo]=f.dataset.pfly.split(",").map(Number);map.setView([la,lo],Math.max(map.getZoom(),11));if(innerWidth<1000&&!t.closest("summary"))plOpen(false)}});
   d.addEventListener("change",e=>{const c=e.target.closest("input[data-pk]");if(!c)return;plToggle(c.dataset.pk,c.checked);plRender()});
+  let dragSrc=null,lp=null;
+  d.addEventListener("dragstart",e=>{const r=e.target.closest&&e.target.closest("[data-pdrag]");if(!r)return;dragSrc=JSON.parse(r.dataset.pdrag);e.dataTransfer.effectAllowed="copyMove";try{e.dataTransfer.setData("text/plain",dragSrc.wp.name)}catch(_){}d.classList.add("pl-dragging")});
+  d.addEventListener("dragend",()=>{dragSrc=null;d.classList.remove("pl-dragging");d.querySelectorAll(".pl-over").forEach(x=>x.classList.remove("pl-over"))});
+  d.addEventListener("dragover",e=>{const t=dragSrc&&e.target.closest&&e.target.closest("[data-pdrop]");if(!t)return;e.preventDefault();d.querySelectorAll(".pl-over").forEach(x=>x!==t&&x.classList.remove("pl-over"));t.classList.add("pl-over")});
+  d.addEventListener("drop",e=>{const t=dragSrc&&e.target.closest&&e.target.closest("[data-pdrop]");if(!t)return;e.preventDefault();const s=dragSrc;dragSrc=null;plMove(s,t.dataset.pdrop)});
+  /* มือถือ: กดค้างที่จุด = เมนูย้าย */
+  d.addEventListener("pointerdown",e=>{const r=e.pointerType!=="mouse"&&e.target.closest("[data-pdrag]");if(!r||e.target.closest("input,button"))return;clearTimeout(lp);const x0=e.clientX,y0=e.clientY;
+    lp=setTimeout(()=>{lp=null;plMoveDlg(JSON.parse(r.dataset.pdrag))},550);const cancel=ev=>{if(ev.type!=="pointermove"||Math.hypot(ev.clientX-x0,ev.clientY-y0)>10){clearTimeout(lp);d.removeEventListener("pointermove",cancel);d.removeEventListener("pointerup",cancel)}};
+    d.addEventListener("pointermove",cancel);d.addEventListener("pointerup",cancel)});
+  d.addEventListener("contextmenu",e=>{const r=e.target.closest("[data-pdrag]");if(!r)return;e.preventDefault();plMoveDlg(JSON.parse(r.dataset.pdrag))});
   d.querySelector("#plQ").addEventListener("input",()=>plRender());
   const tb=document.createElement("div");tb.className="pl-tabs pl-tabs-side";tb.innerHTML='<button type="button" class="on" data-pltab="plan">✈ แผนการบิน</button><button type="button" data-pltab="pl">📂 จุดของฉัน</button>';
   const side=document.querySelector(".top>.side");if(side)side.prepend(tb);tb.addEventListener("click",e=>{if(e.target.closest('[data-pltab="pl"]'))plOpen(true)});
