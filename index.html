@@ -183,7 +183,7 @@ body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#ff
 #printView .fcard{background:#fff!important;color:#000!important}#printView .fcard .r b{white-space:normal;flex:0 1 auto;max-width:58%}#printView .fcard .r span{text-align:right;flex:1 1 auto;overflow-wrap:break-word}
 #printView.pv-notbl .pv-cp{display:none}
 body.pvprev .pv-page2{margin-top:8mm!important}.pv-page2[hidden]{display:none!important}.pv-page2 .pv-tbl{margin-top:2mm}
-.pv-cp td:first-child{text-align:center!important;width:9mm}.pv-cp td:nth-child(2){text-align:left}
+.pv-cp td{vertical-align:middle}.pv-cp td:first-child{text-align:center!important;font-size:1.05em}.pv-cp td:nth-child(2){text-align:center;font-family:var(--f-body)}.pv-cp th{line-height:1.15}
 @media print{.pv-page2{break-before:page;page-break-before:always;margin-top:0!important}}
 body.printing #pvMap .remtag{font-size:calc(11px*var(--pvrem,1));padding:calc(1px*var(--pvrem,1)) calc(5px*var(--pvrem,1))}
 body.printing #pvMap .wpicon{transform:scale(var(--pvwp,1))}
@@ -2370,7 +2370,7 @@ function plTree(){const T=[],apName=a=>String(a.name||"").replace(/\s*(Internati
     if(!cu){const pf=kids.find(x=>x.k==="vfr:"+ic+":pts");if(pf)pf.drop="ap:"+ic}
     return{k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],kids,drop:"ap:"+ic}};
   const all=Object.entries(AP).filter(([,a])=>a&&a.lat!=null).sort((x,y)=>x[0].localeCompare(y[0]));
-  T.push({k:"#aip",root:["ap","vfr","vfrA"],t:"✈ สนามบิน (AIP)",kids:all.filter(([,a])=>a.eaip&&!a.eaip.custom).map(([ic,a])=>apFolder(ic,a))});
+  T.push({k:"#aip",root:["ap","vfr","vfrA"],t:"✈ ข้อมูล eAIP",kids:all.filter(([,a])=>a.eaip&&!a.eaip.custom).map(([ic,a])=>apFolder(ic,a))});
   T.push({k:"mil",t:"🎖 สนามที่เพิ่มเอง (ไม่มีใน AIP)",kids:all.filter(([,a])=>a.eaip&&a.eaip.custom).map(([ic,a])=>apFolder(ic,a)),empty:"ยังไม่มี — ใช้ 📍 ปักหมุด บนแผนที่ หรือนำเข้า Excel / KML"});
   T.push({k:"oth",t:"🛬 สนามอื่น / ลานจอด ฮ.",kids:all.filter(([,a])=>!a.eaip).map(([ic,a])=>({k:"ap:"+ic,t:`${ic} ${apName(a)}`,ll:[a.lat,a.lon],wp:{name:ic,lat:a.lat,lon:a.lon}}))});
   T.push({k:"#nav",root:["nav"],t:"📡 VOR / NDB / TACAN",kids:((EAIP&&EAIP.navaids)||[]).filter(n=>n.lat!=null).map(n=>({k:"nav:"+n.id+":"+n.type,t:`${n.id} ${n.name||""}`,sub:`${n.type||""} ${n.freq||""}`,ll:[n.lat,n.lon],wp:{name:n.id,lat:n.lat,lon:n.lon,vor:`${n.id} ${(n.freq||"").replace(/\s*\(.*$/,"")}`}})),empty:"ยังไม่มีข้อมูล eAIP"});
@@ -4121,7 +4121,9 @@ function pvTabs(pv,pp,cw){const secs=[...pp.querySelectorAll(":scope>details.pp-
   T.map.insertAdjacentHTML("beforeend",'<p class="hint pp-tip2">💡 แตะตัวหนังสือบนกระดาษเพื่อพิมพ์แก้ · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>');
   cw.open=true;cw.classList.add("pv-ctl-tab");T.sty.appendChild(cw);const ctl=cw.querySelector(".pv-ctl");
   const q=document.createElement("div");q.className="kc-quick";q.innerHTML='<h4>ที่ใช้บ่อย</h4>';const take=sel=>{const el=ctl.querySelector(sel);const r=el&&el.closest(".kc-r");if(r)q.appendChild(r);return r};
-  take('[data-kl="paper"]');take('[data-kl="tbl"]');take('[data-kl="nav2"]');{const sw=ctl.querySelector("[data-lc]");const r=sw&&sw.closest(".kc-r");if(r)q.appendChild(r)}{const r=take('[data-kl="rpfs"]');if(r)r.querySelector("span").textContent="ขนาดชื่อจุด / สนาม"}
+  take('[data-kl="paper"]');take('[data-kl="tbl"]');take('[data-kl="nav2"]');{const sw=ctl.querySelector("[data-lc]");const r=sw&&sw.closest(".kc-r");if(r)q.appendChild(r)}{const vs=((EAIP&&EAIP.navaids)||[]).filter(n=>/VOR/i.test(n.type||"")&&n.lat!=null).sort((a,b)=>a.id.localeCompare(b.id)),cur=(kbLay().refVor||"BKK").toUpperCase();if(vs.length){const l=document.createElement("label");l.className="kc-r";l.innerHTML=`<span>Radial/DME จาก</span><select data-refvor>${vs.map(n=>`<option value="${esc(n.id)}" ${n.id.toUpperCase()===cur?"selected":""}>${esc(n.id)} ${esc(String(n.name||"").replace(/\s*D?VOR.*$/i,""))}</option>`).join("")}</select>`;q.appendChild(l);
+    l.querySelector("select").addEventListener("change",e=>{e.stopPropagation();const K=kbLay();K.refVor=e.target.value;kbLaySave(K);const c=pv.querySelector(".pv-cp");if(c){const d=document.createElement("div");d.innerHTML=pvCpHtml(state.wps);const t=d.firstElementChild;t.querySelectorAll("td,th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});c.replaceWith(t)}})}}
+  {const r=take('[data-kl="rpfs"]');if(r)r.querySelector("span").textContent="ขนาดชื่อจุด / สนาม"}
   const fine=document.createElement("details");fine.className="kc-fine";fine.innerHTML='<summary>ปรับละเอียด — ขนาดแผนที่ · ความหนาเส้น · หมุด · callout · ตัวอักษร · สนามบินที่แสดง</summary>';
   ctl.querySelectorAll(":scope>.kc-g").forEach(g=>fine.appendChild(g));ctl.prepend(q);ctl.appendChild(fine);
   const tabs=document.createElement("div");tabs.className="pp-tabs";tabs.setAttribute("role","tablist");tabs.innerHTML='<button type="button" data-ptab="map">🗺 แผนที่</button><button type="button" data-ptab="frq">📻 ความถี่</button><button type="button" data-ptab="sty">🎨 รูปแบบ</button>';
@@ -4148,9 +4150,14 @@ function wpNear(w){let b=null;const c=(nm,la,lo)=>{if(!nm||la==null||!isFinite(+
   try{vfrPtsAll().forEach(({p})=>c(vfrShort(p),p.lat,p.lon))}catch(e){}try{dbAll().forEach(x=>c(x.name||x.dtd,x.lat,x.lon))}catch(e){}try{schFavAll().forEach(f=>c(f.n,f.lat,f.lon))}catch(e){}Object.entries(AP).forEach(([ic,a])=>{if(a)c(ic,a.lat,a.lon)});return b&&b.nm}
 function wpLabel(w,i){const n=String(w&&w.name||"");if(n&&!/^(WP\s*\d+|จุด\s*\d+)$/i.test(n))return n;const k=wpNear(w);if(k)return k;
   const ed=(state.schEd||{})["w:"+i+":"+n];if(ed&&ed.html){const t=String(ed.html).replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();if(t)return t}return n||("WP"+(i+1))}
-/* หน้า 1: ตารางจุด CP + พิกัด */
-function pvCpHtml(W){return `<table class="pv-tbl pv-cp"><thead><tr><th>#</th><th>จุด (CP)</th><th>MGRS</th><th>LAT</th><th>LONG</th></tr></thead><tbody>`+
-    W.map((w,i)=>`<tr><td>${i===0?"SP":i===W.length-1?"END":i}</td><td>${w.rp?"▲ ":""}${dbNoTxt(w,true)}<b>${esc(wpLabel(w,i))}</b></td><td>${fmtMgrs(toMgrs(+w.lat,+w.lon))}</td><td>${posFmt(+w.lat,true,"dms",1)}</td><td>${posFmt(+w.lon,false,"dms",1)}</td></tr>`).join("")+`</tbody></table>`}
+/* หน้า 1: ตารางจุด — POINT · Landmark · Radial/DME จาก VOR อ้างอิง (ค่าเริ่มต้น BKK) · MGRS · PRESET */
+function refVor(){const id=(kbLay().refVor||"BKK").toUpperCase();return((EAIP&&EAIP.navaids)||[]).find(n=>String(n.id).toUpperCase()===id&&n.lat!=null&&/VOR/i.test(n.type||""))||null}
+function radDme(v,w){if(!v)return"–";const d=gcDistNm([v.lat,v.lon],[+w.lat,+w.lon]);if(d<0.3)return"-";const r=Math.round(norm(trueCourse([v.lat,v.lon],[+w.lat,+w.lon])+num(state.g&&state.g.var,0)))%360||360;return`R-${String(r).padStart(3,"0")}/ ${d.toFixed(1)}D`}
+function wpLandmark(w){if(w.lm)return w.lm;let b=null;try{vfrPtsAll().forEach(({p})=>{const d=gcDistNm([+w.lat,+w.lon],[p.lat,p.lon]);if(d<=0.5&&p.lm&&(!b||d<b.d))b={d,t:String(p.lm).split("·")[0].trim()}})}catch(e){}if(b)return b.t;const m=typeof dbMatch==="function"&&dbMatch(w);return m&&m.note?String(m.note).split("·")[0].trim():""}
+function pvCpHtml(W){const v=refVor(),id=v?v.id:(kbLay().refVor||"BKK");return `<table class="pv-tbl pv-cp"><thead><tr><th>POINT</th><th>Landmark</th><th>Radial/DME<br>From ${esc(id)}</th><th>MGRS</th><th>PRESET</th></tr></thead><tbody>`+
+    W.map((w,i)=>{const m=typeof dbMatch==="function"&&dbMatch(w);return`<tr><td><b>${esc(wpLabel(w,i))}</b></td><td data-lmi="${i}">${esc(wpLandmark(w))}</td><td>${radDme(v,w)}</td><td>${fmtMgrs(toMgrs(+w.lat,+w.lon))}</td><td>${m?esc(m.no):""}</td></tr>`}).join("")+`</tbody></table>`}
+/* แก้ Landmark บนกระดาษ = จำไว้กับจุดนั้นในแผน */
+document.addEventListener("input",e=>{const td=e.target.closest&&e.target.closest(".pv-cp td[data-lmi]");if(!td)return;const w=state.wps[+td.dataset.lmi];if(!w)return;w.lm=td.innerText.trim();store.set("vfr_current",state)});
 function pvTblHtml(res,W){return `<table class="pv-tbl pv-nav"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
     res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(wpLabel(W[i+1],i+1))}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
 function pvUnitSync(pv){const u=pv.querySelector(".pv-unit");if(!u)return;const h=ficHtml();u.hidden=!h;u.innerHTML=h}
