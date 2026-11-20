@@ -181,7 +181,10 @@ body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#ff
 .pv-cards .fcard{border-width:1.5px;padding:1mm 1.5mm;font-size:var(--pvfs,7.5pt);break-inside:avoid}
 #printView{--panel:#fff;--ink:#000;--muted:#555;--line:#bbb;--nav:#123c69;--accent:#0a4fd1;--input:#fff;color-scheme:light}
 #printView .fcard{background:#fff!important;color:#000!important}#printView .fcard .r b{white-space:normal;flex:0 1 auto;max-width:58%}#printView .fcard .r span{text-align:right;flex:1 1 auto;overflow-wrap:break-word}
-#printView.pv-notbl .pv-tbl{display:none}
+#printView.pv-notbl .pv-cp{display:none}
+body.pvprev .pv-page2{margin-top:8mm!important}.pv-page2[hidden]{display:none!important}.pv-page2 .pv-tbl{margin-top:2mm}
+.pv-cp td:first-child{text-align:center!important;width:9mm}.pv-cp td:nth-child(2){text-align:left}
+@media print{.pv-page2{break-before:page;page-break-before:always;margin-top:0!important}}
 body.printing #pvMap .remtag{font-size:calc(11px*var(--pvrem,1));padding:calc(1px*var(--pvrem,1)) calc(5px*var(--pvrem,1))}
 body.printing #pvMap .wpicon{transform:scale(var(--pvwp,1))}
 body.printing #pvMap .wpicon:not(.rpt):not(.seq){background:var(--pvwpc,#d6198f)!important}body.printing #pvMap .wpicon.seq{color:var(--pvwpc,#d6198f)!important;border-color:var(--pvwpc,#d6198f)!important}
@@ -3975,7 +3978,7 @@ function ficAreas(){const W=(state&&state.wps)||[],out=[];const add=n=>{if(out.a
 function ficMode(){const v=state&&state.unitFreq;return!v||v==="auto"?"auto":v}
 function ficText(){const m=ficMode();if(m==="none")return"";if(m==="auto"){const a=ficAreas();return a.length?`${a.join(" → ")} ${FIC_F}`:""}return m}
 function ficHtml(){const t=ficText();if(!t)return"";const m=t.match(/^(?:FIC )?(.*?)\s+(127\.0.*)$/);return m?`${esc(m[1])}<br><small>${esc(m[2])} MHz</small>`:esc(t)}
-const KB_LAY0={paper:"A5",wpCall:false,callsz:1,schCards:false,schNear:10,dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,remsz:1,wpsz:0.85,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
+const KB_LAY0={paper:"A5",wpCall:false,callsz:1,schCards:false,schNear:10,dog:1,rem:"10",mapw:90,maph:140,fill:true,fs:7.5,tbl:true,nav2:true,remsz:1,wpsz:0.85,hd:1,tfs:8,line:1,lcol:"#d6198f",ldash:"solid",lop:1,wpc:"#d6198f",rpc:"#ffd400",rpfs:1};
 /* แถวปรับค่าแบบแถบเลื่อน + ตัวเลข */
 function kcR(t,k,mn,mx,st,KL,u,f){const v=KL[k];return`<label class="kc-r"><span>${t}</span><input type="range" data-kl="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><output data-o="${k}">${f?f(v):(+v).toString()+(u||"")}</output></label>`}
 const KC_FMT={lop:v=>Math.round(v*100)+"%",mapw:v=>v+" mm",maph:v=>v+" mm",fs:v=>v+" pt",tfs:v=>v+" pt"};
@@ -4001,6 +4004,8 @@ async function kbSavePdf(pv,KL){const btn=$("#pvPdf"),old=btn.textContent;btn.di
     const {jsPDF}=window.jspdf,doc=new jsPDF({unit:"mm",format:KL.paper==="A4"?"a4":"a5",orientation:"portrait"}),m=4,maxW=P.w,maxH=P.h;
     let w=maxW,h=img.height*w/img.width;if(h>maxH){h=maxH;w=img.width*h/img.height}
     doc.addImage(png,"PNG",m+(maxW-w)/2,m,w,h,undefined,"FAST");
+    const p2=pv.querySelector(".pv-page2");if(p2&&!p2.hidden){const z2=p2.style.zoom;p2.style.zoom="";document.body.classList.add("pv-snap");const png2=await htmlToImage.toPng(p2,opt);document.body.classList.remove("pv-snap");p2.style.zoom=z2;
+      const i2=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=png2});let w2=maxW,h2=i2.height*w2/i2.width;if(h2>maxH){h2=maxH;w2=i2.width*h2/i2.height}doc.addPage();doc.addImage(png2,"PNG",m+(maxW-w2)/2,m,w2,h2,undefined,"FAST")}
     const W=state.wps,name=`Kneeboard_${(W[0]&&W[0].name||"").replace(/[^\w-]/g,"")}-${(W.at(-1)&&W.at(-1).name||"").replace(/[^\w-]/g,"")}_${KL.paper}.pdf`,blob=doc.output("blob"),file=new File([blob],name,{type:"application/pdf"});
     if(navigator.canShare&&navigator.canShare({files:[file]})&&/iPad|iPhone|iPod|Android/.test(navigator.userAgent+(navigator.maxTouchPoints>1?"iPad":""))){try{await navigator.share({files:[file],title:name});toast("ส่งออก PDF แล้ว");return}catch(e){if(e.name==="AbortError")return}}
     const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast("บันทึก "+name)}
@@ -4090,8 +4095,16 @@ function pvRibbon(pv,cw){cw.open=true;cw.classList.add("pv-rib");const bar=pv.qu
   const rs=pv.querySelector("#pvReset")||ctl.querySelector('[id*="Reset"],[data-kreset]');if(rs&&!row.contains(rs)){const c=rs.cloneNode(true);c.removeAttribute("id");c.classList.add("rib-b");c.onclick=()=>rs.click();row.appendChild(c)}
   document.addEventListener("pointerdown",e=>{if(!e.target.closest(".pv-rib .kc-g.open,.rib-b"))ctl.querySelectorAll(":scope>.kc-g.open").forEach(x=>{x.classList.remove("open");x._rb.classList.remove("on")})},true)}
 function kbPanelHome(){try{if(map.hasLayer(callLayer))map.removeLayer(callLayer)}catch(e){}if(!kbPanelSaved)return;kbPanelSaved.slice().reverse().forEach(({n,p,nx})=>p.insertBefore(n,nx&&nx.parentNode===p?nx:null));kbPanelSaved=null;const pn=document.querySelector(".pv-panel");if(pn)pn.remove()}
-function pvTblHtml(res,W){return `<table class="pv-tbl"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
-    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(W[i+1].name)}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
+/* ชื่อจุดที่แสดงบน Kneeboard: จุดชื่อกลางๆ (WP2 / จุด 3) ใช้ชื่อจุดที่รู้จักซึ่งอยู่ตรงนั้น (≤ 0.5 NM) เช่น KILO */
+function wpNear(w){let b=null;const c=(nm,la,lo)=>{if(!nm||la==null||!isFinite(+la))return;const d=gcDistNm([+w.lat,+w.lon],[+la,+lo]);if(d<=0.5&&(!b||d<b.d))b={nm:String(nm),d}};
+  try{vfrPtsAll().forEach(({p})=>c(vfrShort(p),p.lat,p.lon))}catch(e){}try{dbAll().forEach(x=>c(x.name||x.dtd,x.lat,x.lon))}catch(e){}try{schFavAll().forEach(f=>c(f.n,f.lat,f.lon))}catch(e){}Object.entries(AP).forEach(([ic,a])=>{if(a)c(ic,a.lat,a.lon)});return b&&b.nm}
+function wpLabel(w,i){const n=String(w&&w.name||"");if(n&&!/^(WP\s*\d+|จุด\s*\d+)$/i.test(n))return n;const k=wpNear(w);if(k)return k;
+  const ed=(state.schEd||{})["w:"+i+":"+n];if(ed&&ed.html){const t=String(ed.html).replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\s+/g," ").trim();if(t)return t}return n||("WP"+(i+1))}
+/* หน้า 1: ตารางจุด CP + พิกัด */
+function pvCpHtml(W){return `<table class="pv-tbl pv-cp"><thead><tr><th>#</th><th>จุด (CP)</th><th>MGRS</th><th>LAT</th><th>LONG</th></tr></thead><tbody>`+
+    W.map((w,i)=>`<tr><td>${i===0?"SP":i===W.length-1?"END":i}</td><td>${w.rp?"▲ ":""}${dbNoTxt(w,true)}<b>${esc(wpLabel(w,i))}</b></td><td>${fmtMgrs(toMgrs(+w.lat,+w.lon))}</td><td>${posFmt(+w.lat,true,"dms",1)}</td><td>${posFmt(+w.lon,false,"dms",1)}</td></tr>`).join("")+`</tbody></table>`}
+function pvTblHtml(res,W){return `<table class="pv-tbl pv-nav"><thead><tr><th>Go To</th><th>GS</th><th>TC</th><th>MH</th><th>Dist</th><th>Rem</th><th>ETE</th><th>ETA</th><th>Fuel</th><th>ATE</th></tr></thead><tbody>`+
+    res.rows.map((r,i)=>`<tr><td>${W[i+1].rp?"▲ ":""}${dbNoTxt(W[i+1],true)}${esc(wpLabel(W[i+1],i+1))}</td><td>${isFinite(r.gs)?r.gs.toFixed(0):"–"}</td><td>${hdg(r.tc)}</td><td><b>${isFinite(r.mh)?hdg(r.mh):"–"}</b></td><td>${r.dist.toFixed(1)}</td><td>${r.rem.toFixed(1)}</td><td>${mmss(r.ete)}</td><td>${hhmm(r.eta)}</td><td>${r.fuel.toFixed(0)}</td><td></td></tr>`).join("")+`</tbody></table>`}
 function pvUnitSync(pv){const u=pv.querySelector(".pv-unit");if(!u)return;const h=ficHtml();u.hidden=!h;u.innerHTML=h}
 /* แก้เส้นทางระหว่างดูตัวอย่าง Kneeboard (เช่น ลากเพิ่มจุด/สนามสำรอง) → อัปเดตหัวกระดาษ ตาราง ความถี่ และรายการความถี่ด้านซ้าย */
 let pvRouteSig="";
@@ -4099,7 +4112,7 @@ function pvRouteRefresh(){const pv=$("#printView");if(!document.body.classList.c
   const sig=W.map(w=>[w.lat.toFixed(5),w.lon.toFixed(5),w.name].join()).join("|");if(sig===pvRouteSig)return;const first=!pvRouteSig;pvRouteSig=sig;if(first)return;
   setTimeout(()=>{const res=compute();if(!res.rows.length)return;const h1=pv.querySelector(".pv-head h1");if(h1)h1.textContent=`${W[0].name} – ${W.at(-1).name}`;
     const q=qnhText(),tot=pv.querySelector(".pv-head .tot");if(tot)tot.innerHTML=`${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}`;
-    const t=pv.querySelector(".pv-tbl");if(t){const d=document.createElement("div");d.innerHTML=pvTblHtml(res,W);t.replaceWith(d.firstElementChild);pv.querySelectorAll(".pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}
+    const t=pv.querySelector(".pv-nav");{const c=pv.querySelector(".pv-cp");if(c){const d=document.createElement("div");d.innerHTML=pvCpHtml(W);c.replaceWith(d.firstElementChild)}const h2=pv.querySelector(".pv-page2 h1");if(h2)h2.textContent=`NAV LOG · ${W[0].name} – ${W.at(-1).name}`}if(t){const d=document.createElement("div");d.innerHTML=pvTblHtml(res,W);t.replaceWith(d.firstElementChild);pv.querySelectorAll(".pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}
     pvUnitSync(pv);const sel=$("#pvUnit");if(sel&&sel.options[0])sel.options[0].textContent="อัตโนมัติตามเส้นทาง"+(ficAreas().length?" ("+ficAreas().join(" → ")+")":"");
     try{kbRender()}catch(e){}if(window._pvCards)window._pvCards()},30)}
 {const r0=render;render=function(...a){const out=r0.apply(this,a);try{pvRouteRefresh()}catch(e){}return out}}
@@ -4121,7 +4134,7 @@ function kneePrint(preview){
     <details class="pv-ctlw pp-sec" ${innerWidth<900?"":"open"}><summary>⚙️ ปรับขนาด / รูปแบบ</summary><div class="pv-ctl">
       <div class="kc-g"><h4>📄 หน้ากระดาษ</h4>
         <label class="kc-r"><span>กระดาษ</span><select data-kl="paper">${["A5","A4"].map(v=>`<option ${v===KL.paper?"selected":""}>${v}</option>`).join("")}</select></label>
-        <label class="kc-r kc-ck"><span>ตารางนำทาง</span><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}></label>
+        <label class="kc-r kc-ck"><span>ตารางจุด CP + พิกัด (หน้า 1)</span><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}></label><label class="kc-r kc-ck"><span>NAV LOG (หน้า 2)</span><input type="checkbox" data-kl="nav2" ${KL.nav2!==false?"checked":""}></label>
         <label class="kc-r kc-ck" title="ยืดความสูงแผนที่ให้เต็มหน้ากระดาษอัตโนมัติ"><span>แผนที่เต็มหน้า</span><input type="checkbox" data-kl="fill" ${KL.fill?"checked":""}></label>
         ${kcR("กว้างแผนที่","mapw",60,(KB_PAPER[KL.paper]||KB_PAPER.A5).w-10,2,KL," mm")}${kcR("สูงแผนที่","maph",80,(KB_PAPER[KL.paper]||KB_PAPER.A5).h-20,2,KL," mm")}</div>
       <div class="kc-g"><h4>〰️ เส้นทาง</h4>
@@ -4141,14 +4154,15 @@ function kneePrint(preview){
         <label class="kc-r"><span>ความถี่พื้นที่ (FIC)</span><select id="pvUnit">${[["auto","อัตโนมัติ"+(ficAreas().length?" ("+ficAreas().join(" → ")+")":"")],...UNIT_FREQS.map(v=>[v,v]),["none","— ไม่แสดง —"]].concat(ficMode()!=="auto"&&ficMode()!=="none"&&!UNIT_FREQS.includes(ficMode())?[[ficMode(),ficMode()]]:[]).map(([v,t])=>`<option value="${esc(v)}" ${v===ficMode()?"selected":""}>${esc(t)}</option>`).join("")}</select></label></div>
       <button id="pvReset" class="mini">↺ ค่าเริ่มต้นทั้งหมด</button></div></details></div>`:""}<div class="pv-page"><div class="pv-head">${state.sa?`<span class="sa">SA ${esc(state.sa)} ft</span>`:""}<h1>${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1>
     <div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.${q!=="–"?`<br>QNH ${esc(q)}`:""}</div></div>
-    <div class="pv-body"><div id="pvMap"></div><div class="pv-side"><div class="pv-unit"${ficText()?"":" hidden"}>${ficHtml()}</div><div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div><div class="pv-cards">${cards}</div></div></div>${tbl}</div>`;
+    <div class="pv-body"><div id="pvMap"></div><div class="pv-side"><div class="pv-unit"${ficText()?"":" hidden"}>${ficHtml()}</div><div class="emerchip" style="text-align:center">EMER 121.5 / 243.0</div><div class="pv-cards">${cards}</div></div></div>${pvCpHtml(W)}</div>
+    <div class="pv-page pv-page2"${KL.nav2===false?" hidden":""}><div class="pv-head"><h1>NAV LOG · ${esc(W[0].name)} – ${esc(W.at(-1).name)}</h1><div class="tot">${res.total.toFixed(1)} NM<br>${mmss(res.cumMin)} m.</div></div>${tbl}</div>`;
   if(preview)pv.querySelectorAll(".pv-head h1,.pv-head .tot,.pv-head .sa,.pv-unit,.emerchip,.pv-cards .fcard h3,.pv-cards .fcard .r b,.pv-cards .fcard .r span,.pv-tbl td,.pv-tbl th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});
   const mapEl=$("#map"),home=mapEl.parentNode,next=mapEl.nextSibling;
   let restore=kbMapApply();const orig={boxScale:state.boxScale,remStep:state.remStep};
   const applyKL=()=>{const P=KB_PAPER[KL.paper]||KB_PAPER.A5;pv.style.setProperty("--pvpw",P.w+"mm");pv.style.setProperty("--pvph",P.h+"mm");setPageSize(KL.paper);
     pv.style.setProperty("--pvrem",KL.remsz);pv.style.setProperty("--pvwp",KL.wpsz);pv.style.setProperty("--pvhd",KL.hd);pv.style.setProperty("--pvtfs",KL.tfs+"pt");pv.style.setProperty("--pvline",KL.line);{const l=4*KL.line,D={dash:`${3*l} ${2*l}`,dot:`0.1 ${1.8*l}`,dashdot:`${3*l} ${1.5*l} 0.1 ${1.5*l}`};pv.style.setProperty("--pvlcol",KL.lcol||"#d6198f");pv.style.setProperty("--pvldash",D[KL.ldash]||"none");pv.style.setProperty("--pvlop",KL.lop??1);
       const lum=h=>{const n=parseInt(String(h).slice(1),16);return((n>>16&255)*.299+(n>>8&255)*.587+(n&255)*.114)/255};pv.style.setProperty("--pvwpc",KL.wpc||"#d6198f");pv.style.setProperty("--pvrpc",KL.rpc||"#ffd400");pv.style.setProperty("--pvrptx",lum(KL.rpc||"#ffd400")>.6?"#111":"#fff");pv.style.setProperty("--pvrpfs",KL.rpfs||1)}
-    pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);
+    pv.style.setProperty("--pvmw",KL.mapw+"mm");pv.style.setProperty("--pvmh",KL.maph+"mm");pv.style.setProperty("--pvfs",KL.fs+"pt");pv.classList.toggle("pv-notbl",!KL.tbl);{const p2=pv.querySelector(".pv-page2");if(p2)p2.hidden=KL.nav2===false}
     state.boxScale=KL.dog;state.remStep=String(KL.rem);render();map.invalidateSize();
     if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
       const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
@@ -4162,7 +4176,10 @@ function kneePrint(preview){
   if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw){pvRibbon(pv,cw);pp.insertAdjacentHTML("afterbegin",'<p class="pp-tip">💡 แตะตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้ (เฉพาะใบนี้) · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>')}}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
     if(window._apMv)map.off("moveend",window._apMv);window._apMv=()=>{if(typeof kbApList==="function"){kbApApply(KL);kbApList(KL,pv)}};map.on("moveend",window._apMv);
-    window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};setTimeout(kbVisRender,80);
+    window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL();
+      /* ติ๊กสนามบินแล้วไม่เห็นอะไร = สนามถูกซ่อนไว้หมดจากรายการ "สนามบินที่แสดงบน Kneeboard" หรือแผง 📂 → เปิดกลับให้ */
+      if(k==="ap"&&on)setTimeout(()=>{const vis=[...document.querySelectorAll("#pvMap .apmk")].filter(e=>e.offsetWidth>0&&getComputedStyle(e).display!=="none");if(vis.length)return;
+        KL.apHide=[];kbLaySave(KL);let ch=0;[...PL_HIDE].forEach(x=>{if(/^(ap:|mil$|oth$)/.test(x)){PL_HIDE.delete(x);ch=1}});if(ch){plSave();try{plApplyAp();custApDraw()}catch(e){}}kbApApply(KL);kbApList(KL,pv);toast("สนามถูกซ่อนไว้ทั้งหมด — เปิดแสดงสนามในกรอบแผนที่ให้แล้ว")},300)};setTimeout(kbVisRender,80);
     window._pvCards=()=>{const c=pv.querySelector(".pv-cards");if(c){c.innerHTML=kbCards();c.querySelectorAll(".fcard h3,.fcard .r b,.fcard .r span").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")})}applyKL()};
     pv.querySelector(".pv-ctl").addEventListener("click",e=>{const b=e.target.closest("[data-lc],[data-sw]");if(!b)return;const k=b.dataset.sw||"lcol",c=pv.querySelector(`[data-kl="${k}"]`);c.value=b.dataset.lc||b.dataset.v;c.dispatchEvent(new Event("input",{bubbles:true}))});
     pv.querySelector(".pv-ctl").addEventListener("input",e=>{const k=e.target.dataset.kl;if(!k)return;KL[k]=e.target.type==="checkbox"?e.target.checked:(e.target.tagName==="SELECT"||e.target.type==="color")?e.target.value:+e.target.value;
@@ -4181,7 +4198,7 @@ function kneePrint(preview){
     $("#pvFreeReset").onclick=()=>{pvFreeStore(KL.paper,{on:true,blocks:{}});reopen()};
     if(pvFreeLoad(KL.paper).on)setTimeout(()=>pvFreeOn(pv,KL),260);
     const fitView=()=>{const pg=pv.querySelector(".pv-page"),bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px");if(!pg)return;
-      pg.style.zoom="";const avail=pv.clientWidth-(innerWidth>1000?412:32),w=pg.offsetWidth;pg.style.zoom=w>avail?Math.max(.4,avail/w).toFixed(3):"";map.invalidateSize()};
+      pg.style.zoom="";const avail=pv.clientWidth-(innerWidth>1000?412:32),w=pg.offsetWidth;pg.style.zoom=w>avail?Math.max(.4,avail/w).toFixed(3):"";{const p2=pv.querySelector(".pv-page2");if(p2)p2.style.zoom=pg.style.zoom}map.invalidateSize()};
     pv.querySelector(".pv-ctlw").addEventListener("toggle",fitView);addEventListener("resize",fitView);window._pvFit=fitView;setTimeout(fitView,120);return}
   window.addEventListener("afterprint",back,{once:true});
   setTimeout(()=>{window.print();},2000)}
@@ -6270,7 +6287,7 @@ function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;
   W.forEach((w,i)=>{const p=pts[i],end=i===0||i===W.length-1,[vx,vy]=ndir[i];
     const rr=(end?8:6.5)*fz*pz,lx=p[0]+vx*(rr+6*fz),ly=p[1]+vy*(rr+6*fz),an=Math.abs(vx)<.35?"m":vx>0?"s":"e";
     g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rr}" fill="${wpc}" stroke="#0f172a" stroke-width="${1.3*fz}"${end?` stroke-width="${2.2*fz}"`:""}/>`;
-    T(`w:${i}:${w.name}`,lx,ly+(Math.abs(vx)<.35?vy*4*fz:0),String(w.name||("WP"+(i+1))),{fs:end?11:10,fw:800,a:an})});
+    T(`w:${i}:${w.name}`,lx,ly+(Math.abs(vx)<.35?vy*4*fz:0),String((/^(WP\s*\d+|จุด\s*\d+)$/i.test(w.name||"")&&wpNear(w))||w.name||("WP"+(i+1))),{fs:end?11:10,fw:800,a:an})});
   g+=`<g transform="translate(${bw-18*fz},${20*fz})"><path d="M0 ${-12*fz} L${5*fz} ${4*fz} L0 0 L${-5*fz} ${4*fz}Z" fill="#111"/></g>`;T("n",bw-18*fz,30*fz,"N",{fs:9,fw:800});
   const html=`<svg class="pv-sch" viewBox="0 0 ${bw} ${bh}" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
   if(svg)svg.outerHTML=html;else box.insertAdjacentHTML("beforeend",html);
