@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-20T18:23Z",
+"fetched": "2026-11-20T20:16Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1084,6 +1084,15 @@
 },
 {
 "loc": "VTBS",
+"id": "A4673/26",
+"icao": "A4673/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611201912 C) 2611202315\r\nE) ILS RWY 02R/20L U/S",
+"plain": " ",
+"start": "11/20/2026 1912",
+"end": "11/20/2026 2315",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBS",
 "id": "A4639/26",
 "icao": "A4639/26 NOTAMN\r\nQ) VTBB/QMPLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611201700 C) 2611202300\r\nE) ACFT STAND NR S114 CLSD DUE TO WIP",
 "plain": " ",
@@ -1098,15 +1107,6 @@
 "plain": " ",
 "start": "11/20/2026 1930",
 "end": "11/20/2026 2300",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4672/26",
-"icao": "A4672/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611201609 C) 2611202200\r\nE) ILS RWY 03L/21R U/S",
-"plain": " ",
-"start": "11/20/2026 1609",
-"end": "11/20/2026 2200",
 "keyword": "INTERNATIONAL"
 },
 {
