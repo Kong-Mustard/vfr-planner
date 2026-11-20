@@ -290,6 +290,22 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+.pvb-mode{position:relative}.pvb-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:3300;background:#fff;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.35);padding:6px;display:flex;flex-direction:column;gap:4px;min-width:230px}
+.pvb-menu[hidden]{display:none!important}.pvb-menu .pvb-btn{justify-content:flex-start;width:100%;text-align:left}.pvb-menu .pvb-btn span{display:inline!important}#pvEditBtn.on{background:#2563eb;color:#fff}
+.pp-tabs{display:flex;gap:4px;background:#f1f5f9;border-radius:12px;padding:4px;margin:0 0 10px;position:sticky;top:-10px;z-index:2}
+.pp-tabs button{flex:1;border:0;background:none;color:#64748b;font:800 14.5px var(--f-body);padding:9px 0;border-radius:9px;min-height:40px}.pp-tabs button.on{background:#fff;color:#0f172a;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.pp-tab[hidden]{display:none!important}.pv-ctl-tab>summary{display:none}.pp-tip2{margin-top:12px;font-size:12px}
+body.pvprev .pv-panel .pp-tab .pv-ctl{display:flex!important;flex-direction:column;gap:10px!important}
+.kc-quick{border:1px solid #e2e8f0;border-radius:12px;padding:8px 10px}.kc-quick h4{margin:0 0 4px;font:800 13.5px var(--f-display);color:#334155}
+.kc-fine>summary{cursor:pointer;color:#2563eb;font-weight:800;padding:8px 2px;font-size:14px}.kc-fine[open]>summary{margin-bottom:6px}.kc-fine>.kc-g{margin:0 0 8px!important}
+#kbMapSeg .km-x:not(.on){display:none}#kbMapSeg.more .km-x{display:block}#kbMapSeg .km-more{font-size:12.5px;color:#64748b}
+.pv-panel #kbMapSeg{display:grid!important;grid-template-columns:repeat(4,1fr)!important}
+.kv-quick{display:flex;flex-direction:column;margin:10px 0 4px}.kv-quick>b{font-size:12.5px;color:#64748b;margin:0 2px 4px}
+.kv-sw{display:flex!important;align-items:center;justify-content:space-between;gap:10px;padding:8px 4px!important;border-bottom:1px solid #f1f5f9;font-size:15px!important;font-weight:600;cursor:pointer}
+.kv-sw input{appearance:none;-webkit-appearance:none;flex:none;width:46px!important;height:28px!important;border-radius:99px;background:#cbd5e1;position:relative;margin:0;cursor:pointer;transition:background .15s}
+.kv-sw input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .15s}.kv-sw input:checked{background:#22c55e}.kv-sw input:checked::after{left:21px}
+.pv-panel .kv-quick label.kv-sw{flex-direction:row!important;justify-content:space-between!important;align-items:center!important;text-align:left!important;width:100%}
+.kv-more>summary{cursor:pointer;color:#2563eb;font-weight:800;padding:8px 2px;font-size:14px}
 .pl-r[data-tone]{--tc:#64748b;background:color-mix(in srgb,var(--tc) 13%,transparent);box-shadow:inset 3px 0 0 var(--tc);margin:2px 0}
 .pl-r[data-tone]:hover{background:color-mix(in srgb,var(--tc) 24%,transparent)}
 .pl-r[data-tone=root]{--tc:#94a3b8;font-weight:800}.pl-r[data-tone=ap]{--tc:#3b82f6;font-weight:700}.pl-r[data-tone=apm]{--tc:#60a5fa}
@@ -2092,7 +2108,7 @@ body.cl-on{overflow:hidden}
     <div class="btns"><button id="kbDA" class="mini">เฉพาะต้นทาง/ปลายทาง</button><button id="kbAll" class="mini">เลือกทั้งหมด</button><button id="kbNone" class="mini">ล้าง</button></div></div>
   <div class="kb-map"><b>🗺️ แผนที่ใน Kneeboard</b>
     <div class="seg kb-seg" id="kbMapSeg" role="group" aria-label="ชนิดแผนที่">
-      <button data-km="sat" class="on">ดาวเทียม</button><button data-km="topo">ภูมิประเทศ</button><button data-km="osm">ถนน (OSM)</button><button data-km="chart">พื้นขาวชาร์ต</button><button data-km="sch" title="ไม่มีแผนที่ข้างหลัง — เส้นต่อจุด + ทิศ/ระยะทุกขา + จุดแยกเป็นเส้นประ">📐 แผนผังเส้นทาง</button><button data-km="route">✏️ เฉพาะเส้นทาง (วาดมือต่อ)</button></div>
+      <button data-km="sat" class="on">ดาวเทียม</button><button data-km="topo">ภูมิประเทศ</button><button data-km="osm" class="km-x">ถนน (OSM)</button><button data-km="chart">พื้นขาว</button><button data-km="sch" title="ไม่มีแผนที่ข้างหลัง — เส้นต่อจุด + ทิศ/ระยะทุกขา + จุดแยกเป็นเส้นประ">📐 แผนผังเส้นทาง</button><button data-km="route" class="km-x">✏️ เฉพาะเส้นทาง (วาดมือต่อ)</button><button type="button" class="km-more" onclick="this.parentNode.classList.toggle('more')">⋯ แบบอื่น</button></div>
     <div class="kb-opts" hidden><label><input type="checkbox" id="kbLayers" checked> พื้นที่ P/R/D · CTR · NOTAM · สนามบิน</label><label><input type="checkbox" id="kbDog" checked> กล่อง doghouse</label><label><input type="checkbox" id="kbNames" checked> ชื่อสถานที่</label></div><div id="kbVis" class="kb-vis"></div></div>
   <div id="kbBody" class="kb-body"></div>
   <div class="kb-foot"><span id="kbCount" class="hint"></span>
@@ -3767,9 +3783,13 @@ function kbVisRender(){const box=$("#kbVis");if(!box)return;const ro=kbMapMode==
   const sch=kbMapMode==="sch";box.hidden=sch;let so=$("#kbSchOpt");if(!so){box.insertAdjacentHTML("beforebegin",'<div id="kbSchOpt" class="kb-schopt" hidden><label><input type="checkbox" id="kbSchCards"> วางกล่องความถี่ในแผนผัง</label><p class="hint">แตะป้าย/ชื่อ/กล่องบนแผนผังเพื่อ ย้าย · หมุน · ย่อ-ขยาย · แก้ข้อความ · จุดแยก (สนาม/พื้นที่อื่น) เพิ่มที่แท็บ 1</p></div>');so=$("#kbSchOpt");
     $("#kbSchCards").onchange=e=>{const K=kbLay();K.schCards=e.target.checked;kbLaySave(K);if(window._pvRemap)window._pvRemap()}}
   so.hidden=!sch;$("#kbSchCards").checked=!!kbLay().schCards;if(sch)return;
-  box.innerHTML='<p class="hint">เปิด/ปิดตรงนี้ = เปิด/ปิดที่แท็บ 1 ด้วย (ชุดเดียวกัน)</p>'+[...new Set(VIS.map(v=>v.g))].map(g=>{const its=VIS.filter(v=>v.g===g&&visMode(v));if(!its.length)return"";
-    return`<div class="kv-g"><b>${g}</b><div>${its.map(v=>`<label><input type="checkbox" data-kbvis="${v.k}" ${visOn(v.k)?"checked":""}>${v.c?`<i style="background:${v.c}"></i>`:""}${esc(v.t)}</label>`).join("")}</div></div>`}).join("")}
-$("#kbVis").addEventListener("change",e=>{const c=e.target.closest("[data-kbvis]");if(!c)return;const k=c.dataset.kbvis,on=c.checked;
+  const QK=["route","hbox","vfr","ap"],PRD=["P","R","D"],vOk=k=>VIS.some(v=>v.k===k&&visMode(v)),sw=(attr,on,t)=>`<label class="kv-sw"><span>${t}</span><input type="checkbox" ${attr} ${on?"checked":""}></label>`;
+  const quick=QK.filter(vOk).map(k=>sw(`data-kbvis="${k}"`,visOn(k),{route:"เส้นทาง + จุด",hbox:"กล่อง heading (doghouse)",vfr:"จุดรายงาน VFR",ap:"สนามบิน / ฮ."}[k])).join("")+(PRD.some(vOk)?sw(`data-kbvisg="P,R,D"`,PRD.some(k=>vOk(k)&&visOn(k)),"พื้นที่ P / R / D"):"");
+  const rest=VIS.filter(v=>visMode(v)&&!QK.includes(v.k)&&!PRD.includes(v.k));
+  box.innerHTML=`<div class="kv-quick"><b>แสดงบนแผนที่ (ที่ใช้บ่อย)</b>${quick}</div><details class="kv-more"${window._kvMore?" open":""}><summary>ชั้นข้อมูลอื่น (${rest.length}) — VOR, Waypoint, CTR, NOTAM, สายไฟ…</summary><p class="hint">เปิด/ปิดตรงนี้ = เปิด/ปิดที่แท็บ 1 ด้วย</p>`+[...new Set(VIS.map(v=>v.g))].map(g=>{const its=rest.filter(v=>v.g===g);if(!its.length)return"";
+    return`<div class="kv-g"><b>${g}</b><div>${its.map(v=>`<label><input type="checkbox" data-kbvis="${v.k}" ${visOn(v.k)?"checked":""}>${v.c?`<i style="background:${v.c}"></i>`:""}${esc(v.t)}</label>`).join("")}</div></div>`}).join("")+"</details>";box.querySelector(".kv-more").addEventListener("toggle",e=>{window._kvMore=e.target.open})}
+$("#kbVis").addEventListener("change",e=>{const g=e.target.closest("[data-kbvisg]");if(g){g.dataset.kbvisg.split(",").forEach(k=>{if(window._pvVis)window._pvVis(k,g.checked);else{visSet(k,g.checked);visSave()}});kbVisRender();return}
+  const c=e.target.closest("[data-kbvis]");if(!c)return;const k=c.dataset.kbvis,on=c.checked;
   if(window._pvVis)window._pvVis(k,on);else{visSet(k,on);visSave()}if(on&&k==="enr")drawEnr();if(k==="ifr")drawIfr();if(k==="pwr"&&on){pwrWarn();pwrDraw()}kbVisRender()});
 ["#kbLayers","#kbNames"].forEach(id=>$(id).addEventListener("change",()=>{if(window._pvRemap)window._pvRemap()}));
 $("#kbDog").addEventListener("change",e=>{visSet("hbox",e.target.checked);visSave();if(window._pvRemap)window._pvRemap()});
@@ -4085,6 +4105,24 @@ function kbPanelOpen(pv){const dlg=$("#kbDlg"),nodes=[dlg.querySelector(".kb-map
   panel.querySelector(".pp-map").appendChild(nodes[0]);panel.querySelector(".pp-btns").appendChild(nodes[1]);panel.querySelector(".pp-count").appendChild(nodes[2]);panel.querySelector(".pp-body").appendChild(nodes[3]);
   pv.appendChild(panel);kbRender()}
 /* ---------- แถบ "ปรับขนาด / รูปแบบ" ด้านบน (แบบแถบจัดหน้าอิสระ): ปุ่มกลุ่ม → เมนูลงมา · สีเส้นกดได้บนแถบเลย ---------- */
+/* Kneeboard แผงซ้าย 3 แท็บ: 🗺 แผนที่ · 📻 ความถี่ · 🎨 รูปแบบ — เห็นเฉพาะที่ใช้บ่อย ที่เหลือพับไว้ */
+function pvTabs(pv,pp,cw){const secs=[...pp.querySelectorAll(":scope>details.pp-sec")];const T={map:document.createElement("div"),frq:document.createElement("div"),sty:document.createElement("div")};
+  secs.forEach((d,i)=>{const t=i?T.frq:T.map;[...d.children].filter(c=>c.tagName!=="SUMMARY").forEach(c=>t.appendChild(c));d.remove()});
+  T.map.insertAdjacentHTML("beforeend",'<p class="hint pp-tip2">💡 แตะตัวหนังสือบนกระดาษเพื่อพิมพ์แก้ · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>');
+  cw.open=true;cw.classList.add("pv-ctl-tab");T.sty.appendChild(cw);const ctl=cw.querySelector(".pv-ctl");
+  const q=document.createElement("div");q.className="kc-quick";q.innerHTML='<h4>ที่ใช้บ่อย</h4>';const take=sel=>{const el=ctl.querySelector(sel);const r=el&&el.closest(".kc-r");if(r)q.appendChild(r);return r};
+  take('[data-kl="paper"]');take('[data-kl="tbl"]');take('[data-kl="nav2"]');{const sw=ctl.querySelector("[data-lc]");const r=sw&&sw.closest(".kc-r");if(r)q.appendChild(r)}{const r=take('[data-kl="rpfs"]');if(r)r.querySelector("span").textContent="ขนาดชื่อจุด / สนาม"}
+  const fine=document.createElement("details");fine.className="kc-fine";fine.innerHTML='<summary>ปรับละเอียด — ขนาดแผนที่ · ความหนาเส้น · หมุด · callout · ตัวอักษร · สนามบินที่แสดง</summary>';
+  ctl.querySelectorAll(":scope>.kc-g").forEach(g=>fine.appendChild(g));ctl.prepend(q);ctl.appendChild(fine);
+  const tabs=document.createElement("div");tabs.className="pp-tabs";tabs.setAttribute("role","tablist");tabs.innerHTML='<button type="button" data-ptab="map">🗺 แผนที่</button><button type="button" data-ptab="frq">📻 ความถี่</button><button type="button" data-ptab="sty">🎨 รูปแบบ</button>';
+  pp.innerHTML="";pp.appendChild(tabs);Object.entries(T).forEach(([k,el])=>{el.className="pp-tab";el.dataset.ptab=k;pp.appendChild(el)});
+  const go=k=>{tabs.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.ptab===k));pp.querySelectorAll(".pp-tab").forEach(t=>t.hidden=t.dataset.ptab!==k);try{localStorage.setItem("vfr_pvtab",k)}catch(e){}};
+  tabs.addEventListener("click",e=>{const b=e.target.closest("[data-ptab]");if(b)go(b.dataset.ptab)});let k0="map";try{k0=localStorage.getItem("vfr_pvtab")||"map"}catch(e){}go(T[k0]?k0:"map")}
+function pvEditMenu(pv){const b=pv.querySelector("#pvEditBtn"),m=pv.querySelector(".pvb-menu");if(!b||!m)return;const rs=pv.querySelector("#pvReset");
+  if(rs){const c=document.createElement("button");c.type="button";c.className="pvb-btn";c.innerHTML="↺ <span>ค่าเริ่มต้นทั้งหมด</span>";c.onclick=()=>rs.click();m.appendChild(c);rs.hidden=true}
+  const sync=()=>b.classList.toggle("on",!!pv.querySelector("#pvFreeBtn.on,#pvInkBtn.on"));
+  b.onclick=e=>{e.stopPropagation();m.hidden=!m.hidden};m.addEventListener("click",()=>{m.hidden=true;setTimeout(sync,60);setTimeout(sync,400)});
+  document.addEventListener("pointerdown",e=>{if(!e.target.closest(".pvb-mode"))m.hidden=true},true)}
 function pvRibbon(pv,cw){cw.open=true;cw.classList.add("pv-rib");const bar=pv.querySelector(".pv-bar");if(bar)bar.appendChild(cw);const ctl=cw.querySelector(".pv-ctl");
   const row=document.createElement("div");row.className="rib-row";ctl.prepend(row);
   ctl.querySelectorAll(":scope>.kc-g").forEach((g,i)=>{const h=g.querySelector("h4");const b=document.createElement("button");b.type="button";b.className="rib-b";b.innerHTML=(h?h.innerHTML:"กลุ่ม "+(i+1))+' <span class="rib-car">▾</span>';row.appendChild(b);g._rb=b;b._g=g;
@@ -4123,7 +4161,7 @@ function kneePrint(preview){
   const cards=kbCards();
   const tbl=pvTblHtml(res,W);
   const q=qnhText();
-  pv.innerHTML=`${preview?`<div class="pv-bar"><div class="pvb-t"><b>Kneeboard</b><span id="pvFit" class="pvb-fit"></span></div><div class="pvb-mode" role="group" aria-label="โหมดแก้ไข"><button id="pvFreeBtn" class="pvb-btn" title="ลาก/ย่อขยายแต่ละส่วน เพิ่มกล่องข้อความ จัดรูปแบบตัวอักษร">⠿ <span>จัดหน้าอิสระ</span></button><button id="pvInkBtn" class="pvb-btn" title="ปากกา · ไฮไลต์ · ข้อความ · สัญลักษณ์ — ติดไปกับ PDF/พิมพ์">🖊 <span>วาด / เขียน</span></button></div><div class="pvb-out"><button id="pvPdf" class="primary" title="สร้างไฟล์ PDF ในเครื่อง (ใช้บน iPad / มือถือได้)">📄 <span>บันทึก PDF</span></button><button id="pvPrint" title="พิมพ์">🖨️<span class="pvb-lg"> พิมพ์</span></button><button id="pvClose" class="pvb-x" title="ปิด">✕</button></div>
+  pv.innerHTML=`${preview?`<div class="pv-bar"><div class="pvb-t"><b>Kneeboard</b><span id="pvFit" class="pvb-fit"></span></div><div class="pvb-mode" role="group" aria-label="โหมดแก้ไข"><button id="pvEditBtn" class="pvb-btn" aria-haspopup="true">✏️ <span>แก้ไขหน้า</span> ▾</button><div class="pvb-menu" hidden><button id="pvFreeBtn" class="pvb-btn" title="ลาก/ย่อขยายแต่ละส่วน เพิ่มกล่องข้อความ จัดรูปแบบตัวอักษร">⠿ <span>จัดหน้าอิสระ</span></button><button id="pvInkBtn" class="pvb-btn" title="ปากกา · ไฮไลต์ · ข้อความ · สัญลักษณ์ — ติดไปกับ PDF/พิมพ์">🖊 <span>วาด / เขียน</span></button></div></div><div class="pvb-out"><button id="pvPdf" class="primary" title="สร้างไฟล์ PDF ในเครื่อง (ใช้บน iPad / มือถือได้)">📄 <span>บันทึก PDF</span></button><button id="pvPrint" title="พิมพ์">🖨️<span class="pvb-lg"> พิมพ์</span></button><button id="pvClose" class="pvb-x" title="ปิด">✕</button></div>
     <div class="pv-free-tools ink-bar" hidden>
       <div class="ink-g"><button data-fx="bold" title="ตัวหนา"><b>B</b></button><button data-fx="italic" title="ตัวเอียง"><i>I</i></button><button data-fx="underline" title="ขีดเส้นใต้"><u>U</u></button><label class="pv-colorl" title="สีตัวอักษร"><input type="color" id="pvColor" value="#c62f24"></label></div>
       <div class="ink-g"><button data-fx="justifyLeft" title="ชิดซ้าย">⯇≡</button><button data-fx="justifyCenter" title="กึ่งกลาง">≡</button><button data-fx="justifyRight" title="ชิดขวา">≡⯈</button><button data-fz="-1" title="ย่อกล่องที่เลือก">A−</button><button data-fz="1" title="ขยายกล่องที่เลือก">A+</button></div>
@@ -4173,7 +4211,7 @@ function kneePrint(preview){
   let done=false;const back=()=>{if(done)return;done=true;setTimeout(()=>{try{saPosApply()}catch(e){}},0);pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");try{saPosApply()}catch(e){}
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
-  if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw){pvRibbon(pv,cw);pp.insertAdjacentHTML("afterbegin",'<p class="pp-tip">💡 แตะตัวหนังสือบนหน้ากระดาษเพื่อพิมพ์แก้ (เฉพาะใบนี้) · ลาก/ซูมแผนที่ · ลากกล่อง doghouse</p>')}}
+  if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw)pvTabs(pv,pp,cw);pvEditMenu(pv)}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
     if(window._apMv)map.off("moveend",window._apMv);window._apMv=()=>{if(typeof kbApList==="function"){kbApApply(KL);kbApList(KL,pv)}};map.on("moveend",window._apMv);
     window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL();
