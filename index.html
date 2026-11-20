@@ -184,6 +184,9 @@ body.pv-route #pvMap #map,body.pv-route #pvMap .leaflet-container{background:#ff
 #printView.pv-notbl .pv-cp{display:none}
 body.pvprev .pv-page2{margin-top:8mm!important}.pv-page2[hidden]{display:none!important}.pv-page2 .pv-tbl{margin-top:2mm}
 .pv-cp td{vertical-align:middle;min-width:6mm;height:1.3em}
+.pv-cp.cp-fx{table-layout:fixed}.pv-cp.cp-fx td,.pv-cp.cp-fx th{overflow:hidden;overflow-wrap:anywhere}#printView .pv-cp th{position:relative}.cp-rz{position:absolute;top:0;right:-4px;width:8px;height:100%;cursor:col-resize;z-index:2;user-select:none}.cp-rz:hover,.cp-rz:active{background:rgba(37,99,235,.45)}
+.cp-tip{position:fixed;z-index:3500;background:#fff;border:1px solid #64748b;border-radius:4px;padding:2px 6px;font:12px var(--f-body);color:#0f172a;pointer-events:none}.cp-tip[hidden]{display:none}
+body.pv-snap .cp-rz{display:none}@media print{.cp-rz{display:none}}
 .cp-bar{position:fixed;z-index:3400;display:flex;flex-wrap:wrap;gap:4px;align-items:center;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.35);padding:5px;max-width:calc(100vw - 16px)}.cp-bar[hidden]{display:none}
 .cp-bar button{border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:8px;font:700 13px var(--f-body);padding:5px 9px;min-height:34px}.cp-bar button:disabled{opacity:.35}.cp-bar .danger{color:#dc2626}.cp-bar .cp-sw{width:30px;padding:0;background:var(--c,#fff)}.cp-bar .cp-sep{width:1px;height:24px;background:#e2e8f0}
 body.pv-snap .cp-bar{display:none!important}@media print{.cp-bar{display:none!important}}.pv-cp td:first-child{text-align:center!important;font-size:1.05em}.pv-cp td:nth-child(2){text-align:center;font-family:var(--f-body)}.pv-cp th{line-height:1.15}
@@ -4160,14 +4163,15 @@ function wpLandmark(w){if(w.lm)return w.lm;let b=null;try{vfrPtsAll().forEach(({
 /* ตารางหน้า 1 แก้แบบ Excel: เพิ่ม/ลบ แถว-คอลัมน์ · ไฮไลต์แถว · พิมพ์ในช่องได้ทุกช่อง (จำไว้กับแผนนี้)
    state.cpT = {cols:[คีย์คอลัมน์], cust:{คีย์:หัวข้อ}, rows:[{k,after}] แถวที่เพิ่ม, hide:{แถวจุดที่ซ่อน}, hl:{แถว:สี}, v:{"แถว|คอลัมน์":ข้อความ}} */
 const CP_BASE={pt:"POINT",lm:"Landmark",rad:"Radial/DME",mgrs:"MGRS",pre:"PRESET"};
-function cpT(){const t=state.cpT||(state.cpT={});t.cols=t.cols||Object.keys(CP_BASE);t.cust=t.cust||{};t.rows=t.rows||[];t.hide=t.hide||{};t.hl=t.hl||{};t.v=t.v||{};return t}
+function cpT(){const t=state.cpT||(state.cpT={});t.cols=t.cols||Object.keys(CP_BASE);t.cust=t.cust||{};t.rows=t.rows||[];t.hide=t.hide||{};t.hl=t.hl||{};t.v=t.v||{};t.w=t.w||{};return t}
 function cpRows(W){const t=cpT(),out=[];const extra=a=>t.rows.filter(r=>r.after===a).forEach(r=>{out.push({k:r.k,x:1});extra(r.k)});extra("top");W.forEach((w,i)=>{if(!t.hide["w"+i])out.push({k:"w"+i,i});extra("w"+i)});
   t.rows.forEach(r=>{if(!out.some(o=>o.k===r.k))out.push({k:r.k,x:1})});return out}
 function pvCpHtml(W){const v=refVor(),id=v?v.id:(kbLay().refVor||"BKK"),t=cpT();
   const head=c=>c==="rad"?`Radial/DME<br>From ${esc(id)}`:esc(CP_BASE[c]||t.cust[c]||"");
   const cell=(r,c)=>{const ov=t.v[r.k+"|"+c];if(ov!=null)return esc(ov);if(r.x)return"";const w=W[r.i];
     if(c==="pt")return`<b>${esc(wpLabel(w,r.i))}</b>`;if(c==="lm")return esc(wpLandmark(w));if(c==="rad")return radDme(v,w);if(c==="mgrs")return fmtMgrs(toMgrs(+w.lat,+w.lon));if(c==="pre"){const m=typeof dbMatch==="function"&&dbMatch(w);return m?esc(m.no):""}return""};
-  return `<table class="pv-tbl pv-cp"><thead><tr>${t.cols.map(c=>`<th data-cc="${c}">${head(c)}</th>`).join("")}</tr></thead><tbody>`+
+  const fx=t.cols.some(c=>t.w[c]);
+  return `<table class="pv-tbl pv-cp${fx?" cp-fx":""}"><colgroup>${t.cols.map(c=>`<col data-cc="${c}"${t.w[c]?` style="width:${t.w[c]}%"`:""}>`).join("")}</colgroup><thead><tr>${t.cols.map(c=>`<th data-cc="${c}">${head(c)}<span class="cp-rz" contenteditable="false" data-rz="${c}" title="ลากเพื่อปรับความกว้าง · ดับเบิลคลิก = พอดีอัตโนมัติ"></span></th>`).join("")}</tr></thead><tbody>`+
     cpRows(W).map(r=>`<tr data-rk="${r.k}"${t.hl[r.k]?` style="background:${esc(t.hl[r.k])}"`:""}>${t.cols.map(c=>`<td data-cc="${c}">${cell(r,c)}</td>`).join("")}</tr>`).join("")+`</tbody></table>`}
 function cpRedraw(focus){const c=document.querySelector("#printView .pv-cp");if(!c)return;const d=document.createElement("div");d.innerHTML=pvCpHtml(state.wps);const tb=d.firstElementChild;
   tb.querySelectorAll("td,th").forEach(el=>{el.contentEditable="true";el.spellcheck=false;el.classList.add("pv-ed")});c.replaceWith(tb);store.set("vfr_current",state);
@@ -4190,10 +4194,19 @@ function cpAct(a,col){const t=cpT(),el=CP_SEL,c=el.dataset.cc,tr=el.closest("tr"
   if(a==="colL"||a==="colR"){const k=nk("c"),i=t.cols.indexOf(c);t.cols.splice(a==="colL"?i:i+1,0,k);t.cust[k]="ใหม่";f=[isTh?null:rk,k]}
   if(a==="hl"&&rk){if(col)t.hl[rk]=col;else delete t.hl[rk]}
   if(a==="delrow"&&rk){if(/^w\d+$/.test(rk))t.hide[rk]=1;else{const r=t.rows.find(x=>x.k===rk);t.rows.forEach(x=>{if(x.after===rk)x.after=r.after});t.rows=t.rows.filter(x=>x.k!==rk)}Object.keys(t.v).forEach(x=>{if(x.startsWith(rk+"|"))delete t.v[x]});delete t.hl[rk];f=null}
-  if(a==="delcol"){if(t.cols.length<=1)return;t.cols=t.cols.filter(x=>x!==c);delete t.cust[c];Object.keys(t.v).forEach(x=>{if(x.endsWith("|"+c))delete t.v[x]});f=null}
+  if(a==="delcol"){if(t.cols.length<=1)return;t.cols=t.cols.filter(x=>x!==c);delete t.cust[c];delete t.w[c];Object.keys(t.v).forEach(x=>{if(x.endsWith("|"+c))delete t.v[x]});f=null}
   if(a==="reset"){if(!confirm("กลับเป็นตารางเริ่มต้น? (แถว/คอลัมน์ที่เพิ่มและข้อความที่พิมพ์ในตารางจะหาย)"))return;delete state.cpT;f=null}
   cpRedraw(f);if(!f){const b=document.querySelector(".cp-bar");if(b)b.hidden=true}}
 document.addEventListener("focusin",e=>{const el=e.target.closest&&e.target.closest(".pv-cp td,.pv-cp th");if(el)cpBar(el)});
+/* ลากขอบหัวคอลัมน์ = ปรับความกว้าง (แบบ Excel) · ดับเบิลคลิกขอบ = กลับเป็นอัตโนมัติ */
+document.addEventListener("pointerdown",e=>{const h=e.target.closest&&e.target.closest(".pv-cp .cp-rz");if(!h)return;e.preventDefault();e.stopPropagation();const tb=h.closest("table"),t=cpT(),c=h.dataset.rz,tw=tb.getBoundingClientRect().width;
+  /* ครั้งแรก: ตรึงความกว้างทุกคอลัมน์ตามที่เห็นอยู่ */const ths=[...tb.querySelectorAll("thead th")];ths.forEach(th=>{const k=th.dataset.cc;if(!t.w[k])t.w[k]=+(th.getBoundingClientRect().width/tw*100).toFixed(2)});tb.classList.add("cp-fx");ths.forEach(th=>{const col=tb.querySelector(`col[data-cc="${th.dataset.cc}"]`);if(col)col.style.width=t.w[th.dataset.cc]+"%"});
+  const i=t.cols.indexOf(c),nb=t.cols[i+1],x0=e.clientX,w0=t.w[c],n0=nb?t.w[nb]:0,mmW=tw/(parseFloat(getComputedStyle(tb).getPropertyValue("zoom"))||1)*25.4/96;
+  let tip=document.querySelector(".cp-tip");if(!tip){tip=document.createElement("div");tip.className="cp-tip";document.body.appendChild(tip)}tip.hidden=false;
+  const mv=ev=>{let d=(ev.clientX-x0)/tw*100;d=Math.max(3-w0,Math.min(d,nb?n0-3:60));t.w[c]=+(w0+d).toFixed(2);if(nb)t.w[nb]=+(n0-d).toFixed(2);
+    [c,nb].forEach(k=>{const col=k&&tb.querySelector(`col[data-cc="${k}"]`);if(col)col.style.width=t.w[k]+"%"});tip.textContent=`ความกว้าง: ${(t.w[c]*mmW/100).toFixed(1)} mm`;tip.style.left=(ev.clientX+12)+"px";tip.style.top=(ev.clientY-30)+"px"};
+  const up=()=>{removeEventListener("pointermove",mv);removeEventListener("pointerup",up);tip.hidden=true;store.set("vfr_current",state)};addEventListener("pointermove",mv);addEventListener("pointerup",up)},true);
+document.addEventListener("dblclick",e=>{const h=e.target.closest&&e.target.closest(".pv-cp .cp-rz");if(!h)return;e.preventDefault();const t=cpT();t.w={};cpRedraw()});
 document.addEventListener("scroll",()=>{const b=document.querySelector(".cp-bar");if(b&&!b.hidden&&CP_SEL&&document.contains(CP_SEL))cpBar(CP_SEL)},true);
 document.addEventListener("pointerdown",e=>{if(!e.target.closest(".pv-cp,.cp-bar")){const b=document.querySelector(".cp-bar");if(b)b.hidden=true}},true);
 /* Enter = ลงช่องล่าง (แถวสุดท้าย = เพิ่มแถวใหม่) · Tab ไปช่องถัดไปตามปกติ */
