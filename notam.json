@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-21T04:17Z",
+"fetched": "2026-11-21T05:20Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1485,15 +1485,6 @@
 "plain": " ",
 "start": "11/21/2026 2300",
 "end": "11/22/2026 0500",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTSS",
-"id": "J7482/26",
-"icao": "J7482/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/AW/000/001/0657N10028E001\r\nA) VTSS B) 2611202300 C) 2611210500\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.2NM \r\n   CENTRE 065715.0N1002820.3E\r\nF) GND G) 66FT AGL",
-"plain": " ",
-"start": "11/20/2026 2300",
-"end": "11/21/2026 0500",
 "keyword": "INTERNATIONAL"
 },
 {
