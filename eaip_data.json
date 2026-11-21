@@ -1,7 +1,7 @@
 {
  "source": "eAIP Thailand (CAAT)",
  "edition": "2026-10-29",
- "fetched": "2026-11-16T03:17",
+ "fetched": "2026-11-21T03:03",
  "airports": {
   "VTBD": {
    "icao": "VTBD",
@@ -14413,7 +14413,7 @@
       "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
-      "dir": "ARR-RWY06/24From ( North)",
+      "dir": "ARR-RWY06/24 ( From North )",
       "seq": [
        [
         "N2",
@@ -14446,7 +14446,7 @@
       "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 06/24",
       "sec": "ARR",
-      "dir": "ARR-RWY06/24From ( South )",
+      "dir": "ARR-RWY06/24 ( From South )",
       "seq": [
        [
         "S2",
@@ -14473,7 +14473,7 @@
       "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
       "sec": "DEP",
-      "dir": "DEP-RWY06To ( North)",
+      "dir": "DEP-RWY06 ( To North)",
       "seq": [
        [
         "C",
@@ -14500,7 +14500,7 @@
       "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 06",
       "sec": "DEP",
-      "dir": "DEP-RWY06To ( South)",
+      "dir": "DEP-RWY06 ( To South)",
       "seq": [
        [
         "E",
@@ -14527,7 +14527,7 @@
       "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
       "sec": "DEP",
-      "dir": "DEP-RWY24To ( North)",
+      "dir": "DEP-RWY24 ( To North)",
       "seq": [
        [
         "S",
@@ -14554,7 +14554,7 @@
       "c": "G",
       "ch": "VFR EXIT PROCEDURE CHART - RWY 24",
       "sec": "DEP",
-      "dir": "DEP-RWY24To ( South)",
+      "dir": "DEP-RWY24 ( To South)",
       "seq": [
        [
         "L",
@@ -19383,6 +19383,13 @@
       "lat": 15.8124722,
       "lon": 102.6074722,
       "man": 1
+     },
+     {
+      "n": "\"R or ROMEO Point Nhong Krung Yai",
+      "lat": 16.633222,
+      "lon": 103.072111,
+      "rd": "R-060 / 19.1D",
+      "ocr": 1
      }
     ],
     "rt": [
@@ -19486,7 +19493,7 @@
       "c": "G",
       "ch": "VFR ENTRY PROCEDURE CHART - RWY 03/21 (SOUTH)",
       "sec": "ARR",
-      "dir": "ARR-RWY03/21 (From East)",
+      "dir": "ARR-RWY 03/21 (From East)",
       "seq": [
        [
         "J",
