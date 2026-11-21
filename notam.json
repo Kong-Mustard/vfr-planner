@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-21T09:09Z",
+"fetched": "2026-11-21T10:11Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1017,15 +1017,6 @@
 "plain": " ",
 "start": "11/20/2026 0100",
 "end": "11/21/2026 1100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCC",
-"id": "A4646/26",
-"icao": "A4646/26 NOTAMN\r\nQ) VTBB/QOBCE/IV/M/A/000/999/1847N09858E001\r\nA) VTCC B) 2611200200 C) 2611211000\r\nD) DAILY 0200-1000\r\nE) OBST MOBILE CRANE HGT 105FT AGL ERECTED AT 184635.34N0985803.12E\r\n   DIST 473M BEYOND THR RWY 18 AND 417M LEFT SIDE OF RCL",
-"plain": " ",
-"start": "11/20/2026 0200",
-"end": "11/21/2026 1000",
 "keyword": "INTERNATIONAL"
 },
 {
