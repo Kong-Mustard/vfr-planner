@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-21T15:10Z",
+"fetched": "2026-11-21T16:07Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -954,15 +954,6 @@
 "plain": " ",
 "start": "11/21/2026 1000",
 "end": "11/21/2026 1659",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7477/26",
-"icao": "J7477/26 NOTAMN\r\nQ) VTBB/QWLLW/IV/NBO/W/000/060/1716N10207E010\r\nA) VTBB B) 2611211200 C) 2611211558\r\nE) SKY LANTERN (KHOMLOY) WILL BE RELEASED AT 171606.9N1020705.5E\r\n   (NA WANG DISTRICT NONG BUA LAM PHU PROVINCE) DIRECTION UNKNOWN\r\nF) GND G) 6000FT AGL",
-"plain": " ",
-"start": "11/21/2026 1200",
-"end": "11/21/2026 1558",
 "keyword": "INTERNATIONAL"
 },
 {
