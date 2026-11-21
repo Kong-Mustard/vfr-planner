@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-21T01:41Z",
+"fetched": "2026-11-21T03:18Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -936,6 +936,15 @@
 "plain": " ",
 "start": "11/18/2026 2030",
 "end": "11/21/2026 2145",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "J7498/26",
+"icao": "J7498/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/007/1345N10037E001\r\nA) VTBB B) 2611211000 C) 2611211659\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.55NM CENTRE\r\n   134515.30N1003717.00E (BANG KAPI, SUAN LUANG AND\r\n   WANG THONGLANG DISTRICT BANGKOK)\r\nF) GND G) 700FT AGL",
+"plain": " ",
+"start": "11/21/2026 1000",
+"end": "11/21/2026 1659",
 "keyword": "INTERNATIONAL"
 },
 {
