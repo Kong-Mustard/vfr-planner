@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-22T12:02Z",
+"fetched": "2026-11-22T13:24Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -828,6 +828,15 @@
 "plain": " ",
 "start": "11/23/2026 0630",
 "end": "11/24/2026 0400",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "A4684/26",
+"icao": "A4684/26 NOTAMN\r\nQ) VTBB/QANCA/I/BO/E/130/460/1354N10036E999\r\nA) VTBB B) 2611230000 C) 2611232359\r\nE) CDR Y5 (RNAV 2) AVBL FOR FLIGHT PLANNING AS FLW:\r\n   PERIOD      : MEA LOWER/UPPER LIMITS\r\n   0000-2359     FL130/FL460",
+"plain": " ",
+"start": "11/23/2026 0000",
+"end": "11/23/2026 2359",
 "keyword": "INTERNATIONAL"
 },
 {
