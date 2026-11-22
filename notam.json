@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-22T10:09Z",
+"fetched": "2026-11-22T11:06Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -999,24 +999,6 @@
 "plain": " ",
 "start": "11/22/2026 1300",
 "end": "11/22/2026 1437",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTPH",
-"id": "J7350/26",
-"icao": "J7350/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/AW/000/003/1235N09957E001\r\nA) VTPH B) 2611212330 C) 2611221100\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.038NM CENTRE\r\n   123436.43N0995726.56E\r\nF) GND G) 295FT AGL",
-"plain": " ",
-"start": "11/21/2026 2330",
-"end": "11/22/2026 1100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCT",
-"id": "J7479/26",
-"icao": "J7479/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/AW/000/002/2000N09954E001\r\nA) VTCT B) 2611192300 C) 2611221100\r\nD) DAILY 2300-1100\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.35NM CENTRE\r\n   200007.83N0995353.72E\r\nF) GND G) 132FT AGL",
-"plain": " ",
-"start": "11/19/2026 2300",
-"end": "11/22/2026 1100",
 "keyword": "INTERNATIONAL"
 },
 {
