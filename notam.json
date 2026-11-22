@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-22T11:06Z",
+"fetched": "2026-11-22T12:02Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -849,6 +849,15 @@
 "keyword": "INTERNATIONAL"
 },
 {
+"loc": "VTCC",
+"id": "A4682/26",
+"icao": "A4682/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1846N09858E005\r\nA) VTCC B) 2611221230 C) 2611230100\r\nE) TWY Q BTN TWY F AND ACFT STAND NR 20R CLSD\r\n   DUE TO TEMPO ACFT PRKG",
+"plain": " ",
+"start": "11/22/2026 1230",
+"end": "11/23/2026 0100",
+"keyword": "INTERNATIONAL"
+},
+{
 "loc": "VTBS",
 "id": "A4663/26",
 "icao": "A4663/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611221900 C) 2611222230\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY B BTN TWY C9 AND TWY B13 \r\n   -TWY B7 TO TWY B13",
@@ -1233,6 +1242,15 @@
 "plain": " ",
 "start": "11/09/2026 0238",
 "end": "11/23/2026 1500",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTUD",
+"id": "A4683/26",
+"icao": "A4683/26 NOTAMN\r\nQ) VTBB/QFAAH/IV/BO/A/000/999/1723N10247E005\r\nA) VTUD B) 2611221500 C) 2611221600\r\nE) AD OPR HR ATS AND ARO HR SER EXTD TO 1600",
+"plain": " ",
+"start": "11/22/2026 1500",
+"end": "11/22/2026 1600",
 "keyword": "INTERNATIONAL"
 },
 {
