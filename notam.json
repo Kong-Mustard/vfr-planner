@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-23T00:01Z",
+"fetched": "2026-11-23T01:44Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -855,15 +855,6 @@
 "plain": " ",
 "start": "11/23/2026 1200",
 "end": "11/23/2026 1300",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCC",
-"id": "A4682/26",
-"icao": "A4682/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1846N09858E005\r\nA) VTCC B) 2611221230 C) 2611230100\r\nE) TWY Q BTN TWY F AND ACFT STAND NR 20R CLSD\r\n   DUE TO TEMPO ACFT PRKG",
-"plain": " ",
-"start": "11/22/2026 1230",
-"end": "11/23/2026 0100",
 "keyword": "INTERNATIONAL"
 },
 {
