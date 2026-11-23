@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-23T04:40Z",
+"fetched": "2026-11-23T06:31Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -855,6 +855,15 @@
 "plain": " ",
 "start": "11/24/2026 1100",
 "end": "11/24/2026 1300",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "J7514/26",
+"icao": "J7514/26 NOTAMN\r\nQ) VTBB/QWMLW/IV/BO/W/000/020/1601N10335E002\r\nA) VTBB B) 2611241230 C) 2611241245\r\nE) FIREWORKS DISPLAY WILL TAKE PLACE RADIUS 2NM CENTRE\r\n   160046.90N1033450.60E (MUEANG DISTRICT ROI ET PROVINCE)\r\nF) GND G) 2000FT AGL",
+"plain": " ",
+"start": "11/24/2026 1230",
+"end": "11/24/2026 1245",
 "keyword": "INTERNATIONAL"
 },
 {
