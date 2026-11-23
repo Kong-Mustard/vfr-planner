@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-23T22:14Z",
+"fetched": "2026-11-23T23:16Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1530,15 +1530,6 @@
 "plain": " ",
 "start": "08/28/2026 1000",
 "end": "11/28/2026 1000",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTSP",
-"id": "A4696/26",
-"icao": "A4696/26 NOTAMN\r\nQ) VTBB/QCSAS/I/BO/AE/000/999/0808N09820E256\r\nA) VTSP B) 2611231800 C) 2611232300\r\nE) SSR U/S DUE TO MAINT",
-"plain": " ",
-"start": "11/23/2026 1800",
-"end": "11/23/2026 2300",
 "keyword": "INTERNATIONAL"
 },
 {
