@@ -313,6 +313,7 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
 .pl-off{display:none!important}
+#printView .pv-free-tools{display:none!important}.pvb-mh{margin:4px 6px 2px;font-size:11.5px;max-width:240px;white-space:normal}
 .mrot-ctl a{width:auto!important;height:auto!important;min-width:46px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;padding:4px 6px!important;line-height:1.1!important;text-decoration:none;color:#111}
 .mrot-ctl .mrot-rose{cursor:grab;touch-action:none;user-select:none}.mrot-ctl .mrot-rose svg{width:34px;height:34px;display:block;transition:transform .05s}
 .mrot-ctl small{font:800 10px var(--f-body);display:block;white-space:nowrap}.mrot-ctl .mrot-rt{font-size:18px}.mrot-ctl.on .mrot-rose{background:#fef3c7}
@@ -4210,7 +4211,9 @@ function pvSetSheet(pv){const b=pv.querySelector("#pvSetBtn"),pp=pv.querySelecto
   if(!pp.querySelector(".pp-x")){const x=document.createElement("button");x.type="button";x.className="pp-x";x.textContent="✕ ปิดตั้งค่า";x.onclick=()=>document.body.classList.remove("pv-set");pp.prepend(x)}
   b.onclick=()=>document.body.classList.toggle("pv-set")}
 function pvEditMenu(pv){try{pvSetSheet(pv)}catch(e){}const b=pv.querySelector("#pvEditBtn"),m=pv.querySelector(".pvb-menu");if(!b||!m)return;const rs=pv.querySelector("#pvReset");
+  [["pvUndo","↶ <span>ย้อนการย้าย/ย่อขยายกล่อง</span>"],["pvAddTxt","➕ <span>เพิ่มกล่องข้อความ</span>"],["pvFreeReset","⠿ <span>จัดตำแหน่งกล่องกลับเหมือนเดิม</span>"]].forEach(([id,h])=>{const src=pv.querySelector("#"+id);if(!src)return;const c=document.createElement("button");c.type="button";c.className="pvb-btn";c.innerHTML=h;c.onclick=()=>src.click();m.appendChild(c)});
   if(rs){const c=document.createElement("button");c.type="button";c.className="pvb-btn";c.innerHTML="↺ <span>ค่าเริ่มต้นทั้งหมด</span>";c.onclick=()=>rs.click();m.appendChild(c);rs.hidden=true}
+  m.insertAdjacentHTML("beforeend",'<p class="hint pvb-mh">ลาก ⠿ มุมซ้ายบนของแต่ละส่วนเพื่อย้าย · ลากมุมขวาล่างเพื่อย่อ/ขยาย (แตะส่วนนั้นก่อนบน iPad)</p>')
   const sync=()=>b.classList.toggle("on",!!pv.querySelector("#pvFreeBtn.on,#pvInkBtn.on"));
   b.onclick=e=>{e.stopPropagation();m.hidden=!m.hidden;pvMenuFit(m)};m.addEventListener("click",()=>{m.hidden=true;setTimeout(sync,60);setTimeout(sync,400)});
   document.addEventListener("pointerdown",e=>{if(!e.target.closest(".pvb-mode"))m.hidden=true},true)}
@@ -4387,7 +4390,7 @@ function kneePrint(preview){
     const reopen=()=>{back();setTimeout(()=>kneePrint(true),60)};
     $("#pvFreeBtn").onclick=()=>{const L=pvFreeLoad(KL.paper);if(pv.classList.contains("pv-free")){L.on=false;pvFreeStore(KL.paper,L);reopen()}else{L.on=true;pvFreeStore(KL.paper,L);pvFreeOn(pv,KL)}};
     $("#pvFreeReset").onclick=()=>{pvFreeStore(KL.paper,{on:true,blocks:{}});reopen()};
-    if(pvFreeLoad(KL.paper).on)setTimeout(()=>pvFreeOn(pv,KL),260);
+    /* ลาก/ย่อขยายแต่ละส่วนได้ทันที ไม่ต้องกดเข้าโหมดจัดหน้า */setTimeout(()=>{if(pv.isConnected&&!pv.classList.contains("pv-free"))pvFreeOn(pv,KL)},260);
     const fitView=()=>{const pg=pv.querySelector(".pv-page"),bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px");if(!pg)return;
       pg.style.zoom="";const avail=pv.clientWidth-(innerWidth>1000?412:32),w=pg.offsetWidth;pg.style.zoom=w>avail?Math.max(.4,avail/w).toFixed(3):"";{const p2=pv.querySelector(".pv-page2");if(p2)p2.style.zoom=pg.style.zoom}map.invalidateSize()};
     pv.querySelector(".pv-ctlw").addEventListener("toggle",fitView);addEventListener("resize",fitView);window._pvFit=fitView;setTimeout(fitView,120);return}
