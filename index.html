@@ -222,6 +222,18 @@ body.pvprev #pvMap,#pvMap{position:relative}
 #schEditBtn.on{background:#2563eb;color:#fff}
 body.sch-cards .pv-side .pv-cards{display:none}
 #pvMap .pv-sch{position:absolute;inset:0;z-index:900;background:#fff;width:100%;height:100%}#pvMap .pv-sch text{font-family:var(--f-body),sans-serif}
+/* ---- Kneeboard: หมุนแผนที่ (v165) — หมุนเฉพาะ #map ในกรอบกระดาษ ป้าย/หมุด/doghouse หมุนกลับให้ตั้งตรง ---- */
+#pvMap.kbrot{width:var(--pvmw,86mm);height:var(--pvmh,124mm);overflow:hidden;border:1px solid #000;box-sizing:border-box}
+body #pvMap.kbrot.kbrot #map{position:absolute!important;left:50%;top:50%;width:var(--pvmd,200px)!important;height:var(--pvmd,200px)!important;margin:calc(var(--pvmd,200px)/-2) 0 0 calc(var(--pvmd,200px)/-2)!important;transform:rotate(var(--pvrot,0deg));border:0!important}
+#pvMap.kbrot .leaflet-marker-icon:not(.hbox)>*,#pvMap.kbrot .leaflet-tooltip{rotate:calc(var(--pvrot,0deg)*-1)}
+#pvMap .kbrose{position:absolute;top:2mm;right:2mm;z-index:950;width:11mm;height:11mm;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#pvMap .kbrose svg{width:100%;height:100%;display:block;transform:rotate(var(--pvrot,0deg))}
+#pvMap .kbrot-ui{position:absolute;left:2mm;bottom:2mm;z-index:950;display:flex;flex-direction:column;gap:4px}
+#pvMap .kbrot-ui button{width:34px;height:34px;padding:0;font:800 18px/1 var(--f-body);border:1px solid #111;border-radius:6px;background:#fff;color:#111}
+#pvMap:not(.kbrot) .kbrot-ui{display:none}
+body.pv-snap #pvMap .kbrot-ui,body.pv-snap #pvMap:not(.kbrot) .kbrose{display:none!important}
+@media print{#pvMap .kbrot-ui,#pvMap:not(.kbrot) .kbrose{display:none!important}}
+.kc-rot{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.kc-rot input[type=number]{width:80px}.kc-rot input[type=range]{flex:1 1 100%}
 .pv-cards .fcard h3{font-size:9pt;margin:0}.fcard h3 .ap-el,.fcard h3 .ap-rw{font-weight:700;font-size:.82em;margin-left:.35em}.fcard h3 .ap-el{color:#475569}.pv-cards .fcard h3 small{display:none}
 .pv-cards .fcard .r{padding:0}
 .pv-unit{border:2px solid #e07a00;font:700 11pt var(--f-display);padding:1mm 2mm;color:#e07a00}
@@ -2550,7 +2562,7 @@ function drawMap(rows){
       const pm=map.latLngToLayerPoint(mid),ll=map.layerPointToLatLng([pm.x-dy/len*off,pm.y+dx/len*off]);pos=[ll.lat,ll.lng]}
     const lead=L.polyline([mid,pos],{color:"#111",weight:1.5,dashArray:"4 3",interactive:false}).addTo(routeLayer);
     const cmp=DS==="mini",bw0=cmp?72:92,bh0=cmp?96:150;
-    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"แตะ = เปลี่ยนรูปแบบ/ขนาด · ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${cmp?hboxSvgMini(r,s,boxRot(i,r)):hboxSvg(r,s,boxRot(i,r))}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(bw0*s),Math.round(bh0*s)],iconAnchor:[Math.round(bw0/2*s),Math.round(bh0/2*s)]})}).addTo(routeLayer);
+    const mk=L.marker(pos,{draggable:true,zIndexOffset:1000,title:"แตะ = เปลี่ยนรูปแบบ/ขนาด · ลากเพื่อย้าย · ดับเบิลคลิกเพื่อกลับตำแหน่งอัตโนมัติ",icon:L.divIcon({className:"hbox",html:`<div class="hbwrap" style="transform:rotate(${boxRot(i,r)}deg)">${cmp?hboxSvgMini(r,s,boxRot(i,r)+kbRotDeg()):hboxSvg(r,s,boxRot(i,r)+kbRotDeg())}<span class="hrot" title="ลากเพื่อหมุน · ดับเบิลคลิก = กลับค่าเริ่มต้น" aria-label="หมุนกล่อง">⟳</span></div>`,iconSize:[Math.round(bw0*s),Math.round(bh0*s)],iconAnchor:[Math.round(bw0/2*s),Math.round(bh0/2*s)]})}).addTo(routeLayer);
     mk.on("drag",ev=>lead.setLatLngs([mid,ev.target.getLatLng()]));
     mk.on("dragend",ev=>{const ll=ev.target.getLatLng();state.boxPos[key]=[ll.lat,ll.lng];store.set("vfr_current",state);histSched()});
     mk.on("dblclick",()=>{delete state.boxPos[key];render()});
@@ -4274,6 +4286,7 @@ function kneePrint(preview){
         <label class="kc-r kc-ck"><span>ตารางจุด CP + พิกัด (หน้า 1)</span><input type="checkbox" data-kl="tbl" ${KL.tbl?"checked":""}></label><label class="kc-r kc-ck"><span>NAV LOG (หน้า 2)</span><input type="checkbox" data-kl="nav2" ${KL.nav2!==false?"checked":""}></label>
         <label class="kc-r kc-ck" title="ยืดความสูงแผนที่ให้เต็มหน้ากระดาษอัตโนมัติ"><span>แผนที่เต็มหน้า</span><input type="checkbox" data-kl="fill" ${KL.fill?"checked":""}></label>
         ${kcR("กว้างแผนที่","mapw",60,(KB_PAPER[KL.paper]||KB_PAPER.A5).w-10,2,KL," mm")}${kcR("สูงแผนที่","maph",80,(KB_PAPER[KL.paper]||KB_PAPER.A5).h-20,2,KL," mm")}</div>
+      <div class="kc-g"><h4>🧭 หมุนแผนที่</h4><div class="kc-rot"><input type="range" id="kbRotR" min="-180" max="180" step="1" value="${state.kbRot||0}"><input type="number" id="kbRotN" min="-180" max="360" step="1" value="${state.kbRot||0}"><span>°</span><button type="button" class="mini" id="kbRotAuto">🧭 หมุนตามเส้นทาง</button><button type="button" class="mini" id="kbRot0">↺ 0°</button></div><p class="hint" style="margin:4px 0 0">ลากลูกศร N บนแผนที่เพื่อหมุนได้ · ตัวหนังสือ/ป้ายยังตั้งตรง</p></div>
       <div class="kc-g"><h4>〰️ เส้นทาง</h4>
         <div class="kc-r"><span>สีเส้น</span><span class="kc-sw">${["#d6198f","#e11d48","#2563eb","#111827","#16a34a","#f59e0b"].map(c=>`<button type="button" data-lc="${c}" style="--c:${c}" class="${c===KL.lcol?"on":""}" aria-label="สี ${c}"></button>`).join("")}<input type="color" data-kl="lcol" value="${KL.lcol}" aria-label="สีเส้นอื่น"></span></div>
         <label class="kc-r"><span>ลักษณะเส้น</span><select data-kl="ldash">${[["solid","━━ เส้นทึบ"],["dash","╍╍ เส้นประ"],["dot","··· จุด"],["dashdot","─·─ ประ-จุด"]].map(([v,t])=>`<option value="${v}" ${v===KL.ldash?"selected":""}>${t}</option>`).join("")}</select></label>
@@ -4304,9 +4317,10 @@ function kneePrint(preview){
     if(KL.fill&&!pv.classList.contains("pv-free")){const pg0=pv.querySelector(".pv-page"),bd=pv.querySelector(".pv-body");if(pg0&&bd){const z=parseFloat(pg0.style.zoom)||1,lim=P.h*96/25.4;
       const top=pg0.getBoundingClientRect().top,bot=Math.max(...[...pg0.children].map(c=>c.getBoundingClientRect().bottom)),used=(bot-top)/z,bh=bd.getBoundingClientRect().height/z,mhNow=parseFloat(getComputedStyle(pv).getPropertyValue("--pvmh"))||KL.maph;
       const mh=Math.max(60,Math.min(P.h-20,Math.floor(Math.max(mhNow,bh*25.4/96)+(lim-used)*25.4/96-1.5)));if(Math.abs(mh-mhNow)>=1){KL.maph=mh;pv.style.setProperty("--pvmh",mh+"mm");map.invalidateSize();const el=pv.querySelector('[data-kl="maph"]');if(el)el.value=mh;kcOut(pv,"maph",mh)}}}
-    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);try{schDraw(pv,KL)}catch(e){console.error(e)}try{kbCallDraw(KL)}catch(e){console.error(e)}try{cpFitMin()}catch(e){}if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}
+    if(typeof kbInkPaint==="function")kbInkPaint(pv);if(typeof pvLegsDraw==="function")pvLegsDraw(KL,pv);try{schDraw(pv,KL)}catch(e){console.error(e)}try{kbCallDraw(KL)}catch(e){console.error(e)}try{cpFitMin()}catch(e){}if(typeof kbApApply==="function"){kbApApply(KL);kbApList(KL,pv)}try{kbRotApply()}catch(e){}
     const pg=pv.querySelector(".pv-page"),f=$("#pvFit");if(pg&&f&&!pv.classList.contains("pv-free")){const lim=P.h*96/25.4,top=pg.getBoundingClientRect().top+parseFloat(getComputedStyle(pg).paddingTop),bot=Math.max(...[...pg.children].map(c=>c.getBoundingClientRect().bottom));const zf=parseFloat(pg.style.zoom)||1;f.innerHTML=(bot-top)/zf>lim+2?'<span class="pv-warn">⚠ เกิน 1 หน้า ${KL.paper} — ลดความสูงแผนที่หรือซ่อนตาราง</span>':"✓ พอดี 1 หน้า "+KL.paper}};
   $("#pvMap").appendChild(mapEl);
+  try{kbRotInit()}catch(e){console.error(e)}
   let done=false;const back=()=>{if(done)return;done=true;setTimeout(()=>{try{saPosApply()}catch(e){}},0);pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");try{saPosApply()}catch(e){}
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
@@ -4339,6 +4353,57 @@ function kneePrint(preview){
     pv.querySelector(".pv-ctlw").addEventListener("toggle",fitView);addEventListener("resize",fitView);window._pvFit=fitView;setTimeout(fitView,120);return}
   window.addEventListener("afterprint",back,{once:true});
   setTimeout(()=>{window.print();},2000)}
+
+/* ---------- Kneeboard: หมุนแผนที่ (v165) ----------
+   หมุน #map ด้วย CSS ภายในกรอบ #pvMap (กรอบใหญ่ = เส้นทแยงกระดาษ) → แผนที่หลักไม่ได้รับผลกระทบ
+   Leaflet ถูกแก้ให้แปลงทิศเมาส์/นิ้วกลับ −θ เฉพาะตอนแผนที่อยู่ใน #pvMap.kbrot */
+function kbRotBox(){const c=map.getContainer(),p=c&&c.parentNode;return p&&p.id==="pvMap"?p:null}
+function kbRotRad(el){const b=kbRotBox();if(!b||!b.classList.contains("kbrot"))return 0;if(el&&!b.contains(el))return 0;return(+state.kbRot||0)*Math.PI/180}
+function kbRotDeg(){try{return kbRotRad()*180/Math.PI}catch(e){return 0}}
+/* กล่อง doghouse หมุนไปกับแผนที่ (ชี้ตามขาเส้นทาง → แนว track-up ตั้งตรง) ตัวเลขในกล่องกลับหัวตามมุมบนกระดาษ */
+function kbRotZ(){const b=kbRotBox();if(!b||!b.offsetWidth)return 1;return b.getBoundingClientRect().width/b.offsetWidth||1}
+(function(){const D=L.Draggable.prototype,om=D._onMove,od=D._onDown,mp=L.Map.prototype.mouseEventToContainerPoint;
+  D._onDown=function(e){const r=od.apply(this,arguments);if(this._parentScale&&kbRotRad(this._element)){const z=kbRotZ();this._parentScale={x:z,y:z,boundingClientRect:this._parentScale.boundingClientRect}}return r};
+  D._onMove=function(e){const r=kbRotRad(this._element);if(!r||!this._startPoint||(e.touches&&e.touches.length>1))return om.apply(this,arguments);
+    const t=e.touches&&e.touches.length===1?e.touches[0]:e,s0=this._startPoint,dx=t.clientX-s0.x,dy=t.clientY-s0.y,c=Math.cos(r),s=Math.sin(r);
+    this._startPoint=L.point(t.clientX-(dx*c+dy*s),t.clientY-(-dx*s+dy*c));try{return om.apply(this,arguments)}finally{this._startPoint=s0}};
+  L.Map.prototype.mouseEventToContainerPoint=function(e){const c=this._container,r=c===map.getContainer()?kbRotRad():0;if(!r)return mp.call(this,e);
+    const b=c.getBoundingClientRect(),z=kbRotZ(),dx=(e.clientX-(b.left+b.width/2))/z,dy=(e.clientY-(b.top+b.height/2))/z,co=Math.cos(r),si=Math.sin(r);
+    return L.point(dx*co+dy*si+c.clientWidth/2,-dx*si+dy*co+c.clientHeight/2)}})();
+function kbRotInit(){const b=kbRotBox();if(!b)return;if(!b.querySelector(".kbrose")){
+    b.insertAdjacentHTML("beforeend",'<div class="kbrose" title="ลากเพื่อหมุนแผนที่ · แตะสองครั้ง = 0°"><svg viewBox="-20 -20 40 40"><circle r="18" fill="#fff" fill-opacity=".85" stroke="#111" stroke-width="1.5"/><path d="M0-15L6 6 0 2-6 6Z" fill="#111"/><path d="M0-15L0 2-6 6Z" fill="#fff" stroke="#111" stroke-width="1"/><text y="15.5" text-anchor="middle" font-size="9" font-weight="800" fill="#111">N</text></svg></div><div class="kbrot-ui"><button type="button" data-kbz="1" aria-label="ซูมเข้า">+</button><button type="button" data-kbz="-1" aria-label="ซูมออก">−</button></div>');
+    const rose=b.querySelector(".kbrose");let drag=null;
+    rose.addEventListener("pointerdown",e=>{e.preventDefault();e.stopPropagation();rose.setPointerCapture(e.pointerId);drag=1});
+    rose.addEventListener("pointermove",e=>{if(!drag)return;const r=rose.getBoundingClientRect(),a=Math.atan2(e.clientX-(r.left+r.width/2),-(e.clientY-(r.top+r.height/2)))*180/Math.PI;kbRotSet(Math.round(a),false)});
+    rose.addEventListener("pointerup",()=>{if(drag){drag=null;kbRotSave()}});rose.addEventListener("dblclick",e=>{e.stopPropagation();kbRotSet(0)});
+    ["click","mousedown","touchstart","wheel"].forEach(t=>rose.addEventListener(t,e=>e.stopPropagation()));
+    b.querySelector(".kbrot-ui").addEventListener("click",e=>{const k=e.target.closest("[data-kbz]");if(k){e.stopPropagation();map.setZoom(map.getZoom()+(+k.dataset.kbz)*(map.options.zoomDelta||1))}});
+    if(window.ResizeObserver&&!b._kbRo){b._kbRo=new ResizeObserver(()=>kbRotApply());b._kbRo.observe(b)}}
+  kbRotApply()}
+function kbRotNorm(d){d=((+d||0)%360+360)%360;return d>180?d-360:d}
+function kbRotApply(){const b=kbRotBox();if(!b)return;const d=kbRotNorm(state.kbRot),on=d!==0,was=b.classList.contains("kbrot");
+  b.style.setProperty("--pvrot",d+"deg");b.classList.toggle("kbrot",on);
+  if(on){const w=b.clientWidth,h=b.clientHeight,md=Math.ceil(Math.hypot(w,h))+2;if(b._kbMd!==md){b._kbMd=md;b.style.setProperty("--pvmd",md+"px");map.invalidateSize({pan:false})}}
+  if(on!==was){b._kbMd=0;map.invalidateSize({pan:false});if(on)kbRotApply()}
+  document.querySelectorAll("#kbRotR,#kbRotN").forEach(x=>{if(document.activeElement!==x)x.value=d})}
+let _kbRotT=0;function kbRotSave(){clearTimeout(_kbRotT);_kbRotT=setTimeout(()=>store.set("vfr_current",state),300)}
+function kbRotSet(d,save=true){const c=map.getCenter(),was=kbRotNorm(state.kbRot)!==0;state.kbRot=kbRotNorm(d);kbRotApply();if(was!==(state.kbRot!==0))map.setView(c,map.getZoom(),{animate:false});clearTimeout(kbRotSet._r);kbRotSet._r=setTimeout(()=>{try{render()}catch(e){}},120);if(save)kbRotSave()}
+/* หมุนตามเส้นทาง: Track-up (จุดเริ่มด้านล่าง → ปลายทางด้านบน) แล้วซูมให้เต็มกรอบกระดาษ */
+function kbRotRoute(){const W=state.wps.filter(w=>isFinite(+w.lat)&&isFinite(+w.lon));if(W.length<2){toast("ต้องมีจุดเส้นทางอย่างน้อย 2 จุด");return}
+  const z=map.getZoom(),P=W.map(w=>map.project([+w.lat,+w.lon],z));let vx=P.at(-1).x-P[0].x,vy=P.at(-1).y-P[0].y;
+  const xs=P.map(p=>p.x),ys=P.map(p=>p.y),span=Math.hypot(Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys));
+  if(Math.hypot(vx,vy)<.3*span){/* เส้นทางวนกลับ: ใช้แกนหลัก (PCA) หันไปทางขาแรก */const mx=xs.reduce((a,b)=>a+b)/xs.length,my=ys.reduce((a,b)=>a+b)/ys.length;let sxx=0,syy=0,sxy=0;P.forEach(p=>{const a=p.x-mx,b=p.y-my;sxx+=a*a;syy+=b*b;sxy+=a*b});
+    const t=.5*Math.atan2(2*sxy,sxx-syy);vx=Math.cos(t);vy=Math.sin(t);const fx=P[1].x-P[0].x,fy=P[1].y-P[0].y;if(vx*fx+vy*fy<0){vx=-vx;vy=-vy}}
+  const deg=Math.round(-90-Math.atan2(vy,vx)*180/Math.PI);kbRotSet(deg);kbRotFit()}
+function kbRotFit(){const b=kbRotBox(),W=state.wps.filter(w=>isFinite(+w.lat)&&isFinite(+w.lon));if(!b||W.length<2)return;
+  const LL=W.map(w=>[+w.lat,+w.lon]);routeLayer.eachLayer(m=>{const o=m.options&&m.options.icon&&m.options.icon.options;if(o&&/\bhbox\b/.test(o.className||"")&&m.getLatLng){const q=m.getLatLng();LL.push([q.lat,q.lng])}});
+  const r=(+state.kbRot||0)*Math.PI/180,c=Math.cos(r),s=Math.sin(r),z=map.getZoom(),Q=LL.map(w=>{const p=map.project(w,z);return[p.x*c-p.y*s,p.x*s+p.y*c]});
+  const x0=Math.min(...Q.map(q=>q[0])),x1=Math.max(...Q.map(q=>q[0])),y0=Math.min(...Q.map(q=>q[1])),y1=Math.max(...Q.map(q=>q[1]));
+  const w=b.clientWidth*.84,h=b.clientHeight*.86,k=Math.min(w/Math.max(1,x1-x0),h/Math.max(1,y1-y0)),snap=map.options.zoomSnap||1;
+  let nz=Math.floor(map.getScaleZoom(k,z)/snap)*snap;nz=Math.max(map.getMinZoom(),Math.min(map.getMaxZoom(),nz));
+  const cx=(x0+x1)/2,cy=(y0+y1)/2;map.setView(map.unproject(L.point(cx*c+cy*s,-cx*s+cy*c),z),nz,{animate:false})}
+document.addEventListener("input",e=>{if(e.target.id==="kbRotR"||e.target.id==="kbRotN"){const v=e.target.value;if(v===""||v==="-")return;kbRotSet(+v)}});
+document.addEventListener("click",e=>{const t=e.target.closest("#kbRotAuto,#kbRot0");if(!t)return;if(t.id==="kbRot0"){kbRotSet(0);try{fit()}catch(x){}}else kbRotRoute()});
 
 /* ---------- Excel (.xlsx) แบบมีรูปแบบ ---------- */
 function loadScript(src){return new Promise((ok,no)=>{if(window.ExcelJS)return ok();const s=document.createElement("script");s.src=src;sriSet(s,src);s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
