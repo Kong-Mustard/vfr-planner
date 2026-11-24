@@ -230,9 +230,9 @@ body #pvMap.kbrot.kbrot #map{position:absolute!important;left:50%;top:50%;width:
 #pvMap .kbrose svg{width:100%;height:100%;display:block;transform:rotate(var(--pvrot,0deg))}
 #pvMap .kbrot-ui{position:absolute;left:2mm;bottom:2mm;z-index:950;display:flex;flex-direction:column;gap:4px}
 #pvMap .kbrot-ui button{width:34px;height:34px;padding:0;font:800 18px/1 var(--f-body);border:1px solid #111;border-radius:6px;background:#fff;color:#111}
-#pvMap:not(.kbrot) .kbrot-ui{display:none}
-body.pv-snap #pvMap .kbrot-ui,body.pv-snap #pvMap:not(.kbrot) .kbrose{display:none!important}
-@media print{#pvMap .kbrot-ui,#pvMap:not(.kbrot) .kbrose{display:none!important}}
+#pvMap:not(.kbrot) .kbrot-ui,#pvMap.sch .kbrot-ui{display:none!important}
+body.pv-snap #pvMap .kbrot-ui,body.pv-snap #pvMap:not(.kbrot):not(.sch) .kbrose{display:none!important}
+@media print{#pvMap .kbrot-ui,#pvMap:not(.kbrot):not(.sch) .kbrose{display:none!important}}
 .kc-rot{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.kc-rot input[type=number]{width:80px}.kc-rot input[type=range]{flex:1 1 100%}
 .pv-cards .fcard h3{font-size:9pt;margin:0}.fcard h3 .ap-el,.fcard h3 .ap-rw{font-weight:700;font-size:.82em;margin-left:.35em}.fcard h3 .ap-el{color:#475569}.pv-cards .fcard h3 small{display:none}
 .pv-cards .fcard .r{padding:0}
@@ -4387,14 +4387,14 @@ function kbRotApply(){const b=kbRotBox();if(!b)return;const d=kbRotNorm(state.kb
   if(on!==was){b._kbMd=0;map.invalidateSize({pan:false});if(on)kbRotApply()}
   document.querySelectorAll("#kbRotR,#kbRotN").forEach(x=>{if(document.activeElement!==x)x.value=d})}
 let _kbRotT=0;function kbRotSave(){clearTimeout(_kbRotT);_kbRotT=setTimeout(()=>store.set("vfr_current",state),300)}
-function kbRotSet(d,save=true){const c=map.getCenter(),was=kbRotNorm(state.kbRot)!==0;state.kbRot=kbRotNorm(d);kbRotApply();if(was!==(state.kbRot!==0))map.setView(c,map.getZoom(),{animate:false});clearTimeout(kbRotSet._r);kbRotSet._r=setTimeout(()=>{try{render()}catch(e){}},120);if(save)kbRotSave()}
+function kbRotSet(d,save=true){const c=map.getCenter(),was=kbRotNorm(state.kbRot)!==0;state.kbRot=kbRotNorm(d);kbRotApply();if(was!==(state.kbRot!==0))map.setView(c,map.getZoom(),{animate:false});clearTimeout(kbRotSet._r);kbRotSet._r=setTimeout(()=>{try{render()}catch(e){}try{if(kbMapMode==="sch")schDraw(document,kbLay())}catch(e){console.error(e)}},120);if(save)kbRotSave()}
 /* หมุนตามเส้นทาง: Track-up (จุดเริ่มด้านล่าง → ปลายทางด้านบน) แล้วซูมให้เต็มกรอบกระดาษ */
 function kbRotRoute(){const W=state.wps.filter(w=>isFinite(+w.lat)&&isFinite(+w.lon));if(W.length<2){toast("ต้องมีจุดเส้นทางอย่างน้อย 2 จุด");return}
   const z=map.getZoom(),P=W.map(w=>map.project([+w.lat,+w.lon],z));let vx=P.at(-1).x-P[0].x,vy=P.at(-1).y-P[0].y;
   const xs=P.map(p=>p.x),ys=P.map(p=>p.y),span=Math.hypot(Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys));
   if(Math.hypot(vx,vy)<.3*span){/* เส้นทางวนกลับ: ใช้แกนหลัก (PCA) หันไปทางขาแรก */const mx=xs.reduce((a,b)=>a+b)/xs.length,my=ys.reduce((a,b)=>a+b)/ys.length;let sxx=0,syy=0,sxy=0;P.forEach(p=>{const a=p.x-mx,b=p.y-my;sxx+=a*a;syy+=b*b;sxy+=a*b});
     const t=.5*Math.atan2(2*sxy,sxx-syy);vx=Math.cos(t);vy=Math.sin(t);const fx=P[1].x-P[0].x,fy=P[1].y-P[0].y;if(vx*fx+vy*fy<0){vx=-vx;vy=-vy}}
-  const deg=Math.round(-90-Math.atan2(vy,vx)*180/Math.PI);kbRotSet(deg);kbRotFit()}
+  const deg=Math.round(-90-Math.atan2(vy,vx)*180/Math.PI);kbRotSet(deg);if(kbMapMode!=="sch")kbRotFit()}
 function kbRotFit(){const b=kbRotBox(),W=state.wps.filter(w=>isFinite(+w.lat)&&isFinite(+w.lon));if(!b||W.length<2)return;
   const LL=W.map(w=>[+w.lat,+w.lon]);routeLayer.eachLayer(m=>{const o=m.options&&m.options.icon&&m.options.icon.options;if(o&&/\bhbox\b/.test(o.className||"")&&m.getLatLng){const q=m.getLatLng();LL.push([q.lat,q.lng])}});
   const r=(+state.kbRot||0)*Math.PI/180,c=Math.cos(r),s=Math.sin(r),z=map.getZoom(),Q=LL.map(w=>{const p=map.project(w,z);return[p.x*c-p.y*s,p.x*s+p.y*c]});
@@ -6586,7 +6586,7 @@ function schFavList(pv){const box=pv&&pv.querySelector("#schFav");if(!box)return
 function schAltTxt(){if(state.schAlt!=null)return state.schAlt;const v=state.fpl&&state.fpl.v||{};return[v.altn,v.altn2].filter(x=>x&&x!=="ZZZZ").join(", ")}
 function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;let svg=box.querySelector(".pv-sch");
   const oldl=box.querySelector(".pv-schl");const scC=!!kbLay().schCards;document.body.classList.toggle("sch-cards",kbMapMode==="sch"&&scC);
-  if(kbMapMode!=="sch"){if(svg)svg.remove();if(oldl)oldl.remove();box.classList.remove("sch-edit");return}
+  if(kbMapMode!=="sch"){if(svg)svg.remove();if(oldl)oldl.remove();box.classList.remove("sch-edit","sch");return}
   const W=state.wps.filter(w=>isFinite(w.lat)&&isFinite(w.lon));if(W.length<2){if(svg)svg.remove();if(oldl)oldl.remove();return}
   const vr=num(state.g&&state.g.var,0),r3=a=>String(Math.round(norm(a))||360).padStart(3,"0")+"°";
   const alts=brAll().map(b=>({name:b.name,lat:+b.lat,lon:+b.lon}));
@@ -6597,6 +6597,7 @@ function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;
   const raw=[[0,0]];for(let i=1;i<W.length;i++){const d=step(W[i-1],W[i]);raw.push([raw[i-1][0]+d[0],raw[i-1][1]+d[1]])}
   const nearI=A=>{let bi=0,bd=1e9;W.forEach((w,i)=>{const d=gcDistNm([w.lat,w.lon],[A.lat,A.lon]);if(d<bd){bd=d;bi=i}});return[bi,bd]};
   const araw=alts.map(A=>{const[i]=nearI(A),d=step(W[i],A);return[raw[i][0]+d[0],raw[i][1]+d[1]]});
+  {/* หมุนแผนผังตามมุมหมุนแผนที่ Kneeboard */const rr=kbRotNorm(state.kbRot)*Math.PI/180,rc=Math.cos(rr),rs=Math.sin(rr);if(rr)[raw,araw].forEach(A=>A.forEach(q=>{const x=q[0],y=q[1];q[0]=x*rc-y*rs;q[1]=x*rs+y*rc}))}
   const allr=raw.concat(araw),xs=allr.map(q=>q[0]),ys=allr.map(q=>q[1]),x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
   const sc=Math.min((bw-2*pad)/Math.max(1e-6,x1-x0),(bh-2*pad)/Math.max(1e-6,y1-y0)),ox=(bw-(x1-x0)*sc)/2,oy=(bh-(y1-y0)*sc)/2;
   const PR=q=>[ox+(q[0]-x0)*sc,oy+(q[1]-y0)*sc],pts=raw.map(PR),apts=araw.map(PR);
@@ -6622,7 +6623,8 @@ function schDraw(pv,KL){const box=pv&&pv.querySelector("#pvMap");if(!box)return;
     const rr=(end?8:6.5)*fz*pz,lx=p[0]+vx*(rr+6*fz),ly=p[1]+vy*(rr+6*fz),an=Math.abs(vx)<.35?"m":vx>0?"s":"e";
     g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rr}" fill="${wpc}" stroke="#0f172a" stroke-width="${1.3*fz}"${end?` stroke-width="${2.2*fz}"`:""}/>`;
     T(`w:${i}:${w.name}`,lx,ly+(Math.abs(vx)<.35?vy*4*fz:0),String((/^(WP\s*\d+|จุด\s*\d+)$/i.test(w.name||"")&&wpNear(w))||w.name||("WP"+(i+1))),{fs:end?11:10,fw:800,a:an})});
-  g+=`<g transform="translate(${bw-18*fz},${20*fz})"><path d="M0 ${-12*fz} L${5*fz} ${4*fz} L0 0 L${-5*fz} ${4*fz}Z" fill="#111"/></g>`;T("n",bw-18*fz,30*fz,"N",{fs:9,fw:800});
+  /* ลูกศร N ใช้ตัวหมุน .kbrose ร่วมกับโหมดแผนที่ (ลากหมุนได้) */
+  box.classList.add("sch");
   const html=`<svg class="pv-sch" viewBox="0 0 ${bw} ${bh}" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
   if(svg)svg.outerHTML=html;else box.insertAdjacentHTML("beforeend",html);
   const lay=document.createElement("div");lay.className="pv-schl";if(oldl)oldl.replaceWith(lay);else box.appendChild(lay);
