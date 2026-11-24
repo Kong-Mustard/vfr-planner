@@ -2542,7 +2542,7 @@ function drawMap(rows){
     if(hit._path)hit._path.addEventListener("pointerdown",ev=>legDragStart(ev,i))}
   state.wps.forEach((w,i)=>{
     const dm=typeof dbMatch==="function"?dbMatch(w):null;if(dm&&/^WP\d*$/i.test(String(w.name||"").trim())&&dm.name)w.name=dm.name;
-    if(dm&&dm.name&&String(dm.name).toUpperCase()!==String(w.name).toUpperCase())L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="wpdbl">${esc(dm.name)}</span>`,iconSize:null,iconAnchor:[-14,-4]})}).addTo(routeLayer);
+    /* จุดรายงาน (▲ ชื่อ) ที่ตรงกับ Waypoint หน่วย: แสดงป้ายเดียว ไม่ซ้อนชื่อ BASE (เลข preset ยังอยู่) */if(dm&&dm.name&&!w.rp&&String(dm.name).toUpperCase()!==String(w.name).toUpperCase())L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="wpdbl">${esc(dm.name)}</span>`,iconSize:null,iconAnchor:[-14,-4]})}).addTo(routeLayer);
     const m=L.marker([w.lat,w.lon],{draggable:true,icon:L.divIcon({className:"",html:(()=>{const cp=cpNoFor(w);const ic=String(w.name||"").toUpperCase(),isAp=/^VT[A-Z]{2}$/.test(ic)&&AP[ic];return`<div class="wpicon${w.rp?" rpt":""}${cp?" cp":" seq"}" title="${cp?"Preset "+esc(cp):"ลำดับที่ "+(i+1)}">${cp?esc(cp):i+1}</div>${isAp?`<span class="wpap">${esc(ic)}</span>`:""}`})(),iconSize:[24,24],iconAnchor:[12,12]})})
       .bindTooltip(`${i+1}. ${esc(w.name||"WP")}${w.rp?" (จุดรายงาน)":""}<br>${fmtMgrs(toMgrs(w.lat,w.lon))}`).addTo(routeLayer);
     if(w.rp)L.marker([w.lat,w.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="rplabel">▲ ${esc(w.name)}</span>`,iconSize:null,iconAnchor:[-14,26]})}).addTo(routeLayer);
