@@ -2785,6 +2785,8 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 const SRI={"https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js":"sha384-weMABwrltA6jWR8DDe9Jp5blk+tZQh7ugpCsF3JwSA53WZM9/14PjS5LAJNHNjAI",
  "https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js":"sha384-UbfRVKN3/elS1r7JcK2FhmPP+KlJ4CvYwbyYD7tH+uTkbT9bNJr9eJeQ0FoFbAgz",
  "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js":"sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk",
+ "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js":"sha384-Cck14aA9cifjYolcnjebXRfWGkz5ltHMBiG4px/j8GS+xQcb7OhNQWZYyWjQ+UwQ",
+ "https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js":"sha384-4xaIisuLEy2lo2HkB2C4rEf7v8jbTb2kuogX6TkuEt9feTWKBSFSOzsqNNbV+sKh",
  "https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js":"sha384-Pqp51FUN2/qzfxZxBCtF0stpc9ONI6MYZpVqmo8m20SoaQCzf+arZvACkLkirlPz",
  "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js":"sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj",
  "https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css":"sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V",
@@ -4297,7 +4299,7 @@ function kneePrint(preview){
   let done=false;const back=()=>{if(done)return;done=true;setTimeout(()=>{try{saPosApply()}catch(e){}},0);pvRouteSig="";if(window._apMv){map.off("moveend",window._apMv);window._apMv=null}apLayer.eachLayer(m=>{const el=m.getElement&&m.getElement();if(el)el.classList.remove("kb-off")});if(typeof pvLegsClear==="function")pvLegsClear();window._pvFreeMap=window._pvDog=window._pvUndo=window._pvVis=null;if(window._pvFit){removeEventListener("resize",window._pvFit);window._pvFit=null}kbPanelHome();window._pvRemap=window._pvCards=null;restore();state.boxScale=orig.boxScale;state.remStep=orig.remStep;pv.classList.remove("pv-notbl","pv-free");render();setPageSize("A5");if(prevTab&&prevTab.dataset.tab!=="plan")setTimeout(()=>prevTab.click(),0);document.body.classList.remove("printing","pvprev");home.insertBefore(mapEl,next);map.invalidateSize();pv.innerHTML=""};
   document.body.classList.add("printing");if(preview)document.body.classList.add("pvprev");try{saPosApply()}catch(e){}
   applyKL();setTimeout(()=>{map.invalidateSize();fit();pv.scrollTop=0;applyKL();const bar=pv.querySelector(".pv-bar");if(bar)pv.style.setProperty("--pvtop",(bar.offsetHeight+18)+"px")},50);
-  if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw)pvTabs(pv,pp,cw);pvEditMenu(pv)}
+  if(preview){kbPanelOpen(pv);{const pp=pv.querySelector(".pv-panel"),cw=pv.querySelector(".pv-ctlw");if(pp&&cw)pvTabs(pv,pp,cw);pvEditMenu(pv);try{pvExportMenu(pv)}catch(e){console.error(e)}}
     window._pvRemap=()=>{restore();document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL()};
     if(window._apMv)map.off("moveend",window._apMv);window._apMv=()=>{if(typeof kbApList==="function"){kbApApply(KL);kbApList(KL,pv)}};map.on("moveend",window._apMv);
     window._pvVis=(k,on)=>{restore();window._pvBusy=1;visSet(k,on);visSave();window._pvBusy=0;document.body.classList.add("printing","pvprev");restore=kbMapApply();applyKL();
@@ -6249,6 +6251,136 @@ async function kmlImport(f){const doc=new DOMParser().parseFromString(await kmlT
   repDlg(plReportHtml({...R,skip:R.skip}).replace("📂 ข้อมูลจุดที่นำเข้า","🌍 นำเข้า KML: "+esc(f.name))+(R.rt?`<p>เส้นทาง <b>${R.rt}</b> → โฟลเดอร์ 🛣 เส้นทางที่บันทึก (กด ↪ ใช้ เพื่อเปิดเป็นแผน)</p>`:""));return R}
 {const inp=document.createElement("input");inp.type="file";inp.accept=".kml,.kmz,application/vnd.google-earth.kml+xml,application/vnd.google-earth.kmz";inp.hidden=true;inp.id="kmlImport";document.body.appendChild(inp);
   inp.onchange=async()=>{const f=inp.files[0];inp.value="";if(!f)return;try{await kmlImport(f)}catch(e){toast("นำเข้า KML ไม่ได้: "+e.message)}}}
+
+/* ---------- 📤 ส่งออก Kneeboard → PowerPoint (แก้ได้ทุกชิ้น) · Excel · Word
+   แอปคำนวณ (ทิศ/ระยะ/Radial-DME/MGRS/ความถี่) แล้วส่งให้ไปจัดหน้าต่อเองในโปรแกรม ---------- */
+const XP_FONT="Tahoma";
+function xpTitle(){const W=state.wps,h=document.querySelector("#printView .pv-page:not(.pv-page2) .pv-head h1");const t=h?h.innerText.trim():"";return t||`${W[0].name} – ${W.at(-1).name}`}
+function xpCards(){const d=document.createElement("div");d.innerHTML=kbCards();return[...d.querySelectorAll(".fcard")].map(c=>{const h=c.querySelector("h3");
+  return{id:(h&&h.childNodes[0]?h.childNodes[0].textContent:"").trim(),title:h?h.innerText.replace(/\s+/g," ").trim():"",rows:[...c.querySelectorAll(".r")].map(r=>[(r.querySelector("b")||{}).innerText||"",(r.querySelector("span")||{}).innerText||""])}})}
+function xpFic(){const t=ficText();if(!t)return null;const m=t.match(/^(?:FIC )?(.*?)\s+(127\.0.*)$/);return m?{name:m[1],freq:m[2]}:{name:t,freq:""}}
+/* ตาราง CP ชุดเดียวกับบนกระดาษ (รวมแถวที่เพิ่ม/แก้/ไฮไลต์) */
+function xpTable(){const d=document.createElement("div");d.innerHTML=pvCpHtml(state.wps);const tb=d.firstElementChild,t=cpT();
+  const head=[...tb.querySelectorAll("thead th")].map(th=>th.innerHTML.replace(/<br\s*\/?>/gi," ").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/\s+/g," ").trim());
+  const rows=[...tb.querySelectorAll("tbody tr")].map(tr=>({bg:tr.style.background?xpHex(tr.style.background):"",cells:[...tr.cells].map(td=>td.textContent.replace(/\s+/g," ").trim()),bold:0}));
+  const wid=t.cols.map(c=>t.w[c]||({pt:15,lm:24,rad:20,mgrs:29,pre:12}[c]||14));return{head,rows,wid,cols:t.cols}}
+function xpHex(c){const m=String(c).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);if(m)return[m[1],m[2],m[3]].map(x=>(+x).toString(16).padStart(2,"0")).join("").toUpperCase();return String(c).replace("#","").toUpperCase()}
+function xpDest(cards){const W=state.wps,w=W.at(-1),a=AP[String(w.name).toUpperCase()],c=cards.find(x=>x.id&&x.id.toUpperCase()===String(w.name).toUpperCase());
+  const rw=a&&a.eaip&&a.eaip.rwy&&a.eaip.rwy.length?a.eaip.rwy.join(" , "):"",tw=c&&(c.rows.find(r=>/TWR|TOWER/i.test(r[0]))||c.rows[0]);
+  return{name:String(w.name),full:a&&a.name&&a.name!==w.name?String(a.name):"",mgrs:fmtMgrs(toMgrs(+w.lat,+w.lon)),rwy:rw,contact:tw?`${tw[0]} ${tw[1]}`:""}}
+function xpSum(){const res=compute(),la=(state.legs||[]).map(l=>num(l&&l.alt,null)).filter(v=>v!=null),alt=la.length?Math.max(...la):num(state.g&&state.g.alt,null);return{dist:Math.round(res.total),time:Math.round(res.cumMin),alt}}
+/* แผนผัง: ทุกขายาวใกล้เคียงกัน (ทิศจริง ระยะไม่ตามสเกล) → พิกัดในกรอบ (นิ้ว) */
+function xpSchem(box){const W=state.wps,vr=num(state.g&&state.g.var,0),Lf=d=>Math.pow(Math.max(d,.3)+2,.3);
+  const mc=(a,b)=>norm(trueCourse([+a.lat,+a.lon],[+b.lat,+b.lon])+vr),dir=c=>[Math.sin(c*D2R),-Math.cos(c*D2R)];
+  const P=[[0,0]];for(let i=1;i<W.length;i++){const d=gcDistNm([W[i-1].lat,W[i-1].lon],[W[i].lat,W[i].lon]),u=dir(mc(W[i-1],W[i]));P.push([P[i-1][0]+u[0]*Lf(d),P[i-1][1]+u[1]*Lf(d)])}
+  const B=brAll().map(b=>{const[i,d]=brNear(b),u=dir(mc(W[i],b)),l=Lf(d)*.85;return{b,i,d,c:mc(W[i],b),p:[P[i][0]+u[0]*l,P[i][1]+u[1]*l]}});
+  const all=P.concat(B.map(x=>x.p)),xs=all.map(p=>p[0]),ys=all.map(p=>p[1]),bw=Math.max(...xs)-Math.min(...xs)||1,bh=Math.max(...ys)-Math.min(...ys)||1;
+  const pad=.45,sc=Math.min((box.w-2*pad)/bw,(box.h-2*pad)/bh,2.4),ox=box.x+(box.w-bw*sc)/2-Math.min(...xs)*sc,oy=box.y+(box.h-bh*sc)/2-Math.min(...ys)*sc,T=p=>[ox+p[0]*sc,oy+p[1]*sc];
+  const pts=P.map(T),cx=pts.reduce((s,p)=>s+p[0],0)/pts.length,cy=pts.reduce((s,p)=>s+p[1],0)/pts.length;
+  const legs=[];for(let i=1;i<W.length;i++){const d=gcDistNm([W[i-1].lat,W[i-1].lon],[W[i].lat,W[i].lon]),c=mc(W[i-1],W[i]);legs.push({a:pts[i-1],b:pts[i],txt:`< ${hdg(c)}° / ${d<10?d.toFixed(1):d.toFixed(1)} / ${hdg(norm(c+180))}° >`})}
+  const alts=B.map(x=>({a:pts[x.i],b:T(x.p),name:x.b.name||"",ap:!!AP[String(x.b.name||"").toUpperCase()],txt:`< ${hdg(x.c)}° / ${x.d<10?x.d.toFixed(1):Math.round(x.d)} / ${hdg(norm(x.c+180))}° >`}));
+  return{pts,legs,alts,cx,cy,names:W.map((w,i)=>wpLabel(w,i)),isAp:W.map(w=>!!AP[String(w.name).toUpperCase()])}}
+/* ทิศวางป้ายชื่อจุด: ฝั่งตรงข้ามกับเส้นที่เข้า-ออก */
+function xpLblDir(pts,i,extra){const v=[];if(i>0)v.push([pts[i-1][0]-pts[i][0],pts[i-1][1]-pts[i][1]]);if(i<pts.length-1)v.push([pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]]);(extra||[]).forEach(e=>v.push(e));
+  let x=0,y=0;v.forEach(a=>{const l=Math.hypot(a[0],a[1])||1;x+=a[0]/l;y+=a[1]/l});if(Math.hypot(x,y)<.2){const a=v[0]||[1,0];x=a[1];y=-a[0]}const l=Math.hypot(x,y)||1;return[-x/l,-y/l]}
+async function xpPhoto(lat,lon,z){z=z||16;const n=2**z,fx=(lon+180)/360*n,fy=(1-Math.log(Math.tan(lat*D2R)+1/Math.cos(lat*D2R))/Math.PI)/2*n,tx=Math.floor(fx),ty=Math.floor(fy);
+  const cv=document.createElement("canvas");cv.width=cv.height=512;const g=cv.getContext("2d"),ox=(fx-tx)*256,oy=(fy-ty)*256;
+  const jobs=[];for(let dx=-2;dx<=2;dx++)for(let dy=-2;dy<=2;dy++)jobs.push(new Promise((ok,no)=>{const im=new Image();im.crossOrigin="anonymous";im.onload=()=>{g.drawImage(im,256+(dx*256)-ox,256+(dy*256)-oy);ok()};im.onerror=no;im.src=offUrl("sat",z,tx+dx,ty+dy)}));
+  const r=await Promise.allSettled(jobs);if(!r.some(x=>x.status==="fulfilled"))throw new Error("no tiles");
+  g.fillStyle="#ffd400";g.strokeStyle="#000";g.lineWidth=2;g.beginPath();g.moveTo(256,256);g.lineTo(246,232);g.arc(256,230,10,Math.PI*.8,Math.PI*.2,false);g.closePath();g.fill();g.stroke();return cv.toDataURL("image/jpeg",.85)}
+async function xpOut(name,blob){const file=new File([blob],name,{type:blob.type});
+  if(navigator.canShare&&navigator.canShare({files:[file]})&&/iPad|iPhone|iPod|Android/.test(navigator.userAgent+(navigator.maxTouchPoints>1?"iPad":""))){try{await navigator.share({files:[file],title:name});toast("ส่งออกแล้ว");return}catch(e){if(e.name==="AbortError")return}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast("บันทึก "+name)}
+const xpName=ext=>`Kneeboard_${xpTitle().replace(/[\\/:*?"<>|]/g,"_").replace(/\s+/g,"").slice(0,50)}.${ext}`;
+/* ---------- PowerPoint: A5 แนวตั้ง · 1 แผนผัง · 2 ตารางจุด + ภาพที่หมาย · 3 NAV LOG ---------- */
+async function xpPptx(){await loadLib("https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js","PptxGenJS");
+  const px=new PptxGenJS();px.defineLayout({name:"A5P",width:5.83,height:8.27});px.layout="A5P";px.title=xpTitle();
+  const F={fontFace:XP_FONT,margin:0},title=xpTitle(),cards=xpCards(),fic=xpFic(),dest=xpDest(cards),sum=xpSum(),SW=5.83,SH=8.27;
+  const hdr=s=>{s.addShape(px.ShapeType.rect,{x:0,y:0,w:SW,h:.5,fill:{color:"000000"},line:{color:"000000"}});s.addText(title,{...F,x:.1,y:0,w:SW-.2,h:.5,color:"FFFFFF",bold:true,fontSize:16,align:"center",valign:"middle",fit:"shrink"})};
+  const line=(s,a,b,o)=>{const x=Math.min(a[0],b[0]),y=Math.min(a[1],b[1]),w=Math.max(Math.abs(b[0]-a[0]),.001),h=Math.max(Math.abs(b[1]-a[1]),.001);s.addShape(px.ShapeType.line,{x,y,w,h,flipH:(b[0]-a[0])*(b[1]-a[1])<0,line:o})};
+  /* ---- สไลด์ 1: แผนผัง ---- */
+  const s1=px.addSlide();s1.background={color:"FFFFFF"};hdr(s1);
+  let y=.6;const LX=.08,LW=1.95,box=(o)=>{s1.addText(o.t,{...F,x:o.x??LX,y:o.y??y,w:o.w??LW,h:o.h,fontSize:o.fs||7.5,color:o.c||"000000",fill:o.fill?{color:o.fill}:undefined,line:{color:o.lc||"000000",width:.75},align:o.al||"left",valign:"top",margin:[3,4,3,4],bold:o.b,fit:"shrink"});if(o.y==null)y+=o.h+.08};
+  if(fic)box({t:[{text:fic.name,options:{breakLine:true,fontSize:10}},{text:fic.freq,options:{fontSize:10}}],h:.5,fill:"4472C4",lc:"2F528F",c:"FFFFFF",al:"center"});
+  box({t:"EMER 121.5 / 243.0",h:.24,fill:"E02424",lc:"B91C1C",c:"FFFFFF",al:"center",b:true,fs:8.5});
+  const cardBox=(c,x,yy)=>{const t=[{text:c.title,options:{bold:true,underline:{style:"sng"},breakLine:true}}].concat(c.rows.map((r,i)=>({text:`${r[0]} : ${r[1]}`,options:{breakLine:i<c.rows.length-1}})));const h=.12*(c.rows.length+1)+.1;return{t,h,x,y:yy}};
+  const pending=[];cards.forEach(c=>{const o=cardBox(c);if(y+o.h<SH-1.4){box(o)}else pending.push(o)});
+  box({t:[{text:dest.name,options:{bold:true,fontSize:11,breakLine:true}}].concat(dest.full?[{text:dest.full,options:{breakLine:true}}]:[],[{text:dest.mgrs,options:{breakLine:true}}],dest.rwy?[{text:`ร่อนลง/วิ่งขึ้น : ${dest.rwy}`,options:{breakLine:true}}]:[],dest.contact?[{text:`ติดต่อ : ${dest.contact}`}]:[]),h:.85,fill:"4472C4",lc:"2F528F",c:"FFFFFF",al:"center",fs:8.5});
+  box({t:[{text:`DIST = ${sum.dist} NM.`,options:{breakLine:true}},{text:`TIME = ${sum.time} Min.`,options:{breakLine:true}},{text:`ALT = ${sum.alt!=null?Math.round(sum.alt).toLocaleString("en-US")+" ft":"-"}`}],h:.55,w:1.35,fill:"8EA9DB",lc:"8EA9DB",fs:9});
+  /* กล่องที่ล้นคอลัมน์ซ้าย → วางมุมขวาล่าง */
+  let ry=SH-.95;pending.reverse().forEach(o=>{ry-=o.h+.08;box({...o,x:SW-LW-.08,y:ry})});
+  /* เส้นทางหลัก / สำรอง (พิมพ์ต่อเองได้) */
+  const W=state.wps;s1.addText([{text:"MAIN ROUTE",options:{bold:true,underline:{style:"sng"},breakLine:true}},{text:W.map((w,i)=>wpLabel(w,i)).join(" – "),options:{breakLine:true}},{text:"ALTERNATE ROUTE",options:{bold:true,underline:{style:"sng"},breakLine:true}},{text:" "}],
+    {...F,x:LX,y:SH-.85,w:SW-.16,h:.78,fontSize:7.5,line:{color:"000000",width:.75},valign:"top",margin:[3,4,3,4],fit:"shrink"});
+  /* แผนผัง */
+  const area={x:LW+.18,y:.62,w:SW-LW-.26,h:SH-.62-.95-(pending.length?Math.min(SH-.95-ry,3):0)},S=xpSchem(area);
+  s1.addText("N\n↑",{...F,x:SW-.42,y:.58,w:.3,h:.42,fontSize:10,bold:true,align:"center"});
+  S.alts.forEach(a=>{line(s1,a.a,a.b,{color:"A6A6A6",width:1.25,dashType:"sysDot"})});
+  S.legs.forEach(l=>line(s1,l.a,l.b,{color:"000000",width:3.5}));
+  const lbl=(t,a,b,o)=>{const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;let ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;if(ang>90)ang-=180;if(ang<=-90)ang+=180;
+    let nx=-(b[1]-a[1]),ny=b[0]-a[0];const nl=Math.hypot(nx,ny)||1;nx/=nl;ny/=nl;if(nx*(mx-S.cx)+ny*(my-S.cy)<0){nx=-nx;ny=-ny}const off=o.off||.15,w=1.7,h=.2;
+    s1.addText(t,{...F,x:mx+nx*off-w/2,y:my+ny*off-h/2,w,h,rotate:ang,fontSize:o.fs||8,color:o.c||"000000",bold:o.b,align:"center",valign:"middle"})};
+  S.legs.forEach(l=>lbl(l.txt,l.a,l.b,{fs:8,b:false}));
+  S.alts.forEach(a=>lbl(a.txt,a.a,a.b,{fs:6.5,c:"A6A6A6",off:.1}));
+  const dot=(p,col,lc,r)=>s1.addShape(px.ShapeType.ellipse,{x:p[0]-r,y:p[1]-r,w:2*r,h:2*r,fill:{color:col},line:{color:lc,width:1}});
+  const name=(t,p,d,o)=>{const w=1.5,h=.24,g=.17,tw=String(t).length*(o.fs||10)*.0085+.05;let x,al;if(d[0]>.35){x=p[0]+g;al="left"}else if(d[0]<-.35){x=p[0]-g-w;al="right"}else{x=p[0]-w/2;al="center"}
+    /* ไม่ให้ชื่อล้นขอบกระดาษ */if(al==="left"&&p[0]+g+tw>SW-.06){x=p[0]-g-w;al="right"}else if(al==="right"&&p[0]-g-tw<.06){x=p[0]+g;al="left"}else if(al==="center"){x=Math.min(Math.max(x,.06-(w-tw)/2),SW-.06-w+(w-tw)/2)}
+    const yy=p[1]+d[1]*(Math.abs(d[0])>.35?.05:.26)-h/2;s1.addText(t,{...F,x,y:yy,w,h,fontSize:o.fs||10,bold:o.b!==false,align:al,valign:"middle",color:"000000"})};
+  S.alts.forEach(a=>{dot(a.b,"FFFF00","7F7F00",.09);const d=[a.b[0]-a.a[0],a.b[1]-a.a[1]],l=Math.hypot(d[0],d[1])||1;name((a.ap?"✈ ":"")+a.name,a.b,[d[0]/l,d[1]/l],{fs:9,b:false})});
+  S.pts.forEach((p,i)=>{dot(p,"4472C4","2F528F",.1);const ex=S.alts.filter(a=>a.a===p).map(a=>[a.b[0]-p[0],a.b[1]-p[1]]);name((S.isAp[i]&&i>0&&i<S.pts.length-1?"✈ ":"")+S.names[i],p,xpLblDir(S.pts,i,ex),{fs:10})});
+  /* ---- สไลด์ 2: ตารางจุด + ภาพที่หมาย ---- */
+  const s2=px.addSlide();hdr(s2);const T=xpTable(),tw=SW-.2,ws=T.wid.reduce((a,b)=>a+b,0);
+  const hc={fill:{color:"E7E6E6"},bold:true,fontSize:9,align:"center",valign:"middle",fontFace:XP_FONT};
+  const rows=[T.head.map(h=>({text:h,options:hc}))].concat(T.rows.map(r=>r.cells.map((c,j)=>({text:c,options:{fontSize:9,fontFace:XP_FONT,align:T.cols[j]==="lm"?"center":"center",valign:"middle",bold:T.cols[j]==="pt",fill:r.bg&&r.bg!=="FFFFFF"?{color:r.bg}:undefined}}))));
+  s2.addTable(rows,{x:.1,y:.62,w:tw,colW:T.wid.map(w=>w/ws*tw),border:{type:"solid",pt:.75,color:"000000"},rowH:.27,margin:.03,autoPage:false});
+  const ty=.62+.27*(T.rows.length+1)+.25;
+  try{const wd=state.wps.at(-1),img=await xpPhoto(+wd.lat,+wd.lon,16),sz=Math.min(2.7,SH-ty-.15);if(sz>1.2){s2.addImage({data:img,x:.1,y:ty,w:sz,h:sz});s2.addText("ที่หมาย",{...F,x:.1,y:ty,w:1.1,h:.3,fill:{color:"00B0F0"},color:"000000",bold:true,fontSize:12,align:"center",valign:"middle"})}}catch(e){}
+  /* ---- สไลด์ 3: NAV LOG ---- */
+  const res=compute();if(res.rows.length){const s3=px.addSlide();hdr(s3);const H=["Go To","ALT","GS","TC","MH","Dist","Rem","ETE","ETA","Fuel","ATE"];
+    const R=[H.map(h=>({text:h,options:{...hc,fontSize:8}}))].concat(res.rows.map((r,i)=>[wpLabel(W[i+1],i+1),String(num(state.legs[i]&&state.legs[i].alt,"")),isFinite(r.gs)?r.gs.toFixed(0):"–",hdg(r.tc),isFinite(r.mh)?hdg(r.mh):"–",r.dist.toFixed(1),r.rem.toFixed(1),mmss(r.ete),hhmm(r.eta),r.fuel.toFixed(0),""].map((c,j)=>({text:String(c),options:{fontSize:8,fontFace:XP_FONT,align:j?"center":"left",bold:j===4}}))));
+    s3.addTable(R,{x:.1,y:.62,w:SW-.2,colW:[1.25,.45,.4,.4,.4,.45,.45,.5,.5,.45,.38],border:{type:"solid",pt:.75,color:"000000"},rowH:.26,margin:.03,autoPage:false})}
+  const blob=await px.write({outputType:"blob"});await xpOut(xpName("pptx"),new Blob([blob],{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"}))}
+/* ---------- Excel ---------- */
+async function xpXlsx(){await loadScript("https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js");const wb=new ExcelJS.Workbook(),title=xpTitle(),A={name:XP_FONT,size:11};
+  const bd={top:{style:"thin"},bottom:{style:"thin"},left:{style:"thin"},right:{style:"thin"}};
+  const sheet=(nm,head,rows,widths,opt)=>{const ws=wb.addWorksheet(nm,{pageSetup:{paperSize:11,orientation:"portrait",fitToPage:true,fitToWidth:1,fitToHeight:0}});ws.columns=widths.map(w=>({width:w}));
+    ws.mergeCells(1,1,1,head.length);const t=ws.getCell(1,1);t.value=title;t.font={...A,size:16,bold:true,color:{argb:"FFFFFFFF"}};t.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FF000000"}};t.alignment={horizontal:"center",vertical:"middle"};ws.getRow(1).height=28;
+    const hr=ws.getRow(2);head.forEach((h,i)=>{const c=hr.getCell(i+1);c.value=h;c.font={...A,bold:true};c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFE7E6E6"}};c.border=bd;c.alignment={horizontal:"center",vertical:"middle",wrapText:true}});hr.height=32;
+    rows.forEach((r,j)=>{const row=ws.getRow(3+j);(r.cells||r).forEach((v,i)=>{const c=row.getCell(i+1);c.value=v;c.font={...A,bold:opt&&opt.boldCol===i};c.border=bd;c.alignment={horizontal:i===0&&opt&&opt.left0?"left":"center",vertical:"middle",wrapText:true};if(r.bg&&r.bg!=="FFFFFF")c.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FF"+r.bg}}})});ws.views=[{state:"frozen",ySplit:2}];return ws};
+  const T=xpTable();sheet("จุด",T.head,T.rows,T.cols.map(c=>({pt:14,lm:26,rad:16,mgrs:22,pre:9}[c]||14)),{boldCol:T.cols.indexOf("pt")});
+  const res=compute(),W=state.wps;sheet("NAV LOG",["Go To","ALT","GS","TC","MH","Dist","Rem","ETE","ETA","Fuel","ATE"],res.rows.map((r,i)=>[wpLabel(W[i+1],i+1),num(state.legs[i]&&state.legs[i].alt,""),isFinite(r.gs)?Math.round(r.gs):"",hdg(r.tc),isFinite(r.mh)?hdg(r.mh):"",+r.dist.toFixed(1),+r.rem.toFixed(1),mmss(r.ete),hhmm(r.eta),Math.round(r.fuel),""]),[18,8,7,7,7,8,8,8,8,8,8],{left0:true,boldCol:4});
+  /* ความถี่ + ที่หมาย + สรุป */
+  const cards=xpCards(),fic=xpFic(),dest=xpDest(cards),sum=xpSum(),fr=[];if(fic)fr.push(["FIC / หน่วย",fic.name,fic.freq]);fr.push(["EMER","","121.5 / 243.0"]);
+  cards.forEach(c=>{fr.push({cells:[c.title,"",""],bg:"DDEBF7"});c.rows.forEach(r=>fr.push(["",r[0],r[1]]))});
+  fr.push({cells:["ที่หมาย",dest.name+(dest.full?" · "+dest.full:""),dest.mgrs],bg:"BDD7EE"});if(dest.rwy)fr.push(["","ร่อนลง/วิ่งขึ้น",dest.rwy]);if(dest.contact)fr.push(["","ติดต่อ",dest.contact]);
+  fr.push({cells:["สรุป",`DIST ${sum.dist} NM · TIME ${sum.time} Min.`,sum.alt!=null?`ALT ${Math.round(sum.alt)} ft`:""],bg:"D9E1F2"});
+  sheet("ความถี่",["หัวข้อ","รายการ","ค่า"],fr,[22,24,34],{left0:true});
+  const buf=await wb.xlsx.writeBuffer();await xpOut(xpName("xlsx"),new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}))}
+/* ---------- Word (A5) ---------- */
+async function xpDocx(){await loadLib("https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js","docx");const D=window.docx,title=xpTitle(),FT={font:XP_FONT};
+  const bd={style:D.BorderStyle.SINGLE,size:4,color:"000000"},B={top:bd,bottom:bd,left:bd,right:bd};
+  const TW=7257,cell=(t,o)=>new D.TableCell({borders:B,shading:o&&o.bg?{type:D.ShadingType.CLEAR,color:"auto",fill:o.bg}:undefined,width:o&&o.w?{size:o.w,type:D.WidthType.DXA}:undefined,verticalAlign:D.VerticalAlign.CENTER,
+    children:[new D.Paragraph({alignment:o&&o.left?D.AlignmentType.LEFT:D.AlignmentType.CENTER,children:[new D.TextRun({...FT,text:String(t),bold:!!(o&&o.b),size:o&&o.sz||16})]})]});
+  const table=(head,rows,wid0,opt)=>{const n=head.length,wp=wid0||head.map((h,i)=>i?(100-22)/(n-1):22),wid=wp.map(w=>Math.round(w/wp.reduce((a,b)=>a+b,0)*TW));return new D.Table({width:{size:TW,type:D.WidthType.DXA},columnWidths:wid,layout:D.TableLayoutType.FIXED,rows:[new D.TableRow({tableHeader:true,children:head.map((h,i)=>cell(h,{bg:"E7E6E6",b:true,w:wid&&wid[i]}))})].concat(rows.map(r=>new D.TableRow({children:(r.cells||r).map((v,i)=>cell(v,{bg:r.bg&&r.bg!=="FFFFFF"?r.bg:undefined,b:opt&&opt.boldCol===i,left:opt&&opt.left0&&i===0,w:wid&&wid[i]}))})))})};
+  const head=t=>new D.Paragraph({shading:{type:D.ShadingType.CLEAR,color:"auto",fill:"000000"},alignment:D.AlignmentType.CENTER,spacing:{after:120},children:[new D.TextRun({...FT,text:t,bold:true,color:"FFFFFF",size:30})]});
+  const h2=t=>new D.Paragraph({spacing:{before:200,after:80},children:[new D.TextRun({...FT,text:t,bold:true,size:22})]});
+  const T=xpTable(),ws=T.wid.reduce((a,b)=>a+b,0),res=compute(),W=state.wps,cards=xpCards(),fic=xpFic(),dest=xpDest(cards),sum=xpSum();
+  const fr=[];if(fic)fr.push([fic.name,fic.freq]);fr.push(["EMER","121.5 / 243.0"]);cards.forEach(c=>{fr.push({cells:[c.title,""],bg:"DDEBF7"});c.rows.forEach(r=>fr.push([r[0],r[1]]))});
+  const kids=[head(title),table(T.head,T.rows,T.cols.map(c=>({pt:18,lm:22,rad:19,mgrs:29,pre:12}[c]||14)),{boldCol:T.cols.indexOf("pt")}),
+    h2("ที่หมาย"),new D.Paragraph({children:[new D.TextRun({...FT,text:`${dest.name}${dest.full?" · "+dest.full:""} · ${dest.mgrs}`,size:20})]}),
+    ...(dest.rwy?[new D.Paragraph({children:[new D.TextRun({...FT,text:`ร่อนลง/วิ่งขึ้น : ${dest.rwy}`,size:20})]})]:[]),...(dest.contact?[new D.Paragraph({children:[new D.TextRun({...FT,text:`ติดต่อ : ${dest.contact}`,size:20})]})]:[]),
+    new D.Paragraph({children:[new D.TextRun({...FT,text:`DIST = ${sum.dist} NM.   TIME = ${sum.time} Min.   ALT = ${sum.alt!=null?Math.round(sum.alt)+" ft":"-"}`,size:20,bold:true})]}),
+    h2("ความถี่"),table(["หน่วย / สนาม","ความถี่"],fr,[40,60],{left0:true}),
+    new D.Paragraph({pageBreakBefore:true,children:[]}),head("NAV LOG · "+title),
+    table(["Go To","ALT","GS","TC","MH","Dist","Rem","ETE","ETA","Fuel","ATE"],res.rows.map((r,i)=>[wpLabel(W[i+1],i+1),String(num(state.legs[i]&&state.legs[i].alt,"")),isFinite(r.gs)?r.gs.toFixed(0):"–",hdg(r.tc),isFinite(r.mh)?hdg(r.mh):"–",r.dist.toFixed(1),r.rem.toFixed(1),mmss(r.ete),hhmm(r.eta),r.fuel.toFixed(0),""]),null,{left0:true,boldCol:4})];
+  const doc=new D.Document({creator:"VFR Planner",title,sections:[{properties:{page:{size:{width:8391,height:11906},margin:{top:567,bottom:567,left:567,right:567}}},children:kids}]});
+  const blob=await D.Packer.toBlob(doc);await xpOut(xpName("docx"),new Blob([blob],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}))}
+async function xpRun(k){const b=document.getElementById("pvXpBtn"),old=b&&b.innerHTML;if(b){b.disabled=true;b.innerHTML="⏳ กำลังสร้าง…"}
+  try{if(k==="pptx")await xpPptx();if(k==="xlsx")await xpXlsx();if(k==="docx")await xpDocx()}catch(e){console.error(e);toast("ส่งออกไม่ได้: "+(e.message||e)+" (ครั้งแรกต้องต่อเน็ต)")}finally{if(b){b.disabled=false;b.innerHTML=old}}}
+function pvExportMenu(pv){const pdf=pv.querySelector("#pvPdf");if(!pdf||pv.querySelector("#pvXpBtn"))return;const w=document.createElement("div");w.className="pvb-mode pvb-xp";
+  w.innerHTML='<button id="pvXpBtn" class="pvb-btn" title="ส่งออกไปแก้ต่อใน PowerPoint / Excel / Word">📤 <span>ส่งออก</span> ▾</button><div class="pvb-menu" hidden><button type="button" class="pvb-btn" data-xp="pptx">📊 <span>PowerPoint — แก้ได้ทุกชิ้น</span></button><button type="button" class="pvb-btn" data-xp="xlsx">📗 <span>Excel — ตารางจุด / NAV LOG / ความถี่</span></button><button type="button" class="pvb-btn" data-xp="docx">📘 <span>Word — เอกสาร A5</span></button></div>';
+  pdf.parentNode.insertBefore(w,pdf);const b=w.querySelector("#pvXpBtn"),m=w.querySelector(".pvb-menu");b.onclick=e=>{e.stopPropagation();m.hidden=!m.hidden};
+  m.addEventListener("click",e=>{const x=e.target.closest("[data-xp]");if(!x)return;m.hidden=true;xpRun(x.dataset.xp)});document.addEventListener("pointerdown",e=>{if(!e.target.closest(".pvb-xp"))m.hidden=true},true)}
 
 function offOpen(){const d=$("#offDlg");d.showModal();if(!OFF_RUN){$("#offProg").hidden=true;$("#offGo").hidden=false;$("#offStop").hidden=true}offCalc()}
 (function offInit(){const d=$("#offDlg");if(!d)return;
