@@ -2413,17 +2413,20 @@ function plVisOn(k){try{return visOn(k)}catch(e){return false}}
 function plIsOn(n){if(n.root)return n.root.some(plVisOn);if(n.rt)return n.on&&plVisOn("ovl");const L=plLayersOf(n.k);return!plOff(n.k)&&(!L.length||L.some(plVisOn))}
 /* สีแถบตามชนิด: สนาม · โฟลเดอร์ย่อย · จุด · จุดของฉัน · เส้นทาง · BASE */
 function plTone(k){return/^(#|mil$|oth$)/.test(k)?"root":/^ap:/.test(k)?"ap":/^apm:/.test(k)?"apm":/^vfr:[^:]+:pts$/.test(k)?"fd":/^vfr:[^:]+:dep$/.test(k)?"dep":/^vfr:[^:]+:arr$/.test(k)?"arr":/^vp:/.test(k)?"pt":/^my:/.test(k)?"my":/^rt:/.test(k)?"rt":/^db:(a|b)$/.test(k)?"fd":/^db:/.test(k)?"db":/^nav:/.test(k)?"nav":""}
-function plRow(n,depth,path){const kids=n.kids||[],hasK=kids.length||n.empty;const cb=n.noTog?'<span class="pl-sp"></span>':`<input type="checkbox" data-pk="${esc(n.k)}" ${plIsOn(n)?"checked":""} aria-label="แสดง ${esc(n.t)}">`;
+function plRow(n,depth,path,pOn){const kids=n.kids||[],hasK=kids.length||n.empty,on0=pOn!==false&&plIsOn(n),part=on0&&!n.root&&kids.some(c=>!c.noTog&&c.k&&plOff(c.k)),on=on0;const cb=n.noTog?'<span class="pl-sp"></span>':`<input type="checkbox" data-pk="${esc(n.k)}" ${on&&!part?"checked":""}${part?' data-ind="1" title="แสดงบางรายการ — แตะเพื่อแสดงทั้งหมด"':""} aria-label="แสดง ${esc(n.t)}">`;
   const dragA=n.wp&&/^(vp|my|db):/.test(n.k)?` draggable="true" data-pdrag="${esc(JSON.stringify({k:n.k,wp:n.wp,lm:n.sub||""}))}"`:"";
   const dropA=n.drop?` data-pdrop="${esc(n.drop)}"`:"";
   const lab=`<span class="pl-t" ${n.ll?`data-pfly="${n.ll[0]},${n.ll[1]}"`:""}>${esc(n.t)}${n.sub?`<small>${esc(n.sub)}</small>`:""}</span>${n.wp?`<button type="button" class="pl-add" data-pwp="${esc(JSON.stringify(n.wp))}" title="เพิ่มเข้าเส้นทาง">➕</button>`:""}${n.use?`<button type="button" class="pl-use" data-puse="${esc(n.use)}" title="เปิดเป็นแผนการบิน">↪ ใช้</button>`:""}`;
   const tn=plTone(n.k),mk=` data-pmk="${esc(n.k)}"${tn?` data-tone="${tn}"`:""}`;if(!hasK)return`<div class="pl-r" style="--d:${depth}"${dragA}${dropA}${mk}>${cb}${lab}</div>`;
-  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}"${dropA}${mk}>${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
+  const open=PL_OPEN.has(path);return`<details class="pl-f" data-pid="${esc(path)}" ${open?"open":""}><summary class="pl-r" style="--d:${depth}"${dropA}${mk}>${cb}${lab}</summary>${open?(kids.length?kids.map((c,i)=>plRow(c,depth+1,path+"/"+i,on)).join(""):`<p class="hint pl-empty">${esc(n.empty)}</p>`):""}</details>`}
 function plRender(){const box=document.getElementById("plTree");if(!box)return;const q=(document.getElementById("plQ")||{}).value||"";const T=plTree();
   if(q.trim()){const Q=q.trim().toUpperCase(),out=[];const walk=(n,trail)=>{(n.kids||[]).forEach(c=>{if(c.ll&&(c.t.toUpperCase().includes(Q)||String(c.sub||"").toUpperCase().includes(Q)))out.push({...c,kids:null,empty:null,sub:trail});walk(c,c.k&&/^ap:/.test(c.k)?c.t:trail)})};T.forEach(n=>walk(n,n.t.replace(/^\S+\s/,"")));
     box.innerHTML=out.length?out.slice(0,200).map(c=>plRow(c,0,"q")).join(""):'<p class="hint pl-empty">ไม่พบ</p>';return}
-  const st=box.scrollTop;box.innerHTML=T.map((n,i)=>plRow(n,0,String(i))).join("");box.scrollTop=st}
-function plToggle(k,on){const T=plTree();let node=null;const find=a=>a.forEach(n=>{if(n.k===k)node=n;else if(n.kids)find(n.kids)});find(T);
+  const st=box.scrollTop;box.innerHTML=T.map((n,i)=>plRow(n,0,String(i))).join("");box.querySelectorAll("[data-ind]").forEach(e=>e.indeterminate=true);box.scrollTop=st}
+function plToggle(k,on){const T=plTree();let node=null,anc=[];const find=(a,ch)=>a.forEach(n=>{if(node)return;if(n.k===k){node=n;anc=ch}else if(n.kids)find(n.kids,ch.concat([n]))});find(T,[]);
+  /* ติ๊กรายการที่อยู่ในโฟลเดอร์ที่ปิดอยู่ = เปิดโฟลเดอร์นั้น แต่แสดงเฉพาะรายการที่ติ๊ก (รายการอื่นในโฟลเดอร์ยังปิด) */
+  if(on&&node){const chain=anc.concat([node]);anc.forEach((a,ai)=>{if(a.root||!PL_HIDE.has(a.k))return;PL_HIDE.delete(a.k);const keep=new Set(chain.slice(ai+1).map(x=>x.k));
+    const w=x=>(x.kids||[]).forEach(c=>{if(!keep.has(c.k))PL_HIDE.add(c.k);else w(c)});w(a)});plSave()}
   const keysUnder=n=>{const o=[];const w=x=>(x.kids||[]).forEach(c=>{o.push(c.k);w(c)});w(n);return o};
   if(node&&node.root){node.root.forEach(r=>{try{visSet(r,on)}catch(e){}});visSave();/* ติ๊กโฟลเดอร์หลัก = แสดงทั้งหมดในโฟลเดอร์ */if(on){keysUnder(node).forEach(x=>PL_HIDE.delete(x));plSave()}}
   else if(node&&node.rt){ovlSet(node.rt,{on});if(on&&!plVisOn("ovl")){visSet("ovl",true);visSave()}}
