@@ -2405,10 +2405,10 @@ function plToggle(k,on){const T=plTree();let node=null;const find=a=>a.forEach(n
   const keysUnder=n=>{const o=[];const w=x=>(x.kids||[]).forEach(c=>{o.push(c.k);w(c)});w(n);return o};
   if(node&&node.root){node.root.forEach(r=>{try{visSet(r,on)}catch(e){}});visSave();/* ติ๊กโฟลเดอร์หลัก = แสดงทั้งหมดในโฟลเดอร์ */if(on){keysUnder(node).forEach(x=>PL_HIDE.delete(x));plSave()}}
   else if(node&&node.rt){ovlSet(node.rt,{on});if(on&&!plVisOn("ovl")){visSet("ovl",true);visSave()}}
-  else{on?PL_HIDE.delete(k):PL_HIDE.add(k);plSave();
+  else{on?PL_HIDE.delete(k):PL_HIDE.add(k);/* ติ๊กโฟลเดอร์ย่อย (เช่น Preset 1–60) = แสดงลูกทั้งหมด */const isF=!!(node&&node.kids&&node.kids.length);if(on&&isF)keysUnder(node).forEach(x=>PL_HIDE.delete(x));plSave();
     if(on){/* ติ๊กทีละจุดตอนชั้นยังปิดอยู่ = แสดงเฉพาะจุดนี้ (จุดอื่นในหมวดเดียวกันซ่อนไว้ ติ๊กเพิ่มเองได้) */
       const off=plLayersOf(k).filter(v=>!plVisOn(v)),pre=(k.match(/^(my|db|nav|vp):/)||[])[0];
-      if(off.length&&pre&&!(pre==="vp:"&&off.length<plLayersOf(k).length)){const all=[];const w=a=>a.forEach(n=>{if(n.k&&n.k.startsWith(pre)&&n.k!==k&&!n.kids&&!/^db:[ab]$/.test(n.k))all.push(n.k);if(n.kids)w(n.kids)});w(T);all.forEach(x=>PL_HIDE.add(x));plSave()}
+      if(!isF&&off.length&&pre&&!(pre==="vp:"&&off.length<plLayersOf(k).length)){const all=[];const w=a=>a.forEach(n=>{if(n.k&&n.k.startsWith(pre)&&n.k!==k&&!n.kids&&!/^db:[ab]$/.test(n.k))all.push(n.k);if(n.kids)w(n.kids)});w(T);all.forEach(x=>PL_HIDE.add(x));plSave()}
       /* เปิดชั้นแผนที่ + โฟลเดอร์แม่ที่ถูกซ่อนอยู่ */plLayersOf(k).forEach(v=>{if(!plVisOn(v))visSet(v,true)});visSave();
       const m=k.match(/^(?:vp|vfr):([^:]+)/);if(m){PL_HIDE.delete("ap:"+m[1]);if(/^vp:/.test(k))PL_HIDE.delete("vfr:"+m[1]+":pts");const a=AP[m[1]];if(a&&a.eaip&&a.eaip.custom)PL_HIDE.delete("mil");plSave()}
       if(/^db:\d/.test(k)){PL_HIDE.delete("db:a");PL_HIDE.delete("db:b");plSave()}}}
