@@ -2,11 +2,12 @@
    - แอป/ไลบรารี: เก็บไว้ล่วงหน้า
    - ข้อมูล (eAIP, METAR): ใช้ของใหม่ถ้าต่อเน็ตได้ ไม่ได้ใช้ของล่าสุดที่เก็บไว้
    - ภาพแผนที่: เก็บภาพที่เคยเปิดดู (สูงสุด ~6000 ภาพ) */
-const V = "vfr-v171";
+const V = "vfr-v172";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "eaip_data.json", "metar.json", "notam.json", "BASE_template.xlsx", "contacts_template.xlsx", "provinces.json", "ppc_tpl.json",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css",
   "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js",
   "https://cdn.jsdelivr.net/npm/mgrs@2.1.0/dist/mgrs.min.js",
+  "https://cdn.jsdelivr.net/npm/leaflet-rotate@0.2.8/dist/leaflet-rotate.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.js",
   "https://cdn.jsdelivr.net/npm/leaflet-velocity@2.1.4/dist/leaflet-velocity.min.css",
   "fpl_template.pdf", "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
