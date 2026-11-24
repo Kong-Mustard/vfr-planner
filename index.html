@@ -2413,7 +2413,7 @@ function plVisOn(k){try{return visOn(k)}catch(e){return false}}
 function plIsOn(n){if(n.root)return n.root.some(plVisOn);if(n.rt)return n.on&&plVisOn("ovl");const L=plLayersOf(n.k);return!plOff(n.k)&&(!L.length||L.some(plVisOn))}
 /* สีแถบตามชนิด: สนาม · โฟลเดอร์ย่อย · จุด · จุดของฉัน · เส้นทาง · BASE */
 function plTone(k){return/^(#|mil$|oth$)/.test(k)?"root":/^ap:/.test(k)?"ap":/^apm:/.test(k)?"apm":/^vfr:[^:]+:pts$/.test(k)?"fd":/^vfr:[^:]+:dep$/.test(k)?"dep":/^vfr:[^:]+:arr$/.test(k)?"arr":/^vp:/.test(k)?"pt":/^my:/.test(k)?"my":/^rt:/.test(k)?"rt":/^db:(a|b)$/.test(k)?"fd":/^db:/.test(k)?"db":/^nav:/.test(k)?"nav":""}
-function plRow(n,depth,path,pOn){const kids=n.kids||[],hasK=kids.length||n.empty,on0=pOn!==false&&plIsOn(n),part=on0&&!n.root&&kids.some(c=>!c.noTog&&c.k&&plOff(c.k)),on=on0;const cb=n.noTog?'<span class="pl-sp"></span>':`<input type="checkbox" data-pk="${esc(n.k)}" ${on&&!part?"checked":""}${part?' data-ind="1" title="แสดงบางรายการ — แตะเพื่อแสดงทั้งหมด"':""} aria-label="แสดง ${esc(n.t)}">`;
+function plRow(n,depth,path,pOn){const kids=n.kids||[],hasK=kids.length||n.empty,on0=pOn!==false&&plIsOn(n),part=on0&&kids.some(c=>!c.noTog&&c.k&&plOff(c.k)),on=on0;const cb=n.noTog?'<span class="pl-sp"></span>':`<input type="checkbox" data-pk="${esc(n.k)}" ${on&&!part?"checked":""}${part?' data-ind="1" title="แสดงบางรายการ — แตะเพื่อแสดงทั้งหมด"':""} aria-label="แสดง ${esc(n.t)}">`;
   const dragA=n.wp&&/^(vp|my|db):/.test(n.k)?` draggable="true" data-pdrag="${esc(JSON.stringify({k:n.k,wp:n.wp,lm:n.sub||""}))}"`:"";
   const dropA=n.drop?` data-pdrop="${esc(n.drop)}"`:"";
   const lab=`<span class="pl-t" ${n.ll?`data-pfly="${n.ll[0]},${n.ll[1]}"`:""}>${esc(n.t)}${n.sub?`<small>${esc(n.sub)}</small>`:""}</span>${n.wp?`<button type="button" class="pl-add" data-pwp="${esc(JSON.stringify(n.wp))}" title="เพิ่มเข้าเส้นทาง">➕</button>`:""}${n.use?`<button type="button" class="pl-use" data-puse="${esc(n.use)}" title="เปิดเป็นแผนการบิน">↪ ใช้</button>`:""}`;
@@ -2432,8 +2432,9 @@ function plToggle(k,on){const T=plTree();let node=null,anc=[];const find=(a,ch)=
   else if(node&&node.rt){ovlSet(node.rt,{on});if(on&&!plVisOn("ovl")){visSet("ovl",true);visSave()}}
   else{on?PL_HIDE.delete(k):PL_HIDE.add(k);/* ติ๊กโฟลเดอร์ย่อย (เช่น Preset 1–60) = แสดงลูกทั้งหมด */const isF=!!(node&&node.kids&&node.kids.length);if(on&&isF)keysUnder(node).forEach(x=>PL_HIDE.delete(x));plSave();
     if(on){/* ติ๊กทีละจุดตอนชั้นยังปิดอยู่ = แสดงเฉพาะจุดนี้ (จุดอื่นในหมวดเดียวกันซ่อนไว้ ติ๊กเพิ่มเองได้) */
-      const off=plLayersOf(k).filter(v=>!plVisOn(v)),pre=(k.match(/^(my|db|nav|vp):/)||[])[0];
-      if(!isF&&off.length&&pre&&!(pre==="vp:"&&off.length<plLayersOf(k).length)){const all=[];const w=a=>a.forEach(n=>{if(n.k&&n.k.startsWith(pre)&&n.k!==k&&!n.kids&&!/^db:[ab]$/.test(n.k))all.push(n.k);if(n.kids)w(n.kids)});w(T);all.forEach(x=>PL_HIDE.add(x));plSave()}
+      /* ชั้นแผนที่ยังปิดอยู่: เปิดชั้นนั้นแต่ให้ขึ้นเฉพาะรายการที่ติ๊ก (และของข้างใน) — รายการอื่นทุกโฟลเดอร์ที่ใช้ชั้นเดียวกันซ่อนไว้ */
+      const newOn=plLayersOf(k).filter(v=>!plVisOn(v));if(newOn.length){const chainK=new Set(anc.map(x=>x.k).concat([k]));
+        const w=a=>a.forEach(n=>{if(!n.k||n.k===k||n.noTog)return;if(n.root||chainK.has(n.k)){if(n.kids)w(n.kids);return}if(plLayersOf(n.k).some(v=>newOn.includes(v)))PL_HIDE.add(n.k);else if(n.kids)w(n.kids)});w(T);plSave()}
       /* เปิดชั้นแผนที่ + โฟลเดอร์แม่ที่ถูกซ่อนอยู่ */plLayersOf(k).forEach(v=>{if(!plVisOn(v))visSet(v,true)});visSave();
       const m=k.match(/^(?:vp|vfr):([^:]+)/);if(m){PL_HIDE.delete("ap:"+m[1]);if(/^vp:/.test(k))PL_HIDE.delete("vfr:"+m[1]+":pts");const a=AP[m[1]];if(a&&a.eaip&&a.eaip.custom)PL_HIDE.delete("mil");plSave()}
       if(/^db:\d/.test(k)){PL_HIDE.delete("db:a");PL_HIDE.delete("db:b");plSave()}}}
