@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-25T20:22Z",
+"fetched": "2026-11-25T21:25Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1020,30 +1020,12 @@
 "keyword": "INTERNATIONAL"
 },
 {
-"loc": "VTBD",
-"id": "A4737/26",
-"icao": "A4737/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611251730 C) 2611252200\r\nE) ILS RWY 21L U/S",
-"plain": " ",
-"start": "11/25/2026 1730",
-"end": "11/25/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
 "loc": "VTBS",
 "id": "A4738/26",
 "icao": "A4738/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611252017 C) 2611252145\r\nE) ILS RWY 01/19 U/S",
 "plain": " ",
 "start": "11/25/2026 2017",
 "end": "11/25/2026 2145",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBD",
-"id": "A4728/26",
-"icao": "A4728/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611251600 C) 2611252100\r\nE) ACFT STAND TXL BEHIND ACFT STAND NR 68 AND 129 CLSD DUE TO WIP",
-"plain": " ",
-"start": "11/25/2026 1600",
-"end": "11/25/2026 2100",
 "keyword": "INTERNATIONAL"
 },
 {
