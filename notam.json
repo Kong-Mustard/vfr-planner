@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-25T11:23Z",
+"fetched": "2026-11-25T12:31Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -818,6 +818,15 @@
 "icao": "A3448/26 NOTAMR A2675/26 \r\nQ) VTBB/QARCA/IV/BO/E/000/999/1354N10036E999\r\nA) VTBB B) 2609030843 C) 2611262359\r\nE) DUE TO VT D41A ACT FPL PROC FOR ACFT OPR FM/TO VTCC DETAIL AS FLW:\r\n   1. PERIOD MON-FRI 0000-1000 EXCLUDING PUBLIC HOLIDAY\r\n   DEP/OVERFLY  DEST/OVERFLY     RTE\r\n     VTCC         VTCT       W12 IKISU W22  \r\n     VTCC         PONUK      R207 IKISU W22 CTR A581 \r\n     VTCT         VTCC       W22 IKISU W12\r\n     PONUK        VTCC       Y27 DUBEN Y28 CRIST R207 (FOR RNAV) \r\n     PONUK        VTCC       A581 CTR W22 IKISU R207 (FOR NON-RNAV)\r\n   2. PERIOD MON-FRI 1001-2359, SAT, SUN, PUBLIC HOLIDAY, H24\r\n   DEP/OVERFLY  DEST/OVERFLY    RTE\r\n     VTCC         VTCT          W20  \r\n     VTCC         PONUK         A581 \r\n     VTCT         VTCC          W20\r\n     PONUK        VTCC          A581",
 "plain": " ",
 "start": "09/03/2026 0843",
+"end": "11/26/2026 2359",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBB",
+"id": "A4732/26",
+"icao": "A4732/26 NOTAMN\r\nQ) VTBB/QANCA/I/BO/E/130/460/1354N10036E999\r\nA) VTBB B) 2611260000 C) 2611262359\r\nE) CDR Y5 (RNAV 2) AVBL FOR FLIGHT PLANNING AS FLW:\r\n   PERIOD      : MEA LOWER/UPPER LIMITS\r\n   0000-2359     FL130/FL460",
+"plain": " ",
+"start": "11/26/2026 0000",
 "end": "11/26/2026 2359",
 "keyword": "INTERNATIONAL"
 },
