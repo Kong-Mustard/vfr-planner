@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-26T18:11Z",
+"fetched": "2026-11-26T19:28Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -940,6 +940,15 @@
 },
 {
 "loc": "VTBS",
+"id": "A4753/26",
+"icao": "A4753/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611261904 C) 2611262330\r\nE) ILS RWY 01/19 U/S",
+"plain": " ",
+"start": "11/26/2026 1904",
+"end": "11/26/2026 2330",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBS",
 "id": "A4740/26",
 "icao": "A4740/26 NOTAMN\r\nQ) VTBB/QMRLC/IV/NBO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611261500 C) 2611262300\r\nE) RWY 02L/20R CLSD DUE TO WIP",
 "plain": " ",
@@ -981,15 +990,6 @@
 "plain": " ",
 "start": "11/26/2026 1800",
 "end": "11/26/2026 2000",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7556/26",
-"icao": "J7556/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/050/1217N10139E048\r\nA) VTBB B) 2611251400 C) 2611261900\r\nD) DAILY 1400-1900\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 48NM CENTRE\r\n   121657.53N1013918.17E (CHON BURI, RAYONG, CHANTHABURI \r\n   AND TRAT PROVINCE)\r\nF) SFC G) 5000FT AMSL",
-"plain": " ",
-"start": "11/25/2026 1400",
-"end": "11/26/2026 1900",
 "keyword": "INTERNATIONAL"
 },
 {
