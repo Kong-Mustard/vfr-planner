@@ -1052,6 +1052,8 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .nt-bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:4px 0 6px}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{border:0;border-radius:0;padding:7px 16px;background:var(--panel)}
 .seg button.on{background:#fbb4a5;color:#5a1d12}
+.nl-grp.lt{background:#fff;border-color:#cbd5e1}.nl-grp.lt button{background:#fff;color:#334155;font-weight:700}.nl-grp.lt button{white-space:nowrap;padding:7px 12px}@media (max-width:600px){#nlGloss .gl-grid{grid-template-columns:1fr 1fr!important;gap:5px!important}#nlGloss .gl-i{font-size:11.5px}#nlGloss .gl-i b{min-width:0}}.nl-grp.lt button.on{background:#4f46e5;color:#fff}
+#nlGloss>summary{cursor:pointer;list-style:none}#nlGloss>summary::-webkit-details-marker{display:none}#nlGloss>summary h2::after{content:" ▸";opacity:.6}#nlGloss[open]>summary h2::after{content:" ▾"}#nlGloss[open]>summary{margin-bottom:8px}
 .nt-chk{flex-direction:row;align-items:center;gap:6px;font-size:14px;color:var(--ink)}
 .nt-grp h3{margin:14px 0 6px;font:700 19px var(--f-display);color:var(--ink)}
 .nti{position:relative;background:var(--input);border-radius:14px;padding:12px 14px 12px 20px;margin-bottom:8px;cursor:pointer;overflow:hidden}
@@ -1184,6 +1186,8 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .cv-u{display:flex;flex-direction:column;align-items:flex-start;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--input);cursor:pointer;color:var(--ink)}
 .cv-u b{font:800 20px var(--f-mono)}.cv-u i{font-style:normal;color:var(--muted);font-size:13px}.cv-u.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .cv-pre button{border-radius:999px;padding:8px 14px}
+.cv-preblk{margin-top:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fb923c;color:#7c2d12;color-scheme:light}.cv-preblk h3{margin:0 0 8px;font:800 16px var(--f-display);color:#c2410c}
+.cv-preblk .cv-pre button{background:#fff!important;color:#9a3412!important;border:1.5px solid #fdba74!important;box-shadow:none!important;font-weight:700}.cv-preblk .cv-pre button:hover{background:#fb923c!important;color:#fff!important}
 .cv-row1 input,.cv-row1 select,.cv-dens input{background:#fff!important;color:#111827!important;border:1.5px solid #d1d5db!important;color-scheme:light}.cv-row1 input:focus,.cv-row1 select:focus{border-color:var(--accent)!important}
 .cv1 h3{margin:4px 0 0;font:700 16px var(--f-display)}.cv-pre{display:flex;flex-wrap:wrap;gap:8px}.cv-dens{max-width:280px}
 @media (max-width:620px){.cv-row1{grid-template-columns:1fr auto 1fr}.cv-row1 input{grid-column:1/-1}}
@@ -1827,7 +1831,7 @@ body.cl-on{overflow:hidden}
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-indigo">NAVLOG — <span id="nlTitle"></span></h2><span class="nl-btns"><button id="exportXlsx">Export Excel (.xlsx)</button><a id="openSV" class="linkbtn" href="https://skyvector.com/" target="_blank" rel="noopener">SkyVector ↗</a><button id="ppcBtn" class="ppc-btn ppc-off" type="button" disabled aria-disabled="true" title="ปิดการใช้งานชั่วคราว">📊 UH-60 PPC</button></span></div>
     <div class="nl-head" id="nlHead"></div>
-    <div class="seg nl-grp" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
+    <div class="seg nl-grp lt" role="group" aria-label="กลุ่มคอลัมน์"><button data-g="basic" class="on">พื้นฐาน</button><button data-g="wind">ลม / ความเร็ว</button><button data-g="fuel">น้ำมัน</button><button data-g="all">ทั้งหมด</button></div>
     <div class="tablewrap"><table id="navTable">
       <thead><tr>
         <th>Leg</th><th>From → To</th><th title="ความสูงที่จะบิน (ft)">ALT</th><th title="ทิศลม — ลมพัดมาจากทิศ (°True)">W/D</th><th title="ความเร็วลม (kt)">W/V</th><th title="อุณหภูมิที่ความสูงนั้น (°C) ใช้คำนวณ TAS">Temp</th><th title="ความเร็วอ่านจากเครื่องวัด (kt) ที่ตั้งใจบิน">CAS</th><th title="ความเร็วจริงในอากาศ (kt) = CAS ปรับตามความสูง/อุณหภูมิ">TAS</th>
@@ -1837,10 +1841,10 @@ body.cl-on{overflow:hidden}
       <tbody></tbody>
     </table></div>
   </div>
-  <div class="card section" id="nlGloss">
-    <div class="sechead"><h2 class="hd hd-indigo">คำอธิบายหัวตาราง NAVLOG</h2><span class="hint"><span class="gl-key in">ช่องเทา</span> = กรอกได้ · <span class="gl-key calc">ช่องฟ้า</span> = คำนวณอัตโนมัติ</span></div>
-    <div class="gl-grid"><div class="gl-i gl-in gg-alt"><b>ALT</b><span>ความสูงที่จะบิน (ft)</span></div><div class="gl-i gl-in gg-wind"><b>W/D</b><span>ทิศลม — ลมพัดมาจากทิศ (°True)</span></div><div class="gl-i gl-in gg-wind"><b>W/V</b><span>ความเร็วลม (kt)</span></div><div class="gl-i gl-in gg-wind"><b>Temp</b><span>อุณหภูมิที่ความสูงนั้น (°C) ใช้คำนวณ TAS</span></div><div class="gl-i gl-in gg-spd"><b>CAS</b><span>ความเร็วอ่านจากเครื่องวัด (kt) ที่ตั้งใจบิน</span></div><div class="gl-i gl-calc gg-spd"><b>TAS</b><span>ความเร็วจริงในอากาศ (kt) = CAS ปรับตามความสูง/อุณหภูมิ</span></div><div class="gl-i gl-calc gg-hdg"><b>TC</b><span>ทิศของเส้นทางบนแผนที่ (°True)</span></div><div class="gl-i gl-calc gg-hdg"><b>WCA</b><span>มุมแก้ลม (°) + = หันขวา − = หันซ้าย</span></div><div class="gl-i gl-calc gg-hdg"><b>TH</b><span>heading จริงที่ต้องถือ = TC + WCA (°True)</span></div><div class="gl-i gl-calc gg-hdg"><b>Var</b><span>ค่าแปรปรวนแม่เหล็ก (W+, E−)</span></div><div class="gl-i gl-mh gg-mh"><b>MH</b><span>heading ที่ต้องถือบนเข็มทิศแม่เหล็ก = TH + Var</span></div><div class="gl-i gl-in gg-hdg"><b>Dev</b><span>ค่าคลาดเข็มทิศของเครื่อง (จากบัตร deviation)</span></div><div class="gl-i gl-calc gg-hdg"><b>CH</b><span>heading บนเข็มทิศเครื่อง = MH + Dev</span></div><div class="gl-i gl-calc gg-dist"><b>Dist</b><span>ระยะของขานี้ (NM)</span></div><div class="gl-i gl-calc gg-dist"><b>Rem</b><span>ระยะที่เหลือถึงปลายทาง (NM)</span></div><div class="gl-i gl-calc gg-spd"><b>GS</b><span>ความเร็วเทียบพื้น (kt) หลังคิดลม</span></div><div class="gl-i gl-calc gg-time"><b>ETE</b><span>เวลาที่ใช้บินขานี้ (นาที:วินาที)</span></div><div class="gl-i gl-eta gg-time"><b>ETA</b><span>เวลาที่คาดว่าจะถึงจุดนี้ (เวลาท้องถิ่น)</span></div><div class="gl-i gl-in gg-time"><b>ATE</b><span>เวลาที่บินจริง — กรอกระหว่าง/หลังบิน</span></div><div class="gl-i gl-calc gg-fuel"><b>Fuel leg</b><span>น้ำมันที่ใช้ในขานี้ (lb)</span></div><div class="gl-i gl-calc gg-fuel"><b>Fuel rem</b><span>น้ำมันคงเหลือเมื่อถึงจุดนี้ (lb)</span></div><div class="gl-i gl-in gg-fuel"><b>Fuel act</b><span>น้ำมันที่เหลือจริง — กรอกระหว่างบิน</span></div></div>
-  </div>
+  <details class="card section" id="nlGloss">
+    <summary class="sechead gl-sum"><h2 class="hd hd-indigo">📖 คำอธิบายหัวตาราง NAVLOG</h2><span class="hint"><span class="gl-key in">ช่องเทา</span> = กรอกได้ · <span class="gl-key calc">ช่องฟ้า</span> = คำนวณอัตโนมัติ</span></summary>
+    <div class="gl-grid"><div class="gl-i gl-in gg-alt"><b>ALT</b><span>ความสูงบิน (ft)</span></div><div class="gl-i gl-in gg-wind"><b>W/D</b><span>ลมพัดมาจาก (°T)</span></div><div class="gl-i gl-in gg-wind"><b>W/V</b><span>ความเร็วลม (kt)</span></div><div class="gl-i gl-in gg-wind"><b>Temp</b><span>อุณหภูมิ (°C) ใช้หา TAS</span></div><div class="gl-i gl-in gg-spd"><b>CAS</b><span>ความเร็วหน้าปัด (kt)</span></div><div class="gl-i gl-calc gg-spd"><b>TAS</b><span>ความเร็วจริง = CAS ปรับความสูง/อุณหภูมิ</span></div><div class="gl-i gl-calc gg-hdg"><b>TC</b><span>ทิศเส้นทาง (°T)</span></div><div class="gl-i gl-calc gg-hdg"><b>WCA</b><span>มุมแก้ลม (+ขวา −ซ้าย)</span></div><div class="gl-i gl-calc gg-hdg"><b>TH</b><span>TC + WCA</span></div><div class="gl-i gl-calc gg-hdg"><b>Var</b><span>ค่าแม่เหล็ก (W+ E−)</span></div><div class="gl-i gl-mh gg-mh"><b>MH</b><span>TH + Var ← heading ที่ถือ</span></div><div class="gl-i gl-in gg-hdg"><b>Dev</b><span>ค่าคลาดเข็มทิศเครื่อง</span></div><div class="gl-i gl-calc gg-hdg"><b>CH</b><span>MH + Dev</span></div><div class="gl-i gl-calc gg-dist"><b>Dist</b><span>ระยะขานี้ (NM)</span></div><div class="gl-i gl-calc gg-dist"><b>Rem</b><span>ระยะเหลือถึงปลายทาง</span></div><div class="gl-i gl-calc gg-spd"><b>GS</b><span>ความเร็วเทียบพื้น (kt)</span></div><div class="gl-i gl-calc gg-time"><b>ETE</b><span>เวลาบินขานี้</span></div><div class="gl-i gl-eta gg-time"><b>ETA</b><span>เวลาถึงจุดนี้</span></div><div class="gl-i gl-in gg-time"><b>ATE</b><span>เวลาจริง (กรอกเอง)</span></div><div class="gl-i gl-calc gg-fuel"><b>Fuel leg</b><span>น้ำมันที่ใช้ขานี้ (lb)</span></div><div class="gl-i gl-calc gg-fuel"><b>Fuel rem</b><span>น้ำมันเหลือที่จุดนี้</span></div><div class="gl-i gl-in gg-fuel"><b>Fuel act</b><span>น้ำมันเหลือจริง (กรอกเอง)</span></div></div>
+  </details>
   <div class="card section">
     <div class="sechead"><h2 class="hd hd-teal">WEATHER LOG &amp; NOTES</h2></div>
     <div class="tablewrap"><table id="wxLog" class="form-tbl">
@@ -4905,8 +4909,8 @@ function cvRender(){if(CV.c==="calc"){$("#cvWrap").innerHTML=`<div class="cv1" s
    <div class="cv-row1"><input id="cvV" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" value="${esc(CV.v)}" aria-label="ค่า"><select id="cvFrom" aria-label="จากหน่วย">${opts(CV.from)}</select>
      <button id="cvSwap" aria-label="สลับหน่วย" title="สลับหน่วย">⇄</button><select id="cvTo" aria-label="เป็นหน่วย">${opts(CV.to)}</select></div>
    ${c.fuel?`<label class="cv-dens">ความหนาแน่นน้ำมัน (lb/US gal)<input id="cvDens" type="text" inputmode="decimal" autocomplete="off" value="${num(state&&state.fuelDens,6.7)}"></label><p class="hint">JP-8 ≈ 6.7 lb/US gal (≈0.80 kg/L)</p>`:""}
-   <div id="cvOut">${cvOutHtml()}</div>
-   <h3>ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
+   <div id="cvOut">${cvOutHtml()}</div></div>
+   <div class="cv-preblk"><h3>⚡ ปุ่มลัด</h3><div class="cv-pre">${CV_PRE.map((x,i)=>`<button data-pre="${i}">${x[0]}</button>`).join("")}</div></div>`}
 cvRender();
 $("#cvWrap").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
   if(t.dataset.cvc==="cr"||t.dataset.cvc==="calc"||t.dataset.cvc==="pos"){CV.c=t.dataset.cvc;cvRender();return}if(t.dataset.cvc!=null){CV.c=+t.dataset.cvc;const U=CONV[CV.c].u;if(CONV[CV.c].fuel){CV.from=U.findIndex(u=>/^US gal/.test(u[0]));CV.to=U.findIndex(u=>/^L(\/|$)/.test(u[0]))}else{CV.from=0;CV.to=Math.min(1,U.length-1)}cvRender()}
