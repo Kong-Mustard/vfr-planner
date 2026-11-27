@@ -1209,6 +1209,9 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .cv-u{display:flex;flex-direction:column;align-items:flex-start;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--input);cursor:pointer;color:var(--ink)}
 .cv-u b{font:800 20px var(--f-mono)}.cv-u i{font-style:normal;color:var(--muted);font-size:13px}.cv-u.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 .cv-pre button{border-radius:999px;padding:8px 14px}
+.af-tbl{width:100%;font-size:13px}.af-tbl td,.af-tbl th{padding:5px 6px;text-align:left;vertical-align:middle}.af-f{display:inline-block;background:var(--input);border-radius:6px;padding:1px 6px;margin:1px;font:600 12px var(--f-mono)}
+.af-imp{border:2px solid #0369a1;border-radius:14px;padding:10px 12px;margin:8px 0 12px}.af-ih{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}.af-st{border-radius:999px;padding:2px 10px;font-weight:700;font-size:12.5px}.af-st.ok{background:#dcfce7;color:#166534}.af-st.guess{background:#fef9c3;color:#854d0e}.af-st.none{background:#fee2e2;color:#991b1b}
+.af-rv tr.h-guess td{background:color-mix(in srgb,#facc15 10%,transparent)}.af-rv tr.h-none td{background:color-mix(in srgb,#ef4444 8%,transparent)}.af-rv tr.aip td{opacity:.55}.af-rv .af-ic{width:110px;padding:4px 6px;min-height:30px;font-weight:700}.af-d{max-width:260px;font-size:12px;color:var(--muted)}.af-why{font-size:12px;white-space:nowrap}
 .cv-preblk{margin-top:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fb923c;color:#7c2d12;color-scheme:light}.cv-preblk h3{margin:0 0 8px;font:800 16px var(--f-display);color:#c2410c}
 .cv-preblk .cv-pre button{background:#fff!important;color:#9a3412!important;border:1.5px solid #fdba74!important;box-shadow:none!important;font-weight:700}.cv-preblk .cv-pre button:hover{background:#fb923c!important;color:#fff!important}
 .cv-row1 input,.cv-row1 select,.cv-dens input{background:#fff!important;color:#111827!important;border:1.5px solid #d1d5db!important;color-scheme:light}.cv-row1 input:focus,.cv-row1 select:focus{border-color:var(--accent)!important}
@@ -1760,26 +1763,6 @@ body.cl-on{overflow:hidden}
       </div>
     </div>
     <div id="freqList" class="freqgrid"></div>
-    <details id="custBox" class="custbox">
-      <summary>สนามที่กรอกเอง (สนามทหาร / ไม่มีใน eAIP) — <span id="custCount">0</span> แห่ง</summary>
-      <p class="hint">เก็บไว้ในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export เพื่อสำรองหรือย้ายไปเครื่องอื่น · ถ้า eAIP มีข้อมูลสนามเดียวกัน แอปจะใช้ข้อมูลที่กรอกเองแทน</p>
-      <div class="grid2 custgrid">
-        <label>รหัส / ชื่อย่อ<input id="cId" type="text" list="apList" placeholder="VTBH"></label>
-        <label>ชื่อสนาม<input id="cName" type="text" placeholder="สระพรานนาค"></label>
-        <label>พิกัด (เว้นว่างได้ถ้ามีบนแผนที่แล้ว)<input id="cCoord" type="text" placeholder="47P PS 76283 53429"></label>
-        <label>Elev (ft) / RWY<input id="cElevRwy" type="text" placeholder="95 / 04-22"></label>
-        <label style="grid-column:1/-1">ความถี่ — บรรทัดละ 1 รายการ: SERVICE ความถี่ ชื่อเรียก<textarea id="cComm" rows="4" placeholder="TWR 122.1 / 236.6 Sa Pran Nak Tower&#10;GND 121.9"></textarea></label>
-        <label style="grid-column:1/-1">Navaid — บรรทัดละ 1 รายการ: TYPE IDENT ความถี่<textarea id="cNav" rows="2" placeholder="NDB SN 350&#10;VOR BR 112.4"></textarea></label>
-      </div>
-      <div class="btns">
-        <button id="cSave" class="primary">บันทึกสนามนี้</button>
-        <button id="cDel">ลบสนามนี้</button>
-        <select id="cList" aria-label="เลือกสนามที่กรอกไว้" style="width:auto"><option value="">แก้สนามที่กรอกไว้…</option></select>
-        <button id="cExport">Export</button>
-        <button type="button" onclick="document.getElementById('cImport').click()">Import</button>
-        <input id="cImport" type="file" accept=".json,application/json" hidden>
-      </div>
-    </details>
   </div>
 
   <div class="card section" id="ctRouteCard" hidden>
@@ -1991,9 +1974,34 @@ body.cl-on{overflow:hidden}
   <div class="card section cp-intro"><div class="sechead"><h2 class="hd hd-blue">ข้อมูลของหน่วย</h2><button type="button" id="cpXlsOut" hidden>📤 ส่งออก Excel</button></div>
    <p class="hint">🔒 เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต · ส่งต่อกันด้วยไฟล์ Excel</p>
    <nav class="cp-subs" role="tablist" aria-label="หมวดในแท็บ Preset">
-    <button type="button" data-cpsub="pd" style="--cc:#b45309">📋 ข้อมูลจุด (Excel)</button><button type="button" data-cpsub="radio" style="--cc:#2563eb">📻 วิทยุ</button><button type="button" data-cpsub="fpl" style="--cc:#0d9488">🗺 Flight plan</button>
-    <button type="button" data-cpsub="wp" hidden>📍 Waypoint</button><button type="button" data-cpsub="base" hidden>📚 คลัง BASE</button><button type="button" data-cpsub="chk" hidden>✅ ตรวจ / เทียบ</button>
+    <button type="button" data-cpsub="af" style="--cc:#0369a1">✈ ข้อมูลสนาม</button><button type="button" data-cpsub="pd" style="--cc:#b45309">📋 ข้อมูลจุด (Excel)</button><button type="button" data-cpsub="radio" style="--cc:#2563eb">📻 วิทยุ</button><button type="button" data-cpsub="fpl" style="--cc:#0d9488">🗺 Flight plan</button>
+    <button type="button" data-cpsub="wp" style="--cc:#0d9488">📍 Waypoint</button><button type="button" data-cpsub="base" style="--cc:#0d9488">📚 คลัง BASE</button>
     <button type="button" data-cpsub="ct" style="--cc:#6d5bd0">👥 ผู้ติดต่อ</button><button type="button" data-cpsub="flog" style="--cc:#6d5bd0">🛫 ประวัติการบิน</button></nav></div>
+  <div class="card section cp-sec" id="cpAf" data-sub="af" style="--cc:#0369a1"><div class="sechead"><h2 class="cp-h"><span>✈</span>ข้อมูลสนาม — ความถี่ / NAV ที่ไม่มีใน eAIP</h2>
+    <div class="btns"><button type="button" class="primary" id="afImpBtn">📥 นำเข้าความถี่จาก Excel</button><button type="button" id="afGuessPs" title="ใช้ Preset วิทยุที่นำเข้าไว้แล้ว (แท็บย่อย 📻 วิทยุ)">🔎 เดาจาก Preset ที่มีอยู่</button><input type="file" id="afImpFile" accept=".xlsx" hidden></div></div>
+   <p class="hint">สนามทหาร / สนามที่ไม่มีใน eAIP (เช่น VTBH, VTBK) — กรอกเองหรือนำเข้า Excel ของหน่วย · ใช้ใน ⬚ เลือกพื้นที่ (แท็บ 1) และการ์ดความถี่ Kneeboard · 🔒 เก็บในเครื่องนี้เท่านั้น</p>
+   <div id="afImp"></div><div id="afList"></div>
+    <details id="custBox" class="custbox" open>
+      <summary>✎ เพิ่ม / แก้สนาม — มีแล้ว <span id="custCount">0</span> แห่ง</summary>
+      <p class="hint">เก็บไว้ในเครื่องนี้เท่านั้น ไม่ขึ้น GitHub · ใช้ Export เพื่อสำรองหรือย้ายไปเครื่องอื่น · ถ้า eAIP มีข้อมูลสนามเดียวกัน แอปจะใช้ข้อมูลที่กรอกเองแทน</p>
+      <div class="grid2 custgrid">
+        <label>รหัส / ชื่อย่อ<input id="cId" type="text" list="apList" placeholder="VTBH"></label>
+        <label>ชื่อสนาม<input id="cName" type="text" placeholder="สระพรานนาค"></label>
+        <label>พิกัด (เว้นว่างได้ถ้ามีบนแผนที่แล้ว)<input id="cCoord" type="text" placeholder="47P PS 76283 53429"></label>
+        <label>Elev (ft) / RWY<input id="cElevRwy" type="text" placeholder="95 / 04-22"></label>
+        <label style="grid-column:1/-1">ความถี่ — บรรทัดละ 1 รายการ: SERVICE ความถี่ ชื่อเรียก<textarea id="cComm" rows="4" placeholder="TWR 122.1 / 236.6 Sa Pran Nak Tower&#10;GND 121.9"></textarea></label>
+        <label style="grid-column:1/-1">Navaid — บรรทัดละ 1 รายการ: TYPE IDENT ความถี่<textarea id="cNav" rows="2" placeholder="NDB SN 350&#10;VOR BR 112.4"></textarea></label>
+      </div>
+      <div class="btns">
+        <button id="cSave" class="primary">บันทึกสนามนี้</button>
+        <button id="cDel">ลบสนามนี้</button>
+        <select id="cList" aria-label="เลือกสนามที่กรอกไว้" style="width:auto"><option value="">แก้สนามที่กรอกไว้…</option></select>
+        <button id="cExport">Export</button>
+        <button type="button" onclick="document.getElementById('cImport').click()">Import</button>
+        <input id="cImport" type="file" accept=".json,application/json" hidden>
+      </div>
+    </details>
+  </div>
   <div class="card section cp-sec" id="cpPd" data-sub="pd" style="--cc:#b45309"><div class="sechead"><h2 class="cp-h"><span>📋</span>ข้อมูลจุด — ไฟล์ Excel ชุดเดียวกันทั้งหน่วย</h2>
     <div class="btns"><button type="button" class="primary" onclick="document.getElementById('cpXlsOut').click()">📤 ส่งออก Excel</button><button type="button" onclick="document.getElementById('dbImport').click()">📥 นำเข้า Excel</button><button type="button" onclick="document.getElementById('cpTplDl').click()">⬇️ ไฟล์ตัวอย่าง</button><button type="button" onclick="kmlExport('all')">🌍 ส่งออก KML</button><button type="button" onclick="document.getElementById('kmlImport').click()">🌍 นำเข้า KML/KMZ</button></div></div>
    <p class="hint">ทุกจุดที่เพิ่มบนแผนที่ (📍 ปักหมุด · ลากย้ายในแผง 📂) มารวมที่นี่ · <b>ส่งออก</b> แล้วส่งไฟล์ให้เพื่อน → เพื่อน <b>นำเข้า</b> ไฟล์เดียวกันก็ได้จุดชุดเดียวกัน · ชีต: WAYPOINT (BASE) · AIRFIELD · REPORTING POINT · MY POINTS + วิทยุ / ROUTE · จุดรายงานที่ไม่ใส่ชื่อสนาม ระบบเดาให้จาก ICAO ในชื่อ หรือสนามที่ใกล้สุด (≤ 25 NM) · 🔒 เก็บในเครื่องนี้เท่านั้น</p>
@@ -2015,11 +2023,7 @@ body.cl-on{overflow:hidden}
     <p id="dbPasteInfo" class="hint"></p></details>
    <div class="tablewrap"><table id="dbTable"><thead><tr><th>Preset</th><th>ชื่อ / รหัส</th><th>พิกัด MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th><th></th></tr></thead><tbody></tbody></table></div>
   </div>
- <div class="card section cp-sec" id="cpChk" data-sub="chk" style="--cc:#0d9488">
-   <div class="sechead"><h2 class="cp-h"><span>✅</span>ตรวจความพร้อมก่อนเสียบการ์ด DTD</h2><div class="btns"><button id="chkCopy" title="คัดลอกผลตรวจเป็นข้อความ">📋 คัดลอกผลตรวจ</button><button id="dbCopyRoute" class="primary" title="คัดลอกรายการที่ต้องคีย์ใน FalconView">📋 คัดลอกรายการที่ต้องคีย์</button></div></div>
-   <p class="hint">เทียบเส้นทางในแท็บ 1 และความถี่ที่เลือกพิมพ์ลง Kneeboard กับ Preset ชุดปัจจุบัน (แท็บย่อย วิทยุ + Waypoint) · อัปเดตเองทุกครั้งที่แก้แผน</p>
-   <div id="chkBox"></div><div id="keyBox" class="keybox"></div></div>
-  <div class="card section cp-sec" id="cpPick" data-sub="wp" style="--cc:#0d9488">
+ <div class="card section cp-sec" id="cpPick" data-sub="wp" style="--cc:#0d9488">
    <div class="sechead"><h2 class="cp-h"><span>＋</span>เพิ่ม Waypoint ของเที่ยวบินนี้</h2></div>
    <p class="hint">Preset หลักของหน่วยใช้เลข 1–60 · จุดของเที่ยวบิน (เช่น VFR entry/exit ของปลายทาง) เพิ่มต่อจากเลขที่ตั้งไว้ · หยิบจาก <b>คลัง BASE</b> และจุด VFR ของ eAIP (AD 2.24)</p>
    <div class="cp-pickbar"><label>เริ่มที่เลข <input id="cpStart" type="number" min="1" value="61" inputmode="numeric"></label><label>ห่างเส้นทางไม่เกิน <input id="cpCorr" type="number" min="1" value="10" inputmode="decimal"> NM</label></div>
@@ -2035,7 +2039,7 @@ body.cl-on{overflow:hidden}
    <div id="baseInfo"></div>
    <div class="base-q"><input id="baseQ" type="search" placeholder="ค้นหา ID / callsign / รายละเอียด / ความถี่ เช่น VTUK, 122.7" autocomplete="off"><select id="baseCat" aria-label="หมวด"><option value="">ทุกหมวด</option><option value="wp">Waypoint</option><option value="fm">FM</option><option value="vhf">VHF</option><option value="uhf">UHF</option><option value="vor">VOR/ILS</option><option value="adf">ADF</option><option value="tcn">TACAN</option></select></div>
    <div class="tablewrap" id="baseList"></div></div>
-  <div class="card section cp-sec" id="cpCmp" data-sub="chk" style="--cc:#16a34a">
+  <div class="card section cp-sec" id="cpCmp" data-sub="base" style="--cc:#16a34a">
    <div class="sechead"><h2 class="cp-h"><span>⇄</span>เทียบชุดปัจจุบันกับคลัง BASE</h2><div class="btns"><button type="button" id="cmpImp">📥 นำเข้าไฟล์จาก FalconView</button><button type="button" id="cmpCopy">คัดลอกผล</button></div></div>
    <p class="hint">เทียบ Preset ชุดปัจจุบัน (เช่น ที่นำเข้าจาก FalconView) กับคลัง BASE ด้วย ID / callsign · ✓ ตรง · ✗ ค่าไม่ตรง · ⚠ ไม่มีใน BASE</p>
    <div id="cmpBox"></div></div>
@@ -2067,9 +2071,7 @@ body.cl-on{overflow:hidden}
    <div class="btns" style="margin:6px 0"><button class="primary" type="button" onclick="document.getElementById('clImport').click()">Import checklist_data.json</button><button id="clClear" type="button">ลบ Checklist</button><input id="clImport" type="file" accept=".json,application/json" hidden></div>
    <p id="dataCl" class="hint"></p>
    <ul class="dhelp"><li><b>ใช้กับ:</b> แท็บ 5 NORMAL, แท็บ 6 EMER และแท็บ 10 ข้อสอบ</li>
-    <li><b>ไฟล์:</b> emergency_data.json ของ<b>อากาศยานแบบที่ตัวเองบิน</b> (เช่น UH-60M, AW149) — 1 เครื่องเก็บได้ 1 แบบ ชื่อแบบจะแสดงบนหัวแท็บ 5, 6 และ 10</li>
-    <li><b>แบบอื่น:</b> ใช้โครงไฟล์เดียวกัน ใส่ <code>"aircraft": "AW149"</code> และ <code>"source"</code> ชื่อ TM ของแบบนั้น แล้ว Import ทับ</li>
-    <li><b>ทำครั้งเดียวต่อเครื่อง</b> — Import ใหม่เมื่อ TM ออกฉบับแก้ไข แล้วตรวจวันที่ฉบับด้านบน</li>
+    <li><b>ไฟล์:</b> emergency_data.json / checklist_data.json ของ UH-60M Black Hawk — Import ครั้งเดียวต่อเครื่อง · ทำใหม่เมื่อ TM ฉบับแก้ไข</li>
     <li><b>ความปลอดภัย:</b> ข้อมูลจากคู่มือ (export controlled) เก็บในเครื่องนี้เท่านั้น ไม่ขึ้นอินเทอร์เน็ต — ห้ามส่งไฟล์ต่อในช่องทางสาธารณะ</li></ul></div>
   <div class="card section dbox dwide">
    <div class="sechead"><h2 class="hd hd-indigo">3. Preset — Waypoint / วิทยุ (Excel)</h2>
@@ -2874,7 +2876,7 @@ function render(){
 
   $("#exampleTag").hidden=!state.example;
   qnhFill();if(typeof fillProcSelects==="function")fillProcSelects();
-  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();if(typeof dbRouteRender==="function"&&document.getElementById("chkBox"))dbRouteRender();if(typeof ctRoute==="function")ctRoute();if(typeof saSched==="function")saSched();if(typeof fplSumRender==="function"){fplSumRender();const fd=document.getElementById("fplDlg");if(fd&&fd.open&&!fd.contains(document.activeElement))fplRender()}
+  drawMap(res.rows);renderFreq();if(typeof renderAreas==="function")renderAreas();if(typeof ntRender==="function"&&typeof ntLayer!=="undefined")ntRender();if(typeof rpLayer!=="undefined")renderProc();if(typeof ctRoute==="function")ctRoute();if(typeof saSched==="function")saSched();if(typeof fplSumRender==="function"){fplSumRender();const fd=document.getElementById("fplDlg");if(fd&&fd.open&&!fd.contains(document.activeElement))fplRender()}
   store.set("vfr_current",state);histSched();
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -2945,7 +2947,7 @@ $("#corridor").addEventListener("input",renderFreq);
 function custFill(ic){const c=custAll()[ic]||{},a=AP[ic]||{};
   $("#cId").value=ic;$("#cName").value=c.name||a.name||"";$("#cCoord").value=c.lat!=null?`${c.lat.toFixed(5)}, ${c.lon.toFixed(5)}`:"";
   $("#cElevRwy").value=[c.elev??"",c.rwy||""].filter(v=>v!=="").join(" / ");$("#cComm").value=c.comm||"";$("#cNav").value=c.nav||"";
-  $("#custBox").open=true;$("#custBox").scrollIntoView({behavior:"smooth",block:"start"})}
+  const tb=document.querySelector('.rail .tab[data-tab="wpdb"]');if(tb&&tb.getAttribute("aria-selected")!=="true")tb.click();cpSub("af");$("#custBox").open=true;setTimeout(()=>$("#custBox").scrollIntoView({behavior:"smooth",block:"start"}),60)}
 function custList(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")}
 function custRefresh(){custList();location.reload()}
 $("#freqList").addEventListener("click",e=>{const b=e.target.closest("[data-cedit]");if(b)custFill(b.dataset.cedit)});
@@ -4629,7 +4631,7 @@ function acSpecHtml(){const A=(EP&&EP.spec)||(/60M/i.test(acftName())||!EP?AC_SP
 /* WARNING / CAUTION / NOTE: แสดงค้างไว้ แตะหัวข้อเพื่อยุบ */
 const CWN_T={warning:"⚠ WARNING",caution:"⚠ CAUTION",note:"ℹ NOTE"};
 function cwnHtml(b){return`<details class="cwn b-${b.k}" open><summary>${CWN_T[b.k]}</summary><div>${esc(b.t)}</div></details>`}
-const ACFT_MAP=[[/H-?60M/i,"UH-60M Black Hawk"],[/H-?60L/i,"UH-60L Black Hawk"],[/H-?60A/i,"UH-60A Black Hawk"],[/AW-?149/i,"AW149"],[/AW-?139/i,"AW139"],[/UH-?72/i,"UH-72 Lakota"],[/H-?145/i,"H145"],[/UH-?1H/i,"UH-1H"],[/BELL\s*212/i,"Bell 212"],[/BELL\s*412/i,"Bell 412"],[/CH-?47/i,"CH-47 Chinook"],[/MI-?17/i,"Mi-17"]];
+const ACFT_MAP=[[/H-?60M/i,"UH-60M Black Hawk"],[/H-?60L/i,"UH-60L Black Hawk"],[/H-?60A/i,"UH-60A Black Hawk"]]; /* ตอนนี้รองรับเฉพาะ Black Hawk — แบบอื่นไว้อนาคต */
 function acftName(){if(!EP)return"";if(EP.aircraft)return String(EP.aircraft);const src=String(EP.source||"");const m=ACFT_MAP.find(([r])=>r.test(src));return m?m[1]:src}
 function acftHdr(){document.querySelectorAll("[data-acft]").forEach(el=>{if(!EP){el.hidden=true;return}el.hidden=false;
   el.innerHTML=`<div class="ah-row"><span class="ah-ic">🚁</span><b>${esc(acftName())}</b><span class="ah-src">${esc(EP.source||"")}${EP.date?" · "+esc(EP.date):""}</span></div>${acSpecHtml()}`})}
@@ -5215,7 +5217,7 @@ function dbRender(){if(typeof cpRender==="function")setTimeout(cpRender,0);const
     <td class="name"><input data-db="${i}" data-k="note" value="${esc(x.note||"")}"></td>
     <td><div class="btns" style="flex-wrap:nowrap"><button class="mini" data-dbact="add" data-i="${i}" title="เพิ่มลงเส้นทาง (ก่อนจุดสุดท้าย)">＋เส้นทาง</button><button class="mini" data-dbact="zoom" data-i="${i}">ดู</button><button class="mini" data-dbact="del" data-i="${i}" aria-label="ลบ">✕</button></div></td></tr>`).join("")
     ||`<tr><td colspan="6" class="placeholder" style="text-align:left;padding:16px"><b>ยังไม่มีตาราง waypoint ของหน่วย</b><br><span class="hint">วางตารางจาก Excel ในกล่อง "วางตารางจาก Excel / ข้อความ" หรือกด ＋ เพิ่มแถว · ตัวอย่างรูปแบบ: <code>1  VTBH  47P PS 76283 53429</code></span></td></tr>`;
-  if(dup.size)toast("มีเลขซ้ำ: No."+[...dup].join(", "));dbRouteRender();dbDraw()}
+  if(dup.size)toast("มีเลขซ้ำ: No."+[...dup].join(", "));dbDraw()}
 /* ---------- Preset วิทยุ (เก็บถาวร แก้ได้ทุกช่อง) ---------- */
 const PS_BANDS=[{k:"vhf",t:"VHF AM",tag:"V",lo:116,hi:174},{k:"uhf",t:"UHF",tag:"U",lo:225,hi:400},{k:"fm",t:"FM",tag:"FM",lo:30,hi:88},{k:"vor",t:"VOR/ILS",tag:"VOR",lo:108,hi:118},{k:"adf",t:"ADF",tag:"ADF",lo:190,hi:1800}];
 let psBand="vhf";
@@ -5260,38 +5262,6 @@ $("#psAdd").onclick=()=>{const d=psAll(),L=d[psBand];const n=L.reduce((m,x)=>Mat
 /* ---------- ตรวจความพร้อม + รายการเตรียมคีย์ (เส้นทางปัจจุบัน) ---------- */
 function dtdId(name,used){let t=String(name||"").toUpperCase().replace(/[^A-Z0-9 .]/g,"").replace(/\s+/g," ").trim();if((t.match(/[A-Z0-9]/g)||[]).length<2)t=""; /* ชื่อไทยล้วน เช่น "บทบ.ยว.3" → เหลือ "..3" ใช้ไม่ได้ */
   t=t.slice(0,7).trim();let id=t||"WP",k=1;while(used.has(id)){const sfx=String(k++);id=(t||"WP").slice(0,7-sfx.length)+sfx}used.add(id);return id}
-function sopPlanFreqs(){const out=[];kbAirports().forEach(a=>kbItems(a).filter(it=>kbOn(a,it)&&it.svc!=="RW"&&!/^(GP|DME|TACAN|MKR|OM|MM|IM)\b|GLIDE|MARKER/i.test(it.svc)).forEach(it=>out.push({ap:a.id,svc:it.svc,txt:it.txt.replace(/ \[[^\]]*\]$/,"")})));
-  if(ficText())out.unshift({ap:"FIC",svc:"",txt:ficText()});return out}
-function sopCheck(){const W=state?state.wps:[],L=dbAll(),res={wp:[],fq:[],ps:[]};
-  W.forEach((w,i)=>{const m=dbMatch(w);if(m){res.wp.push({i,w,ok:true,m});return}
-    const nm=L.find(x=>x.lat!=null&&String(x.name).toUpperCase()===String(w.name).toUpperCase());
-    if(nm)res.wp.push({i,w,ok:false,m:nm,msg:`ชื่อตรงกับ No.${nm.no} แต่พิกัดต่าง ${gcDistNm([w.lat,w.lon],[nm.lat,nm.lon]).toFixed(2)} NM`});
-    else res.wp.push({i,w,ok:false,msg:"ยังไม่มีใน DTD"})});
-  sopPlanFreqs().forEach(f=>{freqNums(f.txt).forEach(n=>{const hit=psFind(n,f.ap),b=bandOf(n);res.fq.push({...f,f:n,b,hit,ok:hit.length>0})})});
-  const d=psAll();PS_BANDS.forEach(b=>d[b.k].forEach(x=>{const f=num(x.freq);if(f!=null&&!(f>=b.lo&&f<b.hi))res.ps.push(`${b.t} ช่อง ${x.ch} "${x.call||""}" ความถี่ ${x.freq} อยู่นอกย่าน ${b.lo}–${b.hi}`)}));
-  return res}
-function dbRouteRender(){const cb=$("#chkBox");if(!cb)return;const W=state?state.wps:[];
-  if(W.length<2){cb.innerHTML='<p class="hint">สร้างเส้นทางในแท็บ 1 ก่อน</p>';$("#keyBox").innerHTML="";return}
-  const r=sopCheck(),bad=r.wp.filter(x=>!x.ok).length+r.fq.filter(x=>!x.ok).length+r.ps.length,hasDb=dbAll().length,hasPs=PS_BANDS.some(b=>psAll()[b.k].length);
-  cb.innerHTML=`<div class="chk-sum ${bad?"no":"ok"}">${bad?`⚠ ต้องแก้ ${bad} รายการก่อนเสียบการ์ด`:"✓ พร้อมเสียบการ์ด — waypoint และความถี่ตามแผนตรงกับข้อมูล DTD"}</div>
-    ${!hasDb||!hasPs?`<p class="hint">ยังไม่มีข้อมูล${!hasDb?" waypoint":""}${!hasDb&&!hasPs?" และ":""}${!hasPs?" preset วิทยุ":""} — Import Excel จาก FalconView ด้านบน</p>`:""}
-    <h3 class="chk-h">Waypoint ตามเส้นทาง</h3><div class="tablewrap"><table class="chk-tbl"><thead><tr><th>ลำดับ</th><th>จุด</th><th>DTD</th><th>ผล</th></tr></thead><tbody>${r.wp.map(x=>`<tr class="${x.ok?"":"bad-row"}"><td>${x.i+1}</td><td style="text-align:left">${esc(x.w.name)}<span class="mgrs">${fmtMgrs(toMgrs(x.w.lat,x.w.lon))}</span></td><td>${x.m?`<span class="dbno">No.${esc(x.m.no)}</span> ${esc(x.m.dtd||x.m.name)}`:"–"}</td><td>${x.ok?'<span class="ok">✓ ตรง</span>':`<span class="no">✗ ${esc(x.msg)}</span>${x.m&&x.m.lat!=null&&x.msg.startsWith("ชื่อตรง")?` <button class="mini" data-usedb="${x.i}" title="ย้ายจุดในเส้นทางไปที่พิกัดของ No.${esc(x.m.no)}">ใช้พิกัด No.${esc(x.m.no)}</button>`:""}`}</td></tr>`).join("")}</tbody></table></div>
-    <h3 class="chk-h">ความถี่ตามแผน <span class="hint">(ชุดเดียวกับที่เลือกพิมพ์ลง Kneeboard)</span></h3><div class="tablewrap"><table class="chk-tbl"><thead><tr><th>สนาม</th><th>Service</th><th>ความถี่</th><th>Preset</th></tr></thead><tbody>${r.fq.map(x=>`<tr class="${x.ok?"":"bad-row"}"><td>${esc(x.ap)}</td><td>${esc(x.svc)}</td><td><b>${x.f}</b> <span class="hint">${x.b?x.b.t:""}</span></td><td>${x.ok?x.hit.map(({b,x:p})=>`<span class="pstag">${b.tag}${esc(p.ch)}</span> ${esc(p.call||"")}`).join(" "):'<span class="no">✗ ไม่มีใน preset</span>'}</td></tr>`).join("")||'<tr><td colspan="4" class="hint">ยังไม่ได้เลือกความถี่ (ตั้งได้ที่ปุ่ม Kneeboard PDF ในแท็บ 1)</td></tr>'}</tbody></table></div>
-    ${r.ps.length?`<h3 class="chk-h">Preset ที่ผิดปกติ</h3><ul class="chk-ul">${r.ps.map(t=>`<li class="no">✗ ${esc(t)}</li>`).join("")}</ul>`:""}`;
-  /* รายการเตรียมคีย์ */
-  const L=dbAll(),used=new Set(L.map(x=>String(x.dtd||x.name).replace(/^\//,"").toUpperCase()));let next=L.reduce((m,x)=>Math.max(m,+x.no||0),0)+1;
-  const needW=r.wp.filter(x=>!x.ok).map(x=>({no:x.m&&x.msg.startsWith("ชื่อตรง")?x.m.no:next++,id:x.m&&x.msg.startsWith("ชื่อตรง")?(x.m.dtd||x.m.name):dtdId(x.w.name,used),w:x.w,fix:!!(x.m&&x.msg.startsWith("ชื่อตรง"))}));
-  const d=psAll(),nx={};PS_BANDS.forEach(b=>nx[b.k]=d[b.k].reduce((m,x)=>Math.max(m,+x.ch||0),0)+1);
-  const seenF=new Set(),needF=r.fq.filter(x=>!x.ok&&x.b&&!seenF.has(x.f)&&seenF.add(x.f)).map(x=>({b:x.b,ch:nx[x.b.k]++,call:`${x.ap} ${x.svc}`.trim().slice(0,12),f:x.f}));
-  $("#keyBox").innerHTML=!needW.length&&!needF.length?'<p class="ok" style="font-weight:700">✓ ไม่มีอะไรต้องคีย์เพิ่ม — ทุกจุดและทุกความถี่ตามแผนมีใน DTD แล้ว</p>':
-   `${needW.length?`<h3 class="chk-h">Waypoint ที่ต้องเพิ่ม/แก้ (${needW.length})</h3><div class="tablewrap"><table class="chk-tbl"><thead><tr><th>No. (เสนอ)</th><th>DTD ID</th><th>MGRS</th><th>Lat, Lon</th><th>หมายเหตุ</th></tr></thead><tbody>${needW.map(x=>`<tr><td><b>${x.no}</b></td><td><b>${esc(x.id)}</b></td><td>${fmtMgrs(toMgrs(x.w.lat,x.w.lon))}</td><td>${x.w.lat.toFixed(6)}, ${x.w.lon.toFixed(6)}</td><td>${x.fix?"แก้พิกัดของจุดเดิม":esc(x.w.name)}</td></tr>`).join("")}</tbody></table></div>`:""}
-    ${needF.length?`<h3 class="chk-h">Preset ที่ต้องเพิ่ม (${needF.length})</h3><div class="tablewrap"><table class="chk-tbl"><thead><tr><th>ย่าน</th><th>ช่อง (เสนอ)</th><th>Call sign</th><th>ความถี่</th></tr></thead><tbody>${needF.map(x=>`<tr><td>${x.b.t}</td><td><b>${x.ch}</b></td><td>${esc(x.call)}</td><td><b>${x.f}</b></td></tr>`).join("")}</tbody></table></div>`:""}
-    <p class="hint">เลขช่อง/เลขจุดเป็นค่าที่เสนอ (ช่องว่างถัดไป) เปลี่ยนได้ตามต้องการใน FalconView · DTD ID ไม่เกิน 7 ตัวอักษร</p>`;
-  window._sopKey={needW,needF,r}}
-$("#chkBox").addEventListener("click",e=>{const b=e.target.closest("[data-usedb]");if(!b)return;const r=sopCheck(),x=r.wp.find(q=>q.i===+b.dataset.usedb);if(!x||!x.m)return;
-  const w=state.wps[x.i];w.lat=+x.m.lat;w.lon=+x.m.lon;store.set("vfr_current",state);render();toast(`ย้าย ${w.name} ไปที่พิกัด No.${x.m.no} แล้ว`)});
-$("#chkCopy").onclick=()=>{const k=window._sopKey;if(!k)return;const r=k.r;const t=["ตรวจความพร้อม "+new Date().toLocaleString("th-TH"),"WAYPOINT:",...r.wp.map(x=>`${x.i+1}. ${x.w.name} ${x.ok?"✓ No."+x.m.no:"✗ "+x.msg}`),"FREQ:",...r.fq.map(x=>`${x.ap} ${x.svc} ${x.f} ${x.ok?"✓ "+x.hit.map(({b,x:p})=>b.tag+p.ch).join(","):"✗ ไม่มีใน preset"}`),...r.ps.map(x=>"✗ "+x)].join("\n");
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("คัดลอกผลตรวจแล้ว"),()=>toast("คัดลอกไม่ได้"))};
 const dbLayer=L.layerGroup();layerCtl.addOverlay(dbLayer,"Waypoint หน่วย (No.)");
 function dbDraw(){dbLayer.clearLayers();dbAll().forEach(x=>{if(x.lat==null)return;
   L.marker([x.lat,x.lon],{icon:L.divIcon({className:"",html:`<span class="dbpin">${esc(x.no)}</span>`,iconSize:null,iconAnchor:[12,12]})})
@@ -5367,16 +5337,63 @@ $("#dbImport").onchange=async e=>{const f=e.target.files[0];e.target.value="";if
     catch(err){toast("อ่าน Excel ไม่ได้: "+err.message)}return}
   f.text().then(t=>{let items=null;try{const d=JSON.parse(t);if(Array.isArray(d))items=d.filter(x=>x&&x.no!=null)}catch(err){}
   if(!items)items=dbParse(t).ok;if(!items.length){toast("ไฟล์นี้อ่านไม่ได้");return}const n=dbMerge(items,false);dbRender();render();toast(`นำเข้า ${items.length} จุด (รวม ${n})`)})};
-$("#dbCopyRoute").onclick=()=>{const k=window._sopKey;if(!k)return;const t=["รายการเตรียมคีย์ใน FalconView","WAYPOINT (No. · DTD ID · MGRS):",...k.needW.map(x=>`${x.no}\t${x.id}\t${fmtMgrs(toMgrs(x.w.lat,x.w.lon))}\t${x.fix?"(แก้พิกัด)":x.w.name}`),"PRESET (ย่าน · ช่อง · call · ความถี่):",...k.needF.map(x=>`${x.b.t}\t${x.ch}\t${x.call}\t${x.f}`)].join("\n");
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("คัดลอกแล้ว"),()=>toast("คัดลอกไม่ได้"))};
 dbRender();psRender();sopInfoRender();
 /* ---------- แท็บ 8 ใหม่: แท็บย่อย · คลัง BASE · เพิ่มจุดของเที่ยวบิน (61+) · Flight plan · เทียบกับ BASE ---------- */
 const CP_SUB_KEY="vfr_cp_sub";
 function cpSub(k){const W=$("#tab-wpdb");if(!W)return;k=k||"radio";W.dataset.sub=k;
   W.querySelectorAll("[data-cpsub]").forEach(b=>{b.classList.toggle("on",b.dataset.cpsub===k);b.setAttribute("aria-selected",b.dataset.cpsub===k)});
   W.querySelectorAll(".cp-sec[data-sub]").forEach(s=>s.hidden=s.dataset.sub!==k);try{localStorage.setItem(CP_SUB_KEY,k)}catch(e){}
-  if(k==="base")baseRender();if(k==="fpl")fpnRender();if(k==="chk")cmpRender();if(k==="pd")try{pdRender()}catch(e){}}
+  if(k==="base"){baseRender();cmpRender()}if(k==="fpl")fpnRender();if(k==="af")afRender();if(k==="pd")try{pdRender()}catch(e){}}
 $("#tab-wpdb").addEventListener("click",e=>{const b=e.target.closest("[data-cpsub]");if(b)cpSub(b.dataset.cpsub)});
+/* ---------- ✈ ข้อมูลสนาม (แท็บ 8): รายการสนามที่กรอกเอง + นำเข้าความถี่จาก Excel แล้วเดาว่าเป็นของสนามไหน ---------- */
+function afRender(){const box=$("#afList");if(!box)return;const C=custAll(),K=Object.keys(C).sort();
+  box.innerHTML=K.length?`<div class="tablewrap"><table class="af-tbl"><thead><tr><th>ICAO</th><th>ชื่อ</th><th>ความถี่</th><th>NAV</th><th></th></tr></thead><tbody>${K.map(ic=>{const c=C[ic],cm=parseCustLines(c.comm,"comm"),nv=parseCustLines(c.nav,"nav");
+    return`<tr><td><b>${esc(ic)}</b></td><td>${esc(c.name||(AP[ic]||{}).name||"")}</td><td>${cm.map(x=>`<span class="af-f">${esc(x.svc)} ${esc(x.freq)}</span>`).join(" ")||'<span class="hint">–</span>'}</td><td>${nv.map(x=>`<span class="af-f">${esc(x.type)} ${esc(x.id)} ${esc(x.freq)}</span>`).join(" ")||'<span class="hint">–</span>'}</td><td><button type="button" class="mini" data-afed="${esc(ic)}">✎ แก้</button></td></tr>`}).join("")}</tbody></table></div>`
+    :'<p class="hint">ยังไม่มีสนามที่กรอกเอง — กด 📥 นำเข้าความถี่จาก Excel หรือกรอกในกล่องด้านล่าง</p>'}
+$("#afList").addEventListener("click",e=>{const b=e.target.closest("[data-afed]");if(b)custFill(b.dataset.afed)});
+const AF_SVC=[[/\b(TWR|TOWER|หอบังคับ)/i,"TWR"],[/\b(GND|GROUND|ภาคพื้น)/i,"GND"],[/\b(APP|APPROACH)/i,"APP"],[/\bATIS\b/i,"ATIS"],[/\b(DEP|DEPARTURE)\b/i,"DEP"],[/\b(OPS|OPERATION)/i,"OPS"],[/\b(RADIO|INFO)\b/i,"RADIO"]];
+const afNorm=t=>String(t||"").toUpperCase().replace(/สนามบิน|ท่าอากาศยาน|สนาม|AIRPORT|AIRFIELD|AIR BASE|HELIPORT|ตัวอย่าง[^,]*/g,"").replace(/[^A-Z0-9ก-๙]/g,"");
+/* ดัชนีชื่อ → ICAO: ชื่อสนาม (อังกฤษ) · ชื่อสนามที่กรอกเอง · Waypoint หน่วย/ชีต WAYPOINT ที่ DTD ID เป็นรหัส ICAO */
+function afNameIdx(extra){const I=[];const add=(ic,nm)=>{const k=afNorm(nm);if(ic&&k.length>=3)I.push({ic,k})};
+  Object.values(AP).forEach(a=>{if(a&&a.id&&/^VT/.test(a.id)){add(a.id,a.name);String(a.name||"").split(/[\s\/\-()]+/).forEach(w=>{if(w.length>=5)add(a.id,w)})}});
+  Object.entries(custAll()).forEach(([ic,c])=>add(ic,c.name));
+  dbAll().concat(extra||[]).forEach(x=>{const id=String(x.dtd||x.name||"").toUpperCase().trim();if(/^VT[A-Z]{2}$/.test(id)&&AP[id]){add(id,x.desc);add(id,x.note);add(id,x.name!==id?x.name:"")}});
+  return I.sort((a,b)=>b.k.length-a.k.length)}
+function afInit(nm){return String(nm||"").toUpperCase().replace(/\b(INTERNATIONAL|AIRPORT|AIRFIELD|AIR BASE|HELIPORT|ARMY|ROYAL|THAI|AIR FORCE|BASE)\b/g," ").split(/[^A-Z]+/).filter(Boolean).map(w=>w[0]).join("")}
+const afAlias=()=>store.get("vfr_af_alias")||{};
+/* คืน {ic, how: "ok"|"guess"|"none", why} */
+function afGuess(call,desc,idx){const T=(call+" "+desc).toUpperCase(),A=afAlias(),tok=(String(call).toUpperCase().match(/[A-Z]{2,4}/)||[""])[0];
+  const m=T.match(/\bVT[A-Z]{2}\b/);if(m&&AP[m[0]])return{ic:m[0],how:"ok",why:"มีรหัส ICAO"};
+  if(tok&&A[tok]&&AP[A[tok]])return{ic:A[tok],how:"ok",why:`จำไว้: ${tok} = ${A[tok]}`};
+  const nd=afNorm(call+" "+desc);for(const x of idx)if(nd.includes(x.k))return{ic:x.ic,how:x.k.length>=5?"ok":"guess",why:"ชื่อสนามในคำอธิบาย"};
+  if(tok&&tok.length>=2&&!AF_SVC.some(([r])=>r.test(tok))){const c=Object.values(AP).filter(a=>a&&/^VT/.test(a.id)&&(afInit(a.name)===tok||String(a.name||"").toUpperCase().replace(/[^A-Z]/g,"").startsWith(tok)));
+    if(c.length)return{ic:c.sort((a,b)=>(!!b.eaip-!!a.eaip))[0].id,how:"guess",why:`ตัวย่อ ${tok}`}}
+  return{ic:"",how:"none",why:"เดาไม่ได้"}}
+let AF_ROWS=null;
+function afBuild(ps,extra){const idx=afNameIdx(extra),R=[];const band={vhf:"VHF",uhf:"UHF",fm:"FM",vor:"VOR",adf:"ADF",tcn:"TACAN"};
+  Object.keys(band).forEach(b=>(ps[b]||[]).forEach(x=>{if(!x||!String(x.freq||"").trim())return;const g=afGuess(x.call||x.fix||"",x.desc||"",idx),a=AP[g.ic],inAip=!!(a&&a.eaip&&!a.eaip.custom);
+    const fq=String(x.freq).trim(),dup=inAip&&((a.eaip.comm||[]).some(c=>String(c.freq).includes(fq))||(a.eaip.navaids||[]).some(n=>String(n.freq).includes(fq)));
+    R.push({b,bt:band[b],call:String(x.call||x.fix||"").trim(),desc:String(x.desc||"").trim(),freq:fq,ic:g.ic,how:g.how,why:g.why,on:g.how!=="none"&&!inAip&&!dup,inAip,dup})}));return R}
+function afImpRender(){const box=$("#afImp");if(!AF_ROWS){box.innerHTML="";return}const R=AF_ROWS,n=k=>R.filter(r=>r.how===k).length,on=R.filter(r=>r.on&&r.ic).length;
+  box.innerHTML=`<div class="af-imp"><div class="af-ih"><b>ตรวจก่อนบันทึก</b> <span class="af-st ok">✓ แน่นอน ${n("ok")}</span><span class="af-st guess">? เดา ${n("guess")}</span><span class="af-st none">✗ ไม่ทราบ ${n("none")}</span>
+    <span class="hint">· สนามใน eAIP ใช้ข้อมูล AIP (ไม่บันทึกทับ) · แก้ช่อง "สนาม" ได้ ระบบจะจำตัวย่อไว้ใช้ครั้งหน้า</span></div>
+    <div class="tablewrap"><table class="af-tbl af-rv"><thead><tr><th></th><th>ย่าน</th><th>Callsign</th><th>ความถี่</th><th>คำอธิบาย</th><th>สนาม</th><th>สถานะ</th></tr></thead><tbody>${R.map((r,i)=>`<tr class="h-${r.how}${r.inAip?" aip":""}"><td><input type="checkbox" data-afi="${i}" ${r.on&&r.ic?"checked":""} ${r.inAip?"disabled":""}></td><td>${r.bt}</td><td><b>${esc(r.call)}</b></td><td class="mono">${esc(r.freq)}</td><td class="af-d">${esc(r.desc)}</td>
+      <td><input class="af-ic" data-afic="${i}" list="afIcList" value="${esc(r.ic)}" placeholder="เลือกสนาม" autocomplete="off"></td><td class="af-why">${r.inAip?(r.dup?"มีใน AIP แล้ว":"สนามใน eAIP"):r.how==="ok"?"✓ ":r.how==="guess"?"? ":"✗ "}${r.inAip?"":esc(r.why)}</td></tr>`).join("")}</tbody></table></div>
+    <datalist id="afIcList">${Object.values(AP).filter(a=>a&&a.id).sort((a,b)=>a.id.localeCompare(b.id)).map(a=>`<option value="${esc(a.id)}">${esc(a.name||"")}${a.eaip&&!a.eaip.custom?" · eAIP":""}</option>`).join("")}</datalist>
+    <div class="btns" style="margin-top:8px"><button type="button" class="primary" id="afSave">💾 บันทึก ${on} รายการเข้าข้อมูลสนาม</button><button type="button" id="afCancel">ยกเลิก</button></div></div>`}
+$("#afImp").addEventListener("change",e=>{const t=e.target;if(t.dataset.afi!=null){AF_ROWS[+t.dataset.afi].on=t.checked;afImpRender()}
+  if(t.dataset.afic!=null){const r=AF_ROWS[+t.dataset.afic],ic=t.value.trim().toUpperCase(),a=AP[ic];r.ic=a?ic:"";r.how=a?"ok":"none";r.why=a?"เลือกเอง":"ไม่พบรหัสนี้";r.user=!!a;r.inAip=!!(a&&a.eaip&&!a.eaip.custom);r.on=!!a&&!r.inAip;afImpRender()}});
+$("#afImp").addEventListener("click",e=>{if(e.target.id==="afCancel"){AF_ROWS=null;afImpRender()}if(e.target.id==="afSave")afSave()});
+function afSave(){const C=custAll(),A=afAlias();let n=0;
+  AF_ROWS.filter(r=>r.on&&r.ic&&!r.inAip).forEach(r=>{const c=C[r.ic]=C[r.ic]||{name:(AP[r.ic]||{}).name||r.ic,lat:null,lon:null};const T=(r.call+" "+r.desc);
+    if(/VOR|ADF|TACAN/.test(r.bt)){const ty=r.bt==="ADF"?"NDB":r.bt,id=(r.call.split(/[\s\/]/)[0]||r.call).toUpperCase(),line=`${ty} ${id} ${r.freq}`;if(!String(c.nav||"").includes(r.freq)){c.nav=(c.nav?c.nav+"\n":"")+line;n++}}
+    else{const sv=(AF_SVC.find(([re])=>re.test(T))||[0,r.bt])[1],line=`${sv} ${r.freq} ${r.call}`.trim();if(!String(c.comm||"").includes(r.freq)){c.comm=(c.comm?c.comm+"\n":"")+line;n++}}
+    const tok=(r.call.toUpperCase().match(/[A-Z]{2,4}/)||[""])[0];if(tok&&!/^VT/.test(tok)&&!AF_SVC.some(([re])=>re.test(tok))&&(r.user||r.how==="ok"))A[tok]=r.ic});
+  store.set("vfr_custom_ap",C);store.set("vfr_af_alias",A);AF_ROWS=null;toast(`บันทึก ${n} ความถี่แล้ว — กำลังโหลดใหม่`);setTimeout(()=>location.reload(),700)}
+$("#afImpBtn").onclick=()=>$("#afImpFile").click();
+$("#afImpFile").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;try{const ps=await psFromXlsx(f);let wp=[];try{wp=await dbFromXlsx(f)||[]}catch(er){}
+  if(!ps){toast("ไม่พบชีต Preset (FM / VHF / UHF / ADF-VOR) ในไฟล์");return}AF_ROWS=afBuild(ps,Array.isArray(wp)?wp:[]);afImpRender();$("#afImp").scrollIntoView({behavior:"smooth",block:"start"})}catch(er){console.error(er);toast("อ่านไฟล์ไม่ได้: "+er.message)}};
+$("#afGuessPs").onclick=()=>{const ps=psAll();if(!PS_BANDS.some(b=>(ps[b.k]||[]).length)){toast("ยังไม่มี Preset — นำเข้าที่ 📻 วิทยุ ก่อน หรือกด 📥 นำเข้าจาก Excel");return}AF_ROWS=afBuild(ps,[]);afImpRender()};
 /* Morse จาก ID (ส่วนหน้า "/") */
 const MORSE={A:"•−",B:"−•••",C:"−•−•",D:"−••",E:"•",F:"••−•",G:"−−•",H:"••••",I:"••",J:"•−−−",K:"−•−",L:"•−••",M:"−−",N:"−•",O:"−−−",P:"•−−•",Q:"−−•−",R:"•−•",S:"•••",T:"−",U:"••−",V:"•••−",W:"•−−",X:"−••−",Y:"−•−−",Z:"−−••",
   0:"−−−−−",1:"•−−−−",2:"••−−−",3:"•••−−",4:"••••−",5:"•••••",6:"−••••",7:"−−•••",8:"−−−••",9:"−−−−•"};
