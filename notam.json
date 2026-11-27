@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-27T16:31Z",
+"fetched": "2026-11-27T18:11Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1044,15 +1044,6 @@
 "plain": " ",
 "start": "11/27/2026 1627",
 "end": "11/27/2026 2200",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7447/26",
-"icao": "J7447/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/009/1344N10031E001\r\nA) VTBB B) 2611271100 C) 2611271659\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.2NM CENTRE\r\n   134345.08N1003040.33E (BANG RAK, KHLONG SAN AND \r\n   SAMPHANTHAWONG DISTRICT BANGKOK)\r\nF) GND G) 900FT AGL",
-"plain": " ",
-"start": "11/27/2026 1100",
-"end": "11/27/2026 1659",
 "keyword": "INTERNATIONAL"
 },
 {
