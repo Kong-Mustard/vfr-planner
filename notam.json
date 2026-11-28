@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-28T17:12Z",
+"fetched": "2026-11-28T18:05Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -899,6 +899,15 @@
 "icao": "A4770/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1341N10045E005\r\nA) VTBS B) 2611281900 C) 2611282200\r\nE) TWY CLSD DUE TO WIP DETAIL AS FLW:\r\n   -TWY C BTN TWY C4 AND TWY C6\r\n   -TWY C5\r\n   -TXL T6 BEHIND ACFT STAND NR B2 B4 B6\r\n   -TXL T7 BEHIND ACFT STAND NR C1 C3",
 "plain": " ",
 "start": "11/28/2026 1900",
+"end": "11/28/2026 2200",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBD",
+"id": "A4783/26",
+"icao": "A4783/26 NOTAMN\r\nQ) VTBB/QICAS/I/NBO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611281724 C) 2611282200\r\nE) ILS RWY 03L/21R U/S",
+"plain": " ",
+"start": "11/28/2026 1724",
 "end": "11/28/2026 2200",
 "keyword": "INTERNATIONAL"
 },
