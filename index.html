@@ -72,12 +72,17 @@ button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--a
 button:hover{filter:brightness(.97)}
 .hint{font-size:12px;color:var(--muted);margin:0}
 .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.sum3{grid-template-columns:1fr 1fr 1fr auto;gap:6px}.sum3 b{font-size:17px!important}.sum-tas{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--input);border-radius:14px;padding:4px 6px;font-size:11px;color:var(--muted)}
+.sum3{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.sum3 b{font-size:17px!important}.sum-in{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.sum-f{display:flex!important;flex-direction:column;gap:2px;font-size:11.5px;color:var(--muted);margin:0}.sum-f>span:first-child{font-weight:700}
+.sum-fi{display:flex;align-items:center;gap:4px;background:#d1d5db;border-radius:12px;padding:3px 8px}.sum-fi input{flex:1;min-width:0;width:100%;background:transparent!important;border:0!important;box-shadow:none!important;font:800 17px var(--f-mono);color:#111827!important;text-align:center;padding:2px 0!important;min-height:30px;height:30px}
+.sum-fi small{font-size:11px;color:#4b5563;font-weight:700}.sum-x{border:0;background:#9ca3af;color:#fff;border-radius:50%;width:22px;height:22px;padding:0;font-size:11px;min-height:0;line-height:22px}.sum-f>small{font-size:10.5px}
+:root[data-theme="dark"] .sum-fi{background:#4b5563}:root[data-theme="dark"] .sum-fi input{color:#fff!important}:root[data-theme="dark"] .sum-fi small{color:#e5e7eb}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sum-fi{background:#4b5563}:root:not([data-theme="light"]) .sum-fi input{color:#fff!important}:root:not([data-theme="light"]) .sum-fi small{color:#e5e7eb}}
+.sum-tas{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--input);border-radius:14px;padding:4px 6px;font-size:11px;color:var(--muted)}
 .sum-tas input{width:56px;text-align:center;font:800 15px var(--f-mono);padding:3px 4px;min-height:28px;border-radius:8px}.sum-tas small{font-size:10px}
 .rt-row{display:grid!important;grid-template-columns:84px minmax(0,1fr);align-items:center;gap:6px}.rt-row input{min-height:36px;padding:6px 10px}.routebox .res{margin:-2px 0 2px 90px;font-size:12.5px}
 .docbar .fpl-cta,.docbar .kb-cta{padding:7px 12px!important;gap:8px!important;min-height:0}.docbar .fpl-ic{font-size:20px!important}.docbar .fpl-tx b{font-size:14px}.docbar .fpl-go{display:none}
 .lt{--bg:#f2f4f7;--panel:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#0a6cff;--accent-soft:#e8f0ff;--nav:#0a6cff;--input:#f2f4f7;--calc:#eef4ff;--calc-ink:#0b4fc0;--warn:#d97706;--bad:#dc2626;--good:#059669;--hl:#fff4c2;--hl-ink:#7a5200;color-scheme:light;background:var(--panel)!important;color:var(--ink)}
-#wpCard #wpTable td,#wpCard #wpTable th{padding-top:3px!important;padding-bottom:3px!important}#wpCard #wpTable input{min-height:30px;padding:4px 7px}#wpCard .sechead{margin-bottom:6px}
+#wpCard #wpTable td,#wpCard #wpTable th{padding-top:4px!important;padding-bottom:4px!important;vertical-align:middle!important}#wpCard #wpTable th{text-align:center!important}#wpCard #wpTable input{height:34px;min-height:34px;padding:0 9px!important;line-height:34px;box-sizing:border-box;vertical-align:middle}#wpCard #wpTable .mgrs{display:block;margin-top:2px;line-height:1.2}#wpCard .sechead{margin-bottom:6px}
 .summary div{background:var(--input);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
 .summary b{display:block;font:600 18px var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
 .summary span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
@@ -389,7 +394,10 @@ body.flymode .cur-ro,body.pvprev .cur-ro,body.pvprev .ms-hud,body.pvprev .pf-hud
 .dr-lb,.dr-cur{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fff;border:2px solid #f59e0b;border-radius:999px;padding:1px 8px;font:800 12px var(--f-body);color:#111;box-shadow:0 1px 3px #0006}.dr-cur{transform:translate(14px,-130%);background:#fef3c7}
 .dr-tt{font-weight:800}
 body.pin-mode #map,body.pin-mode #map .leaflet-interactive{cursor:crosshair!important}.pin-ctl a.on{background:#2563eb;color:#fff}.pin-ctl a small,.off-ctl a small,.pf-ctl a small,.ms-ctl a small,.bx-ctl a small{display:block;font-size:10px;line-height:1}
-.pin-pos{margin:0 0 8px;font-size:12.5px;color:var(--muted)}.pin-kind{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.pin-kind label{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;cursor:pointer}.pin-kind label:has(input:checked){border-color:#2563eb;background:#eff6ff;color:#111}
+.pin-pos{margin:0 0 8px;font-size:12.5px;color:var(--muted)}.pin-kind{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.pin-kind{gap:6px!important}.pin-kind label{margin:0!important;position:relative;display:flex!important;flex-direction:row!important;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:9px 12px!important;cursor:pointer;min-height:46px;font-weight:700;font-size:14px;background:var(--input);transition:border-color .15s,background .15s}
+.pin-kind label input{position:absolute!important;opacity:0!important;width:1px!important;height:1px!important;pointer-events:none;margin:0}.pin-kind label i{font-style:normal;font-size:20px;line-height:1;width:24px;text-align:center}
+.pin-kind label:hover{border-color:#60a5fa}.pin-kind label:has(input:checked){border-color:#2563eb;background:#2563eb;color:#fff}.pin-kind label:has(input:checked)::after{content:"✓";position:absolute;right:10px;font-weight:900}
+.pin-kind label:has(input:focus-visible){outline:2px solid #93c5fd;outline-offset:2px}
 .pin-f{display:flex;flex-direction:column;gap:6px}.pin-f[hidden]{display:none}.pin-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.bk-dlg textarea{width:100%;font:inherit}
 button.danger{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
 .pl-r[draggable=true]{cursor:grab}.pl-over{outline:2px dashed #2563eb;background:#dbeafe55!important}#plPanel.pl-dragging [data-pdrop]{outline:1px dashed #94a3b8}.pl-dst{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
@@ -428,6 +436,7 @@ body.printing .hrot{display:none}
 .wxs-qnh .qnhbox .ttl .hint{display:none}.wxs-qnh .qnhbox{padding:6px 10px;gap:4px 8px}.wxs-qnh .qnhbox input{font-size:18px;padding:5px}.wxs-qnh .qnhbox .ttl{font-size:13px}
 .wx-tl2{background:#0f172a;color:#e2e8f0;border-radius:16px;padding:10px 14px 14px;margin:0 0 10px;color-scheme:dark}.wx-tl2 .wx-tlh{display:flex;align-items:center;gap:12px}.wx-tlt{flex:1;min-width:0}.wx-tlt small{display:block;font-size:11.5px;color:#94a3b8}.wx-tlt b{font:800 18px var(--f-display);color:#fff}
 .wx-tl2 .wx-play{width:44px;height:44px;border-radius:50%;background:#0ea5e9;color:#fff;border:0;font-size:17px;box-shadow:0 0 0 4px rgba(14,165,233,.25)}.wx-tl2 .wx-now{background:#1e293b;color:#fbbf24;border:1px solid #f59e0b;border-radius:999px;padding:6px 12px;font-weight:700}
+.wx-rad{background:#052e2b}.wx-rad .wx-days{background:#0f3d38}.wx-rad .wx-day{background:#0f3d38;border-color:#1f6f66}.wx-rad .wx-day.nc{background:repeating-linear-gradient(135deg,#134e4a 0 8px,#115e59 8px 16px)}.wx-rad .wx-fill{background:linear-gradient(90deg,rgba(45,212,191,.08),rgba(45,212,191,.45))}.wx-rad .wx-play{background:#14b8a6;box-shadow:0 0 0 4px rgba(20,184,166,.25)}.wx-rad .wx-bub{background:#14b8a6}.wx-rad .wx-bub::after{border-top-color:#14b8a6}.wx-rad .wx-trk input[type=range]::-webkit-slider-thumb{background:#5eead4}
 .wx-trk{position:relative;height:40px;margin-top:30px;--p:0%;--now:-10%}.wx-days{position:absolute;inset:0;border-radius:10px;overflow:hidden;background:#1e293b}
 .wx-day{position:absolute;top:0;bottom:0;border-left:1px solid #475569;display:flex;align-items:flex-end;padding:0 6px 4px;font:700 11.5px var(--f-body);color:#cbd5e1;white-space:nowrap;overflow:hidden}.wx-day:nth-child(even){background:#26354d}
 .wx-tk{position:absolute;top:0;width:1px;height:7px;background:#64748b}.wx-tk.b{height:12px;background:#94a3b8}
@@ -1156,6 +1165,7 @@ details.area-row[open]>summary::after{content:"▴ ซ่อน"}
 .wxs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}@media (max-width:640px){.wxs-grid{grid-template-columns:1fr 1fr}.wxs-qnh{grid-column:1/-1}}
 .wxs-ap{background:#fff;border:1px solid #e2e8f0;border-top:5px solid #94a3b8;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-size:13.5px;line-height:1.35;box-shadow:0 2px 8px rgba(15,23,42,.06)}
 .wxs-ap.c-VFR{border-top-color:#1f8a4c}.wxs-ap.c-MVFR{border-top-color:#2f6fd6}.wxs-ap.c-IFR{border-top-color:#d1242f}.wxs-ap.c-LIFR{border-top-color:#a1249e}
+.wxs-light{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;background:linear-gradient(90deg,#fff7ed,#eef2ff);border:1px solid #e2e8f0;border-radius:12px;padding:7px 12px;margin-bottom:8px;font-size:13px;color:#475569}.wxs-light b{color:#0f172a}.wxs-light .wl-moon{margin-left:auto;color:#4338ca}.wxs-light .wl-moon b{color:#312e81}
 .wxs-role{font-size:11px;font-weight:700;color:#64748b;background:#f1f5f9;border-radius:999px;padding:1px 8px}.wxs-kv{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #e2e8f0;padding:2px 0}.wxs-kv span{color:#64748b;white-space:nowrap}.wxs-kv b{text-align:right;color:#0f172a}
 .wxs-t{font-size:11px;color:#94a3b8;margin-top:2px}.wxs-none{color:#64748b;font-size:13px;padding:6px 0}.wxs-none small{color:#94a3b8}
 .wxs-card .wxs-tbl th{background:#f1f5f9;color:#334155}.wxs-card .wxs-risk span{background:#fff7ed;border-color:#fb923c;color:#9a3412}.wxs-card .wxs-ok{background:#ecfdf5;border:1px solid #6ee7b7;color:#047857;border-radius:12px;padding:8px 12px}
@@ -1243,6 +1253,9 @@ body.pm-grid #planMetaSlot .sa-info{font-size:11.5px;padding:4px 8px}body.pm-gri
 .pm-t{font-weight:800;font-size:14px}.pm-t::before{content:"▸ ";color:var(--muted)}.pm-box[open] .pm-t::before{content:"▾ "}
 .pm-sum{display:flex;flex-wrap:wrap;gap:4px}.pm-sum i{font-style:normal;font:600 12px var(--f-mono);padding:2px 8px;border-radius:999px;background:var(--panel)}.pm-box[open] .pm-sum{display:none}
 #planMetaSlot{padding:0 12px 12px}#planMetaSlot .grid2{gap:6px 10px}#planMetaSlot label{font-size:12px}#planMetaSlot input{padding:7px 9px;min-height:38px}
+#nlSetup{padding-top:10px;padding-bottom:10px}#nlSetup .sechead{margin-bottom:6px}#nlSetup #planMeta{grid-template-columns:repeat(7,minmax(0,1fr));gap:6px 8px}#nlSetup #planMeta>label{font-size:12px;gap:2px}#nlSetup #planMeta>label:first-child{grid-column:span 2!important}
+#nlSetup #planMeta input{min-height:34px;height:34px;padding:0 10px}#nlSetup .sa-info{margin-top:0;font-size:12px;padding:4px 8px}#nlSetup #legDef{margin-top:8px}#nlSetup .legdef{grid-template-columns:repeat(4,minmax(0,1fr)) auto}#nlSetup .legdef input{min-height:34px;height:34px}#nlSetup #legDef>.hint{display:none}#nlSetup .ac-chk{margin-top:6px;font-size:12px}
+@media (max-width:900px){#nlSetup #planMeta{grid-template-columns:repeat(3,minmax(0,1fr))}#nlSetup #planMeta>label:first-child{grid-column:1/-1!important}}@media (max-width:520px){#nlSetup #planMeta{grid-template-columns:repeat(2,minmax(0,1fr))}#nlSetup .legdef{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .legdef-h{display:flex;align-items:center;justify-content:space-between;margin:2px 0 6px}.legdef-h h2{font-size:13px;margin:0}
 .legdef{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.7fr) minmax(0,1fr);gap:6px}.legdef label{display:flex;flex-direction:column;gap:3px;font-weight:600}
 .legdef small{font-weight:500;color:var(--muted);font-size:10.5px;margin-left:3px;display:inline}.legdef label{flex-wrap:nowrap}.legdef input{width:100%;min-width:0;padding:8px 6px;text-align:center}
@@ -1298,8 +1311,8 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 }
 @media (max-width:520px){.routebox{grid-template-columns:1fr}.routebox>*{grid-column:1!important}.routebox>.res{padding-bottom:0}.docbar{grid-template-columns:1fr}}
 .gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px 14px}
-.gl-i{display:grid;grid-template-columns:74px 1fr;gap:8px;align-items:baseline;padding:6px 8px;border-radius:8px;background:var(--input);font-size:13.5px}
-.gl-i b{font:800 13px var(--f-mono);color:#fff!important;background:var(--gc,#1e40af);border-radius:7px;padding:3px 6px;text-align:center;align-self:center}
+.gl-i{display:grid;grid-template-columns:86px 1fr;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;background:var(--input);font-size:12.5px}
+.gl-i b{font:900 15px var(--f-mono);letter-spacing:.2px;color:#fff!important;background:var(--gc,#1e40af);border-radius:7px;padding:3px 6px;text-align:center;align-self:center}
 .gg-alt{--gc:#1e40af}.gg-wind{--gc:#0369a1}.gg-spd{--gc:#0e7490}.gg-hdg{--gc:#4338ca}.gg-mh{--gc:#2563eb}.gg-dist{--gc:#1d4ed8}.gg-time{--gc:#6d28d9}.gg-fuel{--gc:#0f766e}
 .gl-i.gl-mh b{box-shadow:0 0 0 2px #93c5fd}.gl-i span{color:var(--muted)}.gl-i.gl-calc b{color:var(--calc-ink,#9cc2ff)}.gl-i.gl-mh{outline:1.5px solid var(--accent)}.gl-i.gl-mh b{color:var(--accent)}
 .gl-key{padding:1px 6px;border-radius:5px}.gl-key.in{background:var(--input)}.gl-key.calc{background:var(--calc,#14213a);color:var(--calc-ink,#9cc2ff)}
@@ -1375,7 +1388,7 @@ input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and
 #mfWp.collapsed .mf-tg{border-radius:16px}#mfWp.collapsed .mf-body{display:none}#mfWp.collapsed .mf-tg span{transform:rotate(-90deg)}
 #mfWp .mf-body{overflow:auto;padding:0 4px 6px}#mfWp .mf-body>.card{margin:0;box-shadow:none;border:0}
 #mfWp .card .sechead h2,#mfWp .card>.hint{display:none}
-#mfWp{width:min(440px,calc(100vw - 28px))}
+#mfWp{width:min(440px,calc(100vw - 28px));top:calc(max(env(safe-area-inset-top,0px),10px) + 76px)!important;max-height:calc(100dvh - 100px - env(safe-area-inset-top,0px))!important}
 #mfWp #wpTable th:nth-child(2),#mfWp #wpTable td:nth-child(2),#mfWp #wpTable th:nth-child(5),#mfWp #wpTable td:nth-child(5),#mfWp #wpTable .mgrs,#mfWp [data-act="up"],#mfWp [data-act="down"],#mfWp [data-act="zoom"]{display:none}
 #mfWp #wpTable{min-width:0;width:100%}#mfWp #wpTable td,#mfWp #wpTable th{padding:4px 3px}#mfWp #wpTable .name input{width:100%;min-width:70px}#mfWp #wpTable .coord input{width:100%;min-width:150px;font-size:12.5px}
 #mfWp .tablewrap{overflow-x:hidden}#mfWp .sechead .btns button{padding:6px 10px;font-size:12.5px}
@@ -1730,7 +1743,10 @@ body.cl-on{overflow:hidden}
         <div><span>ระยะรวม</span><b id="sDist">–</b></div>
         <div><span>เวลารวม</span><b id="sEte">–</b></div>
         <div class="key"><span>ถึง (ETA)</span><b id="sEta">–</b></div>
-        <label class="sum-tas" title="ความเร็วเดินทาง (TAS) ใช้คำนวณเวลารวม/เวลาถึงตรงนี้เท่านั้น — ไม่เกี่ยวกับ NAVLOG แท็บ 2"><span>TAS</span><input id="sTas" type="number" inputmode="numeric" min="30" max="250" step="5"><small>kt</small></label>
+      </div>
+      <div class="sum-in" title="ใช้คำนวณเวลารวม / เวลาถึง ในแท็บนี้เท่านั้น — ไม่เกี่ยวกับ NAVLOG แท็บ 2">
+        <label class="sum-f"><span>ความเร็ว CAS</span><span class="sum-fi"><input id="sTas" type="number" inputmode="numeric" min="30" max="250" step="5"><small>kt</small></span></label>
+        <label class="sum-f"><span>เวลาเริ่ม</span><span class="sum-fi"><input id="sDep" type="time"><button type="button" id="sDepClr" class="sum-x" title="ล้าง = ใช้เวลาปัจจุบัน" hidden>✕</button></span><small id="sDepHint">ว่าง = ใช้เวลาตอนนี้</small></label>
       </div>
       </div>
     </div>
@@ -1887,8 +1903,8 @@ body.cl-on{overflow:hidden}
       <p><b>โมเดล</b> — โปรแกรมพยากรณ์อากาศของแต่ละประเทศ ผลไม่เท่ากัน: <b>ECMWF</b> (ศูนย์พยากรณ์ยุโรป · โดยรวมแม่นที่สุด) · <b>GFS</b> (NOAA สหรัฐฯ) · <b>ICON</b> (DWD เยอรมนี) → สลับดู ถ้า 3 โมเดลไปทางเดียวกัน = มั่นใจได้มากขึ้น · ถ้าต่างกันมาก = อากาศช่วงนั้นยังไม่แน่นอน</p></details>
     <div class="wx-tl2"><div class="wx-tlh"><button type="button" id="wxPlay" class="wx-play" aria-label="เล่นพยากรณ์ลม">▶</button><div class="wx-tlt"><small>💨 ลมพยากรณ์ · เวลาไทย</small><b id="wxTimeLbl">–</b></div><button type="button" id="wxNow" class="wx-now">⏱ ตอนนี้</button></div>
       <div class="wx-trk" id="wxTrk"><div id="wxTicks" class="wx-days"></div><div class="wx-fill"></div><i class="wx-nowln" title="ตอนนี้"></i><span class="wx-bub" id="wxBub">–</span><input id="wxTime" type="range" min="0" max="47" value="0" aria-label="เวลาพยากรณ์"></div></div>
-    <div class="wx-tlc radar" id="wxRadarRow"><div class="wx-tlh"><span class="wx-tli">🌧️</span><div><small>เรดาร์ฝน RainViewer</small><b id="wxRadarLbl">–</b></div><button type="button" id="wxRPlay" class="wx-play" aria-label="เล่นเรดาร์ย้อนหลัง">▶</button></div>
-      <input id="wxRTime" type="range" min="0" max="0" value="0" aria-label="เวลาเรดาร์"></div>
+    <div class="wx-tl2 wx-rad" id="wxRadarRow"><div class="wx-tlh"><button type="button" id="wxRPlay" class="wx-play" aria-label="เล่นเรดาร์ย้อนหลัง">▶</button><div class="wx-tlt"><small>🌧️ เรดาร์ฝน RainViewer · ย้อนหลัง ~2 ชม. + พยากรณ์สั้น</small><b id="wxRadarLbl">–</b></div><button type="button" id="wxRNow" class="wx-now">⏱ ล่าสุด</button></div>
+      <div class="wx-trk" id="wxRTrk"><div id="wxRTicks" class="wx-days"></div><div class="wx-fill"></div><i class="wx-nowln" title="ภาพล่าสุด"></i><span class="wx-bub" id="wxRBub">–</span><input id="wxRTime" type="range" min="0" max="0" value="0" aria-label="เวลาเรดาร์"></div></div>
     <div id="wxMap"></div>
     <p class="hint" id="wxStatus"></p>
     <div class="wx-links"><span class="hint">ดูเพิ่ม:</span><a class="linkbtn" href="https://www.rainviewer.com/map.html?loc=14.0,100.6,6" target="_blank" rel="noopener">RainViewer ↗</a><a class="linkbtn" href="https://www.windy.com/?14.0,100.6,6" target="_blank" rel="noopener">Windy ↗</a><a class="linkbtn" href="https://weather.tmd.go.th/" target="_blank" rel="noopener">กรมอุตุฯ เรดาร์ ↗</a><a class="linkbtn" href="https://aviationweather.gov/" target="_blank" rel="noopener">AviationWeather ↗</a></div>
@@ -2865,7 +2881,7 @@ function render(){
     ||`<tr><td colspan="10" class="hint" style="padding:14px">ต้องมีอย่างน้อย 2 จุด</td></tr>`;
   renderNavlogExtras(res);
   // summary
-  sumRender(res);
+  sumRender();
   {const A=AC_SPEC,el=$("#acChk");if(el){const W=[];if(res.rows.length){const endMin=A.enduranceMin,b=num(state.burn,0);
      if(res.cumMin>endMin)W.push(`⚠ เวลาบินรวม ${mmss(res.cumMin)} เกิน endurance ${A.endurance}`);
      if(res.total>A.rangeNm)W.push(`⚠ ระยะรวม ${res.total.toFixed(0)} NM เกินพิสัย ${A.rangeNm} NM`);
@@ -3069,13 +3085,18 @@ function wxDrawRoute(){if(!wxMap)return;if(wxRoute)wxMap.removeLayer(wxRoute);wx
 let wxRF=null,wxRIdx=0,wxRTimer=null;
 function wxRadarShow(i){if(!wxRF||!wxMap)return;wxRIdx=Math.max(0,Math.min(wxRF.frames.length-1,i));const f=wxRF.frames[wxRIdx];
   if(wxRadarL)wxMap.removeLayer(wxRadarL);wxRadarL=L.tileLayer(`${wxRF.host}${f.path}/256/{z}/{x}/{y}/2/1_1.png`,{opacity:.72,maxNativeZoom:7,maxZoom:12,attribution:"Radar © RainViewer"}).addTo(wxMap);
-  const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});$("#wxRTime").value=wxRIdx;$("#wxRTime").style.setProperty("--p",(wxRIdx/Math.max(1,wxRF.frames.length-1)*100)+"%");
+  const t=new Date(f.time*1000).toLocaleTimeString("th-TH",{timeZone:"Asia/Bangkok",hour:"2-digit",minute:"2-digit"});$("#wxRTime").value=wxRIdx;$("#wxRTrk").style.setProperty("--p",(wxRIdx/Math.max(1,wxRF.frames.length-1)*100)+"%");$("#wxRBub").textContent=t;
   $("#wxRadarLbl").textContent=`${t} น.${f.nc?" (พยากรณ์)":wxRIdx===wxRF.past-1?" (ล่าสุด)":""}`;$("#wxStatus").dataset.radar=`เรดาร์ RainViewer ${t} น.`;wxStatus()}
 async function wxLoadRadar(){if(wxRadarL){wxMap.removeLayer(wxRadarL);wxRadarL=null}clearInterval(wxRTimer);wxRTimer=null;$("#wxRPlay").textContent="▶";
   $("#wxRadarRow").hidden=!$("#wxRadar").checked;if(!$("#wxRadar").checked){$("#wxStatus").dataset.radar="";wxStatus();return}
   try{const d=await(await fetch("https://api.rainviewer.com/public/weather-maps.json")).json();const past=d.radar.past||[],nc=(d.radar.nowcast||[]).map(f=>({...f,nc:1}));
-    wxRF={host:d.host,frames:[...past,...nc],past:past.length};$("#wxRTime").max=wxRF.frames.length-1;wxRadarShow(past.length-1)}
+    wxRF={host:d.host,frames:[...past,...nc],past:past.length};$("#wxRTime").max=wxRF.frames.length-1;wxRTicks();wxRadarShow(past.length-1)}
   catch(e){$("#wxStatus").dataset.radar="โหลดเรดาร์ไม่ได้ (ต้องต่อเน็ต)";wxStatus()}}
+/* แถบเรดาร์: ช่อง "ย้อนหลัง" / "พยากรณ์" · ขีดทุกภาพ · เส้นส้ม = ภาพล่าสุด */
+function wxRTicks(){const el=$("#wxRTicks");if(!el||!wxRF)return;const n=Math.max(1,wxRF.frames.length-1),p=wxRF.past-1;
+  el.innerHTML=`<div class="wx-day" style="left:0;width:${p/n*100}%"><span>ย้อนหลัง</span></div>`+(wxRF.frames.length>wxRF.past?`<div class="wx-day nc" style="left:${p/n*100}%;width:${(n-p)/n*100}%"><span>พยากรณ์</span></div>`:"")
+    +wxRF.frames.map((f,i)=>i?`<i class="wx-tk${new Date(f.time*1000).getUTCMinutes()===0?" b":""}" style="left:${i/n*100}%"></i>`:"").join("");$("#wxRTrk").style.setProperty("--now",(p/n*100)+"%")}
+$("#wxRNow").onclick=()=>{if(wxRF){clearInterval(wxRTimer);wxRTimer=null;$("#wxRPlay").textContent="▶";wxRadarShow(wxRF.past-1)}};
 function wxStatus(){const s=$("#wxStatus");s.textContent=[s.dataset.grid,s.dataset.radar].filter(Boolean).join(" · ")}
 const uv=(dir,spd)=>{const r=dir*D2R;return[-spd*Math.sin(r),-spd*Math.cos(r)]};
 const dirspd=(u,v)=>[norm(Math.atan2(-u,-v)*R2D),Math.hypot(u,v)];
@@ -3213,6 +3234,10 @@ function metarDecode(raw){const o=metarParts(raw);return`<div class="metar-d">${
 function wxKey(){return JSON.stringify([state.wps.map(w=>[w.lat.toFixed(3),w.lon.toFixed(3)]),state.date,state.depTime,state.legs.map(l=>l.alt)])}
 let wxKeyDone=null;
 async function wxAuto(force){if(state.wps.length<2){wxSumRender();return}const k=wxKey();if(!force&&k===wxKeyDone&&wxRouteData){wxSumRender();return}wxKeyDone=k;$("#wxSum").innerHTML='<p class="hint">กำลังดึงพยากรณ์ตามเส้นทาง…</p>';await wxRouteFetch();wxSumRender()}
+/* สรุปแสงสว่าง 1 บรรทัด (วันนี้ · ที่จุดต้นทาง) — รายละเอียดอยู่การ์ด 🌙 ด้านล่าง */
+function lightLine(){try{const W=(state.wps||[]).filter(w=>isFinite(+w.lat)),P=W[0]?{lat:+W[0].lat,lon:+W[0].lon}:{lat:13.75,lon:100.5},ymd=new Date(Date.now()+BKK_MS).toISOString().slice(0,10),t0=bkkMid(ymd),
+  S=ASTRO.sunTimes(new Date(t0+12*36e5),P.lat,P.lon),I=ASTRO.illum(new Date(t0+21*36e5)),M=ASTRO.moonTimes(t0,P.lat,P.lon);
+  return`<div class="wxs-light"><span>🌅 BMCT <b>${bkkHM(S.dawn)}</b></span><span>☀️ ขึ้น <b>${bkkHM(S.rise)}</b></span><span>🌇 ตก <b>${bkkHM(S.set)}</b></span><span>🌆 EECT <b>${bkkHM(S.dusk)}</b></span><span class="wl-moon">🌙 <b>${Math.round(I.f*100)}%</b> ${moonPhaseTh(I.phase,I.f).replace(/ \(.*\)/,"")} · ขึ้น <b>${bkkHM(M.rise)}</b> ตก <b>${bkkHM(M.set)}</b></span></div>`}catch(e){return""}}
 function wxSumRender(){const box=$("#wxSum");if(!box)return;const W=state.wps;if(W.length<2){box.innerHTML='<p class="hint">สร้างเส้นทางในแท็บ 1 ก่อน</p>';return}
   const ap=(name,role)=>{const ic=String(name).toUpperCase(),m=metarCache&&metarCache.metar[ic];const o=m?metarParts(m.raw):{};
     const kv=(i,t,v)=>`<div class="wxs-kv"><span>${i} ${t}</span><b>${esc(v||"–")}</b></div>`;
@@ -3223,7 +3248,7 @@ function wxSumRender(){const box=$("#wxSum");if(!box)return;const W=state.wps;if
   const risk=wxRouteData?(()=>{const M=Object.keys(WX_MODELS),mx=k=>Math.max(0,...wxRouteData.flatMap(p=>M.map(m=>p.per[m][k]).filter(v=>v!=null)));const out=[];
     if(mx("pr")>=1)out.push(`🌧️ ฝนตามเส้นทาง สูงสุด ${mx("pr").toFixed(1)} mm/h`);if(mx("cape")>=1000)out.push(`⛈️ CAPE ${Math.round(mx("cape"))} — มีโอกาสพายุฟ้าคะนอง`);if(mx("cl")>=70)out.push(`☁️ เมฆต่ำปกคลุม ${Math.round(mx("cl"))}%`);
     const vs=wxRouteData.flatMap(p=>M.map(m=>p.per[m].vis).filter(v=>v!=null));if(vs.length&&Math.min(...vs)<5000)out.push(`👁️ ทัศนวิสัยต่ำสุด ${(Math.min(...vs)/1000).toFixed(1)} km`);return out})():[];
-  box.innerHTML=`<div class="wxs-grid">${ap(W[0].name,"ต้นทาง")}${ap(W.at(-1).name,"ปลายทาง")}<div class="wxs-ap wxs-qnh" id="wxsQnhSlot"></div></div>
+  box.innerHTML=lightLine()+`<div class="wxs-grid">${ap(W[0].name,"ต้นทาง")}${ap(W.at(-1).name,"ปลายทาง")}<div class="wxs-ap wxs-qnh" id="wxsQnhSlot"></div></div>
     ${risk.length?`<div class="wxs-risk">${risk.map(r=>`<span>${r}</span>`).join("")}</div>`:wxRouteData?'<div class="wxs-ok">✅ ไม่พบฝน/พายุ/เมฆต่ำมากตามเส้นทางจากพยากรณ์</div>':""}
     ${legs?`<div class="tablewrap"><table class="wxs-tbl"><thead><tr><th>Leg</th><th>ALT</th><th>ลมพยากรณ์ (เฉลี่ย 3 โมเดล)</th><th>Temp</th><th>ค่าใน NAV LOG ตอนนี้</th></tr></thead><tbody>${legs}</tbody></table></div><p class="hint">ลมพยากรณ์เป็นค่าคร่าวๆ — กด "ใส่ลม/อุณหภูมิลง NAV LOG" แล้วยังแก้เองได้ในแท็บ 2</p>`:'<p class="hint">ยังไม่มีพยากรณ์ตามเส้นทาง (ต้องต่อเน็ต)</p>'}`}
 {const qb=$("#wxQnhBox"),_r=wxSumRender;wxSumRender=function(){if(qb.parentNode&&qb.parentNode.id==="wxsQnhSlot")qb.parentNode.removeChild(qb);_r.apply(this,arguments);const sl=$("#wxsQnhSlot");if(sl){qb.style.margin="0";qb.style.maxWidth="none";sl.appendChild(qb)}}}
@@ -4981,7 +5006,10 @@ function cvOut(){const o=$("#cvOut");if(o)o.innerHTML=cvOutHtml()}
 const CR_TILE=["📐","#ec4899","อัตราไต่ / ร่อน"],POS_TILE=["📍","#0d9488","พิกัด Lat/Long ⇄ MGRS"],CALC_TILE=["🧮","#64748b","เครื่องคิดเลข"];
 /* เรียงตามที่ใช้บ่อย: ความกดอากาศ · น้ำมัน(น้ำหนัก) · อัตราใช้น้ำมัน · ไต่/ร่อน · ความเร็ว · พิกัด · ที่เหลือ */
 const CV_ORDER=[3,7,8,"cr",1,"pos",0,2,4,5,6,"calc"];
-function cvCatsHtml(){const T={cr:CR_TILE,pos:POS_TILE,calc:CALC_TILE};return`<div class="cv-cats">${CV_ORDER.map(k=>{const t=typeof k==="number"?[CV_IC[k][0],CV_IC[k][1],CONV[k].t]:T[k];return`<button class="cv-cat${CV.c===k?" on":""}" data-cvc="${k}" style="--cc:${t[1]}"><span>${t[0]}</span>${t[2]}</button>`}).join("")}</div>`}
+/* สีช่อง: สลับโทนร้อน/เย็นตามลำดับ (ช่องติดกันไม่ซ้ำโทน) */
+const CV_WARM=["#ef4444","#f97316","#eab308","#ec4899","#f59e0b","#d946ef"],CV_COOL=["#0ea5e9","#14b8a6","#6366f1","#22c55e","#3b82f6","#06b6d4"];
+const cvTone=i=>{const w=(i+Math.floor(i/6))%2===0,k=Math.floor(i/2);return(w?CV_WARM:CV_COOL)[k%6]}; /* ตารางหมากรุก (6 ช่อง/แถว) */
+function cvCatsHtml(){const T={cr:CR_TILE,pos:POS_TILE,calc:CALC_TILE};return`<div class="cv-cats">${CV_ORDER.map((k,i)=>{const t=typeof k==="number"?[CV_IC[k][0],CV_IC[k][1],CONV[k].t]:T[k];return`<button class="cv-cat${CV.c===k?" on":""}" data-cvc="${k}" style="--cc:${cvTone(i)}"><span>${t[0]}</span>${t[2]}</button>`}).join("")}</div>`}
 function cvRender(){if(CV.c==="calc"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CALC_TILE[1]}">${cvCatsHtml()}<div id="calcWrap" class="calc"></div></div>`;calcRender();return}
   if(CV.c==="pos"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${POS_TILE[1]}">${cvCatsHtml()}<div id="posWrap" class="cr pos"></div></div>`;posRender();return}
   if(CV.c==="cr"){$("#cvWrap").innerHTML=`<div class="cv1" style="--cc:${CR_TILE[1]}">${cvCatsHtml()}<div id="crWrap" class="cr"></div></div>`;crRender();return}
@@ -5784,7 +5812,7 @@ function simTick(){const S=SIM;if(!S)return;const now=Date.now(),dt=(now-S.t)/36
   const L0=GPS.last,trk=S.pause?(L0&&L0.trk):(L0&&!isNaN(L0.lat)&&(Math.abs(L0.lat-lat)+Math.abs(L0.lon-lon))>1e-7?trueCourse([L0.lat,L0.lon],[lat,lon]):tc);
   gpsFix(lat,lon,S.pause?0:gs,trk,alt,10,now);simPanelUpd()}
 function simStop(){if(GPS.sim){clearInterval(GPS.sim);GPS.sim=null}const el=document.querySelector(".sim-pan");if(el)el.remove();const b=document.querySelector('[data-fm="sim"]');if(b)b.classList.remove("on")}
-function simPanel(){let el=document.querySelector(".sim-pan");if(el)el.remove();el=document.createElement("div");el.className="sim-pan";
+function simPanel(){let el=document.querySelector(".sim-pan");if(el)el.remove();el=document.createElement("div");el.className="sim-pan"+(innerWidth<761?" min":""); /* จอมือถือ: เริ่มแบบย่อ ไม่บังแผง GPS */
   el.innerHTML=`<div class="sp-h"><b>🧪 จำลองการบิน</b><button type="button" data-sp="min" aria-label="ย่อ/ขยาย">▾</button></div><div class="sp-b">
    <div class="sp-r"><span>เวลา</span><div class="sp-seg">${[1,5,10,30,60].map(m=>`<button type="button" data-sp="mult" data-v="${m}">×${m}</button>`).join("")}</div></div>
    <div class="sp-r"><span>GS</span><button type="button" data-sp="gs" data-v="-10">−10</button><b class="sp-v" data-spv="gs"></b><button type="button" data-sp="gs" data-v="10">+10</button><button type="button" data-sp="gs0" class="sp-auto">ตามแผน</button></div>
@@ -5970,12 +5998,18 @@ $("#cpTplDl").onclick=async()=>{try{const b=await(await fetch("BASE_template.xls
   const u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
   catch(e){if(e&&e.name==="AbortError")return;toast("โหลดไฟล์ตัวอย่างไม่ได้ (ต้องต่อเน็ตครั้งแรก)")}};
 /* สรุปแท็บ 1: ระยะรวม · เวลารวม · เวลาถึง — ใช้ TAS ช่องเดียว (ไม่เกี่ยวกับ NAVLOG แท็บ 2 · ไม่คิดลม) */
-function sumTas(){const v=+state.sumTas;return v>=30&&v<=300?v:120}
-function sumRender(res){const ti=$("#sTas");if(ti&&document.activeElement!==ti)ti.value=sumTas();const W=(state.wps||[]).filter(w=>isFinite(+w.lat));let d=0;
-  for(let i=1;i<W.length;i++)d+=gcDistNm([+W[i-1].lat,+W[i-1].lon],[+W[i].lat,+W[i].lon]);const ok=W.length>1,min=d/sumTas()*60,dep=res&&isFinite(res.dep)?res.dep:null;
-  $("#sDist").textContent=ok?d.toFixed(1)+" NM":"–";$("#sEte").textContent=ok?mmss(min):"–";$("#sEta").textContent=ok&&dep!=null?hhmm(dep+min):"–"}
-$("#sTas").addEventListener("input",e=>{const v=+e.target.value;if(v>=30&&v<=300){state.sumTas=v;store.set("vfr_current",state);sumRender(compute())}});
+/* สรุปแท็บ 1: ความเร็ว (CAS) + เวลาเริ่ม ของแท็บนี้เอง — ไม่เชื่อม NAVLOG แท็บ 2 · ไม่คิดลม · เวลาเริ่มว่าง = เวลาปัจจุบันของเครื่อง (อัปเดตทุก 30 วินาที) */
+function sumTas(){const v=+state.sumTas;return v>=30&&v<=300?v:130}
+function sumDepMin(){const t=state.sumDep;if(/^\d{1,2}:\d{2}$/.test(t||"")){const[h,m]=t.split(":").map(Number);return h*60+m}const n=new Date();return n.getHours()*60+n.getMinutes()+n.getSeconds()/60}
+function sumRender(){const ti=$("#sTas"),di=$("#sDep");if(ti&&document.activeElement!==ti)ti.value=sumTas();if(di&&document.activeElement!==di)di.value=state.sumDep||"";
+  const live=!state.sumDep;$("#sDepClr").hidden=live;$("#sDepHint").textContent=live?"ว่าง = ใช้เวลาตอนนี้":"กำหนดเอง";
+  const W=(state.wps||[]).filter(w=>isFinite(+w.lat));let d=0;for(let i=1;i<W.length;i++)d+=gcDistNm([+W[i-1].lat,+W[i-1].lon],[+W[i].lat,+W[i].lon]);const ok=W.length>1,min=d/sumTas()*60;
+  $("#sDist").textContent=ok?d.toFixed(1)+" NM":"–";$("#sEte").textContent=ok?mmss(min):"–";$("#sEta").textContent=ok?hhmm(Math.floor(sumDepMin()+min)):"–";$("#sEta").title=live?"เวลาปัจจุบัน + เวลารวม":"เวลาเริ่ม + เวลารวม"}
+$("#sTas").addEventListener("input",e=>{const v=+e.target.value;if(v>=30&&v<=300){state.sumTas=v;store.set("vfr_current",state);sumRender()}});
 $("#sTas").addEventListener("change",e=>{if(!(+e.target.value>=30))e.target.value=sumTas()});
+$("#sDep").addEventListener("change",e=>{state.sumDep=e.target.value||"";store.set("vfr_current",state);sumRender()});
+$("#sDepClr").onclick=()=>{state.sumDep="";store.set("vfr_current",state);sumRender()};
+setInterval(()=>{if(!state.sumDep&&!document.hidden)sumRender()},30000);
 function pmSumRender(){const el=$("#pmSum");if(!el||!state)return;const g=state.g||{};
   el.innerHTML=[state.depTime&&`🕗 ${esc(state.depTime)}`,state.fuel0!=null&&state.fuel0!==""&&`⛽ ${esc(state.fuel0)} lb`,g.alt!=null&&`ALT ${esc(g.alt)}`,g.cas!=null&&`CAS ${esc(g.cas)}`,(g.wd!=null&&g.wv!=null)&&`💨 ${esc(g.wd)}°/${esc(g.wv)}`,state.sa&&`SA ${esc(state.sa)}`].filter(Boolean).map(x=>`<i>${x}</i>`).join("")}
 /* แถบลัดไปหัวข้อ + ปุ่มกลับขึ้นบน */
@@ -6265,7 +6299,7 @@ async function pinDlg(o){const C=custAll(),ed=o.edit?C[o.edit]||{}:null,near=o.r
   const kind0=ed?(ed.heli?"heli":"ap"):(o.kind||(o.rpAp?"rp":"ap"));
   const r=await bkDlg(`<h3>${ed?"✎ แก้ไขสนาม "+esc(o.edit):"📍 ปักหมุดใหม่"}</h3>
    <p class="mono pin-pos">${fmtMgrs(toMgrs(o.lat,o.lon))} · ${posFmt(o.lat,true,"dms",1)} ${posFmt(o.lon,false,"dms",1)}</p>
-   ${ed?"":`<div class="pin-kind">${[["ap","✈ สนามบิน"],["heli","🚁 ลานจอด ฮ."],["rp","◆ จุดรายงานของสนาม"],["my","🟡 จุดของฉัน"]].map(k=>`<label><input type="radio" name="kind" value="${k[0]}" ${k[0]===kind0?"checked":""}><span>${k[1]}</span></label>`).join("")}</div>`}
+   ${ed?"":`<div class="pin-kind">${[["ap","✈ สนามบิน"],["heli","🚁 ลานจอด ฮ."],["rp","◆ จุดรายงานของสนาม"],["my","🟡 จุดของฉัน"]].map(k=>`<label><input type="radio" name="kind" value="${k[0]}" ${k[0]===kind0?"checked":""}><i>${k[1].split(" ")[0]}</i><span>${k[1].split(" ").slice(1).join(" ")}</span></label>`).join("")}</div>`}
    <div class="pin-f" data-for="ap heli"><label>รหัส (ICAO หรือรหัสที่หน่วยใช้)<input name="ic" maxlength="8" value="${esc(o.edit||"")}" ${ed?"readonly":""} placeholder="เช่น VTBH, ราบ11"></label>
      <label>ชื่อ<input name="name" maxlength="40" value="${esc(ed?ed.name||"":"")}" placeholder="เช่น สระพรานนาค"></label>
      <div class="pin-2"><label>ความสูง (ft)<input name="elev" inputmode="numeric" value="${esc(ed?ed.elev??"":"")}"></label><label>ทางวิ่ง / ทิศร่อนลง<input name="rwy" value="${esc(ed?ed.rwy||"":"")}" placeholder="06-24/01-19"></label></div>
@@ -6320,7 +6354,7 @@ function drDraw(cur){DR.lay.clearLayers();const W=DR.W;if(!W.length)return;const
   W.forEach((w,i)=>L.circleMarker([w.lat,w.lon],{radius:6,color:"#fff",weight:2,fillColor:w.snap?"#16a34a":"#f59e0b",fillOpacity:1,interactive:false}).bindTooltip(`${i+1}${w.snap?" "+esc(w.name):""}${w.ft!=null?` · ▲ ${Math.round(w.ft).toLocaleString("en-US")} ft`:""}`,{permanent:true,direction:"right",className:"dr-tt"}).addTo(DR.lay));
   if(cur){const l=W[W.length-1];L.polyline([[l.lat,l.lon],[cur.lat,cur.lon]],{color:"#f59e0b",weight:3,dashArray:"6 6",interactive:false}).addTo(DR.lay);
     const c=drMc(l,cur),d=gcDistNm([l.lat,l.lon],[cur.lat,cur.lon]);L.marker([cur.lat,cur.lon],{interactive:false,icon:L.divIcon({className:"",html:`<span class="dr-cur">${hdg(c)}° · ${d.toFixed(1)} NM${cur.snap?` → ${esc(cur.name)}`:""}</span>`,iconSize:[0,0]})}).addTo(DR.lay)}}
-function drProf(){const pb=DR.hud&&DR.hud.querySelector(".ms-prof");if(!pb)return;pb.hidden=!DR.showP||DR.W.length<2;const b=DR.hud.querySelector('[data-dr="prof"]');if(b)b.classList.toggle("on",!!DR.showP);if(DR.showP&&DR.W.length>1)profMount(pb,DR.W)}
+function drProf(){const pb=DR.hud&&DR.hud.querySelector(".ms-prof");if(!pb)return;pb.hidden=!DR.showP||DR.W.length<2;const b=DR.hud.querySelector('[data-dr="prof"]');if(b)b.classList.toggle("on",!!DR.showP);if(DR.showP&&DR.W.length>1)profMount(pb,DR.W,true)}
 function drTerrain(){if(DR.showP)drProf();clearTimeout(DR.tm);DR.terr=null;drHud();if(DR.W.length<2)return;const W=DR.W.slice(),sig=JSON.stringify(W.map(w=>[w.lat,w.lon]));
   DR.tm=setTimeout(async()=>{try{const r=await saTerrain(W,0.5);if(JSON.stringify(DR.W.map(w=>[w.lat,w.lon]))===sig){DR.terr=r;drHud()}}catch(e){DR.terr={err:1};drHud()}},350)}
 /* เส้นที่บันทึกแล้วเอากลับมาแก้ได้ (แตะเส้นบนแผนที่ → ✏️ แก้เส้น · หรือกด ↶ ย้อน ตอนยังไม่ได้วาดจุดใหม่ = เปิดเส้นล่าสุดกลับมา) */
@@ -6376,12 +6410,12 @@ function profSvg(P,Wd,Hd){const pad={l:46,r:10,t:16,b:22},w=Wd-pad.l-pad.r,h=Hd-
     <text x="${pad.l+w}" y="${Hd-6}" text-anchor="end" class="pf-u">NM</text><text x="${pad.l-5}" y="9" text-anchor="end" class="pf-u">ft</text><g class="pf-cur" style="display:none"><line y1="${pad.t}" y2="${pad.t+h}"/><circle r="4"/><text></text></g></svg>`}
 /* วางกราฟลงในกล่อง · ชี้/ลากบนกราฟ = จุดบนแผนที่ตามไปด้วย */
 const PF_MK=L.layerGroup();
-async function profMount(box,W){if(!box)return;const sig=JSON.stringify((W||[]).map(w=>[+w.lat,+w.lon]));box.dataset.sig=sig;
+async function profMount(box,W,compact){if(!box)return;const sig=JSON.stringify((W||[]).map(w=>[+w.lat,+w.lon]));box.dataset.sig=sig;
   if(!W||W.length<2){box.innerHTML='<p class="pf-msg">วางอย่างน้อย 2 จุดเพื่อดูกราฟความสูง</p>';return}
   box.innerHTML='<p class="pf-msg">⛰ กำลังคำนวณความสูงพื้นดิน…</p>';let P;try{P=await profData(W)}catch(e){P={err:1}}if(box.dataset.sig!==sig)return;
   if(!P||P.err){box.innerHTML='<p class="pf-msg">วัดความสูงไม่ได้ — ต้องต่อเน็ต (หรือเคยโหลดพื้นที่นี้ไว้แล้ว)</p>';return}
   const Wd=Math.max(260,box.clientWidth||400),hi=P.pts.reduce((a,p)=>(p.ft||0)>(a.ft||0)?p:a,P.pts[0]),sa=Math.ceil(((hi.ft||0)+1000)/100)*100;
-  box.innerHTML=`<div class="pf-sum">ระยะ <b>${P.tot.toFixed(1)}</b> NM · ▲ พื้นสูงสุด <b>${Math.round(hi.ft||0).toLocaleString("en-US")}</b> ft · +1,000 ft = <b>${sa.toLocaleString("en-US")}</b> ft</div>`+profSvg(P,Wd,150)+'<p class="pf-note">DEM ~150 ม. ค่าประมาณ · ไม่รวมเสา/อาคาร/ต้นไม้</p>';
+  box.innerHTML=(compact?"":`<div class="pf-sum">ระยะ <b>${P.tot.toFixed(1)}</b> NM · ▲ พื้นสูงสุด <b>${Math.round(hi.ft||0).toLocaleString("en-US")}</b> ft · +1,000 ft = <b>${sa.toLocaleString("en-US")}</b> ft</div>`)+profSvg(P,Wd,compact?92:150)+(compact?'':'<p class="pf-note">DEM ~150 ม. ค่าประมาณ · ไม่รวมเสา/อาคาร/ต้นไม้</p>');
   const sv=box.querySelector("svg"),cur=sv.querySelector(".pf-cur"),D=sv.dataset,l=+D.l,w=+D.w,yOf=f=>+D.t+ +D.h-(f||0)/+D.top*+D.h;
   const show=cx=>{const r=sv.getBoundingClientRect(),x=(cx-r.left)*(Wd/r.width),d=Math.max(0,Math.min(P.tot,(x-l)/w*P.tot)),p=P.pts.reduce((a,q)=>Math.abs(q.d-d)<Math.abs(a.d-d)?q:a,P.pts[0]),X=l+p.d/P.tot*w,Y=yOf(p.ft);
     cur.style.display="";cur.querySelector("line").setAttribute("x1",X);cur.querySelector("line").setAttribute("x2",X);const c=cur.querySelector("circle");c.setAttribute("cx",X);c.setAttribute("cy",Y);
