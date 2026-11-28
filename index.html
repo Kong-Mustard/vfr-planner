@@ -318,8 +318,6 @@ body.hide-rem .remtag{display:none}.rem-q,.remtag{display:none!important}
 .ovl-lb{position:absolute;transform:translate(-50%,-140%);white-space:nowrap;font:800 11px var(--f-body);color:#fff;background:var(--c);padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px #0006}
 .ovl-r{display:flex!important;align-items:center;gap:6px}.ovl-c{width:18px;height:18px;min-height:0!important;min-width:0!important;padding:0!important;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #94a3b8}.ovl-r small{color:#64748b}
 .lmk-ts{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.bk-dlg:has(.lmk-ts){max-width:620px}.lmk-ts label{display:flex;flex-direction:column;align-items:center;border:1.5px solid #cbd5e1;border-radius:10px;padding:4px;cursor:pointer}.lmk-ts input{position:absolute;opacity:0}.lmk-ts label:has(input:checked){border-color:#2563eb;background:#eff6ff}.lmk-ts span{font-size:22px;line-height:1.2}.lmk-ts small{font-size:10.5px;line-height:1.2;text-align:center}.lmk-ts label{position:relative;padding:6px 2px!important;margin:0!important;min-width:0;justify-content:center;gap:2px}
-.br-box{margin:8px 0 2px;padding:8px 10px;border:1px dashed var(--line);border-radius:12px}.br-box>b{font-size:13.5px}.br-add{display:flex;gap:6px;margin:6px 0}.br-add input{flex:1;min-width:0}
-.br-list{display:flex;flex-wrap:wrap;gap:6px}.br-chip{display:inline-flex;align-items:center;gap:6px;background:#fef9c3;color:#111;border:1px solid #eab308;border-radius:999px;padding:2px 4px 2px 10px;font-size:12.5px}.br-chip small{color:#555}.br-chip button{border:0;background:none;min-height:26px;min-width:26px;padding:0;color:#555}
 .br-mk{position:relative;width:16px;height:16px}.br-mk i{position:absolute;inset:0;background:#facc15;border:2px solid #444;border-radius:50%;box-shadow:0 1px 3px #0006}.br-mk span{position:absolute;left:19px;top:-1px;white-space:nowrap;font:800 11px var(--f-body);color:#111;background:#fffde7e6;border:1px solid #eab308;padding:0 5px;border-radius:5px}
 .kcall-ic{overflow:visible}.kcall-w{position:absolute;left:0;top:0}.kcall-ln{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}.kcall-ln line{stroke:#1d4ed8;stroke-width:1.6}
 .kcall{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;background:#fde047;border:2px solid #1d4ed8;border-radius:7px;padding:2px 8px;font-weight:800;color:#0f172a;font-family:var(--f-body),Arial,sans-serif;cursor:move;pointer-events:auto;box-shadow:0 1px 3px #0005;touch-action:none}
@@ -1767,8 +1765,6 @@ body.cl-on{overflow:hidden}
       <thead><tr><th>#</th><th>Preset</th><th>ชื่อจุด</th><th>พิกัด (lat, lon / MGRS)</th><th>VOR / Freq</th><th></th></tr></thead>
       <tbody></tbody>
     </table></div>
-    <div class="br-box"><b>🟡 จุดแยก</b> <span class="hint">สนาม/พื้นที่อื่นที่ใช้เส้นทางเดียวกัน (ไว้รายงาน · ไม่ต้องทำแผนซ้ำ) — ต่อเส้นประจากจุดที่ใกล้ที่สุด</span>
-      <div class="br-add"><input id="brIn" placeholder="ICAO / ชื่อจุด / MGRS / พิกัด เช่น VTBD, ราบ11"><button type="button" id="brAdd" class="mini">＋ เพิ่ม</button></div><div id="brList" class="br-list"></div></div>
   </div>
 
   <div class="card section" id="freqCard">
@@ -2633,17 +2629,11 @@ let remMk=[];function remThin(){if(document.body.classList.contains("printing"))
   remMk.forEach(m=>{const e=m.getElement();if(!e)return;const p=map.latLngToContainerPoint(m.getLatLng());const ok=!last||p.distanceTo(last)>=34;e.style.display=ok?"":"none";if(ok)last=p})}
 map.on("zoomend",()=>remThin());
 /* ---------- จุดแยก (สนาม/พื้นที่อื่นบนเส้นทางเดียวกัน) — เก็บกับแผน ---------- */
-function brAll(){return(Array.isArray(state.branches)?state.branches:[]).filter(b=>b&&isFinite(+b.lat)&&isFinite(+b.lon))}
+function brAll(){return[]} /* เอาระบบจุดแยกออกแล้ว (ข้อมูลเดิมในแผนไม่ลบ แต่ไม่แสดง/ไม่ใช้) */
 function brNear(b){const W=state.wps;let bi=0,bd=1e9;W.forEach((w,i)=>{const d=gcDistNm([w.lat,w.lon],[+b.lat,+b.lon]);if(d<bd){bd=d;bi=i}});return[bi,bd]}
 function brInfo(b){const W=state.wps;if(!W.length)return"";const[i,d]=brNear(b),w=W[i],vr=num(state.g&&state.g.var,0),c=norm(trueCourse([w.lat,w.lon],[+b.lat,+b.lon])+vr);
   return`จาก ${w.name||"จุด "+(i+1)} · ${hdg(c)}° / ${d<10?d.toFixed(1):Math.round(d)} NM`}
-function brRender(){const box=document.getElementById("brList");if(!box)return;const B=brAll();
-  box.innerHTML=B.length?B.map((b,k)=>`<span class="br-chip"><b>${esc(b.name)}</b><small>${esc(brInfo(b))}</small><button type="button" data-brdel="${k}" aria-label="ลบ">✕</button></span>`).join(""):""}
-function brAdd(t){t=String(t||"").trim();if(!t)return false;const f=(typeof schFavAll==="function"?schFavAll():[]).find(x=>x.n.toUpperCase()===t.toUpperCase());
-  let r=f?{lat:+f.lat,lon:+f.lon}:resolvePoint(t,false),nm=f?f.n:t;if(!r||!isFinite(r.lat)){const c=parseCoord(t);if(c){r={lat:c[0],lon:c[1]};nm="จุดแยก "+(brAll().length+1)}}if(!r||!isFinite(r.lat)){toast("หาตำแหน่ง \""+t+"\" ไม่เจอ — ใส่ ICAO/ชื่อจุด/MGRS/พิกัด");return false}
-  state.branches=brAll().concat([{name:String(nm).toUpperCase().slice(0,24),lat:+(+r.lat).toFixed(6),lon:+(+r.lon).toFixed(6)}]);markEdited();render();return true}
-document.addEventListener("click",e=>{if(e.target.id==="brAdd"){if(brAdd($("#brIn").value))$("#brIn").value=""}const d=e.target.closest("[data-brdel]");if(d){const B=brAll();B.splice(+d.dataset.brdel,1);state.branches=B;markEdited();render()}});
-document.addEventListener("keydown",e=>{if(e.target.id==="brIn"&&e.key==="Enter"){e.preventDefault();if(brAdd(e.target.value))e.target.value=""}});
+function brRender(){}
 function drawMap(rows){
   routeLayer.clearLayers();
   brAll().forEach(b=>{if(!state.wps.length)return;const[i]=brNear(b),w=state.wps[i];
@@ -3013,7 +3003,7 @@ $("#cImport").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(
   store.set("vfr_custom_ap",c);toast("นำเข้า "+Object.keys(d).length+" สนาม"+(nPt?` · จุดรายงาน ${nPt}`:"")+(nOb?` · สิ่งกีดขวาง ${nOb}`:""));setTimeout(custRefresh,600)}catch(err){toast("ไฟล์ไม่ถูกต้อง")}});e.target.value=""};
 (function(){const c=custAll();$("#cList").innerHTML=`<option value="">แก้สนามที่กรอกไว้…</option>`+Object.keys(c).sort().map(k=>`<option>${esc(k)}</option>`).join("")})();
 $("#importEaip").onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const d=JSON.parse(t);if(!d.airports||!d.edition)throw 0;
-  EAIP=d;const ok=eaipPersist(d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
+  EAIP=d;const ok=eaipPersist(d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();try{dbDraw()}catch(e){}if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();
   toast(`โหลด eAIP ฉบับ ${d.edition} แล้ว`+(ok?"":" (เก็บถาวรไม่ได้ ต้อง import ใหม่ทุกครั้ง)"))}catch(err){toast("ไฟล์นี้ไม่ใช่ eaip_data.json")}});e.target.value=""};
 
 /* ---------- ต้นทาง / ปลายทาง ---------- */
@@ -3321,7 +3311,7 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
   PS.mk=L.marker([o.lat,o.lon],{zIndexOffset:2000,icon:L.divIcon({className:"",html:'<div class="ps-pin">📍</div>',iconSize:[28,28],iconAnchor:[14,26]})}).addTo(map);
   const dms=`${posFmt(o.lat,true,"dms",2)}  ${posFmt(o.lon,false,"dms",2)}`;
   PS.mk.bindPopup(`<div class="ps-pop"><b>${esc(o.n)}</b><small>${esc(o.info||"")}</small><div class="mono">${fmtMgrs(toMgrs(o.lat,o.lon))}</div><div class="mono">${dms}</div><div class="gnd hint"></div>
-    <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="br">🟡 เพิ่มเป็นจุดแยก</button><button type="button" data-psa="fav">⭐ เก็บไว้ใช้ซ้ำ</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
+    <div class="ps-b"><button type="button" data-psa="wp">➕ เพิ่มเป็นจุดเส้นทาง</button><button type="button" data-psa="fav">⭐ เก็บไว้ใช้ซ้ำ</button><button type="button" data-psa="x">✕</button></div></div>`,{maxWidth:280}).openPopup();
   PS.cur=o;gndFill(PS.mk.getPopup().getElement()&&PS.mk.getPopup().getElement().querySelector(".gnd"),o.lat,o.lon);map.setView([o.lat,o.lon],Math.max(map.getZoom(),13))}
 {const box=document.createElement("div");box.className="ps-box";box.innerHTML='<div class="ps-in"><span>🔍</span><input type="text" placeholder="ค้นหาสถานที่ / อำเภอ / จุด / พิกัด" aria-label="ค้นหาสถานที่" enterkeyhint="search"><button type="button" class="ps-x" aria-label="ล้าง">✕</button></div><div class="ps-res" hidden></div>';
   map.getContainer().appendChild(box);PS.box=box;L.DomEvent.disableClickPropagation(box);L.DomEvent.disableScrollPropagation(box);const inp=box.querySelector("input");let t=0;
@@ -3331,7 +3321,6 @@ function psGo(o){PS.box.querySelector(".ps-res").hidden=true;if(PS.mk)map.remove
   box.querySelector(".ps-res").addEventListener("click",e=>{const b=e.target.closest("[data-psi]");if(b)psGo(PS.list[+b.dataset.psi])});
   map.getContainer().addEventListener("click",e=>{const b=e.target.closest("[data-psa]");if(!b||!PS.cur)return;const o=PS.cur;
     if(b.dataset.psa==="wp"){state.wps.push({name:o.src==="📍"?"WP"+(state.wps.length+1):String(o.n).replace(/\s+/g," ").slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6),vor:""});markEdited();render();toast("เพิ่มเป็นจุดที่ "+state.wps.length)}
-    if(b.dataset.psa==="br"){state.branches=brAll().concat([{name:String(o.src==="📍"?"จุดแยก"+(brAll().length+1):o.n).toUpperCase().slice(0,24),lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)}]);markEdited();render();toast("เพิ่มจุดแยกแล้ว (แท็บ 1 ใต้ตารางจุด)")}
     if(b.dataset.psa==="fav"){lmkDlg({n:String(o.n).slice(0,24)}).then(r=>{if(!r)return;lmkSave(null,{n:r.n,t:r.t,lat:+o.lat.toFixed(6),lon:+o.lon.toFixed(6)});toast("เก็บ "+r.n+" แล้ว")})}
     if(PS.mk){map.removeLayer(PS.mk);PS.mk=null}})}
 /* ---------- แท็บ 1: หมุนแผนที่ (แบบ Google Earth) ----------
@@ -5311,7 +5300,11 @@ $("#psAdd").onclick=()=>{const d=psAll(),L=d[psBand];const n=L.reduce((m,x)=>Mat
 function dtdId(name,used){let t=String(name||"").toUpperCase().replace(/[^A-Z0-9 .]/g,"").replace(/\s+/g," ").trim();if((t.match(/[A-Z0-9]/g)||[]).length<2)t=""; /* ชื่อไทยล้วน เช่น "บทบ.ยว.3" → เหลือ "..3" ใช้ไม่ได้ */
   t=t.slice(0,7).trim();let id=t||"WP",k=1;while(used.has(id)){const sfx=String(k++);id=(t||"WP").slice(0,7-sfx.length)+sfx}used.add(id);return id}
 const dbLayer=L.layerGroup();layerCtl.addOverlay(dbLayer,"Waypoint หน่วย (No.)");
-function dbDraw(){dbLayer.clearLayers();dbAll().forEach(x=>{if(x.lat==null)return;
+/* Waypoint หน่วยที่อยู่ตำแหน่งเดียวกับสนาม (eAIP / ที่เพิ่มเอง) หรือ VOR/NDB ใน eAIP (ห่าง < 0.2 NM) → ไม่วาดหมุดซ้ำ · ข้อมูลยังอยู่ครบ */
+function dbDupOf(x){const near=(la,lo)=>isFinite(+la)&&Math.abs(la-x.lat)<0.01&&Math.abs(lo-x.lon)<0.01&&gcDistNm([+la,+lo],[x.lat,x.lon])<0.2;
+  for(const a of Object.values(AP))if(a&&(a.eaip||/^VT/.test(a.id||""))&&near(a.lat,a.lon))return a.id;
+  for(const n of((typeof EAIP!=="undefined"&&EAIP&&EAIP.navaids)||[]))if(near(n.lat,n.lon))return n.id;return null}
+function dbDraw(){dbLayer.clearLayers();dbAll().forEach(x=>{if(x.lat==null||dbDupOf(x))return;
   L.marker([x.lat,x.lon],{icon:L.divIcon({className:"",html:`<span class="dbpin">${esc(x.no)}</span>`,iconSize:null,iconAnchor:[12,12]})})
    .bindTooltip(`No.${esc(x.no)} ${esc(x.name)}<br>${esc(x.mgrs||"")}`).on("click",e=>{L.DomEvent.stopPropagation(e);dbAddToRoute(x)}).addTo(dbLayer)})}
 function dbAddToRoute(x){const w={name:x.name||("No."+x.no),lat:x.lat,lon:x.lon,vor:""};const W=state.wps;
@@ -6066,7 +6059,7 @@ try{npRenderList();npRenderMain()}catch(e){}
 fetch("eaip_data.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).catch(()=>null).then(async d=>{
   if(!d||!d.airports||!d.edition){d=await CLDB.get("eaip").catch(()=>null);if(!d||!d.airports)return} /* ออฟไลน์และไม่มีใน cache → ใช้ฉบับที่เก็บไว้ใน IndexedDB */
   if(EAIP&&EAIP.edition===d.edition&&EAIP.fetched===d.fetched){if(localStorage.getItem("vfr_eaip"))eaipPersist(d);return}
-  EAIP=d;eaipPersist(d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
+  EAIP=d;eaipPersist(d);applyEaip();applyCustom();fillDatalist();if(typeof drawVfr==="function")drawVfr();try{dbDraw()}catch(e){}if(typeof drawAs21==="function")drawAs21();if(typeof drawAreas==="function")drawAreas();if(typeof drawIfr==="function")drawIfr();render();toast("อัปเดตข้อมูล eAIP ฉบับ "+d.edition)}).catch(()=>{});
 /* ---------- PPC (H-60 Performance Planning Card) — ฟอร์มกรอกเองตาม IPAC · เก็บในเครื่องเท่านั้น (vfr_ppc) ---------- */
 const PPC_PH=[["dep","Departure [DEP]"],["crs","Cruise [CRS]"],["arr1","Arrival [ARR1]"],["arr2","Arrival 2 [ARR2]"],["cfg","Config"]];
 const PPC_OPT={
