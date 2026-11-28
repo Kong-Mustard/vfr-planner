@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-28T10:14Z",
+"fetched": "2026-11-28T11:11Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -1017,24 +1017,6 @@
 "plain": " ",
 "start": "11/27/2026 2130",
 "end": "11/28/2026 1630",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCN",
-"id": "J7575/26",
-"icao": "J7575/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/AW/000/003/1849N10048E001\r\nA) VTCN B) 2611272300 C) 2611281100\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.5NM\r\n   CENTRE 184921.99N1004826.20E\r\nF) GND G) 296FT AGL",
-"plain": " ",
-"start": "11/27/2026 2300",
-"end": "11/28/2026 1100",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTCH",
-"id": "J7589/26",
-"icao": "J7589/26 NOTAMN\r\nQ) VTBB/QWMLW/IV/BO/AW/000/060/1916N09856E003\r\nA) VTCH B) 2611280200 C) 2611281100\r\nE) ROCKET (BANGFAI) FRNG WILL TAKE PLACE RADIUS 3NM\r\n   CENTRE 191619.49N0975629.83E\r\n   RMK: COOR CTC TEL +668 4885 8132, +668 4979 1985\r\nF) GND G) 6000FT AGL",
-"plain": " ",
-"start": "11/28/2026 0200",
-"end": "11/28/2026 1100",
 "keyword": "INTERNATIONAL"
 },
 {
