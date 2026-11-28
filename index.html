@@ -6506,7 +6506,9 @@ document.addEventListener("click",e=>{if(!e.target.closest("[data-kbbox-clear]")
 /* ---------- 📋 ข้อมูลจุด ↔ Excel (ส่งให้เพื่อนนำเข้าแล้วเห็นชุดเดียวกัน)
    ชีตเพิ่มในเทมเพลต BASE: AIRFIELD (สนามที่เพิ่มเอง) · REPORTING POINT (จุดรายงานที่เพิ่ม) · MY POINTS (จุดของฉัน)
    จุดรายงานของสนามใน AIP เก็บแยกที่ vfr_xpts (ไม่ทับข้อมูล AIP) · ของสนามที่เพิ่มเองเก็บใน vfr_custom_ap ---------- */
-const apHasPt=(ic,n)=>{const a=AP[ic];const v=a&&a.eaip&&a.eaip.vfr&&a.eaip.vfr.pts&&a.eaip.vfr.pts.length?a.eaip.vfr:MIL_VFR[ic];return!!(v&&(v.pts||[]).some(p=>String(p.n).toUpperCase()===String(n).toUpperCase()))};
+const apHasPt=(ic,n,lat,lon)=>{const a=AP[ic];const v=a&&a.eaip&&a.eaip.vfr&&a.eaip.vfr.pts&&a.eaip.vfr.pts.length?a.eaip.vfr:MIL_VFR[ic];const N=String(n).toUpperCase().replace(/\s*(RP|POINT)$/,"").trim();
+  /* ซ้ำ = ชื่อตรง · รหัสจุดตรง (WK RP ↔ "WK") · หรืออยู่ห่างกันไม่ถึง 0.15 NM */
+  return!!(v&&(v.pts||[]).some(p=>String(p.n).toUpperCase()===String(n).toUpperCase()||(p.id&&String(p.id).toUpperCase()===N)||(lat!=null&&isFinite(+p.lat)&&gcDistNm([+p.lat,+p.lon],[+lat,+lon])<0.15)))};
 function rpAdd(ic,p){ic=String(ic).toUpperCase();const nm=String(p.n||"").trim().toUpperCase().slice(0,24);if(!nm||!isFinite(+p.lat)||!isFinite(+p.lon))return false;
   const q={n:nm,lat:+(+p.lat).toFixed(6),lon:+(+p.lon).toFixed(6),lm:String(p.lm||""),rd:String(p.rd||"")},C=custAll(),a=AP[ic];
   if(C[ic]||(a&&a.eaip&&a.eaip.custom)){const base=Array.isArray(C[ic]&&C[ic].pts)?C[ic].pts:((apVfr(a)||{}).pts||[]).map(x=>({n:x.n,lat:x.lat,lon:x.lon,lm:x.lm||"",rd:x.rd||""}));
@@ -6534,7 +6536,7 @@ async function placesFromXlsx(f,dbItems){await loadScript("https://cdn.jsdelivr.
     const i=F.findIndex(x=>x.n.toUpperCase()===n.toUpperCase());const v={n,t,lat:+p[0].toFixed(6),lon:+p[1].toFixed(6)};if(i>=0)F[i]=v;else F.push(v);R.my++});store.set("vfr_altpts",F)}
   /* WAYPOINT ที่ดูเป็นจุดรายงาน (มีคำว่า POINT / จุดรายงาน) → เพิ่มเป็นจุดรายงานของสนามที่เดาได้ด้วย (ยังอยู่ใน BASE เหมือนเดิม) */
   (dbItems||[]).forEach(x=>{const txt=[x.name,x.dtd,x.fix,x.note,x.desc].filter(Boolean).join(" ");if(!/POINT|จุดรายงาน|\bRP\b/i.test(txt)||x.lat==null)return;const g=rpGuessAp(txt,x.lat,x.lon);if(!g)return;
-    const n=String(x.name||x.dtd||"").replace(/\s*POINT\b/i,"").trim()||x.dtd;if(apHasPt(g.ic,n))return;if(rpAdd(g.ic,{n,lat:x.lat,lon:x.lon,lm:x.note||""})===true){R.rp++;R.guess.push(`No.${x.no} ${n} → ${g.ic} (${g.why})`)}});
+    const n=String(x.name||x.dtd||"").replace(/\s*POINT\b/i,"").trim()||x.dtd;if(apHasPt(g.ic,n,x.lat,x.lon))return;if(rpAdd(g.ic,{n,lat:x.lat,lon:x.lon,lm:x.note||""})===true){R.rp++;R.guess.push(`No.${x.no} ${n} → ${g.ic} (${g.why})`)}});
   pinRefresh();pdRender();return R}
 function plReportHtml(R){if(!R||!(R.af||R.rp||R.my||R.skip.length))return"";
   return`<h3>📂 ข้อมูลจุดที่นำเข้า</h3><p>สนามที่เพิ่มเอง <b>${R.af}</b> · จุดรายงาน <b>${R.rp}</b> · จุดของฉัน <b>${R.my}</b></p>
