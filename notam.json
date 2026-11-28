@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-28T12:08Z",
+"fetched": "2026-11-28T13:28Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -918,15 +918,6 @@
 "plain": " ",
 "start": "11/28/2026 1000",
 "end": "11/28/2026 1659",
-"keyword": "INTERNATIONAL"
-},
-{
-"loc": "VTBB",
-"id": "J7357/26",
-"icao": "J7357/26 NOTAMN\r\nQ) VTBB/QWULW/IV/BO/W/000/007/1349N10004E001\r\nA) VTBB B) 2611280900 C) 2611281300\r\nE) UNMANNED AIRCRAFT WILL TAKE PLACE RADIUS 0.08NM CENTRE\r\n   134912.13N1000343.77E (MUEANG DISTRICT NAKHON PATHOM PROVINCE)\r\nF) GND G) 700FT AGL",
-"plain": " ",
-"start": "11/28/2026 0900",
-"end": "11/28/2026 1300",
 "keyword": "INTERNATIONAL"
 },
 {
