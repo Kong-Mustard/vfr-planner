@@ -2286,9 +2286,23 @@ const AIRPORTS=[["BTZ","Betong International Airport",5.79,101.15,"medium","785"
 const AP={};AIRPORTS.forEach(a=>AP[a[0]]={id:a[0],name:a[1],lat:a[2],lon:a[3],type:a[4],elev:a[5]});
 function customPts(){return store.get("vfr_points")||{}}
 function saveCustom(name,lat,lon){const c=customPts();c[name.toUpperCase()]={name,lat,lon};store.set("vfr_points",c);fillDatalist()}
+/* ชื่อสนามภาษาไทย (ชื่อสาธารณะ) → ICAO — พิมพ์ไทยได้เผื่อลืมรหัส */
+const AP_TH={VTBD:"ดอนเมือง",VTBK:"กำแพงแสน",VTBL:"โคกกะเทียม ลพบุรี",VTBO:"ตราด เขาสมิง",VTBP:"ประจวบคีรีขันธ์",VTBS:"สุวรรณภูมิ",VTBU:"อู่ตะเภา",VTBW:"วัฒนานคร สระแก้ว",VTBH:"สระพรานนาค",
+  VTCC:"เชียงใหม่",VTCH:"แม่ฮ่องสอน",VTCI:"ปาย",VTCL:"ลำปาง",VTCN:"น่านนคร น่าน",VTCP:"แพร่",VTCT:"แม่ฟ้าหลวง เชียงราย",VTPB:"เพชรบูรณ์",VTPH:"หัวหิน",VTPI:"ตาคลี",VTPM:"แม่สอด",VTPN:"นครสวรรค์",
+  VTPO:"สุโขทัย",VTPP:"พิษณุโลก",VTPT:"ตาก",VTSB:"สุราษฎร์ธานี",VTSC:"นราธิวาส",VTSE:"ชุมพร",VTSF:"นครศรีธรรมราช",VTSG:"กระบี่",VTSH:"สงขลา",VTSK:"ปัตตานี",VTSM:"สมุย",VTSN:"ชะเอียน",VTSP:"ภูเก็ต",
+  VTSR:"ระนอง",VTSS:"หาดใหญ่",VTST:"ตรัง",VTSY:"เบตง",VTUD:"อุดรธานี",VTUI:"สกลนคร",VTUK:"ขอนแก่น",VTUL:"เลย",VTUN:"โคราช",VTUO:"บุรีรัมย์",VTUQ:"นครราชสีมา",VTUU:"อุบลราชธานี",VTUV:"ร้อยเอ็ด",VTUW:"นครพนม",VTUZ:"น้ำพอง"};
+const thN=t=>String(t||"").replace(/สนามบิน|ท่าอากาศยาน|สนาม\s*ฮ\.?|สนาม|จังหวัด|จว\.|อำเภอ|อ\.|บ้าน|บ\.|[\s()\-\/.,]/g,"").toLowerCase();
+/* ค้นจากชื่อไทย: สนาม (ชื่อไทย + สนามที่เพิ่มเอง) ก่อน → จุดที่นำเข้า → Waypoint หน่วย */
+function thaiFind(t){const q=thN(t);if(q.length<2||!/[ก-๙]/.test(t))return null;const hit=nm=>{const k=thN(nm);return k&&(k.startsWith(q)||k.includes(q)||(q.length>=4&&q.includes(k)))};
+  const C=custAll();for(const[ic,c]of Object.entries(C))if(AP[ic]&&hit(c.name))return{ap:ic};
+  for(const[ic,nm]of Object.entries(AP_TH))if(AP[ic]&&nm.split(" ").some(hit))return{ap:ic};
+  const f=schFavAll().find(x=>hit(x.n));if(f)return{pt:{name:f.n,lat:+f.lat,lon:+f.lon,info:"จุดที่นำเข้า (ค้นจากชื่อไทย)"}};
+  const d=dbAll().find(x=>x.lat!=null&&(hit(x.name)||hit(x.note)));if(d)return{pt:{name:d.name||("No."+d.no),lat:d.lat,lon:d.lon,info:`Waypoint หน่วย No.${d.no} (ค้นจากชื่อไทย)`}};return null}
 function fillDatalist(){const c=customPts();
   $("#apList").innerHTML=Object.values(AP).filter(a=>/^VT/.test(a.id)).sort((x,y)=>x.id<y.id?-1:1).map(a=>`<option value="${esc(a.id)}">${esc(a.name)}</option>`).join("")+
-    Object.values(c).map(p=>`<option value="${esc(p.name)}">จุดที่บันทึก</option>`).join("")}
+    Object.values(c).map(p=>`<option value="${esc(p.name)}">จุดที่บันทึก</option>`).join("")+
+    /* ชื่อไทย → แตะแล้วใส่รหัส ICAO ให้ */Object.entries(AP_TH).filter(([ic])=>AP[ic]).map(([ic,nm])=>`<option value="${esc(ic)}">${esc(nm)}</option>`).join("")+
+    Object.entries(custAll()).filter(([ic,x])=>AP[ic]&&/[ก-๙]/.test(x.name||"")).map(([ic,x])=>`<option value="${esc(ic)}">${esc(x.name)}</option>`).join("")}
 /* แยก "พิกัด + ชื่อ" เช่น 47Q QU 27275 13325 (บทบ.ยว.3) */
 function splitCoordName(t){
   let m=t.match(/^\s*(\d{1,2}\s*[C-Xc-x]\s*[A-Za-z]{2}\s*\d{1,5}\s*\d{0,5})\s*(.*)$/);
@@ -2306,6 +2320,7 @@ function resolvePoint(text,remember=true){
   const s=splitCoordName(t);if(s){const p=parseCoord(s.coord);if(p){
     if(s.name&&remember)saveCustom(s.name,p[0],p[1]);
     return{name:s.name||"",lat:p[0],lon:p[1],info:s.name?"พิกัดที่ใส่ (บันทึกชื่อแล้ว)":"พิกัดที่ใส่"}}}
+  const th=thaiFind(t);if(th){if(th.ap){const r=resolvePoint(th.ap,false);if(r){r.th=th.ap;return r}}if(th.pt)return th.pt}
   return null}
 /* ---------- ข้อมูล eAIP (import จากสคริปต์ eaip_update.py) ---------- */
 let EAIP=store.get("vfr_eaip"); /* รุ่นเก่าเก็บใน localStorage — ย้ายไป IndexedDB หลังโหลดสำเร็จ */
@@ -2360,7 +2375,7 @@ function showRes(el,p,raw){if(!raw.trim()){el.textContent="";el.className="res";
   if(!p){el.textContent="ไม่พบรหัส/ชื่อนี้ และอ่านเป็นพิกัดไม่ได้";el.className="res err";return}
   el.className="res res1";el.title=`${p.name||""} · ${p.full||p.info} · ${p.lat.toFixed(5)}, ${p.lon.toFixed(5)} · ${fmtMgrs(toMgrs(p.lat,p.lon))}`;
   const a=AP[String(p.name||"").toUpperCase()];
-  if(a&&p.src){el.innerHTML=`${esc(p.info)} · ${a.eaip&&!a.eaip.custom?'<span class="src-ok">✓ eAIP</span>':a.eaip?'<span class="src-warn">กรอกเอง (ไม่มีใน eAIP)</span>':'<span class="src-warn">ไม่มีใน eAIP</span>'}`;return}
+  if(a&&p.src){el.innerHTML=`${p.th&&!/^VT/i.test(raw.trim())?`→ <b>${esc(p.th)}</b> · `:""}${esc(p.info)} · ${a.eaip&&!a.eaip.custom?'<span class="src-ok">✓ eAIP</span>':a.eaip?'<span class="src-warn">กรอกเอง (ไม่มีใน eAIP)</span>':'<span class="src-warn">ไม่มีใน eAIP</span>'}`;return}
   el.innerHTML=`<b>${esc(p.name||"(ไม่มีชื่อ)")}</b> · ${esc(p.info)} · <span class="mono">${fmtMgrs(toMgrs(p.lat,p.lon))}</span>${p.src?` <span class="${p.src==="eAIP"?"src-ok":"src-warn"}">${esc(p.src)}</span>`:""}`}
 
 /* ---------- คำนวณการเดินอากาศ ---------- */
