@@ -1,5 +1,5 @@
 {
-"fetched": "2026-11-28T13:28Z",
+"fetched": "2026-11-28T15:10Z",
 "source": "FAA NOTAM Search (ICAO international)",
 "notams": [
 {
@@ -855,6 +855,15 @@
 "plain": " ",
 "start": "11/28/2026 2300",
 "end": "11/29/2026 0800",
+"keyword": "INTERNATIONAL"
+},
+{
+"loc": "VTBD",
+"id": "A4782/26",
+"icao": "A4782/26 NOTAMN\r\nQ) VTBB/QMXLC/IV/BO/A/000/999/1355N10036E005\r\nA) VTBD B) 2611281400 C) 2611282359\r\nE) TXL B BTN TWY D AND TWY E CLSD DUE TO TEMPO ACFT PRKG",
+"plain": " ",
+"start": "11/28/2026 1400",
+"end": "11/28/2026 2359",
 "keyword": "INTERNATIONAL"
 },
 {
